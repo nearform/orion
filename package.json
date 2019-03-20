@@ -1,0 +1,22 @@
+{
+  "name": "knowledgebase",
+  "version": "1.0.0",
+  "description": "The goto knowledge base",
+  "dependencies": {
+    "lerna": "^3.13.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nearform/knowledgebase.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nearform/knowledgebase/issues"
+  },
+  "homepage": "https://github.com/nearform/knowledgebase#readme"
+}
