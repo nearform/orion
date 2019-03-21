@@ -1,4 +1,7 @@
 import React from 'react'
+import { ThemeProvider } from 'styled-components/macro'
+import { theme } from 'saluki'
+import customTheme from './src/utils/theme'
 
 // custom typefaces
 import 'typeface-montserrat'
@@ -15,6 +18,8 @@ const client = new GraphQLClient({
 
 export const wrapRootElement = ({ element }) => {
   return (
-    <ClientContext.Provider value={client}>{element}</ClientContext.Provider>
+    <ClientContext.Provider value={client}>
+      <ThemeProvider theme={theme(customTheme)}>{element}</ThemeProvider>
+    </ClientContext.Provider>
   )
 }
