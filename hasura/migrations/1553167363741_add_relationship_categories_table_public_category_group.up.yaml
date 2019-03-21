@@ -1,0 +1,12 @@
+- args:
+    name: categories
+    table:
+      name: category_group
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: category
+          schema: public
+  type: create_array_relationship

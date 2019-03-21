@@ -1,0 +1,6 @@
+- args:
+    relationship: visibleTo
+    table:
+      name: article
+      schema: public
+  type: drop_relationship
