@@ -4,12 +4,12 @@ require('dotenv').config({
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
-    author: `Kyle Mathews`,
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
+    title: `NearForm Knowledgebase`,
+    author: `NearForm`,
+    description: `NearForm's Open Source Knowledgebase.`,
+    siteUrl: `https://neaform.github.io/knowledgebase`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `nearform`,
     },
   },
   plugins: [
@@ -61,22 +61,27 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `NearForm Knowledgebase`,
+        short_name: `NFKB`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `content/assets/gatsby-icon.png`,
+        icon: `content/assets/nearform-logo.png`,
       },
     },
-    `gatsby-plugin-offline`,
+    // no PWA for now
+    // `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
       },
+    },
+    {
+      resolve: `gatsby-plugin-create-client-paths`,
+      options: { prefixes: [`/members/*`, '/admin/*'] },
     },
   ],
 }

@@ -2,7 +2,6 @@ import React from 'react'
 import { Link, graphql } from 'gatsby'
 import { useQuery } from 'graphql-hooks'
 
-import Bio from '../components/bio'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import { rhythm } from '../utils/typography'
@@ -14,14 +13,14 @@ const HOMEPAGE_QUERY = `query HomePage {
   }
 }`
 
-function BlogIndex({ data, location }) {
+function BlogIndex({ data, location, ...props }) {
   const siteTitle = data.site.siteMetadata.title
   const posts = data.allMarkdownRemark.edges
 
   const { loading, error, data: users } = useQuery(HOMEPAGE_QUERY)
 
   if (loading) return 'Loading...'
-  if (error) return 'Something Bad Happened'
+  if (error) return 'Error!'
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -29,7 +28,6 @@ function BlogIndex({ data, location }) {
         title="All posts"
         keywords={[`blog`, `gatsby`, `javascript`, `react`]}
       />
-      <Bio />
       <pre>{JSON.stringify(users, null, 2)}</pre>
       {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
