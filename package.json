@@ -6,7 +6,8 @@
     "lerna": "^3.13.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bootstrap": "lerna bootstrap --ci  --concurrency=2",
+    "postinstall": "npm run bootstrap"
   },
   "repository": {
     "type": "git",
