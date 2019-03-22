@@ -33,7 +33,23 @@ const commonPlugins = [
     exclude: 'node_modules/**',
     runtimeHelpers: true
   }),
-  commonjs()
+  commonjs({
+    include: 'node_modules/**',
+    // left-hand side can be an absolute path, a path
+    // relative to the current directory, or the name
+    // of a module in node_modules
+    namedExports: {
+      'node_modules/react-is/index.js': [
+        'isElement',
+        'isValidElementType',
+        'ForwardRef'
+      ],
+      'node_modules/babel-plugin-macros/dist/index.js': [
+        'MacroError',
+        'createMacro'
+      ]
+    }
+  })
 ]
 
 export default [

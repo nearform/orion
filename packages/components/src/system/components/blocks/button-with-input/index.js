@@ -7,7 +7,7 @@ import Input from '~/system/components/elements/input/index'
 const ButtonWithInput = ({ button, input }) => (
   <div>
     <Input onChange={input.onChange} />
-    <Button onClick={button.onClick}>{button.label}</Button>
+    <Button onClick={button.onClick} label={button.label} />
   </div>
 )
 

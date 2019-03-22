@@ -3,6 +3,7 @@ import { setAddon, addDecorator } from '@storybook/react'
 import { withKnobs, select } from '@storybook/addon-knobs/react'
 import { withConsole } from '@storybook/addon-console'
 import JSXAddon from 'storybook-addon-jsx'
+import { configureViewport } from '@storybook/addon-viewport'
 
 addDecorator(withKnobs)
 addDecorator((storyFn, context) => withConsole()(storyFn)(context))

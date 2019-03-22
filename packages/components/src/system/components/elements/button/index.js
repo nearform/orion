@@ -1,13 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
-import { fontFamily, fontSize, color, padding } from 'saluki'
+import { fontSize, color } from 'saluki'
 
 const StyledButton = styled.button`
-  ${fontFamily}
-  ${padding}
-  ${fontSize}
-  ${color}
+  ${fontSize('large')}
+  ${color('blue')}
 `
 const Button = ({ label, onClick }) => (
   <StyledButton onClick={onClick}>{label}</StyledButton>
