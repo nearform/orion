@@ -2,13 +2,16 @@ import React from 'react'
 import Amplify from 'aws-amplify'
 import { Authenticator } from 'aws-amplify-react'
 import { GraphQLClient, ClientContext } from 'graphql-hooks'
-import { ThemeProvider } from 'styled-components/macro'
+import { ThemeProvider } from 'styled-components'
 import { theme } from 'saluki'
+
 import customTheme from './src/utils/theme'
 
 // custom typefaces
 import 'typeface-montserrat'
 import 'typeface-merriweather'
+import 'typeface-poppins'
+import 'typeface-didact-gothic'
 
 import awsConfig from './src/aws-exports'
 import DisplayIfSignedIn from './src/components/DisplayIfSignedIn'
