@@ -1,9 +1,11 @@
 import { configure } from '@storybook/react'
 import { setAddon, addDecorator } from '@storybook/react'
 import { withKnobs, select } from '@storybook/addon-knobs/react'
+import { withConsole } from '@storybook/addon-console'
 import JSXAddon from 'storybook-addon-jsx'
 
 addDecorator(withKnobs)
+addDecorator((storyFn, context) => withConsole()(storyFn)(context))
 setAddon(JSXAddon)
 
 // automatically import all files ending in *.stories.js
