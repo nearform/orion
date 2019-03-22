@@ -1,5 +1,5 @@
 import React from 'react'
-import { ThemeProvider } from 'styled-components/macro'
+import { ThemeProvider } from 'styled-components'
 import { theme } from 'saluki'
 
 import { storiesOf } from '@storybook/react'
