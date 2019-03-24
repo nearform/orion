@@ -83,5 +83,6 @@ module.exports = {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/members/*`, '/admin/*'] },
     },
+    `gatsby-plugin-styled-components`,
   ],
 }
