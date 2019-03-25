@@ -1,19 +1,18 @@
 const fs = require('fs')
 
+const srcDir = `${__dirname}/src`
+
 const functionNames = fs
-  .readdirSync(__dirname, { withFileTypes: true })
+  .readdirSync(srcDir, { withFileTypes: true })
   .filter(dirent => dirent.isDirectory())
-  .filter(dirent => !/node_modules|build/.test(dirent.name))
   .map(dirent => dirent.name)
 
 const entries = functionNames.reduce(
-  (acc, f) => ({ ...acc, [f]: `./${f}/index.js` }),
+  (acc, f) => ({ ...acc, [f]: `${srcDir}/${f}/index.js` }),
   {}
 )
 
-console.log(entries)
-
-const functions = (module.exports = {
+module.exports = {
   entry: entries,
   target: 'node',
   output: {
@@ -21,4 +20,7 @@ const functions = (module.exports = {
     filename: '[name].bundle.js',
     libraryTarget: 'umd',
   },
-})
+  optimization: {
+    minimize: false,
+  },
+}
