@@ -4,9 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "graphql-hooks": "^3.4.1",
+    "node-fetch": "^2.3.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  }
 }

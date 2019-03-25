@@ -1,5 +1,5 @@
 import React from 'react'
-import Amplify from 'aws-amplify'
+import Amplify, { Auth, Hub } from 'aws-amplify'
 import { Authenticator } from 'aws-amplify-react'
 import { GraphQLClient, ClientContext } from 'graphql-hooks'
 import { ThemeProvider } from 'styled-components'
@@ -18,13 +18,32 @@ import DisplayIfSignedIn from './src/components/DisplayIfSignedIn'
 
 const client = new GraphQLClient({
   url: process.env.GATSBY_GRAPHQL_API,
-  headers: {
-    'x-hasura-admin-secret': process.env.GATSBY_GRAPHQL_ADMIN_SECRET,
-  },
 })
 
-export function onClientEntry() {
+const authListener = {
+  onHubCapsule: event => {
+    if (event.payload.event === 'signIn') {
+      setClientToken(event.payload.data.signInUserSession)
+    }
+  },
+}
+
+Hub.listen('auth', authListener)
+
+const setClientToken = session => {
+  client.setHeader('Authorization', `Bearer ${session.idToken.jwtToken}`)
+}
+
+export async function onClientEntry() {
   Amplify.configure(awsConfig)
+
+  try {
+    const currentSession = await Auth.currentSession()
+
+    setClientToken(currentSession)
+  } catch (err) {
+    // no authenticated user, it's fine
+  }
 }
 
 export const wrapRootElement = ({ element }) => {
@@ -35,7 +54,7 @@ export const wrapRootElement = ({ element }) => {
   )
 }
 
-export const wrapPageElement = ({ element, ...props }) => {
+export const wrapPageElement = ({ element }) => {
   return (
     <Authenticator>
       <DisplayIfSignedIn>{element}</DisplayIfSignedIn>
