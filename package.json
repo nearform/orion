@@ -6,7 +6,8 @@
     "lerna": "^3.13.1"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap --ci  --concurrency=2",
+    "bootstrap": "lerna bootstrap --concurrency=2",
+    "clean": "lerna clean",
     "postinstall": "npm run bootstrap"
   },
   "repository": {
