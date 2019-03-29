@@ -3,7 +3,8 @@ import Amplify, { Auth, Hub } from 'aws-amplify'
 import { Authenticator } from 'aws-amplify-react'
 import { GraphQLClient, ClientContext } from 'graphql-hooks'
 import { ThemeProvider } from 'styled-components'
-import { theme } from 'saluki'
+import { createTheme } from 'saluki'
+import defaultTheme from 'saluki-theme-default'
 
 import customTheme from './src/utils/theme'
 
@@ -49,7 +50,9 @@ export async function onClientEntry() {
 export const wrapRootElement = ({ element }) => {
   return (
     <ClientContext.Provider value={client}>
-      <ThemeProvider theme={theme(customTheme)}>{element}</ThemeProvider>
+      <ThemeProvider theme={createTheme(defaultTheme, customTheme)}>
+        {element}
+      </ThemeProvider>
     </ClientContext.Provider>
   )
 }
