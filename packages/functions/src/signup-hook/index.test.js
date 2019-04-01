@@ -2,6 +2,7 @@ jest.mock('../graphql')
 
 const handler = require('./').handler
 const graphql = require('../graphql')
+const { getDefaultRole, createCreateUserMutation } = require('./queries')
 
 const originalEvent = {
   version: '1',
@@ -26,6 +27,57 @@ const originalEvent = {
   response: {},
 }
 
+const noRolesFromDb = Promise.resolve({
+  body: { data: { role: [] } },
+})
+
+const oneRoleFromDb = Promise.resolve({
+  body: {
+    data: {
+      role: [
+        {
+          id: 'some id',
+          name: 'some role name',
+        },
+      ],
+    },
+  },
+})
+
 describe('signup-hook', () => {
-  it('it should query the default role', () => {})
+  it('it should query the default role', async () => {
+    graphql.mockReturnValue(oneRoleFromDb)
+
+    await handler(originalEvent)
+
+    expect(graphql).toBeCalledWith(getDefaultRole)
+  })
+
+  it('it should return an error if the default role is not found', async () => {
+    graphql.mockReturnValue(noRolesFromDb)
+
+    await expect(handler(originalEvent)).rejects.toThrow(
+      'no default role found'
+    )
+  })
+
+  it('it should create the user with the found role and attributes coming from the request', async () => {
+    graphql.mockReturnValue(oneRoleFromDb)
+
+    await handler(originalEvent)
+
+    const {
+      body: {
+        data: { role },
+      },
+    } = await oneRoleFromDb
+
+    const mutation = createCreateUserMutation(originalEvent, role)
+
+    expect(graphql).toBeCalledWith(mutation)
+
+    expect(mutation).toContain(originalEvent.request.userAttributes.sub)
+    expect(mutation).toContain(originalEvent.userName)
+    expect(mutation).toContain(role[0].id)
+  })
 })

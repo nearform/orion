@@ -2,7 +2,7 @@ jest.mock('../graphql')
 
 const handler = require('./').handler
 const graphql = require('../graphql')
-const createUserQuery = require('./createUserQuery')
+const { createUserQuery } = require('./queries')
 
 const originalEvent = {
   version: '1',

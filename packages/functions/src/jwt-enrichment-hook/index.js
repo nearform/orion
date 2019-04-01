@@ -1,5 +1,5 @@
 const graphql = require('../graphql')
-const createUserQuery = require('./createUserQuery')
+const { createUserQuery } = require('./queries')
 
 exports.handler = async event => {
   const queryUser = createUserQuery(event)

@@ -1,4 +1,4 @@
-module.exports = event => `
+exports.createUserQuery = event => `
 {
   user(
     limit: 1 
