@@ -58,7 +58,8 @@
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^4.0.1",
     "rollup-plugin-url": "^2.2.0",
-    "saluki": "^0.3.0",
+    "saluki": "^0.4.0",
+    "saluki-theme-default": "^1.0.0",
     "storybook-addon-jsx": "^7.0.1"
   },
   "lint-staged": {

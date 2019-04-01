@@ -1,6 +1,4 @@
 import React from 'react'
-import { ThemeProvider } from 'styled-components'
-import { theme } from 'saluki'
 
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
@@ -28,7 +26,6 @@ storiesOf('System/Blocks/ButtonWithInput', module)
       This is a basic block with input and a button:
     `)
   )
-  .addDecorator(story => <ThemeProvider theme={theme}>{story()}</ThemeProvider>)
   .add('Basic Input with a Button Example', () => (
     <ButtonWithInput {...mockProps} />
   ))
