@@ -1,7 +1,4 @@
 import React from 'react'
-import { ThemeProvider } from 'styled-components/macro'
-import { createTheme } from 'saluki'
-import defaultTheme from 'saluki-theme-default'
 
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
@@ -21,7 +18,4 @@ storiesOf('System/Components/Input', module)
       Explore the panels on the left.
     `)
   )
-  .addDecorator(story => (
-    <ThemeProvider theme={createTheme(defaultTheme)}>{story()}</ThemeProvider>
-  ))
   .add('Basic Input Example', () => <Input onChange={action('changed')} />)
