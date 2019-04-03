@@ -7,14 +7,14 @@ exports.getDefaultRole = `
 }
 `
 
-exports.createCreateUserMutation = (event, role) => `
-mutation createUser {
+exports.createUserMutation = `
+mutation createUser($cognitoId: ID!, $name: String!, $roleId: Int!) {
     insert_user(objects: {
-        cognito_id: "${event.request.userAttributes.sub}"
-        name: "${event.userName}"
-        roles: {
+        cognito_id: $cognitoId
+        name: $name
+        user_roles: {
             data: [{
-                role_id: ${role[0].id}
+                role_id: $roleId
             }]
         }
     }) {

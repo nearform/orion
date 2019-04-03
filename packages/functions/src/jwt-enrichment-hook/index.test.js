@@ -2,7 +2,7 @@ jest.mock('../graphql')
 
 const handler = require('./').handler
 const graphql = require('../graphql')
-const { createUserQuery } = require('./queries')
+const { queryUserByCognitoId } = require('./queries')
 
 const originalEvent = {
   version: '1',
@@ -33,26 +33,22 @@ const originalEvent = {
 }
 
 const noUsersFromDb = Promise.resolve({
-  body: { data: { user: [] } },
+  user: [],
 })
 
 const oneUserFromDb = Promise.resolve({
-  body: {
-    data: {
-      user: [
+  user: [
+    {
+      id: 'some id',
+      user_roles: [
         {
-          id: 'some id',
-          user_roles: [
-            {
-              role: {
-                name: 'some role',
-              },
-            },
-          ],
+          role: {
+            name: 'some role',
+          },
         },
       ],
     },
-  },
+  ],
 })
 
 describe('jwt-enrichment-hook', () => {
@@ -61,10 +57,9 @@ describe('jwt-enrichment-hook', () => {
 
     await handler(originalEvent)
 
-    const query = createUserQuery(originalEvent)
-
-    expect(query).toContain(originalEvent.request.userAttributes.sub)
-    expect(graphql).toBeCalledWith(query)
+    expect(graphql).toBeCalledWith(queryUserByCognitoId, {
+      cognitoId: originalEvent.request.userAttributes.sub,
+    })
   })
 
   describe('when no users found', () => {
@@ -111,7 +106,7 @@ describe('jwt-enrichment-hook', () => {
       const graphqlResponse = await oneUserFromDb
 
       expect(allowedRoles).toEqual([
-        graphqlResponse.body.data.user[0].user_roles[0].role.name,
+        graphqlResponse.user[0].user_roles[0].role.name,
       ])
     })
 
@@ -125,7 +120,7 @@ describe('jwt-enrichment-hook', () => {
       const graphqlResponse = await oneUserFromDb
 
       expect(defaultRole).toEqual(
-        graphqlResponse.body.data.user[0].user_roles[0].role.name
+        graphqlResponse.user[0].user_roles[0].role.name
       )
     })
 
@@ -138,7 +133,7 @@ describe('jwt-enrichment-hook', () => {
 
       const graphqlResponse = await oneUserFromDb
 
-      expect(userId).toEqual(graphqlResponse.body.data.user[0].id)
+      expect(userId).toEqual(graphqlResponse.user[0].id)
     })
 
     it('should not contain any other claims', () => {
