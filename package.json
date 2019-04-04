@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "The goto knowledge base",
   "dependencies": {
-    "concurrently": "^4.1.0",
     "lerna": "^3.13.1"
   },
   "scripts": {
