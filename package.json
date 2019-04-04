@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "The goto knowledge base",
   "dependencies": {
+    "concurrently": "^4.1.0",
     "lerna": "^3.13.1"
   },
   "scripts": {
     "bootstrap": "lerna bootstrap --concurrency=2",
+    "build": "lerna run build",
+    "test": "lerna run test",
     "clean": "lerna clean",
-    "postinstall": "npm run bootstrap"
+    "postinstall": "npm run bootstrap -- --no-ci"
   },
   "repository": {
     "type": "git",

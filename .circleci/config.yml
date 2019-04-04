@@ -1,0 +1,46 @@
+deploy_environment: &deploy_environment
+  docker:
+    - image: circleci/node:10
+
+version: 2
+jobs:
+  build:
+    <<: *deploy_environment
+    steps:
+      - checkout
+      - run: npm install
+      # npm build runs lerna run build. lerna will potentially build unneeded assets.
+      # if build gets slow in future we should investigate removing unneeded asset builds from lerna
+      - run: npm build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  test:
+    <<: *deploy_environment
+    steps:
+      - attach_workspace:
+          at: .
+      - run: npm test
+  deploy:
+    <<: *deploy_environment
+    steps:
+      - attach_workspace:
+          at: .
+      - run: echo "TBD"
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - test
