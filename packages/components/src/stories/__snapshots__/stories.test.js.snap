@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots System/Blocks/ButtonWithInput Basic Input with a Button Example 1`] = `
+<div>
+  <input
+    className="input__Input-sc-1agdo2v-0 wbtRb"
+    onChange={[Function]}
+    placeholder="Input your email"
+  />
+  <button
+    className="button__Button-sc-15zmbi-0 cQbmuY"
+    onClick={[Function]}
+  >
+    Hello World button with input
+  </button>
+</div>
+`;
+
+exports[`Storyshots System/Elements/Button Basic Button Example 1`] = `
+<button
+  className="button__Button-sc-15zmbi-0 cQbmuY"
+  onClick={[Function]}
+>
+  Hello World Button
+</button>
+`;
+
+exports[`Storyshots System/Elements/CheckBox Basic CheckBox Example 1`] = `
+<div
+  className="checkbox__CheckboxContainer-sc-1ndzbp3-3 SEgGV"
+>
+  <input
+    checked={false}
+    className="checkbox__HiddenCheckbox-sc-1ndzbp3-1 dybboG"
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <div
+    checked={false}
+    className="checkbox__StyledCheckbox-sc-1ndzbp3-2 dbZusy"
+  >
+    <svg
+      className="checkbox__Icon-sc-1ndzbp3-0 meDSA"
+      viewBox="0 0 24 24"
+    >
+      <polyline
+        points="20 6 9 17 4 12"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`Storyshots System/Elements/Input Basic Input Example 1`] = `
+<input
+  className="input__Input-sc-1agdo2v-0 wbtRb"
+  onChange={[Function]}
+  placeholder="Your email address"
+/>
+`;

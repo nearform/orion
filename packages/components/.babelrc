@@ -12,5 +12,16 @@
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-proposal-object-rest-spread",
     "babel-plugin-styled-components"
-  ]
+  ],
+  "env": {
+    "test": {
+      "presets":[
+        ["@babel/preset-env", { "modules": false }],
+        "@babel/react",
+      ],
+      "plugins": [
+        "transform-es2015-modules-commonjs",
+      ]
+    }
+  }
 }
