@@ -25,7 +25,7 @@ const commonPlugins = [
   }),
   json(),
   alias({
-    resolve: ['.js', 'index.js', '.svg'],
+    resolve: ['.js', '.svg'],
     '~': join(__dirname, 'src'),
     assets: join(__dirname, 'src/assets')
   }),

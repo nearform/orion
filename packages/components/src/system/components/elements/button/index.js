@@ -1,19 +1,43 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { fontSize, color } from 'saluki'
+import styled, { css } from 'styled-components'
+import {
+  fontSize,
+  backgroundColor,
+  color,
+  fontWeight,
+  letterSpacing,
+  textTransform,
+  paddingVertical,
+  paddingHorizontal,
+  borderRadius,
+  borderStyle,
+  boxShadow
+} from 'saluki'
 
-const StyledButton = styled.button`
-  ${fontSize('large')}
-  ${color('blue')}
+const secondary = css`
+  ${color('primaryDark')}
+  ${backgroundColor('textContrast')}
 `
-const Button = ({ label, onClick }) => (
-  <StyledButton onClick={onClick}>{label}</StyledButton>
-)
+const primary = css`
+  ${color('textContrast')}
+  ${backgroundColor('primaryMain')}
+`
+
+const Button = styled.button`
+  ${fontSize('xSmall')}
+  ${fontWeight('bold')}
+  ${letterSpacing('large')}
+  ${textTransform('uppercase')}
+  ${paddingVertical('xSmall')}
+  ${paddingHorizontal('small')}
+  ${borderRadius('medium')}
+  ${boxShadow('element')}
+  ${borderStyle('none')}
+  ${({ inverted }) => (inverted ? secondary : primary)}
+`
 
 Button.propTypes = {
-  label: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  inverted: PropTypes.bool
 }
 
 export default Button

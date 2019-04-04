@@ -6,8 +6,8 @@ import Input from '~/system/components/elements/input/index'
 
 const ButtonWithInput = ({ button, input }) => (
   <div>
-    <Input onChange={input.onChange} />
-    <Button onClick={button.onClick} label={button.label} />
+    <Input onChange={input.onChange} placeholder={'Input your email'} />
+    <Button onClick={button.onClick}>Hello World button with input</Button>
   </div>
 )
 

@@ -1,16 +1,27 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { fontSize } from 'saluki'
+import {
+  fontSize,
+  color,
+  boxShadow,
+  borderStyle,
+  height,
+  paddingHorizontal,
+  minWidth
+} from 'saluki'
 
-const StyledInput = styled.input`
-  ${fontSize('large')}
+const Input = styled.input`
+  ${fontSize('xSmall')}
+  ${color('textPrimary')}
+  ${boxShadow('element')}
+  ${borderStyle('none')}
+  ${height('small')}
+  ${paddingHorizontal('xSmall')}
+  ${minWidth('input')}
+  ::placeholder {
+    ${color('textHint')}
+    transition: opacity 500ms;
+  }
+
 `
-
-const Input = ({ onChange }) => <StyledInput onChange={onChange} />
-
-Input.propTypes = {
-  onChange: PropTypes.func.isRequired
-}
 
 export default Input
