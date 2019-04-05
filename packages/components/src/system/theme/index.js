@@ -1,2 +1,5 @@
-export { default as OrangeTheme } from './orange-theme'
-export { default as KnowledgebaseTheme } from './knowledgebase-theme'
+import { fontFamilies } from './typography'
+import { OrangePalette, KnowledgebasePalette } from './colors'
+
+export const OrangeTheme = { ...fontFamilies, ...OrangePalette }
+export const KnowledgebaseTheme = { ...fontFamilies, ...KnowledgebasePalette }

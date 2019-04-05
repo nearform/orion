@@ -1,23 +1,31 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { configure } from '@storybook/react'
 import { setAddon, addDecorator } from '@storybook/react'
 import { withKnobs, select } from '@storybook/addon-knobs/react'
 import JSXAddon from 'storybook-addon-jsx'
 import { configureViewport } from '@storybook/addon-viewport'
-import { ThemeProvider } from 'styled-components'
 import { createTheme } from 'saluki'
 import defaultTheme from 'saluki-theme-default'
 import { withThemes } from 'storybook-styled-components'
 import { KnowledgebaseTheme, OrangeTheme } from '~/system/theme'
+import Typography from '~/system/theme/typography'
 
 const themes = {
   knowledgebaseTheme: createTheme(defaultTheme, KnowledgebaseTheme),
   orangeTheme: createTheme(defaultTheme, OrangeTheme)
 }
 
+const TypographyDecorator = story => (
+  <Fragment>
+    <Typography />
+    {story()}
+  </Fragment>
+)
+
 addDecorator(withKnobs)
 addDecorator(withThemes(themes))
 setAddon(JSXAddon)
+addDecorator(TypographyDecorator)
 
 if (process.env.NODE_ENV === 'test') {
   const { getFullPath, requireModules } = require('./require-context')

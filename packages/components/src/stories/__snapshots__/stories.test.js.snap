@@ -58,3 +58,51 @@ exports[`Storyshots System/Elements/Input Basic Input Example 1`] = `
   placeholder="Your email address"
 />
 `;
+
+exports[`Storyshots System/Typography/Headings Basic Button Example 1`] = `
+<button>
+  Sample Button Text
+</button>
+`;
+
+exports[`Storyshots System/Typography/Headings Basic Header 1 Example 1`] = `
+<h1>
+  Header level 1
+</h1>
+`;
+
+exports[`Storyshots System/Typography/Headings Basic Header 2 Example 1`] = `
+<h2>
+  Header level 2
+</h2>
+`;
+
+exports[`Storyshots System/Typography/Headings Basic Header 3 Example 1`] = `
+<h3>
+  Header level 3
+</h3>
+`;
+
+exports[`Storyshots System/Typography/Headings Basic Header 4 Example 1`] = `
+<h4>
+  Header level 4
+</h4>
+`;
+
+exports[`Storyshots System/Typography/Headings Basic Header 5 Example 1`] = `
+<h5>
+  Header level 5
+</h5>
+`;
+
+exports[`Storyshots System/Typography/Headings Basic Header 6 Example 1`] = `
+<h6>
+  Header level 6
+</h6>
+`;
+
+exports[`Storyshots System/Typography/Headings Basic Paragraph Example 1`] = `
+<p>
+  Omnis id corrupti iusto sit similique qui amet.
+</p>
+`;
