@@ -1,67 +1,54 @@
 const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const slugify = require('slugify')
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const blogPost = path.resolve(`./src/templates/blog-post.js`)
+  const articleTemplate = path.resolve(`./src/templates/article.js`)
 
-  return graphql(
+  const articlesResult = await graphql(
     `
       {
-        allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: DESC }
-          limit: 1000
-        ) {
-          edges {
-            node {
-              fields {
-                slug
-              }
-              frontmatter {
-                title
-              }
+        knowledgebase {
+          article {
+            id
+            title
+            description
+            content
+            published_at
+            author {
+              id
+              name
             }
           }
         }
       }
     `
-  ).then(result => {
-    if (result.errors) {
-      throw result.errors
-    }
+  )
 
-    // Create blog posts pages.
-    const posts = result.data.allMarkdownRemark.edges
-
-    posts.forEach((post, index) => {
-      const previous = index === posts.length - 1 ? null : posts[index + 1].node
-      const next = index === 0 ? null : posts[index - 1].node
-
-      createPage({
-        path: post.node.fields.slug,
-        component: blogPost,
-        context: {
-          slug: post.node.fields.slug,
-          previous,
-          next,
-        },
-      })
-    })
-
-    return null
-  })
-}
-
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
-
-  if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
-    createNodeField({
-      name: `slug`,
-      node,
-      value,
-    })
+  if (articlesResult.errors) {
+    throw articlesResult.errors
   }
+
+  const articles = articlesResult.data.knowledgebase.article
+
+  articles.forEach((article, index) => {
+    const previous = index === articles.length - 1 ? null : articles[index + 1]
+    const next = index === 0 ? null : articles[index - 1]
+
+    const slug = slugify(article.title)
+
+    createPage({
+      path: `${article.id}/${slug}`,
+      component: articleTemplate,
+      context: {
+        slug,
+        article,
+        previous,
+        next,
+      },
+    })
+  })
+
+  return null
 }

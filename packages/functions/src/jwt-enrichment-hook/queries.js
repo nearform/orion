@@ -1,5 +1,5 @@
 exports.queryUserByCognitoId = `
-query queryUser($cognitoId: ID!) {
+query queryUser($cognitoId: String!) {
   user(
     limit: 1 
     where: { cognito_id: { _eq: $cognitoId } }

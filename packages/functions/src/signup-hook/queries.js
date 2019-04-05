@@ -8,7 +8,7 @@ exports.getDefaultRole = `
 `
 
 exports.createUserMutation = `
-mutation createUser($cognitoId: ID!, $name: String!, $roleId: Int!) {
+mutation createUser($cognitoId: String!, $name: String!, $roleId: Int!) {
     insert_user(objects: {
         cognito_id: $cognitoId
         name: $name

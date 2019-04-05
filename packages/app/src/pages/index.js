@@ -1,51 +1,37 @@
 import React from 'react'
 import { Link, graphql } from 'gatsby'
-import { useQuery } from 'graphql-hooks'
+import slugify from 'slugify'
 
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import { rhythm } from '../utils/typography'
 
-const HOMEPAGE_QUERY = `query HomePage {
-  user {
-    id
-    name
-  }
-}`
-
-function BlogIndex({ data, location, ...props }) {
+function Homepage({ data, location, ...props }) {
   const siteTitle = data.site.siteMetadata.title
-  const posts = data.allMarkdownRemark.edges
-
-  const { loading, error, data: users } = useQuery(HOMEPAGE_QUERY)
-
-  if (loading) return 'Loading...'
-  if (error) return 'Error!'
+  const articles = data.knowledgebase.article
 
   return (
     <Layout location={location} title={siteTitle}>
-      <SEO
-        title="All posts"
-        keywords={[`blog`, `gatsby`, `javascript`, `react`]}
-      />
-      <pre>{JSON.stringify(users, null, 2)}</pre>
-      {posts.map(({ node }) => {
-        const title = node.frontmatter.title || node.fields.slug
+      <SEO title="All articles" keywords={[`knowledgebase`, `NearForm`]} />
+      {articles.map(article => {
         return (
-          <div key={node.fields.slug}>
+          <div key={article.id}>
             <h3
               style={{
                 marginBottom: rhythm(1 / 4),
               }}
             >
-              <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
-                {title}
+              <Link
+                style={{ boxShadow: `none` }}
+                to={`${article.id}/${slugify(article.title)}`}
+              >
+                {article.title}
               </Link>
             </h3>
-            <small>{node.frontmatter.date}</small>
+            <small>{article.published_at}</small>
             <p
               dangerouslySetInnerHTML={{
-                __html: node.frontmatter.description || node.excerpt,
+                __html: article.description,
               }}
             />
           </div>
@@ -55,7 +41,7 @@ function BlogIndex({ data, location, ...props }) {
   )
 }
 
-export default BlogIndex
+export default Homepage
 
 export const pageQuery = graphql`
   query {
@@ -64,18 +50,16 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-      edges {
-        node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            title
-            description
-          }
+    knowledgebase {
+      article {
+        id
+        title
+        description
+        content
+        published_at
+        author {
+          id
+          name
         }
       }
     }
