@@ -8,10 +8,16 @@ jobs:
     <<: *deploy_environment
     steps:
       - checkout
-      - run: npm install
+      - run: 
+          name: Install npm deps
+          command: npm install
       # npm build runs lerna run build. lerna will potentially build unneeded assets.
       # if build gets slow in future we should investigate removing unneeded asset builds from lerna
-      - run: npm run build
+      - run:
+          name: Build bundle
+          command: |
+            set -e
+            npm run build
       - persist_to_workspace:
           root: .
           paths:
@@ -21,13 +27,24 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: npm test
+      - run:
+          name: Test
+          command: npm test
   deploy:
     <<: *deploy_environment
+    environment:
+      S3_BUCKET_PATH: "s3://knowledgebase.nearform.com"
     steps:
       - attach_workspace:
           at: .
-      - run: echo "TBD"
+      - run:
+          name: Install awscli
+          command: |
+            sudo apt-get install python-pip python
+            sudo pip install awscli
+      - run:
+          name: Deploy bundle to S3
+          command: aws s3 sync packages/app/public ${S3_BUCKET_PATH} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
 
 workflows:
   version: 2

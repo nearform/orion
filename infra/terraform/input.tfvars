@@ -1,0 +1,15 @@
+aws_region = "eu-west-1"
+project_name = "knowledgebase"
+vpc_az_count = 2
+route53_zone = "nearform.com."
+cf_wildcard_domain_name = "*.nearform.com"
+cf_domain_name = "knowledgebase.nearform.com"
+cf_not_found_path = "/404.html"
+ci_user_name = "knowledgebase-ci-user"
+rds_password = "Uqb;jVjX8qANEQPy"
+hasura_domain_name = "knowledgebase-hasura.nearform.com"
+hasura_port = 8080
+HASURA_GRAPHQL_DATABASE_URL = "postgres://dlcifzirkpupwp:532cc576569e5847eacc1d00fabea9b81f2e2957114137a0ca3d656068ecfbc8@ec2-54-246-92-116.eu-west-1.compute.amazonaws.com:5432/d8cbrf4g3ro458"
+HASURA_GRAPHQL_ADMIN_SECRET = "azPS7MbM5cHa"
+HASURA_GRAPHQL_ENABLE_CONSOLE = "false"
+HASURA_GRAPHQL_JWT_SECRET = "{ \\\"type\\\": \\\"RS256\\\", \\\"jwk_url\\\": \\\"https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_QeZSaIzBc/.well-known/jwks.json\\\", \\\"claims_format\\\": \\\"stringified_json\\\" }"
