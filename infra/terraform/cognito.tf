@@ -130,3 +130,52 @@ resource "aws_iam_role" "auth" {
   name               = "${var.project_name}_auth_role"
   assume_role_policy = "${data.aws_iam_policy_document.auth_role_policy.json}"
 }
+
+data "aws_iam_policy_document" "unauth_role_policy" {
+  statement {
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    effect  = "Allow"
+
+    principals {
+      type        = "Federated"
+      identifiers = ["cognito-identity.amazonaws.com"]
+    }
+
+    condition {
+      test     = "ForAnyValue:StringLike"
+      variable = "cognito-identity.amazonaws.com:amr"
+
+      values = ["unauthenticated"]
+    }
+  }
+}
+
+resource "aws_iam_role" "unauth" {
+  name               = "${var.project_name}_unauth_role"
+  assume_role_policy = "${data.aws_iam_policy_document.unauth_role_policy.json}"
+}
+
+resource "aws_cognito_identity_pool" "main" {
+  identity_pool_name               = "${var.project_name}_identity_pool"
+  allow_unauthenticated_identities = true
+
+  cognito_identity_providers {
+    client_id               = "${aws_cognito_user_pool_client.client.id}"
+    provider_name           = "${aws_cognito_user_pool.pool.endpoint}"
+  }
+
+  cognito_identity_providers {
+    client_id               = "${aws_cognito_user_pool_client.client_web.id}"
+    provider_name           = "${aws_cognito_user_pool.pool.endpoint}"
+  }
+
+}
+
+resource "aws_cognito_identity_pool_roles_attachment" "main" {
+  identity_pool_id = "${aws_cognito_identity_pool.main.id}"
+
+  roles = {
+    "authenticated" = "${aws_iam_role.auth.arn}"
+    "unauthenticated" = "${aws_iam_role.unauth.arn}"
+  }
+}
