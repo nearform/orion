@@ -8,7 +8,7 @@
 $ aws configure --profile knowledgebase
 AWS Access Key ID [None]: AK*********E
 AWS Secret Access Key [None]: je7M***************EY
-Default region name [None]: ca-central-1
+Default region name [None]: eu-west-1
 Default output format [None]: text
 ```
 
@@ -21,7 +21,7 @@ export AWS_PROFILE=knowledgebase
 
 1. Create a bucket:
 ```sh
-aws s3api create-bucket --bucket knowledgebase-tf-state --region ca-central-1 --create-bucket-configuration LocationConstraint=ca-central-1
+aws s3api create-bucket --bucket knowledgebase-tf-state --region eu-west-1 --create-bucket-configuration LocationConstraint=eu-west-1
 ```
 2. Enable versioning on the bucket:
 ```sh
@@ -33,7 +33,7 @@ aws s3api put-bucket-versioning --bucket knowledgebase-tf-state --versioning-con
 1. Install [Terraform](https://www.terraform.io/downloads.html)
 2. Init Terraform:
 ```sh
-terraform init -backend-config="bucket=knowledgebase-tf-state" -backend-config="key=terraform.tfstate" -backend-config="region=ca-central-1"
+terraform init -backend-config="bucket=knowledgebase-tf-state" -backend-config="key=terraform.tfstate" -backend-config="region=eu-west-1"
 ```
 3. Adjust in `input.tfvars` file
 4. Provision the infrastructure:
