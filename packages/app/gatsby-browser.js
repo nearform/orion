@@ -21,12 +21,10 @@ const client = new GraphQLClient({
   url: process.env.GATSBY_GRAPHQL_API,
 })
 
-const authListener = {
-  onHubCapsule: event => {
-    if (event.payload.event === 'signIn') {
-      setClientToken(event.payload.data.signInUserSession)
-    }
-  },
+const authListener = event => {
+  if (event.payload.event === 'signIn') {
+    setClientToken(event.payload.data.signInUserSession)
+  }
 }
 
 Hub.listen('auth', authListener)
