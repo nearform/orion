@@ -1,6 +1,8 @@
 # NearForm 🤓 Knowledgebase 
 
 [![CircleCI](https://circleci.com/gh/nearform/knowledgebase.svg?style=svg&circle-token=0ce58bd80ab2db1fd16b1eca28dba58c62588a74)](https://circleci.com/gh/nearform/knowledgebase)
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
+
 
 This repo is a collection of packages that can be used as a foundation for a statically built, GraphQL-driven knowledgebase.
 
