@@ -35,7 +35,7 @@ aws s3api put-bucket-versioning --bucket knowledgebase-tf-state --versioning-con
 ```sh
 terraform init -backend-config="bucket=knowledgebase-tf-state" -backend-config="key=terraform.tfstate" -backend-config="region=eu-west-1"
 ```
-3. Adjust in `input.tfvars` file
+3. Rename `sample.tfvars` to `input.tfvars` and fill in missing secrets:
 4. Provision the infrastructure:
 ```sh
 terraform apply -var-file input.tfvars
