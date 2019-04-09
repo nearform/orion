@@ -3,6 +3,8 @@ import { Router } from '@reach/router'
 import { graphql } from 'gatsby'
 import { useQuery } from 'graphql-hooks'
 
+import ProtectedRoute from '../../components/ProtectedRoute'
+
 const ADMIN_QUERY = `query HomePage {
   user {
     id
@@ -10,7 +12,7 @@ const ADMIN_QUERY = `query HomePage {
   }
 }`
 
-function AdminRoute() {
+function AdminRoute({ data }) {
   const { loading, error, data: users } = useQuery(ADMIN_QUERY)
 
   if (loading) return 'Loading...'
@@ -22,7 +24,12 @@ function AdminRoute() {
 export default function Admin({ data }) {
   return (
     <Router>
-      <AdminRoute path="/admin" data={data} />
+      <ProtectedRoute
+        role="admin"
+        component={AdminRoute}
+        path="/admin"
+        data={data}
+      />
     </Router>
   )
 }
