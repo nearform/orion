@@ -31,8 +31,8 @@ resource "aws_acm_certificate_validation" "cf_wildcard_cert" {
 }
 
 resource "aws_acm_certificate" "wildcard_cert" {
-  domain_name               = "${var.cf_wildcard_domain_name}"
-  validation_method         = "DNS"
+  domain_name       = "${var.cf_wildcard_domain_name}"
+  validation_method = "DNS"
 
   lifecycle {
     create_before_destroy = true

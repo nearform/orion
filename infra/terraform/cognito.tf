@@ -48,13 +48,14 @@ resource "aws_cognito_user_pool" "pool" {
 
   auto_verified_attributes = ["email"]
 
-  # lambda_config {
-  #   post_confirmation    = "arn:aws:lambda:eu-west-1:218551634871:function:knowledgebase-create-user-in-db"
-  #   pre_token_generation = "arn:aws:lambda:eu-west-1:218551634871:function:knowledgebase-add-hasura-jwt-claims"
-  # }
+  lambda_config {
+    post_confirmation    = "${aws_lambda_function.signup_hook.arn}"
+    pre_token_generation = "${aws_lambda_function.jwt_enrichment_hook.arn}"
+  }
 
   mfa_configuration = "OFF"
   name              = "${var.project_name}_user_pool"
+
   password_policy {
     minimum_length    = 8
     require_lowercase = true
@@ -62,6 +63,7 @@ resource "aws_cognito_user_pool" "pool" {
     require_symbols   = true
     require_uppercase = true
   }
+
   schema {
     attribute_data_type      = "String"
     developer_only_attribute = false
@@ -74,10 +76,12 @@ resource "aws_cognito_user_pool" "pool" {
       min_length = 0
     }
   }
+
   sms_configuration {
     external_id    = "${var.project_name}_role_external_id"
     sns_caller_arn = "${aws_iam_role.sns_role.arn}"
   }
+
   sms_verification_message   = "Your verification code is {####}"
   email_verification_message = "Your verification code is {####}"
   email_verification_subject = "Your verification code"
@@ -86,13 +90,6 @@ resource "aws_cognito_user_pool" "pool" {
 resource "aws_cognito_user_pool_client" "client_web" {
   name         = "${var.project_name}_app_client_web"
   user_pool_id = "${aws_cognito_user_pool.pool.id}"
-}
-
-resource "aws_cognito_user_pool_client" "client" {
-  name         = "${var.project_name}_app_client"
-  user_pool_id = "${aws_cognito_user_pool.pool.id}"
-
-  generate_secret = true
 }
 
 resource "aws_cognito_user_group" "admins" {
@@ -160,22 +157,16 @@ resource "aws_cognito_identity_pool" "main" {
   allow_unauthenticated_identities = true
 
   cognito_identity_providers {
-    client_id               = "${aws_cognito_user_pool_client.client.id}"
-    provider_name           = "${aws_cognito_user_pool.pool.endpoint}"
+    client_id     = "${aws_cognito_user_pool_client.client_web.id}"
+    provider_name = "${aws_cognito_user_pool.pool.endpoint}"
   }
-
-  cognito_identity_providers {
-    client_id               = "${aws_cognito_user_pool_client.client_web.id}"
-    provider_name           = "${aws_cognito_user_pool.pool.endpoint}"
-  }
-
 }
 
 resource "aws_cognito_identity_pool_roles_attachment" "main" {
   identity_pool_id = "${aws_cognito_identity_pool.main.id}"
 
   roles = {
-    "authenticated" = "${aws_iam_role.auth.arn}"
+    "authenticated"   = "${aws_iam_role.auth.arn}"
     "unauthenticated" = "${aws_iam_role.unauth.arn}"
   }
 }

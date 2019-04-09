@@ -19,4 +19,8 @@ module "rds" {
   vpc_security_group_ids = ["${aws_vpc.main.default_security_group_id}"]
 
   deletion_protection = false
+
+  tags = {
+    Owner = "Damian Beresford"
+  }
 }

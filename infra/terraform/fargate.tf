@@ -97,16 +97,16 @@ data "template_file" "hasura_container_definition_app" {
   template = "${file("${path.root}/fargate_container_definitions/hasura.json.tpl")}"
 
   vars {
-    app_name       = "${var.project_name}-hasura"
-    app_image      = "hasura/graphql-engine:latest"
-    fargate_cpu    = "512"
-    fargate_memory = "1024"
-    aws_region     = "${var.aws_region}"
-    app_port       = "${var.hasura_port}"
-    HASURA_GRAPHQL_DATABASE_URL = "${var.HASURA_GRAPHQL_DATABASE_URL}"
-    HASURA_GRAPHQL_ADMIN_SECRET = "${var.HASURA_GRAPHQL_ADMIN_SECRET}"
+    app_name                      = "${var.project_name}-hasura"
+    app_image                     = "hasura/graphql-engine:latest"
+    fargate_cpu                   = "512"
+    fargate_memory                = "1024"
+    aws_region                    = "${var.aws_region}"
+    app_port                      = "${var.hasura_port}"
+    HASURA_GRAPHQL_DATABASE_URL   = "${var.HASURA_GRAPHQL_DATABASE_URL}"
+    HASURA_GRAPHQL_ADMIN_SECRET   = "${var.HASURA_GRAPHQL_ADMIN_SECRET}"
     HASURA_GRAPHQL_ENABLE_CONSOLE = "${var.HASURA_GRAPHQL_ENABLE_CONSOLE}"
-    HASURA_GRAPHQL_JWT_SECRET = "${var.HASURA_GRAPHQL_JWT_SECRET}"
+    HASURA_GRAPHQL_JWT_SECRET     = "${var.HASURA_GRAPHQL_JWT_SECRET}"
   }
 }
 

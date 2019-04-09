@@ -13,3 +13,4 @@ HASURA_GRAPHQL_DATABASE_URL = "postgres://dlcifzirkpupwp:532cc576569e5847eacc1d0
 HASURA_GRAPHQL_ADMIN_SECRET = "azPS7MbM5cHa"
 HASURA_GRAPHQL_ENABLE_CONSOLE = "false"
 HASURA_GRAPHQL_JWT_SECRET = "{ \\\"type\\\": \\\"RS256\\\", \\\"jwk_url\\\": \\\"https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_QeZSaIzBc/.well-known/jwks.json\\\", \\\"claims_format\\\": \\\"stringified_json\\\" }"
+HASURA_GRAPHQL_API = "https://knowledgebase-hasura.nearform.com/v1alpha1/graphql"

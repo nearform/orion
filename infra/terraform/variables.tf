@@ -59,3 +59,7 @@ variable "HASURA_GRAPHQL_ENABLE_CONSOLE" {
 variable "HASURA_GRAPHQL_JWT_SECRET" {
   description = "HASURA_GRAPHQL_JWT_SECRET"
 }
+
+variable "HASURA_GRAPHQL_API" {
+  description = "HASURA_GRAPHQL_API"
+}
