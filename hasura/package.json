@@ -1,7 +1,8 @@
 {
   "name": "hasura",
   "scripts": {
-    "console": "env-cmd .env hasura console"
+    "console": "env-cmd .env hasura console",
+    "migrate": "env-cmd .env hasura migrate"
   },
   "devDependencies": {
     "env-cmd": "^8.0.2"

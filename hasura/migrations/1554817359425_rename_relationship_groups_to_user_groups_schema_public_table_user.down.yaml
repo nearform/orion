@@ -1,0 +1,5 @@
+- args:
+    name: user_groups
+    new_name: groups
+    table: user
+  type: rename_relationship
