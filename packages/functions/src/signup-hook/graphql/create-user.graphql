@@ -1,9 +1,15 @@
-mutation createUser($cognitoId: String!, $name: String!, $roleId: Int!) {
+mutation createUser(
+  $cognitoId: String!
+  $name: String!
+  $roleId: Int!
+  $signupRequest: jsonb
+) {
   insert_user(
     objects: {
       cognito_id: $cognitoId
       name: $name
       user_roles: { data: [{ role_id: $roleId }] }
+      signupRequest: $signupRequest
     }
   ) {
     returning {

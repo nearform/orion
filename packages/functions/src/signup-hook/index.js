@@ -17,6 +17,7 @@ export const handler = async event => {
     cognitoId: event.request.userAttributes.sub,
     name: event.userName,
     roleId: role[0].id,
+    signupRequest: event.request,
   })
 
   console.log('created user', user)

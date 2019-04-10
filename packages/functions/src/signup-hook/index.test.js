@@ -70,6 +70,7 @@ describe('signup-hook', () => {
       cognitoId: originalEvent.request.userAttributes.sub,
       name: originalEvent.userName,
       roleId: role[0].id,
+      signupRequest: originalEvent.request,
     })
   })
 })

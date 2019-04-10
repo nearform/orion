@@ -6,24 +6,42 @@ import { useQuery } from 'graphql-hooks'
 import ProtectedRoute from '../../components/ProtectedRoute'
 import Layout from '../../components/layout'
 
-const ADMIN_QUERY = `query HomePage {
-  user {
+const getPendingUsers = `query getPendingUsers {
+  user(where: { pending: { _eq: true } }) {
     id
     name
+    pending
   }
 }`
 
 function AdminRoute({ data, location }) {
   const siteTitle = data.site.siteMetadata.title
 
-  const { loading, error, data: users } = useQuery(ADMIN_QUERY)
+  const { loading, error, data: users } = useQuery(getPendingUsers)
 
   if (loading) return 'Loading...'
   if (error) return 'Error!'
 
   return (
     <Layout location={location} title={siteTitle}>
-      <pre>{JSON.stringify(users, null, 2)}</pre>
+      <table>
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>pending</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.user.map(user => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.name}</td>
+              <td>{user.pending.toString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </Layout>
   )
 }
