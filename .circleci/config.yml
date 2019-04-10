@@ -18,6 +18,12 @@ jobs:
           command: |
             set -e
             npm run build
+      - run:
+          name: Build Lambda functions
+          command: |
+            set -e
+            cd packages/functions
+            npm run build
       - persist_to_workspace:
           root: .
           paths:
@@ -29,7 +35,9 @@ jobs:
           at: .
       - run:
           name: Test
-          command: npm test
+          command: |
+            set -e
+            npm test
   deploy:
     <<: *deploy_environment
     environment:
@@ -45,13 +53,48 @@ jobs:
       - run:
           name: Deploy bundle to S3
           command: aws s3 sync packages/app/public ${S3_BUCKET_PATH} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
-
+  test-lambdas:
+    <<: *deploy_environment
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Test lambdas
+          command: |
+            set -e
+            cd packages/functions
+            npm test
+  deploy-lambdas:
+    <<: *deploy_environment
+    environment:
+      AWS_DEFAULT_REGION: "eu-west-1"
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install awscli
+          command: |
+            sudo apt-get install python-pip python
+            sudo pip install awscli
+      - run:
+          name: Deploy jwt-enrichment-hook Lambda
+          command: |
+            zip jwt-enrichment-hook.zip -FSj packages/functions/build/jwt-enrichment-hook.js
+            aws lambda update-function-code --function-name knowledgebase_jwt_enrichment_hook --zip-file fileb://jwt-enrichment-hook.zip
+      - run:
+          name: Deploy signup-hook Lambda
+          command: |
+            zip signup-hook.zip -FSj packages/functions/build/signup-hook.js
+            aws lambda update-function-code --function-name knowledgebase_signup_hook --zip-file fileb://signup-hook.zip
 workflows:
   version: 2
   build-and-deploy:
     jobs:
       - build
       - test:
+          requires:
+            - build
+      - test-lambdas:
           requires:
             - build
       - deploy:
@@ -61,3 +104,10 @@ workflows:
                 - master
           requires:
             - test
+      - deploy-lambdas:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - test-lambdas

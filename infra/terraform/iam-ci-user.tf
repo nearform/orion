@@ -32,6 +32,17 @@ data "aws_iam_policy_document" "s3_bucket_access" {
       "*",
     ]
   }
+
+  statement {
+    actions = [
+      "lambda:*",
+    ]
+
+    resources = [
+      "arn:aws:lambda:*:*:function:${aws_lambda_function.signup_hook.function_name}",
+      "arn:aws:lambda:*:*:function:${aws_lambda_function.jwt_enrichment_hook.function_name}",
+    ]
+  }
 }
 
 resource "aws_iam_user_policy" "s3-policy" {

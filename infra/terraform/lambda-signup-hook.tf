@@ -28,7 +28,7 @@ resource "aws_lambda_function" "signup_hook" {
   source_code_hash = "${base64sha256(file("lambda_src/signup-hook.zip"))}"
   role             = "${aws_iam_role.signup_hook.arn}"
   runtime          = "nodejs8.10"
-  handler          = "index.handler"
+  handler          = "signup-hook.handler"
   memory_size      = 128
   timeout          = 3
 
@@ -37,6 +37,13 @@ resource "aws_lambda_function" "signup_hook" {
       GRAPHQL_ADMIN_SECRET = "${var.HASURA_GRAPHQL_ADMIN_SECRET}"
       GRAPHQL_API          = "${var.HASURA_GRAPHQL_API}"
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      "source_code_hash",
+      "last_modified"
+    ]
   }
 }
 

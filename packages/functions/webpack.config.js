@@ -17,7 +17,7 @@ module.exports = {
   target: 'node',
   output: {
     path: `${__dirname}/build`,
-    filename: '[name].bundle.js',
+    filename: '[name].js',
     libraryTarget: 'umd',
   },
   optimization: {
