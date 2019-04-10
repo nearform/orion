@@ -1,0 +1,6 @@
+query getDefaultRole {
+  role(where: { is_default: { _eq: true } }) {
+    id
+    name
+  }
+}

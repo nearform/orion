@@ -1,8 +1,10 @@
 jest.mock('../graphql')
 
-const handler = require('./').handler
-const graphql = require('../graphql')
-const { getDefaultRole, createUserMutation } = require('./queries')
+import { handler } from './'
+import graphql from '../graphql'
+
+import createUser from './graphql/create-user.graphql'
+import getDefaultRole from './graphql/get-default-role.graphql'
 
 const originalEvent = {
   version: '1',
@@ -64,7 +66,7 @@ describe('signup-hook', () => {
 
     const { role } = await oneRoleFromDb
 
-    expect(graphql).toBeCalledWith(createUserMutation, {
+    expect(graphql).toBeCalledWith(createUser, {
       cognitoId: originalEvent.request.userAttributes.sub,
       name: originalEvent.userName,
       roleId: role[0].id,

@@ -1,8 +1,8 @@
-const graphql = require('../graphql')
-const { queryUserByCognitoId } = require('./queries')
+import graphql from '../graphql'
+import getUserByCognitoId from './graphql/get-user-by-cognito-id.graphql'
 
-exports.handler = async event => {
-  const { user } = await graphql(queryUserByCognitoId, {
+export const handler = async event => {
+  const { user } = await graphql(getUserByCognitoId, {
     cognitoId: event.request.userAttributes.sub,
   })
 

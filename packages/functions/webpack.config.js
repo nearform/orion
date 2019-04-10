@@ -20,6 +20,14 @@ module.exports = {
     filename: '[name].js',
     libraryTarget: 'umd',
   },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: 'babel-loader',
+      },
+    ],
+  },
   optimization: {
     minimize: false,
   },

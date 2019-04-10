@@ -1,8 +1,8 @@
 jest.mock('../graphql')
 
-const handler = require('./').handler
-const graphql = require('../graphql')
-const { queryUserByCognitoId } = require('./queries')
+import { handler } from './'
+import graphql from '../graphql'
+import getUserByCognitoId from './graphql/get-user-by-cognito-id.graphql'
 
 const originalEvent = {
   version: '1',
@@ -57,7 +57,7 @@ describe('jwt-enrichment-hook', () => {
 
     await handler(originalEvent)
 
-    expect(graphql).toBeCalledWith(queryUserByCognitoId, {
+    expect(graphql).toBeCalledWith(getUserByCognitoId, {
       cognitoId: originalEvent.request.userAttributes.sub,
     })
   })

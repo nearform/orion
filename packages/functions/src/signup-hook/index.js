@@ -1,7 +1,8 @@
-const graphql = require('../graphql')
-const { getDefaultRole, createUserMutation } = require('./queries')
+import graphql from '../graphql'
+import createUser from './graphql/create-user.graphql'
+import getDefaultRole from './graphql/get-default-role.graphql'
 
-exports.handler = async event => {
+export const handler = async event => {
   const { role } = await graphql(getDefaultRole)
 
   console.log('found role', role)
@@ -12,7 +13,7 @@ exports.handler = async event => {
 
   console.log('creating user', event, role)
 
-  const user = await graphql(createUserMutation, {
+  const user = await graphql(createUser, {
     cognitoId: event.request.userAttributes.sub,
     name: event.userName,
     roleId: role[0].id,
