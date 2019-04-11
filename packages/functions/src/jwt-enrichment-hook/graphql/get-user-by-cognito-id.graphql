@@ -4,7 +4,22 @@ query getUserByCognitoId($cognitoId: String!) {
     name
     user_roles {
       role {
+        id
         name
+        order
+      }
+    }
+    user_groups {
+      group {
+        id
+        name
+        roles {
+          role {
+            id
+            name
+            order
+          }
+        }
       }
     }
   }

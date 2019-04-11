@@ -1,6 +1,6 @@
 module.exports = {
   roles: [
-    {name: "admin"},
-    {name: "non-member", is_default: true}
-  ]
+    { name: 'admin', order: 1 },
+    { name: 'non-member', order: 2, is_default: true },
+  ],
 }

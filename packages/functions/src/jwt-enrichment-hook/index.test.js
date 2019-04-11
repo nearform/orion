@@ -43,7 +43,9 @@ const oneUserFromDb = Promise.resolve({
       user_roles: [
         {
           role: {
+            id: 1,
             name: 'some role',
+            order: 1,
           },
         },
       ],
