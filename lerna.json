@@ -1,6 +1,7 @@
 {
   "packages": [
-    "packages/*"
+    "packages/*",
+    "hasura"
   ],
   "version": "0.0.0"
 }

@@ -2,9 +2,11 @@
   "name": "hasura",
   "scripts": {
     "console": "env-cmd .env hasura console",
-    "migrate": "env-cmd .env hasura migrate"
+    "migrate": "env-cmd .env hasura migrate",
+    "seed": "env-cmd .env node ./seed.js"
   },
   "devDependencies": {
-    "env-cmd": "^8.0.2"
+    "env-cmd": "^8.0.2",
+    "graphql-request": "^1.8.2"
   }
 }

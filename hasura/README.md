@@ -11,6 +11,7 @@ Please read the [Hasura documentation](https://docs.hasura.io) to learn more.
 - make sure that the Hasura CLI is installed as described in the [docs](https://docs.hasura.io/1.0/graphql/manual/hasura-cli/install-hasura-cli.html)
 - `cp .env.sample .env`
 - populate the `.env` file with the required environment variables. Note that for the sake of running the Hasura console, `HASURA_GRAPHQL_ADMIN_SECRET` is the only environment variable required, as the others are needed to run Hasura itself
+- To seed data into Hasura from our [./seed-data.js/](./seed-data.js) files, update the relevant data (and maybe the graphQL script if needed in [./seed.js](./seed.js)) and run `npm run seed`.
 - `npm run console`
 
 This will open the local Hasura Web console, pointing at the Hasura instance specified in the `config.yaml` file.
