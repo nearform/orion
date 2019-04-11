@@ -86,6 +86,19 @@ jobs:
           command: |
             zip signup-hook.zip -FSj packages/functions/build/signup-hook.js
             aws lambda update-function-code --function-name knowledgebase_signup_hook --zip-file fileb://signup-hook.zip
+  apply-hasura-migrations:
+    <<: *deploy_environment
+    steps:
+      - checkout
+      - run:
+          name: Install Hasura CLI
+          command: |
+            curl -L https://github.com/hasura/graphql-engine/raw/master/cli/get.sh | bash
+      - run:
+          name: Apply Hasura migrations
+          command: |
+            cd hasura
+            hasura migrate apply
 workflows:
   version: 2
   build-and-deploy:
@@ -104,6 +117,11 @@ workflows:
                 - master
           requires:
             - test
+      - apply-hasura-migrations:
+          filters:
+            branches:
+              only:
+                - master
       - deploy-lambdas:
           filters:
             branches:
