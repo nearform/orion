@@ -8,11 +8,12 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "components": "^1.0.0",
     "aws-amplify": "^1.1.25",
     "aws-amplify-react": "^2.3.5",
     "babel-plugin-styled-components": "^1.10.0",
+    "components": "^1.0.0",
     "core-js": "^2.6.5",
+    "formik": "^1.5.2",
     "gatsby": "^2.3.16",
     "gatsby-image": "^2.0.35",
     "gatsby-plugin-create-client-paths": "^2.0.5",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.4.3",
+    "babel-eslint": "^10.0.1",
     "babel-jest": "^24.7.1",
     "babel-preset-gatsby": "^0.1.11",
     "dotenv": "^7.0.0",
