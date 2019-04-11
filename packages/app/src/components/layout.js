@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'gatsby'
 
-import Toolbar from './Toolbar'
+import MainToolbar from './MainToolbar'
 
 class Layout extends React.Component {
   render() {
@@ -24,7 +24,7 @@ class Layout extends React.Component {
     }
     return (
       <div>
-        <Toolbar />
+        <MainToolbar />
         <div>
           <header>{header}</header>
           <main>{children}</main>

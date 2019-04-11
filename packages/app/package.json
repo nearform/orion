@@ -44,8 +44,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.7.1",
     "prettier": "^1.16.4",
-    "react-test-renderer": "^16.8.6",
-    "react-testing-library": "^6.1.2"
+    "react-test-renderer": "^16.8.6"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [

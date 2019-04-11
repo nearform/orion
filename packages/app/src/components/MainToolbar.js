@@ -1,8 +1,8 @@
 import React from 'react'
-import { Link } from 'gatsby'
 import styled from 'styled-components'
 
 import { isAdmin } from '../utils/auth'
+import NavLink from './NavLink'
 
 const ToolbarContainer = styled.div`
   text-align: right;
@@ -13,11 +13,13 @@ const ToolbarContainer = styled.div`
   }
 `
 
-export default function Toolbar() {
+export default function MainToolbar() {
   return (
     <ToolbarContainer>
-      <Link to="/">Home</Link>
-      {isAdmin() && <Link to="admin">Admin</Link>}
+      <NavLink partial={false} to="/">
+        Home
+      </NavLink>
+      {isAdmin() && <NavLink to="/admin">Admin</NavLink>}
     </ToolbarContainer>
   )
 }
