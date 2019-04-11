@@ -2,17 +2,7 @@ import React from 'react'
 import Amplify, { Auth, Hub } from 'aws-amplify'
 import { Authenticator } from 'aws-amplify-react'
 import { GraphQLClient, ClientContext } from 'graphql-hooks'
-import { ThemeProvider } from 'styled-components'
-import { createTheme } from 'saluki'
-import defaultTheme from 'saluki-theme-default'
-
-import customTheme from './src/utils/theme'
-
-// custom typefaces
-import 'typeface-montserrat'
-import 'typeface-merriweather'
-import 'typeface-poppins'
-import 'typeface-didact-gothic'
+import { KnowledgebaseTheme } from 'components'
 
 import awsConfig from './src/aws-exports'
 import DisplayIfSignedIn from './src/components/DisplayIfSignedIn'
@@ -48,9 +38,7 @@ export async function onClientEntry() {
 export const wrapRootElement = ({ element }) => {
   return (
     <ClientContext.Provider value={client}>
-      <ThemeProvider theme={createTheme(defaultTheme, customTheme)}>
-        {element}
-      </ThemeProvider>
+      <KnowledgebaseTheme>{element}</KnowledgebaseTheme>
     </ClientContext.Provider>
   )
 }

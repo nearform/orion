@@ -6,7 +6,7 @@ import {
   borderStyle,
   height,
   paddingHorizontal,
-  minWidth
+  minWidth,
 } from 'saluki'
 
 const Input = styled.input`

@@ -10,37 +10,37 @@ const Item = styled.div`
       {
         width: getWidth(span, 'small', gutter),
         marginLeft: `${gutter}px`,
-        ...style
-      }
+        ...style,
+      },
     ])}
   ${({ span, style, gutter }) =>
     breakpoint('medium', [
       {
         width: getWidth(span, 'medium', gutter),
         marginLeft: `${gutter}px`,
-        ...style
-      }
+        ...style,
+      },
     ])}
   ${({ span, style, gutter }) =>
     breakpoint('large', [
       {
         width: getWidth(span, 'large', gutter),
         marginLeft: `${gutter}px`,
-        ...style
-      }
+        ...style,
+      },
     ])}
   ${({ span, style, gutter }) =>
     breakpoint('max', [
       {
         width: getWidth(span, 'max', gutter),
         marginLeft: `${gutter}px`,
-        ...style
-      }
+        ...style,
+      },
     ])}
 `
 
 Item.defaultProps = {
-  gutter: 0
+  gutter: 0,
 }
 
 const StyledContainer = styled.div`
@@ -50,7 +50,7 @@ const StyledContainer = styled.div`
 `
 
 StyledContainer.defaultProps = {
-  gutter: 0
+  gutter: 0,
 }
 
 const getWidth = (span, screenWidth, gutter) => {
@@ -59,7 +59,7 @@ const getWidth = (span, screenWidth, gutter) => {
     small: 6,
     medium: 6,
     large: 12,
-    max: 12
+    max: 12,
   }
   if (!span) return `calc(8.33% - ${gutter}px)`
 
@@ -72,7 +72,7 @@ const Container = ({ children, gutter }) => {
     <StyledContainer gutter={gutter}>
       {React.Children.map(children, child =>
         React.cloneElement(child, {
-          gutter
+          gutter,
         })
       )}
     </StyledContainer>
@@ -80,15 +80,15 @@ const Container = ({ children, gutter }) => {
 }
 
 Container.defaultProps = {
-  gutter: 0
+  gutter: 0,
 }
 
 Container.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element)
+    PropTypes.arrayOf(PropTypes.element),
   ]),
-  gutter: PropTypes.number
+  gutter: PropTypes.number,
 }
 
 const Grid = props => {
@@ -105,9 +105,9 @@ const Grid = props => {
 Grid.propTypes = {
   container: PropTypes.oneOfType([
     PropTypes.bool,
-    PropTypes.instanceOf(undefined)
+    PropTypes.instanceOf(undefined),
   ]),
-  item: PropTypes.oneOfType([PropTypes.bool, PropTypes.instanceOf(undefined)])
+  item: PropTypes.oneOfType([PropTypes.bool, PropTypes.instanceOf(undefined)]),
 }
 
 export default Grid

@@ -4,7 +4,6 @@ import slugify from 'slugify'
 
 import Layout from '../components/layout'
 import SEO from '../components/seo'
-import { rhythm } from '../utils/typography'
 
 function Homepage({ data, location, ...props }) {
   const siteTitle = data.site.siteMetadata.title
@@ -16,15 +15,8 @@ function Homepage({ data, location, ...props }) {
       {articles.map(article => {
         return (
           <div key={article.id}>
-            <h3
-              style={{
-                marginBottom: rhythm(1 / 4),
-              }}
-            >
-              <Link
-                style={{ boxShadow: `none` }}
-                to={`${article.id}/${slugify(article.title)}`}
-              >
+            <h3>
+              <Link to={`${article.id}/${slugify(article.title)}`}>
                 {article.title}
               </Link>
             </h3>

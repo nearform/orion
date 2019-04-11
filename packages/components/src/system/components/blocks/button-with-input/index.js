@@ -13,7 +13,7 @@ const ButtonWithInput = ({ button, input }) => (
 
 ButtonWithInput.propTypes = {
   button: PropTypes.shape(Button.propTypes),
-  input: PropTypes.shape(Input.propTypes)
+  input: PropTypes.shape(Input.propTypes),
 }
 
 export default ButtonWithInput

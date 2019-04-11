@@ -9,7 +9,7 @@ const palette = {
   sand3: '#908a8a',
   sand2: '#a8a4a3',
   sand1: '#f4f4f2',
-  red: '#ED1B34'
+  red: '#ED1B34',
 }
 
 const themePalette = {
@@ -22,29 +22,29 @@ const themePalette = {
   textSecondary: palette.sand3,
   textDisabled: palette.sand1,
   textHint: palette.sand2,
-  textContrast: palette.white
+  textContrast: palette.white,
 }
 
 const theme = {
   color: {
-    ...themePalette
+    ...themePalette,
   },
   backgroundColor: {
-    ...themePalette
+    ...themePalette,
   },
   fontSize: {
-    xSmall: '0.7rem'
+    xSmall: '0.7rem',
   },
   padding: {
-    xSmall: '0.5rem'
+    xSmall: '0.5rem',
   },
   boxShadow: {
     element: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
-    page: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)'
+    page: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
   },
   width: {
-    input: '10rem'
-  }
+    input: '10rem',
+  },
 }
 
 export default theme

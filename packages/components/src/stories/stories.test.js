@@ -11,5 +11,5 @@ const styledSnapshot = ({ story, context }) => {
 }
 
 initStoryshots({
-  test: styledSnapshot
+  test: styledSnapshot,
 })

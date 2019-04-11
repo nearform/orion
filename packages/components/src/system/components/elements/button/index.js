@@ -11,7 +11,7 @@ import {
   paddingHorizontal,
   borderRadius,
   borderStyle,
-  boxShadow
+  boxShadow,
 } from 'saluki'
 
 const secondary = css`
@@ -37,7 +37,7 @@ const Button = styled.button`
 `
 
 Button.propTypes = {
-  inverted: PropTypes.bool
+  inverted: PropTypes.bool,
 }
 
 export default Button

@@ -2,7 +2,7 @@ import { css } from 'styled-components'
 
 export const fontFamilies = {
   primary: 'Poppins, Helvetica, Arial, sans-serif',
-  secondary: 'Didact Gothic, Helvetica, Arial, sans-serif'
+  secondary: 'Didact Gothic, Helvetica, Arial, sans-serif',
 }
 
 export const primaryTypeface = css`

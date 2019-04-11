@@ -7,12 +7,12 @@ import { configureViewport } from '@storybook/addon-viewport'
 import { createTheme } from 'saluki'
 import defaultTheme from 'saluki-theme-default'
 import { withThemes } from 'storybook-styled-components'
-import { KnowledgebaseTheme, OrangeTheme } from '~/system/theme'
+import { Knowledgebase, Orange } from '~/system/theme'
 import Typography from '~/system/theme/typography'
 
 const themes = {
-  knowledgebaseTheme: createTheme(defaultTheme, KnowledgebaseTheme),
-  orangeTheme: createTheme(defaultTheme, OrangeTheme)
+  knowledgebaseTheme: createTheme(defaultTheme, Knowledgebase),
+  orangeTheme: createTheme(defaultTheme, Orange)
 }
 
 const TypographyDecorator = story => (

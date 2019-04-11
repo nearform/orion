@@ -3,6 +3,7 @@ import babel from 'rollup-plugin-babel'
 import alias from 'rollup-plugin-alias'
 import resolve from 'rollup-plugin-node-resolve'
 import json from 'rollup-plugin-json'
+import { eslint } from 'rollup-plugin-eslint'
 import commonjs from 'rollup-plugin-commonjs'
 import clean from 'rollup-plugin-clean'
 import pkg from './package.json'
@@ -14,24 +15,25 @@ const external = [
   'prop-types',
   'react-helmet',
   'gatsby',
-  'gatsby-image'
+  'gatsby-image',
 ]
 
 const commonPlugins = [
   clean(),
   resolve({
     preferBuiltins: true,
-    browser: true
+    browser: true,
   }),
+  eslint(),
   json(),
   alias({
     resolve: ['.js', '.svg'],
     '~': join(__dirname, 'src'),
-    assets: join(__dirname, 'src/assets')
+    assets: join(__dirname, 'src/assets'),
   }),
   babel({
     exclude: 'node_modules/**',
-    runtimeHelpers: true
+    runtimeHelpers: true,
   }),
   commonjs({
     include: 'node_modules/**',
@@ -42,14 +44,14 @@ const commonPlugins = [
       'node_modules/react-is/index.js': [
         'isElement',
         'isValidElementType',
-        'ForwardRef'
+        'ForwardRef',
       ],
       'node_modules/babel-plugin-macros/dist/index.js': [
         'MacroError',
-        'createMacro'
-      ]
-    }
-  })
+        'createMacro',
+      ],
+    },
+  }),
 ]
 
 export default [
@@ -57,6 +59,6 @@ export default [
     input,
     external,
     plugins: [...commonPlugins],
-    output: [{ file: pkg.module, format: 'es' }]
-  }
+    output: [{ file: pkg.module, format: 'es' }],
+  },
 ]

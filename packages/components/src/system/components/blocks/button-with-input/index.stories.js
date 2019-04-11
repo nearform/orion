@@ -9,11 +9,11 @@ import ButtonWithInput from '.'
 const mockProps = {
   button: {
     label: text('label', 'Hello Button'),
-    onClick: console.log
+    onClick: console.log,
   },
   input: {
-    onChange: console.log
-  }
+    onChange: console.log,
+  },
 }
 
 storiesOf('System/Blocks/ButtonWithInput', module)

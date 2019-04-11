@@ -26,6 +26,13 @@
     "jest/globals": true
   },
   "rules": {
+    "comma-dangle": ["error", {
+        "arrays": "ignore",
+        "objects": "ignore",
+        "imports": "ignore",
+        "exports": "ignore",
+        "functions": "ignore"
+    }],
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 2,
     "prettier/prettier": "error",
