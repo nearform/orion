@@ -33,6 +33,8 @@ This folder contains all the files and scripts to provision the infrastructure.
 
 ### [./packages/components](./packages/components)
 
+> note, this package is currently, temporarily unused until we sort out the direction we want to go with the design system
+
 - a component library based on [styled-components](https://www.styled-components.com/)
 - a design system with a `ThemeProvider` approach to theming and using
   [saluki](https://github.com/nearform/saluki) for its CSS-in-JS modular
