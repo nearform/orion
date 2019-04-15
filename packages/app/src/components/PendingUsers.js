@@ -6,6 +6,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Typography,
 } from '@material-ui/core'
 
 const getPendingUsers = `query getPendingUsers {
@@ -23,23 +24,28 @@ export default function PendingUsers() {
   if (error) return 'Error!'
 
   return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>id</TableCell>
-          <TableCell>name</TableCell>
-          <TableCell>pending</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {users.user.map(user => (
-          <TableRow key={user.id}>
-            <TableCell>{user.id}</TableCell>
-            <TableCell>{user.name}</TableCell>
-            <TableCell>{user.pending.toString()}</TableCell>
+    <>
+      <Typography variant="h3" gutterBottom>
+        Pending users
+      </Typography>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>id</TableCell>
+            <TableCell>name</TableCell>
+            <TableCell>pending</TableCell>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHead>
+        <TableBody>
+          {users.user.map(user => (
+            <TableRow key={user.id}>
+              <TableCell>{user.id}</TableCell>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.pending.toString()}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </>
   )
 }

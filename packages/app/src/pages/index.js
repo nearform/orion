@@ -6,13 +6,17 @@ import { Typography } from '@material-ui/core'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 
-function Homepage({ data, location, ...props }) {
+function Homepage({ data, location }) {
   const siteTitle = data.site.siteMetadata.title
   const articles = data.knowledgebase.article
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout location={location}>
       <SEO title="All articles" keywords={[`knowledgebase`, `NearForm`]} />
+      <Typography variant="h2">{siteTitle}</Typography>
+      <Typography variant="subtitle1">
+        Not much to see yet, but stay tuned
+      </Typography>
       {articles.map(article => {
         return (
           <div key={article.id}>

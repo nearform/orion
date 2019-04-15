@@ -1,31 +1,30 @@
 import React from 'react'
-import { withStyles, Link } from '@material-ui/core'
+import { AppBar, Toolbar, Button, withStyles } from '@material-ui/core'
+import { Link as RouterLink } from '@reach/router'
 
 import { isAdmin } from '../utils/auth'
-import NavLink from './NavLink'
 
 function MainToolbar({ classes }) {
   return (
-    <div className={classes.root}>
-      <Link component={NavLink} partial={false} to="/">
-        Home
-      </Link>
-      {isAdmin() && (
-        <Link component={NavLink} to="/admin">
-          Admin
-        </Link>
-      )}
-    </div>
+    <AppBar position="static">
+      <Toolbar>
+        <div className={classes.grow} />
+        <Button color="inherit" component={RouterLink} to="/">
+          Home
+        </Button>
+        {isAdmin() && (
+          <Button color="inherit" component={RouterLink} to="/admin">
+            Admin
+          </Button>
+        )}
+      </Toolbar>
+    </AppBar>
   )
 }
 
 const styles = {
-  root: {
-    textAlign: 'right',
-    marginRight: 10,
-    '& > * + *': {
-      marginLeft: 10,
-    },
+  grow: {
+    flexGrow: 1,
   },
 }
 

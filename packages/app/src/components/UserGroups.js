@@ -8,9 +8,11 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  TextField,
   Button,
+  IconButton,
 } from '@material-ui/core'
+import { TextField } from 'formik-material-ui'
+import * as Yup from 'yup'
 
 const getGroups = `
 query getGroups {
@@ -45,6 +47,24 @@ query getRoles {
 }
 `
 
+const deleteGroupMutation = `
+mutation deleteGroup($id: Int!) {
+  delete_group_role(where: {group_id: { _eq: $id}}) {
+    affected_rows
+  }
+  delete_group(where: {id: {_eq: $id}}) {
+    affected_rows
+  }
+}
+`
+
+const GroupSchema = Yup.object().shape({
+  name: Yup.string().required(),
+  roleId: Yup.number()
+    .integer()
+    .required(),
+})
+
 export default function UserGroups() {
   const {
     loading: groupsLoading,
@@ -58,6 +78,12 @@ export default function UserGroups() {
   )
 
   const [createGroup] = useMutation(createGroupMutation)
+  const [deleteGroup] = useMutation(deleteGroupMutation)
+
+  const doDeleteGroup = async id => {
+    await deleteGroup({ variables: { id } })
+    refetchGroups()
+  }
 
   if (groupsLoading || rolesLoading) return 'Loading...'
   if (groupsError || rolesError) return 'Error!'
@@ -65,9 +91,13 @@ export default function UserGroups() {
   return (
     <div>
       <Typography variant="h3" gutterBottom>
-        New Group
+        Groups
+      </Typography>
+      <Typography variant="h4" gutterBottom>
+        Create group
       </Typography>
       <Formik
+        validationSchema={GroupSchema}
         initialValues={{ name: '', roleId: roles.role[0].id }}
         onSubmit={async (values, { setSubmitting }) => {
           try {
@@ -106,8 +136,8 @@ export default function UserGroups() {
           </Form>
         )}
       </Formik>
-      <Typography variant="h3" gutterBottom>
-        Groups
+      <Typography variant="h4" gutterBottom>
+        Group list
       </Typography>
       <Table>
         <TableHead>
@@ -115,6 +145,7 @@ export default function UserGroups() {
             <TableCell>id</TableCell>
             <TableCell>name</TableCell>
             <TableCell>roles</TableCell>
+            <TableCell />
           </TableRow>
         </TableHead>
         <TableBody>
@@ -124,6 +155,11 @@ export default function UserGroups() {
               <TableCell>{group.name}</TableCell>
               <TableCell>
                 {group.roles.map(r => r.role.name).join(', ')}
+              </TableCell>
+              <TableCell>
+                <IconButton onClick={() => doDeleteGroup(group.id)}>
+                  x
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}

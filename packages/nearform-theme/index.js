@@ -5,7 +5,13 @@ const headings = new Array(6)
   .fill(null)
   .map((_, i) => i + 1)
   .reduce(
-    (acc, c) => ({ ...acc, [`h${c}`]: { fontFamily: headingFontFamily } }),
+    (acc, c) => ({
+      ...acc,
+      [`h${c}`]: {
+        fontFamily: headingFontFamily,
+        fontWeight: 'bold',
+      },
+    }),
     {}
   )
 

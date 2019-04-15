@@ -1,5 +1,6 @@
 import React from 'react'
 import { Router } from '@reach/router'
+import { withStyles } from '@material-ui/core'
 
 import Layout from './layout'
 import PendingUsers from './PendingUsers'
@@ -7,13 +8,13 @@ import AdminToolbar from './AdminToolbar'
 import UserGroups from './UserGroups'
 import SEO from './seo'
 
-export default function AdminRoute({ data, location }) {
+function AdminRoute({ data, location, classes }) {
   const siteTitle = data.site.siteMetadata.title
 
   return (
     <Layout location={location} title={siteTitle}>
       <SEO title="Admin" />
-      <AdminToolbar />
+      <AdminToolbar className={classes.toolbar} />
       <Router>
         <PendingUsers default path="pending-users" />
         <UserGroups path="groups" />
@@ -21,3 +22,11 @@ export default function AdminRoute({ data, location }) {
     </Layout>
   )
 }
+
+const styles = theme => ({
+  toolbar: {
+    marginBottom: theme.spacing.unit * 2,
+  },
+})
+
+export default withStyles(styles)(AdminRoute)
