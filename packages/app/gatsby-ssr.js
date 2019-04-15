@@ -1,7 +1,8 @@
 import React from 'react'
 import { GraphQLClient, ClientContext } from 'graphql-hooks'
-import { KnowledgebaseTheme } from 'components'
 import fetch from 'node-fetch'
+
+import 'nearform-theme'
 
 const client = new GraphQLClient({
   url: process.env.GATSBY_GRAPHQL_API,
@@ -10,8 +11,6 @@ const client = new GraphQLClient({
 
 export const wrapRootElement = ({ element }) => {
   return (
-    <ClientContext.Provider value={client}>
-      <KnowledgebaseTheme>{element}</KnowledgebaseTheme>
-    </ClientContext.Provider>
+    <ClientContext.Provider value={client}>{element}</ClientContext.Provider>
   )
 }

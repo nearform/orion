@@ -1,23 +1,29 @@
 import React from 'react'
-import styled from 'styled-components'
+import { Link, withStyles } from '@material-ui/core'
 
-import { isAdmin } from '../utils/auth'
 import NavLink from './NavLink'
 
-const ToolbarContainer = styled.div`
-  text-align: right;
-  margin-right: 10px;
-
-  & > * + * {
-    margin-left: 10px;
-  }
-`
-
-export default function AdminToolbar() {
+function AdminToolbar({ classes }) {
   return (
-    <ToolbarContainer>
-      <NavLink to="pending-users">Pending users</NavLink>
-      <NavLink to="groups">Groups</NavLink>
-    </ToolbarContainer>
+    <div className={classes.root}>
+      <Link component={NavLink} to="pending-users">
+        Pending users
+      </Link>
+      <Link component={NavLink} to="groups">
+        Groups
+      </Link>
+    </div>
   )
 }
+
+const styles = {
+  root: {
+    textAlign: 'right',
+    marginRight: 10,
+    '& > * + *': {
+      marginLeft: 10,
+    },
+  },
+}
+
+export default withStyles(styles)(AdminToolbar)

@@ -1,5 +1,12 @@
 import React from 'react'
 import { useQuery } from 'graphql-hooks'
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from '@material-ui/core'
 
 const getPendingUsers = `query getPendingUsers {
   user(where: { pending: { _eq: true } }) {
@@ -16,23 +23,23 @@ export default function PendingUsers() {
   if (error) return 'Error!'
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>name</th>
-          <th>pending</th>
-        </tr>
-      </thead>
-      <tbody>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>id</TableCell>
+          <TableCell>name</TableCell>
+          <TableCell>pending</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
         {users.user.map(user => (
-          <tr key={user.id}>
-            <td>{user.id}</td>
-            <td>{user.name}</td>
-            <td>{user.pending.toString()}</td>
-          </tr>
+          <TableRow key={user.id}>
+            <TableCell>{user.id}</TableCell>
+            <TableCell>{user.name}</TableCell>
+            <TableCell>{user.pending.toString()}</TableCell>
+          </TableRow>
         ))}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   )
 }

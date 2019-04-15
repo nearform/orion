@@ -1,6 +1,16 @@
 import React from 'react'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Formik, Form, Field } from 'formik'
+import {
+  Typography,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TextField,
+  Button,
+} from '@material-ui/core'
 
 const getGroups = `
 query getGroups {
@@ -54,7 +64,9 @@ export default function UserGroups() {
 
   return (
     <div>
-      <h1>New Group</h1>
+      <Typography variant="h3" gutterBottom>
+        New Group
+      </Typography>
       <Formik
         initialValues={{ name: '', roleId: roles.role[0].id }}
         onSubmit={async (values, { setSubmitting }) => {
@@ -68,39 +80,55 @@ export default function UserGroups() {
       >
         {({ isSubmitting }) => (
           <Form>
-            <Field name="name" placeholder="name" />
-            <Field name="roleId" component="select">
+            <Field
+              component={TextField}
+              variant="outlined"
+              name="name"
+              placeholder="name"
+            />
+            <Field
+              component={TextField}
+              select
+              SelectProps={{ native: true }}
+              variant="outlined"
+              name="roleId"
+              label="role"
+            >
               {roles.role.map(role => (
                 <option key={role.id} value={role.id}>
                   {role.name}
                 </option>
               ))}
             </Field>
-            <button type="submit" disabled={isSubmitting}>
+            <Button type="submit" variant="contained" disabled={isSubmitting}>
               Save
-            </button>
+            </Button>
           </Form>
         )}
       </Formik>
-      <h1>Groups</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>roles</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Typography variant="h3" gutterBottom>
+        Groups
+      </Typography>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>id</TableCell>
+            <TableCell>name</TableCell>
+            <TableCell>roles</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {groups.group.map(group => (
-            <tr key={group.id}>
-              <td>{group.id}</td>
-              <td>{group.name}</td>
-              <td>{group.roles.map(r => r.role.name).join(', ')}</td>
-            </tr>
+            <TableRow key={group.id}>
+              <TableCell>{group.id}</TableCell>
+              <TableCell>{group.name}</TableCell>
+              <TableCell>
+                {group.roles.map(r => r.role.name).join(', ')}
+              </TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   )
 }

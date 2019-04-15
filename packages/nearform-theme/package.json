@@ -1,0 +1,11 @@
+{
+  "name": "nearform-theme",
+  "version": "1.0.0",
+  "main": "index.js",
+  "module": "module.js",
+  "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+}

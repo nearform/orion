@@ -9,7 +9,7 @@ export default function Admin({ data }) {
   return (
     <Router>
       <ProtectedRoute
-        role="admin"
+        allowedRole="admin"
         component={AdminRoute}
         path="admin/*"
         data={data}

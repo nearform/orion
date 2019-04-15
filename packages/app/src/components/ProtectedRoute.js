@@ -7,7 +7,7 @@ import { isAuthenticated, getUserRoles } from '../utils/auth'
 const isBrowser = typeof window !== `undefined`
 
 export default function ProtectedRoute({
-  role,
+  allowedRole,
   component: Component,
   ...props
 }) {
@@ -16,10 +16,10 @@ export default function ProtectedRoute({
     return null
   }
 
-  if (role) {
+  if (allowedRole) {
     const userRoles = getUserRoles()
 
-    if (!userRoles.includes(role)) {
+    if (!userRoles.includes(allowedRole)) {
       if (isBrowser) navigate('/')
       return null
     }
@@ -29,6 +29,6 @@ export default function ProtectedRoute({
 }
 
 ProtectedRoute.propTypes = {
-  role: T.string,
+  allowedRole: T.string,
   component: T.elementType.isRequired,
 }

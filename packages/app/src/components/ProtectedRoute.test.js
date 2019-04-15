@@ -50,7 +50,7 @@ describe('ProtectedRoute', () => {
       },
     }
 
-    shallow(<ProtectedRoute component={SecretComponent} role="admin" />)
+    shallow(<ProtectedRoute component={SecretComponent} allowedRole="admin" />)
 
     expect(navigate).toBeCalledWith('/')
   })
@@ -69,7 +69,7 @@ describe('ProtectedRoute', () => {
     }
 
     const wrapper = shallow(
-      <ProtectedRoute component={SecretComponent} role="user" />
+      <ProtectedRoute component={SecretComponent} allowedRole="user" />
     )
 
     expect(wrapper.find(SecretComponent).length).toBe(1)

@@ -2,7 +2,8 @@ import React from 'react'
 import Amplify, { Auth, Hub } from 'aws-amplify'
 import { Authenticator } from 'aws-amplify-react'
 import { GraphQLClient, ClientContext } from 'graphql-hooks'
-import { KnowledgebaseTheme } from 'components'
+
+import ThemeWrapper from 'nearform-theme'
 
 import awsConfig from './src/aws-exports'
 import DisplayIfSignedIn from './src/components/DisplayIfSignedIn'
@@ -38,7 +39,7 @@ export async function onClientEntry() {
 export const wrapRootElement = ({ element }) => {
   return (
     <ClientContext.Provider value={client}>
-      <KnowledgebaseTheme>{element}</KnowledgebaseTheme>
+      <ThemeWrapper>{element}</ThemeWrapper>
     </ClientContext.Provider>
   )
 }

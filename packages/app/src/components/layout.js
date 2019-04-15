@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
+import { Typography } from '@material-ui/core'
 
 import MainToolbar from './MainToolbar'
 
@@ -11,15 +12,15 @@ class Layout extends React.Component {
 
     if (location.pathname === rootPath) {
       header = (
-        <h1>
+        <Typography variant="h1">
           <Link to={`/`}> {title} </Link>
-        </h1>
+        </Typography>
       )
     } else {
       header = (
-        <h3>
+        <Typography variant="h3">
           <Link to={'/'}>{title}</Link>
-        </h3>
+        </Typography>
       )
     }
     return (

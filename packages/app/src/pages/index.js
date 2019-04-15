@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, graphql } from 'gatsby'
 import slugify from 'slugify'
+import { Typography } from '@material-ui/core'
 
 import Layout from '../components/layout'
 import SEO from '../components/seo'
@@ -15,11 +16,11 @@ function Homepage({ data, location, ...props }) {
       {articles.map(article => {
         return (
           <div key={article.id}>
-            <h3>
+            <Typography variant="h3">
               <Link to={`${article.id}/${slugify(article.title)}`}>
                 {article.title}
               </Link>
-            </h3>
+            </Typography>
             <small>{article.published_at}</small>
             <p
               dangerouslySetInnerHTML={{

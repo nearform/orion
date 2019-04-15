@@ -2,6 +2,8 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV || 'development'}`,
 })
 
+const nearformTheme = require('nearform-theme')
+
 module.exports = {
   siteMetadata: {
     title: `NearForm Knowledgebase`,
@@ -30,7 +32,18 @@ module.exports = {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/members/*`, '/admin/*'] },
     },
-    `gatsby-plugin-styled-components`,
+    {
+      resolve: `gatsby-plugin-material-ui`,
+      options: {
+        theme: nearformTheme.muiTheme,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: nearformTheme.googleFonts,
+      },
+    },
     {
       resolve: 'gatsby-source-graphql',
       options: {

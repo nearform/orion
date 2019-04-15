@@ -1,25 +1,32 @@
 import React from 'react'
-import styled from 'styled-components'
+import { withStyles, Link } from '@material-ui/core'
 
 import { isAdmin } from '../utils/auth'
 import NavLink from './NavLink'
 
-const ToolbarContainer = styled.div`
-  text-align: right;
-  margin-right: 10px;
-
-  & > * + * {
-    margin-left: 10px;
-  }
-`
-
-export default function MainToolbar() {
+function MainToolbar({ classes }) {
   return (
-    <ToolbarContainer>
-      <NavLink partial={false} to="/">
+    <div className={classes.root}>
+      <Link component={NavLink} partial={false} to="/">
         Home
-      </NavLink>
-      {isAdmin() && <NavLink to="/admin">Admin</NavLink>}
-    </ToolbarContainer>
+      </Link>
+      {isAdmin() && (
+        <Link component={NavLink} to="/admin">
+          Admin
+        </Link>
+      )}
+    </div>
   )
 }
+
+const styles = {
+  root: {
+    textAlign: 'right',
+    marginRight: 10,
+    '& > * + *': {
+      marginLeft: 10,
+    },
+  },
+}
+
+export default withStyles(styles)(MainToolbar)

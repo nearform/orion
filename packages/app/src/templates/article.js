@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, graphql } from 'gatsby'
+import { Typography } from '@material-ui/core'
 
 import Layout from '../components/layout'
 import SEO from '../components/seo'
@@ -12,7 +13,7 @@ class ArticleTemplate extends React.Component {
     return (
       <Layout location={this.props.location} title={siteTitle}>
         <SEO title={article.title} description={article.description} />
-        <h1>{article.title}</h1>
+        <Typography variant="h1">{article.title}</Typography>
         <p>{article.published_at}</p>
         <div dangerouslySetInnerHTML={{ __html: article.content }} />
         <hr />
