@@ -45,6 +45,11 @@ This folder contains all the files and scripts to provision the infrastructure.
 - a static build enabled app based on [gatsby](https://www.gatsbyjs.org)
 - Gatsby uses [graphql](https://graphql.org/) to fetch data from the API
 
+### [./packages/nearform-theme](./packages/nearform-theme)
+
+- material-ui theme with NearForm branding
+- wrapper component to apply common styles to the application
+
 ### [./packages/functions](./packages/functions)
 
 - lambda serverless functions used to interact with AWS Cognito and Hasura
@@ -75,15 +80,6 @@ Shared secrets are stored in a vault. Get in touch with a team member to get acc
 
 Infrastructure provisioning is done via Terraform. Check out the instructions in the [infra](.infra) directory.
 
-## Storybook
-
-The components package contains storybook stories to document and test the components contained therein.
-
-```
-cd packages/components
-npm run storybook
-```
-
 ## Running the application
 
 Ensure you have a local `.env.development` file available.
@@ -93,9 +89,11 @@ cd packages/app
 npm start
 ```
 
-## Adding new dependencies
+## Storybook
+
+The components package contains storybook stories to document and test the components contained therein.
 
 ```
-npx lerna add <npm-package-name> --scope=<package/module>
-npx lerna add -D <npm-package-name> --scope=<package/module> // for dev dependencies
+cd packages/components
+npm run storybook
 ```
