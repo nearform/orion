@@ -1,27 +1,33 @@
 import React from 'react'
-import { Link } from '@reach/router'
+import { Link as RouterLink } from '@reach/router'
 import { withStyles } from '@material-ui/core'
+import classnames from 'classnames'
 
-function NavLink({ partial = true, classes, ...props }) {
+function NavLink({ partial = true, classes, className, ...props }) {
   return (
-    <Link
-      {...props}
+    <RouterLink
       getProps={({ isCurrent, isPartiallyCurrent }) => {
         const isActive = partial ? isPartiallyCurrent : isCurrent
         return {
-          className: isActive ? classes.active : classes.inactive,
+          className: classnames(className, { [classes.active]: isActive }),
         }
       }}
+      {...props}
     />
   )
 }
 
 const styles = theme => ({
   active: {
-    color: theme.palette.primary.main,
-  },
-  inactive: {
-    color: theme.palette.secondary.main,
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      bottom: 0,
+      height: 2,
+      backgroundColor: theme.palette.secondary.main,
+    },
   },
 })
 

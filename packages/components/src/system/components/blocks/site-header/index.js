@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import T from 'prop-types'
 import { AppBar, Toolbar, Button, withStyles } from '@material-ui/core'
 
 import Logo from '../../elements/logo'
@@ -10,7 +10,12 @@ const SiteHeader = ({ classes, linkComponent, isAdmin }) => {
       <Toolbar>
         <Logo />
         <div className={classes.grow} />
-        <Button color="inherit" component={linkComponent} to="/">
+        <Button
+          partial={false}
+          color="inherit"
+          component={linkComponent}
+          to="/"
+        >
           Home
         </Button>
         {isAdmin() && (
@@ -30,13 +35,13 @@ const styles = {
 }
 
 SiteHeader.defaultProps = {
-  isAdmin: () => true,
+  isAdmin: () => false,
 }
 
 SiteHeader.propTypes = {
-  classes: PropTypes.object,
-  isAdmin: PropTypes.func,
-  linkComponent: PropTypes.element,
+  classes: T.object.isRequired,
+  isAdmin: T.func,
+  linkComponent: T.elementType,
 }
 
 export default withStyles(styles)(SiteHeader)
