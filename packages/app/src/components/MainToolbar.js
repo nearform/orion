@@ -1,31 +1,13 @@
 import React from 'react'
-import { AppBar, Toolbar, Button, withStyles } from '@material-ui/core'
 import { Link as RouterLink } from '@reach/router'
+import { SiteHeader } from 'components'
 
 import { isAdmin } from '../utils/auth'
 
-function MainToolbar({ classes }) {
+function MainToolbar() {
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <div className={classes.grow} />
-        <Button color="inherit" component={RouterLink} to="/">
-          Home
-        </Button>
-        {isAdmin() && (
-          <Button color="inherit" component={RouterLink} to="/admin">
-            Admin
-          </Button>
-        )}
-      </Toolbar>
-    </AppBar>
+    <SiteHeader linkComponent={RouterLink} isAdmin={isAdmin} />
   )
 }
 
-const styles = {
-  grow: {
-    flexGrow: 1,
-  },
-}
-
-export default withStyles(styles)(MainToolbar)
+export default MainToolbar

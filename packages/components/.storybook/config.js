@@ -1,31 +1,22 @@
 import React, { Fragment } from 'react'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { configure } from '@storybook/react'
 import { setAddon, addDecorator } from '@storybook/react'
 import { withKnobs, select } from '@storybook/addon-knobs/react'
 import JSXAddon from 'storybook-addon-jsx'
 import { configureViewport } from '@storybook/addon-viewport'
-import { createTheme } from 'saluki'
-import defaultTheme from 'saluki-theme-default'
-import { withThemes } from 'storybook-styled-components'
-import { Knowledgebase, Orange } from '~/system/theme'
-import Typography from '~/system/theme/typography'
 
-const themes = {
-  knowledgebaseTheme: createTheme(defaultTheme, Knowledgebase),
-  orangeTheme: createTheme(defaultTheme, Orange)
-}
+import { muiTheme } from 'nearform-theme'
 
-const TypographyDecorator = story => (
-  <Fragment>
-    <Typography />
-    {story()}
-  </Fragment>
+const withThemeDecorator = storyFn => (
+  <MuiThemeProvider theme={createMuiTheme(muiTheme)}>
+    {storyFn()}
+  </MuiThemeProvider>
 )
 
 addDecorator(withKnobs)
-addDecorator(withThemes(themes))
+addDecorator(withThemeDecorator)
 setAddon(JSXAddon)
-addDecorator(TypographyDecorator)
 
 if (process.env.NODE_ENV === 'test') {
   const { getFullPath, requireModules } = require('./require-context')

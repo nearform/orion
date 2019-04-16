@@ -1,5 +1,4 @@
 import initStoryshots from '@storybook/addon-storyshots'
-import 'jest-styled-components'
 import renderer from 'react-test-renderer'
 
 // Using this function means we'll see the change in the css in the snapshot

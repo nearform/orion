@@ -8,6 +8,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
+    "components": "^1.0.0",
     "@material-ui/core": "^3.9.3",
     "aws-amplify": "^1.1.25",
     "aws-amplify-react": "^2.3.5",
