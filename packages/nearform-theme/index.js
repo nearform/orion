@@ -36,6 +36,10 @@ exports.muiTheme = {
   palette: {
     primary: { main: nearformPalette.blue },
     secondary: { main: nearformPalette.supersplit },
+    background: {
+      default: '#fff',
+      paper: nearformPalette.sand1,
+    },
   },
 }
 

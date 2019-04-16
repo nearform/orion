@@ -1,5 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core'
+import Footer from './Footer'
 
 import MainToolbar from './MainToolbar'
 
@@ -11,9 +12,7 @@ function Layout({ classes, children }) {
       </header>
       <main className={classes.main}>{children}</main>
       <footer className={classes.footer}>
-        © {new Date().getFullYear()}, Built by NearForm with
-        {` `}
-        <a href="https://www.gatsbyjs.org">Gatsby</a>
+        <Footer />
       </footer>
     </div>
   )
@@ -24,7 +23,6 @@ const styles = theme => ({
     padding: theme.spacing.unit,
   },
   footer: {
-    padding: theme.spacing.unit,
     position: 'absolute',
     bottom: 0,
     left: 0,
