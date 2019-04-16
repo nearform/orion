@@ -32,12 +32,13 @@ module.exports = {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/members/*`, '/admin/*'] },
     },
-    {
-      resolve: `gatsby-plugin-material-ui`,
-      options: {
-        theme: nearformTheme.muiTheme,
-      },
-    },
+    // include again once the plugin fixes hot-reloading
+    // {
+    //   resolve: `gatsby-plugin-material-ui`,
+    //   options: {
+    //     theme: nearformTheme.muiTheme,
+    //   },
+    // },
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {

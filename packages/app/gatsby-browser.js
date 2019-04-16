@@ -2,8 +2,13 @@ import React from 'react'
 import Amplify, { Auth, Hub } from 'aws-amplify'
 import { Authenticator } from 'aws-amplify-react'
 import { GraphQLClient, ClientContext } from 'graphql-hooks'
+import {
+  MuiThemeProvider,
+  createMuiTheme,
+  CssBaseline,
+} from '@material-ui/core'
 
-import ThemeWrapper from 'nearform-theme'
+import ThemeWrapper, { muiTheme } from 'nearform-theme'
 
 import awsConfig from './src/aws-exports'
 import DisplayIfSignedIn from './src/components/DisplayIfSignedIn'
@@ -39,7 +44,12 @@ export async function onClientEntry() {
 export const wrapRootElement = ({ element }) => {
   return (
     <ClientContext.Provider value={client}>
-      <ThemeWrapper>{element}</ThemeWrapper>
+      <MuiThemeProvider theme={createMuiTheme(muiTheme)}>
+        <ThemeWrapper>
+          <CssBaseline />
+          {element}
+        </ThemeWrapper>
+      </MuiThemeProvider>
     </ClientContext.Provider>
   )
 }
