@@ -25,12 +25,6 @@ The application follows a serverless application model, where the only API used 
 
 This folder contains the migrations and scripts necessary to run them.
 
-### [./infra](./infra)
-
-The infrastructure is managed via Terraform and provisioned to AWS.
-
-This folder contains all the files and scripts to provision the infrastructure.
-
 ### [./packages/components](./packages/components)
 
 > note, this package is currently, temporarily unused until we sort out the direction we want to go with the design system
@@ -75,10 +69,6 @@ Most of the configuration comes from environment variables. Required environment
 - functions [`.env.sample`](./packages/functions/.env.sample) - runtime environment variables for AWS Lambda functions.
 
 Shared secrets are stored in a vault. Get in touch with a team member to get access to it.
-
-### 3. Provision
-
-Infrastructure provisioning is done via Terraform. Check out the instructions in the [infra](.infra) directory.
 
 ## Running the application
 
