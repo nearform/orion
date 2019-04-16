@@ -11,7 +11,7 @@ function Layout({ classes, children }) {
         <MainToolbar />
       </header>
       <main className={classes.main}>{children}</main>
-      <footer className={classes.footer}>
+      <footer>
         <Footer />
       </footer>
     </div>
@@ -21,12 +21,6 @@ function Layout({ classes, children }) {
 const styles = theme => ({
   main: {
     padding: theme.spacing.unit,
-  },
-  footer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
   },
 })
 
