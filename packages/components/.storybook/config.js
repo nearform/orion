@@ -6,7 +6,7 @@ import { withKnobs, select } from '@storybook/addon-knobs/react'
 import JSXAddon from 'storybook-addon-jsx'
 import { configureViewport } from '@storybook/addon-viewport'
 
-import { muiTheme } from 'nearform-theme'
+import { muiTheme } from '../app/theme.js'
 
 const withThemeDecorator = storyFn => (
   <MuiThemeProvider theme={createMuiTheme(muiTheme)}>

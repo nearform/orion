@@ -8,7 +8,7 @@ import {
   CssBaseline,
 } from '@material-ui/core'
 
-import ThemeWrapper, { muiTheme } from 'nearform-theme'
+import ThemeWrapper, { muiTheme } from './theme.js'
 
 import awsConfig from './src/aws-exports'
 import DisplayIfSignedIn from './src/components/DisplayIfSignedIn'

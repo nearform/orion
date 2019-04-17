@@ -28,6 +28,7 @@
     "graphql-hooks": "^3.4.1",
     "mdi-material-ui": "^5.10.0",
     "nearform-theme": "^1.0.0",
+    "efqm-theme": "^1.0.0",
     "node-fetch": "^2.3.0",
     "prismjs": "^1.16.0",
     "prop-types": "^15.7.2",
