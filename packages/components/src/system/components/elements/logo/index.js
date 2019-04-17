@@ -3,24 +3,26 @@ import PropTypes from 'prop-types'
 import { withStyles, Typography } from '@material-ui/core'
 import NFLogo from '../../../assets/NF_Shared_Brand_Assets_icon_reverse.png'
 
-const inlineStyle = {
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
-  height: '50px',
-}
-
 const Logo = ({ classes, logoSrc }) => (
-  <div style={inlineStyle}>
-    <img style={{ height: '100%' }} src={logoSrc} />
-    <Typography variant="h5" color="textPrimary" classes={classes}>
+  <div className={classes.root}>
+    <img className={classes.logo} src={logoSrc} />
+    <Typography variant="h5" className={classes.textWhite}>
       NearForm
     </Typography>
   </div>
 )
 
 const styles = theme => ({
-  colorTextPrimary: {
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '50px',
+  },
+  logo: {
+    height: '100%',
+  },
+  textWhite: {
     color: '#ffffff',
   },
 })
