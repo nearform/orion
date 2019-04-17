@@ -70,6 +70,14 @@ Most of the configuration comes from environment variables. Required environment
 
 Shared secrets are stored in a vault. Get in touch with a team member to get access to it.
 
+## Contributing
+
+1. Clone the project.
+2. Make changes.
+3. Work on a new branch using the convention `{change type}/{change name}`. For instance `feature/signup-form` or `fix/broken-signup form`.
+4. Commit changes using conventional commits via Commitizen: `git cz`. This requires installing [Commitizen](http://commitizen.github.io/cz-cli/) first.
+5. Create a pull request and get someone to review it.
+
 ## Running the application
 
 Ensure you have a local `.env.development` file available.
