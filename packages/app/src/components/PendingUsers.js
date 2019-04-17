@@ -10,5 +10,11 @@ const getPendingUsers = `query getPendingUsers {
 }`
 
 export default function PendingUsers() {
-  return <Users query={getPendingUsers} pageTitle="Pending Users" />
+  return (
+    <Users
+      query={getPendingUsers}
+      pageTitle="Pending Users"
+      enableGroupsPicker={true}
+    />
+  )
 }
