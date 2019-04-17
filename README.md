@@ -73,9 +73,10 @@ Shared secrets are stored in a vault. Get in touch with a team member to get acc
 ## Contributing
 
 1. Clone the project.
-2. Make changes.
+2. Pick an issue to work on from the project board.
 3. Work on a new branch using the convention `{change type}/{change name}`. For instance `feature/signup-form` or `fix/broken-signup form`.
 4. Commit changes using conventional commits via Commitizen: `git cz`. This requires installing [Commitizen](http://commitizen.github.io/cz-cli/) first.
+5. Reference the issue in the commit message (the conventional commits wizard prompts for that at some point), for instance `Fixes #12`. Doing this, GitHub will close the issue once the PR that references it in this way gets merged.
 5. Create a pull request and get someone to review it.
 
 ## Running the application
