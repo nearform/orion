@@ -78,6 +78,7 @@ Shared secrets are stored in a vault. Get in touch with a team member to get acc
 4. Commit changes using conventional commits via Commitizen: `git cz`. This requires installing [Commitizen](http://commitizen.github.io/cz-cli/) first.
 5. Reference the issue in the commit message (the conventional commits wizard prompts for that at some point), for instance `Fixes #12`. Doing this, GitHub will close the issue once the PR that references it in this way gets merged.
 5. Create a pull request and get someone to review it.
+6. Once approved, you as the author of the PR should merge it.
 
 ## Running the application
 
