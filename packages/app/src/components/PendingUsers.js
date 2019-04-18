@@ -10,19 +10,13 @@ import {
 import AdminTable from './AdminTable'
 import UserGroupsPicker from './UserGroupsPicker'
 
-const query = `query getPendingUsers {
-  user(where: { pending: { _eq: true } }) {
-    id
-    name
-    pending
-  }
-}`
+import { getPendingUsers } from '../queries'
 
 const headers = ['id', 'name', 'pending', 'action']
 
 export default function PendingUsers() {
   return AdminTable({
-    query,
+    query: getPendingUsers,
     pageTitle: 'Pending Users',
     headers,
     Modal: UserGroupsPicker,

@@ -15,23 +15,7 @@ import VerifiedUser from '@material-ui/icons/VerifiedUser'
 
 import AdminTable from './AdminTable'
 
-const allUsersQuery = `query getUsers {
-  user {
-    id
-    name
-    signupRequest
-    user_groups {
-      group {
-        name
-      }
-    }
-    user_roles {
-      role {
-        name
-      }
-    }
-  }
-}`
+import { getUsers } from '../queries'
 
 const headers = [
   'id',
@@ -126,7 +110,7 @@ export default function AllUsers({ query, pageTitle, variables }) {
 }
 
 AllUsers.defaultProps = {
-  query: allUsersQuery,
+  query: getUsers,
   pageTitle: 'All Users',
 }
 

@@ -1,0 +1,18 @@
+query getUsersInGroup($groupId: Int!) {
+  user(where: { user_groups: { group_id: { _in: [$groupId] } } }) {
+    id
+    name
+    signupRequest
+    pending
+    user_groups {
+      group {
+        name
+      }
+    }
+    user_roles {
+      role {
+        name
+      }
+    }
+  }
+}

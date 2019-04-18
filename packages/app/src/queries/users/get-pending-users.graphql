@@ -1,0 +1,18 @@
+query getPendingUsers {
+  user(where: { pending: { _eq: true } }) {
+    id
+    name
+    signupRequest
+    pending
+    user_groups {
+      group {
+        name
+      }
+    }
+    user_roles {
+      role {
+        name
+      }
+    }
+  }
+}

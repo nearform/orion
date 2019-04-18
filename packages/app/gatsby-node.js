@@ -1,4 +1,4 @@
-const path = require(`path`)
+const path = require('path')
 const slugify = require('slugify')
 
 exports.createPages = async ({ graphql, actions }) => {
@@ -51,4 +51,16 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 
   return null
+}
+
+exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
+  const config = getConfig()
+  config.module.rules.push(
+    {
+      test: /\.graphql?$/,
+      exclude: /node_modules/,
+      loader: 'webpack-graphql-loader'
+    }
+  )
+  actions.replaceWebpackConfig(config)
 }

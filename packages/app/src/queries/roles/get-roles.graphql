@@ -1,0 +1,6 @@
+query getRoles {
+  role {
+    id
+    name
+  }
+}
