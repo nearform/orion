@@ -93,6 +93,9 @@ exports.muiTheme = {
       default: '#fff',
       paper: efqmDigitalPalette.paleGrey,
     },
+    custom: {
+      sliderTick: efqmDigitalPalette.midGrey,
+    },
   },
 }
 

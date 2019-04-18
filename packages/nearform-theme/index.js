@@ -67,6 +67,9 @@ exports.muiTheme = {
       default: '#fff',
       paper: nearformPalette.sand1,
     },
+    custom: {
+      sliderTick: nearformPalette.sand3,
+    },
   },
 }
 
