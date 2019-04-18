@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core'
 
 import Layout from './layout'
 import PendingUsers from './PendingUsers'
+import AllUsers from './AllUsers'
 import AdminToolbar from './AdminToolbar'
 import UserGroups from './UserGroups'
 import SEO from './seo'
@@ -17,6 +18,7 @@ function AdminRoute({ data, location, classes }) {
       <AdminToolbar className={classes.toolbar} />
       <Router>
         <PendingUsers default path="pending-users" />
+        <AllUsers path="all-users" />
         <UserGroups path="groups" />
       </Router>
     </Layout>

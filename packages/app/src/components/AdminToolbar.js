@@ -11,6 +11,9 @@ function AdminToolbar({ classes, ...props }) {
         <Button color="inherit" component={NavLink} to="pending-users">
           Pending users
         </Button>
+        <Button color="inherit" component={NavLink} to="all-users">
+          All Users
+        </Button>
         <Button color="inherit" component={NavLink} to="groups">
           Groups
         </Button>
