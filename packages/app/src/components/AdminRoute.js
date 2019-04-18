@@ -7,6 +7,7 @@ import PendingUsers from './PendingUsers'
 import AllUsers from './AllUsers'
 import AdminToolbar from './AdminToolbar'
 import UserGroups from './UserGroups'
+import GroupUsers from './GroupUsers'
 import SEO from './seo'
 
 function AdminRoute({ data, location, classes }) {
@@ -20,6 +21,7 @@ function AdminRoute({ data, location, classes }) {
         <PendingUsers default path="pending-users" />
         <AllUsers path="all-users" />
         <UserGroups path="groups" />
+        <GroupUsers path="groups/:groupId/:groupName" />
       </Router>
     </Layout>
   )

@@ -1,4 +1,6 @@
 import React from 'react'
+import slugify from 'slugify'
+import { Link as RouterLink } from '@reach/router'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Formik, Form, Field } from 'formik'
 import {
@@ -8,8 +10,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Button,
-  IconButton,
+  Button, IconButton,
 } from '@material-ui/core'
 import { TextField } from 'formik-material-ui'
 import * as Yup from 'yup'
@@ -152,7 +153,11 @@ export default function UserGroups() {
           {groups.group.map(group => (
             <TableRow key={group.id}>
               <TableCell>{group.id}</TableCell>
-              <TableCell>{group.name}</TableCell>
+              <TableCell>
+                <RouterLink to={`${group.id}/${slugify(group.name)}`}>
+                  {group.name}
+                </RouterLink>
+              </TableCell>
               <TableCell>
                 {group.roles.map(r => r.role.name).join(', ')}
               </TableCell>

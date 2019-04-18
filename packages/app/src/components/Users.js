@@ -1,4 +1,5 @@
 import React from 'react'
+import T from 'prop-types'
 import { useQuery } from 'graphql-hooks'
 import {
   Table,
@@ -9,8 +10,8 @@ import {
   Typography,
 } from '@material-ui/core'
 
-export default function Users({ query, pageTitle }) {
-  const { loading, error, data: users } = useQuery(query)
+export default function Users({ query, pageTitle, variables }) {
+  const { loading, error, data: users } = useQuery(query, { variables })
 
   if (loading) return 'Loading...'
   if (error) return 'Error!'
@@ -42,3 +43,10 @@ export default function Users({ query, pageTitle }) {
   )
 }
 
+Users.defaultProps = {
+  variables: {},
+}
+
+Users.propTypes = {
+  variables: T.object,
+}
