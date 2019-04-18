@@ -65,8 +65,8 @@ function Footer({ classes, theme }) {
             inbox every month.
           </Typography>
           <div className={classes.horizontalContainer}>
-            <TextField variant="outlined" placeholder="your email address" />
-            <Button color="primary" variant="contained">
+            <TextField placeholder="your email address" />
+            <Button size="small" color="primary" variant="contained">
               subscribe
             </Button>
           </div>

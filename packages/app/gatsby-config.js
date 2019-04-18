@@ -2,9 +2,10 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV || 'development'}`,
 })
 
-const themeName = 'efqm-theme'
+const THEME_NAME = 'efqm-theme'
 
-const activeTheme = require(themeName)
+const path = require('path')
+const currentTheme = require(THEME_NAME)
 
 const metadata = {
   'efqm-theme': {
@@ -15,7 +16,6 @@ const metadata = {
     social: {
       twitter: `EFQM`,
     },
-    icon: `content/assets/efqmdigital-logomark.png`,
     shortName: `EFQM-KB`,
   },
   'nearform-theme': {
@@ -26,20 +26,18 @@ const metadata = {
     social: {
       twitter: `nearform`,
     },
-    icon: `content/assets/nearform-logo.png`,
     shortName: `NFKB`,
-  }
+  },
 }
 
-const {
-  title,
-  author,
-  description,
-  siteUrl,
-  social,
-  shortName,
-  icon
-} = metadata[themeName]
+const { title, author, description, siteUrl, social, shortName } = metadata[
+  THEME_NAME
+]
+
+const themeAssetsPath = path.join(
+  path.dirname(require.resolve(THEME_NAME)),
+  `assets`
+)
 
 module.exports = {
   siteMetadata: {
@@ -51,6 +49,15 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `theme-assets`,
+        path: themeAssetsPath,
+      },
+    },
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: title,
@@ -59,13 +66,13 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon,
+        icon: path.join(themeAssetsPath, 'logo.png'),
       },
     },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/members/*`, '/admin/*'] },
+      options: { prefixes: ['/admin/*'] },
     },
     // include again once the plugin fixes hot-reloading
     // {
@@ -77,7 +84,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
-        fonts: activeTheme.googleFonts,
+        fonts: currentTheme.googleFonts,
       },
     },
     {

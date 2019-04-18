@@ -6,6 +6,6 @@
  * 'nearform-theme'
  * 'efqm-theme'
  *
-**/
+ **/
 export { default } from 'efqm-theme'
 export * from 'efqm-theme'

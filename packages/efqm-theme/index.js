@@ -43,11 +43,39 @@ const efqmDigitalPalette = {
 }
 
 exports.muiTheme = {
+  overrides: {
+    MuiButton: {
+      root: {
+        boxShadow:
+          '0 0 5px 0 rgba(0, 0, 0, 0.1), 0 2px 10px 0 rgba(0, 0, 0, 0.1)',
+      },
+      text: {
+        boxShadow: 'none',
+      },
+    },
+    MuiInput: {
+      root: {
+        borderRadius: 3,
+        padding: '0 5px',
+        backgroundColor: efqmDigitalPalette.paleGrey,
+      },
+    },
+  },
+  props: {
+    MuiInput: {
+      disableUnderline: true,
+    },
+  },
   typography: {
     useNextVariants: 'true',
     fontFamily,
     fontWeight: 'light',
     ...headings,
+    button: {
+      fontSize: 12,
+      letterSpacing: 2.5,
+      fontWeight: '600',
+    },
   },
   palette: {
     // These roles will be refined as designs are updated

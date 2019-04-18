@@ -1,15 +1,19 @@
-import React, { Fragment } from 'react'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import React from 'react'
+import {
+  MuiThemeProvider,
+  createMuiTheme,
+  CssBaseline,
+} from '@material-ui/core'
 import { configure } from '@storybook/react'
 import { setAddon, addDecorator } from '@storybook/react'
-import { withKnobs, select } from '@storybook/addon-knobs/react'
+import { withKnobs } from '@storybook/addon-knobs/react'
 import JSXAddon from 'storybook-addon-jsx'
-import { configureViewport } from '@storybook/addon-viewport'
 
-import { muiTheme } from '../app/theme.js'
+import { muiTheme } from '../../app/theme.js'
 
 const withThemeDecorator = storyFn => (
   <MuiThemeProvider theme={createMuiTheme(muiTheme)}>
+    <CssBaseline />
     {storyFn()}
   </MuiThemeProvider>
 )

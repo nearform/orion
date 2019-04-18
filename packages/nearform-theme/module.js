@@ -1,6 +1,7 @@
 import { withStyles } from '@material-ui/core'
 import { bodyFontFamily } from './index'
-export { muiTheme } from './index'
+
+export * from './index'
 
 const styles = {
   '@global': {
