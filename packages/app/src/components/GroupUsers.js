@@ -1,22 +1,45 @@
 import React from 'react'
-import Users from './Users'
+import T from 'prop-types'
+import { Typography } from '@material-ui/core'
 
-const getUsersInGroup = `query getUsersInGroup ($groupId: Int!) {
+import AllUsers from './AllUsers.js'
+
+// TODO: find a way to alter AllUsers query to reduce duplication
+const query = `query getUsersInGroup ($groupId: Int!) {
   user (where: {user_groups: { group_id: { _in: [$groupId] }}}){
-    user_groups {
-      group_id
-    }
     id
     name
-    pending
-  }}`
+    signupRequest
+    user_groups {
+      group {
+        name
+      }
+    }
+    user_roles {
+      role {
+        name
+      }
+    }
+  }
+}`
 
 export default function GroupUsers({ groupName, groupId }) {
-  return (
-    <Users
-      query={getUsersInGroup}
-      variables={{ groupId }}
-      pageTitle={`Users in group ${groupName} with id ${groupId}`}
-    />
+  const pageTitle = (
+    <span>
+      Users in {groupName}{' '}
+      <Typography inline variant="h6" color="textSecondary">
+        {' '}
+        Group #{groupId}{' '}
+      </Typography>
+    </span>
   )
+
+  return (
+    <AllUsers query={query} variables={{ groupId }} pageTitle={pageTitle} />
+  )
+}
+
+GroupUsers.propTypes = {
+  groupName: T.string,
+  groupId: T.string,
 }

@@ -38,7 +38,7 @@ mutation insertUserGroup($userId: Int!, $groupId: Int!) {
 }
 `
 
-function UserGroupsPicker({ user, onClose, onApply }) {
+function UserGroupsPicker({ selected: user, onClose, onApply }) {
   const [currentGroupId, setGroupId] = useState('')
   const [currentError, setError] = useState(null)
 
