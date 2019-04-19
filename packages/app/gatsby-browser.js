@@ -1,6 +1,6 @@
 import React from 'react'
 import Amplify, { Auth, Hub } from 'aws-amplify'
-import { Authenticator } from 'aws-amplify-react'
+import { Authenticator, Greetings } from 'aws-amplify-react'
 import { GraphQLClient, ClientContext } from 'graphql-hooks'
 import {
   MuiThemeProvider,
@@ -56,7 +56,7 @@ export const wrapRootElement = ({ element }) => {
 
 export const wrapPageElement = ({ element }) => {
   return (
-    <Authenticator>
+    <Authenticator hide={[Greetings]}>
       <DisplayIfSignedIn>{element}</DisplayIfSignedIn>
     </Authenticator>
   )

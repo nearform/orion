@@ -2,6 +2,7 @@ import React from 'react'
 import { useStaticQuery, graphql } from 'gatsby'
 import Img from 'gatsby-image'
 import { Typography, Button, withStyles } from '@material-ui/core'
+import { Auth } from 'aws-amplify'
 
 import { isAdmin } from '../utils/auth'
 import NavLink from './NavLink'
@@ -31,6 +32,8 @@ function MainToolbar({ classes }) {
     }
   `)
 
+  const doLogout = () => Auth.signOut()
+
   return (
     <>
       <div className={classes.gradient} />
@@ -39,14 +42,15 @@ function MainToolbar({ classes }) {
         <Typography variant="h5">{title}</Typography>
         <div className={classes.grow} />
         <div className={classes.linksContainer}>
-          <Button partial={false} color="inherit" component={NavLink} to="/">
+          <Button partial={false} component={NavLink} to="/">
             Home
           </Button>
           {isAdmin() && (
-            <Button color="inherit" component={NavLink} to="/admin">
+            <Button component={NavLink} to="/admin">
               Admin
             </Button>
           )}
+          <Button onClick={doLogout}>Logout</Button>
         </div>
       </div>
     </>
