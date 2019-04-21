@@ -11,7 +11,7 @@ class ArticleTemplate extends React.Component {
     const { previous, next, article } = this.props.pageContext
 
     return (
-      <Layout location={this.props.location} title={siteTitle}>
+      <>
         <SEO title={article.title} description={article.description} />
         <Typography variant="h1">{article.title}</Typography>
         <p>{article.published_at}</p>
@@ -33,7 +33,7 @@ class ArticleTemplate extends React.Component {
             )}
           </li>
         </ul>
-      </Layout>
+      </>
     )
   }
 }

@@ -1,27 +1,21 @@
 import React from 'react'
-import { navigate } from 'gatsby'
 import T from 'prop-types'
+import { Redirect } from '@reach/router'
 
-import { isAuthenticated, getUserRoles } from '../utils/auth'
-
-const isBrowser = typeof window !== `undefined`
+import { isAuthenticatedSync, getUserRolesSync } from '../utils/auth'
 
 export default function ProtectedRoute({
   allowedRole,
   component: Component,
   ...props
 }) {
-  if (!isAuthenticated()) {
-    if (isBrowser) navigate('/')
-    return null
+  if (!isAuthenticatedSync()) {
+    return <Redirect to="/" noThrow />
   }
 
   if (allowedRole) {
-    const userRoles = getUserRoles()
-
-    if (!userRoles.includes(allowedRole)) {
-      if (isBrowser) navigate('/')
-      return null
+    if (!getUserRolesSync().includes(allowedRole)) {
+      return <Redirect to="/" noThrow />
     }
   }
 

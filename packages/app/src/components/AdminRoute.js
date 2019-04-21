@@ -2,7 +2,6 @@ import React from 'react'
 import { Router } from '@reach/router'
 import { withStyles } from '@material-ui/core'
 
-import Layout from './layout'
 import PendingUsers from './PendingUsers'
 import AllUsers from './AllUsers'
 import AdminToolbar from './AdminToolbar'
@@ -10,11 +9,9 @@ import UserGroups from './UserGroups'
 import GroupUsers from './GroupUsers'
 import SEO from './seo'
 
-function AdminRoute({ data, location, classes }) {
-  const siteTitle = data.site.siteMetadata.title
-
+function AdminRoute({ classes }) {
   return (
-    <Layout location={location} title={siteTitle}>
+    <>
       <SEO title="Admin" />
       <AdminToolbar className={classes.toolbar} />
       <Router>
@@ -23,7 +20,7 @@ function AdminRoute({ data, location, classes }) {
         <UserGroups path="groups" />
         <GroupUsers path="groups/:groupId/:groupName" />
       </Router>
-    </Layout>
+    </>
   )
 }
 

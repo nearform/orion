@@ -1,29 +1,19 @@
 import React from 'react'
 import { Router } from '@reach/router'
-import { graphql } from 'gatsby'
+import { Authenticator, Greetings } from 'aws-amplify-react'
 
 import ProtectedRoute from '../../components/ProtectedRoute'
 import AdminRoute from '../../components/AdminRoute'
+import DisplayIfSignedIn from '../../components/DisplayIfSignedIn'
 
-export default function Admin({ data }) {
+export default function Admin() {
   return (
-    <Router>
-      <ProtectedRoute
-        allowedRole="admin"
-        component={AdminRoute}
-        path="admin/*"
-        data={data}
-      />
-    </Router>
+    <Authenticator hide={[Greetings]}>
+      <DisplayIfSignedIn>
+        <Router basepath="/admin">
+          <ProtectedRoute allowedRole="admin" component={AdminRoute} path="*" />
+        </Router>
+      </DisplayIfSignedIn>
+    </Authenticator>
   )
 }
-
-export const pageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`

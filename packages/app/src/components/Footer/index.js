@@ -7,7 +7,10 @@ import {
   TextField,
   Paper,
 } from '@material-ui/core'
-import { Facebook, Youtube, Linkedin, Twitter } from 'mdi-material-ui'
+import Facebook from 'mdi-material-ui/Facebook'
+import Youtube from 'mdi-material-ui/Youtube'
+import Linkedin from 'mdi-material-ui/Linkedin'
+import Twitter from 'mdi-material-ui/Twitter'
 
 function Footer({ classes, theme }) {
   return (

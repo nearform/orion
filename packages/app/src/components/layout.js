@@ -1,7 +1,7 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core'
-import Footer from './Footer'
 
+import Footer from './Footer'
 import MainToolbar from './MainToolbar'
 
 function Layout({ classes, children }) {
@@ -19,7 +19,13 @@ function Layout({ classes, children }) {
 }
 
 const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+  },
   main: {
+    flex: 1,
     padding: theme.spacing.unit,
   },
 })

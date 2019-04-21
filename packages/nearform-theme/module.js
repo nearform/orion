@@ -6,6 +6,7 @@ export * from './index'
 const styles = {
   '@global': {
     body: {
+      overflowY: 'scroll',
       fontFamily: bodyFontFamily,
     },
   },

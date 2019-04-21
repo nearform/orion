@@ -7,12 +7,11 @@ import {
   Typography,
   Tooltip,
 } from '@material-ui/core'
-import {
-  /* TODO: uncomment when edit functionality is implemented
-  Edit,
-  */
-  VerifiedUser,
-} from '@material-ui/icons'
+
+/* TODO: uncomment when edit functionality is implemented
+Edit,
+*/
+import VerifiedUser from '@material-ui/icons/VerifiedUser'
 
 import AdminTable from './AdminTable'
 

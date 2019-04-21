@@ -1,23 +1,82 @@
-import { Auth } from 'aws-amplify'
+import { useEffect, useState } from 'react'
+import { Auth, Hub } from 'aws-amplify'
 
 const isBrowser = typeof window !== `undefined`
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
 const HASURA_ALLOWED_ROLES_KEY = 'x-hasura-allowed-roles'
 const ADMIN_ROLE = 'admin'
 
-export const isAuthenticated = () => isBrowser && !!Auth.user
+const isAuthenticated = async () => {
+  try {
+    const user = await Auth.currentAuthenticatedUser()
 
-export function getUserRoles() {
-  if (!isAuthenticated()) return []
+    return isBrowser && !!user
+  } catch (err) {
+    return false
+  }
+}
+export const isAuthenticatedSync = () => isBrowser && !!Auth.user
+
+const isAdmin = async () => (await getUserRoles()).includes(ADMIN_ROLE)
+export const isAdminSync = () => getUserRolesSync().includes(ADMIN_ROLE)
+
+export const getUserRolesSync = () => {
+  if (!isAuthenticatedSync()) return []
 
   try {
-    const tokenPayload = Auth.user.signInUserSession.idToken.payload
-    const hasuraClaims = JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE])
-
-    return hasuraClaims[HASURA_ALLOWED_ROLES_KEY]
+    return extractUserRolesFromTokenPayload()
   } catch (err) {
     return []
   }
 }
 
-export const isAdmin = () => getUserRoles().includes(ADMIN_ROLE)
+function extractUserRolesFromTokenPayload() {
+  const tokenPayload = Auth.user.signInUserSession.idToken.payload
+  const hasuraClaims = JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE])
+  return hasuraClaims[HASURA_ALLOWED_ROLES_KEY]
+}
+
+async function getUserRoles() {
+  if (!(await isAuthenticated())) return []
+
+  try {
+    return extractUserRolesFromTokenPayload()
+  } catch (err) {
+    return []
+  }
+}
+
+export function useUserRoles() {
+  return useAuthState(getUserRolesSync(), getUserRoles)
+}
+
+export function useIsAdmin() {
+  return useAuthState(isAdminSync(), isAdmin)
+}
+
+export function useIsAuthenticated() {
+  return useAuthState(isAuthenticatedSync(), isAuthenticated)
+}
+
+function useAuthState(initialState, asyncStateGetter) {
+  async function checkState() {
+    setState(await asyncStateGetter())
+  }
+
+  const [state, setState] = useState(initialState)
+
+  useEffect(() => {
+    checkState()
+  }, [asyncStateGetter])
+
+  useAmplifyEvent('auth', checkState)
+
+  return state
+}
+
+function useAmplifyEvent(channel, handler) {
+  useEffect(() => {
+    Hub.listen(channel, handler)
+    return () => Hub.remove(channel, handler)
+  }, [channel, handler])
+}

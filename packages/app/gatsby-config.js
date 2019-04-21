@@ -72,7 +72,7 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: ['/admin/*'] },
+      options: { prefixes: ['/admin/*', '/auth/*'] },
     },
     // include again once the plugin fixes hot-reloading
     // {

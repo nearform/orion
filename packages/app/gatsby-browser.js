@@ -1,6 +1,5 @@
 import React from 'react'
 import Amplify, { Auth, Hub } from 'aws-amplify'
-import { Authenticator, Greetings } from 'aws-amplify-react'
 import { GraphQLClient, ClientContext } from 'graphql-hooks'
 import {
   MuiThemeProvider,
@@ -11,7 +10,7 @@ import {
 import ThemeWrapper, { muiTheme } from './theme.js'
 
 import awsConfig from './src/aws-exports'
-import DisplayIfSignedIn from './src/components/DisplayIfSignedIn'
+import Layout from './src/components/layout'
 
 const client = new GraphQLClient({
   url: process.env.GATSBY_GRAPHQL_API,
@@ -55,9 +54,5 @@ export const wrapRootElement = ({ element }) => {
 }
 
 export const wrapPageElement = ({ element }) => {
-  return (
-    <Authenticator hide={[Greetings]}>
-      <DisplayIfSignedIn>{element}</DisplayIfSignedIn>
-    </Authenticator>
-  )
+  return <Layout>{element}</Layout>
 }

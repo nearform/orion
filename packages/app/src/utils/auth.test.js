@@ -1,6 +1,6 @@
 import { Auth } from 'aws-amplify'
 
-import { isAuthenticated, getUserRoles, isAdmin } from './auth'
+import { isAuthenticatedSync, getUserRolesSync, isAdminSync } from './auth'
 
 beforeEach(() => {
   Auth.user = null
@@ -9,7 +9,7 @@ beforeEach(() => {
 describe('auth', () => {
   describe('isAuthenticated', () => {
     it('should return false when user does not exist', () => {
-      expect(isAuthenticated()).toBe(false)
+      expect(isAuthenticatedSync()).toBe(false)
     })
 
     it('should return true when user exists', () => {
@@ -17,13 +17,13 @@ describe('auth', () => {
         some: 'user',
       }
 
-      expect(isAuthenticated()).toBe(true)
+      expect(isAuthenticatedSync()).toBe(true)
     })
   })
 
   describe('getUserRoles', () => {
     it('should return empty array when user is not authenticated', () => {
-      expect(getUserRoles()).toEqual([])
+      expect(getUserRolesSync()).toEqual([])
     })
 
     it('should return empty array when user is authenticated but has no claims', () => {
@@ -31,7 +31,7 @@ describe('auth', () => {
         some: 'user',
       }
 
-      expect(getUserRoles()).toEqual([])
+      expect(getUserRolesSync()).toEqual([])
     })
 
     it('should return empty array when user is authenticated and has claims but no roles', () => {
@@ -47,7 +47,7 @@ describe('auth', () => {
         },
       }
 
-      expect(getUserRoles()).toEqual([])
+      expect(getUserRolesSync()).toEqual([])
     })
 
     it('should return roles array when user is authenticated and has roles in claims', () => {
@@ -63,7 +63,7 @@ describe('auth', () => {
         },
       }
 
-      expect(getUserRoles()).toEqual(['user'])
+      expect(getUserRolesSync()).toEqual(['user'])
     })
   })
 
@@ -81,7 +81,7 @@ describe('auth', () => {
         },
       }
 
-      expect(isAdmin()).toBe(true)
+      expect(isAdminSync()).toBe(true)
     })
   })
 })

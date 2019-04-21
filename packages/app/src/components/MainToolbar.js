@@ -1,10 +1,10 @@
 import React from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
+import { useStaticQuery, graphql, navigate } from 'gatsby'
 import Img from 'gatsby-image'
 import { Typography, Button, withStyles } from '@material-ui/core'
 import { Auth } from 'aws-amplify'
 
-import { isAdmin } from '../utils/auth'
+import { useIsAdmin, useIsAuthenticated } from '../utils/auth'
 import NavLink from './NavLink'
 
 function MainToolbar({ classes }) {
@@ -32,7 +32,13 @@ function MainToolbar({ classes }) {
     }
   `)
 
-  const doLogout = () => Auth.signOut()
+  const doLogout = () => {
+    Auth.signOut()
+    navigate('/auth')
+  }
+
+  const isAdmin = useIsAdmin()
+  const isAuthenticated = useIsAuthenticated()
 
   return (
     <>
@@ -45,12 +51,17 @@ function MainToolbar({ classes }) {
           <Button partial={false} component={NavLink} to="/">
             Home
           </Button>
-          {isAdmin() && (
+          {!isAuthenticated && (
+            <Button component={NavLink} to="/auth">
+              Login
+            </Button>
+          )}
+          {isAdmin && (
             <Button component={NavLink} to="/admin">
               Admin
             </Button>
           )}
-          <Button onClick={doLogout}>Logout</Button>
+          {isAuthenticated && <Button onClick={doLogout}>Logout</Button>}
         </div>
       </div>
     </>

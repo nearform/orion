@@ -3,15 +3,14 @@ import { Link, graphql } from 'gatsby'
 import slugify from 'slugify'
 import { Typography } from '@material-ui/core'
 
-import Layout from '../components/layout'
 import SEO from '../components/seo'
 
-function Homepage({ data, location }) {
+function Homepage({ data }) {
   const siteTitle = data.site.siteMetadata.title
   const articles = data.knowledgebase.article
 
   return (
-    <Layout location={location}>
+    <>
       <SEO title="All articles" keywords={[`knowledgebase`, `NearForm`]} />
       <Typography variant="h2">{siteTitle}</Typography>
       <Typography variant="subtitle1">
@@ -34,7 +33,7 @@ function Homepage({ data, location }) {
           </div>
         )
       })}
-    </Layout>
+    </>
   )
 }
 
