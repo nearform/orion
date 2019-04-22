@@ -7,7 +7,7 @@ import {
   CssBaseline,
 } from '@material-ui/core'
 
-import ThemeWrapper, { muiTheme } from './theme.js'
+import ThemeWrapper, { theme } from './theme.js'
 
 import awsConfig from './src/aws-exports'
 import Layout from './src/components/layout'
@@ -43,7 +43,7 @@ export async function onClientEntry() {
 export const wrapRootElement = ({ element }) => {
   return (
     <ClientContext.Provider value={client}>
-      <MuiThemeProvider theme={createMuiTheme(muiTheme)}>
+      <MuiThemeProvider theme={createMuiTheme(theme.muiTheme)}>
         <ThemeWrapper>
           <CssBaseline />
           {element}

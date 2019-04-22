@@ -3,17 +3,17 @@ import { useStaticQuery, graphql, navigate } from 'gatsby'
 import Img from 'gatsby-image'
 import { Typography, Button, withStyles } from '@material-ui/core'
 import { Auth } from 'aws-amplify'
+import { PaddedContainer } from 'components'
 
 import { useIsAdmin, useIsAuthenticated } from '../utils/auth'
 import NavLink from './NavLink'
-import { PaddedContainer } from 'components'
 
 function MainToolbar({ classes }) {
   const {
     site: {
       siteMetadata: { title },
     },
-    file: {
+    logo: {
       childImageSharp: { fixed },
     },
   } = useStaticQuery(graphql`
@@ -23,7 +23,7 @@ function MainToolbar({ classes }) {
           title
         }
       }
-      file(name: { eq: "logo" }) {
+      logo: file(name: { eq: "logo" }) {
         childImageSharp {
           fixed(height: 30) {
             ...GatsbyImageSharpFixed

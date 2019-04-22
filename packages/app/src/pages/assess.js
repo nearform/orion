@@ -11,19 +11,16 @@ import {
   TextField,
   Button,
 } from '@material-ui/core'
-import { graphql } from 'gatsby'
 import { AssessmentProgress, PaddedContainer } from 'components'
 
 import SEO from '../components/seo'
 import ImagePlaceholder from '../components/ImagePlaceholder'
 import SectionTitle from '../components/SectionTitle'
 
-function Assess({ data, theme, classes }) {
-  const siteTitle = data.site.siteMetadata.title
-
+function Assess({ theme, classes }) {
   return (
     <>
-      <SEO title={siteTitle} />
+      <SEO title="Your assessments" />
       <PaddedContainer>
         <Typography variant="h1" gutterBottom>
           Your assessments
@@ -109,15 +106,13 @@ function Assess({ data, theme, classes }) {
           </Grid>
         </div>
         <div className={classes.section}>
-          <Grid container spacing={theme.spacing.unit * 4}>
+          <Grid container spacing={theme.spacing.unit * 3}>
             <Grid item>
               <Typography variant="h5" gutterBottom>
                 to enter the assessment please click on an area of the model
               </Typography>
             </Grid>
           </Grid>
-        </div>
-        <div className={classes.section}>
           <Grid container spacing={theme.spacing.unit * 2}>
             <Grid item xs={3}>
               <SectionTitle barColor={theme.palette.primary.dark}>
@@ -278,7 +273,7 @@ function Assess({ data, theme, classes }) {
 
 const styles = theme => ({
   section: {
-    margin: `${theme.spacing.unit * 2}px 0`,
+    margin: `${theme.spacing.unit * 3}px 0`,
   },
   keyInformationInput: {
     marginBottom: theme.spacing.unit * 2,
@@ -295,13 +290,3 @@ const styles = theme => ({
 })
 
 export default withStyles(styles, { withTheme: true })(Assess)
-
-export const pageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`

@@ -12,8 +12,26 @@ import Youtube from 'mdi-material-ui/Youtube'
 import Linkedin from 'mdi-material-ui/Linkedin'
 import Twitter from 'mdi-material-ui/Twitter'
 import { PaddedContainer } from 'components'
+import Img from 'gatsby-image'
+import { useStaticQuery, graphql } from 'gatsby'
 
 function Footer({ classes, theme }) {
+  const {
+    largeLogo: {
+      childImageSharp: { fixed },
+    },
+  } = useStaticQuery(graphql`
+    query {
+      largeLogo: file(name: { eq: "large-logo" }) {
+        childImageSharp {
+          fixed(height: 50) {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
+    }
+  `)
+
   return (
     <Paper className={classes.root} elevation={0}>
       <PaddedContainer>
@@ -71,7 +89,7 @@ function Footer({ classes, theme }) {
             </Typography>
             <div className={classes.horizontalContainer}>
               <TextField placeholder="your email address" />
-              <Button size="small" color="primary" variant="contained">
+              <Button color="secondary" variant="contained">
                 subscribe
               </Button>
             </div>
@@ -80,6 +98,7 @@ function Footer({ classes, theme }) {
               <Youtube />
               <Twitter />
               <Linkedin />
+              <Img fixed={fixed} />
             </div>
           </Grid>
         </Grid>
@@ -113,6 +132,7 @@ const styles = theme => ({
     '& > * + *': {
       marginLeft: theme.spacing.unit * 2,
     },
+    alignItems: 'flex-end',
   },
 })
 

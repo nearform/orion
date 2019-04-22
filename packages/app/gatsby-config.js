@@ -7,45 +7,14 @@ const THEME_NAME = 'efqm-theme'
 const path = require('path')
 const currentTheme = require(THEME_NAME)
 
-const metadata = {
-  'efqm-theme': {
-    title: `EFQM Knowledgebase`,
-    author: `EFQM`,
-    description: `EFQM's Digital Knowledgebase.`,
-    siteUrl: `https://www.knowledge-base.efqm.org`,
-    social: {
-      twitter: `EFQM`,
-    },
-    shortName: `EFQM-KB`,
-  },
-  'nearform-theme': {
-    title: `NearForm Knowledgebase`,
-    author: `NearForm`,
-    description: `NearForm's Open Source Knowledgebase.`,
-    siteUrl: `https://neaform.github.io/knowledgebase`,
-    social: {
-      twitter: `nearform`,
-    },
-    shortName: `NFKB`,
-  },
-}
-
-const { title, author, description, siteUrl, social, shortName } = metadata[
-  THEME_NAME
-]
-
 const themeAssetsPath = path.join(
   path.dirname(require.resolve(THEME_NAME)),
-  `assets`
+  currentTheme.config.assetsPath
 )
 
 module.exports = {
   siteMetadata: {
-    title,
-    author,
-    description,
-    siteUrl,
-    social,
+    ...currentTheme.metadata,
   },
   plugins: [
     {
@@ -60,8 +29,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: title,
-        short_name: shortName,
+        name: currentTheme.metadata.title,
+        short_name: currentTheme.metadata.shortName,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,
@@ -84,7 +53,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
-        fonts: currentTheme.googleFonts,
+        fonts: currentTheme.theme.googleFonts,
       },
     },
     {
