@@ -1,30 +1,68 @@
 const fontFamily = (exports.fontFamily = 'Lato, sans-serif')
 
-// Placeholder until we have complete typography guidelines
-const headings = {
+const typography = {
   h1: {
     fontFamily,
     fontWeight: '900',
+    fontSize: 28,
+    lineHeight: 1.29,
+    letterSpacing: 0.5,
   },
   h2: {
     fontFamily,
-    fontWeight: '900',
+    fontWeight: 'bold',
+    fontSize: 18,
+    lineHeight: 'normal',
+    letterSpacing: -0.1,
   },
   h3: {
     fontFamily,
-    fontWeight: '700',
+    fontWeight: 'bold',
   },
   h4: {
     fontFamily,
-    fontWeight: '500',
+    fontWeight: 'bold',
   },
   h5: {
     fontFamily,
-    fontWeight: '700',
+    fontWeight: 'bold',
+    fontSize: 11,
+    // lineHeight: 'normal',
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
   },
   h6: {
     fontFamily,
-    fontWeight: '500',
+    fontWeight: '900',
+    fontSize: 12,
+    // lineHeight: 'normal',
+    letterSpacing: 1.8,
+    textTransform: 'uppercase',
+  },
+  body1: {
+    fontFamily,
+    fontSize: 16,
+    // lineHeight: 1.31,
+    letterSpacing: 'normal',
+  },
+  body2: {
+    fontFamily,
+    fontSize: 14,
+    // lineHeight: 0.86,
+    letterSpacing: 'normal',
+  },
+  placeholder: {
+    fontFamily,
+    fontSize: 14,
+    lineHeight: 'normal',
+    letterSpacing: -0.1,
+  },
+  button: {
+    fontFamily,
+    fontSize: 12,
+    fontWeight: '900',
+    lineHeight: 'normal',
+    letterSpacing: 1.8,
   },
 }
 
@@ -69,13 +107,8 @@ exports.muiTheme = {
   typography: {
     useNextVariants: 'true',
     fontFamily,
-    fontWeight: 'light',
-    ...headings,
-    button: {
-      fontSize: 12,
-      letterSpacing: 2.5,
-      fontWeight: '600',
-    },
+    fontWeight: 'normal',
+    ...typography,
   },
   palette: {
     // These roles will be refined as designs are updated

@@ -92,10 +92,10 @@ export default function UserGroups() {
 
   return (
     <div>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         Groups
       </Typography>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         Create group
       </Typography>
       <Formik
@@ -138,7 +138,7 @@ export default function UserGroups() {
           </Form>
         )}
       </Formik>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         Group list
       </Typography>
       <Table>

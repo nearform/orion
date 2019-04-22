@@ -17,7 +17,7 @@ function Footer({ classes, theme }) {
     <Paper className={classes.root} elevation={0}>
       <Grid container spacing={theme.spacing.unit * 3}>
         <Grid item xs>
-          <Typography variant="button" color="secondary" gutterBottom>
+          <Typography variant="h5" gutterBottom>
             Get in touch
           </Typography>
           <Typography component="div">
@@ -38,7 +38,7 @@ function Footer({ classes, theme }) {
           </Typography>
         </Grid>
         <Grid item xs>
-          <Typography variant="button" color="secondary" gutterBottom>
+          <Typography variant="h5" gutterBottom>
             support
           </Typography>
           <Typography component="div">
@@ -49,7 +49,7 @@ function Footer({ classes, theme }) {
           </Typography>
         </Grid>
         <Grid item xs>
-          <Typography variant="button" color="secondary" gutterBottom>
+          <Typography variant="h5" gutterBottom>
             resources
           </Typography>
           <Typography component="div">
@@ -60,7 +60,7 @@ function Footer({ classes, theme }) {
           </Typography>
         </Grid>
         <Grid item xs>
-          <Typography variant="button" color="secondary" gutterBottom>
+          <Typography variant="h5" gutterBottom>
             subscribe to our newsletter
           </Typography>
           <Typography gutterBottom>

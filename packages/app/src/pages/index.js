@@ -12,14 +12,14 @@ function Homepage({ data }) {
   return (
     <>
       <SEO title="All articles" keywords={[`knowledgebase`, `NearForm`]} />
-      <Typography variant="h2">{siteTitle}</Typography>
-      <Typography variant="subtitle1">
-        Not much to see yet, but stay tuned
+      <Typography variant="h1" gutterBottom>
+        {siteTitle}
       </Typography>
+      <Typography variant="h6">Not much to see yet, but stay tuned</Typography>
       {articles.map(article => {
         return (
           <div key={article.id}>
-            <Typography variant="h3">
+            <Typography variant="h2">
               <Link to={`${article.id}/${slugify(article.title)}`}>
                 {article.title}
               </Link>

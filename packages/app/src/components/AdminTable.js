@@ -32,7 +32,7 @@ export default function AdminTable({
 
   return (
     <>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         {pageTitle}
       </Typography>
       {Modal && (
