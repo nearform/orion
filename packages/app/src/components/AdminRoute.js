@@ -1,6 +1,7 @@
 import React from 'react'
 import { Router } from '@reach/router'
 import { withStyles } from '@material-ui/core'
+import { PaddedContainer } from 'components'
 
 import PendingUsers from './PendingUsers'
 import AllUsers from './AllUsers'
@@ -13,13 +14,15 @@ function AdminRoute({ classes }) {
   return (
     <>
       <SEO title="Admin" />
-      <AdminToolbar className={classes.toolbar} />
-      <Router>
-        <PendingUsers default path="pending-users" />
-        <AllUsers path="all-users" />
-        <UserGroups path="groups" />
-        <GroupUsers path="groups/:groupId/:groupName" />
-      </Router>
+      <PaddedContainer>
+        <AdminToolbar className={classes.toolbar} />
+        <Router>
+          <PendingUsers default path="pending-users" />
+          <AllUsers path="all-users" />
+          <UserGroups path="groups" />
+          <GroupUsers path="groups/:groupId/:groupName" />
+        </Router>
+      </PaddedContainer>
     </>
   )
 }

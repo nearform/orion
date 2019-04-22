@@ -3,6 +3,8 @@ import T from 'prop-types'
 import { withStyles, Grid, Typography } from '@material-ui/core'
 import classnames from 'classnames'
 
+import { PaddedContainer } from '..'
+
 const progressWidthPercent = new Array(10).fill(null).reduce(
   (acc, _, i) => ({
     ...acc,
@@ -27,20 +29,24 @@ function AssessmentProgress({
     classes[`progress${Math.min(Math.ceil(progressPercent / 10) * 10, 100)}`]
 
   return (
-    <div className={classes.root}>
-      <Grid container spacing={theme.spacing.unit * 2} className={classes.grid}>
-        <Grid item xs>
-          <Typography color="inherit" variant="h6">
-            Overall progress
-          </Typography>
+    <PaddedContainer className={classes.root}>
+      <Grid container spacing={theme.spacing.unit * 2} alignItems="center">
+        <Grid item xs={3}>
+          <Grid container spacing={theme.spacing.unit * 3} alignItems="center">
+            <Grid item>
+              <Typography color="inherit" variant="h2">
+                Overall progress
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography color="inherit" variant="h1">
+                {progress}%
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs>
-          <Typography color="inherit" variant="h5">
-            {progress}%
-          </Typography>
-        </Grid>
-        <Grid item xs>
-          <Typography variant="button" color="inherit" gutterBottom>
+          <Typography variant="h5" color="inherit" gutterBottom>
             direction
           </Typography>
           <div
@@ -51,7 +57,7 @@ function AssessmentProgress({
           />
         </Grid>
         <Grid item xs>
-          <Typography variant="button" color="inherit" gutterBottom>
+          <Typography variant="h5" color="inherit" gutterBottom>
             execution
           </Typography>
           <div
@@ -62,7 +68,7 @@ function AssessmentProgress({
           />
         </Grid>
         <Grid item xs>
-          <Typography variant="button" color="inherit" gutterBottom>
+          <Typography variant="h5" color="inherit" gutterBottom>
             results
           </Typography>
           <div
@@ -73,7 +79,7 @@ function AssessmentProgress({
           />
         </Grid>
       </Grid>
-    </div>
+    </PaddedContainer>
   )
 }
 
@@ -100,9 +106,6 @@ const styles = theme => ({
     backgroundColor: theme.palette.primary.dark,
     height: 96,
     color: 'white',
-  },
-  grid: {
-    padding: `0 ${theme.spacing.unit * 4}px`,
   },
   progressBar: {
     borderRadius: 10,

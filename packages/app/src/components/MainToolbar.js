@@ -6,6 +6,7 @@ import { Auth } from 'aws-amplify'
 
 import { useIsAdmin, useIsAuthenticated } from '../utils/auth'
 import NavLink from './NavLink'
+import { PaddedContainer } from 'components'
 
 function MainToolbar({ classes }) {
   const {
@@ -43,27 +44,29 @@ function MainToolbar({ classes }) {
   return (
     <>
       <div className={classes.gradient} />
-      <div className={classes.root}>
-        <Img className={classes.logo} fixed={fixed} />
-        <Typography variant="h5">{title}</Typography>
-        <div className={classes.grow} />
-        <div className={classes.linksContainer}>
-          <Button partial={false} component={NavLink} to="/">
-            Home
-          </Button>
-          {!isAuthenticated && (
-            <Button component={NavLink} to="/auth">
-              Login
+      <PaddedContainer>
+        <div className={classes.root}>
+          <Img className={classes.logo} fixed={fixed} />
+          <Typography variant="h2">{title}</Typography>
+          <div className={classes.grow} />
+          <div className={classes.linksContainer}>
+            <Button component={NavLink} to="/assess">
+              Assess Base
             </Button>
-          )}
-          {isAdmin && (
-            <Button component={NavLink} to="/admin">
-              Admin
-            </Button>
-          )}
-          {isAuthenticated && <Button onClick={doLogout}>Logout</Button>}
+            {!isAuthenticated && (
+              <Button component={NavLink} to="/auth">
+                Login
+              </Button>
+            )}
+            {isAdmin && (
+              <Button component={NavLink} to="/admin">
+                Admin
+              </Button>
+            )}
+            {isAuthenticated && <Button onClick={doLogout}>Logout</Button>}
+          </div>
         </div>
-      </div>
+      </PaddedContainer>
     </>
   )
 }
@@ -80,7 +83,8 @@ const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 4,
   },
   logo: {
     marginRight: theme.spacing.unit * 2,

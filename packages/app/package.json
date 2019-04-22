@@ -13,6 +13,7 @@
     "aws-amplify": "^1.1.26",
     "aws-amplify-react": "^2.3.6",
     "classnames": "^2.2.6",
+    "components": "^1.0.0",
     "core-js": "^2.6.5",
     "formik": "^1.5.2",
     "formik-material-ui": "0.0.16",
