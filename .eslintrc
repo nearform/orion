@@ -1,0 +1,41 @@
+{
+  "root": true,
+  "extends": [
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "env": {
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
+  "rules": {
+    // taken over from gastby config but adapted to not enforce return keyword
+
+    "arrow-body-style": [
+      "error",
+      "as-needed",
+      { "requireReturnForObjectLiteral": false }
+    ],
+    // taken over from gastby config
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowTaggedTemplates": true
+      }
+    ],
+    "consistent-return": ["error"],
+    "no-console": "off",
+    "no-inner-declarations": "off",
+    // taken over from gastby config but adapted to not enforce backtics
+    "quotes": ["error", "single", {
+      "avoidEscape": true
+    }],
+    // taken over from gastby config
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off"
+  }
+}

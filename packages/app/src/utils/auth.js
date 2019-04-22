@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Auth, Hub } from 'aws-amplify'
 
-const isBrowser = typeof window !== `undefined`
+const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
 const HASURA_ALLOWED_ROLES_KEY = 'x-hasura-allowed-roles'
 const ADMIN_ROLE = 'admin'

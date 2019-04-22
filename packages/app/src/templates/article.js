@@ -2,12 +2,10 @@ import React from 'react'
 import { Link, graphql } from 'gatsby'
 import { Typography } from '@material-ui/core'
 
-import Layout from '../components/layout'
 import SEO from '../components/seo'
 
 class ArticleTemplate extends React.Component {
   render() {
-    const siteTitle = this.props.data.site.siteMetadata.title
     const { previous, next, article } = this.props.pageContext
 
     return (

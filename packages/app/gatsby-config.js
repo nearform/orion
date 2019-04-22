@@ -18,40 +18,40 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: `theme-assets`,
+        name: 'theme-assets',
         path: themeAssetsPath,
       },
     },
-    `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: 'gatsby-plugin-manifest',
       options: {
         name: currentTheme.metadata.title,
         short_name: currentTheme.metadata.shortName,
-        start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
+        start_url: '/',
+        background_color: '#ffffff',
+        theme_color: '#663399',
+        display: 'minimal-ui',
         icon: path.join(themeAssetsPath, 'logo.png'),
       },
     },
-    `gatsby-plugin-react-helmet`,
+    'gatsby-plugin-react-helmet',
     {
-      resolve: `gatsby-plugin-create-client-paths`,
+      resolve: 'gatsby-plugin-create-client-paths',
       options: { prefixes: ['/admin/*', '/auth/*'] },
     },
     // include again once the plugin fixes hot-reloading
     // {
-    //   resolve: `gatsby-plugin-material-ui`,
+    //   resolve: 'gatsby-plugin-material-ui',
     //   options: {
     //     theme: activeTheme.muiTheme,
     //   },
     // },
     {
-      resolve: `gatsby-plugin-google-fonts`,
+      resolve: 'gatsby-plugin-google-fonts',
       options: {
         fonts: currentTheme.theme.googleFonts,
       },

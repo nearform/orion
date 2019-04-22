@@ -1,10 +1,10 @@
 exports.metadata = {
-  title: `NearForm Assess Base`,
-  author: `NearForm`,
-  description: `NearForm's Open Source Assess Base.`,
-  siteUrl: `https://neaform.github.io/knowledgebase`,
+  title: 'NearForm Assess Base',
+  author: 'NearForm',
+  description: "NearForm's Open Source Assess Base.",
+  siteUrl: 'https://neaform.github.io/knowledgebase',
   social: {
-    twitter: `nearform`,
+    twitter: 'nearform',
   },
-  shortName: `NF-AB`,
+  shortName: 'NF-AB',
 }

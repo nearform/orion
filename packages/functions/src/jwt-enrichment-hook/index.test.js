@@ -1,8 +1,8 @@
-jest.mock('../graphql')
-
 import { handler } from './'
 import graphql from '../graphql'
 import getUserByCognitoId from './graphql/get-user-by-cognito-id.graphql'
+
+jest.mock('../graphql')
 
 const originalEvent = {
   version: '1',

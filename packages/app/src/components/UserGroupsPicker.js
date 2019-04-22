@@ -43,7 +43,8 @@ function UserGroupsPicker({ selected: user, onClose, onApply }) {
     try {
       const { data, error } = await doApplyGroupChange(user.id, currentGroupId)
       if (error) {
-        return setError(error)
+        setError(error)
+        return
       }
       if (
         data &&
@@ -53,7 +54,8 @@ function UserGroupsPicker({ selected: user, onClose, onApply }) {
         // if update failed it means there was no entry for user before so we need to add it
         const { error } = await doInsertUserGroup(user.id, currentGroupId)
         if (error) {
-          return setError(error)
+          setError(error)
+          return
         }
       }
       handleClose(fn)
@@ -114,7 +116,7 @@ function UserGroupsPicker({ selected: user, onClose, onApply }) {
 }
 
 UserGroupsPicker.propTypes = {
-  user: T.shape({
+  selected: T.shape({
     id: T.number,
     name: T.string,
   }),
