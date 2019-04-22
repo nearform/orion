@@ -16,49 +16,12 @@ import {
 import { TextField } from 'formik-material-ui'
 import * as Yup from 'yup'
 
-const getGroups = `
-query getGroups {
-  group {
-    id
-    name
-    roles {
-      role {
-        name
-      }
-    }
-  }
-}`
-
-const createGroupMutation = `
-mutation createGroup ($name: String!, $roleId: Int!) {
-  insert_group(objects: {name: $name, roles: {data: {role_id: $roleId}}}) {
-    returning {
-      id
-      name
-    }
-  }
-}
-`
-
-const getRoles = `
-query getRoles {
-  role {
-    id
-    name
-  }
-}
-`
-
-const deleteGroupMutation = `
-mutation deleteGroup($id: Int!) {
-  delete_group_role(where: {group_id: { _eq: $id}}) {
-    affected_rows
-  }
-  delete_group(where: {id: {_eq: $id}}) {
-    affected_rows
-  }
-}
-`
+import {
+  createGroupMutation,
+  getGroupsWithRoles,
+  deleteGroupMutation,
+  getRoles,
+} from '../queries'
 
 const GroupSchema = Yup.object().shape({
   name: Yup.string().required(),
@@ -73,7 +36,7 @@ export default function UserGroups() {
     error: groupsError,
     data: groups,
     refetch: refetchGroups,
-  } = useQuery(getGroups)
+  } = useQuery(getGroupsWithRoles)
 
   const { loading: rolesLoading, error: rolesError, data: roles } = useQuery(
     getRoles

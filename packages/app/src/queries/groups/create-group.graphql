@@ -1,0 +1,10 @@
+mutation createGroup($name: String!, $roleId: Int!) {
+  insert_group(
+    objects: { name: $name, roles: { data: { role_id: $roleId } } }
+  ) {
+    returning {
+      id
+      name
+    }
+  }
+}

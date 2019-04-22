@@ -12,31 +12,11 @@ import {
   MenuItem,
 } from '@material-ui/core'
 
-const getGroups = `query getGroups {
-  group {
-    id
-    name
-  }
-}`
-
-const applyUserGroupChangeMutation = `
-mutation updateUserGroup($userId: Int!, $groupId: Int!) {
-  update_user(where: {id: {_eq: $userId}}, _set: {pending: false}) {
-    affected_rows
-  }
-  update_user_group(where: {user_id: {_eq: $userId}}, _set: {group_id: $groupId}) {
-    affected_rows
-  }
-}
-`
-
-const insertUserGroupMutation = `
-mutation insertUserGroup($userId: Int!, $groupId: Int!) {
-  insert_user_group(objects: {user_id: $userId, group_id: $groupId}) {
-    affected_rows
-  }
-}
-`
+import {
+  addUserGroupMutation,
+  getGroups,
+  assignUserGroupMutation,
+} from '../queries'
 
 function UserGroupsPicker({ selected: user, onClose, onApply }) {
   const [currentGroupId, setGroupId] = useState('')
@@ -52,8 +32,8 @@ function UserGroupsPicker({ selected: user, onClose, onApply }) {
   )
   const groups = data ? data.group || [] : []
 
-  const [applyUserGroupChange] = useMutation(applyUserGroupChangeMutation)
-  const [applyInsertUserGroup] = useMutation(insertUserGroupMutation)
+  const [applyUserGroupChange] = useMutation(assignUserGroupMutation)
+  const [applyInsertUserGroup] = useMutation(addUserGroupMutation)
 
   const doApplyGroupChange = async (userId, groupId) =>
     applyUserGroupChange({ variables: { userId, groupId } })

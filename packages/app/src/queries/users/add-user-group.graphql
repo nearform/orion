@@ -1,0 +1,5 @@
+mutation addUserGroup($userId: Int!, $groupId: Int!) {
+  insert_user_group(objects: { user_id: $userId, group_id: $groupId }) {
+    affected_rows
+  }
+}

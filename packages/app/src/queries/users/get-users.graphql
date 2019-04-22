@@ -1,0 +1,18 @@
+query getUsers {
+  user {
+    id
+    name
+    pending
+    signupRequest
+    user_groups {
+      group {
+        name
+      }
+    }
+    user_roles {
+      role {
+        name
+      }
+    }
+  }
+}

@@ -5,23 +5,7 @@ import { Typography } from '@material-ui/core'
 import AllUsers from './AllUsers.js'
 
 // TODO: find a way to alter AllUsers query to reduce duplication
-const query = `query getUsersInGroup ($groupId: Int!) {
-  user (where: {user_groups: { group_id: { _in: [$groupId] }}}){
-    id
-    name
-    signupRequest
-    user_groups {
-      group {
-        name
-      }
-    }
-    user_roles {
-      role {
-        name
-      }
-    }
-  }
-}`
+import { getUsersInGroup } from '../queries'
 
 export default function GroupUsers({ groupName, groupId }) {
   const pageTitle = (
@@ -35,7 +19,11 @@ export default function GroupUsers({ groupName, groupId }) {
   )
 
   return (
-    <AllUsers query={query} variables={{ groupId }} pageTitle={pageTitle} />
+    <AllUsers
+      query={getUsersInGroup}
+      variables={{ groupId }}
+      pageTitle={pageTitle}
+    />
   )
 }
 
