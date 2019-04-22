@@ -27,6 +27,7 @@ const typography = {
     fontFamily,
     fontWeight: 'bold',
     fontSize: 11,
+    // from zeplin style guide but disabled temporarily
     // lineHeight: 'normal',
     letterSpacing: 1.2,
     textTransform: 'uppercase',
@@ -35,6 +36,7 @@ const typography = {
     fontFamily,
     fontWeight: '900',
     fontSize: 12,
+    // from zeplin style guide but disabled temporarily
     // lineHeight: 'normal',
     letterSpacing: 1.8,
     textTransform: 'uppercase',
@@ -42,12 +44,14 @@ const typography = {
   body1: {
     fontFamily,
     fontSize: 16,
+    // from zeplin style guide but disabled temporarily
     // lineHeight: 1.31,
     letterSpacing: 'normal',
   },
   body2: {
     fontFamily,
     fontSize: 14,
+    // from zeplin style guide but disabled temporarily
     // lineHeight: 0.86,
     letterSpacing: 'normal',
   },
