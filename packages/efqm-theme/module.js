@@ -1,6 +1,6 @@
 import { withStyles } from '@material-ui/core'
 
-import { fontFamily } from './index'
+import { theme } from './index'
 
 export * from './index'
 
@@ -8,7 +8,7 @@ const styles = {
   '@global': {
     body: {
       overflowY: 'scroll',
-      fontFamily,
+      fontFamily: theme.fontFamily,
     },
   },
 }

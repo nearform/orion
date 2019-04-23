@@ -1,5 +1,5 @@
 import React from 'react'
-import { useStaticQuery, graphql, navigate } from 'gatsby'
+import { useStaticQuery, graphql, navigate, Link } from 'gatsby'
 import Img from 'gatsby-image'
 import { Typography, Button, withStyles } from '@material-ui/core'
 import { Auth } from 'aws-amplify'
@@ -7,6 +7,7 @@ import { PaddedContainer } from 'components'
 
 import { useIsAdmin, useIsAuthenticated } from '../utils/auth'
 import NavLink from './NavLink'
+import LanguageSwitcher from './LanguageSwitcher'
 
 function MainToolbar({ classes }) {
   const {
@@ -40,14 +41,15 @@ function MainToolbar({ classes }) {
 
   const isAdmin = useIsAdmin()
   const isAuthenticated = useIsAuthenticated()
-
   return (
     <>
       <div className={classes.gradient} />
       <PaddedContainer>
         <div className={classes.root}>
-          <Img className={classes.logo} fixed={fixed} />
-          <Typography variant="h2">{title}</Typography>
+          <Link to="/" className={classes.logoHomeLink}>
+            <Img className={classes.logo} fixed={fixed} />
+            <Typography variant="h2">{title}</Typography>
+          </Link>
           <div className={classes.grow} />
           <div className={classes.linksContainer}>
             <Button component={NavLink} to="/assess">
@@ -64,6 +66,7 @@ function MainToolbar({ classes }) {
               </Button>
             )}
             {isAuthenticated && <Button onClick={doLogout}>Logout</Button>}
+            <LanguageSwitcher />
           </div>
         </div>
       </PaddedContainer>
@@ -86,6 +89,10 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 4,
   },
+  logoHomeLink: {
+    display: 'flex',
+    alignItems: 'center',
+  },
   logo: {
     marginRight: theme.spacing.unit * 2,
   },
@@ -93,6 +100,7 @@ const styles = theme => ({
     flexGrow: 1,
   },
   linksContainer: {
+    display: 'flex',
     '& > * + *': {
       marginLeft: theme.spacing.unit * 4,
     },

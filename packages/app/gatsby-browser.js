@@ -1,5 +1,4 @@
 import React from 'react'
-import Amplify, { Auth, Hub } from 'aws-amplify'
 import { GraphQLClient, ClientContext } from 'graphql-hooks'
 import {
   MuiThemeProvider,
@@ -7,37 +6,18 @@ import {
   CssBaseline,
 } from '@material-ui/core'
 
+import * as auth from './utils/auth'
+import * as i18n from './utils/i18n'
 import ThemeWrapper, { theme } from './theme.js'
-
-import awsConfig from './src/aws-exports'
 import Layout from './src/components/layout'
 
 const client = new GraphQLClient({
   url: process.env.GATSBY_GRAPHQL_API,
 })
 
-const authListener = event => {
-  if (event.payload.event === 'signIn') {
-    setClientToken(event.payload.data.signInUserSession)
-  }
-}
-
-Hub.listen('auth', authListener)
-
-const setClientToken = session => {
-  client.setHeader('Authorization', `Bearer ${session.idToken.jwtToken}`)
-}
-
 export async function onClientEntry() {
-  Amplify.configure(awsConfig)
-
-  try {
-    const currentSession = await Auth.currentSession()
-
-    setClientToken(currentSession)
-  } catch (err) {
-    // no authenticated user, it's fine
-  }
+  await auth.init(client)
+  await i18n.init()
 }
 
 export const wrapRootElement = ({ element }) => {

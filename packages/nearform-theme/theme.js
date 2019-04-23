@@ -1,4 +1,4 @@
-const bodyFontFamily = (exports.bodyFontFamily = 'Didact Gothic, sans-serif')
+const fontFamily = (exports.fontFamily = 'Didact Gothic, sans-serif')
 const headingFontFamily = 'Poppins, sans-serif'
 
 const headings = new Array(6)
@@ -53,7 +53,7 @@ exports.muiTheme = {
   },
   typography: {
     useNextVariants: 'true',
-    fontFamily: bodyFontFamily,
+    fontFamily: fontFamily,
     ...headings,
     button: {
       letterSpacing: 2,

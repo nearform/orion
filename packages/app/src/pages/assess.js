@@ -11,6 +11,7 @@ import {
   TextField,
   Button,
 } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
 import { AssessmentProgress, PaddedContainer } from 'components'
 
 import SEO from '../components/seo'
@@ -18,12 +19,14 @@ import ImagePlaceholder from '../components/ImagePlaceholder'
 import SectionTitle from '../components/SectionTitle'
 
 function Assess({ theme, classes }) {
+  const { t } = useTranslation()
+
   return (
     <>
-      <SEO title="Your assessments" />
+      <SEO title={t('Your assessments')} />
       <PaddedContainer>
         <Typography variant="h1" gutterBottom>
-          Your assessments
+          {t('Your assessments')}
         </Typography>
         <div className={classes.section}>
           <Typography variant="h3" gutterBottom>
