@@ -18,15 +18,17 @@ function Layout({ classes, children }) {
   )
 }
 
-const styles = theme => ({
+const styles = {
   root: {
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
   },
   main: {
+    display: 'flex',
+    flexDirection: 'column',
     flex: 1,
   },
-})
+}
 
 export default withStyles(styles)(Layout)

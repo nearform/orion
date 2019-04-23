@@ -13,13 +13,36 @@ import {
 } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import { AssessmentProgress, PaddedContainer } from 'components'
+import { Link } from 'gatsby'
 
-import SEO from '../components/seo'
-import ImagePlaceholder from '../components/ImagePlaceholder'
-import SectionTitle from '../components/SectionTitle'
+import SEO from '../../components/seo'
+import ImagePlaceholder from '../../components/ImagePlaceholder'
+import SectionTitle from '../../components/SectionTitle'
 
 function Assess({ theme, classes }) {
   const { t } = useTranslation()
+
+  const areas = [
+    {
+      name: 'direction',
+      color: theme.palette.primary.light,
+      sections: ['purpose & strategy', 'organisational leadership & culture'],
+    },
+    {
+      name: 'execution',
+      color: theme.palette.primary.main,
+      sections: [
+        'engaging with stakeholders',
+        'creating sustainable value',
+        'driving performance & transformation',
+      ],
+    },
+    {
+      name: 'results',
+      color: theme.palette.secondary.dark,
+      sections: ['stakeholder perceptions', 'organisational performance'],
+    },
+  ]
 
   return (
     <>
@@ -122,117 +145,44 @@ function Assess({ theme, classes }) {
                 efqm excellence model 2020
               </SectionTitle>
             </Grid>
-            <Grid
-              item
-              xs
-              container
-              spacing={theme.spacing.unit * 3}
-              direction="column"
-            >
-              <Grid item>
-                <SectionTitle barColor={theme.palette.primary.light}>
-                  direction
-                </SectionTitle>
+            {areas.map(area => (
+              <Grid
+                key={area.name}
+                item
+                xs
+                container
+                spacing={theme.spacing.unit * 3}
+                direction="column"
+              >
+                <Grid item>
+                  <SectionTitle barColor={area.color}>{area.name}</SectionTitle>
+                </Grid>
+                {area.sections.map(section => (
+                  <Grid item key={section}>
+                    <Typography
+                      component={Link}
+                      to="assess/section"
+                      state={{
+                        area: area.name,
+                        section,
+                        color: area.color,
+                      }}
+                      variant="h3"
+                      gutterBottom
+                      style={{ color: area.color }}
+                    >
+                      {section}
+                    </Typography>
+                    <Typography
+                      variant="h4"
+                      className={classes.sectionProgress}
+                    >
+                      0% complete
+                    </Typography>
+                  </Grid>
+                ))}{' '}
               </Grid>
-              <Grid item>
-                <Typography
-                  variant="h3"
-                  gutterBottom
-                  className={classes.colorPrimaryLight}
-                >
-                  purpose &amp; strategy
-                </Typography>
-                <Typography variant="h4" className={classes.colorPrimaryDark}>
-                  0% complete
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant="h3"
-                  gutterBottom
-                  className={classes.colorPrimaryLight}
-                >
-                  organisational leadership &amp; culture
-                </Typography>
-                <Typography variant="h4" className={classes.colorPrimaryDark}>
-                  0% complete
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              xs
-              container
-              spacing={theme.spacing.unit * 3}
-              direction="column"
-            >
-              <Grid item>
-                <SectionTitle barColor={theme.palette.primary.main}>
-                  execution
-                </SectionTitle>
-              </Grid>
-              <Grid item>
-                <Typography variant="h3" gutterBottom color="primary">
-                  engaging with stakeholders
-                </Typography>
-                <Typography variant="h4" className={classes.colorPrimaryDark}>
-                  0% complete
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant="h3" gutterBottom color="primary">
-                  creating sustainable value
-                </Typography>
-                <Typography variant="h4" className={classes.colorPrimaryDark}>
-                  0% complete
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant="h3" gutterBottom color="primary">
-                  driving performance &amp; transformation
-                </Typography>
-                <Typography variant="h4" className={classes.colorPrimaryDark}>
-                  0% complete
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              xs
-              container
-              spacing={theme.spacing.unit * 3}
-              direction="column"
-            >
-              <Grid item>
-                <SectionTitle barColor={theme.palette.secondary.dark}>
-                  results
-                </SectionTitle>
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant="h3"
-                  gutterBottom
-                  className={classes.colorSecondaryDark}
-                >
-                  stakeholder perceptions
-                </Typography>
-                <Typography variant="h4" className={classes.colorPrimaryDark}>
-                  0% complete
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant="h3"
-                  gutterBottom
-                  className={classes.colorSecondaryDark}
-                >
-                  organisational performance
-                </Typography>
-                <Typography variant="h4" className={classes.colorPrimaryDark}>
-                  0% complete
-                </Typography>
-              </Grid>
-            </Grid>
+            ))}
           </Grid>
         </div>
         <div className={classes.section}>
@@ -281,14 +231,8 @@ const styles = theme => ({
   keyInformationInput: {
     marginBottom: theme.spacing.unit * 2,
   },
-  colorPrimaryLight: {
-    color: theme.palette.primary.light,
-  },
-  colorPrimaryDark: {
+  sectionProgress: {
     color: theme.palette.primary.dark,
-  },
-  colorSecondaryDark: {
-    color: theme.palette.secondary.dark,
   },
 })
 
