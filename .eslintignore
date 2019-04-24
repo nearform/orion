@@ -3,3 +3,4 @@ node_modules
 docs
 packages/app/public
 packages/app/.cache
+packages/functions/build

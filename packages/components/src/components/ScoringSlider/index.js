@@ -12,7 +12,7 @@ function ScoringSlider({ classes, label, ...props }) {
       <Typography
         id="label"
         className={classes.label}
-        variant="button"
+        variant="h4"
         gutterBottom
       >
         {label}

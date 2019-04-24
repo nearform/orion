@@ -14,35 +14,18 @@ import {
 import { useTranslation } from 'react-i18next'
 import { AssessmentProgress, PaddedContainer } from 'components'
 import { Link } from 'gatsby'
+import slugify from 'slugify'
 
-import SEO from '../../components/seo'
-import ImagePlaceholder from '../../components/ImagePlaceholder'
-import SectionTitle from '../../components/SectionTitle'
+import SEO from '../components/seo'
+import ImagePlaceholder from '../components/ImagePlaceholder'
+import SectionTitle from '../components/SectionTitle'
 
-function Assess({ theme, classes }) {
+function Assess({
+  theme,
+  classes,
+  pageContext: { assessment, slug, pillarColors },
+}) {
   const { t } = useTranslation()
-
-  const areas = [
-    {
-      name: 'direction',
-      color: theme.palette.primary.light,
-      sections: ['purpose & strategy', 'organisational leadership & culture'],
-    },
-    {
-      name: 'execution',
-      color: theme.palette.primary.main,
-      sections: [
-        'engaging with stakeholders',
-        'creating sustainable value',
-        'driving performance & transformation',
-      ],
-    },
-    {
-      name: 'results',
-      color: theme.palette.secondary.dark,
-      sections: ['stakeholder perceptions', 'organisational performance'],
-    },
-  ]
 
   return (
     <>
@@ -142,47 +125,50 @@ function Assess({ theme, classes }) {
           <Grid container spacing={theme.spacing.unit * 2}>
             <Grid item xs={3}>
               <SectionTitle barColor={theme.palette.primary.dark}>
-                efqm excellence model 2020
+                {assessment.name}
               </SectionTitle>
             </Grid>
-            {areas.map(area => (
-              <Grid
-                key={area.name}
-                item
-                xs
-                container
-                spacing={theme.spacing.unit * 3}
-                direction="column"
-              >
-                <Grid item>
-                  <SectionTitle barColor={area.color}>{area.name}</SectionTitle>
-                </Grid>
-                {area.sections.map(section => (
-                  <Grid item key={section}>
-                    <Typography
-                      component={Link}
-                      to="assess/section"
-                      state={{
-                        area: area.name,
-                        section,
-                        color: area.color,
-                      }}
-                      variant="h3"
-                      gutterBottom
-                      style={{ color: area.color }}
-                    >
-                      {section}
-                    </Typography>
-                    <Typography
-                      variant="h4"
-                      className={classes.sectionProgress}
-                    >
-                      0% complete
-                    </Typography>
+            {assessment.pillars.map((pillar, pillarIndex) => {
+              const pillarSlug = slugify(pillar.name)
+              const pillarColor = pillarColors[pillarIndex]
+              return (
+                <Grid
+                  key={pillar.name}
+                  item
+                  xs
+                  container
+                  spacing={theme.spacing.unit * 3}
+                  direction="column"
+                >
+                  <Grid item>
+                    <SectionTitle barColor={pillarColor}>
+                      {pillar.name}
+                    </SectionTitle>
                   </Grid>
-                ))}{' '}
-              </Grid>
-            ))}
+                  {pillar.criteria.map(criterion => (
+                    <Grid item key={criterion.name}>
+                      <Typography
+                        component={Link}
+                        to={`assessment/${slug}/${pillarSlug}/${slugify(
+                          criterion.name
+                        )}`}
+                        variant="h3"
+                        gutterBottom
+                        style={{ color: pillarColor }}
+                      >
+                        {criterion.name}
+                      </Typography>
+                      <Typography
+                        variant="h4"
+                        className={classes.sectionProgress}
+                      >
+                        0% complete
+                      </Typography>
+                    </Grid>
+                  ))}{' '}
+                </Grid>
+              )
+            })}
           </Grid>
         </div>
         <div className={classes.section}>

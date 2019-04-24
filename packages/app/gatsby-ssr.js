@@ -2,7 +2,7 @@ import React from 'react'
 import { GraphQLClient, ClientContext } from 'graphql-hooks'
 import fetch from 'node-fetch'
 
-import './theme.js'
+import './theme.es'
 
 const client = new GraphQLClient({
   url: process.env.GATSBY_GRAPHQL_API,

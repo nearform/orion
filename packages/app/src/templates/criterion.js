@@ -3,26 +3,33 @@ import { Typography, withStyles, Grid, Button } from '@material-ui/core'
 import { AssessmentProgress, PaddedContainer } from 'components'
 import { Link } from 'gatsby'
 
-import SEO from '../../components/seo'
-import SectionTitle from '../../components/SectionTitle'
+import SEO from '../components/seo'
+import SectionTitle from '../components/SectionTitle'
 
-function AssessmentSection({
+function CriterionTemplate({
   theme,
   classes,
-  location: { state: { area, section, color } = {} },
+  pageContext: { pillar, criterion, pillarColor, assessmentSlug },
+  location,
 }) {
   return (
     <div className={classes.root}>
-      <SEO title={section} />
+      <SEO title={criterion.name} />
       <PaddedContainer className={classes.paddedContainer}>
-        <Button component={Link} to="assess" variant="text" color="secondary">
+        <Button
+          component={Link}
+          to={`assessment/${assessmentSlug}`}
+          variant="text"
+          color="secondary"
+        >
           ◀ Assessment overview
         </Button>
         <div className={classes.section}>
           <Grid container spacing={theme.spacing.unit * 4}>
-            <Grid item xs={3}>
-              <SectionTitle barColor={color}>
-                {area} <span style={{ color }}>▶</span> {section}
+            <Grid item>
+              <SectionTitle barColor={pillarColor}>
+                {pillar.name} <span style={{ color: pillarColor }}>▶</span>{' '}
+                {criterion.name}
               </SectionTitle>
             </Grid>
             <Grid item xs>
@@ -57,11 +64,13 @@ function AssessmentSection({
                 </li>
               </Typography>
               <Button
+                component={Link}
+                to={`${location.pathname}/1`}
                 variant="contained"
                 color="secondary"
                 className={classes.section}
               >
-                Assess {section}
+                Assess {criterion.name}
               </Button>
             </Grid>
           </Grid>
@@ -86,4 +95,4 @@ const styles = theme => ({
   },
 })
 
-export default withStyles(styles, { withTheme: true })(AssessmentSection)
+export default withStyles(styles, { withTheme: true })(CriterionTemplate)

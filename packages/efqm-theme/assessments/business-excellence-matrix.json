@@ -1,0 +1,126 @@
+{
+  "name": "efqm excellence model 2020",
+  "pillars": [
+    {
+      "name": "direction",
+      "criteria": [
+        {
+          "name": "purpose & strategy",
+          "parts": [
+            {
+              "guidance": "some guidance",
+              "tables": [
+                {
+                  "name": "set & communicate purpose & vision",
+                  "columns": [
+                    {
+                      "name": "what we do (approach)"
+                    },
+                    {
+                      "name": "how we do it (deployment)"
+                    },
+                    {
+                      "name": "how & when we review it (assessment & refinement)"
+                    },
+                    {
+                      "name": "how we show this (evidence)"
+                    },
+                    {
+                      "name": "owner"
+                    },
+                    {
+                      "name": "efqm links"
+                    }
+                  ]
+                },
+                {
+                  "name": "capture overall strenghts & area for improvement below",
+                  "columns": [
+                    {
+                      "name": "strenghts"
+                    },
+                    {
+                      "name": "areas for improvement"
+                    }
+                  ]
+                }
+              ],
+              "scoring": [
+                {
+                  "name": "relevance & usability",
+                  "scores": [
+                    {
+                      "name": "scope & relevance",
+                      "description": "A coherent set of results, including key results, are identified that demonstrate the performance of the organisation in terms of strategy, objectives and the needs and expectations of stakeholders."
+                    },
+                    {
+                      "name": "integrity",
+                      "description": "..."
+                    },
+                    {
+                      "name": "segmentation",
+                      "description": "..."
+                    }
+                  ],
+                  "rules": []
+                },
+                {
+                  "name": "performance",
+                  "scores": [
+                    {
+                      "name": "trends"
+                    },
+                    {
+                      "name": "targets"
+                    },
+                    {
+                      "name": "comparisons"
+                    },
+                    {
+                      "name": "confidence"
+                    }
+                  ],
+                  "rules": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "organisational leadership & culture",
+          "parts": []
+        }
+      ]
+    },
+    {
+      "name": "execution",
+      "criteria": [
+        {
+          "name": "engaging with stakeholders",
+          "parts": []
+        },
+        {
+          "name": "creating sustainable value",
+          "parts": []
+        },
+        {
+          "name": "driving performance and transformation",
+          "parts": []
+        }
+      ]
+    },
+    {
+      "name": "results",
+      "criteria": [
+        {
+          "name": "stakeholder perceptions",
+          "parts": []
+        },
+        {
+          "name": "organisational performance",
+          "parts": []
+        }
+      ]
+    }
+  ]
+}

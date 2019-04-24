@@ -9,7 +9,7 @@ import { setAddon, addDecorator } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs/react'
 import JSXAddon from 'storybook-addon-jsx'
 
-import { theme } from '../../app/theme'
+import { theme } from '../../app/theme.es'
 
 const withThemeDecorator = storyFn => (
   <MuiThemeProvider theme={createMuiTheme(theme.muiTheme)}>

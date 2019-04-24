@@ -4,7 +4,7 @@ import { jsxDecorator } from 'storybook-addon-jsx'
 import { number, text } from '@storybook/addon-knobs'
 import { withStyles } from '@material-ui/core'
 
-import ScoringSlider from './ScoringSlider'
+import ScoringSlider from './'
 
 const Container = withStyles(theme => ({
   root: {

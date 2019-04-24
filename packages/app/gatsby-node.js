@@ -1,52 +1,127 @@
 const path = require('path')
 const slugify = require('slugify')
 
+const { theme } = require('./theme')
+
+const pillarColors = [
+  theme.muiTheme.palette.primary.light,
+  theme.muiTheme.palette.primary.main,
+  theme.muiTheme.palette.secondary.dark,
+]
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const articleTemplate = path.resolve('./src/templates/article.js')
+  const assessmentTemplate = path.resolve('./src/templates/assessment.js')
+  const criterionTemplate = path.resolve('./src/templates/criterion.js')
+  const criterionPartTemplate = path.resolve(
+    './src/templates/criterion-part.js'
+  )
 
-  const articlesResult = await graphql(
-    `
-      {
-        knowledgebase {
-          article {
-            id
-            title
-            description
-            content
-            published_at
-            author {
-              id
+  const assessmentsQueryResults = await graphql(`
+    {
+      allAssessments {
+        totalCount
+        nodes {
+          name
+          pillars {
+            name
+            criteria {
               name
+              parts {
+                guidance
+                tables {
+                  name
+                  columns {
+                    name
+                  }
+                }
+                scoring {
+                  name
+                  scores {
+                    name
+                    description
+                  }
+                }
+              }
             }
           }
         }
       }
-    `
-  )
+    }
+  `)
 
-  if (articlesResult.errors) {
-    throw articlesResult.errors
+  if (assessmentsQueryResults.errors) {
+    throw assessmentsQueryResults.errors
   }
 
-  const articles = articlesResult.data.knowledgebase.article
+  const { nodes: assessments } = assessmentsQueryResults.data.allAssessments
 
-  articles.forEach((article, index) => {
-    const previous = index === articles.length - 1 ? null : articles[index + 1]
-    const next = index === 0 ? null : articles[index - 1]
-
-    const slug = slugify(article.title)
+  assessments.forEach(assessment => {
+    const assessmentSlug = slugify(assessment.name)
 
     createPage({
-      path: `${article.id}/${slug}`,
-      component: articleTemplate,
+      path: `assessment/${assessmentSlug}`,
+      component: assessmentTemplate,
       context: {
-        slug,
-        article,
-        previous,
-        next,
+        slug: assessmentSlug,
+        assessment,
+        pillarColors,
       },
+    })
+
+    assessment.pillars.forEach((pillar, pillarIndex) => {
+      const pillarSlug = slugify(pillar.name)
+      const pillarColor = pillarColors[pillarIndex]
+
+      pillar.criteria.forEach(criterion => {
+        const criterionSlug = slugify(criterion.name)
+
+        createPage({
+          path: `assessment/${assessmentSlug}/${pillarSlug}/${criterionSlug}`,
+          component: criterionTemplate,
+          context: {
+            assessmentSlug,
+            pillarSlug,
+            slug: criterionSlug,
+            assessment,
+            pillar,
+            criterion,
+            pillarColor,
+          },
+        })
+
+        const createCriterionPartLink = partNumber =>
+          `assessment/${assessmentSlug}/${pillarSlug}/${criterionSlug}/${partNumber}`
+
+        criterion.parts.forEach((part, partIndex, { length: totalParts }) => {
+          const isFirst = partIndex === 0
+          const isLast = partIndex === totalParts - 1
+          const partNumber = partIndex + 1
+          const previousLink =
+            !isFirst && createCriterionPartLink(partNumber - 1)
+          const nextLink = !isLast && createCriterionPartLink(partNumber + 1)
+
+          createPage({
+            path: `assessment/${assessmentSlug}/${pillarSlug}/${criterionSlug}/${partNumber}`,
+            component: criterionPartTemplate,
+            context: {
+              assessmentSlug,
+              pillarSlug,
+              criterionSlug,
+              partNumber,
+              part,
+              assessment,
+              pillar,
+              criterion,
+              pillarColor,
+              previousLink,
+              nextLink,
+              totalParts,
+            },
+          })
+        })
+      })
     })
   })
 

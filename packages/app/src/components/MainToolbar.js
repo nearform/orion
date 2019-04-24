@@ -52,7 +52,7 @@ function MainToolbar({ classes }) {
           </Link>
           <div className={classes.grow} />
           <div className={classes.linksContainer}>
-            <Button component={NavLink} to="/assess">
+            <Button component={NavLink} to="/assessment">
               Assess Base
             </Button>
             {!isAuthenticated && (

@@ -40,7 +40,7 @@ function Footer({ classes, theme }) {
             <Typography variant="h4" gutterBottom>
               Get in touch
             </Typography>
-            <Typography component="div">
+            <Typography component="div" variant="body1">
               <div>Avenue des Olympiades 2</div>
               <div>5th Floor</div>
               <div>B - 1140 Brussels, Belgium</div>
@@ -61,7 +61,7 @@ function Footer({ classes, theme }) {
             <Typography variant="h4" gutterBottom>
               support
             </Typography>
-            <Typography component="div">
+            <Typography component="div" variant="body1">
               <div>Link 1</div>
               <div>Link 2</div>
               <div>Link 3</div>
@@ -72,7 +72,7 @@ function Footer({ classes, theme }) {
             <Typography variant="h4" gutterBottom>
               resources
             </Typography>
-            <Typography component="div">
+            <Typography component="div" variant="body1">
               <div>Link 1</div>
               <div>Link 2</div>
               <div>Link 3</div>
@@ -83,7 +83,7 @@ function Footer({ classes, theme }) {
             <Typography variant="h4" gutterBottom>
               subscribe to our newsletter
             </Typography>
-            <Typography gutterBottom>
+            <Typography gutterBottom variant="body1">
               The latest EFQM news, articles, and resources, sent straight to
               your inbox every month.
             </Typography>
@@ -104,16 +104,24 @@ function Footer({ classes, theme }) {
         </Grid>
         <Grid container spacing={theme.spacing.unit} justify="center">
           <Grid item>
-            <Typography inline>© EFQM</Typography>
+            <Typography inline variant="body1">
+              © EFQM
+            </Typography>
           </Grid>
           <Grid item>
-            <Typography inline>Terms of Use</Typography>
+            <Typography inline variant="body1">
+              Terms of Use
+            </Typography>
           </Grid>
           <Grid item>
-            <Typography inline>Privacy Statement</Typography>
+            <Typography inline variant="body1">
+              Privacy Statement
+            </Typography>
           </Grid>
           <Grid item>
-            <Typography inline>Login</Typography>
+            <Typography inline variant="body1">
+              Login
+            </Typography>
           </Grid>
         </Grid>
       </PaddedContainer>

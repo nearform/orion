@@ -8,7 +8,7 @@ import {
 
 import * as auth from './utils/auth'
 import * as i18n from './utils/i18n'
-import ThemeWrapper, { theme } from './theme.js'
+import ThemeWrapper, { theme } from './theme.es'
 import Layout from './src/components/layout'
 
 const client = new GraphQLClient({

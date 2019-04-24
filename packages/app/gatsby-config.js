@@ -2,14 +2,16 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV || 'development'}`,
 })
 
-const THEME_NAME = 'efqm-theme'
-
 const path = require('path')
-const currentTheme = require(THEME_NAME)
 
-const themeAssetsPath = path.join(
-  path.dirname(require.resolve(THEME_NAME)),
-  currentTheme.config.assetsPath
+const currentTheme = require('./theme')
+
+const themeRootPath = path.dirname(require.resolve(currentTheme.THEME_NAME))
+
+const themeAssetsPath = path.join(themeRootPath, currentTheme.config.assetsPath)
+const themeAssessmentsPath = path.join(
+  themeRootPath,
+  currentTheme.config.assessmentsPath
 )
 
 module.exports = {
@@ -23,6 +25,17 @@ module.exports = {
         name: 'theme-assets',
         path: themeAssetsPath,
       },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'theme-assessments',
+        path: themeAssessmentsPath,
+      },
+    },
+    {
+      resolve: 'gatsby-transformer-json',
+      options: { typeName: 'Assessments' },
     },
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',

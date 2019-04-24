@@ -104,6 +104,11 @@ exports.muiTheme = {
         backgroundColor: efqmDigitalPalette.paleGrey,
       },
     },
+    MuiTypography: {
+      gutterBottom: {
+        marginBottom: '.75em',
+      },
+    },
   },
   props: {
     MuiInput: {
@@ -130,9 +135,7 @@ exports.muiTheme = {
     background: {
       default: efqmDigitalPalette.white,
       paper: efqmDigitalPalette.paleGrey,
-    },
-    custom: {
-      sliderTick: efqmDigitalPalette.midGrey,
+      dark: efqmDigitalPalette.midGrey,
     },
     contrastThreshold: 1,
   },

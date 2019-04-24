@@ -16,12 +16,12 @@ const marksStyles = theme => ({
       top: 0,
       height: 6,
       width: 1,
-      backgroundColor: theme.palette.custom.sliderTick,
+      backgroundColor: theme.palette.background.dark,
       content: '""',
     },
     '&::after': {
       position: 'absolute',
-      top: 4,
+      top: 8,
       transform: 'translateX(-50%)',
     },
   },
@@ -61,6 +61,7 @@ function Marks({ classes }) {
       {new Array(5).fill(null).map((_, i) => (
         <Typography
           key={i}
+          variant="h4"
           className={classnames(classes.tick, classes[`tick${i}`])}
           color="secondary"
         />
