@@ -53,6 +53,36 @@ jobs:
       - run:
           name: Deploy bundle to S3
           command: aws s3 sync packages/app/public ${S3_BUCKET_PATH} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+  build-storybook:
+    <<: *deploy_environment
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Build storybook bundle
+          command: |
+            set -e
+            cd packages/components
+            npm run build-storybook
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  deploy-storybook:
+    <<: *deploy_environment
+    environment:
+      S3_BUCKET_PATH: "s3://knowledgebase-storybook.nearform.com"
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install awscli
+          command: |
+            sudo apt-get install python-pip python
+            sudo pip install awscli
+      - run:
+          name: Deploy bundle to S3
+          command: aws s3 sync packages/components/storybook-static ${S3_BUCKET_PATH} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
   test-lambdas:
     <<: *deploy_environment
     steps:
@@ -110,6 +140,20 @@ workflows:
       - test-lambdas:
           requires:
             - build
+      - build-storybook:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build
+      - deploy-storybook:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build-storybook
       - deploy:
           filters:
             branches:
