@@ -6,7 +6,7 @@ function SectionTitle({ classes, barColor, ...props }) {
   return (
     <div>
       <div className={classes.bar} style={{ backgroundColor: barColor }} />
-      <Typography variant="h6" {...props} />
+      <Typography variant="h3" {...props} />
     </div>
   )
 }

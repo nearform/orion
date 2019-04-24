@@ -46,7 +46,7 @@ function AssessmentProgress({
           </Grid>
         </Grid>
         <Grid item xs>
-          <Typography variant="h5" color="inherit" gutterBottom>
+          <Typography variant="h4" color="inherit" gutterBottom>
             direction
           </Typography>
           <div
@@ -57,7 +57,7 @@ function AssessmentProgress({
           />
         </Grid>
         <Grid item xs>
-          <Typography variant="h5" color="inherit" gutterBottom>
+          <Typography variant="h4" color="inherit" gutterBottom>
             execution
           </Typography>
           <div
@@ -68,7 +68,7 @@ function AssessmentProgress({
           />
         </Grid>
         <Grid item xs>
-          <Typography variant="h5" color="inherit" gutterBottom>
+          <Typography variant="h4" color="inherit" gutterBottom>
             results
           </Typography>
           <div

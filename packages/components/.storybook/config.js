@@ -9,10 +9,10 @@ import { setAddon, addDecorator } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs/react'
 import JSXAddon from 'storybook-addon-jsx'
 
-import { muiTheme } from '../../app/theme.js'
+import { theme } from '../../app/theme'
 
 const withThemeDecorator = storyFn => (
-  <MuiThemeProvider theme={createMuiTheme(muiTheme)}>
+  <MuiThemeProvider theme={createMuiTheme(theme.muiTheme)}>
     <CssBaseline />
     {storyFn()}
   </MuiThemeProvider>

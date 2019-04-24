@@ -37,7 +37,7 @@ function Footer({ classes, theme }) {
       <PaddedContainer>
         <Grid container spacing={theme.spacing.unit * 3}>
           <Grid item xs>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h4" gutterBottom>
               Get in touch
             </Typography>
             <Typography component="div">
@@ -58,7 +58,7 @@ function Footer({ classes, theme }) {
             </Typography>
           </Grid>
           <Grid item xs>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h4" gutterBottom>
               support
             </Typography>
             <Typography component="div">
@@ -69,7 +69,7 @@ function Footer({ classes, theme }) {
             </Typography>
           </Grid>
           <Grid item xs>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h4" gutterBottom>
               resources
             </Typography>
             <Typography component="div">
@@ -80,7 +80,7 @@ function Footer({ classes, theme }) {
             </Typography>
           </Grid>
           <Grid item xs>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h4" gutterBottom>
               subscribe to our newsletter
             </Typography>
             <Typography gutterBottom>

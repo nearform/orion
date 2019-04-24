@@ -5,7 +5,6 @@ const typography = {
     fontFamily,
     fontWeight: '900',
     fontSize: 28,
-    lineHeight: 1.29,
     letterSpacing: 0.5,
   },
   h2: {
@@ -17,42 +16,34 @@ const typography = {
   },
   h3: {
     fontFamily,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    fontSize: 12,
+    letterSpacing: 1.8,
+    textTransform: 'uppercase',
   },
   h4: {
     fontFamily,
     fontWeight: 'bold',
+    fontSize: 11,
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
   },
   h5: {
     fontFamily,
     fontWeight: 'bold',
-    fontSize: 11,
-    // from zeplin style guide but disabled temporarily
-    // lineHeight: 'normal',
-    letterSpacing: 1.2,
-    textTransform: 'uppercase',
   },
   h6: {
     fontFamily,
-    fontWeight: '900',
-    fontSize: 12,
-    // from zeplin style guide but disabled temporarily
-    // lineHeight: 'normal',
-    letterSpacing: 1.8,
-    textTransform: 'uppercase',
+    fontWeight: 'bold',
   },
   body1: {
     fontFamily,
-    fontSize: 16,
-    // from zeplin style guide but disabled temporarily
-    // lineHeight: 1.31,
+    fontSize: 14,
     letterSpacing: 'normal',
   },
   body2: {
     fontFamily,
-    fontSize: 14,
-    // from zeplin style guide but disabled temporarily
-    // lineHeight: 0.86,
+    fontSize: 16,
     letterSpacing: 'normal',
   },
   placeholder: {
@@ -82,6 +73,7 @@ const efqmDigitalPalette = {
   // Shades used in designs not included in EFQM docs
   midGrey: 'rgb(152, 175, 198)',
   paleGrey: 'rgb(244, 246, 248)',
+  white: '#fff',
 }
 
 exports.muiTheme = {
@@ -94,6 +86,15 @@ exports.muiTheme = {
       },
       text: {
         boxShadow: 'none',
+      },
+      contained: {
+        padding: '9px 24px 8px',
+      },
+      outlined: {
+        padding: '8px 24px 7px',
+      },
+      sizeSmall: {
+        fontSize: 11,
       },
     },
     MuiInput: {
@@ -116,7 +117,6 @@ exports.muiTheme = {
     ...typography,
   },
   palette: {
-    // These roles will be refined as designs are updated
     primary: {
       main: efqmDigitalPalette.navyBlue,
       light: efqmDigitalPalette.cyan,
@@ -124,16 +124,17 @@ exports.muiTheme = {
     },
     secondary: {
       main: efqmDigitalPalette.aqua,
-      light: efqmDigitalPalette.pearGreen, // Higher luminosity, brighter
-      dark: efqmDigitalPalette.emeraldGreen, // Stronger, more saturated
+      light: efqmDigitalPalette.pearGreen,
+      dark: efqmDigitalPalette.emeraldGreen,
     },
     background: {
-      default: '#fff',
+      default: efqmDigitalPalette.white,
       paper: efqmDigitalPalette.paleGrey,
     },
     custom: {
       sliderTick: efqmDigitalPalette.midGrey,
     },
+    contrastThreshold: 1,
   },
 }
 

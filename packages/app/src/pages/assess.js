@@ -26,7 +26,7 @@ function Assess({ theme, classes }) {
           Your assessments
         </Typography>
         <div className={classes.section}>
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h3" gutterBottom>
             Assessments completed
           </Typography>
           <Grid container spacing={theme.spacing.unit * 4}>
@@ -60,7 +60,7 @@ function Assess({ theme, classes }) {
             </Grid>
             <Grid item xs={5}>
               <ImagePlaceholder>
-                <Typography variant="h5">Pic of Model 2020</Typography>
+                <Typography variant="h4">Pic of Model 2020</Typography>
               </ImagePlaceholder>
             </Grid>
           </Grid>
@@ -77,16 +77,16 @@ function Assess({ theme, classes }) {
         <div className={classes.section}>
           <Grid container spacing={theme.spacing.unit * 4}>
             <Grid item xs>
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h4" gutterBottom>
                 Enter your assessment unit
               </Typography>
               <TextField fullWidth />
             </Grid>
             <Grid item xs>
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h4" gutterBottom>
                 Add key information
               </Typography>
-              <Typography variant="body1">
+              <Typography>
                 Key Information is those key facts about your organisation which
                 help assessors to gain an overall view of your organisation and
                 its strategic context.
@@ -108,7 +108,7 @@ function Assess({ theme, classes }) {
         <div className={classes.section}>
           <Grid container spacing={theme.spacing.unit * 3}>
             <Grid item>
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h4" gutterBottom>
                 to enter the assessment please click on an area of the model
               </Typography>
             </Grid>
@@ -133,25 +133,25 @@ function Assess({ theme, classes }) {
               </Grid>
               <Grid item>
                 <Typography
-                  variant="h6"
+                  variant="h3"
                   gutterBottom
                   className={classes.colorPrimaryLight}
                 >
                   purpose &amp; strategy
                 </Typography>
-                <Typography variant="h5" className={classes.colorPrimaryDark}>
+                <Typography variant="h4" className={classes.colorPrimaryDark}>
                   0% complete
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography
-                  variant="h6"
+                  variant="h3"
                   gutterBottom
                   className={classes.colorPrimaryLight}
                 >
                   organisational leadership &amp; culture
                 </Typography>
-                <Typography variant="h5" className={classes.colorPrimaryDark}>
+                <Typography variant="h4" className={classes.colorPrimaryDark}>
                   0% complete
                 </Typography>
               </Grid>
@@ -169,26 +169,26 @@ function Assess({ theme, classes }) {
                 </SectionTitle>
               </Grid>
               <Grid item>
-                <Typography variant="h6" gutterBottom color="primary">
+                <Typography variant="h3" gutterBottom color="primary">
                   engaging with stakeholders
                 </Typography>
-                <Typography variant="h5" className={classes.colorPrimaryDark}>
+                <Typography variant="h4" className={classes.colorPrimaryDark}>
                   0% complete
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography variant="h6" gutterBottom color="primary">
+                <Typography variant="h3" gutterBottom color="primary">
                   creating sustainable value
                 </Typography>
-                <Typography variant="h5" className={classes.colorPrimaryDark}>
+                <Typography variant="h4" className={classes.colorPrimaryDark}>
                   0% complete
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography variant="h6" gutterBottom color="primary">
+                <Typography variant="h3" gutterBottom color="primary">
                   driving performance &amp; transformation
                 </Typography>
-                <Typography variant="h5" className={classes.colorPrimaryDark}>
+                <Typography variant="h4" className={classes.colorPrimaryDark}>
                   0% complete
                 </Typography>
               </Grid>
@@ -207,25 +207,25 @@ function Assess({ theme, classes }) {
               </Grid>
               <Grid item>
                 <Typography
-                  variant="h6"
+                  variant="h3"
                   gutterBottom
                   className={classes.colorSecondaryDark}
                 >
                   stakeholder perceptions
                 </Typography>
-                <Typography variant="h5" className={classes.colorPrimaryDark}>
+                <Typography variant="h4" className={classes.colorPrimaryDark}>
                   0% complete
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography
-                  variant="h6"
+                  variant="h3"
                   gutterBottom
                   className={classes.colorSecondaryDark}
                 >
                   organisational performance
                 </Typography>
-                <Typography variant="h5" className={classes.colorPrimaryDark}>
+                <Typography variant="h4" className={classes.colorPrimaryDark}>
                   0% complete
                 </Typography>
               </Grid>
@@ -238,7 +238,7 @@ function Assess({ theme, classes }) {
               <SectionTitle gutterBottom barColor={theme.palette.primary.dark}>
                 lens view
               </SectionTitle>
-              <Typography variant="body1">
+              <Typography>
                 If you would like to lead your assessment through one of the
                 following lenses you can follow these paths.
               </Typography>

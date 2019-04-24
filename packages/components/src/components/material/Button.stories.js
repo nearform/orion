@@ -17,9 +17,8 @@ storiesOf('material/Button', module)
     <>
       <Container>
         <Button>default</Button>
-        <Button variant="contained">default contained</Button>
-        <Button variant="outlined">default outlined</Button>
-        <Button variant="text">default text</Button>
+        <Button variant="contained">contained</Button>
+        <Button variant="outlined">outlined</Button>
       </Container>
       <Container>
         <Button color="primary">primary</Button>
@@ -28,9 +27,6 @@ storiesOf('material/Button', module)
         </Button>
         <Button color="primary" variant="outlined">
           primary outlined
-        </Button>
-        <Button color="primary" variant="text">
-          primary text
         </Button>
       </Container>
       <Container>
@@ -41,8 +37,27 @@ storiesOf('material/Button', module)
         <Button color="secondary" variant="outlined">
           secondary outlined
         </Button>
-        <Button color="secondary" variant="text">
-          secondary text
+      </Container>
+      <Container>
+        <Button color="primary" variant="contained" size="large">
+          primary contained large
+        </Button>
+        <Button color="primary" variant="contained" size="medium">
+          primary contained medium
+        </Button>
+        <Button color="primary" variant="contained" size="small">
+          primary contained small
+        </Button>
+      </Container>
+      <Container>
+        <Button color="secondary" variant="contained" size="large">
+          secondary contained large
+        </Button>
+        <Button color="secondary" variant="contained" size="medium">
+          secondary contained medium
+        </Button>
+        <Button color="secondary" variant="contained" size="small">
+          secondary contained small
         </Button>
       </Container>
     </>
