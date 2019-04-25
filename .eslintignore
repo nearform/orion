@@ -1,0 +1,5 @@
+node_modules
+.circleci
+docs
+packages/app/public
+packages/app/.cache

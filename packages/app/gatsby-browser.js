@@ -20,19 +20,15 @@ export async function onClientEntry() {
   await i18n.init()
 }
 
-export const wrapRootElement = ({ element }) => {
-  return (
-    <ClientContext.Provider value={client}>
-      <MuiThemeProvider theme={createMuiTheme(theme.muiTheme)}>
-        <ThemeWrapper>
-          <CssBaseline />
-          {element}
-        </ThemeWrapper>
-      </MuiThemeProvider>
-    </ClientContext.Provider>
-  )
-}
+export const wrapRootElement = ({ element }) => (
+  <ClientContext.Provider value={client}>
+    <MuiThemeProvider theme={createMuiTheme(theme.muiTheme)}>
+      <ThemeWrapper>
+        <CssBaseline />
+        {element}
+      </ThemeWrapper>
+    </MuiThemeProvider>
+  </ClientContext.Provider>
+)
 
-export const wrapPageElement = ({ element }) => {
-  return <Layout>{element}</Layout>
-}
+export const wrapPageElement = ({ element }) => <Layout>{element}</Layout>

@@ -44,7 +44,6 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.4.3",
-    "babel-eslint": "^10.0.1",
     "babel-jest": "^24.7.1",
     "babel-preset-gatsby": "^0.1.11",
     "dotenv": "^7.0.0",
@@ -55,7 +54,6 @@
     "gatsby-transformer-sharp": "^2.1.18",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.7.1",
-    "prettier": "^1.17.0",
     "react-test-renderer": "^16.8.6",
     "webpack-graphql-loader": "^1.0.1"
   },
@@ -72,7 +70,6 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write src/**/*.{js,jsx,graphql}",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "jest"

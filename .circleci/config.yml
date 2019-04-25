@@ -8,9 +8,12 @@ jobs:
     <<: *deploy_environment
     steps:
       - checkout
-      - run: 
+      - run:
           name: Install npm deps
           command: npm install
+      - run:
+          name: Lint code
+          command: npm run lint
       # npm build runs lerna run build. lerna will potentially build unneeded assets.
       # if build gets slow in future we should investigate removing unneeded asset builds from lerna
       - run:

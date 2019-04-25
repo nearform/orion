@@ -9,8 +9,6 @@ const client = new GraphQLClient({
   fetch,
 })
 
-export const wrapRootElement = ({ element }) => {
-  return (
-    <ClientContext.Provider value={client}>{element}</ClientContext.Provider>
-  )
-}
+export const wrapRootElement = ({ element }) => (
+  <ClientContext.Provider value={client}>{element}</ClientContext.Provider>
+)

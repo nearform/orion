@@ -1,10 +1,10 @@
-jest.mock('../graphql')
-
 import { handler } from './'
 import graphql from '../graphql'
 
 import createUser from './graphql/create-user.graphql'
 import getDefaultRole from './graphql/get-default-role.graphql'
+
+jest.mock('../graphql')
 
 const originalEvent = {
   version: '1',

@@ -4,7 +4,7 @@ const slugify = require('slugify')
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const articleTemplate = path.resolve(`./src/templates/article.js`)
+  const articleTemplate = path.resolve('./src/templates/article.js')
 
   const articlesResult = await graphql(
     `
@@ -55,12 +55,10 @@ exports.createPages = async ({ graphql, actions }) => {
 
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
   const config = getConfig()
-  config.module.rules.push(
-    {
-      test: /\.graphql?$/,
-      exclude: /node_modules/,
-      loader: 'webpack-graphql-loader'
-    }
-  )
+  config.module.rules.push({
+    test: /\.graphql?$/,
+    exclude: /node_modules/,
+    loader: 'webpack-graphql-loader',
+  })
   actions.replaceWebpackConfig(config)
 }
