@@ -3,4 +3,9 @@ query getGroups {
     id
     name
   }
+  group_aggregate {
+    aggregate {
+      count
+    }
+  }
 }

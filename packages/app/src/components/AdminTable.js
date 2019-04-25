@@ -6,11 +6,11 @@ import {
   TableHead,
   TableRow,
   TableCell,
+  TableBody,
+  TableFooter,
   Typography,
+  TablePagination,
 } from '@material-ui/core'
-
-// This reduces duplication and will house generic admin table features
-// like click-to-sort, pagination, filters and bulk actions
 
 export default function AdminTable({
   query,
@@ -21,8 +21,17 @@ export default function AdminTable({
   Modal,
 }) {
   const [selected, setSelected] = useState(null)
+  const [offset, setOffset] = useState(0)
 
-  const { loading, error, data, refetch } = useQuery(query, { variables })
+  const rowsPerPage = 4
+
+  const { loading, error, data, refetch } = useQuery(query, {
+    variables: { ...variables, offset: offset, limit: rowsPerPage },
+  })
+
+  const changePage = (event, page) => {
+    setOffset(page * rowsPerPage)
+  }
 
   // TODO: for dev convenience, instead extract array of default headers from query
   if (!headers.length) return 'No table headers to show'
@@ -53,7 +62,20 @@ export default function AdminTable({
             ))}
           </TableRow>
         </TableHead>
-        <AdminTableContent data={data} setSelected={setSelected} />
+        <TableBody>
+          <AdminTableContent data={data} setSelected={setSelected} />
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              colSpan={headers.length}
+              count={data.user_aggregate.aggregate.count}
+              rowsPerPage={rowsPerPage}
+              page={Math.floor(offset / rowsPerPage)}
+              onChangePage={changePage}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     </>
   )

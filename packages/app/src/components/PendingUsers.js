@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment, useState } from 'react'
 import {
   TableBody,
   TableRow,
@@ -6,6 +6,7 @@ import {
   Tooltip,
   IconButton,
 } from '@material-ui/core'
+import TablePagination from '@material-ui/core/TablePagination'
 
 import AdminTable from './AdminTable'
 import UserGroupsPicker from './UserGroupsPicker'
@@ -22,8 +23,9 @@ export default function PendingUsers() {
     Modal: UserGroupsPicker,
     AdminTableContent: function({ data, setSelected }) {
       const { user } = data
+
       return (
-        <TableBody>
+        <Fragment>
           {user.map(user => (
             <TableRow key={user.id}>
               <TableCell>{user.id}</TableCell>
@@ -39,7 +41,7 @@ export default function PendingUsers() {
               </TableCell>
             </TableRow>
           ))}
-        </TableBody>
+        </Fragment>
       )
     },
   })

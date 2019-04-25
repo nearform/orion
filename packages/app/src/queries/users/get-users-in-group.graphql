@@ -15,4 +15,9 @@ query getUsersInGroup($groupId: Int!) {
       }
     }
   }
+  user(where: { user_groups: { group_id: { _in: [$groupId] } } }) {
+    aggregate {
+      count
+    }
+  }
 }

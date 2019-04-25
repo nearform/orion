@@ -3,4 +3,9 @@ query getRoles {
     id
     name
   }
+  role_aggregate {
+    aggregate {
+      count
+    }
+  }
 }

@@ -15,4 +15,9 @@ query getUsers {
       }
     }
   }
+  user_aggregate {
+    aggregate {
+      count
+    }
+  }
 }

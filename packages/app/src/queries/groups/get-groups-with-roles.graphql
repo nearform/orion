@@ -8,4 +8,9 @@ query getGroups {
       }
     }
   }
+  group_aggregate {
+    aggregate {
+      count
+    }
+  }
 }
