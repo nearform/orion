@@ -1,0 +1,8 @@
+- args:
+    name: owner
+    table:
+      name: assessment
+      schema: public
+    using:
+      foreign_key_constraint_on: owner_id
+  type: create_object_relationship

@@ -20,9 +20,9 @@ export async function init(graphqlClient) {
   Hub.listen('auth', authListener)
 
   try {
-    const currentSession = await Auth.currentSession()
+    const currentUser = await Auth.currentAuthenticatedUser()
 
-    setClientToken(currentSession)
+    setClientToken(currentUser.signInUserSession)
   } catch (err) {
     // no authenticated user, it's fine
   }

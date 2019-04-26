@@ -1,0 +1,7 @@
+mutation createAssessment($key: String!, $ownerId: Int!) {
+  insert_assessment(objects: { key: $key, owner_id: $ownerId }) {
+    returning {
+      id
+    }
+  }
+}

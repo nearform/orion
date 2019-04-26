@@ -9,7 +9,7 @@ import SectionTitle from '../components/SectionTitle'
 function CriterionTemplate({
   theme,
   classes,
-  pageContext: { pillar, criterion, pillarColor, assessmentSlug },
+  pageContext: { assessment, pillar, criterion, pillarColor },
   location,
 }) {
   return (
@@ -18,7 +18,7 @@ function CriterionTemplate({
       <PaddedContainer className={classes.paddedContainer}>
         <Button
           component={Link}
-          to={`assessment/${assessmentSlug}`}
+          to={`assessment/${assessment.key}`}
           variant="text"
           color="secondary"
         >

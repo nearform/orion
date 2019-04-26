@@ -15,7 +15,6 @@ import {
 import { useTranslation } from 'react-i18next'
 import { AssessmentProgress, PaddedContainer } from 'components'
 import { Link } from 'gatsby'
-import slugify from 'slugify'
 
 import SEO from '../components/seo'
 import ImagePlaceholder from '../components/ImagePlaceholder'
@@ -42,10 +41,10 @@ const mockAssessments = [
   },
 ]
 
-function Assess({
+function AssessmentTemplate({
   theme,
   classes,
-  pageContext: { assessment, slug, pillarColors },
+  pageContext: { assessment, pillarColors },
 }) {
   const { t } = useTranslation()
 
@@ -153,7 +152,6 @@ function Assess({
           </Grid>
           <Grid container spacing={theme.spacing.unit * 2}>
             {assessment.pillars.map((pillar, pillarIndex) => {
-              const pillarSlug = slugify(pillar.name)
               const pillarColor = pillarColors[pillarIndex]
               return (
                 <Grid
@@ -173,9 +171,9 @@ function Assess({
                     <Grid item key={criterion.name}>
                       <Typography
                         component={Link}
-                        to={`assessment/${slug}/${pillarSlug}/${slugify(
-                          criterion.name
-                        )}`}
+                        to={`assessment/${assessment.key}/${pillar.key}/${
+                          criterion.key
+                        }`}
                         variant="h3"
                         gutterBottom
                         style={{ color: pillarColor }}
@@ -246,4 +244,4 @@ const styles = theme => ({
   },
 })
 
-export default withStyles(styles, { withTheme: true })(Assess)
+export default withStyles(styles, { withTheme: true })(AssessmentTemplate)

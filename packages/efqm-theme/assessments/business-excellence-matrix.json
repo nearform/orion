@@ -1,45 +1,58 @@
 {
+  "key": "efqm-2020",
   "name": "efqm excellence model 2020",
   "pillars": [
     {
+      "key": "direction",
       "name": "direction",
       "criteria": [
         {
+          "key": "purpose-strategy",
           "name": "purpose & strategy",
           "parts": [
             {
               "guidance": "some guidance",
               "tables": [
                 {
+                  "key": "purpose-vision",
                   "name": "set & communicate purpose & vision",
                   "columns": [
                     {
+                      "key": "approach",
                       "name": "what we do (approach)"
                     },
                     {
+                      "key": "deployment",
                       "name": "how we do it (deployment)"
                     },
                     {
+                      "key": "assessment-refinement",
                       "name": "how & when we review it (assessment & refinement)"
                     },
                     {
+                      "key": "evidence",
                       "name": "how we show this (evidence)"
                     },
                     {
+                      "key": "owner",
                       "name": "owner"
                     },
                     {
+                      "key": "links",
                       "name": "efqm links"
                     }
                   ]
                 },
                 {
+                  "key": "strenghts-improvement",
                   "name": "capture overall strenghts & area for improvement below",
                   "columns": [
                     {
+                      "key": "strenghts",
                       "name": "strenghts"
                     },
                     {
+                      "key": "improvement",
                       "name": "areas for improvement"
                     }
                   ]
@@ -47,17 +60,21 @@
               ],
               "scoring": [
                 {
+                  "key": "relevance-usability",
                   "name": "relevance & usability",
                   "scores": [
                     {
+                      "key": "scope-relevance",
                       "name": "scope & relevance",
                       "description": "A coherent set of results, including key results, are identified that demonstrate the performance of the organisation in terms of strategy, objectives and the needs and expectations of stakeholders."
                     },
                     {
+                      "key": "integrity",
                       "name": "integrity",
                       "description": "..."
                     },
                     {
+                      "key": "segmentation",
                       "name": "segmentation",
                       "description": "..."
                     }
@@ -65,18 +82,23 @@
                   "rules": []
                 },
                 {
+                  "key": "performance",
                   "name": "performance",
                   "scores": [
                     {
+                      "key": "trends",
                       "name": "trends"
                     },
                     {
+                      "key": "targets",
                       "name": "targets"
                     },
                     {
+                      "key": "comparisons",
                       "name": "comparisons"
                     },
                     {
+                      "key": "confidence",
                       "name": "confidence"
                     }
                   ],
@@ -87,36 +109,44 @@
           ]
         },
         {
+          "key": "leadership-culture",
           "name": "organisational leadership & culture",
           "parts": []
         }
       ]
     },
     {
+      "key": "execution",
       "name": "execution",
       "criteria": [
         {
+          "key": "engaging-stakeholders",
           "name": "engaging with stakeholders",
           "parts": []
         },
         {
+          "key": "creating-value",
           "name": "creating sustainable value",
           "parts": []
         },
         {
+          "key": "performance-transformation",
           "name": "driving performance and transformation",
           "parts": []
         }
       ]
     },
     {
+      "key": "results",
       "name": "results",
       "criteria": [
         {
+          "key": "stakeholder-perceptions",
           "name": "stakeholder perceptions",
           "parts": []
         },
         {
+          "key": "organisational-performance",
           "name": "organisational performance",
           "parts": []
         }

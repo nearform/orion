@@ -1,5 +1,4 @@
 const path = require('path')
-const slugify = require('slugify')
 
 const { theme } = require('./theme')
 
@@ -23,22 +22,29 @@ exports.createPages = async ({ graphql, actions }) => {
       allAssessments {
         totalCount
         nodes {
+          key
           name
           pillars {
+            key
             name
             criteria {
+              key
               name
               parts {
                 guidance
                 tables {
+                  key
                   name
                   columns {
+                    key
                     name
                   }
                 }
                 scoring {
+                  key
                   name
                   scores {
+                    key
                     name
                     description
                   }
@@ -58,32 +64,23 @@ exports.createPages = async ({ graphql, actions }) => {
   const { nodes: assessments } = assessmentsQueryResults.data.allAssessments
 
   assessments.forEach(assessment => {
-    const assessmentSlug = slugify(assessment.name)
-
     createPage({
-      path: `assessment/${assessmentSlug}`,
+      path: `assessment/${assessment.key}`,
       component: assessmentTemplate,
       context: {
-        slug: assessmentSlug,
         assessment,
         pillarColors,
       },
     })
 
     assessment.pillars.forEach((pillar, pillarIndex) => {
-      const pillarSlug = slugify(pillar.name)
       const pillarColor = pillarColors[pillarIndex]
 
       pillar.criteria.forEach(criterion => {
-        const criterionSlug = slugify(criterion.name)
-
         createPage({
-          path: `assessment/${assessmentSlug}/${pillarSlug}/${criterionSlug}`,
+          path: `assessment/${assessment.key}/${pillar.key}/${criterion.key}`,
           component: criterionTemplate,
           context: {
-            assessmentSlug,
-            pillarSlug,
-            slug: criterionSlug,
             assessment,
             pillar,
             criterion,
@@ -92,7 +89,9 @@ exports.createPages = async ({ graphql, actions }) => {
         })
 
         const createCriterionPartLink = partNumber =>
-          `assessment/${assessmentSlug}/${pillarSlug}/${criterionSlug}/${partNumber}`
+          `assessment/${assessment.key}/${pillar.key}/${
+            criterion.key
+          }/${partNumber}`
 
         criterion.parts.forEach((part, partIndex, { length: totalParts }) => {
           const isFirst = partIndex === 0
@@ -103,12 +102,11 @@ exports.createPages = async ({ graphql, actions }) => {
           const nextLink = !isLast && createCriterionPartLink(partNumber + 1)
 
           createPage({
-            path: `assessment/${assessmentSlug}/${pillarSlug}/${criterionSlug}/${partNumber}`,
+            path: `assessment/${assessment.key}/${pillar.key}/${
+              criterion.key
+            }/${partNumber}`,
             component: criterionPartTemplate,
             context: {
-              assessmentSlug,
-              pillarSlug,
-              criterionSlug,
               partNumber,
               part,
               assessment,

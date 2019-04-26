@@ -1,0 +1,28 @@
+query getAssessment(
+  $assessmentKey: String!
+  $ownerId: Int!
+  $pillarKey: String!
+  $criterionKey: String!
+  $partNumber: Int!
+) {
+  assessment(
+    limit: 1
+    where: { key: { _eq: $assessmentKey }, owner_id: { _eq: $ownerId } }
+  ) {
+    id
+    tables(
+      where: {
+        pillar_key: { _eq: $pillarKey }
+        criterion_key: { _eq: $criterionKey }
+        part_number: { _eq: $partNumber }
+      }
+    ) {
+      id
+      pillar_key
+      criterion_key
+      part_number
+      table_key
+      table_values
+    }
+  }
+}

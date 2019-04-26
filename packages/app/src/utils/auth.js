@@ -4,6 +4,7 @@ import { Auth, Hub } from 'aws-amplify'
 const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
 const HASURA_ALLOWED_ROLES_KEY = 'x-hasura-allowed-roles'
+const HASURA_USER_ID = 'x-hasura-user-id'
 const ADMIN_ROLE = 'admin'
 
 const isAuthenticated = async () => {
@@ -30,10 +31,29 @@ export const getUserRolesSync = () => {
   }
 }
 
+export const getUserIdSync = () => {
+  if (!isAuthenticatedSync()) return null
+
+  try {
+    return extractUserIdFromTokenPayload()
+  } catch (err) {
+    return null
+  }
+}
+
 function extractUserRolesFromTokenPayload() {
-  const tokenPayload = Auth.user.signInUserSession.idToken.payload
-  const hasuraClaims = JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE])
+  const hasuraClaims = extractHasuraClaimsFromTokenPayload()
   return hasuraClaims[HASURA_ALLOWED_ROLES_KEY]
+}
+
+function extractUserIdFromTokenPayload() {
+  const hasuraClaims = extractHasuraClaimsFromTokenPayload()
+  return hasuraClaims[HASURA_USER_ID]
+}
+
+function extractHasuraClaimsFromTokenPayload() {
+  const tokenPayload = Auth.user.signInUserSession.idToken.payload
+  return JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE])
 }
 
 async function getUserRoles() {
