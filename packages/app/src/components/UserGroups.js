@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import slugify from 'slugify'
 import { Link as RouterLink } from '@reach/router'
 import { useQuery, useMutation } from 'graphql-hooks'
@@ -10,6 +10,8 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  TableFooter,
+  TablePagination,
   Button,
   IconButton,
 } from '@material-ui/core'
@@ -31,12 +33,19 @@ const GroupSchema = Yup.object().shape({
 })
 
 export default function UserGroups() {
+  const [offset, setOffset] = useState(0)
+
+  const rowsPerPage = 4 // TODO: maybe define this once app wide?
+  const headers = ['id', 'name', 'roles']
+
   const {
     loading: groupsLoading,
     error: groupsError,
     data: groups,
     refetch: refetchGroups,
-  } = useQuery(getGroupsWithRoles)
+  } = useQuery(getGroupsWithRoles, {
+    variables: { offset: offset, limit: rowsPerPage },
+  })
 
   const { loading: rolesLoading, error: rolesError, data: roles } = useQuery(
     getRoles
@@ -44,6 +53,10 @@ export default function UserGroups() {
 
   const [createGroup] = useMutation(createGroupMutation)
   const [deleteGroup] = useMutation(deleteGroupMutation)
+
+  const changePage = (event, page) => {
+    setOffset(page * rowsPerPage)
+  }
 
   const doDeleteGroup = async id => {
     await deleteGroup({ variables: { id } })
@@ -107,9 +120,9 @@ export default function UserGroups() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>id</TableCell>
-            <TableCell>name</TableCell>
-            <TableCell>roles</TableCell>
+            {headers.map(header => (
+              <TableCell>{header}</TableCell>
+            ))}
             <TableCell />
           </TableRow>
         </TableHead>
@@ -133,6 +146,17 @@ export default function UserGroups() {
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              colSpan={headers.length + 1}
+              count={groups.group_aggregate.aggregate.count}
+              rowsPerPage={rowsPerPage}
+              page={Math.floor(offset / rowsPerPage)}
+              onChangePage={changePage}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     </div>
   )

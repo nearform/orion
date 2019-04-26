@@ -1,5 +1,5 @@
-query getUsers {
-  user {
+query getUsers($limit: Int!, $offset: Int!) {
+  user(limit: $limit, offset: $offset) {
     id
     name
     pending

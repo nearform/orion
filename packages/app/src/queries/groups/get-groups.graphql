@@ -1,5 +1,5 @@
-query getGroups {
-  group {
+query getGroups($limit: Int, $offset: Int) {
+  group(limit: $limit, offset: $offset) {
     id
     name
   }

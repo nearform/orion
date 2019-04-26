@@ -1,12 +1,6 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import T from 'prop-types'
-import {
-  TableBody,
-  TableRow,
-  TableCell,
-  Typography,
-  Tooltip,
-} from '@material-ui/core'
+import { TableRow, TableCell, Typography, Tooltip } from '@material-ui/core'
 
 /* TODO: uncomment when edit functionality is implemented
 Edit,
@@ -82,7 +76,7 @@ export default function AllUsers({ query, pageTitle, variables }) {
     AdminTableContent: function({ data }) {
       const { user } = data
       return (
-        <TableBody>
+        <Fragment>
           {user.map(user => (
             <TableRow key={user.id.toString()}>
               <TableCell>{user.id}</TableCell>
@@ -103,7 +97,7 @@ export default function AllUsers({ query, pageTitle, variables }) {
             */}
             </TableRow>
           ))}
-        </TableBody>
+        </Fragment>
       )
     },
   })
