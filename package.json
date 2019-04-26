@@ -52,7 +52,7 @@
     }
   },
   "lint-staged": {
-    "**.{js,jsx,graphql}": [
+    "**.{js,jsx}": [
       "eslint --fix",
       "git add"
     ]
