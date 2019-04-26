@@ -1,12 +1,5 @@
-import React, { Fragment, useState } from 'react'
-import {
-  TableBody,
-  TableRow,
-  TableCell,
-  Tooltip,
-  IconButton,
-} from '@material-ui/core'
-import TablePagination from '@material-ui/core/TablePagination'
+import React, { Fragment } from 'react'
+import { TableRow, TableCell, Tooltip, IconButton } from '@material-ui/core'
 
 import AdminTable from './AdminTable'
 import UserGroupsPicker from './UserGroupsPicker'
