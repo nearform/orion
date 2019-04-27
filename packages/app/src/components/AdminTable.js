@@ -10,7 +10,9 @@ import {
   TableFooter,
   Typography,
   TablePagination,
+  Tooltip,
 } from '@material-ui/core'
+import TableSortLabel from '@material-ui/core/TableSortLabel'
 
 export default function AdminTable({
   query,
@@ -22,15 +24,29 @@ export default function AdminTable({
 }) {
   const [selected, setSelected] = useState(null)
   const [offset, setOffset] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(4)
+  const [orderObject, setOrderObject] = useState({
+    order: 'asc',
+    orderBy: 'id',
+  })
 
-  const rowsPerPage = 4
-
-  const { loading, error, data, refetch } = useQuery(query, {
+  const { loading, error, data, refetch } = useQuery(query(orderObject.order), {
     variables: { ...variables, offset: offset, limit: rowsPerPage },
   })
 
   const changePage = (event, page) => {
     setOffset(page * rowsPerPage)
+  }
+
+  const handleChangeRowsPerPage = event => setRowsPerPage(event.target.value)
+
+  const sortColumn = (property, event) => {
+    const toOrderBy = property
+    let toOrder = 'desc'
+    if (toOrderBy === property && orderObject.order === 'desc') {
+      toOrder = 'asc'
+    }
+    setOrderObject({ order: toOrder, orderBy: toOrderBy })
   }
 
   // TODO: for dev convenience, instead extract array of default headers from query
@@ -57,8 +73,23 @@ export default function AdminTable({
       <Table>
         <TableHead>
           <TableRow>
-            {headers.map((header, index) => (
-              <TableCell key={`${index}_${header}`}>{header}</TableCell>
+            {headers.map(header => (
+              <TableCell
+                key={header.key}
+                sortDirection={
+                  orderObject.orderBy === header.id ? orderObject.order : false
+                }
+              >
+                <Tooltip title="Sort" enterDelay={300}>
+                  <TableSortLabel
+                    active={orderObject.orderBy === header.id}
+                    direction={orderObject.order}
+                    onClick={e => sortColumn(header.id)}
+                  >
+                    {header.label}
+                  </TableSortLabel>
+                </Tooltip>
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -68,11 +99,13 @@ export default function AdminTable({
         <TableFooter>
           <TableRow>
             <TablePagination
+              rowsPerPageOptions={[4, 8, 12]}
               colSpan={headers.length}
               count={data.user_aggregate.aggregate.count}
               rowsPerPage={rowsPerPage}
               page={Math.floor(offset / rowsPerPage)}
               onChangePage={changePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
             />
           </TableRow>
         </TableFooter>

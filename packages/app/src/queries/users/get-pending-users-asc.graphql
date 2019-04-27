@@ -1,5 +1,5 @@
-query getPendingUsers($limit: Int!, $offset: Int!) {
-  user(where: { pending: { _eq: true } }, limit: $limit, offset: $offset) {
+query getPendingUsersASC($limit: Int!, $offset: Int!) {
+  user(where: {pending: {_eq: true}}, limit: $limit, offset: $offset, order_by: {id: asc}) {
     id
     name
     signupRequest
@@ -15,7 +15,7 @@ query getPendingUsers($limit: Int!, $offset: Int!) {
       }
     }
   }
-  user_aggregate(where: { pending: { _eq: true } }) {
+  user_aggregate(where: {pending: {_eq: true}}) {
     aggregate {
       count
     }

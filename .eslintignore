@@ -1,6 +1,7 @@
 node_modules
 .circleci
 docs
+packages/app/src/queries
 packages/app/public
 packages/app/.cache
 packages/functions/build
