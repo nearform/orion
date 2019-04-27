@@ -1,19 +1,13 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
+import { Button } from '@material-ui/core'
 
-import { Button, withStyles } from '@material-ui/core'
-
-const Container = withStyles({
-  root: {
-    marginBottom: 10,
-    '& > * + *': { marginLeft: 10 },
-  },
-})(({ classes, children }) => <div className={classes.root}>{children}</div>)
+import Container from './Container'
 
 storiesOf('material/Button', module)
   .addDecorator(jsxDecorator)
-  .add('Button', () => (
+  .add('Buttons', () => (
     <>
       <Container>
         <Button>default</Button>

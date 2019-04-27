@@ -25,14 +25,22 @@ const nearformPalette = {
   supersplit: '#fd775e',
   brunchPink: '#fd7a9e',
   bubblegum: '#f9c3c0',
+  white: '#fff',
 }
+
+const shadows = [
+  'none',
+  // material ui requires  25 elevations
+  ...new Array(24).fill(
+    '0 0 5px 0 rgba(0, 0, 0, 0.1), 0 2px 10px 0 rgba(0, 0, 0, 0.1)'
+  ),
+]
 
 exports.muiTheme = {
   overrides: {
     MuiButton: {
       root: {
-        boxShadow:
-          '0 0 5px 0 rgba(0, 0, 0, 0.1), 0 2px 10px 0 rgba(0, 0, 0, 0.1)',
+        boxShadow: shadows[1],
       },
       text: {
         boxShadow: 'none',
@@ -64,11 +72,13 @@ exports.muiTheme = {
     primary: { main: nearformPalette.blue },
     secondary: { main: nearformPalette.supersplit },
     background: {
-      default: '#fff',
+      default: nearformPalette.white,
       paper: nearformPalette.sand1,
+      light: nearformPalette.sand1,
       dark: nearformPalette.sand3,
     },
   },
+  shadows,
 }
 
 exports.googleFonts = ['Didact Gothic', 'Poppins']

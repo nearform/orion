@@ -23,7 +23,7 @@ const styles = theme => ({
     height: theme.spacing.unit * 4,
     width: theme.spacing.unit * 4,
     backgroundColor: theme.palette.background.default,
-    boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.1), 0 2px 10px 0 rgba(0, 0, 0, 0.1)',
+    boxShadow: theme.shadows[1],
   },
   thumbIcon: {
     display: 'flex',

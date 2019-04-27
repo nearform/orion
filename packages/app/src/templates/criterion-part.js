@@ -5,7 +5,6 @@ import {
   Button,
   Typography,
   TextField,
-  Paper,
 } from '@material-ui/core'
 import { AssessmentProgress, PaddedContainer, ScoringSlider } from 'components'
 import { Link } from 'gatsby'
@@ -124,7 +123,7 @@ function CriterionPartTemplate({
           </div>
         ))}
       </PaddedContainer>
-      <Paper className={classes.scoringSection} elevation={0}>
+      <div className={classes.scoringSection}>
         <PaddedContainer>
           <Typography variant="h2" color="primary" gutterBottom>
             Scoring Section
@@ -140,7 +139,7 @@ function CriterionPartTemplate({
             </Grid>
           </Grid>
         </PaddedContainer>
-      </Paper>
+      </div>
       <AssessmentProgress />
     </div>
   )
@@ -159,6 +158,7 @@ const styles = theme => ({
     margin: `${theme.spacing.unit * 3}px 0`,
   },
   scoringSection: {
+    backgroundColor: theme.palette.background.light,
     padding: `${theme.spacing.unit * 3}px 0`,
   },
 })

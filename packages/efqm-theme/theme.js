@@ -71,18 +71,25 @@ const efqmDigitalPalette = {
   pearGreen: 'rgb(155, 220, 106)',
 
   // Shades used in designs not included in EFQM docs
-  midGrey: 'rgb(152, 175, 198)',
   paleGrey: 'rgb(244, 246, 248)',
+  midGrey: 'rgb(152, 175, 198)',
   white: '#fff',
 }
+
+const shadows = [
+  'none',
+  // material ui requires  25 elevations
+  ...new Array(24).fill(
+    '0 0 5px 0 rgba(0, 0, 0, 0.1), 0 2px 10px 0 rgba(0, 0, 0, 0.1)'
+  ),
+]
 
 exports.muiTheme = {
   overrides: {
     MuiButton: {
       root: {
         whiteSpace: 'nowrap',
-        boxShadow:
-          '0 0 5px 0 rgba(0, 0, 0, 0.1), 0 2px 10px 0 rgba(0, 0, 0, 0.1)',
+        boxShadow: shadows[1],
       },
       text: {
         boxShadow: 'none',
@@ -99,9 +106,26 @@ exports.muiTheme = {
     },
     MuiInput: {
       root: {
+        ...typography.body1,
         borderRadius: 3,
-        padding: '0 5px',
         backgroundColor: efqmDigitalPalette.paleGrey,
+      },
+      input: {
+        padding: '7.5px 12px 8.5px',
+      },
+    },
+    MuiOutlinedInput: {
+      root: {
+        ...typography.body1,
+        borderRadius: 3,
+        boxShadow: shadows[1],
+        background: efqmDigitalPalette.white,
+      },
+      notchedOutline: {
+        border: 'none',
+      },
+      input: {
+        padding: '7.5px 12px 8.5px',
       },
     },
     MuiTypography: {
@@ -109,10 +133,21 @@ exports.muiTheme = {
         marginBottom: '.75em',
       },
     },
+    MuiTableCell: {
+      head: {
+        ...typography.h4,
+      },
+      body: {
+        ...typography.body1,
+      },
+    },
   },
   props: {
     MuiInput: {
       disableUnderline: true,
+    },
+    MuiPaper: {
+      elevation: 1,
     },
   },
   typography: {
@@ -134,11 +169,13 @@ exports.muiTheme = {
     },
     background: {
       default: efqmDigitalPalette.white,
-      paper: efqmDigitalPalette.paleGrey,
+      paper: efqmDigitalPalette.white,
+      light: efqmDigitalPalette.paleGrey,
       dark: efqmDigitalPalette.midGrey,
     },
     contrastThreshold: 1,
   },
+  shadows,
 }
 
 exports.googleFonts = ['Lato']

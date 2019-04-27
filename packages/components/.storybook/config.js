@@ -1,25 +1,28 @@
 import React from 'react'
-import {
-  MuiThemeProvider,
-  createMuiTheme,
-  CssBaseline,
-} from '@material-ui/core'
+import { CssBaseline } from '@material-ui/core'
 import { configure } from '@storybook/react'
 import { setAddon, addDecorator } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs/react'
 import JSXAddon from 'storybook-addon-jsx'
+import { muiTheme } from 'storybook-addon-material-ui'
+import { theme as nearformTheme } from 'nearform-theme'
+import { theme as efqmTheme } from 'efqm-theme'
 
-import { theme } from '../../app/theme.es'
-
-const withThemeDecorator = storyFn => (
-  <MuiThemeProvider theme={createMuiTheme(theme.muiTheme)}>
+const withCssBaseline = storyFn => (
+  <>
     <CssBaseline />
     {storyFn()}
-  </MuiThemeProvider>
+  </>
 )
 
 addDecorator(withKnobs)
-addDecorator(withThemeDecorator)
+addDecorator(withCssBaseline)
+addDecorator(
+  muiTheme([
+    { ...efqmTheme.muiTheme, themeName: 'EFQM' },
+    { ...nearformTheme.muiTheme, themeName: 'NearForm' },
+  ])
+)
 setAddon(JSXAddon)
 
 if (process.env.NODE_ENV === 'test') {

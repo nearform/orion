@@ -10,6 +10,7 @@ import {
   TableBody,
   TextField,
   Button,
+  Paper,
 } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import { AssessmentProgress, PaddedContainer } from 'components'
@@ -31,41 +32,54 @@ function Assess({
     <>
       <SEO title={t('Your assessments')} />
       <PaddedContainer>
-        <Typography variant="h1" gutterBottom>
-          {t('Your assessments')}
-        </Typography>
+        <Button
+          component={Link}
+          to={`assessment`}
+          variant="text"
+          color="secondary"
+        >
+          ◀ Assess base home
+        </Button>
         <div className={classes.section}>
-          <Typography variant="h3" gutterBottom>
-            Assessments completed
-          </Typography>
+          <Grid container spacing={theme.spacing.unit * 4}>
+            <Grid item xs={4}>
+              <SectionTitle barColor={theme.palette.primary.dark}>
+                {assessment.name}
+              </SectionTitle>
+            </Grid>
+          </Grid>
+        </div>
+        <div className={classes.section}>
           <Grid container spacing={theme.spacing.unit * 4}>
             <Grid item xs={7}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Last Updated</TableCell>
-                    <TableCell>Status</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell />
-                    <TableCell />
-                    <TableCell />
-                  </TableRow>
-                  <TableRow>
-                    <TableCell />
-                    <TableCell />
-                    <TableCell />
-                  </TableRow>
-                  <TableRow>
-                    <TableCell />
-                    <TableCell />
-                    <TableCell />
-                  </TableRow>
-                </TableBody>
-              </Table>
+              <Paper>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>{t('Your assessments')}</TableCell>
+                      <TableCell>Last Updated</TableCell>
+                      <TableCell>Status</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell />
+                      <TableCell />
+                      <TableCell />
+                    </TableRow>
+                    <TableRow>
+                      <TableCell />
+                      <TableCell />
+                      <TableCell />
+                    </TableRow>
+                    <TableRow>
+                      <TableCell />
+                      <TableCell />
+                      <TableCell />
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </Paper>
             </Grid>
             <Grid item xs={5}>
               <ImagePlaceholder>
@@ -87,7 +101,7 @@ function Assess({
           <Grid container spacing={theme.spacing.unit * 4}>
             <Grid item xs>
               <Typography variant="h4" gutterBottom>
-                Enter your assessment unit
+                Enter your assessment name
               </Typography>
               <TextField fullWidth />
             </Grid>
@@ -123,11 +137,6 @@ function Assess({
             </Grid>
           </Grid>
           <Grid container spacing={theme.spacing.unit * 2}>
-            <Grid item xs={3}>
-              <SectionTitle barColor={theme.palette.primary.dark}>
-                {assessment.name}
-              </SectionTitle>
-            </Grid>
             {assessment.pillars.map((pillar, pillarIndex) => {
               const pillarSlug = slugify(pillar.name)
               const pillarColor = pillarColors[pillarIndex]

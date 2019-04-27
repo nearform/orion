@@ -9,7 +9,10 @@ import ScoringSlider from './'
 const Container = withStyles(theme => ({
   root: {
     padding: 50,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.light,
+    '& > * + *': {
+      marginTop: 50,
+    },
   },
 }))(({ children, classes }) => <div className={classes.root}>{children}</div>)
 

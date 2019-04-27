@@ -5,7 +5,6 @@ import {
   Typography,
   Button,
   TextField,
-  Paper,
 } from '@material-ui/core'
 import Facebook from 'mdi-material-ui/Facebook'
 import Youtube from 'mdi-material-ui/Youtube'
@@ -33,7 +32,7 @@ function Footer({ classes, theme }) {
   `)
 
   return (
-    <Paper className={classes.root} elevation={0}>
+    <div className={classes.root}>
       <PaddedContainer>
         <Grid container spacing={theme.spacing.unit * 3}>
           <Grid item xs>
@@ -79,7 +78,7 @@ function Footer({ classes, theme }) {
               <div>Link 4</div>
             </Typography>
           </Grid>
-          <Grid item xs>
+          <Grid item xs={4}>
             <Typography variant="h4" gutterBottom>
               subscribe to our newsletter
             </Typography>
@@ -88,7 +87,11 @@ function Footer({ classes, theme }) {
               your inbox every month.
             </Typography>
             <div className={classes.horizontalContainer}>
-              <TextField placeholder="your email address" />
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="Your email address"
+              />
               <Button color="secondary" variant="contained">
                 subscribe
               </Button>
@@ -125,12 +128,13 @@ function Footer({ classes, theme }) {
           </Grid>
         </Grid>
       </PaddedContainer>
-    </Paper>
+    </div>
   )
 }
 
 const styles = theme => ({
   root: {
+    backgroundColor: theme.palette.background.light,
     paddingTop: theme.spacing.unit * 7,
     paddingBottom: theme.spacing.unit * 3,
   },
