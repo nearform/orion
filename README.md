@@ -40,9 +40,13 @@ This folder contains the migrations and scripts necessary to run them.
 - Gatsby uses [graphql](https://graphql.org/) to fetch data from the API
 
 ### [./packages/nearform-theme](./packages/nearform-theme)
+### [./packages/efqm-theme](./packages/efqm-theme)
 
-- material-ui theme with NearForm branding
-- wrapper component to apply common styles to the application
+- branding customizations
+- material-ui themes
+- wrapper components to apply common styles to the application
+- theme configuration
+- assets
 
 ### [./packages/functions](./packages/functions)
 
