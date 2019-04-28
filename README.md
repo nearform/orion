@@ -93,6 +93,8 @@ npm start
 
 The components package contains storybook stories to document and test the components contained therein.
 
+A hosted version of the storybook stories is running at https://knowledgebase-storybook.nearform.com
+
 ```
 cd packages/components
 npm run storybook
