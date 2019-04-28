@@ -11,6 +11,45 @@ The project architecture follows a JAMStack, Serverless application model. The p
 
 ![architecture](./docs/architecture.png)
 
+## Project vision
+
+Although the knowledgebase name still reflects the original idea behind the project, the objective is to build a more flexible platform, capable of accommodating a quandrant of requirements running on two axis:
+
+- feature wise, a knowledgebase and an assess-base
+- branding wise, internal NearForm projects and customer projects
+
+The end goal is to support all the variation on such axis:
+
+- NearForm cloud native knowledgebase and assess-base
+- EFQM knowledge base and assess-base
+
+The initial goal is to implement the EFQM assess-base, followed closely by the EFQM knowlegebase, while at the same time creating the platform to accommodate a non-EFQM version of both, with all that it entails.
+
+At a high level, the architecture of the project will have a single **host Web application built with Gatsby**, where branding customizations for a same brand (we don't expect to host within the same runtime instance of an application multiple brands) occur via a **theme** package which contains:
+
+- UI customizations via Material UI themes
+- application-wide specific configuration (i.e. assessment configuration)
+- translations
+
+Also, the  idea is that knowledgebase and assess-base specific code, including:
+
+- site-specific components
+- site-specific database schema and metadata
+
+will live in **Gatsby theme packages**, a new feature recently introduced in Gatsby, and still experimental, which allows to compose a Gatsby application via multiple modules which collaborate with each other, rather than being constrained to a single application per Gatsby host as is the case with the usual Gatsby starter projects.
+
+### Implementing an application with the platform
+
+All the above considered, the objective is to make it possible to implemented either or both a knowledgebase application and an assess-base application by:
+
+- creating a plain Gatsby application
+- using Gatsby theme packages published by NearForm
+- customizing the look and behavior of the application(s) via a brand-specific theme package provided by the implementor and following well-defined and documented configuration procedures, including:
+  - providing assets to show in the UI of the application
+  - customizing the look via Material UI theme configuration
+  - providing configuration for the assessments available in the assess base
+  - ....
+
 ## Project structure
 
 The application is stored in a [lerna](https://github.com/lerna/lerna) monorepo.
