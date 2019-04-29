@@ -10,9 +10,7 @@ import {
   TableFooter,
   Typography,
   TablePagination,
-  Tooltip,
 } from '@material-ui/core'
-import TableSortLabel from '@material-ui/core/TableSortLabel'
 
 export default function AdminTable({
   query,
@@ -25,12 +23,8 @@ export default function AdminTable({
   const [selected, setSelected] = useState(null)
   const [offset, setOffset] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(4)
-  const [orderObject, setOrderObject] = useState({
-    order: 'asc',
-    orderBy: 'id',
-  })
 
-  const { loading, error, data, refetch } = useQuery(query(orderObject.order), {
+  const { loading, error, data, refetch } = useQuery(query, {
     variables: { ...variables, offset: offset, limit: rowsPerPage },
   })
 
@@ -39,15 +33,6 @@ export default function AdminTable({
   }
 
   const handleChangeRowsPerPage = event => setRowsPerPage(event.target.value)
-
-  const sortColumn = (property, event) => {
-    const toOrderBy = property
-    let toOrder = 'desc'
-    if (toOrderBy === property && orderObject.order === 'desc') {
-      toOrder = 'asc'
-    }
-    setOrderObject({ order: toOrder, orderBy: toOrderBy })
-  }
 
   // TODO: for dev convenience, instead extract array of default headers from query
   if (!headers.length) return 'No table headers to show'
@@ -73,23 +58,8 @@ export default function AdminTable({
       <Table>
         <TableHead>
           <TableRow>
-            {headers.map(header => (
-              <TableCell
-                key={header.key}
-                sortDirection={
-                  orderObject.orderBy === header.id ? orderObject.order : false
-                }
-              >
-                <Tooltip title="Sort" enterDelay={300}>
-                  <TableSortLabel
-                    active={orderObject.orderBy === header.id}
-                    direction={orderObject.order}
-                    onClick={e => sortColumn(header.id)}
-                  >
-                    {header.label}
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
+            {headers.map((header, index) => (
+              <TableCell key={`${index}_${header}`}>{header}</TableCell>
             ))}
           </TableRow>
         </TableHead>

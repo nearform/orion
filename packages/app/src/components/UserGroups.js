@@ -34,8 +34,8 @@ const GroupSchema = Yup.object().shape({
 
 export default function UserGroups() {
   const [offset, setOffset] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(4)
 
-  const rowsPerPage = 4 // TODO: maybe define this once app wide?
   const headers = ['id', 'name', 'roles']
 
   const {
@@ -50,6 +50,8 @@ export default function UserGroups() {
   const { loading: rolesLoading, error: rolesError, data: roles } = useQuery(
     getRoles
   )
+
+  const handleChangeRowsPerPage = event => setRowsPerPage(event.target.value)
 
   const [createGroup] = useMutation(createGroupMutation)
   const [deleteGroup] = useMutation(deleteGroupMutation)
@@ -120,8 +122,8 @@ export default function UserGroups() {
       <Table>
         <TableHead>
           <TableRow>
-            {headers.map(header => (
-              <TableCell>{header}</TableCell>
+            {headers.map((header, index) => (
+              <TableCell key={`${header}_${index}`}>{header}</TableCell>
             ))}
             <TableCell />
           </TableRow>
@@ -149,11 +151,13 @@ export default function UserGroups() {
         <TableFooter>
           <TableRow>
             <TablePagination
+              rowsPerPageOptions={[4, 8, 12]}
               colSpan={headers.length + 1}
               count={groups.group_aggregate.aggregate.count}
               rowsPerPage={rowsPerPage}
               page={Math.floor(offset / rowsPerPage)}
               onChangePage={changePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
             />
           </TableRow>
         </TableFooter>

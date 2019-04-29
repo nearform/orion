@@ -4,25 +4,13 @@ import { TableRow, TableCell, Tooltip, IconButton } from '@material-ui/core'
 import AdminTable from './AdminTable'
 import UserGroupsPicker from './UserGroupsPicker'
 
-import { getPendingUsersASC, getPendingUsersDESC } from '../queries'
+import { getPendingUsers } from '../queries'
 
-const headers = [
-  { id: 'id', label: 'ID' },
-  { id: 'name', label: 'Name' },
-  { id: 'pending', label: 'Pending' },
-  { id: 'action', label: 'Action' },
-]
+const headers = ['id', 'name', 'pending', 'action']
 
 export default function PendingUsers() {
   return AdminTable({
-    query: order => {
-      switch (order) {
-        case 'desc':
-          return getPendingUsersDESC
-        default:
-          return getPendingUsersASC
-      }
-    },
+    query: getPendingUsers,
     pageTitle: 'Pending Users',
     headers,
     Modal: UserGroupsPicker,
