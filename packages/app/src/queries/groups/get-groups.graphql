@@ -3,7 +3,7 @@ query getGroups($limit: Int, $offset: Int) {
     id
     name
   }
-  group_aggregate {
+  field_aggregate: group_aggregate {
     aggregate {
       count
     }

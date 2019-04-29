@@ -15,7 +15,7 @@ query getUsersInGroup($groupId: Int!, $limit: Int!, $offset: Int!) {
       }
     }
   }
-  user_aggregate(where: { user_groups: { group_id: { _in: [$groupId] } } }) {
+  field_aggregate: user_aggregate(where: { user_groups: { group_id: { _eq: $groupId } } }) {
     aggregate {
       count
     }

@@ -15,7 +15,7 @@ query getPendingUsers($limit: Int!, $offset: Int!) {
       }
     }
   }
-  user_aggregate(where: {pending: {_eq: true}}) {
+  field_aggregate: user_aggregate(where: {pending: {_eq: true}}) {
     aggregate {
       count
     }

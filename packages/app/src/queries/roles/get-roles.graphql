@@ -3,7 +3,7 @@ query getRoles {
     id
     name
   }
-  role_aggregate {
+  field_aggregate: role_aggregate {
     aggregate {
       count
     }

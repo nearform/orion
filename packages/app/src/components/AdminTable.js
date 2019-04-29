@@ -20,8 +20,9 @@ export default function AdminTable({
   AdminTableContent,
   Modal,
 }) {
+  const DROPDOWN_SELECT = [4, 8, 12]
   const [selected, setSelected] = useState(null)
-  const [offset, setOffset] = useState(0)
+  const [offset, setOffset] = useState(DROPDOWN_SELECT[0])
   const [rowsPerPage, setRowsPerPage] = useState(4)
 
   const { loading, error, data, refetch } = useQuery(query, {
@@ -69,9 +70,9 @@ export default function AdminTable({
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[4, 8, 12]}
+              rowsPerPageOptions={DROPDOWN_SELECT}
               colSpan={headers.length}
-              count={data.user_aggregate.aggregate.count}
+              count={data.field_aggregate.aggregate.count}
               rowsPerPage={rowsPerPage}
               page={Math.floor(offset / rowsPerPage)}
               onChangePage={changePage}

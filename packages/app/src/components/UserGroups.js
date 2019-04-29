@@ -1,17 +1,12 @@
-import React, { useState } from 'react'
+import React, { Fragment } from 'react'
 import slugify from 'slugify'
 import { Link as RouterLink } from '@reach/router'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Formik, Form, Field } from 'formik'
 import {
   Typography,
-  Table,
-  TableHead,
   TableRow,
   TableCell,
-  TableBody,
-  TableFooter,
-  TablePagination,
   Button,
   IconButton,
 } from '@material-ui/core'
@@ -25,6 +20,8 @@ import {
   getRoles,
 } from '../queries'
 
+import AdminTable from './AdminTable'
+
 const GroupSchema = Yup.object().shape({
   name: Yup.string().required(),
   roleId: Yup.number()
@@ -32,41 +29,24 @@ const GroupSchema = Yup.object().shape({
     .required(),
 })
 
+const headers = ['id', 'name', 'roles']
+
 export default function UserGroups() {
-  const [offset, setOffset] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(4)
-
-  const headers = ['id', 'name', 'roles']
-
-  const {
-    loading: groupsLoading,
-    error: groupsError,
-    data: groups,
-    refetch: refetchGroups,
-  } = useQuery(getGroupsWithRoles, {
-    variables: { offset: offset, limit: rowsPerPage },
-  })
-
   const { loading: rolesLoading, error: rolesError, data: roles } = useQuery(
     getRoles
   )
 
-  const handleChangeRowsPerPage = event => setRowsPerPage(event.target.value)
-
   const [createGroup] = useMutation(createGroupMutation)
   const [deleteGroup] = useMutation(deleteGroupMutation)
 
-  const changePage = (event, page) => {
-    setOffset(page * rowsPerPage)
-  }
-
   const doDeleteGroup = async id => {
     await deleteGroup({ variables: { id } })
-    refetchGroups()
+    // TODO: this needs to be changed to pass in the refetch method from useQuery
+    // refetchGroups()
   }
 
-  if (groupsLoading || rolesLoading) return 'Loading...'
-  if (groupsError || rolesError) return 'Error!'
+  if (rolesLoading) return 'Loading...'
+  if (rolesError) return 'Error!'
 
   return (
     <div>
@@ -82,7 +62,9 @@ export default function UserGroups() {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             await createGroup({ variables: values })
-            await refetchGroups()
+            // TODO: this needs to be changed to pass in the refetch method from useQuery
+            // from the parent
+            // await refetchGroups()
           } finally {
             setSubmitting(false)
           }
@@ -116,52 +98,36 @@ export default function UserGroups() {
           </Form>
         )}
       </Formik>
-      <Typography variant="h2" gutterBottom>
-        Group list
-      </Typography>
-      <Table>
-        <TableHead>
-          <TableRow>
-            {headers.map((header, index) => (
-              <TableCell key={`${header}_${index}`}>{header}</TableCell>
-            ))}
-            <TableCell />
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {groups.group.map(group => (
-            <TableRow key={group.id}>
-              <TableCell>{group.id}</TableCell>
-              <TableCell>
-                <RouterLink to={`${group.id}/${slugify(group.name)}`}>
-                  {group.name}
-                </RouterLink>
-              </TableCell>
-              <TableCell>
-                {group.roles.map(r => r.role.name).join(', ')}
-              </TableCell>
-              <TableCell>
-                <IconButton onClick={() => doDeleteGroup(group.id)}>
-                  x
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[4, 8, 12]}
-              colSpan={headers.length + 1}
-              count={groups.group_aggregate.aggregate.count}
-              rowsPerPage={rowsPerPage}
-              page={Math.floor(offset / rowsPerPage)}
-              onChangePage={changePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
+      <AdminTable
+        query={getGroupsWithRoles}
+        pageTitles="Group list"
+        headers={headers}
+        AdminTableContent={({ data }) => {
+          const { group: groups } = data
+          return (
+            <Fragment>
+              {groups.map(group => (
+                <TableRow key={group.id}>
+                  <TableCell>{group.id}</TableCell>
+                  <TableCell>
+                    <RouterLink to={`${group.id}/${slugify(group.name)}`}>
+                      {group.name}
+                    </RouterLink>
+                  </TableCell>
+                  <TableCell>
+                    {group.roles.map(r => r.role.name).join(', ')}
+                  </TableCell>
+                  <TableCell>
+                    <IconButton onClick={() => doDeleteGroup(group.id)}>
+                      x
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </Fragment>
+          )
+        }}
+      />
     </div>
   )
 }
