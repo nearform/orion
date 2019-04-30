@@ -1,4 +1,4 @@
-# NearForm 🤓 raw-salmon
+# NearForm 🍣 raw-salmon
 
 [![CircleCI](https://circleci.com/gh/nearform/raw-salmon.svg?style=svg&circle-token=0ce58bd80ab2db1fd16b1eca28dba58c62588a74)](https://circleci.com/gh/nearform/raw-salmon)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
