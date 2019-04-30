@@ -1,5 +1,15 @@
-query getUsersInGroup($groupId: Int!, $limit: Int!, $offset: Int!) {
-  user(where: { user_groups: { group_id: { _eq: $groupId } } }, limit: $limit, offset: $offset) {
+query getUsersInGroup(
+  $groupId: Int!
+  $limit: Int!
+  $offset: Int!
+  $orderBy: user_order_by!
+) {
+  user(
+    where: { user_groups: { group_id: { _eq: $groupId } } }
+    limit: $limit
+    offset: $offset
+    order_by: [$orderBy]
+  ) {
     id
     name
     signupRequest
@@ -15,7 +25,9 @@ query getUsersInGroup($groupId: Int!, $limit: Int!, $offset: Int!) {
       }
     }
   }
-  field_aggregate: user_aggregate(where: { user_groups: { group_id: { _eq: $groupId } } }) {
+  field_aggregate: user_aggregate(
+    where: { user_groups: { group_id: { _eq: $groupId } } }
+  ) {
     aggregate {
       count
     }

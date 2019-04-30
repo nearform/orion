@@ -1,5 +1,5 @@
-query getGroups($limit: Int, $offset: Int) {
-  group(limit: $limit, offset: $offset) {
+query getGroups($limit: Int, $offset: Int, $orderBy: group_order_by!) {
+  group(limit: $limit, offset: $offset, order_by: [$orderBy]) {
     id
     name
   }

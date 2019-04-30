@@ -6,7 +6,12 @@ import UserGroupsPicker from './UserGroupsPicker'
 
 import { getPendingUsers } from '../queries'
 
-const headers = ['id', 'name', 'pending', 'action']
+const headers = [
+  { id: 'id', label: 'ID', sortable: true },
+  { id: 'name', label: 'Name', sortable: true },
+  { id: 'pending', label: 'Pending' },
+  { id: 'action', label: 'Action' },
+]
 
 export default function PendingUsers() {
   return AdminTable({

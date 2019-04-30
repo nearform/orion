@@ -10,6 +10,8 @@ import {
   TableFooter,
   Typography,
   TablePagination,
+  Tooltip,
+  TableSortLabel,
 } from '@material-ui/core'
 
 export default function AdminTable({
@@ -20,22 +22,34 @@ export default function AdminTable({
   AdminTableContent,
   Modal,
 }) {
-  const DROPDOWN_SELECT = [4, 8, 12]
+  const PAGE_SIZES = [4, 8, 12]
   const [selected, setSelected] = useState(null)
-  const [offset, setOffset] = useState(DROPDOWN_SELECT[0])
-  const [rowsPerPage, setRowsPerPage] = useState(4)
+  const [offset, setOffset] = useState(0)
+  const [pageSize, setPageSize] = useState(PAGE_SIZES[0])
+  const [orderBy, setOrderBy] = useState({
+    id: 'asc',
+  })
 
   const { loading, error, data, refetch } = useQuery(query, {
-    variables: { ...variables, offset: offset, limit: rowsPerPage },
+    variables: {
+      ...variables,
+      offset,
+      limit: pageSize,
+      orderBy,
+    },
   })
 
   const changePage = (event, page) => {
-    setOffset(page * rowsPerPage)
+    setOffset(page * pageSize)
   }
 
-  const handleChangeRowsPerPage = event => setRowsPerPage(event.target.value)
+  const handleChangePageSize = event => setPageSize(event.target.value)
 
-  // TODO: for dev convenience, instead extract array of default headers from query
+  const toggleOrder = order => (order === 'asc' ? 'desc' : 'asc')
+
+  const handleSort = property =>
+    setOrderBy({ [property]: toggleOrder(orderBy[property]) })
+
   if (!headers.length) return 'No table headers to show'
 
   if (loading) return 'Loading...'
@@ -59,9 +73,28 @@ export default function AdminTable({
       <Table>
         <TableHead>
           <TableRow>
-            {headers.map((header, index) => (
-              <TableCell key={`${index}_${header}`}>{header}</TableCell>
-            ))}
+            {headers.map(header => {
+              if (!header.sortable)
+                return <TableCell key={header.id}>{header.label}</TableCell>
+              return (
+                <TableCell
+                  key={header.id}
+                  sortDirection={
+                    orderBy.hasOwnProperty(header.id) ? header.id : false
+                  }
+                >
+                  <Tooltip title="Sort" enterDelay={300}>
+                    <TableSortLabel
+                      active={orderBy.hasOwnProperty(header.id)}
+                      direction={orderBy[header.id]}
+                      onClick={e => handleSort(header.id)}
+                    >
+                      {header.label}
+                    </TableSortLabel>
+                  </Tooltip>
+                </TableCell>
+              )
+            })}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -70,13 +103,13 @@ export default function AdminTable({
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={DROPDOWN_SELECT}
+              rowsPerPageOptions={PAGE_SIZES}
               colSpan={headers.length}
               count={data.field_aggregate.aggregate.count}
-              rowsPerPage={rowsPerPage}
-              page={Math.floor(offset / rowsPerPage)}
+              rowsPerPage={pageSize}
+              page={Math.floor(offset / pageSize)}
               onChangePage={changePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
+              onChangeRowsPerPage={handleChangePageSize}
             />
           </TableRow>
         </TableFooter>
@@ -93,7 +126,13 @@ AdminTable.propTypes = {
   query: T.string,
   variables: T.object,
   pageTitle: T.oneOfType([T.string, T.node]),
-  headers: T.arrayOf(T.string).isRequired,
+  headers: T.arrayOf(
+    T.shape({
+      id: T.string.isRequired,
+      label: T.string.isRequired,
+      sortable: T.bool,
+    })
+  ).isRequired,
   AdminTableContent: T.func.isRequired,
   Modal: T.func,
 }

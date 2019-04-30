@@ -1,5 +1,5 @@
-query getUsers($limit: Int!, $offset: Int!) {
-  user(limit: $limit, offset: $offset) {
+query getUsers($limit: Int!, $offset: Int!, $orderBy: user_order_by!) {
+  user(limit: $limit, offset: $offset, order_by: [$orderBy]) {
     id
     name
     pending

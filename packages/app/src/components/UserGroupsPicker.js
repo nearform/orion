@@ -28,7 +28,8 @@ function UserGroupsPicker({ selected: user, onClose, onApply }) {
     }
   }
   const { loading: groupsLoading, error: groupsError, data } = useQuery(
-    getGroups
+    getGroups,
+    { variables: { orderBy: { id: 'asc' } } }
   )
   const groups = data ? data.group || [] : []
 
@@ -36,9 +37,13 @@ function UserGroupsPicker({ selected: user, onClose, onApply }) {
   const [applyInsertUserGroup] = useMutation(addUserGroupMutation)
 
   const doApplyGroupChange = async (userId, groupId) =>
-    applyUserGroupChange({ variables: { userId, groupId } })
+    applyUserGroupChange({
+      variables: { userId, groupId, orderBy: { id: 'asc' } },
+    })
   const doInsertUserGroup = async (userId, groupId) =>
-    applyInsertUserGroup({ variables: { userId, groupId } })
+    applyInsertUserGroup({
+      variables: { userId, groupId, orderBy: { id: 'asc' } },
+    })
   const handleApplyGroup = async fn => {
     try {
       const { data, error } = await doApplyGroupChange(user.id, currentGroupId)

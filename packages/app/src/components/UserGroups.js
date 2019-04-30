@@ -29,7 +29,12 @@ const GroupSchema = Yup.object().shape({
     .required(),
 })
 
-const headers = ['id', 'name', 'roles']
+const headers = [
+  { id: 'id', label: 'ID', sortable: true },
+  { id: 'name', label: 'Group', sortable: true },
+  { id: 'roles', label: 'Roles' },
+  { id: 'action', label: 'Action' },
+]
 
 export default function UserGroups() {
   const { loading: rolesLoading, error: rolesError, data: roles } = useQuery(

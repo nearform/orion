@@ -11,16 +11,25 @@ import AdminTable from './AdminTable'
 
 import { getUsers } from '../queries'
 
+// const headers = [
+//   'id',
+//   'name',
+//   'email',
+//   'phone',
+//   'group',
+//   'role',
+//   /* TODO: uncomment when edit functionality is implemented
+//   'edit',
+// */
+// ]
+
 const headers = [
-  'id',
-  'name',
-  'email',
-  'phone',
-  'group',
-  'role',
-  /* TODO: uncomment when edit functionality is implemented
-  'edit',
-*/
+  { id: 'id', label: 'ID', sortable: true },
+  { id: 'name', label: 'Name', sortable: true },
+  { id: 'email', label: 'Email' },
+  { id: 'phone', label: 'Phone' },
+  { id: 'group', label: 'Group' },
+  { id: 'role', label: 'Role' },
 ]
 
 function getRelationalName(user, relation, entity) {
