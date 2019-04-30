@@ -1,9 +1,9 @@
-# NearForm 🤓 Knowledgebase
+# NearForm 🤓 raw-salmon
 
-[![CircleCI](https://circleci.com/gh/nearform/knowledgebase.svg?style=svg&circle-token=0ce58bd80ab2db1fd16b1eca28dba58c62588a74)](https://circleci.com/gh/nearform/knowledgebase)
+[![CircleCI](https://circleci.com/gh/nearform/raw-salmon.svg?style=svg&circle-token=0ce58bd80ab2db1fd16b1eca28dba58c62588a74)](https://circleci.com/gh/nearform/raw-salmon)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
-This repository is a collection of packages that can be used as a foundation for a statically built, GraphQL-driven knowledgebase.
+This repository is a collection of packages that can be used as a foundation for a statically built, GraphQL-driven platform.
 
 ## Architecture
 
@@ -13,7 +13,7 @@ The project architecture follows a JAMStack, Serverless application model. The p
 
 ## Project vision
 
-Although the knowledgebase name still reflects the original idea behind the project, the objective is to build a more flexible platform, capable of accommodating a quandrant of requirements running on two axis:
+The objective of the project is to build a more flexible platform, capable of accommodating a quandrant of requirements running on two axis:
 
 - feature wise, a knowledgebase and an assess-base
 - branding wise, internal NearForm projects and customer projects
@@ -56,7 +56,7 @@ The application is stored in a [lerna](https://github.com/lerna/lerna) monorepo.
 
 ### [./.circleci](./.circleci)
 
-CircleCI [knowledgebase project](https://circleci.com/gh/nearform/knowledgebase) continuous integration configuration.
+CircleCI [project](https://circleci.com/gh/nearform/raw-salmon) continuous integration configuration.
 
 ### [./hasura](./hasura)
 
@@ -96,9 +96,9 @@ This folder contains the migrations and scripts necessary to run them.
 ### 1. Clone and install dependencies
 
 ```
-git clone https://github.com/nearform/knowledgebase.git
+git clone https://github.com/nearform/raw-salmon.git
 
-cd knowledgebase
+cd raw-salmon
 
 npm i
 ```
@@ -136,7 +136,7 @@ npm start
 
 The components package contains storybook stories to document and test the components contained therein.
 
-A hosted version of the storybook stories is running at https://knowledgebase-storybook.nearform.com
+A hosted version of the storybook stories is running at https://raw-salmon-storybook.nearform.com
 
 ```
 cd packages/components
