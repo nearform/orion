@@ -43,8 +43,6 @@ jobs:
             npm test
   deploy:
     <<: *deploy_environment
-    environment:
-      S3_BUCKET_PATH: "s3://knowledgebase.nearform.com"
     steps:
       - attach_workspace:
           at: .
@@ -55,7 +53,7 @@ jobs:
             sudo pip install awscli
       - run:
           name: Deploy bundle to S3
-          command: aws s3 sync packages/app/public ${S3_BUCKET_PATH} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+          command: aws s3 sync packages/app/public ${APP_S3_BUCKET_PATH} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
   build-storybook:
     <<: *deploy_environment
     steps:
@@ -73,8 +71,6 @@ jobs:
             - .
   deploy-storybook:
     <<: *deploy_environment
-    environment:
-      S3_BUCKET_PATH: "s3://knowledgebase-storybook.nearform.com"
     steps:
       - attach_workspace:
           at: .
@@ -85,7 +81,7 @@ jobs:
             sudo pip install awscli
       - run:
           name: Deploy bundle to S3
-          command: aws s3 sync packages/components/storybook-static ${S3_BUCKET_PATH} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+          command: aws s3 sync packages/components/storybook-static ${STORYBOOK_S3_BUCKET_PATH} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
   test-lambdas:
     <<: *deploy_environment
     steps:
@@ -113,12 +109,12 @@ jobs:
           name: Deploy jwt-enrichment-hook Lambda
           command: |
             zip jwt-enrichment-hook.zip -FSj packages/functions/build/jwt-enrichment-hook.js
-            aws lambda update-function-code --function-name knowledgebase_jwt_enrichment_hook --zip-file fileb://jwt-enrichment-hook.zip
+            aws lambda update-function-code --function-name rawsalmon_jwt_enrichment_hook --zip-file fileb://jwt-enrichment-hook.zip
       - run:
           name: Deploy signup-hook Lambda
           command: |
             zip signup-hook.zip -FSj packages/functions/build/signup-hook.js
-            aws lambda update-function-code --function-name knowledgebase_signup_hook --zip-file fileb://signup-hook.zip
+            aws lambda update-function-code --function-name rawsalmon_signup_hook --zip-file fileb://signup-hook.zip
   apply-hasura-migrations:
     <<: *deploy_environment
     steps:
