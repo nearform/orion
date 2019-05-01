@@ -1,5 +1,5 @@
 {
-  "name": "knowledgebase",
+  "name": "raw-salmon",
   "version": "1.0.0",
   "description": "The goto knowledge base",
   "scripts": {
@@ -14,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/knowledgebase.git"
+    "url": "git+https://github.com/nearform/raw-salmon.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nearform/knowledgebase/issues"
+    "url": "https://github.com/nearform/raw-salmon/issues"
   },
-  "homepage": "https://github.com/nearform/knowledgebase#readme",
+  "homepage": "https://github.com/nearform/raw-salmon#readme",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "cz-conventional-changelog": "^2.1.0",
