@@ -15,12 +15,12 @@ export const handler = async event => {
 
   const user = await graphql(createUser, {
     cognitoId: event.request.userAttributes.sub,
-    name: event.userName,
+    email: event.request.userAttributes.email,
     roleId: role[0].id,
     signupRequest: event.request,
   })
 
-  console.log('created user', user)
+  console.log('created user', JSON.stringify(user))
 
   return event
 }
