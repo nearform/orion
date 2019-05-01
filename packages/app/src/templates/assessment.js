@@ -20,6 +20,27 @@ import slugify from 'slugify'
 import SEO from '../components/seo'
 import ImagePlaceholder from '../components/ImagePlaceholder'
 import SectionTitle from '../components/SectionTitle'
+import AssessmentStatusChip, {
+  ASSESSMENT_STATUS,
+} from 'components/src/components/AssessmentStatusChip'
+
+const mockAssessments = [
+  {
+    name: 'Q1  Assessment for Company A',
+    updated_at: new Date().toLocaleDateString(),
+    status: ASSESSMENT_STATUS.inProgress,
+  },
+  {
+    name: 'Another  Assessment for Company A',
+    updated_at: new Date().toLocaleDateString(),
+    status: ASSESSMENT_STATUS.submitted,
+  },
+  {
+    name: 'Assessment for Company B',
+    updated_at: new Date().toLocaleDateString(),
+    status: ASSESSMENT_STATUS.closed,
+  },
+]
 
 function Assess({
   theme,
@@ -62,21 +83,15 @@ function Assess({
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    <TableRow>
-                      <TableCell />
-                      <TableCell />
-                      <TableCell />
-                    </TableRow>
-                    <TableRow>
-                      <TableCell />
-                      <TableCell />
-                      <TableCell />
-                    </TableRow>
-                    <TableRow>
-                      <TableCell />
-                      <TableCell />
-                      <TableCell />
-                    </TableRow>
+                    {mockAssessments.map(assessment => (
+                      <TableRow key={assessment.name}>
+                        <TableCell>{assessment.name}</TableCell>
+                        <TableCell>{assessment.updated_at}</TableCell>
+                        <TableCell>
+                          <AssessmentStatusChip status={assessment.status} />
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </Paper>

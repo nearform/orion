@@ -173,7 +173,7 @@ exports.muiTheme = {
       light: efqmDigitalPalette.paleGrey,
       dark: efqmDigitalPalette.midGrey,
     },
-    contrastThreshold: 1,
+    contrastThreshold: 1.6,
   },
   shadows,
 }
