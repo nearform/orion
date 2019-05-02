@@ -38,11 +38,11 @@ function UserGroupsPicker({ selected: user, onClose, onApply }) {
 
   const doApplyGroupChange = async (userId, groupId) =>
     applyUserGroupChange({
-      variables: { userId, groupId, orderBy: { id: 'asc' } },
+      variables: { userId, groupId },
     })
   const doInsertUserGroup = async (userId, groupId) =>
     applyInsertUserGroup({
-      variables: { userId, groupId, orderBy: { id: 'asc' } },
+      variables: { userId, groupId },
     })
   const handleApplyGroup = async fn => {
     try {
