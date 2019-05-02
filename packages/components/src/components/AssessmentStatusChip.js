@@ -17,40 +17,28 @@ function getChipColor(status) {
   switch (status) {
     case ASSESSMENT_STATUS.submitted:
       return 'secondary'
-    case ASSESSMENT_STATUS.closed:
-      return 'default'
     case ASSESSMENT_STATUS.inProgress:
-    default:
       return 'primary'
+    case ASSESSMENT_STATUS.closed:
+    default:
+      return 'default'
   }
 }
 
-function getIconColor(status) {
+function getIconDetails(status) {
   switch (status) {
     case ASSESSMENT_STATUS.submitted:
-      return 'secondary'
+      return [DoneIcon, 'secondary']
     case ASSESSMENT_STATUS.inProgress:
-      return 'secondary'
+      return [MoreHorizIcon, 'primary']
     case ASSESSMENT_STATUS.closed:
     default:
-      return 'inherit'
-  }
-}
-
-function getIcon(status) {
-  switch (status) {
-    case ASSESSMENT_STATUS.submitted:
-      return DoneIcon
-    case ASSESSMENT_STATUS.closed:
-      return TuneIcon
-    case ASSESSMENT_STATUS.inProgress:
-    default:
-      return MoreHorizIcon
+      return [TuneIcon, 'inherit']
   }
 }
 
 function AssessmentStatusChip({ classes, status }) {
-  const Icon = getIcon(status)
+  const [Icon, color] = getIconDetails(status)
 
   return (
     <Chip
@@ -58,7 +46,7 @@ function AssessmentStatusChip({ classes, status }) {
       label={
         <>
           <Typography variant="body1">{status}</Typography>
-          <Icon fontSize="small" color={getIconColor(status)} />
+          <Icon fontSize="small" color={color} />
         </>
       }
       color={getChipColor(status)}
@@ -73,7 +61,7 @@ AssessmentStatusChip.propTypes = {
 
 const styles = theme => ({
   root: {
-    display: 'flex',
+    height: 'auto',
     backgroundColor: fade(theme.palette.primary.dark, 0.1),
   },
   colorPrimary: {
