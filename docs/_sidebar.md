@@ -1,0 +1,2 @@
+* [Home](/)
+* [Quick start](/quick-start/)
