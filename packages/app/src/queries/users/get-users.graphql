@@ -11,6 +11,7 @@ query getUsers($limit: Int!, $offset: Int!, $orderBy: user_order_by!) {
     }
     user_roles {
       role {
+        id
         name
       }
     }

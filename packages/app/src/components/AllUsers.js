@@ -43,10 +43,9 @@ function getStyledSignupAttr(user, key) {
 
 function getStyledRoleName(user) {
   const roleName = getRelationalName(user, 'user_roles', 'role')
+  const isAdmin = user.user_roles[0] && user.user_roles[0].id === 1
   return (
-    <Typography
-      color={roleName !== 'non-member' ? 'textPrimary' : 'textSecondary'}
-    >
+    <Typography color={isAdmin ? 'textPrimary' : 'textSecondary'}>
       {roleName}
     </Typography>
   )
