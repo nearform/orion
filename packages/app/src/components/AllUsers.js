@@ -11,23 +11,9 @@ import AdminTable from './AdminTable'
 
 import { getUsers } from '../queries'
 
-// const headers = [
-//   'id',
-//   'name',
-//   'email',
-//   'phone',
-//   'group',
-//   'role',
-//   /* TODO: uncomment when edit functionality is implemented
-//   'edit',
-// */
-// ]
-
 const headers = [
   { id: 'id', label: 'ID', sortable: true },
-  { id: 'name', label: 'Name', sortable: true },
   { id: 'email', label: 'Email' },
-  { id: 'phone', label: 'Phone' },
   { id: 'group', label: 'Group' },
   { id: 'role', label: 'Role' },
 ]
@@ -39,8 +25,6 @@ function getRelationalName(user, relation, entity) {
 
 function getStyledGroupName(user) {
   const groupName = getRelationalName(user, 'user_groups', 'group')
-
-  // TODO: Localise localise localise
   return groupName || styleAsSecondary('no group')
 }
 
@@ -89,12 +73,8 @@ export default function AllUsers({ query, pageTitle, variables }) {
           {user.map(user => (
             <TableRow key={user.id.toString()}>
               <TableCell>{user.id}</TableCell>
-              <TableCell>{user.name}</TableCell>
               <TableCell>
                 {getStyledContactInfo(user, 'email address')}
-              </TableCell>
-              <TableCell>
-                {getStyledContactInfo(user, 'phone number')}
               </TableCell>
               <TableCell>{getStyledGroupName(user)}</TableCell>
               <TableCell>{getStyledRoleName(user)}</TableCell>

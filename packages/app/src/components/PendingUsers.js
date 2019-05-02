@@ -8,7 +8,6 @@ import { getPendingUsers } from '../queries'
 
 const headers = [
   { id: 'id', label: 'ID', sortable: true },
-  { id: 'name', label: 'Name', sortable: true },
   { id: 'pending', label: 'Pending' },
   { id: 'action', label: 'Action' },
 ]
@@ -27,11 +26,10 @@ export default function PendingUsers() {
           {user.map(user => (
             <TableRow key={user.id}>
               <TableCell>{user.id}</TableCell>
-              <TableCell>{user.name}</TableCell>
               <TableCell>{user.pending.toString()}</TableCell>
               <TableCell>
                 <Tooltip
-                  title={`Associate ${user.name} with a group`}
+                  title={`Associate user ${user.id} with a group`}
                   aria-label="Add"
                 >
                   <IconButton onClick={() => setSelected(user)}>+</IconButton>
