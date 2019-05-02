@@ -1,19 +1,30 @@
 import React, { Fragment } from 'react'
 import T from 'prop-types'
-import { TableRow, TableCell, Typography, Tooltip } from '@material-ui/core'
-
-/* TODO: uncomment when edit functionality is implemented
-Edit,
-*/
-import VerifiedUser from '@material-ui/icons/VerifiedUser'
+import {
+  withStyles,
+  TableRow,
+  TableCell,
+  Typography,
+  Tooltip,
+} from '@material-ui/core'
+import { HowToReg, ErrorOutline } from '@material-ui/icons'
 
 import AdminTable from './AdminTable'
 
 import { getUsers } from '../queries'
 
+const styles = {
+  middle: {
+    verticalAlign: 'middle',
+  },
+}
+
 const headers = [
   { id: 'id', label: 'ID', sortable: true },
   { id: 'email', label: 'Email' },
+  { id: 'orgName', label: 'Org name' },
+  { id: 'orgType', label: 'Org type' },
+  { id: 'country', label: 'Country' },
   { id: 'group', label: 'Group' },
   { id: 'role', label: 'Role' },
 ]
@@ -23,44 +34,46 @@ function getRelationalName(user, relation, entity) {
   return entries.length ? entries[0][entity].name : null
 }
 
-function getStyledGroupName(user) {
-  const groupName = getRelationalName(user, 'user_groups', 'group')
-  return groupName || styleAsSecondary('no group')
+function getStyledSignupAttr(user, key) {
+  if (!user.signupRequest || !user.signupRequest.userAttributes[key])
+    return <Typography color="textSecondary">None</Typography>
+
+  return <Typography>{user.signupRequest.userAttributes[key]}</Typography>
 }
 
 function getStyledRoleName(user) {
   const roleName = getRelationalName(user, 'user_roles', 'role')
-  return roleName !== 'non-member' ? roleName : styleAsSecondary(roleName)
-}
-
-function styleAsSecondary(string) {
-  return <Typography color="textSecondary">{string}</Typography>
-}
-
-function getStyledContactInfo(user, type) {
-  if (!user.signupRequest) return styleAsSecondary('none')
-
-  const attrs = user.signupRequest.userAttributes
-  const isEmail = type === 'email address'
-
-  const contactInfo = isEmail ? attrs.email : attrs.phone_number
-  const isVerifiedString = isEmail
-    ? attrs.email_verified
-    : attrs.phone_number_verified
-
-  return isVerifiedString === 'true' ? (
-    <Tooltip title={`This ${type} is verified`} placement="top">
-      <span style={{ whiteSpace: 'nowrap' }}>
-        <VerifiedUser fontSize="small" style={{ verticalAlign: 'middle' }} />{' '}
-        {contactInfo}
-      </span>
-    </Tooltip>
-  ) : (
-    <Typography>{contactInfo}</Typography>
+  return (
+    <Typography
+      color={roleName !== 'non-member' ? 'textPrimary' : 'textSecondary'}
+    >
+      {roleName}
+    </Typography>
   )
 }
 
-export default function AllUsers({ query, pageTitle, variables }) {
+function getGroupAndStatus(user, classes) {
+  const StatusIcon = user.pending ? ErrorOutline : HowToReg
+  const groupName = getRelationalName(user, 'user_groups', 'group')
+  return (
+    <Tooltip
+      noWrap
+      title={user.pending ? 'Pending user' : 'Assigned user'}
+      placement="top"
+    >
+      <Typography noWrap color={user.pending ? 'textSecondary' : 'textPrimary'}>
+        <StatusIcon
+          className={classes.middle}
+          fontSize="small"
+          color="inherit"
+        />{' '}
+        <span>{groupName || 'Unassigned'}</span>
+      </Typography>
+    </Tooltip>
+  )
+}
+
+function AllUsers({ classes, query, pageTitle, variables }) {
   return AdminTable({
     query,
     pageTitle,
@@ -72,11 +85,18 @@ export default function AllUsers({ query, pageTitle, variables }) {
         <Fragment>
           {user.map(user => (
             <TableRow key={user.id.toString()}>
-              <TableCell>{user.id}</TableCell>
+              <TableCell padding="dense">{user.id}</TableCell>
+              <TableCell>{getStyledSignupAttr(user, 'email')}</TableCell>
               <TableCell>
-                {getStyledContactInfo(user, 'email address')}
+                {getStyledSignupAttr(user, 'custom:orgName')}
               </TableCell>
-              <TableCell>{getStyledGroupName(user)}</TableCell>
+              <TableCell>
+                {getStyledSignupAttr(user, 'custom:orgType')}
+              </TableCell>
+              <TableCell>
+                {getStyledSignupAttr(user, 'custom:country')}
+              </TableCell>
+              <TableCell>{getGroupAndStatus(user, classes)}</TableCell>
               <TableCell>{getStyledRoleName(user)}</TableCell>
               {/*
               TODO: uncomment when edit functionality is implemented
@@ -99,6 +119,8 @@ AllUsers.defaultProps = {
 
 AllUsers.propTypes = {
   query: T.string,
-  pageTitle: T.oneOfType([T.string, T.node]),
+  pageTitle: T.node,
   variables: T.object,
 }
+
+export default withStyles(styles)(AllUsers)
