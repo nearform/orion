@@ -74,7 +74,9 @@ function UserGroupsPicker({ selected: user, onClose, onApply }) {
   return (
     <div>
       <Dialog open={!!user} onClose={() => handleClose(onClose)}>
-        <DialogTitle>Assign a group to {user.name}</DialogTitle>
+        <DialogTitle>
+          Assign group to {user.signupRequest.userAttributes.email}
+        </DialogTitle>
         <DialogContent>
           {(groupsError || currentError) && (
             <Typography variant="subtitle1">
@@ -90,6 +92,7 @@ function UserGroupsPicker({ selected: user, onClose, onApply }) {
 
           {!groupsError && !groupsLoading && groups && groups.length && (
             <Select
+              fullWidth
               value={currentGroupId}
               onChange={event => setGroupId(Number(event.target.value))}
             >

@@ -1,18 +1,42 @@
 import React, { Fragment } from 'react'
-import { TableRow, TableCell, Tooltip, IconButton } from '@material-ui/core'
+import {
+  withStyles,
+  TableRow,
+  TableCell,
+  Tooltip,
+  Typography,
+  IconButton,
+} from '@material-ui/core'
+import { VerifiedUser, ErrorOutline, HowToReg } from '@material-ui/icons'
 
 import AdminTable from './AdminTable'
 import UserGroupsPicker from './UserGroupsPicker'
 
 import { getPendingUsers } from '../queries'
 
+const styles = {
+  middle: {
+    verticalAlign: 'middle',
+  },
+}
+
 const headers = [
   { id: 'id', label: 'ID', sortable: true },
-  { id: 'pending', label: 'Pending' },
-  { id: 'action', label: 'Action' },
+  { id: 'email', label: 'Email' },
+  { id: 'orgName', label: 'Org name' },
+  { id: 'orgType', label: 'Org type' },
+  { id: 'country', label: 'Country' },
+  { id: 'action', label: 'Assign group' },
 ]
 
-export default function PendingUsers() {
+function getStyledSignupAttr(user, key) {
+  if (!user.signupRequest.userAttributes[key])
+    return <Typography color="textSecondary">None</Typography>
+
+  return <Typography>{user.signupRequest.userAttributes[key]}</Typography>
+}
+
+function PendingUsers({ classes }) {
   return AdminTable({
     query: getPendingUsers,
     pageTitle: 'Pending Users',
@@ -23,22 +47,50 @@ export default function PendingUsers() {
 
       return (
         <Fragment>
-          {user.map(user => (
-            <TableRow key={user.id}>
-              <TableCell>{user.id}</TableCell>
-              <TableCell>{user.pending.toString()}</TableCell>
-              <TableCell>
-                <Tooltip
-                  title={`Associate user ${user.id} with a group`}
-                  aria-label="Add"
-                >
-                  <IconButton onClick={() => setSelected(user)}>+</IconButton>
-                </Tooltip>
-              </TableCell>
-            </TableRow>
-          ))}
+          {user.map(user => {
+            const { email, email_verified } = user.signupRequest.userAttributes
+            const isVerfified = email_verified === 'true'
+            const StatusIcon = isVerfified ? VerifiedUser : ErrorOutline
+            return (
+              <TableRow key={user.id}>
+                <TableCell>{user.id}</TableCell>
+                <TableCell>
+                  <Tooltip
+                    title={`${isVerfified ? 'V' : 'Unv'}erified email address`}
+                    placement="top"
+                  >
+                    <Typography
+                      noWrap
+                      color={isVerfified ? 'textPrimary' : 'textSecondary'}
+                    >
+                      <StatusIcon fontSize="small" className={classes.middle} />{' '}
+                      {email}
+                    </Typography>
+                  </Tooltip>
+                </TableCell>
+                <TableCell>
+                  {getStyledSignupAttr(user, 'custom:orgName')}
+                </TableCell>
+                <TableCell>
+                  {getStyledSignupAttr(user, 'custom:orgType')}
+                </TableCell>
+                <TableCell>
+                  {getStyledSignupAttr(user, 'custom:country')}
+                </TableCell>
+                <TableCell>
+                  <Tooltip title={`Assign group to ${email}`} aria-label="Add">
+                    <IconButton onClick={() => setSelected(user)}>
+                      <HowToReg color="secondary" />
+                    </IconButton>
+                  </Tooltip>
+                </TableCell>
+              </TableRow>
+            )
+          })}
         </Fragment>
       )
     },
   })
 }
+
+export default withStyles(styles)(PendingUsers)
