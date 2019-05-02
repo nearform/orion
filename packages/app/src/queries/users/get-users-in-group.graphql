@@ -13,6 +13,7 @@ query getUsersInGroup(
     id
     signupRequest
     pending
+    email
     user_groups {
       group {
         name

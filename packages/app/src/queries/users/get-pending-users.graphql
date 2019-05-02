@@ -7,6 +7,7 @@ query getPendingUsers($limit: Int!, $offset: Int!, $orderBy: user_order_by!) {
   ) {
     id
     signupRequest
+    email
     pending
     user_groups {
       group {

@@ -21,7 +21,7 @@ const styles = {
 
 const headers = [
   { id: 'id', label: 'ID', sortable: true },
-  { id: 'email', label: 'Email' },
+  { id: 'email', label: 'Email', sortable: true },
   { id: 'orgName', label: 'Org name' },
   { id: 'orgType', label: 'Org type' },
   { id: 'country', label: 'Country' },
@@ -86,7 +86,9 @@ function AllUsers({ classes, query, pageTitle, variables }) {
           {user.map(user => (
             <TableRow key={user.id.toString()}>
               <TableCell padding="dense">{user.id}</TableCell>
-              <TableCell>{getStyledSignupAttr(user, 'email')}</TableCell>
+              <TableCell>
+                <Typography>{user.email}</Typography>
+              </TableCell>
               <TableCell>
                 {getStyledSignupAttr(user, 'custom:orgName')}
               </TableCell>

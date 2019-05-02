@@ -22,7 +22,7 @@ const styles = {
 
 const headers = [
   { id: 'id', label: 'ID', sortable: true },
-  { id: 'email', label: 'Email' },
+  { id: 'email', label: 'Email', sortable: true },
   { id: 'orgName', label: 'Org name' },
   { id: 'orgType', label: 'Org type' },
   { id: 'country', label: 'Country' },
@@ -48,7 +48,7 @@ function PendingUsers({ classes }) {
       return (
         <Fragment>
           {user.map(user => {
-            const { email, email_verified } = user.signupRequest.userAttributes
+            const { email_verified } = user.signupRequest.userAttributes
             const isVerfified = email_verified === 'true'
             const StatusIcon = isVerfified ? VerifiedUser : ErrorOutline
             return (
@@ -64,7 +64,7 @@ function PendingUsers({ classes }) {
                       color={isVerfified ? 'textPrimary' : 'textSecondary'}
                     >
                       <StatusIcon fontSize="small" className={classes.middle} />{' '}
-                      {email}
+                      {user.email}
                     </Typography>
                   </Tooltip>
                 </TableCell>
@@ -78,7 +78,10 @@ function PendingUsers({ classes }) {
                   {getStyledSignupAttr(user, 'custom:country')}
                 </TableCell>
                 <TableCell>
-                  <Tooltip title={`Assign group to ${email}`} aria-label="Add">
+                  <Tooltip
+                    title={`Assign group to ${user.email}`}
+                    aria-label="Add"
+                  >
                     <IconButton onClick={() => setSelected(user)}>
                       <HowToReg color="secondary" />
                     </IconButton>
