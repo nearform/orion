@@ -69,3 +69,4 @@ package-lock.json
 
 # custom
 build/
+/hasura-schema.json

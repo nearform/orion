@@ -4,3 +4,4 @@ docs
 packages/app/public
 packages/app/.cache
 packages/functions/build
+/hasura-schema.json

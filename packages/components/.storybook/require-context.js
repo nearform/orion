@@ -54,4 +54,3 @@ export function getFullPath(dirname, request) {
   }
   return path.resolve(process.env.NODE_PATH, request)
 }
-
