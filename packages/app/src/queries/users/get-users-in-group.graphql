@@ -11,7 +11,6 @@ query getUsersInGroup(
     order_by: [$orderBy]
   ) {
     id
-    name
     signupRequest
     pending
     user_groups {
