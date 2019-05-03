@@ -1,0 +1,20 @@
+{
+  "projects": {
+    "raw-salmon": {
+      "schemaPath": "hasura-schema.json",
+      "includes": [
+        "*.graphql"
+      ],
+      "extensions": {
+        "endpoints": {
+          "default": {
+            "url": "${env:GATSBY_GRAPHQL_API}",
+            "headers": {
+              "x-hasura-admin-secret": "${env:HASURA_GRAPHQL_ADMIN_SECRET}"
+            }
+          }
+        }
+      }
+    }
+  }
+}

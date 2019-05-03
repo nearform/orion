@@ -4,7 +4,8 @@
     "plugin:prettier/recommended"
   ],
   "plugins": [
-    "prettier"
+    "prettier",
+    "graphql"
   ],
   "env": {
     "es6": true
@@ -14,11 +15,12 @@
   },
   "rules": {
     // taken over from gastby config but adapted to not enforce return keyword
-
     "arrow-body-style": [
       "error",
       "as-needed",
-      { "requireReturnForObjectLiteral": false }
+      {
+        "requireReturnForObjectLiteral": false
+      }
     ],
     // taken over from gastby config
     "no-unused-expressions": [
@@ -27,15 +29,31 @@
         "allowTaggedTemplates": true
       }
     ],
-    "consistent-return": ["error"],
+    "consistent-return": [
+      "error"
+    ],
     "no-console": "off",
     "no-inner-declarations": "off",
     // taken over from gastby config but adapted to not enforce backtics
-    "quotes": ["error", "single", {
-      "avoidEscape": true
-    }],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
     // taken over from gastby config
     "require-jsdoc": "off",
-    "valid-jsdoc": "off"
+    "valid-jsdoc": "off",
+    "graphql/template-strings": [
+      "error",
+      {
+        "env": "literal",
+        "projectName": "raw-salmon",
+        "validators": "all",
+        "schemaJsonFilepath": "hasura-schema.json"
+        // no need to specify schema here, it will be automatically determined using .graphqlconfig
+      }
+    ]
   }
 }

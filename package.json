@@ -9,9 +9,13 @@
     "clean": "lerna clean",
     "docs": "docsify serve -p 4000 docs",
     "postinstall": "npm run bootstrap -- --no-ci",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
-    "postcommit": "git update-index --again"
+    "lint-files": "eslint . --ext .js  --ext .graphql",
+    "lint": "npm run generate-schema && npm run lint-files",
+    "dev:lint": "npm run dev:generate-schema && npm run lint-files",
+    "lint:fix": "eslint --fix --ext .js --ext .graphql .",
+    "postcommit": "git update-index --again",
+    "dev:generate-schema": "graphql get-schema --dotenv packages/app/.env.development --output=hasura-schema.json",
+    "generate-schema": "graphql get-schema --output=hasura-schema.json"
   },
   "repository": {
     "type": "git",
@@ -32,15 +36,19 @@
     "eslint-config-google": "^0.10.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-flowtype": "^2.50.3",
+    "eslint-plugin-graphql": "^3.0.3",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jest": "^22.4.1",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "graphql": "^14.2.1",
+    "graphql-cli": "^3.0.11",
     "husky": "^1.3.1",
     "lerna": "^3.13.3",
     "lint-staged": "^8.1.5",
-    "prettier": "^1.17.0"
+    "prettier": "^1.17.0",
+    "pretty-quick": "^1.10.0"
   },
   "config": {
     "commitizen": {
@@ -49,12 +57,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run lint"
+      "pre-commit": "lint-staged && pretty-quick --staged --pattern '**/*.graphql'",
+      "pre-push": "npm run dev:lint"
     }
   },
   "lint-staged": {
-    "**.{js,jsx}": [
+    "**.{js,graphql}": [
+      "npm run dev:generate-schema",
       "eslint --fix",
       "git add"
     ]
