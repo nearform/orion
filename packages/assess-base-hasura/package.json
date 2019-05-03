@@ -1,5 +1,5 @@
 {
-  "name": "hasura",
+  "name": "assess-base-hasura",
   "scripts": {
     "console": "env-cmd .env hasura console",
     "migrate": "env-cmd .env hasura migrate"

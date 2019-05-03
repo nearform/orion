@@ -15,11 +15,15 @@ The application is stored in a [lerna](https://github.com/lerna/lerna) monorepo.
 
 CircleCI [project](https://circleci.com/gh/nearform/raw-salmon) continuous integration configuration.
 
-### [./hasura](./hasura)
+### [./packages/hasura](./packages/hasura)
 
 The application follows a serverless application model, where the only API used by the frontend is exposed through GraphQL via [Hasura](https://hasura.io).
 
 This folder contains the migrations and scripts necessary to run them.
+
+### [./packages/assess-base-hasura](./packages/assess-base-hasura)
+
+This package contains the assess-base specific Hasura schema and metatada.
 
 ### [./packages/components](./packages/components)
 
@@ -36,6 +40,7 @@ This folder contains the migrations and scripts necessary to run them.
 - Gatsby uses [graphql](https://graphql.org/) to fetch data from the API
 
 ### [./packages/nearform-theme](./packages/nearform-theme)
+
 ### [./packages/efqm-theme](./packages/efqm-theme)
 
 - branding customizations
