@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "public"."assessment" ADD CONSTRAINT "assessment_key_key" UNIQUE
+      ("key")
+  type: run_sql
