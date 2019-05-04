@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import slugify from 'slugify'
 import { Link as RouterLink } from '@reach/router'
 import { useQuery, useMutation } from 'graphql-hooks'
@@ -20,7 +20,7 @@ import {
   getRoles,
 } from '../queries'
 
-import AdminTable from './AdminTable'
+import useAdminTable from './useAdminTable'
 
 const GroupSchema = Yup.object().shape({
   name: Yup.string().required(),
@@ -36,28 +36,56 @@ const headers = [
   { id: 'action', label: 'Action' },
 ]
 
+function TitleWrapper({ children }) {
+  return (
+    <>
+      <Typography variant="h1" gutterBottom>
+        Groups
+      </Typography>
+      {children}
+    </>
+  )
+}
+
 export default function UserGroups() {
   const { loading: rolesLoading, error: rolesError, data: roles } = useQuery(
     getRoles
   )
-
   const [createGroup] = useMutation(createGroupMutation)
   const [deleteGroup] = useMutation(deleteGroupMutation)
 
-  const doDeleteGroup = async id => {
-    await deleteGroup({ variables: { id } })
-    // TODO: this needs to be changed to pass in the refetch method from useQuery
-    // refetchGroups()
-  }
+  const { refetch: refetchGroups, table } = useAdminTable({
+    query: getGroupsWithRoles,
+    headers,
+    renderTableBody: (data, { refetch: refetchGroups }) => {
+      const doDeleteGroup = async id => {
+        await deleteGroup({ variables: { id } })
+        refetchGroups()
+      }
+      return data.group.map(group => (
+        <TableRow key={group.id}>
+          <TableCell>{group.id}</TableCell>
+          <TableCell>
+            <RouterLink to={`${group.id}/${slugify(group.name)}`}>
+              {group.name}
+            </RouterLink>
+          </TableCell>
+          <TableCell>{group.roles.map(r => r.role.name).join(', ')}</TableCell>
+          <TableCell>
+            <IconButton onClick={async () => doDeleteGroup(group.id)}>
+              x
+            </IconButton>
+          </TableCell>
+        </TableRow>
+      ))
+    },
+  })
 
-  if (rolesLoading) return 'Loading...'
-  if (rolesError) return 'Error!'
+  if (rolesLoading) return <TitleWrapper>Loading roles...</TitleWrapper>
+  if (rolesError) return <TitleWrapper>Error loading roles</TitleWrapper>
 
   return (
-    <div>
-      <Typography variant="h1" gutterBottom>
-        Groups
-      </Typography>
+    <TitleWrapper>
       <Typography variant="h2" gutterBottom>
         Create group
       </Typography>
@@ -67,9 +95,7 @@ export default function UserGroups() {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             await createGroup({ variables: values })
-            // TODO: this needs to be changed to pass in the refetch method from useQuery
-            // from the parent
-            // await refetchGroups()
+            refetchGroups()
           } finally {
             setSubmitting(false)
           }
@@ -103,36 +129,7 @@ export default function UserGroups() {
           </Form>
         )}
       </Formik>
-      <AdminTable
-        query={getGroupsWithRoles}
-        pageTitles="Group list"
-        headers={headers}
-        AdminTableContent={({ data }) => {
-          const { group: groups } = data
-          return (
-            <Fragment>
-              {groups.map(group => (
-                <TableRow key={group.id}>
-                  <TableCell>{group.id}</TableCell>
-                  <TableCell>
-                    <RouterLink to={`${group.id}/${slugify(group.name)}`}>
-                      {group.name}
-                    </RouterLink>
-                  </TableCell>
-                  <TableCell>
-                    {group.roles.map(r => r.role.name).join(', ')}
-                  </TableCell>
-                  <TableCell>
-                    <IconButton onClick={() => doDeleteGroup(group.id)}>
-                      x
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </Fragment>
-          )
-        }}
-      />
-    </div>
+      {table}
+    </TitleWrapper>
   )
 }

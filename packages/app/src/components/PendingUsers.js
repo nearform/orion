@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import {
   withStyles,
   TableRow,
@@ -7,9 +7,9 @@ import {
   Typography,
   IconButton,
 } from '@material-ui/core'
-import { VerifiedUser, ErrorOutline, HowToReg } from '@material-ui/icons'
+import { HowToReg } from '@material-ui/icons'
 
-import AdminTable from './AdminTable'
+import useAdminTable from './useAdminTable'
 import UserGroupsPicker from './UserGroupsPicker'
 
 import { getPendingUsers } from '../queries'
@@ -37,63 +37,48 @@ function getStyledSignupAttr(user, key) {
 }
 
 function PendingUsers({ classes }) {
-  return AdminTable({
+  const { selected, setSelected, refetch, table } = useAdminTable({
     query: getPendingUsers,
-    pageTitle: 'Pending Users',
     headers,
-    Modal: UserGroupsPicker,
-    AdminTableContent: function({ data, setSelected }) {
-      const { user } = data
-
-      return (
-        <Fragment>
-          {user.map(user => {
-            const { email_verified } = user.signupRequest.userAttributes
-            const isVerfified = email_verified === 'true'
-            const StatusIcon = isVerfified ? VerifiedUser : ErrorOutline
-            return (
-              <TableRow key={user.id}>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>
-                  <Tooltip
-                    title={`${isVerfified ? 'V' : 'Unv'}erified email address`}
-                    placement="top"
-                  >
-                    <Typography
-                      noWrap
-                      color={isVerfified ? 'textPrimary' : 'textSecondary'}
-                    >
-                      <StatusIcon fontSize="small" className={classes.middle} />{' '}
-                      {user.email}
-                    </Typography>
-                  </Tooltip>
-                </TableCell>
-                <TableCell>
-                  {getStyledSignupAttr(user, 'custom:orgName')}
-                </TableCell>
-                <TableCell>
-                  {getStyledSignupAttr(user, 'custom:orgType')}
-                </TableCell>
-                <TableCell>
-                  {getStyledSignupAttr(user, 'custom:country')}
-                </TableCell>
-                <TableCell>
-                  <Tooltip
-                    title={`Assign group to ${user.email}`}
-                    aria-label="Add"
-                  >
-                    <IconButton onClick={() => setSelected(user)}>
-                      <HowToReg color="secondary" />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
-            )
-          })}
-        </Fragment>
-      )
+    renderTableBody: (data, { setSelected }) => {
+      return data.user.map(user => {
+        return (
+          <TableRow key={user.id}>
+            <TableCell>{user.id}</TableCell>
+            <TableCell>
+              <Typography>{user.email}</Typography>
+            </TableCell>
+            <TableCell>{getStyledSignupAttr(user, 'custom:orgName')}</TableCell>
+            <TableCell>{getStyledSignupAttr(user, 'custom:orgType')}</TableCell>
+            <TableCell>{getStyledSignupAttr(user, 'custom:country')}</TableCell>
+            <TableCell>
+              <Tooltip title={`Assign group to ${user.email}`} aria-label="Add">
+                <IconButton onClick={() => setSelected(user)}>
+                  <HowToReg color="secondary" />
+                </IconButton>
+              </Tooltip>
+            </TableCell>
+          </TableRow>
+        )
+      })
     },
   })
+  return (
+    <>
+      <Typography variant="h1" gutterBottom>
+        Pending Users
+      </Typography>
+      <UserGroupsPicker
+        selected={selected}
+        onClose={() => setSelected(null)}
+        onApply={() => {
+          refetch()
+          setSelected(null)
+        }}
+      />
+      {table}
+    </>
+  )
 }
 
 export default withStyles(styles)(PendingUsers)

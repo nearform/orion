@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import T from 'prop-types'
 import {
   withStyles,
@@ -9,8 +9,7 @@ import {
 } from '@material-ui/core'
 import { HowToReg, ErrorOutline } from '@material-ui/icons'
 
-import AdminTable from './AdminTable'
-
+import useAdminTable from './useAdminTable'
 import { getUsers } from '../queries'
 
 const styles = {
@@ -42,12 +41,8 @@ function getStyledSignupAttr(user, key) {
 }
 
 function getStyledRoleName(user) {
-  const roleName = getRelationalName(user, 'user_roles', 'role')
-  const isAdmin = user.user_roles[0] && user.user_roles[0].id === 1
   return (
-    <Typography color={isAdmin ? 'textPrimary' : 'textSecondary'}>
-      {roleName}
-    </Typography>
+    <Typography>{getRelationalName(user, 'user_roles', 'role')}</Typography>
   )
 }
 
@@ -73,44 +68,35 @@ function getGroupAndStatus(user, classes) {
 }
 
 function AllUsers({ classes, query, pageTitle, variables }) {
-  return AdminTable({
+  const { table } = useAdminTable({
     query,
-    pageTitle,
     headers,
     variables,
-    AdminTableContent: function({ data }) {
-      const { user } = data
-      return (
-        <Fragment>
-          {user.map(user => (
-            <TableRow key={user.id.toString()}>
-              <TableCell padding="dense">{user.id}</TableCell>
-              <TableCell>
-                <Typography>{user.email}</Typography>
-              </TableCell>
-              <TableCell>
-                {getStyledSignupAttr(user, 'custom:orgName')}
-              </TableCell>
-              <TableCell>
-                {getStyledSignupAttr(user, 'custom:orgType')}
-              </TableCell>
-              <TableCell>
-                {getStyledSignupAttr(user, 'custom:country')}
-              </TableCell>
-              <TableCell>{getGroupAndStatus(user, classes)}</TableCell>
-              <TableCell>{getStyledRoleName(user)}</TableCell>
-              {/*
-              TODO: uncomment when edit functionality is implemented
-              <TableCell>
-                <Edit color="secondary" />
-              </TableCell>
-            */}
-            </TableRow>
-          ))}
-        </Fragment>
-      )
+    renderTableBody: data => {
+      return data.user.map(user => (
+        <TableRow key={user.id.toString()}>
+          <TableCell padding="dense">{user.id}</TableCell>
+          <TableCell>
+            <Typography>{user.email}</Typography>
+          </TableCell>
+          <TableCell>{getStyledSignupAttr(user, 'custom:orgName')}</TableCell>
+          <TableCell>{getStyledSignupAttr(user, 'custom:orgType')}</TableCell>
+          <TableCell>{getStyledSignupAttr(user, 'custom:country')}</TableCell>
+          <TableCell>{getGroupAndStatus(user, classes)}</TableCell>
+          <TableCell>{getStyledRoleName(user)}</TableCell>
+        </TableRow>
+      ))
     },
   })
+
+  return (
+    <>
+      <Typography variant="h1" gutterBottom>
+        {pageTitle}
+      </Typography>
+      {table}
+    </>
+  )
 }
 
 AllUsers.defaultProps = {
@@ -119,6 +105,7 @@ AllUsers.defaultProps = {
 }
 
 AllUsers.propTypes = {
+  classes: T.object,
   query: T.string,
   pageTitle: T.node,
   variables: T.object,
