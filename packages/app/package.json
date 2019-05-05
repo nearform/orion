@@ -13,6 +13,7 @@
     "@material-ui/lab": "^3.0.0-alpha.30",
     "aws-amplify": "^1.1.27",
     "aws-amplify-react": "^2.3.7",
+    "ajv": "^6.10.0",
     "classnames": "^2.2.6",
     "components": "^1.0.0",
     "core-js": "^2.6.5",

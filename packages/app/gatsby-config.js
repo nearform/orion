@@ -6,14 +6,9 @@ const path = require('path')
 
 const currentTheme = require('./theme')
 
-const themeRootPath = path.dirname(require.resolve(currentTheme.THEME_NAME))
+const { getThemePaths } = require('./utils/paths')
 
-const themeAssetsPath = path.join(themeRootPath, currentTheme.config.assetsPath)
-
-const themeAssessmentsPath = path.join(
-  themeRootPath,
-  currentTheme.config.assessmentsPath
-)
+const { themeAssetsPath, themeAssessmentsPath } = getThemePaths(currentTheme)
 
 module.exports = {
   siteMetadata: {
