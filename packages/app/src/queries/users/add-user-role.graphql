@@ -1,0 +1,5 @@
+mutation addUserRole($userId: Int!, $roleId: Int!) {
+  insert_user_role(objects: { user_id: $userId, role_id: $roleId }) {
+    affected_rows
+  }
+}

@@ -11,6 +11,7 @@ query getPendingUsers($limit: Int!, $offset: Int!, $orderBy: user_order_by!) {
     pending
     user_groups {
       group {
+        id
         name
       }
     }

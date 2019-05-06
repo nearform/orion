@@ -1,4 +1,5 @@
 import React from 'react'
+import { useQuery, useMutation } from 'graphql-hooks'
 import {
   withStyles,
   TableRow,
@@ -8,11 +9,18 @@ import {
   IconButton,
 } from '@material-ui/core'
 import { HowToReg } from '@material-ui/icons'
+import * as Yup from 'yup'
 
 import useAdminTable from './useAdminTable'
-import UserGroupsPicker from './UserGroupsPicker'
+import AdminModal from './AdminModal'
+import UserSelectPicker from './UserSelectPicker'
 
-import { getPendingUsers } from '../queries'
+import {
+  getPendingUsers,
+  getGroups,
+  addUserGroupMutation,
+  assignUserGroupMutation,
+} from '../queries'
 
 const styles = {
   middle: {
@@ -63,18 +71,67 @@ function PendingUsers({ classes }) {
       })
     },
   })
+
+  const { data: modalData } = useQuery(getGroups, {
+    variables: {
+      orderBy: { id: 'asc' },
+    },
+  })
+
+  const [doAddUserGroup] = useMutation(addUserGroupMutation)
+  const [doAssignUserGroup] = useMutation(assignUserGroupMutation)
+
+  const modalContents = [
+    {
+      label: 'Group',
+      FieldComponent: UserSelectPicker,
+      entityKey: 'group',
+    },
+  ]
+
+  const modalSchema = Yup.object().shape({
+    userId: Yup.number().integer(),
+    groupId: Yup.number().integer(),
+    groupIsAssigned: Yup.boolean(),
+  })
+
+  const onModalSave = async values => {
+    const groupMutation = values.groupIsAssigned
+      ? doAssignUserGroup
+      : doAddUserGroup
+    await groupMutation({
+      variables: {
+        userId: values.userId,
+        groupId: values.groupId,
+      },
+    })
+    setSelected(null)
+    refetch()
+  }
+
+  const getModalInitialValues = user => {
+    const groupId = user.user_groups.length && user.user_groups[0].group.id
+    return {
+      userId: user ? user.id : null,
+      groupId: groupId || null,
+      groupIsAssigned: !!groupId,
+    }
+  }
+
   return (
     <>
       <Typography variant="h1" gutterBottom>
         Pending Users
       </Typography>
-      <UserGroupsPicker
+      <AdminModal
         selected={selected}
+        data={modalData}
+        contents={modalContents}
+        title={user => `Assign group to ${user.email}`}
+        onSave={values => onModalSave(values)}
         onClose={() => setSelected(null)}
-        onApply={() => {
-          refetch()
-          setSelected(null)
-        }}
+        schema={modalSchema}
+        getInitialValues={getModalInitialValues}
       />
       {table}
     </>
