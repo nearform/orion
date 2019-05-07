@@ -30,6 +30,7 @@ exports.createPages = async ({ graphql, actions }) => {
             criteria {
               key
               name
+              description
               parts {
                 guidance
                 tables {

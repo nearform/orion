@@ -8,8 +8,9 @@ import {
 
 import * as auth from './utils/auth'
 import * as i18n from './utils/i18n'
-import ThemeWrapper, { theme } from './theme.es'
+import ThemeWrapper, { theme, assessments } from './theme.es'
 import Layout from './src/components/layout'
+import addTranslations from './utils/translations'
 
 const client = new GraphQLClient({
   url: process.env.GATSBY_GRAPHQL_API,
@@ -17,7 +18,9 @@ const client = new GraphQLClient({
 
 export async function onClientEntry() {
   await auth.init(client)
-  await i18n.init()
+  const i18next = await i18n.init()
+
+  addTranslations(assessments, i18next)
 }
 
 export const wrapRootElement = ({ element }) => (

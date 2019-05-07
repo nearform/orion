@@ -2,9 +2,11 @@ import React from 'react'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
 import { AssessmentProgress, PaddedContainer } from 'components'
 import { Link } from 'gatsby'
+import ReactMarkdown from 'react-markdown'
 
 import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
+import { useTranslation } from 'react-i18next'
 
 function CriterionTemplate({
   theme,
@@ -12,6 +14,8 @@ function CriterionTemplate({
   pageContext: { assessment, pillar, criterion, pillarColor },
   location,
 }) {
+  const { t } = useTranslation()
+
   return (
     <div className={classes.root}>
       <SEO title={criterion.name} />
@@ -29,39 +33,15 @@ function CriterionTemplate({
             <Grid item>
               <SectionTitle barColor={pillarColor}>
                 {pillar.name} <span style={{ color: pillarColor }}>▶</span>{' '}
-                {criterion.name}
+                {t(criterion.name)}
               </SectionTitle>
             </Grid>
             <Grid item xs>
-              <Typography variant="body1">
-                Excellent organisations have leaders who shape the future and
-                make it happen, acting as role models for it's values and ethics
-                and inspiring trust at all times. They are flexible, enabling
-                the organisation to anticipate and react in a timely manner to
-                ensure the on-going success of the organisation.
-              </Typography>
-              <Typography
-                variant="body1"
-                component="ul"
-                className={classes.section}
-              >
-                <li>
-                  Leaders develop the mission, vision, values and ethics and act
-                  as role models.
-                </li>
-                <li>
-                  Leaders define, monitor, review and drive the improvement of
-                  the organisation's management system and performance.
-                </li>
-                <li>Leaders engage with external stakeholders.</li>
-                <li>
-                  Leaders reinforce a culture of excellence with the
-                  organisation's people.
-                </li>
-                <li>
-                  Leaders ensure that the organisation is flexible and manages
-                  change effectively.
-                </li>
+              <Typography variant="body1" component="div" gutterBottom>
+                <ReactMarkdown
+                  source={t(criterion.description)}
+                  renderers={{ paragraph: 'div' }}
+                />
               </Typography>
               <Button
                 component={Link}
