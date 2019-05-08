@@ -97,6 +97,12 @@ exports.muiTheme = {
       contained: {
         padding: '9px 24px 8px',
       },
+      outlinedPrimary: {
+        border: 'none',
+      },
+      outlinedSecondary: {
+        border: 'none',
+      },
       outlined: {
         padding: '8px 24px 7px',
       },
