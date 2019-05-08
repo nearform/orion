@@ -6,18 +6,18 @@ import {
   Button,
   TextField,
 } from '@material-ui/core'
-import Facebook from 'mdi-material-ui/Facebook'
-import Youtube from 'mdi-material-ui/Youtube'
-import Linkedin from 'mdi-material-ui/Linkedin'
-import Twitter from 'mdi-material-ui/Twitter'
 import { PaddedContainer } from 'components'
 import Img from 'gatsby-image'
 import { useStaticQuery, graphql } from 'gatsby'
 
 function Footer({ classes, theme }) {
   const {
+    site: {
+      siteMetadata: { author, social },
+    },
+    socialIcons,
     largeLogo: {
-      childImageSharp: { fixed },
+      childImageSharp: { fixed: logoFixed },
     },
   } = useStaticQuery(graphql`
     query {
@@ -28,9 +28,32 @@ function Footer({ classes, theme }) {
           }
         }
       }
+      socialIcons: allFile(
+        filter: {
+          extension: { in: ["png", "svg", "jpg", "gif"] }
+          relativeDirectory: { eq: "social" }
+          sourceInstanceName: { in: ["theme-assets", "app-assets"] }
+        }
+      ) {
+        edges {
+          node {
+            name
+            childImageSharp {
+              fixed(width: 28) {
+                ...GatsbyImageSharpFixed
+              }
+            }
+          }
+        }
+      }
+      site {
+        siteMetadata {
+          author
+          social
+        }
+      }
     }
   `)
-
   return (
     <div className={classes.root}>
       <PaddedContainer>
@@ -97,11 +120,20 @@ function Footer({ classes, theme }) {
               </Button>
             </div>
             <div className={classes.horizontalContainer}>
-              <Facebook />
-              <Youtube />
-              <Twitter />
-              <Linkedin />
-              <Img fixed={fixed} />
+              {social.map(([name, url]) => {
+                const icon = socialIcons.edges.find(
+                  item => item.node.name.toLowerCase() === name.toLowerCase()
+                )
+                return (
+                  icon && (
+                    <a key={name} href={url} title={`${author} on ${name}`}>
+                      <Img fixed={icon.node.childImageSharp.fixed} />
+                    </a>
+                  )
+                )
+              })}
+              <div className={classes.grow} />
+              <Img fixed={logoFixed} />
             </div>
           </Grid>
         </Grid>
@@ -145,6 +177,9 @@ const styles = theme => ({
       marginLeft: theme.spacing.unit * 2,
     },
     alignItems: 'flex-end',
+  },
+  grow: {
+    flexGrow: 1,
   },
 })
 

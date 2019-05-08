@@ -31,7 +31,6 @@
     "graphql": "^14.1.1",
     "graphql-hooks": "^3.5.0",
     "i18next": "^15.0.9",
-    "mdi-material-ui": "^5.10.0",
     "nearform-theme": "^1.0.0",
     "node-fetch": "^2.3.0",
     "prismjs": "^1.16.0",

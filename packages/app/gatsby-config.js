@@ -9,6 +9,7 @@ const currentTheme = require('./theme')
 const themeRootPath = path.dirname(require.resolve(currentTheme.THEME_NAME))
 
 const themeAssetsPath = path.join(themeRootPath, currentTheme.config.assetsPath)
+
 const themeAssessmentsPath = path.join(
   themeRootPath,
   currentTheme.config.assessmentsPath
@@ -24,6 +25,13 @@ module.exports = {
       options: {
         name: 'theme-assets',
         path: themeAssetsPath,
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'app-assets',
+        path: './src/assets',
       },
     },
     {
