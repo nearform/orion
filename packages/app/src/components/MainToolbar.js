@@ -2,6 +2,7 @@ import React from 'react'
 import { useStaticQuery, graphql, navigate, Link } from 'gatsby'
 import Img from 'gatsby-image'
 import { Typography, Button, withStyles } from '@material-ui/core'
+import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
 import { PaddedContainer } from 'components'
 
@@ -9,7 +10,7 @@ import { useIsAdmin, useIsAuthenticated } from '../utils/auth'
 import NavLink from './NavLink'
 import LanguageSwitcher from './LanguageSwitcher'
 
-function MainToolbar({ classes }) {
+function MainToolbar({ classes, dark }) {
   const {
     site: {
       siteMetadata: { title },
@@ -41,31 +42,41 @@ function MainToolbar({ classes }) {
 
   const isAdmin = useIsAdmin()
   const isAuthenticated = useIsAuthenticated()
+  const darkClass = classnames({
+    [classes.toolbarDark]: dark,
+    [classes.toolbarContrast]: dark,
+  })
   return (
     <>
       <div className={classes.gradient} />
-      <PaddedContainer>
+      <PaddedContainer className={darkClass}>
         <div className={classes.root}>
           <Link to="/" className={classes.logoHomeLink}>
             <Img className={classes.logo} fixed={fixed} />
-            <Typography variant="h2">{title}</Typography>
+            <Typography variant="h2" className={darkClass}>
+              {title}
+            </Typography>
           </Link>
           <div className={classes.grow} />
           <div className={classes.linksContainer}>
-            <Button component={NavLink} to="/assessment">
+            <Button component={NavLink} className={darkClass} to="/">
               Assess Base
             </Button>
             {!isAuthenticated && (
-              <Button component={NavLink} to="/auth">
+              <Button component={NavLink} className={darkClass} to="/auth">
                 Login
               </Button>
             )}
             {isAdmin && (
-              <Button component={NavLink} to="/admin">
+              <Button component={NavLink} className={darkClass} to="/admin">
                 Admin
               </Button>
             )}
-            {isAuthenticated && <Button onClick={doLogout}>Logout</Button>}
+            {isAuthenticated && (
+              <Button onClick={doLogout} className={darkClass}>
+                Logout
+              </Button>
+            )}
             <LanguageSwitcher />
           </div>
         </div>
@@ -95,6 +106,12 @@ const styles = theme => ({
   },
   logo: {
     marginRight: theme.spacing.unit * 2,
+  },
+  toolbarDark: {
+    backgroundColor: theme.palette.primary.dark,
+  },
+  toolbarContrast: {
+    color: theme.palette.background.paper,
   },
   grow: {
     flexGrow: 1,

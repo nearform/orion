@@ -11,6 +11,7 @@ const pillarColors = [
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
+  const homeTemplate = path.resolve('./src/templates/home.js')
   const assessmentTemplate = path.resolve('./src/templates/assessment.js')
   const criterionTemplate = path.resolve('./src/templates/criterion.js')
   const criterionPartTemplate = path.resolve(
@@ -24,6 +25,8 @@ exports.createPages = async ({ graphql, actions }) => {
         nodes {
           key
           name
+          logoAsset
+          shortDescription
           pillars {
             key
             name
@@ -63,6 +66,15 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   const { nodes: assessments } = assessmentsQueryResults.data.allAssessments
+  const homepageAssets = assessments.map(({ logoAsset }) => logoAsset)
+
+  createPage({
+    path: '/',
+    component: homeTemplate,
+    context: {
+      assets: homepageAssets,
+    },
+  })
 
   assessments.forEach(assessment => {
     createPage({

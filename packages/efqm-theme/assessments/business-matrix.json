@@ -1,6 +1,9 @@
 {
   "key": "efqm-2020",
-  "name": "efqm excellence model 2020",
+  "name": "business matrix",
+  "orderIndex": 2,
+  "logoAsset": "assess-2-img",
+  "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum sapien et ipsum pellentesque, ut fringilla eros scelerisque. Mauris ex ex, viverra pharetra cursus gravida, vulputate ac velit.",
   "pillars": [
     {
       "key": "direction",

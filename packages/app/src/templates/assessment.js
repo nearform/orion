@@ -52,12 +52,7 @@ function AssessmentTemplate({
     <>
       <SEO title={t('Your assessments')} />
       <PaddedContainer>
-        <Button
-          component={Link}
-          to={`assessment`}
-          variant="text"
-          color="secondary"
-        >
+        <Button component={Link} to="/" variant="text" color="secondary">
           ◀ Assess base home
         </Button>
         <div className={classes.section}>

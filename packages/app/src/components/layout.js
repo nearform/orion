@@ -4,11 +4,11 @@ import { withStyles } from '@material-ui/core'
 import Footer from './Footer'
 import MainToolbar from './MainToolbar'
 
-function Layout({ classes, children }) {
+function Layout({ classes, children, darkToolbar }) {
   return (
     <div className={classes.root}>
       <header>
-        <MainToolbar />
+        <MainToolbar dark={darkToolbar} />
       </header>
       <main className={classes.main}>{children}</main>
       <footer>

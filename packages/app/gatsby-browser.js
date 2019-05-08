@@ -34,4 +34,6 @@ export const wrapRootElement = ({ element }) => (
   </ClientContext.Provider>
 )
 
-export const wrapPageElement = ({ element }) => <Layout>{element}</Layout>
+export const wrapPageElement = ({ element, props }) => (
+  <Layout darkToolbar={props.location.pathname === '/'}>{element}</Layout>
+)

@@ -1,1 +1,1 @@
-module.exports = [require('./business-excellence-matrix.json')]
+module.exports = [require('./business-matrix.json')]
