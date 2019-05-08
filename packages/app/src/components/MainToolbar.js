@@ -59,8 +59,16 @@ function MainToolbar({ classes, dark }) {
           </Link>
           <div className={classes.grow} />
           <div className={classes.linksContainer}>
-            <Button component={NavLink} className={darkClass} to="/">
+            <Button
+              partial={false}
+              component={NavLink}
+              className={darkClass}
+              to="/"
+            >
               Assess Base
+            </Button>
+            <Button component={NavLink} className={darkClass} to="/assessment">
+              Assessment
             </Button>
             {!isAuthenticated && (
               <Button component={NavLink} className={darkClass} to="/auth">
