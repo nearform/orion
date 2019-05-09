@@ -1,6 +1,6 @@
 const path = require('path')
 
-const { theme } = require('./theme')
+const { theme, config } = require('./theme')
 
 const pillarColors = [
   theme.muiTheme.palette.primary.light,
@@ -72,6 +72,7 @@ exports.createPages = async ({ graphql, actions }) => {
     path: '/',
     component: homeTemplate,
     context: {
+      heroImageName: config.heroImageName,
       assets: homepageAssets,
     },
   })

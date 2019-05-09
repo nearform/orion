@@ -133,7 +133,7 @@ const styles = theme => ({
 })
 
 export const query = graphql`
-  query HomeTemplateQuery($assets: [String]!) {
+  query HomeTemplateQuery($heroImageName: String!, $assets: [String]!) {
     site {
       siteMetadata {
         title
@@ -148,7 +148,7 @@ export const query = graphql`
         shortDescription
       }
     }
-    heroBanner: file(name: { eq: "banner-hero@3x" }) {
+    heroBanner: file(name: { eq: $heroImageName }) {
       childImageSharp {
         fluid(quality: 100) {
           ...GatsbyImageSharpFluid
