@@ -99,9 +99,15 @@ exports.muiTheme = {
       },
       outlinedPrimary: {
         border: 'none',
+        '&:hover': {
+          border: 'none',
+        },
       },
       outlinedSecondary: {
         border: 'none',
+        '&:hover': {
+          border: 'none',
+        },
       },
       outlined: {
         padding: '8px 24px 7px',
