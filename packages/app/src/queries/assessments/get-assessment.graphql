@@ -24,5 +24,18 @@ query getAssessment(
       table_key
       table_values
     }
+    scoring(
+      where: {
+        pillar_key: { _eq: $pillarKey }
+        criterion_key: { _eq: $criterionKey }
+        part_number: { _eq: $partNumber }
+      }
+    ) {
+      id
+      pillar_key
+      criterion_key
+      part_number
+      scoring_values
+    }
   }
 }

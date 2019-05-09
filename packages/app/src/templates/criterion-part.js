@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
-import { AssessmentProgress, PaddedContainer, ScoringSlider } from 'components'
+import { AssessmentProgress, PaddedContainer } from 'components'
 import { Link } from 'gatsby'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
@@ -11,11 +11,12 @@ import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
 import {
   getAssessment,
+  createAssessmentMutation,
   insertAssessmentTableDataMutation,
   updateAssessmentTableDataMutation,
-  createAssessmentMutation,
 } from '../queries'
 import { isAuthenticatedSync, getUserIdSync } from '../utils/auth'
+import AssessmentPartScoring from '../components/AssessmentPartScoring'
 
 function createTableInitialValues(assessment, table) {
   const tableData = getExistingTableData(assessment, table)
@@ -40,7 +41,6 @@ function getExistingTableData(assessment, table) {
 function CriterionPartTemplate({
   theme,
   classes,
-  location,
   pageContext: {
     partNumber,
     part,
@@ -59,9 +59,9 @@ function CriterionPartTemplate({
 
   const userId = getUserIdSync()
 
+  const [createAssessment] = useMutation(createAssessmentMutation)
   const [insertTableData] = useMutation(insertAssessmentTableDataMutation)
   const [updateTableData] = useMutation(updateAssessmentTableDataMutation)
-  const [createAssessment] = useMutation(createAssessmentMutation)
 
   const { loading, error, data: assessmentData, refetch } = useQuery(
     getAssessment,
@@ -232,10 +232,10 @@ function CriterionPartTemplate({
                     </Grid>
                     <Grid item>
                       <Button
-                        disabled={isSubmitting}
                         type="submit"
                         variant="contained"
                         color="secondary"
+                        disabled={isSubmitting}
                       >
                         Save Updates
                       </Button>
@@ -252,16 +252,16 @@ function CriterionPartTemplate({
           <Typography variant="h2" color="primary" gutterBottom>
             Scoring Section
           </Typography>
-          <Grid container spacing={theme.spacing.unit * 2}>
-            {(part.scoring || []).map(score => (
-              <Grid item key={score.name} xs>
-                <ScoringSlider label={score.name} value={0} />
-              </Grid>
-            ))}
-            <Grid item xs>
-              <ScoringSlider label="Overall" value={0} />
-            </Grid>
-          </Grid>
+          <AssessmentPartScoring
+            assessment={assessment}
+            assessmentPart={part}
+            assessmentData={assessmentData}
+            pillar={pillar}
+            criterion={criterion}
+            partNumber={partNumber}
+            createNewAssessment={createNewAssessment}
+            onScoreSaved={refetch}
+          />
         </PaddedContainer>
       </div>
       <AssessmentProgress />

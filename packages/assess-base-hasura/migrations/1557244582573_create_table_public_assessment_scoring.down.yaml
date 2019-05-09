@@ -1,0 +1,3 @@
+- args:
+    sql: DROP TABLE "public"."assessment_scoring"
+  type: run_sql

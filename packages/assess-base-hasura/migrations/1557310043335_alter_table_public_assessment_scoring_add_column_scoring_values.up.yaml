@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "public"."assessment_scoring" ADD COLUMN "scoring_values" jsonb
+      NOT NULL
+  type: run_sql

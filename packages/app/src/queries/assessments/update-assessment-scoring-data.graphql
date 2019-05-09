@@ -1,0 +1,8 @@
+mutation updateAssessmentScoringData($id: Int!, $scoringValues: jsonb!) {
+  update_assessment_scoring(
+    where: { id: { _eq: $id } }
+    _set: { scoring_values: $scoringValues }
+  ) {
+    affected_rows
+  }
+}
