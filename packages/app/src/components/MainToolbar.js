@@ -67,9 +67,6 @@ function MainToolbar({ classes, dark }) {
             >
               Assess Base
             </Button>
-            <Button component={NavLink} className={darkClass} to="/assessment">
-              Assessment
-            </Button>
             {!isAuthenticated && (
               <Button component={NavLink} className={darkClass} to="/auth">
                 Login
