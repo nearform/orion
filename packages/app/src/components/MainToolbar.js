@@ -2,6 +2,7 @@ import React from 'react'
 import { useStaticQuery, graphql, navigate, Link } from 'gatsby'
 import Img from 'gatsby-image'
 import { Typography, Button, withStyles } from '@material-ui/core'
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
 import { PaddedContainer } from 'components'
@@ -46,6 +47,7 @@ function MainToolbar({ classes, dark }) {
     [classes.toolbarDark]: dark,
     [classes.toolbarContrast]: dark,
   })
+  const navButtonClass = classnames(darkClass, classes.navButton)
   return (
     <>
       <div className={classes.gradient} />
@@ -61,25 +63,45 @@ function MainToolbar({ classes, dark }) {
           <div className={classes.linksContainer}>
             <Button
               partial={false}
+              className={navButtonClass}
               component={NavLink}
-              className={darkClass}
               to="/"
             >
-              Assess Base
+              ASSESS BASE
             </Button>
+            <Button
+              className={navButtonClass}
+              component={NavLink}
+              to="https://www.efqm.org/"
+            >
+              EFQM.ORG
+            </Button>
+            {isAuthenticated && (
+              <Button className={navButtonClass} component={NavLink} to="#">
+                <AccountCircleOutlinedIcon
+                  className={classes.icon}
+                  fontSize="large"
+                />
+                MyEFQM
+              </Button>
+            )}
             {!isAuthenticated && (
-              <Button component={NavLink} className={darkClass} to="/auth">
-                Login
+              <Button className={navButtonClass} component={NavLink} to="/auth">
+                LOGIN
               </Button>
             )}
             {isAdmin && (
-              <Button component={NavLink} className={darkClass} to="/admin">
-                Admin
+              <Button
+                className={navButtonClass}
+                component={NavLink}
+                to="/admin"
+              >
+                ADMIN
               </Button>
             )}
             {isAuthenticated && (
-              <Button onClick={doLogout} className={darkClass}>
-                Logout
+              <Button className={navButtonClass} onClick={doLogout}>
+                LOGOUT
               </Button>
             )}
             <LanguageSwitcher />
@@ -120,6 +142,13 @@ const styles = theme => ({
   },
   grow: {
     flexGrow: 1,
+  },
+  navButton: {
+    textTransform: 'none',
+  },
+  icon: {
+    marginRight: theme.spacing.unit,
+    color: 'inherit',
   },
   linksContainer: {
     display: 'flex',
