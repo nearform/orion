@@ -5,11 +5,15 @@ import { withTheme, Grid } from '@material-ui/core'
 import { Formik, Form, Field } from 'formik'
 import { ScoringSlider } from 'components'
 import T from 'prop-types'
+import mean from 'lodash/mean'
+import round from 'lodash/round'
 
 import {
   insertAssessmentScoringDataMutation,
   updateAssessmentScoringDataMutation,
 } from '../queries'
+
+const SLIDER_STEP = 5
 
 function createScoringInitialValues(assessmentPart, assessmentData) {
   const existingScoringData = getExistingScoringData(
@@ -89,50 +93,60 @@ function AssessmentPartScoring({
     }
   }
 
+  const scoringValues = createScoringInitialValues(
+    assessmentPart,
+    assessmentData
+  )
+
   return (
-    <Formik
-      onSubmit={handleScoreChange}
-      initialValues={createScoringInitialValues(assessmentPart, assessmentData)}
-    >
+    <Formik onSubmit={handleScoreChange} initialValues={scoringValues}>
       {({ setFieldValue, handleSubmit }) => {
         submitRef.current = handleSubmit
 
         return (
           <Form>
             <Grid container direction="column" spacing={theme.spacing.unit * 2}>
-              {assessmentPart.scoring.map(scoringGroup => (
-                <Grid
-                  key={scoringGroup.key}
-                  item
-                  container
-                  spacing={theme.spacing.unit * 2}
-                >
-                  {scoringGroup.scores.map(score => {
-                    const fieldName = `${scoringGroup.key}.${score.key}`
+              {assessmentPart.scoring.map(scoringGroup => {
+                const groupOverall =
+                  round(
+                    mean(Object.values(scoringValues[scoringGroup.key])) /
+                      SLIDER_STEP
+                  ) * SLIDER_STEP
 
-                    return (
-                      <Grid item key={score.key} xs>
-                        <Field name={fieldName}>
-                          {({ field }) => (
-                            <ScoringSlider
-                              {...field}
-                              step={5}
-                              label={score.name}
-                              onChange={(e, value) => {
-                                setFieldValue(fieldName, value)
-                                debounceSubmit(e)
-                              }}
-                            />
-                          )}
-                        </Field>
-                      </Grid>
-                    )
-                  })}
-                  <Grid item xs>
-                    <ScoringSlider label="Overall" value={0} />
+                return (
+                  <Grid
+                    key={scoringGroup.key}
+                    item
+                    container
+                    spacing={theme.spacing.unit * 2}
+                  >
+                    {scoringGroup.scores.map(score => {
+                      const fieldName = `${scoringGroup.key}.${score.key}`
+
+                      return (
+                        <Grid item key={score.key} xs>
+                          <Field name={fieldName}>
+                            {({ field }) => (
+                              <ScoringSlider
+                                {...field}
+                                step={SLIDER_STEP}
+                                label={score.name}
+                                onChange={(e, value) => {
+                                  setFieldValue(fieldName, value)
+                                  debounceSubmit(e)
+                                }}
+                              />
+                            )}
+                          </Field>
+                        </Grid>
+                      )
+                    })}
+                    <Grid item xs>
+                      <ScoringSlider label="Overall" value={groupOverall} />
+                    </Grid>
                   </Grid>
-                </Grid>
-              ))}
+                )
+              })}
             </Grid>
           </Form>
         )
