@@ -1,8 +1,8 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
 import { Button, Grid, Typography, withStyles } from '@material-ui/core'
 import { PaddedContainer } from 'components'
+import BackgroundImage from 'gatsby-background-image'
 
 import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
@@ -29,10 +29,12 @@ function AssessmentsHome({ theme, classes, data }) {
     }))
     .sort((a, b) => a.orderIndex - b.orderIndex)
   return (
-    <>
+    <BackgroundImage
+      className={classes.heroContainer}
+      fluid={heroBanner.childImageSharp.fluid}
+    >
       <SEO title="Assessment Home Page" />
       <div className={classes.header}>
-        <Img fluid={heroBanner.childImageSharp.fluid} />
         <PaddedContainer className={classes.heroDescription}>
           <Grid container spacing={theme.spacing.unit * 4} direction="column">
             <Grid item xs={4}>
@@ -110,7 +112,7 @@ function AssessmentsHome({ theme, classes, data }) {
           </Grid>
         </div>
       </PaddedContainer>
-    </>
+    </BackgroundImage>
   )
 }
 
@@ -118,12 +120,15 @@ const styles = theme => ({
   header: {
     position: 'relative',
   },
+  heroContainer: {
+    backgroundSize: '100%',
+    backgroundPosition: 'top left',
+  },
   heroDescription: {
-    position: 'absolute',
-    left: 0,
-    top: theme.spacing.unit * 13,
+    marginTop: theme.spacing.unit * 13,
   },
   sectionTop: {
+    backgroundColor: theme.palette.background.paper,
     marginTop: theme.spacing.unit * 16,
     marginBottom: theme.spacing.unit * 2,
   },

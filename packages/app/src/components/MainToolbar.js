@@ -48,8 +48,11 @@ function MainToolbar({ classes, dark }) {
     [classes.toolbarContrast]: dark,
   })
   const navButtonClass = classnames(darkClass, classes.navButton)
+
+  // darkClass is needed on both outer container and inner padded container
+  // to avoid hairline gap between toolbar and main element in mobile WebKit
   return (
-    <>
+    <div className={darkClass}>
       <div className={classes.gradient} />
       <PaddedContainer className={darkClass}>
         <div className={classes.root}>
@@ -108,7 +111,7 @@ function MainToolbar({ classes, dark }) {
           </div>
         </div>
       </PaddedContainer>
-    </>
+    </div>
   )
 }
 
