@@ -1,0 +1,8 @@
+mutation deleteAssessmentTableRow($id: Int!, $rowIndex: Int!) {
+  update_assessment_table(
+    where: { id: { _eq: $id } }
+    _delete_elem: { table_values: $rowIndex }
+  ) {
+    affected_rows
+  }
+}

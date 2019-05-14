@@ -9,6 +9,9 @@ export {
   default as updateAssessmentTableDataMutation,
 } from './update-assessment-table-data.graphql'
 export {
+  default as deleteAssessmentTableRowMutation,
+} from './delete-assessment-table-row.graphql'
+export {
   default as insertAssessmentScoringDataMutation,
 } from './insert-assessment-scoring-data.graphql'
 export {

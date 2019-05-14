@@ -14,27 +14,33 @@ import {
   createAssessmentMutation,
   insertAssessmentTableDataMutation,
   updateAssessmentTableDataMutation,
+  deleteAssessmentTableRowMutation,
 } from '../queries'
 import { isAuthenticatedSync, getUserIdSync } from '../utils/auth'
 import AssessmentPartScoring from '../components/AssessmentPartScoring'
 
-function createTableInitialValues(assessment, table) {
-  const tableData = getExistingTableData(assessment, table)
-
-  if (tableData) {
-    return tableData.table_values[0]
-  }
-
-  return table.columns.reduce(
+function getEmptyTableRow(tableDef) {
+  return tableDef.columns.reduce(
     (initialValues, { key }) => ({ ...initialValues, [key]: '' }),
     {}
   )
 }
 
-function getExistingTableData(assessment, table) {
+function createTableRows(assessment, tableDef) {
+  const tableData = getExistingTableData(assessment, tableDef)
+  const emptyTableRow = getEmptyTableRow(tableDef)
+
+  if (!tableData) {
+    return [emptyTableRow]
+  }
+
+  return tableData.table_values.concat(emptyTableRow)
+}
+
+function getExistingTableData(assessment, tableDef) {
   return (
     assessment &&
-    assessment.tables.find(({ table_key }) => table_key === table.key)
+    assessment.tables.find(({ table_key }) => table_key === tableDef.key)
   )
 }
 
@@ -62,6 +68,7 @@ function CriterionPartTemplate({
   const [createAssessment] = useMutation(createAssessmentMutation)
   const [insertTableData] = useMutation(insertAssessmentTableDataMutation)
   const [updateTableData] = useMutation(updateAssessmentTableDataMutation)
+  const [deleteTableRow] = useMutation(deleteAssessmentTableRowMutation)
 
   const { loading, error, data: assessmentData, refetch } = useQuery(
     getAssessment,
@@ -89,18 +96,24 @@ function CriterionPartTemplate({
     return data.insert_assessment.returning[0].id
   }
 
-  async function handleSaveTable(table, values) {
+  async function handleSaveTable(tableDef, rowIndex, rowValues) {
     const assessmentId = assessmentData.assessment.length
       ? assessmentData.assessment[0].id
       : await createNewAssessment()
 
-    const tableData = getExistingTableData(assessmentData.assessment[0], table)
+    const tableData = getExistingTableData(
+      assessmentData.assessment[0],
+      tableDef
+    )
 
     if (tableData) {
+      const tableValues = [...tableData.table_values]
+      tableValues[rowIndex] = rowValues
+
       await updateTableData({
         variables: {
           id: tableData.id,
-          tableValues: [values],
+          tableValues,
         },
       })
     } else {
@@ -110,11 +123,27 @@ function CriterionPartTemplate({
           pillarKey: pillar.key,
           criterionKey: criterion.key,
           partNumber,
-          tableKey: table.key,
-          tableValues: [values],
+          tableKey: tableDef.key,
+          tableValues: [rowValues],
         },
       })
     }
+
+    refetch()
+  }
+
+  async function handleDeleteTableRow(tableDef, rowIndex) {
+    const tableData = getExistingTableData(
+      assessmentData.assessment[0],
+      tableDef
+    )
+
+    await deleteTableRow({
+      variables: {
+        id: tableData.id,
+        rowIndex,
+      },
+    })
 
     refetch()
   }
@@ -191,59 +220,75 @@ function CriterionPartTemplate({
           </Grid>
         </div>
         {part.tables.map(table => (
-          <div className={classes.section} key={table.key}>
-            <Formik
-              initialValues={createTableInitialValues(
-                assessmentData.assessment[0],
-                table
-              )}
-              onSubmit={(values, actions) =>
-                handleSaveTable(table, values, actions)
-              }
-            >
-              {({ isSubmitting }) => (
-                <Form>
-                  <Typography variant="h2" color="primary" gutterBottom>
-                    {table.name}
-                  </Typography>
-                  <Grid container spacing={theme.spacing.unit * 2}>
-                    {table.columns.map(column => (
-                      <Grid item xs={4} key={column.key}>
-                        <Typography variant="h3" gutterBottom>
-                          {column.name}
-                        </Typography>
-                        <Field
-                          component={TextField}
-                          name={column.key}
-                          fullWidth
-                        />
-                      </Grid>
-                    ))}
-                  </Grid>
-                  <Grid
-                    container
-                    spacing={theme.spacing.unit * 2}
-                    justify="flex-end"
+          <div key={table.key}>
+            <Typography variant="h2" color="primary" gutterBottom>
+              {table.name}
+            </Typography>
+            {createTableRows(assessmentData.assessment[0], table).map(
+              (initialValues, rowIndex, { length: totalRows }) => (
+                <div
+                  className={classes.section}
+                  key={`${table.key}-${rowIndex}`}
+                >
+                  <Formik
+                    initialValues={initialValues}
+                    onSubmit={(values, actions) =>
+                      handleSaveTable(table, rowIndex, values, actions)
+                    }
                   >
-                    <Grid item>
-                      <Button disabled variant="outlined" color="secondary">
-                        Add new item
-                      </Button>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        color="secondary"
-                        disabled={isSubmitting}
-                      >
-                        Save Updates
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Form>
-              )}
-            </Formik>
+                    {({ isSubmitting, dirty }) => (
+                      <Form>
+                        <Grid container spacing={theme.spacing.unit * 2}>
+                          {table.columns.map(column => (
+                            <Grid item xs={4} key={column.key}>
+                              <Typography variant="h3" gutterBottom>
+                                {column.name}
+                              </Typography>
+                              <Field
+                                component={TextField}
+                                name={column.key}
+                                fullWidth
+                              />
+                            </Grid>
+                          ))}
+                        </Grid>
+                        <Grid
+                          container
+                          spacing={theme.spacing.unit * 2}
+                          justify="flex-end"
+                        >
+                          <Grid item>
+                            <Button
+                              type="submit"
+                              variant="contained"
+                              color="secondary"
+                              disabled={!dirty || isSubmitting}
+                            >
+                              {rowIndex === totalRows - 1
+                                ? 'Save new row'
+                                : 'Save Updates'}
+                            </Button>
+                          </Grid>
+                          {rowIndex !== totalRows - 1 && (
+                            <Grid item>
+                              <Button
+                                onClick={() =>
+                                  handleDeleteTableRow(table, rowIndex)
+                                }
+                                variant="outlined"
+                                color="secondary"
+                              >
+                                Remove
+                              </Button>
+                            </Grid>
+                          )}
+                        </Grid>
+                      </Form>
+                    )}
+                  </Formik>
+                </div>
+              )
+            )}
           </div>
         ))}
       </PaddedContainer>
