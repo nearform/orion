@@ -3,43 +3,15 @@ import {
   Typography,
   withStyles,
   Grid,
-  TableHead,
-  TableRow,
-  TableCell,
-  Table,
-  TableBody,
   TextField,
   Button,
-  Paper,
 } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import { AssessmentProgress, PaddedContainer } from 'components'
 import { Link } from 'gatsby'
 
 import SEO from '../components/seo'
-import ImagePlaceholder from '../components/ImagePlaceholder'
 import SectionTitle from '../components/SectionTitle'
-import AssessmentStatusChip, {
-  ASSESSMENT_STATUS,
-} from 'components/src/components/AssessmentStatusChip'
-
-const mockAssessments = [
-  {
-    name: 'Q1  Assessment for Company A',
-    updated_at: new Date().toLocaleDateString(),
-    status: ASSESSMENT_STATUS.inProgress,
-  },
-  {
-    name: 'Another  Assessment for Company A',
-    updated_at: new Date().toLocaleDateString(),
-    status: ASSESSMENT_STATUS.submitted,
-  },
-  {
-    name: 'Assessment for Company B',
-    updated_at: new Date().toLocaleDateString(),
-    status: ASSESSMENT_STATUS.closed,
-  },
-]
 
 function AssessmentTemplate({
   theme,
@@ -61,39 +33,6 @@ function AssessmentTemplate({
               <SectionTitle barColor={theme.palette.primary.dark}>
                 {assessment.name}
               </SectionTitle>
-            </Grid>
-          </Grid>
-        </div>
-        <div className={classes.section}>
-          <Grid container spacing={theme.spacing.unit * 4}>
-            <Grid item xs={7}>
-              <Paper>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>{t('Your assessments')}</TableCell>
-                      <TableCell>Last Updated</TableCell>
-                      <TableCell>Status</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {mockAssessments.map(assessment => (
-                      <TableRow key={assessment.name}>
-                        <TableCell>{assessment.name}</TableCell>
-                        <TableCell>{assessment.updated_at}</TableCell>
-                        <TableCell>
-                          <AssessmentStatusChip status={assessment.status} />
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Paper>
-            </Grid>
-            <Grid item xs={5}>
-              <ImagePlaceholder>
-                <Typography variant="h4">Pic of Model 2020</Typography>
-              </ImagePlaceholder>
             </Grid>
           </Grid>
         </div>
