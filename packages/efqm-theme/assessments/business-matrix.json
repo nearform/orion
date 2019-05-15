@@ -54,12 +54,12 @@
                   ]
                 },
                 {
-                  "key": "strenghts-improvement",
-                  "name": "capture overall strenghts & area for improvement below",
+                  "key": "strengths-improvement",
+                  "name": "capture overall strengths & area for improvement below",
                   "columns": [
                     {
-                      "key": "strenghts",
-                      "name": "strenghts"
+                      "key": "strengths",
+                      "name": "strengths"
                     },
                     {
                       "key": "improvement",
@@ -67,52 +67,36 @@
                     }
                   ]
                 }
-              ],
-              "scoring": [
+              ]
+            },
+            {
+              "guidance": "some guidance to purpose and strategy part 2",
+              "tables": [
                 {
-                  "key": "relevance-usability",
-                  "name": "relevance & usability",
-                  "scores": [
+                  "key": "strategic-vision",
+                  "name": "define strategic vision based on purpose",
+                  "columns": [
                     {
-                      "key": "scope-relevance",
-                      "name": "scope & relevance",
-                      "description": "A coherent set of results, including key results, are identified that demonstrate the performance of the organisation in terms of strategy, objectives and the needs and expectations of stakeholders."
+                      "key": "placeholder",
+                      "name": "placeholder columns (placeholders)"
                     },
                     {
-                      "key": "integrity",
-                      "name": "integrity",
-                      "description": "..."
+                      "key": "goals",
+                      "name": "long term targets (goals)"
                     },
                     {
-                      "key": "segmentation",
-                      "name": "segmentation",
-                      "description": "..."
+                      "key": "milestones",
+                      "name": "key steps towards meeting goals (milestones)"
+                    },
+                    {
+                      "key": "resources",
+                      "name": "resources available to use (resources)"
+                    },
+                    {
+                      "key": "needs",
+                      "name": "resources needed not currently available (needs)"
                     }
-                  ],
-                  "rules": []
-                },
-                {
-                  "key": "performance",
-                  "name": "performance",
-                  "scores": [
-                    {
-                      "key": "trends",
-                      "name": "trends"
-                    },
-                    {
-                      "key": "targets",
-                      "name": "targets"
-                    },
-                    {
-                      "key": "comparisons",
-                      "name": "comparisons"
-                    },
-                    {
-                      "key": "confidence",
-                      "name": "confidence"
-                    }
-                  ],
-                  "rules": []
+                  ]
                 }
               ]
             }
@@ -123,6 +107,53 @@
           "name": "organisational leadership & culture",
           "parts": []
         }
+      ],
+      "scoring": [
+        {
+          "key": "relevance-usability",
+          "name": "relevance & usability",
+          "scores": [
+            {
+              "key": "scope-relevance",
+              "name": "scope & relevance",
+              "description": "A coherent set of results, including key results, are identified that demonstrate the performance of the organisation in terms of strategy, objectives and the needs and expectations of stakeholders."
+            },
+            {
+              "key": "integrity",
+              "name": "integrity",
+              "description": "..."
+            },
+            {
+              "key": "segmentation",
+              "name": "segmentation",
+              "description": "..."
+            }
+          ],
+          "rules": []
+        },
+        {
+          "key": "performance",
+          "name": "performance",
+          "scores": [
+            {
+              "key": "trends",
+              "name": "trends"
+            },
+            {
+              "key": "targets",
+              "name": "targets"
+            },
+            {
+              "key": "comparisons",
+              "name": "comparisons"
+            },
+            {
+              "key": "confidence",
+              "name": "confidence"
+            }
+          ],
+          "rules": []
+        }
       ]
     },
     {
@@ -132,7 +163,36 @@
         {
           "key": "engaging-stakeholders",
           "name": "engaging with stakeholders",
-          "parts": []
+          "description": "Placeholder content for the Engaging with Stakeholders criteria under the Execution pillar.",
+          "parts": [
+            {
+              "guidance": "some placeholder guidance",
+              "tables": [
+                {
+                  "key": "example-table-1",
+                  "name": "example table 1",
+                  "columns": [
+                    {
+                      "key": "example-input-1",
+                      "name": "example input 1"
+                    },
+                    {
+                      "key": "example-input-2",
+                      "name": "example input 2"
+                    },
+                    {
+                      "key": "example-input-3",
+                      "name": "example input 3"
+                    },
+                    {
+                      "key": "example-input-4",
+                      "name": "example input 4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
           "key": "creating-value",
@@ -143,6 +203,40 @@
           "key": "performance-transformation",
           "name": "driving performance and transformation",
           "parts": []
+        }
+      ],
+      "scoring": [
+        {
+          "key": "scoring-section-1",
+          "name": "Example scoring section 1",
+          "scores": [
+            {
+              "key": "example-1",
+              "name": "example score 1",
+              "description": "Example description 1."
+            },
+            {
+              "key": "example-2",
+              "name": "example score 2",
+              "description": "Example description 2."
+            }
+          ]
+        },
+        {
+          "key": "scoring-section-2",
+          "name": "Example scoring section 2",
+          "scores": [
+            {
+              "key": "example-3",
+              "name": "example score 3",
+              "description": "Example description 3."
+            },
+            {
+              "key": "example-4",
+              "name": "example score 4",
+              "description": "Example description 4."
+            }
+          ]
         }
       ]
     },

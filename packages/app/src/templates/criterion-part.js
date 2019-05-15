@@ -20,7 +20,7 @@ import {
 } from '../queries'
 import { isAuthenticatedSync, getUserIdSync } from '../utils/auth'
 import { uploadFile, getFileUri } from '../utils/storage'
-import AssessmentPartScoring from '../components/AssessmentPartScoring'
+import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
 import UploadButton from '../components/UploadButton'
 
 function getEmptyTableRow(tableDef) {
@@ -368,9 +368,8 @@ function CriterionPartTemplate({
           <Typography variant="h2" color="primary" gutterBottom>
             Scoring Section
           </Typography>
-          <AssessmentPartScoring
+          <AssessmentPillarScoring
             assessment={assessment}
-            assessmentPart={part}
             assessmentData={assessmentData}
             pillar={pillar}
             criterion={criterion}

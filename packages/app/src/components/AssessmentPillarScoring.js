@@ -15,7 +15,7 @@ import {
 
 const SLIDER_STEP = 5
 
-function createScoringInitialValues(assessmentPart, assessmentData) {
+function createScoringInitialValues(pillar, assessmentData) {
   const existingScoringData = getExistingScoringData(
     assessmentData.assessment[0]
   )
@@ -24,7 +24,7 @@ function createScoringInitialValues(assessmentPart, assessmentData) {
     return existingScoringData.scoring_values
   }
 
-  return assessmentPart.scoring.reduce(
+  return pillar.scoring.reduce(
     (acc, scoringGroup) => ({
       ...acc,
       [scoringGroup.key]: scoringGroup.scores.reduce(
@@ -42,10 +42,9 @@ function getExistingScoringData(assessment) {
 
 const SAVE_SCORE_DEBOUNCE_TIME = 1000
 
-function AssessmentPartScoring({
+function AssessmentPillarScoring({
   theme,
   assessmentData,
-  assessmentPart,
   pillar,
   criterion,
   partNumber,
@@ -93,10 +92,7 @@ function AssessmentPartScoring({
     }
   }
 
-  const scoringValues = createScoringInitialValues(
-    assessmentPart,
-    assessmentData
-  )
+  const scoringValues = createScoringInitialValues(pillar, assessmentData)
 
   return (
     <Formik onSubmit={handleScoreChange} initialValues={scoringValues}>
@@ -106,7 +102,7 @@ function AssessmentPartScoring({
         return (
           <Form>
             <Grid container direction="column" spacing={theme.spacing.unit * 2}>
-              {assessmentPart.scoring.map(scoringGroup => {
+              {pillar.scoring.map(scoringGroup => {
                 const groupOverall =
                   round(
                     mean(Object.values(scoringValues[scoringGroup.key])) /
@@ -160,10 +156,9 @@ function AssessmentPartScoring({
   )
 }
 
-AssessmentPartScoring.propTypes = {
+AssessmentPillarScoring.propTypes = {
   theme: T.object.isRequired,
   assessmentData: T.object.isRequired,
-  assessmentPart: T.object.isRequired,
   pillar: T.object.isRequired,
   criterion: T.object.isRequired,
   partNumber: T.number.isRequired,
@@ -171,4 +166,4 @@ AssessmentPartScoring.propTypes = {
   onScoreSaved: T.func.isRequired,
 }
 
-export default withTheme()(AssessmentPartScoring)
+export default withTheme()(AssessmentPillarScoring)

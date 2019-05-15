@@ -44,15 +44,15 @@ exports.createPages = async ({ graphql, actions }) => {
                     name
                   }
                 }
-                scoring {
-                  key
-                  name
-                  scores {
-                    key
-                    name
-                    description
-                  }
-                }
+              }
+            }
+            scoring {
+              key
+              name
+              scores {
+                key
+                name
+                description
               }
             }
           }
