@@ -111,9 +111,12 @@ exports.createPages = async ({ graphql, actions }) => {
           const isFirst = partIndex === 0
           const isLast = partIndex === totalParts - 1
           const partNumber = partIndex + 1
-          const previousLink =
-            !isFirst && createCriterionPartLink(partNumber - 1)
-          const nextLink = !isLast && createCriterionPartLink(partNumber + 1)
+          const previousLink = isFirst
+            ? null
+            : createCriterionPartLink(partNumber - 1)
+          const nextLink = isLast
+            ? null
+            : createCriterionPartLink(partNumber + 1)
 
           createPage({
             path: `assessment/${assessment.key}/${pillar.key}/${

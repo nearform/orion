@@ -1,4 +1,9 @@
-export { default as getAssessment } from './get-assessment.graphql'
+export {
+  default as getAssessmentPartData,
+} from './get-assessment-part-data.graphql'
+export {
+  default as getShallowAssessmentData,
+} from './get-shallow-assessment-data.graphql'
 export {
   default as createAssessmentMutation,
 } from './create-assessment.graphql'

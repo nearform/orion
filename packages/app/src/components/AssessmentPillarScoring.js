@@ -16,9 +16,7 @@ import {
 const SLIDER_STEP = 5
 
 function createScoringInitialValues(pillar, assessmentData) {
-  const existingScoringData = getExistingScoringData(
-    assessmentData.assessment[0]
-  )
+  const existingScoringData = getExistingScoringData(assessmentData)
 
   if (existingScoringData) {
     return existingScoringData.scoring_values
@@ -44,12 +42,12 @@ const SAVE_SCORE_DEBOUNCE_TIME = 1000
 
 function AssessmentPillarScoring({
   theme,
+  assessmentId,
   assessmentData,
   pillar,
   criterion,
   partNumber,
   onScoreSaved,
-  createNewAssessment,
 }) {
   const [insertScoringData] = useMutation(insertAssessmentScoringDataMutation)
   const [updateScoringData] = useMutation(updateAssessmentScoringDataMutation)
@@ -63,11 +61,7 @@ function AssessmentPillarScoring({
 
   async function handleScoreChange(values) {
     try {
-      const assessmentId = assessmentData.assessment.length
-        ? assessmentData.assessment[0].id
-        : await createNewAssessment()
-
-      const scoringData = getExistingScoringData(assessmentData.assessment[0])
+      const scoringData = getExistingScoringData(assessmentData)
 
       if (scoringData) {
         await updateScoringData({
@@ -158,11 +152,11 @@ function AssessmentPillarScoring({
 
 AssessmentPillarScoring.propTypes = {
   theme: T.object.isRequired,
+  assessmentId: T.number.isRequired,
   assessmentData: T.object.isRequired,
   pillar: T.object.isRequired,
   criterion: T.object.isRequired,
   partNumber: T.number.isRequired,
-  createNewAssessment: T.func.isRequired,
   onScoreSaved: T.func.isRequired,
 }
 

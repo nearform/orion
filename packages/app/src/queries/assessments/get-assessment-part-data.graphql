@@ -1,14 +1,10 @@
-query getAssessment(
-  $assessmentKey: String!
-  $ownerId: Int!
+query getAssessmentPartData(
+  $id: Int!
   $pillarKey: String!
   $criterionKey: String!
   $partNumber: Int!
 ) {
-  assessment(
-    limit: 1
-    where: { key: { _eq: $assessmentKey }, owner_id: { _eq: $ownerId } }
-  ) {
+  assessment_by_pk(id: $id) {
     id
     tables(
       where: {

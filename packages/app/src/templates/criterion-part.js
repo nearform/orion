@@ -11,8 +11,7 @@ import { saveAs } from 'file-saver'
 import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
 import {
-  getAssessment,
-  createAssessmentMutation,
+  getAssessmentPartData,
   insertAssessmentTableDataMutation,
   updateAssessmentTableDataMutation,
   deleteAssessmentTableRowMutation,
@@ -22,6 +21,7 @@ import { isAuthenticatedSync, getUserIdSync } from '../utils/auth'
 import { uploadFile, getFileUri } from '../utils/storage'
 import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
 import UploadButton from '../components/UploadButton'
+import { getAssessmentId } from '../utils/url'
 
 function getEmptyTableRow(tableDef) {
   return tableDef.columns.reduce(
@@ -51,6 +51,7 @@ function getExistingTableData(assessment, tableDef) {
 function CriterionPartTemplate({
   theme,
   classes,
+  location,
   pageContext: {
     partNumber,
     part,
@@ -68,40 +69,28 @@ function CriterionPartTemplate({
   }
 
   const userId = getUserIdSync()
+  const assessmentId = getAssessmentId(location)
 
-  const [createAssessment] = useMutation(createAssessmentMutation)
   const [insertTableData] = useMutation(insertAssessmentTableDataMutation)
   const [updateTableData] = useMutation(updateAssessmentTableDataMutation)
   const [deleteTableRow] = useMutation(deleteAssessmentTableRowMutation)
   const [createFileUpload] = useMutation(createFileUploadMutation)
 
-  const { loading, error, data: assessmentData, refetch } = useQuery(
-    getAssessment,
-    {
-      variables: {
-        assessmentKey: assessment.key,
-        ownerId: userId,
-        pillarKey: pillar.key,
-        criterionKey: criterion.key,
-        partNumber,
-      },
-    }
-  )
+  const {
+    loading,
+    error,
+    data: { assessment_by_pk: assessmentData } = { assessment_by_pk: null },
+    refetch,
+  } = useQuery(getAssessmentPartData, {
+    variables: {
+      id: assessmentId,
+      pillarKey: pillar.key,
+      criterionKey: criterion.key,
+      partNumber,
+    },
+  })
 
-  async function createNewAssessment() {
-    const { data, error } = await createAssessment({
-      variables: {
-        key: assessment.key,
-        ownerId: userId,
-      },
-    })
-
-    if (error) throw error
-
-    return data.insert_assessment.returning[0].id
-  }
-
-  async function createNewFileUpload(assessmentId, fileName, s3Key) {
+  async function createNewFileUpload(fileName, s3Key) {
     const { data, error } = await createFileUpload({
       variables: {
         fileUploadData: {
@@ -119,18 +108,8 @@ function CriterionPartTemplate({
     return data.insert_assessment_file.returning[0].id
   }
 
-  const getAssessmentId = async () =>
-    assessmentData.assessment.length
-      ? assessmentData.assessment[0].id
-      : await createNewAssessment()
-
   async function handleSaveTable(tableDef, rowIndex, rowValues) {
-    const assessmentId = await getAssessmentId()
-
-    const tableData = getExistingTableData(
-      assessmentData.assessment[0],
-      tableDef
-    )
+    const tableData = getExistingTableData(assessmentData, tableDef)
 
     if (tableData) {
       const tableValues = [...tableData.table_values]
@@ -159,10 +138,7 @@ function CriterionPartTemplate({
   }
 
   async function handleDeleteTableRow(tableDef, rowIndex) {
-    const tableData = getExistingTableData(
-      assessmentData.assessment[0],
-      tableDef
-    )
+    const tableData = getExistingTableData(assessmentData, tableDef)
 
     await deleteTableRow({
       variables: {
@@ -175,8 +151,6 @@ function CriterionPartTemplate({
   }
 
   async function handleFileUpload(file) {
-    const assessmentId = await getAssessmentId()
-
     const { key: s3Key } = await uploadFile(file, assessmentId)
     await createNewFileUpload(assessmentId, file.name, s3Key)
 
@@ -206,7 +180,7 @@ function CriterionPartTemplate({
           <Grid item>
             <Button
               component={Link}
-              to={`assessment/${assessment.key}`}
+              to={`assessment/${assessment.key}#${assessmentId}`}
               variant="text"
               color="secondary"
             >
@@ -222,7 +196,7 @@ function CriterionPartTemplate({
                 </Typography>
               </Grid>
               <Grid item container spacing={theme.spacing.unit}>
-                {assessmentData.assessment[0].files.map(file => (
+                {assessmentData.files.map(file => (
                   <Grid item key={file.s3_key}>
                     <Button
                       variant="text"
@@ -256,7 +230,7 @@ function CriterionPartTemplate({
                 <Typography
                   color="secondary"
                   component={Link}
-                  to={previousLink}
+                  to={`${previousLink}#${assessmentId}`}
                   variant="body1"
                 >
                   ❮
@@ -278,7 +252,7 @@ function CriterionPartTemplate({
                   variant="body1"
                   color="secondary"
                   component={Link}
-                  to={nextLink}
+                  to={`${nextLink}#${assessmentId}`}
                 >
                   ❯
                 </Typography>
@@ -295,7 +269,7 @@ function CriterionPartTemplate({
             <Typography variant="h2" color="primary" gutterBottom>
               {table.name}
             </Typography>
-            {createTableRows(assessmentData.assessment[0], table).map(
+            {createTableRows(assessmentData, table).map(
               (initialValues, rowIndex, { length: totalRows }) => (
                 <div
                   className={classes.section}
@@ -369,12 +343,12 @@ function CriterionPartTemplate({
             Scoring Section
           </Typography>
           <AssessmentPillarScoring
+            assessmentId={assessmentId}
             assessment={assessment}
             assessmentData={assessmentData}
             pillar={pillar}
             criterion={criterion}
             partNumber={partNumber}
-            createNewAssessment={createNewAssessment}
             onScoreSaved={refetch}
           />
         </PaddedContainer>

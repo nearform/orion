@@ -3,10 +3,11 @@ import { Typography, withStyles, Grid, Button } from '@material-ui/core'
 import { AssessmentProgress, PaddedContainer } from 'components'
 import { Link } from 'gatsby'
 import ReactMarkdown from 'react-markdown'
+import { useTranslation } from 'react-i18next'
 
 import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
-import { useTranslation } from 'react-i18next'
+import { getAssessmentId } from '../utils/url'
 
 function CriterionTemplate({
   theme,
@@ -14,6 +15,8 @@ function CriterionTemplate({
   pageContext: { assessment, pillar, criterion, pillarColor },
   location,
 }) {
+  const assessmentId = getAssessmentId(location)
+
   const { t } = useTranslation()
 
   return (
@@ -22,7 +25,7 @@ function CriterionTemplate({
       <PaddedContainer className={classes.paddedContainer}>
         <Button
           component={Link}
-          to={`assessment/${assessment.key}`}
+          to={`assessment/${assessment.key}#${assessmentId}`}
           variant="text"
           color="secondary"
         >
@@ -45,7 +48,9 @@ function CriterionTemplate({
               </Typography>
               <Button
                 component={Link}
-                to={`${location.pathname}/1`}
+                to={`${location.pathname}/1${
+                  assessmentId ? `#${assessmentId}` : ''
+                }`}
                 variant="contained"
                 color="secondary"
                 className={classes.section}
