@@ -41,7 +41,7 @@ function AssessmentsHome({ theme, classes, data }) {
       <SEO title="Assessment Home Page" />
       <div className={classes.header}>
         <PaddedContainer className={classes.heroDescription}>
-          <Grid container spacing={theme.spacing.unit * 4} direction="column">
+          <Grid container spacing={theme.spacing.unit * 3} direction="column">
             <Grid item xs={4}>
               <Typography variant="h1">
                 Welcome to the DigitalEFQM Assess Base
@@ -55,10 +55,8 @@ function AssessmentsHome({ theme, classes, data }) {
                 below.
               </Typography>
             </Grid>
-            <Grid item xs={3}>
-              <Button fullWidth color="secondary" variant="outlined">
-                Find out more
-              </Button>
+            <Grid item>
+              <Button color="secondary">Find out more</Button>
             </Grid>
           </Grid>
         </PaddedContainer>
@@ -76,7 +74,7 @@ function AssessmentsHome({ theme, classes, data }) {
         <div className={classes.sectionBottom}>
           <Grid container spacing={theme.spacing.unit * 2} wrap="nowrap">
             <Grid item xs={3}>
-              <SectionTitle barColor={theme.palette.primary.dark}>
+              <SectionTitle barColor={theme.palette.primary.dark} noWrap>
                 Assessment Tools
               </SectionTitle>
             </Grid>
