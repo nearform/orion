@@ -17,3 +17,6 @@ export {
 export {
   default as updateAssessmentScoringDataMutation,
 } from './update-assessment-scoring-data.graphql'
+export {
+  default as createFileUploadMutation,
+} from './create-file-upload.graphql'

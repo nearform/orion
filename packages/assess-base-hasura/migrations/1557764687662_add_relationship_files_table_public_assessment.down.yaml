@@ -1,0 +1,6 @@
+- args:
+    relationship: files
+    table:
+      name: assessment
+      schema: public
+  type: drop_relationship

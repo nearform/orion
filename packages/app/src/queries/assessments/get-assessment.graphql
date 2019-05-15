@@ -37,5 +37,10 @@ query getAssessment(
       part_number
       scoring_values
     }
+    files(where: { part_number: { _eq: $partNumber } }) {
+      id
+      file_name
+      s3_key
+    }
   }
 }

@@ -6,6 +6,7 @@ import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
+import { saveAs } from 'file-saver'
 
 import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
@@ -15,9 +16,12 @@ import {
   insertAssessmentTableDataMutation,
   updateAssessmentTableDataMutation,
   deleteAssessmentTableRowMutation,
+  createFileUploadMutation,
 } from '../queries'
 import { isAuthenticatedSync, getUserIdSync } from '../utils/auth'
+import { uploadFile, getFileUri } from '../utils/storage'
 import AssessmentPartScoring from '../components/AssessmentPartScoring'
+import UploadButton from '../components/UploadButton'
 
 function getEmptyTableRow(tableDef) {
   return tableDef.columns.reduce(
@@ -69,6 +73,7 @@ function CriterionPartTemplate({
   const [insertTableData] = useMutation(insertAssessmentTableDataMutation)
   const [updateTableData] = useMutation(updateAssessmentTableDataMutation)
   const [deleteTableRow] = useMutation(deleteAssessmentTableRowMutation)
+  const [createFileUpload] = useMutation(createFileUploadMutation)
 
   const { loading, error, data: assessmentData, refetch } = useQuery(
     getAssessment,
@@ -96,10 +101,31 @@ function CriterionPartTemplate({
     return data.insert_assessment.returning[0].id
   }
 
-  async function handleSaveTable(tableDef, rowIndex, rowValues) {
-    const assessmentId = assessmentData.assessment.length
+  async function createNewFileUpload(assessmentId, fileName, s3Key) {
+    const { data, error } = await createFileUpload({
+      variables: {
+        fileUploadData: {
+          user_id: userId,
+          assessment_id: assessmentId,
+          part_number: partNumber,
+          file_name: fileName,
+          s3_key: s3Key,
+        },
+      },
+    })
+
+    if (error) throw error
+
+    return data.insert_assessment_file.returning[0].id
+  }
+
+  const getAssessmentId = async () =>
+    assessmentData.assessment.length
       ? assessmentData.assessment[0].id
       : await createNewAssessment()
+
+  async function handleSaveTable(tableDef, rowIndex, rowValues) {
+    const assessmentId = await getAssessmentId()
 
     const tableData = getExistingTableData(
       assessmentData.assessment[0],
@@ -148,6 +174,22 @@ function CriterionPartTemplate({
     refetch()
   }
 
+  async function handleFileUpload(file) {
+    const assessmentId = await getAssessmentId()
+
+    const { key: s3Key } = await uploadFile(file, assessmentId)
+    await createNewFileUpload(assessmentId, file.name, s3Key)
+
+    refetch()
+  }
+
+  const handleFileDownload = async file => {
+    const fileUrl = await getFileUri(file.s3_key)
+    const response = await fetch(fileUrl)
+    const data = await response.blob()
+    saveAs(data, file.file_name)
+  }
+
   if (loading) {
     return 'Loading...'
   }
@@ -160,14 +202,43 @@ function CriterionPartTemplate({
     <div className={classes.root}>
       <SEO title={criterion.name} />
       <PaddedContainer className={classes.paddedContainer}>
-        <Button
-          component={Link}
-          to={`assessment/${assessment.key}`}
-          variant="text"
-          color="secondary"
-        >
-          ◀ Assessment overview
-        </Button>
+        <Grid container spacing={theme.spacing.unit * 2}>
+          <Grid item>
+            <Button
+              component={Link}
+              to={`assessment/${assessment.key}`}
+              variant="text"
+              color="secondary"
+            >
+              ◀ Assessment overview
+            </Button>
+          </Grid>
+          <Grid item xs />
+          <Grid container item direction="column">
+            <Grid item container>
+              <Grid item>
+                <Typography variant="h4" color="textSecondary">
+                  Supporting documentation
+                </Typography>
+              </Grid>
+              <Grid item container spacing={theme.spacing.unit}>
+                {assessmentData.assessment[0].files.map(file => (
+                  <Grid item key={file.s3_key}>
+                    <Button
+                      variant="text"
+                      onClick={_ => handleFileDownload(file)}
+                    >
+                      {file.file_name}
+                    </Button>
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item>
+            <UploadButton onFileSelected={handleFileUpload} />
+          </Grid>
+        </Grid>
         <div className={classes.section}>
           <Grid container spacing={theme.spacing.unit * 4}>
             <Grid item>

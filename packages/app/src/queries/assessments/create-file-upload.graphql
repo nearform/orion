@@ -1,0 +1,7 @@
+mutation createFileUpload($fileUploadData: [assessment_file_insert_input!]!) {
+  insert_assessment_file(objects: $fileUploadData) {
+    returning {
+      id
+    }
+  }
+}

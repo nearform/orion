@@ -1,0 +1,3 @@
+- args:
+    sql: alter table "public"."assessment_file" rename column "s3_reference" to "s3_key";
+  type: run_sql
