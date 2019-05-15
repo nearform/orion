@@ -6,7 +6,7 @@ import StyledSlider from './StyledSlider'
 import Marks from './Marks'
 import Thumb from './Thumb'
 
-function ScoringSlider({ classes, label, ...props }) {
+function ScoringSlider({ color, classes, label, ...props }) {
   return (
     <div>
       <Typography
@@ -18,6 +18,7 @@ function ScoringSlider({ classes, label, ...props }) {
         {label}
       </Typography>
       <StyledSlider
+        color={color}
         aria-labelledby="label"
         thumb={<Thumb value={props.value} />}
         {...props}

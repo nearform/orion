@@ -5,7 +5,9 @@ import { Typography } from '@material-ui/core'
 export default function Thumb({ className, value }) {
   return (
     <div className={className}>
-      <Typography>{value}</Typography>
+      <Typography variant="h6" color="inherit">
+        {value}
+      </Typography>
     </div>
   )
 }

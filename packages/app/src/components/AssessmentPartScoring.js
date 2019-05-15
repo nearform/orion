@@ -129,6 +129,7 @@ function AssessmentPartScoring({
                             {({ field }) => (
                               <ScoringSlider
                                 {...field}
+                                color={field.value ? 'secondary' : null}
                                 step={SLIDER_STEP}
                                 label={score.name}
                                 onChange={(e, value) => {
@@ -142,7 +143,11 @@ function AssessmentPartScoring({
                       )
                     })}
                     <Grid item xs>
-                      <ScoringSlider label="Overall" value={groupOverall} />
+                      <ScoringSlider
+                        color={groupOverall ? 'primary' : null}
+                        label="Overall"
+                        value={groupOverall}
+                      />
                     </Grid>
                   </Grid>
                 )
