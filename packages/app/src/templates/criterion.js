@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
-import { AssessmentProgress, PaddedContainer } from 'components'
+import { PaddedContainer } from 'components'
 import { Link } from 'gatsby'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
@@ -61,7 +61,6 @@ function CriterionTemplate({
           </Grid>
         </div>
       </PaddedContainer>
-      <AssessmentProgress />
     </div>
   )
 }

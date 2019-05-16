@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
-import { AssessmentProgress, PaddedContainer } from 'components'
+import { PaddedContainer } from 'components'
 import { Link } from 'gatsby'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
@@ -353,7 +353,6 @@ function CriterionPartTemplate({
           />
         </PaddedContainer>
       </div>
-      <AssessmentProgress />
     </div>
   )
 }

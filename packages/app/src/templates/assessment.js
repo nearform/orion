@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
-import { AssessmentProgress, PaddedContainer } from 'components'
+import { PaddedContainer } from 'components'
 import { Link, navigate } from 'gatsby'
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
@@ -229,7 +229,6 @@ function AssessmentTemplate({
           </Grid>
         </div>
       </PaddedContainer>
-      <AssessmentProgress />
     </>
   )
 }
