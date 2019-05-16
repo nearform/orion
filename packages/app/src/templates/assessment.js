@@ -6,12 +6,14 @@ import { Link, navigate } from 'gatsby'
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
 import { useMutation, useManualQuery } from 'graphql-hooks'
+import HelpIcon from '@material-ui/icons/Help'
 
 import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
 import { createAssessmentMutation, getShallowAssessmentData } from '../queries'
 import { getUserIdSync } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
+import ContextualHelp from '../components/ContextualHelp'
 
 function AssessmentTemplate({
   location,
@@ -71,8 +73,16 @@ function AssessmentTemplate({
         <div className={classes.section}>
           <Grid container spacing={theme.spacing.unit * 4}>
             <Grid item xs={4}>
-              <SectionTitle barColor={theme.palette.secondary.main}>
+              <SectionTitle
+                barColor={theme.palette.primary.dark}
+                className={classes.sectionTitle}
+              >
                 {assessment.name}
+                {assessment.guidance && (
+                  <ContextualHelp helpContent={assessment.guidance}>
+                    <HelpIcon color="secondary" className={classes.helpIcon} />
+                  </ContextualHelp>
+                )}
               </SectionTitle>
             </Grid>
           </Grid>
@@ -236,6 +246,13 @@ function AssessmentTemplate({
 const styles = theme => ({
   section: {
     margin: `${theme.spacing.unit * 3}px 0`,
+  },
+  sectionTitle: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  helpIcon: {
+    marginLeft: theme.spacing.unit,
   },
   keyInformationInput: {
     marginBottom: theme.spacing.unit * 2,

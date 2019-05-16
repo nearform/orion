@@ -22,6 +22,7 @@ import { uploadFile, getFileUri } from '../utils/storage'
 import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
 import UploadButton from '../components/UploadButton'
 import { getAssessmentId } from '../utils/url'
+import ContextualHelp from '../components/ContextualHelp'
 
 function getEmptyTableRow(tableDef) {
   return tableDef.columns.reduce(
@@ -62,6 +63,7 @@ function CriterionPartTemplate({
     previousLink,
     nextLink,
     totalParts,
+    guidance,
   },
 }) {
   if (!isAuthenticatedSync()) {
@@ -90,7 +92,7 @@ function CriterionPartTemplate({
     },
   })
 
-  async function createNewFileUpload(fileName, s3Key) {
+  async function createNewFileUpload(assessmentId, fileName, s3Key) {
     const { data, error } = await createFileUpload({
       variables: {
         fileUploadData: {
@@ -187,7 +189,6 @@ function CriterionPartTemplate({
               ◀ Assessment overview
             </Button>
           </Grid>
-          <Grid item xs />
           <Grid container item direction="column">
             <Grid item container>
               <Grid item>
@@ -268,6 +269,11 @@ function CriterionPartTemplate({
           <div key={table.key}>
             <Typography variant="h2" color="primary" gutterBottom>
               {table.name}
+              {table.guidance && (
+                <ContextualHelp helpContent={table.guidance}>
+                  <Button color="secondary">guidance</Button>
+                </ContextualHelp>
+              )}
             </Typography>
             {createTableRows(assessmentData, table).map(
               (initialValues, rowIndex, { length: totalRows }) => (

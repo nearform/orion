@@ -16,12 +16,12 @@ SectionTitle.propTypes = {
   barColor: T.string.isRequired,
 }
 
-const styles = {
+const styles = theme => ({
   bar: {
-    height: 8,
+    height: theme.spacing.unit,
     width: '100%',
-    marginBottom: 4,
+    marginBottom: theme.spacing.unit * 0.5,
   },
-}
+})
 
 export default withStyles(styles)(SectionTitle)

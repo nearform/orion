@@ -74,6 +74,7 @@ const efqmDigitalPalette = {
   paleGrey: 'rgb(244, 246, 248)',
   midGrey: 'rgb(152, 175, 198)',
   white: '#fff',
+  black: '#000',
 }
 
 const shadows = [

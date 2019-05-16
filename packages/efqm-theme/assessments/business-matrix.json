@@ -4,6 +4,7 @@
   "orderIndex": 2,
   "logoAsset": "assess-2-img",
   "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum sapien et ipsum pellentesque, ut fringilla eros scelerisque. Mauris ex ex, viverra pharetra cursus gravida, vulputate ac velit.",
+  "guidance": "We are here to guide you how the business matrix works",
   "pillars": [
     {
       "key": "direction",
@@ -13,6 +14,7 @@
           "key": "purpose-strategy",
           "name": "purpose & strategy",
           "description": "The Organisation has clearly defined its Purpose, including the value it will create for its Stakeholders and the wider Ecosystem in which it operates\nThe Purpose of the Organisation governs the way it operates and constantly strives to improve.\nThe Strategy of the Organisation describes the way in which it intends to fulfil its Purpose, move ever closer to its Vision and, more specifically, plan to reach the Perception & Performance objectives that it has set for itself\n- 1a: Set & Communicate Purpose & Vision\n- 1b: Understand the External Environment, Key Challenges & Own Capabilities\n- 1c: Develop and Update Strategy\n- 1d: Unite Behind and Engage in Purpose & Strategy",
+          "guidance": "We are here to guide you how the purpose strategy works",
           "translations": {
             "de": {
               "name": "[DE] purpose & strategy",
@@ -26,6 +28,7 @@
                 {
                   "key": "purpose-vision",
                   "name": "set & communicate purpose & vision",
+                  "guidance": "We are here to guide you how to complete the puropse and vision critertion part",
                   "columns": [
                     {
                       "key": "approach",
