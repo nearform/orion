@@ -1,12 +1,13 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import debounce from 'lodash/debounce'
+import mean from 'lodash/mean'
+import round from 'lodash/round'
+import get from 'lodash/get'
 import { useMutation } from 'graphql-hooks'
 import { withTheme, Grid } from '@material-ui/core'
 import { Formik, Form, Field } from 'formik'
 import { ScoringSlider } from 'components'
 import T from 'prop-types'
-import mean from 'lodash/mean'
-import round from 'lodash/round'
 
 import {
   insertAssessmentScoringDataMutation,
@@ -15,14 +16,17 @@ import {
 
 const SLIDER_STEP = 5
 
-function createScoringInitialValues(pillar, assessmentData) {
-  const existingScoringData = getExistingScoringData(assessmentData)
+function getScoringData(assessmentData, pillar) {
+  if (assessmentData.scoring[0]) {
+    const { id, scoring_values } = assessmentData.scoring[0]
 
-  if (existingScoringData) {
-    return existingScoringData.scoring_values
+    return {
+      scoringId: id,
+      scoringValues: scoring_values,
+    }
   }
 
-  return pillar.scoring.reduce(
+  const scoringValues = pillar.scoring.reduce(
     (acc, scoringGroup) => ({
       ...acc,
       [scoringGroup.key]: scoringGroup.scores.reduce(
@@ -32,10 +36,10 @@ function createScoringInitialValues(pillar, assessmentData) {
     }),
     {}
   )
-}
-
-function getExistingScoringData(assessment) {
-  return assessment && assessment.scoring[0]
+  return {
+    scoringId: null,
+    scoringValues,
+  }
 }
 
 const SAVE_SCORE_DEBOUNCE_TIME = 1000
@@ -49,6 +53,9 @@ function AssessmentPillarScoring({
   partNumber,
   onScoreSaved,
 }) {
+  const { scoringId, scoringValues } = getScoringData(assessmentData, pillar)
+
+  const [currentScoringId, setCurrentScoringId] = useState(scoringId)
   const [insertScoringData] = useMutation(insertAssessmentScoringDataMutation)
   const [updateScoringData] = useMutation(updateAssessmentScoringDataMutation)
 
@@ -60,37 +67,34 @@ function AssessmentPillarScoring({
   )
 
   async function handleScoreChange(values) {
-    try {
-      const scoringData = getExistingScoringData(assessmentData)
-
-      if (scoringData) {
-        await updateScoringData({
-          variables: {
-            id: scoringData.id,
-            scoringValues: values,
-          },
-        })
-      } else {
-        await insertScoringData({
-          variables: {
-            assessmentId,
-            pillarKey: pillar.key,
-            criterionKey: criterion.key,
-            partNumber,
-            scoringValues: values,
-          },
-        })
-      }
-    } finally {
-      onScoreSaved()
+    if (currentScoringId) {
+      await updateScoringData({
+        variables: {
+          id: scoringId,
+          scoringValues: values,
+        },
+      })
+    } else {
+      const insertResult = await insertScoringData({
+        variables: {
+          assessmentId,
+          pillarKey: pillar.key,
+          criterionKey: criterion.key,
+          partNumber,
+          scoringValues: values,
+        },
+      })
+      const newScoringId = get(
+        insertResult,
+        'data.insert_assessment_scoring.returning[0].id'
+      )
+      setCurrentScoringId(newScoringId)
     }
   }
 
-  const scoringValues = createScoringInitialValues(pillar, assessmentData)
-
   return (
     <Formik onSubmit={handleScoreChange} initialValues={scoringValues}>
-      {({ setFieldValue, handleSubmit }) => {
+      {({ setFieldValue, handleSubmit, values }) => {
         submitRef.current = handleSubmit
 
         return (
@@ -99,8 +103,7 @@ function AssessmentPillarScoring({
               {pillar.scoring.map(scoringGroup => {
                 const groupOverall =
                   round(
-                    mean(Object.values(scoringValues[scoringGroup.key])) /
-                      SLIDER_STEP
+                    mean(Object.values(values[scoringGroup.key])) / SLIDER_STEP
                   ) * SLIDER_STEP
 
                 return (
