@@ -373,6 +373,10 @@ const styles = theme => ({
   scoringSection: {
     backgroundColor: theme.palette.background.light,
     padding: `${theme.spacing.unit * 3}px 0`,
+
+    // Work around MUI 3.x sliders bug causing viewport overflow
+    // see https://github.com/mui-org/material-ui/issues/13455
+    overflow: 'hidden',
   },
 })
 
