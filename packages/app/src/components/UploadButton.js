@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import { Button, withStyles } from '@material-ui/core'
 
-const UploadButton = ({ onFileSelected, classes }) => (
+const UploadButton = ({ onFileSelected, classes, ...buttonProps }) => (
   <>
     <input
       accept="*/*"
@@ -12,9 +12,7 @@ const UploadButton = ({ onFileSelected, classes }) => (
       onChange={event => onFileSelected(event.target.files[0])}
     />
     <label htmlFor="outlined-button-file">
-      <Button variant="outlined" color="secondary" component="span">
-        Upload
-      </Button>
+      <Button component="span" {...buttonProps} />
     </label>
   </>
 )

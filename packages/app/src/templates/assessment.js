@@ -10,10 +10,16 @@ import HelpIcon from '@material-ui/icons/Help'
 
 import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
-import { createAssessmentMutation, getShallowAssessmentData } from '../queries'
+import {
+  createAssessmentMutation,
+  getShallowAssessmentData,
+  createFileUploadMutation,
+} from '../queries'
 import { getUserIdSync } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
+import { uploadFile, downloadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'
+import UploadButton from '../components/UploadButton'
 
 function AssessmentTemplate({
   location,
@@ -28,6 +34,7 @@ function AssessmentTemplate({
   const [assessmentData, setAssessmentData] = useState()
   const [createAssessment] = useMutation(createAssessmentMutation)
   const [getAssessment] = useManualQuery(getShallowAssessmentData)
+  const [createFileUpload] = useMutation(createFileUploadMutation)
 
   useEffect(() => {
     if (assessmentId) {
@@ -61,6 +68,30 @@ function AssessmentTemplate({
     } = await getAssessment({ variables: { id } })
 
     setAssessmentData(assessmentData)
+  }
+
+  async function createNewFileUpload(assessmentId, fileName, s3Key) {
+    const userId = getUserIdSync()
+    const { data, error } = await createFileUpload({
+      variables: {
+        fileUploadData: {
+          user_id: userId,
+          assessment_id: assessmentId,
+          file_name: fileName,
+          s3_key: s3Key,
+        },
+      },
+    })
+
+    if (error) throw error
+
+    return data.insert_assessment_file.returning[0].id
+  }
+
+  async function handleFileUpload(file) {
+    const { key: s3Key } = await uploadFile(file, assessmentId)
+    await createNewFileUpload(assessmentId, file.name, s3Key)
+    await loadAssessment(assessmentId)
   }
 
   return (
@@ -133,24 +164,41 @@ function AssessmentTemplate({
                 its strategic context.
               </Typography>
             </Grid>
-            <Grid item xs>
-              <Formik>
-                {() => (
-                  <Form>
-                    <Field
-                      name="keyInformation"
-                      component={TextField}
-                      fullWidth
-                      multiline
-                      rows={5}
-                      className={classes.keyInformationInput}
-                    />
-                    <Button color="secondary" variant="outlined">
-                      upload key information
-                    </Button>
-                  </Form>
-                )}
-              </Formik>
+            <Grid item xs container>
+              <Grid item>
+                <Formik>
+                  {() => (
+                    <Form>
+                      <Field
+                        name="keyInformation"
+                        component={TextField}
+                        fullWidth
+                        multiline
+                        rows={5}
+                        className={classes.keyInformationInput}
+                      />
+                      <UploadButton
+                        onFileSelected={handleFileUpload}
+                        color="secondary"
+                        variant="outlined"
+                        disabled={!assessmentData}
+                      >
+                        upload key information
+                      </UploadButton>
+                    </Form>
+                  )}
+                </Formik>
+              </Grid>
+              <Grid item container spacing={theme.spacing.unit}>
+                {assessmentData &&
+                  assessmentData.files.map(file => (
+                    <Grid item key={file.s3_key}>
+                      <Button variant="text" onClick={_ => downloadFile(file)}>
+                        {file.file_name}
+                      </Button>
+                    </Grid>
+                  ))}
+              </Grid>
             </Grid>
           </Grid>
         </div>

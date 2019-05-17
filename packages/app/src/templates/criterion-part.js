@@ -6,7 +6,6 @@ import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
-import { saveAs } from 'file-saver'
 
 import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
@@ -18,7 +17,7 @@ import {
   createFileUploadMutation,
 } from '../queries'
 import { isAuthenticatedSync, getUserIdSync } from '../utils/auth'
-import { uploadFile, getFileUri } from '../utils/storage'
+import { uploadFile, downloadFile } from '../utils/storage'
 import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
 import UploadButton from '../components/UploadButton'
 import { getAssessmentId } from '../utils/url'
@@ -159,13 +158,6 @@ function CriterionPartTemplate({
     refetch()
   }
 
-  const handleFileDownload = async file => {
-    const fileUrl = await getFileUri(file.s3_key)
-    const response = await fetch(fileUrl)
-    const data = await response.blob()
-    saveAs(data, file.file_name)
-  }
-
   if (loading) {
     return 'Loading...'
   }
@@ -199,10 +191,7 @@ function CriterionPartTemplate({
               <Grid item container spacing={theme.spacing.unit}>
                 {assessmentData.files.map(file => (
                   <Grid item key={file.s3_key}>
-                    <Button
-                      variant="text"
-                      onClick={_ => handleFileDownload(file)}
-                    >
+                    <Button variant="text" onClick={_ => downloadFile(file)}>
                       {file.file_name}
                     </Button>
                   </Grid>
@@ -211,7 +200,13 @@ function CriterionPartTemplate({
             </Grid>
           </Grid>
           <Grid item>
-            <UploadButton onFileSelected={handleFileUpload} />
+            <UploadButton
+              onFileSelected={handleFileUpload}
+              color="secondary"
+              variant="outlined"
+            >
+              Upload
+            </UploadButton>
           </Grid>
         </Grid>
         <div className={classes.section}>
