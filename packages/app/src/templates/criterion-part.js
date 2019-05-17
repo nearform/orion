@@ -100,6 +100,8 @@ function CriterionPartTemplate({
           part_number: partNumber,
           file_name: fileName,
           s3_key: s3Key,
+          pillar_key: pillar.key,
+          criterion_key: criterion.key,
         },
       },
     })

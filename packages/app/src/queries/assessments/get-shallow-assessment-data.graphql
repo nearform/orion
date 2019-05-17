@@ -3,7 +3,13 @@ query getShallowAssessmentData($id: Int!) {
     id
     key
     name
-    files(where: { part_number: { _is_null: true } }) {
+    files(
+      where: {
+        pillar_key: { _is_null: true }
+        criterion_key: { _is_null: true }
+        part_number: { _is_null: true }
+      }
+    ) {
       file_name
       s3_key
     }
