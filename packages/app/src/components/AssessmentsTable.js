@@ -6,35 +6,49 @@ import {
   Table,
   TableBody,
   IconButton,
+  Typography,
 } from '@material-ui/core'
+import { Link, useStaticQuery, graphql } from 'gatsby'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useTranslation } from 'react-i18next'
+import { useQuery } from 'graphql-hooks'
+import keyBy from 'lodash/keyBy'
+
 import { AssessmentStatusChip, ASSESSMENT_STATUS } from 'components'
+import { getAssessmentsData } from '../queries'
+import { getUserIdSync } from '../utils/auth'
+import { formatDate } from '../utils/date'
 
-function AssessmentsTable() {
-  const mockAssessments = [
-    {
-      name: 'Q1 Questionnaire Assessment for Company A',
-      type: 'Questionaire',
-      updated_at: new Date().toLocaleDateString(),
-      status: ASSESSMENT_STATUS.inProgress,
-    },
-    {
-      name: 'Another Questionnaire Assessment for Company A',
-      type: 'Questionaire',
-      updated_at: new Date().toLocaleDateString(),
-      status: ASSESSMENT_STATUS.submitted,
-    },
-    {
-      name: 'Business Matrix Assessment for Company B',
-      type: 'Business Matrix',
-      updated_at: new Date().toLocaleDateString(),
-      status: ASSESSMENT_STATUS.closed,
-    },
-  ]
-
+export default function AssessmentsTable() {
   const { t } = useTranslation()
+
+  const { allAssessments } = useStaticQuery(
+    graphql`
+      query {
+        allAssessments {
+          nodes {
+            key
+            name
+          }
+        }
+      }
+    `
+  )
+
+  const { data: assessmentsData, loading, error } = useQuery(
+    getAssessmentsData,
+    {
+      variables: {
+        userId: getUserIdSync(),
+      },
+    }
+  )
+
+  if (loading) return <Typography>Loading...</Typography>
+  if (error) return <Typography>Error loading assessments.</Typography>
+
+  const assessmentKeyToName = keyBy(allAssessments.nodes, 'key')
 
   return (
     <Table padding="dense">
@@ -51,18 +65,13 @@ function AssessmentsTable() {
         </TableRow>
       </TableHead>
       <TableBody>
-        {mockAssessments.map(assessment => (
-          <TableRow
-            hover
-            key={assessment.name}
-            // eslint-disable-next-line no-console
-            onClick={event => console.log('Go to assessment action', event)}
-          >
+        {assessmentsData.assessment.map(assessment => (
+          <TableRow hover key={assessment.id}>
             <TableCell>{assessment.name}</TableCell>
-            <TableCell>{assessment.updated_at}</TableCell>
-            <TableCell>{assessment.type}</TableCell>
+            <TableCell>{formatDate(assessment.updated_at)}</TableCell>
+            <TableCell>{assessmentKeyToName[assessment.key].name}</TableCell>
             <TableCell>
-              <AssessmentStatusChip status={assessment.status} />
+              <AssessmentStatusChip status={ASSESSMENT_STATUS.inProgress} />
             </TableCell>
             <TableCell />
             <TableCell />
@@ -72,7 +81,10 @@ function AssessmentsTable() {
               </IconButton>
             </TableCell>
             <TableCell>
-              <IconButton>
+              <IconButton
+                component={Link}
+                to={`/assessment/${assessment.key}#${assessment.id}`}
+              >
                 <ChevronRightIcon />
               </IconButton>
             </TableCell>
@@ -82,5 +94,3 @@ function AssessmentsTable() {
     </Table>
   )
 }
-
-export default AssessmentsTable

@@ -1,6 +1,7 @@
 export {
   default as getAssessmentPartData,
 } from './get-assessment-part-data.graphql'
+export { default as getAssessmentsData } from './get-assessments.graphql'
 export {
   default as getShallowAssessmentData,
 } from './get-shallow-assessment-data.graphql'
