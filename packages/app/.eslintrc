@@ -10,7 +10,11 @@
     "prettier/flowtype",
     "prettier/react"
   ],
-  "plugins": ["flowtype", "prettier", "react"],
+  "plugins": [
+    "flowtype",
+    "prettier",
+    "react"
+  ],
   "parserOptions": {
     "ecmaVersion": 2016,
     "sourceType": "module",
@@ -50,7 +54,10 @@
       }
     },
     {
-      "files": ["**/cypress/integration/**/*", "**/cypress/support/**/*"],
+      "files": [
+        "**/cypress/integration/**/*",
+        "**/cypress/support/**/*"
+      ],
       "globals": {
         "cy": false,
         "Cypress": false
@@ -58,10 +65,11 @@
     }
   ],
   "settings": {
-  "react": {
-    "createClass": "createReactClass",
-    "pragma": "React",  // Pragma to use, default to "React"
-    "version": "16.8.4"
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "React",
+      // Pragma to use, default to "React"
+      "version": "16.8.4"
     }
   }
 }

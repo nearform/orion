@@ -1,12 +1,26 @@
 const path = require('path')
 
-const { theme, config } = require('./theme')
+const currentTheme = require('./theme')
+const { theme, config } = currentTheme
 
 const pillarColors = [
   theme.muiTheme.palette.primary.light,
   theme.muiTheme.palette.primary.main,
   theme.muiTheme.palette.secondary.dark,
 ]
+
+exports.onPreInit = () => {
+  const logger = console
+  try {
+    const { validateAssessmentFiles } = require('./src/validations')
+    validateAssessmentFiles(currentTheme, logger)
+  } catch (e) {
+    // useful to catch and show because gatsby might swallow the error and break in next processing
+    // parts so it would be hard to trace the error to here
+    logger.error(e)
+    throw e
+  }
+}
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
