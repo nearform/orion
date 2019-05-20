@@ -1,10 +1,11 @@
 import React from 'react'
-import { Button, Grid, Typography, withTheme } from '@material-ui/core'
+import { Link } from 'gatsby'
+import { Button, Grid, Typography, withStyles } from '@material-ui/core'
 
 import ImagePlaceholder from './ImagePlaceholder'
 import SectionTitle from '../components/SectionTitle'
 
-function LoggedOutAssessmentInfo({ theme }) {
+function LoggedOutAssessmentInfo({ classes, theme }) {
   return (
     <Grid container spacing={theme.spacing.unit * 4}>
       <Grid item xs={3}>
@@ -30,8 +31,13 @@ function LoggedOutAssessmentInfo({ theme }) {
         </Typography>
         <Grid container>
           <Grid item xs={6}>
-            <Button color="secondary" variant="outlined" fullWidth>
-              Find Out More
+            <Button
+              color="secondary"
+              component={Link}
+              to="/auth"
+              className={classes.button}
+            >
+              Discover More
             </Button>
           </Grid>
         </Grid>
@@ -40,4 +46,10 @@ function LoggedOutAssessmentInfo({ theme }) {
   )
 }
 
-export default withTheme()(LoggedOutAssessmentInfo)
+const styles = {
+  button: {
+    paddingLeft: 0,
+  },
+}
+
+export default withStyles(styles, { withTheme: true })(LoggedOutAssessmentInfo)
