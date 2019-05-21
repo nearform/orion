@@ -1,10 +1,35 @@
 {
   "key": "efqm-2020",
-  "name": "business matrix",
+  "name": "business matrix assessment",
   "orderIndex": 2,
   "logoAsset": "assess-2-img",
   "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum sapien et ipsum pellentesque, ut fringilla eros scelerisque. Mauris ex ex, viverra pharetra cursus gravida, vulputate ac velit.",
   "guidance": "We are here to guide you how the business matrix works",
+  "keyInformation": {
+    "guidance": "We are here to help you fill out the key information",
+    "keyInformationItems": [
+      {
+        "key": "overview",
+        "name": "overview"
+      },
+      {
+        "key": "challenges-and-strategy",
+        "name": "challenges & strategy of the organization"
+      },
+      {
+        "key": "operations-partners-suppliers",
+        "name": "operations, partners & suppliers"
+      },
+      {
+        "key": "market-offerings-and_customers",
+        "name": "market, offerings and customers"
+      },
+      {
+        "key": "management-structure",
+        "name": "management structure and activities"
+      }
+    ]
+  },
   "pillars": [
     {
       "key": "direction",

@@ -7,6 +7,7 @@ it('should successfully validate assessment data against JSON schema', () => {
     orderIndex: 1,
     logoAsset: 'assess-1-img',
     shortDescription: 'Reference determining excellence booklet',
+    keyInformation: {},
     pillars: [],
   }
   expect(validateAssessment(assessment).valid).toEqual(true)
@@ -18,6 +19,7 @@ it('should fail validating invalid assessment data against JSON schema', () => {
     name: 'questionnaire',
     logoAsset: 'assess-1-img',
     shortDescription: 'Reference determining excellence booklet',
+    keyInformation: {},
     pillars: [],
   }
   const result = validateAssessment(assessment)

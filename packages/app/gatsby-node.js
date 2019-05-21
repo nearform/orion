@@ -42,6 +42,13 @@ exports.createPages = async ({ graphql, actions }) => {
           logoAsset
           guidance
           shortDescription
+          keyInformation {
+            guidance
+            keyInformationItems {
+              key
+              name
+            }
+          }
           pillars {
             key
             name

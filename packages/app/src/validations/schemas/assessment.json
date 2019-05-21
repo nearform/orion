@@ -24,6 +24,9 @@
     "shortDescription": {
       "type": "string"
     },
+    "keyInformation": {
+      "$ref": "definitions.json#/definitions/keyInfoItems"
+    },
     "pillars": {
       "type": "array",
       "uniqueItems": true,
@@ -39,6 +42,7 @@
     "key",
     "pillars",
     "orderIndex",
-    "shortDescription"
+    "shortDescription",
+    "keyInformation"
   ]
 }

@@ -7,6 +7,7 @@ import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
 import { useMutation, useManualQuery } from 'graphql-hooks'
 import HelpIcon from '@material-ui/icons/Help'
+import AttachmentIcon from '@material-ui/icons/Attachment'
 
 import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
@@ -20,6 +21,7 @@ import { getAssessmentId } from '../utils/url'
 import { uploadFile, downloadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'
 import UploadButton from '../components/UploadButton'
+import ImagePlaceholder from '../components/ImagePlaceholder'
 
 function AssessmentTemplate({
   location,
@@ -94,6 +96,11 @@ function AssessmentTemplate({
     await loadAssessment(assessmentId)
   }
 
+  const [
+    keyInformationHeader,
+    ...keyInformationItems
+  ] = assessment.keyInformation.keyInformationItems
+
   return (
     <>
       <SEO title={t('Your assessments')} />
@@ -103,102 +110,180 @@ function AssessmentTemplate({
         </Button>
         <div className={classes.section}>
           <Grid container spacing={theme.spacing.unit * 4}>
-            <Grid item xs={4}>
-              <SectionTitle
-                barColor={theme.palette.primary.dark}
-                className={classes.sectionTitle}
-              >
-                {assessment.name}
-                {assessment.guidance && (
-                  <ContextualHelp helpContent={assessment.guidance}>
-                    <HelpIcon color="secondary" className={classes.helpIcon} />
-                  </ContextualHelp>
-                )}
-              </SectionTitle>
-            </Grid>
-          </Grid>
-        </div>
-        <div className={classes.section}>
-          <Grid container spacing={theme.spacing.unit * 4}>
-            <Grid item xs>
-              <Typography variant="h4" gutterBottom>
-                Enter your assessment name
-              </Typography>
-              <Formik
-                enableReinitialize
-                initialValues={{
-                  name: assessmentData ? assessmentData.name : '',
-                }}
-                validate={({ name }) => !!name}
-                onSubmit={handleCreateAssessment}
-              >
-                {({ isValid }) => (
-                  <Form>
-                    <Field
-                      disabled={!!assessmentData}
-                      name="name"
-                      component={TextField}
-                      fullWidth
-                    />
-                    {!assessmentData && (
-                      <Button
-                        type="submit"
+            <Grid
+              item
+              xs={9}
+              container
+              direction="column"
+              wrap="nowrap"
+              spacing={theme.spacing.unit * 4}
+            >
+              <Grid item xs={5}>
+                <SectionTitle
+                  barColor={theme.palette.primary.dark}
+                  className={classes.sectionTitle}
+                  gutterBottom
+                >
+                  {assessment.name}
+                  {assessment.guidance && (
+                    <ContextualHelp helpContent={assessment.guidance}>
+                      <HelpIcon
                         color="secondary"
-                        variant="contained"
-                        disabled={!isValid}
-                      >
-                        Create Assessment
-                      </Button>
-                    )}
-                  </Form>
-                )}
-              </Formik>
-            </Grid>
-            <Grid item xs>
-              <Typography variant="h4" gutterBottom>
-                Add key information
-              </Typography>
-              <Typography>
-                Key Information is those key facts about your organisation which
-                help assessors to gain an overall view of your organisation and
-                its strategic context.
-              </Typography>
-            </Grid>
-            <Grid item xs container>
-              <Grid item>
-                <Formik>
-                  {() => (
-                    <Form>
-                      <Field
-                        name="keyInformation"
-                        component={TextField}
-                        fullWidth
-                        multiline
-                        rows={5}
-                        className={classes.keyInformationInput}
+                        className={classes.helpIcon}
                       />
-                      <UploadButton
-                        onFileSelected={handleFileUpload}
-                        color="secondary"
-                        variant="outlined"
-                        disabled={!assessmentData}
-                      >
-                        upload key information
-                      </UploadButton>
+                    </ContextualHelp>
+                  )}
+                </SectionTitle>
+              </Grid>
+              <Grid item xs>
+                <Typography variant="h4" gutterBottom>
+                  Enter your assessment name
+                </Typography>
+                <Formik
+                  enableReinitialize
+                  initialValues={{
+                    name: assessmentData ? assessmentData.name : '',
+                  }}
+                  validate={({ name }) => !!name}
+                  onSubmit={handleCreateAssessment}
+                >
+                  {({ isValid }) => (
+                    <Form>
+                      <Grid container spacing={theme.spacing.unit * 2}>
+                        <Grid item xs>
+                          <Field
+                            disabled={!!assessmentData}
+                            name="name"
+                            component={TextField}
+                            fullWidth
+                          />
+                        </Grid>
+                        <Grid item xs>
+                          {!assessmentData && (
+                            <Button
+                              type="submit"
+                              color="secondary"
+                              variant="contained"
+                              disabled={!isValid}
+                            >
+                              Create Assessment
+                            </Button>
+                          )}
+                        </Grid>
+                      </Grid>
                     </Form>
                   )}
                 </Formik>
               </Grid>
-              <Grid item container spacing={theme.spacing.unit}>
-                {assessmentData &&
-                  assessmentData.files.map(file => (
-                    <Grid item key={file.s3_key}>
-                      <Button variant="text" onClick={_ => downloadFile(file)}>
-                        {file.file_name}
-                      </Button>
-                    </Grid>
-                  ))}
+              <Grid item xs>
+                <Typography
+                  variant="h3"
+                  className={classes.keyInformationHeader}
+                >
+                  key information
+                  {assessment.keyInformation.guidance && (
+                    <ContextualHelp
+                      helpContent={assessment.keyInformation.guidance}
+                    >
+                      <HelpIcon
+                        color="secondary"
+                        className={classes.helpIcon}
+                      />
+                    </ContextualHelp>
+                  )}
+                </Typography>
+                {keyInformationHeader && (
+                  <Formik>
+                    {({ isValid }) => (
+                      <Form>
+                        <Grid container spacing={theme.spacing.unit * 2}>
+                          <Grid item xs={6}>
+                            <Typography variant="h4" gutterBottom>
+                              {keyInformationHeader.name}
+                            </Typography>
+                            <Field
+                              name={`keyInformation-${
+                                keyInformationHeader.key
+                              }`}
+                              component={TextField}
+                              fullWidth
+                              multiline
+                              rows={5}
+                            />
+                          </Grid>
+                          <Grid item xs />
+                          {keyInformationItems.map(keyInfo => (
+                            <Grid item key={keyInfo.key} xs={6}>
+                              <Typography variant="h4" gutterBottom>
+                                {keyInfo.name}
+                              </Typography>
+                              <Field
+                                name={`keyInformation-${keyInfo.key}`}
+                                component={TextField}
+                                fullWidth
+                                multiline
+                                rows={5}
+                              />
+                            </Grid>
+                          ))}
+                        </Grid>
+                        <Grid item xs container justify="flex-end">
+                          <UploadButton
+                            onFileSelected={handleFileUpload}
+                            color="secondary"
+                            variant="outlined"
+                            disabled={!assessmentData}
+                            className={classes.uploadButton}
+                          >
+                            upload key information
+                          </UploadButton>
+                          <Button
+                            type="submit"
+                            color="secondary"
+                            variant="contained"
+                            disabled={!isValid}
+                          >
+                            Save Updates
+                          </Button>
+                        </Grid>
+                      </Form>
+                    )}
+                  </Formik>
+                )}
               </Grid>
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              container
+              className={classes.filesSeparator}
+              direction="column"
+            >
+              <Grid item>
+                <Typography variant="h3" gutterBottom>
+                  Assessment Documents
+                </Typography>
+              </Grid>
+              {!assessmentData && (
+                <Typography>
+                  You'll find an index of uploaded documents for your assessment
+                  in this area
+                </Typography>
+              )}
+              {assessmentData &&
+                assessmentData.files.map(file => (
+                  <Grid item key={file.s3_key}>
+                    <Button variant="text" onClick={_ => downloadFile(file)}>
+                      <AttachmentIcon className={classes.attachmentIcon} />
+                      <div className={classes.attachment}>
+                        <Typography variant="h4">{file.file_name}</Typography>
+                        <Typography variant="h4" color="secondary">
+                          2 MB
+                        </Typography>
+                      </div>
+                    </Button>
+                  </Grid>
+                ))}
             </Grid>
           </Grid>
         </div>
@@ -244,45 +329,32 @@ function AssessmentTemplate({
                         variant="h4"
                         className={classes.sectionProgress}
                       >
-                        0% complete
+                        {criterion.parts.length} Subcriteria
                       </Typography>
                     </Grid>
                   ))}{' '}
                 </Grid>
               )
             })}
-          </Grid>
-        </div>
-        <div className={classes.section}>
-          <Grid container spacing={theme.spacing.unit * 2}>
-            <Grid item xs={3}>
-              <SectionTitle gutterBottom barColor={theme.palette.primary.dark}>
-                lens view
-              </SectionTitle>
-              <Typography>
-                If you would like to lead your assessment through one of the
-                following lenses you can follow these paths.
-              </Typography>
-            </Grid>
-            <Grid item xs>
-              <Button fullWidth color="secondary" variant="outlined">
-                innovation
-              </Button>
-            </Grid>
-            <Grid item xs>
-              <Button fullWidth color="secondary" variant="outlined">
-                circular economy
-              </Button>
-            </Grid>
-            <Grid item xs>
-              <Button fullWidth color="secondary" variant="outlined">
-                lens 3
-              </Button>
-            </Grid>
-            <Grid item xs>
-              <Button fullWidth color="secondary" variant="outlined">
-                lens 4
-              </Button>
+            <Grid
+              key="scoring-summary"
+              item
+              xs
+              container
+              spacing={theme.spacing.unit * 3}
+              direction="column"
+            >
+              <Grid item xs>
+                <SectionTitle
+                  barColor={theme.palette.primary.dark}
+                  gutterBottom
+                >
+                  Scoring Summary
+                </SectionTitle>
+                <ImagePlaceholder>
+                  <Typography variant="h4">Scoring Summary</Typography>
+                </ImagePlaceholder>
+              </Grid>
             </Grid>
           </Grid>
         </div>
@@ -307,6 +379,26 @@ const styles = theme => ({
   },
   sectionProgress: {
     color: theme.palette.primary.dark,
+  },
+  filesSeparator: {
+    borderLeft: `solid 1px ${theme.palette.background.light}`,
+  },
+  keyInformationHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: theme.spacing.unit * 2,
+  },
+  uploadButton: {
+    marginRight: theme.spacing.unit * 2,
+  },
+  attachmentIcon: {
+    marginRight: theme.spacing.unit,
+    color: theme.palette.secondary.light,
+  },
+  attachment: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
 })
 

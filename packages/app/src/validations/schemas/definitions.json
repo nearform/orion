@@ -27,10 +27,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "name",
-        "description"
-      ]
+      "required": ["name", "description"]
     },
     "translations": {
       "type": "object",
@@ -50,10 +47,7 @@
           "$ref": "definitions.json#/definitions/key"
         }
       },
-      "required": [
-        "name",
-        "key"
-      ]
+      "required": ["name", "key"]
     },
     "partTable": {
       "type": "object",
@@ -74,11 +68,7 @@
           ]
         }
       },
-      "required": [
-        "name",
-        "key",
-        "columns"
-      ]
+      "required": ["name", "key", "columns"]
     },
     "partCriteria": {
       "type": "object",
@@ -96,9 +86,7 @@
           ]
         }
       },
-      "required": [
-        "tables"
-      ]
+      "required": ["tables"]
     },
     "pillarScore": {
       "type": "object",
@@ -113,10 +101,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "name",
-        "key"
-      ]
+      "required": ["name", "key"]
     },
     "pillarCriteria": {
       "type": "object",
@@ -143,11 +128,7 @@
           ]
         }
       },
-      "required": [
-        "name",
-        "key",
-        "parts"
-      ]
+      "required": ["name", "key", "parts"]
     },
     "pillarScoring": {
       "type": "object",
@@ -170,12 +151,7 @@
           "type": "array"
         }
       },
-      "required": [
-        "name",
-        "key",
-        "scores",
-        "rules"
-      ]
+      "required": ["name", "key", "scores", "rules"]
     },
     "pillar": {
       "type": "object",
@@ -204,12 +180,34 @@
           ]
         }
       },
-      "required": [
-        "name",
-        "key",
-        "criteria",
-        "scoring"
-      ]
+      "required": ["name", "key", "criteria", "scoring"]
+    },
+    "keyInfoItem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "definitions.json#/definitions/name"
+        },
+        "key": {
+          "$ref": "definitions.json#/definitions/key"
+        }
+      }
+    },
+    "keyInfoItems": {
+      "type": "object",
+      "properties": {
+        "guidance": {
+          "$ref": "definitions.json#/definitions/guidance"
+        },
+        "keyInformationItems": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "definitions.json#/definitions/keyInfoItem"
+            }
+          ]
+        }
+      }
     }
   }
 }

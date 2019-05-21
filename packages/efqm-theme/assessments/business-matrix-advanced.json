@@ -4,5 +4,9 @@
   "orderIndex": 3,
   "logoAsset": "assess-3-img",
   "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum sapien et ipsum pellentesque, ut fringilla eros scelerisque. Mauris ex ex, viverra pharetra cursus gravida, vulputate ac velit.",
+  "keyInformation": {
+    "guidance": "We are here to help you fill out the key information",
+    "keyInformationItems": []
+  },
   "pillars": []
 }
