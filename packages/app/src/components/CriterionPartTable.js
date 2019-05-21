@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import T from 'prop-types'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
 import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
-import T from 'prop-types'
+import classnames from 'classnames'
 
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
@@ -60,6 +61,7 @@ function CriterionPartTable({
   criterionKey,
   pillarKey,
   disableEditing,
+  paginationNode,
 }) {
   const tableData = getExistingTableData(assessmentTables, tableDef)
 
@@ -136,43 +138,113 @@ function CriterionPartTable({
 
   return (
     <div>
-      <Typography variant="h2" color="primary" gutterBottom>
-        {tableDef.name}
+      <Grid container spacing={theme.spacing.unit * 2}>
+        <Grid item>
+          <Typography variant="h2" color="primary" gutterBottom>
+            {tableDef.name}
+          </Typography>
+        </Grid>
         {tableDef.guidance && (
-          <ContextualHelp helpContent={tableDef.guidance}>
-            <Button color="secondary">guidance</Button>
-          </ContextualHelp>
+          <Grid item>
+            <ContextualHelp helpContent={tableDef.guidance}>
+              <Button color="secondary">guidance</Button>
+            </ContextualHelp>
+          </Grid>
         )}
-      </Typography>
+        <Grid item xs />
+        {paginationNode && <Grid item>{paginationNode}</Grid>}
+      </Grid>
       {[...tableRows, getEmptyTableRow(tableDef)].map(
-        (initialValues, rowIndex) => (
-          <div className={classes.section} key={`${tableDef.key}-${rowIndex}`}>
-            <Formik
-              enableReinitialize
-              initialValues={initialValues}
-              onSubmit={(values, actions) =>
-                handleSaveTable(rowIndex, values, actions)
-              }
-            >
-              {({ isSubmitting, dirty }) => (
-                <Form>
-                  <Grid container spacing={theme.spacing.unit * 2}>
-                    {tableDef.columns.map(column => (
-                      <Grid item xs={4} key={column.key}>
-                        <Typography variant="h4" gutterBottom>
-                          {column.name}
-                        </Typography>
-                        <Field
-                          disabled={disableEditing}
-                          component={TextField}
-                          name={column.key}
-                          fullWidth
-                        />
+        (initialValues, rowIndex, { length: totalRows }) => (
+          <Formik
+            enableReinitialize
+            initialValues={initialValues}
+            onSubmit={(values, actions) =>
+              handleSaveTable(rowIndex, values, actions)
+            }
+            key={`${tableDef.key}-${rowIndex}`}
+          >
+            {({ isSubmitting, dirty }) => (
+              <Form className={classes.section}>
+                <Grid
+                  container
+                  direction="column"
+                  spacing={theme.spacing.unit * 2}
+                >
+                  <Grid
+                    item
+                    container
+                    spacing={theme.spacing.unit}
+                    wrap="nowrap"
+                  >
+                    <Grid item>
+                      <Grid container direction="column" alignItems="center">
+                        <Grid item>
+                          <Typography
+                            variant="h4"
+                            gutterBottom
+                            className={classnames({
+                              invisible: rowIndex > 0,
+                            })}
+                          >
+                            ITEM
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="h3" color="primary">
+                            {rowIndex + 1}
+                          </Typography>
+                        </Grid>
                       </Grid>
-                    ))}
+                    </Grid>
+                    <Grid item>
+                      <Grid
+                        container
+                        className={classes.itemBorderContainer}
+                        direction="column"
+                        alignItems="center"
+                      >
+                        <Grid item>
+                          <Typography
+                            variant="h4"
+                            gutterBottom
+                            className={classes.invisible}
+                          >
+                            {rowIndex}
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          className={classnames(classes.itemBorder, {
+                            [classes.itemBorderActive]:
+                              rowIndex === totalRows - 1,
+                          })}
+                        >
+                          &nbsp;
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs>
+                      <Grid container spacing={theme.spacing.unit * 2}>
+                        {tableDef.columns.map(column => (
+                          <Grid item xs={4} key={column.key}>
+                            <Typography variant="h4" gutterBottom>
+                              {column.name}
+                            </Typography>
+                            <Field
+                              disabled={disableEditing}
+                              component={TextField}
+                              name={column.key}
+                              fullWidth
+                            />
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </Grid>
                   </Grid>
                   {!disableEditing && (
                     <Grid
+                      item
                       container
                       spacing={theme.spacing.unit * 2}
                       justify="flex-end"
@@ -202,10 +274,10 @@ function CriterionPartTable({
                       )}
                     </Grid>
                   )}
-                </Form>
-              )}
-            </Formik>
-          </div>
+                </Grid>
+              </Form>
+            )}
+          </Formik>
         )
       )}
     </div>
@@ -221,12 +293,26 @@ CriterionPartTable.propTypes = {
   partNumber: T.number.isRequired,
   criterionKey: T.string.isRequired,
   pillarKey: T.string.isRequired,
+  paginationNode: T.node,
   disableEditing: T.bool.isRequired,
 }
-
 const styles = theme => ({
   section: {
     margin: `${theme.spacing.unit * 3}px 0`,
+  },
+  invisible: {
+    visibility: 'hidden',
+  },
+  itemBorderContainer: {
+    height: '100%',
+  },
+  itemBorder: {
+    width: theme.spacing.unit / 2,
+    backgroundColor: theme.palette.background.dark,
+    flex: 1,
+  },
+  itemBorderActive: {
+    backgroundColor: theme.palette.secondary.main,
   },
 })
 

@@ -67,6 +67,13 @@ exports.createPages = async ({ graphql, actions }) => {
                     name
                   }
                 }
+                feedbackTables {
+                  key
+                  columns {
+                    key
+                    name
+                  }
+                }
               }
             }
             scoring {

@@ -19,6 +19,8 @@ import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
 import { getAssessmentId } from '../utils/url'
 import FileList from '../components/FileList'
 import CriterionPartTable from '../components/CriterionPartTable'
+import CriterionPartPagination from '../components/CriterionPartPagination'
+import CriterionPartFeedbackTable from '../components/CriterionPartFeedbackTable'
 import {
   assessmentInProgress,
   assessmentSubmitted,
@@ -83,6 +85,7 @@ function CriterionPartTemplate({
         <Grid container spacing={theme.spacing.unit * 2} wrap="nowrap">
           <Grid item>
             <Button
+              className={classes.backButton}
               component={Link}
               to={`assessment/${assessment.key}#${assessmentId}`}
               variant="text"
@@ -107,7 +110,7 @@ function CriterionPartTemplate({
         </Grid>
         <div className={classes.section}>
           <Grid container spacing={theme.spacing.unit * 4}>
-            <Grid item>
+            <Grid item xs={3}>
               <SectionTitle barColor={pillarColor}>
                 {pillar.name} <span style={{ color: pillarColor }}>▶</span>{' '}
                 {criterion.name}
@@ -115,59 +118,66 @@ function CriterionPartTemplate({
             </Grid>
           </Grid>
         </div>
-        <div className={classes.section}>
-          <Grid container spacing={theme.spacing.unit * 2} justify="flex-end">
-            <Grid item>
-              {previousLink ? (
-                <Typography
-                  color="secondary"
-                  component={Link}
-                  to={`${previousLink}#${assessmentId}`}
-                  variant="body1"
-                >
-                  ❮
-                </Typography>
-              ) : (
-                <Typography variant="body1" color="textSecondary">
-                  ❮
-                </Typography>
-              )}
-            </Grid>
-            <Grid item>
-              <Typography variant="body1">
-                PART {partNumber} OF {totalParts}
-              </Typography>
-            </Grid>
-            <Grid item>
-              {nextLink ? (
-                <Typography
-                  variant="body1"
-                  color="secondary"
-                  component={Link}
-                  to={`${nextLink}#${assessmentId}`}
-                >
-                  ❯
-                </Typography>
-              ) : (
-                <Typography variant="body1" color="textSecondary">
-                  ❯
-                </Typography>
-              )}
-            </Grid>
-          </Grid>
-        </div>
-        {part.tables.map(tableDef => (
+        {part.tables.map((table, tableIndex) => (
           <CriterionPartTable
-            key={tableDef.key}
-            tableDef={tableDef}
+            tableDef={table}
+            key={table.key}
             assessmentTables={assessmentData.tables}
             assessmentId={assessmentId}
             criterionKey={criterion.key}
             pillarKey={pillar.key}
             partNumber={partNumber}
             disableEditing={!canEditTablesAndUpload}
+            paginationNode={
+              tableIndex === 0 && (
+                <CriterionPartPagination
+                  assessmentId={assessmentId}
+                  link={Link}
+                  nextLink={nextLink}
+                  previousLink={previousLink}
+                  partNumber={partNumber}
+                  totalParts={totalParts}
+                />
+              )
+            }
           />
         ))}
+        <div className={classes.section}>
+          <Grid container spacing={theme.spacing.unit * 4}>
+            <Grid item xs={3}>
+              <SectionTitle barColor={pillarColor}>
+                Criteria Assessment
+              </SectionTitle>
+            </Grid>
+          </Grid>
+        </div>
+        <Grid container spacing={theme.spacing.unit * 2}>
+          <Grid item>
+            <Typography variant="h2" color="primary" gutterBottom>
+              Capture Strength, Areas for Improvement and Good Practices
+            </Typography>
+          </Grid>
+        </Grid>
+        {part.feedbackTables.map(table => (
+          <CriterionPartFeedbackTable
+            tableDef={table}
+            key={table.key}
+            assessmentTables={assessmentData.feedbackTables}
+            assessmentId={assessmentId}
+            disableEditing={!canEditTablesAndUpload}
+          />
+        ))}
+        <div className={classes.section}>
+          <CriterionPartPagination
+            assessmentId={assessmentId}
+            link={Link}
+            nextLink={nextLink}
+            previousLink={previousLink}
+            partNumber={partNumber}
+            totalParts={totalParts}
+            disableEditing={!canEditTablesAndUpload}
+          />
+        </div>
       </PaddedContainer>
       <div className={classes.scoringSection}>
         <PaddedContainer>
@@ -197,6 +207,9 @@ const styles = theme => ({
   },
   paddedContainer: {
     flex: 1,
+  },
+  backButton: {
+    paddingLeft: 0,
   },
   section: {
     margin: `${theme.spacing.unit * 3}px 0`,
