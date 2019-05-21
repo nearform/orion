@@ -289,7 +289,7 @@ function CriterionPartTemplate({
                         <Grid container spacing={theme.spacing.unit * 2}>
                           {table.columns.map(column => (
                             <Grid item xs={4} key={column.key}>
-                              <Typography variant="h3" gutterBottom>
+                              <Typography variant="h4" gutterBottom>
                                 {column.name}
                               </Typography>
                               <Field
