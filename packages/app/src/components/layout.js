@@ -18,7 +18,7 @@ function Layout({ classes, children, darkToolbar }) {
   )
 }
 
-const styles = {
+const styles = theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -28,7 +28,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
+    marginBottom: theme.spacing.unit * 4,
   },
-}
+})
 
 export default withStyles(styles)(Layout)
