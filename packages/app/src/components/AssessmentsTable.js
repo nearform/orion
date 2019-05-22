@@ -55,7 +55,7 @@ export default function AssessmentsTable() {
       <TableHead>
         <TableRow>
           <TableCell>{t('Your assessments')}</TableCell>
-          <TableCell>Last Updated</TableCell>
+          <TableCell>Created</TableCell>
           <TableCell>Assessment Type</TableCell>
           <TableCell>Status</TableCell>
           <TableCell>Management Report</TableCell>
@@ -68,7 +68,7 @@ export default function AssessmentsTable() {
         {assessmentsData.assessment.map(assessment => (
           <TableRow hover key={assessment.id}>
             <TableCell>{assessment.name}</TableCell>
-            <TableCell>{formatDate(assessment.updated_at)}</TableCell>
+            <TableCell>{formatDate(assessment.created_at)}</TableCell>
             <TableCell>{assessmentKeyToName[assessment.key].name}</TableCell>
             <TableCell>
               <AssessmentStatusChip status={ASSESSMENT_STATUS.inProgress} />

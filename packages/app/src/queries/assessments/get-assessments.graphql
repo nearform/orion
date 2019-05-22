@@ -1,11 +1,11 @@
 query getAssessments($userId: Int) {
   assessment(
     where: { owner_id: { _eq: $userId } }
-    order_by: { updated_at: desc }
+    order_by: { created_at: desc }
   ) {
     id
     key
     name
-    updated_at
+    created_at
   }
 }
