@@ -1,0 +1,8 @@
+- args:
+    name: contributor
+    table:
+      name: assessment_contributor
+      schema: public
+    using:
+      foreign_key_constraint_on: contributor_id
+  type: create_object_relationship

@@ -1,0 +1,16 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - assessment_id
+      - contributor_id
+      filter:
+        assessment:
+          owner_id:
+            _eq: X-Hasura-User-Id
+      limit: null
+    role: partner-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: create_select_permission

@@ -1,3 +1,10 @@
+refs:
+  install_hasura_cli: &install_hasura_cli
+    run:
+      name: Install Hasura CLI
+      command: |
+        curl -L https://github.com/hasura/graphql-engine/raw/master/cli/get.sh | bash
+
 deploy_environment: &deploy_environment
   docker:
     - image: circleci/node:10
@@ -42,21 +49,16 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - *install_hasura_cli
       - run:
-          name: Test app
+          name: Test
           command: |
             set -e
-            npm test
-      - run:
-          name: Test lambdas
-          command: |
-            set -e
-            cd packages/functions
             npm test
   deploy:
     <<: *deploy_environment
     environment:
-      AWS_DEFAULT_REGION: "eu-west-1"
+      AWS_DEFAULT_REGION: 'eu-west-1'
     steps:
       - attach_workspace:
           at: .
@@ -86,10 +88,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run:
-          name: Install Hasura CLI
-          command: |
-            curl -L https://github.com/hasura/graphql-engine/raw/master/cli/get.sh | bash
+      - *install_hasura_cli
       - run:
           name: Apply Hasura migrations
           command: |

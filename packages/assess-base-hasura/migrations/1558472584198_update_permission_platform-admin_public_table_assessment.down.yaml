@@ -1,0 +1,6 @@
+- args:
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: drop_select_permission

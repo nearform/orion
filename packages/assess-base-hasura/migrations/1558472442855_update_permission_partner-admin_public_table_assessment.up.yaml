@@ -1,0 +1,22 @@
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - id
+      - owner_id
+      - key
+      - created_at
+      - name
+      localPresets:
+      - key: owner_id
+        value: x-hasura-User-Id
+      - key: ""
+        value: ""
+      set:
+        owner_id: x-hasura-User-Id
+    role: partner-admin
+    table:
+      name: assessment
+      schema: public
+  type: create_insert_permission

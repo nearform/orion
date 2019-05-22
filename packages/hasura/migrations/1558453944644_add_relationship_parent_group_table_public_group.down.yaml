@@ -1,0 +1,6 @@
+- args:
+    relationship: parent_group
+    table:
+      name: group
+      schema: public
+  type: drop_relationship

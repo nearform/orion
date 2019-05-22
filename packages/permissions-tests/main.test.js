@@ -476,7 +476,7 @@ describe('initial state of the app', () => {
     let platformAssessment
 
     describe('assessment creation', () => {
-      test('a company admin should be able to create an assessment', async () => {
+      test('a company admin should be able to create an assessment and become the owner', async () => {
         const client = createClient(HASURA_ROLES.companyAdmin, {
           [CLAIMS.groupId]: companyGroup.id.toString(),
           [CLAIMS.userId]: companyAdmin.id.toString(),

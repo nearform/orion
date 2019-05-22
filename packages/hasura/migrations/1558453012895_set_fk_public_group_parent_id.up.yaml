@@ -1,0 +1,5 @@
+- args:
+    sql: alter table "public"."group" add constraint "group_parent_id_fkey" foreign
+      key ("parent_id") references "public"."group"("id") on update restrict on delete
+      restrict;
+  type: run_sql

@@ -1,10 +1,11 @@
 const { GraphQLClient } = require('graphql-request')
 const jwt = require('jsonwebtoken')
+const uuid = require('uuid/v1')
 
 const {
-  PERMISSIONS_BLUEPRINT_HASURA_GRAPHQL_API,
-  PERMISSIONS_BLUEPRINT_HASURA_GRAPHQL_ADMIN_SECRET,
-  PERMISSIONS_BLUEPRINT_HASURA_GRAPHQL_JWT_SECRET_KEY,
+  HASURA_GRAPHQL_API,
+  HASURA_GRAPHQL_ADMIN_SECRET,
+  HASURA_GRAPHQL_JWT_SECRET_KEY,
 } = process.env
 
 const HASURA_ROLES = {
@@ -72,26 +73,23 @@ function generateJWT(hasuraDefaultRole, additionalClaims) {
         ...additionalClaims,
       },
     },
-    PERMISSIONS_BLUEPRINT_HASURA_GRAPHQL_JWT_SECRET_KEY
+    HASURA_GRAPHQL_JWT_SECRET_KEY
   )
 }
 
 function createClient(role, additionalClaims) {
-  return new GraphQLClient(PERMISSIONS_BLUEPRINT_HASURA_GRAPHQL_API, {
+  return new GraphQLClient(HASURA_GRAPHQL_API, {
     headers: {
       authorization: `Bearer ${generateJWT(role, additionalClaims)}`,
     },
   })
 }
 
-const adminClient = new GraphQLClient(
-  PERMISSIONS_BLUEPRINT_HASURA_GRAPHQL_API,
-  {
-    headers: {
-      'x-hasura-admin-secret': PERMISSIONS_BLUEPRINT_HASURA_GRAPHQL_ADMIN_SECRET,
-    },
-  }
-)
+const adminClient = new GraphQLClient(HASURA_GRAPHQL_API, {
+  headers: {
+    'x-hasura-admin-secret': HASURA_GRAPHQL_ADMIN_SECRET,
+  },
+})
 
 function createApplicationRoles() {
   return adminClient.request(
@@ -102,7 +100,12 @@ function createApplicationRoles() {
       }
     }
   `,
-    { roles: Object.values(APPLICATION_ROLES).map(role => ({ name: role })) }
+    {
+      roles: Object.values(APPLICATION_ROLES).map((role, index) => ({
+        name: role,
+        order: index + 1,
+      })),
+    }
   )
 }
 
@@ -161,8 +164,8 @@ async function createUser(client, variables) {
     },
   } = await client.request(
     `
-        mutation createUser($email: String!) {
-          insert_user(objects: { email: $email }) {
+        mutation createUser($email: String!, $cognitoId: String!) {
+          insert_user(objects: { email: $email, cognito_id: $cognitoId }) {
             returning {
               id
               email
@@ -170,7 +173,7 @@ async function createUser(client, variables) {
           }
         }
     `,
-    variables
+    { ...variables, cognitoId: uuid() }
   )
 
   return user
@@ -275,8 +278,8 @@ async function createAssessment(client, variables) {
     },
   } = await client.request(
     `
-  mutation createAssessment($name: String!) {
-    insert_assessment(objects: { name: $name }) {
+  mutation createAssessment($name: String!, $key: String!) {
+    insert_assessment(objects: { name: $name, key: $key }) {
       returning {
         id
         name
@@ -284,7 +287,7 @@ async function createAssessment(client, variables) {
       }
     }
   }`,
-    variables
+    { ...variables, key: uuid() }
   )
 
   return assessment

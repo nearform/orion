@@ -1,0 +1,24 @@
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - id
+      - name
+      - parent_id
+      - type
+      localPresets:
+      - key: type
+        value: company
+      - key: parent_id
+        value: x-hasura-Group-Id
+      - key: ""
+        value: ""
+      set:
+        parent_id: x-hasura-Group-Id
+        type: company
+    role: partner-admin
+    table:
+      name: group
+      schema: public
+  type: create_insert_permission

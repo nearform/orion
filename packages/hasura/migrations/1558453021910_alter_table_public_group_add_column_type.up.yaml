@@ -1,0 +1,3 @@
+- args:
+    sql: ALTER TABLE "public"."group" ADD COLUMN "type" text NULL
+  type: run_sql

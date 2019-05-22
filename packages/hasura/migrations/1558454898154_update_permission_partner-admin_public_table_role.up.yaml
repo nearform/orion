@@ -1,0 +1,15 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - name
+      - is_default
+      - order
+      filter: {}
+      limit: null
+    role: partner-admin
+    table:
+      name: role
+      schema: public
+  type: create_select_permission
