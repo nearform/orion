@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-import debounce from 'lodash/debounce'
 import mean from 'lodash/mean'
 import round from 'lodash/round'
 import get from 'lodash/get'
@@ -42,8 +41,6 @@ function getScoringData(assessmentData, pillar) {
   }
 }
 
-const SAVE_SCORE_DEBOUNCE_TIME = 1000
-
 function AssessmentPillarScoring({
   theme,
   assessmentId,
@@ -59,12 +56,10 @@ function AssessmentPillarScoring({
   const [insertScoringData] = useMutation(insertAssessmentScoringDataMutation)
   const [updateScoringData] = useMutation(updateAssessmentScoringDataMutation)
 
-  const submitRef = useRef()
-
-  const debounceSubmit = debounce(
-    e => submitRef.current(e),
-    SAVE_SCORE_DEBOUNCE_TIME
-  )
+  const submitRef = useRef({
+    onChange: false,
+    onDragEnd: false,
+  })
 
   async function handleScoreChange(values) {
     if (currentScoringId) {
@@ -93,9 +88,27 @@ function AssessmentPillarScoring({
   }
 
   return (
-    <Formik onSubmit={handleScoreChange} initialValues={scoringValues}>
-      {({ setFieldValue, handleSubmit, values }) => {
-        submitRef.current = handleSubmit
+    <Formik
+      onSubmit={handleScoreChange}
+      initialValues={scoringValues}
+      // validation disabled because triggered manually below
+      validateOnChange={false}
+      validateOnBlur={false}
+    >
+      {({ setFieldValue, submitForm, values, validateForm }) => {
+        const submitOnLastAction = async key => {
+          // MUI currently has inconsistent onChange / onDragEnd order between click and drag
+          // actions until release for https://github.com/mui-org/material-ui/pull/14475
+          submitRef.current[key] = true
+          if (submitRef.current.onChange && submitRef.current.onDragEnd) {
+            // Prevent timing bugs - by default, Formik validates in a promise on a setState callback
+            // so without explicit validation here, submitForm() can fail if validation hasn't completed
+            await validateForm()
+            submitForm()
+            submitRef.current.onChange = false
+            submitRef.current.onDragEnd = false
+          }
+        }
 
         return (
           <Form>
@@ -127,7 +140,10 @@ function AssessmentPillarScoring({
                                 label={score.name}
                                 onChange={(e, value) => {
                                   setFieldValue(fieldName, value)
-                                  debounceSubmit(e)
+                                  submitOnLastAction('onChange')
+                                }}
+                                onDragEnd={() => {
+                                  submitOnLastAction('onDragEnd')
                                 }}
                               />
                             )}
