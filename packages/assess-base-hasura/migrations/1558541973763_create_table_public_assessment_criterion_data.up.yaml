@@ -1,0 +1,11 @@
+- args:
+    sql: CREATE TABLE "public"."assessment_criterion_data"("assessment_id" integer
+      NOT NULL, "pillar_key" text NOT NULL, "criterion_key" text NOT NULL, "data"
+      jsonb NOT NULL, "created_at" timestamptz NOT NULL DEFAULT now(), PRIMARY KEY
+      ("assessment_id","pillar_key","criterion_key") , FOREIGN KEY ("assessment_id")
+      REFERENCES "public"."assessment"("id") ON UPDATE restrict ON DELETE restrict);
+  type: run_sql
+- args:
+    name: assessment_criterion_data
+    schema: public
+  type: add_existing_table_or_view

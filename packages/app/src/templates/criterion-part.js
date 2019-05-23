@@ -14,14 +14,12 @@ import {
   insertAssessmentTableDataMutation,
   updateAssessmentTableDataMutation,
   deleteAssessmentTableRowMutation,
-  createFileUploadMutation,
 } from '../queries'
 import { isAuthenticatedSync, getUserIdSync } from '../utils/auth'
-import { uploadFile, downloadFile } from '../utils/storage'
 import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
-import UploadButton from '../components/UploadButton'
 import { getAssessmentId } from '../utils/url'
 import ContextualHelp from '../components/ContextualHelp'
+import FileList from '../components/FileList'
 
 function getEmptyTableRow(tableDef) {
   return tableDef.columns.reduce(
@@ -62,20 +60,18 @@ function CriterionPartTemplate({
     previousLink,
     nextLink,
     totalParts,
-    guidance,
   },
 }) {
   if (!isAuthenticatedSync()) {
     return <Redirect to="/auth" noThrow />
   }
 
-  const userId = getUserIdSync()
   const assessmentId = getAssessmentId(location)
+  const userId = getUserIdSync()
 
   const [insertTableData] = useMutation(insertAssessmentTableDataMutation)
   const [updateTableData] = useMutation(updateAssessmentTableDataMutation)
   const [deleteTableRow] = useMutation(deleteAssessmentTableRowMutation)
-  const [createFileUpload] = useMutation(createFileUploadMutation)
 
   const {
     loading,
@@ -90,26 +86,6 @@ function CriterionPartTemplate({
       partNumber,
     },
   })
-
-  async function createNewFileUpload(assessmentId, fileName, s3Key) {
-    const { data, error } = await createFileUpload({
-      variables: {
-        fileUploadData: {
-          user_id: userId,
-          assessment_id: assessmentId,
-          part_number: partNumber,
-          file_name: fileName,
-          s3_key: s3Key,
-          pillar_key: pillar.key,
-          criterion_key: criterion.key,
-        },
-      },
-    })
-
-    if (error) throw error
-
-    return data.insert_assessment_file.returning[0].id
-  }
 
   async function handleSaveTable(tableDef, rowIndex, rowValues) {
     const tableData = getExistingTableData(assessmentData, tableDef)
@@ -153,13 +129,6 @@ function CriterionPartTemplate({
     refetch()
   }
 
-  async function handleFileUpload(file) {
-    const { key: s3Key } = await uploadFile(file, assessmentId)
-    await createNewFileUpload(assessmentId, file.name, s3Key)
-
-    refetch()
-  }
-
   if (loading) {
     return 'Loading...'
   }
@@ -172,7 +141,7 @@ function CriterionPartTemplate({
     <div className={classes.root}>
       <SEO title={criterion.name} />
       <PaddedContainer className={classes.paddedContainer}>
-        <Grid container spacing={theme.spacing.unit * 2}>
+        <Grid container spacing={theme.spacing.unit * 2} wrap="nowrap">
           <Grid item>
             <Button
               component={Link}
@@ -183,32 +152,17 @@ function CriterionPartTemplate({
               ◀ Assessment overview
             </Button>
           </Grid>
-          <Grid container item direction="column">
-            <Grid item container>
-              <Grid item>
-                <Typography variant="h4" color="textSecondary">
-                  Supporting documentation
-                </Typography>
-              </Grid>
-              <Grid item container spacing={theme.spacing.unit}>
-                {assessmentData.files.map(file => (
-                  <Grid item key={file.s3_key}>
-                    <Button variant="text" onClick={_ => downloadFile(file)}>
-                      {file.file_name}
-                    </Button>
-                  </Grid>
-                ))}
-              </Grid>
-            </Grid>
-          </Grid>
+          <Grid item xs />
           <Grid item>
-            <UploadButton
-              onFileSelected={handleFileUpload}
-              color="secondary"
-              variant="outlined"
-            >
-              Upload
-            </UploadButton>
+            <FileList
+              assessmentId={assessmentId}
+              userId={userId}
+              pillar={pillar}
+              criterion={criterion}
+              partNumber={partNumber}
+              files={assessmentData.files}
+              onUploadComplete={refetch}
+            />
           </Grid>
         </Grid>
         <div className={classes.section}>

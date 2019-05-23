@@ -6,10 +6,31 @@ import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
 import { Field, Formik, Form } from 'formik'
 import { TextField } from 'formik-material-ui'
+import { useQuery, useMutation } from 'graphql-hooks'
+import get from 'lodash/get'
 
 import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
 import { getAssessmentId } from '../utils/url'
+import {
+  getAssessmentCriterionData,
+  upsertAssessmentCriterionDataMutation,
+} from '../queries'
+import FileList from '../components/FileList'
+import { getUserIdSync } from '../utils/auth'
+
+function createFormInitialValues(assessmentCriterionData) {
+  if (
+    !assessmentCriterionData ||
+    !assessmentCriterionData.assessment_criterion_data_by_pk
+  ) {
+    return {
+      summary: '',
+    }
+  }
+
+  return assessmentCriterionData.assessment_criterion_data_by_pk.data
+}
 
 function CriterionTemplate({
   theme,
@@ -18,21 +39,78 @@ function CriterionTemplate({
   location,
 }) {
   const assessmentId = getAssessmentId(location)
+  const userId = getUserIdSync()
 
   const { t } = useTranslation()
+
+  const { data: assessmentCriterionData, refetch } = useQuery(
+    getAssessmentCriterionData,
+    {
+      variables: {
+        assessmentId,
+        pillarKey: pillar.key,
+        criterionKey: criterion.key,
+      },
+    }
+  )
+
+  const [upsertAssessmentData] = useMutation(
+    upsertAssessmentCriterionDataMutation
+  )
+
+  async function handleFormSubmit(values, { setSubmitting, resetForm }) {
+    try {
+      const {
+        data: {
+          insert_assessment_criterion_data: { returning },
+        },
+      } = await upsertAssessmentData({
+        variables: {
+          input: {
+            assessment_id: assessmentId,
+            pillar_key: pillar.key,
+            criterion_key: criterion.key,
+            data: values,
+          },
+        },
+      })
+      resetForm(returning[0].data)
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   return (
     <div className={classes.root}>
       <SEO title={criterion.name} />
       <PaddedContainer className={classes.paddedContainer}>
-        <Button
-          component={Link}
-          to={`assessment/${assessment.key}#${assessmentId}`}
-          variant="text"
-          color="secondary"
-        >
-          ◀ Assessment overview
-        </Button>
+        <Grid container spacing={theme.spacing.unit * 2} wrap="nowrap">
+          <Grid item>
+            <Button
+              component={Link}
+              to={`assessment/${assessment.key}#${assessmentId}`}
+              variant="text"
+              color="secondary"
+            >
+              ◀ Assessment overview
+            </Button>
+          </Grid>
+          <Grid item xs />
+          <Grid item>
+            <FileList
+              assessmentId={assessmentId}
+              userId={userId}
+              pillar={pillar}
+              criterion={criterion}
+              files={get(
+                assessmentCriterionData,
+                'assessment_criterion_data_by_pk.assessment.files',
+                []
+              )}
+              onUploadComplete={refetch}
+            />
+          </Grid>
+        </Grid>
         <div className={classes.section}>
           <Grid container spacing={theme.spacing.unit * 4}>
             <Grid item xs={3}>
@@ -57,41 +135,45 @@ function CriterionTemplate({
               >
                 Assess {criterion.name}
               </Button>
-              <Grid
-                container
-                direction="column"
-                spacing={theme.spacing.unit * 2}
-                className={classes.section}
+              <Formik
+                initialValues={createFormInitialValues(assessmentCriterionData)}
+                enableReinitialize
+                onSubmit={handleFormSubmit}
               >
-                <Grid item xs={6}>
-                  <Typography variant="h4" gutterBottom>
-                    {criterion.name} summary
-                  </Typography>
-                  <Formik>
-                    <Form>
-                      <Field
-                        component={TextField}
-                        name="summary"
-                        multiline
-                        rows={4}
-                        fullWidth
-                      />
-                    </Form>
-                  </Formik>
-                </Grid>
-                <Grid item container spacing={theme.spacing.unit * 2}>
-                  <Grid item>
-                    <Button variant="outlined" color="secondary">
-                      Upload
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button variant="outlined" color="secondary">
-                      Save Updates
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Grid>
+                {({ isSubmitting, dirty }) => (
+                  <Form>
+                    <Grid
+                      container
+                      direction="column"
+                      spacing={theme.spacing.unit * 2}
+                      className={classes.section}
+                    >
+                      <Grid item xs={6}>
+                        <Typography variant="h4" gutterBottom>
+                          {criterion.name} summary
+                        </Typography>
+                        <Field
+                          component={TextField}
+                          name="summary"
+                          multiline
+                          rows={4}
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item>
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          type="submit"
+                          disabled={!dirty || isSubmitting}
+                        >
+                          Save Updates
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Form>
+                )}
+              </Formik>
             </Grid>
           </Grid>
         </div>

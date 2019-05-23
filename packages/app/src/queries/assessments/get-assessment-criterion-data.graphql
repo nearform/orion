@@ -1,0 +1,29 @@
+query getAssessmentCriterionData(
+  $assessmentId: Int!
+  $pillarKey: String!
+  $criterionKey: String!
+) {
+  assessment_criterion_data_by_pk(
+    assessment_id: $assessmentId
+    pillar_key: $pillarKey
+    criterion_key: $criterionKey
+  ) {
+    assessment_id
+    pillar_key
+    criterion_key
+    created_at
+    data
+    assessment {
+      files(
+        where: {
+          pillar_key: { _eq: $pillarKey }
+          criterion_key: { _eq: $criterionKey }
+          part_number: { _is_null: true }
+        }
+      ) {
+        file_name
+        s3_key
+      }
+    }
+  }
+}

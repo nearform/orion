@@ -1,4 +1,7 @@
 export {
+  default as getAssessmentCriterionData,
+} from './get-assessment-criterion-data.graphql'
+export {
   default as getAssessmentPartData,
 } from './get-assessment-part-data.graphql'
 export { default as getAssessmentsData } from './get-assessments.graphql'
@@ -23,6 +26,9 @@ export {
 export {
   default as updateAssessmentScoringDataMutation,
 } from './update-assessment-scoring-data.graphql'
+export {
+  default as upsertAssessmentCriterionDataMutation,
+} from './upsert-assessment-criterion-data.graphql'
 export {
   default as createFileUploadMutation,
 } from './create-file-upload.graphql'
