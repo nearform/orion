@@ -5,14 +5,15 @@ require('dotenv').config({
 const path = require('path')
 
 const currentTheme = require('./theme')
-
 const { getThemePaths } = require('./utils/paths')
+const { getApplicationVersion } = require('./utils/version')
 
 const { themeAssetsPath, themeAssessmentsPath } = getThemePaths(currentTheme)
 
 module.exports = {
   siteMetadata: {
     ...currentTheme.metadata,
+    version: getApplicationVersion(),
   },
   plugins: [
     {

@@ -13,7 +13,7 @@ import { useStaticQuery, graphql } from 'gatsby'
 function Footer({ classes, theme }) {
   const {
     site: {
-      siteMetadata: { author, social },
+      siteMetadata: { author, social, version },
     },
     socialIcons,
     largeLogo: {
@@ -50,10 +50,12 @@ function Footer({ classes, theme }) {
         siteMetadata {
           author
           social
+          version
         }
       }
     }
   `)
+
   return (
     <div className={classes.root}>
       <PaddedContainer>
@@ -155,7 +157,7 @@ function Footer({ classes, theme }) {
           </Grid>
           <Grid item>
             <Typography inline variant="body1">
-              Login
+              (version {version})
             </Typography>
           </Grid>
         </Grid>
