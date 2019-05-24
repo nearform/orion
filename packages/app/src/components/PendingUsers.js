@@ -51,7 +51,7 @@ function PendingUsers({ classes }) {
     renderTableBody: (data, { setSelected }) => {
       return data.user.map(user => {
         return (
-          <TableRow key={user.id}>
+          <TableRow key={user.id} data-testid="pending-users">
             <TableCell>{user.id}</TableCell>
             <TableCell>
               <Typography>{user.email}</Typography>

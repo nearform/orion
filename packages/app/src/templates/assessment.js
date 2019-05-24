@@ -126,11 +126,14 @@ function AssessmentTemplate({
   return (
     <>
       <SEO title={t('Your assessments')} />
-      <PaddedContainer>
+      <PaddedContainer data-testid="assessment">
         <Button component={Link} to="/" variant="text" color="secondary">
           ◀ Assess base home
         </Button>
-        <div className={classes.section}>
+        <div
+          className={classes.section}
+          data-testid="assessment__key-information"
+        >
           <Grid container spacing={theme.spacing.unit * 4}>
             <Grid
               item
@@ -327,7 +330,7 @@ function AssessmentTemplate({
             </Grid>
           </Grid>
         </div>
-        <div className={classes.section}>
+        <div className={classes.section} data-testid="assessment__model-areas">
           <Grid container spacing={theme.spacing.unit * 3}>
             <Grid item>
               <Typography variant="h4" gutterBottom>

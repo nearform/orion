@@ -58,3 +58,10 @@ This package contains the assess-base specific Hasura schema and metatada.
 ### [./packages/functions](./packages/functions)
 
 - lambda serverless functions used to interact with AWS Cognito and Hasura
+
+### [./packages/e2e-tests](./packages/e2e-tests)
+
+End-to-end tests using TestCafe. Requires environment variables to run, see
+[the Quick Start Guide](/docs/quick-start#2-configure). For more details see [the Tests docs](/docs/tests#end-to-end-tests).
+
+

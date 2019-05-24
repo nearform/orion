@@ -63,7 +63,7 @@ export default function UserGroups() {
         refetchGroups()
       }
       return data.group.map(group => (
-        <TableRow key={group.id}>
+        <TableRow key={group.id} data-testid="user-groups">
           <TableCell>{group.id}</TableCell>
           <TableCell>
             <RouterLink to={`${group.id}/${slugify(group.name)}`}>

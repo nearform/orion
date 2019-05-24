@@ -3,7 +3,12 @@ import T from 'prop-types'
 import { withStyles, Tooltip } from '@material-ui/core'
 
 const ContextualHelp = ({ classes, children, helpContent, ...rest }) => (
-  <Tooltip title={helpContent} classes={classes} {...rest}>
+  <Tooltip
+    data-testid="contextual-help"
+    title={helpContent}
+    classes={classes}
+    {...rest}
+  >
     {children}
   </Tooltip>
 )

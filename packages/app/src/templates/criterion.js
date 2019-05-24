@@ -81,7 +81,7 @@ function CriterionTemplate({
   }
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testid="criterion">
       <SEO title={criterion.name} />
       <PaddedContainer className={classes.paddedContainer}>
         <Grid container spacing={theme.spacing.unit * 2} wrap="nowrap">

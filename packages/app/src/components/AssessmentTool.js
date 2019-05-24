@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core'
 
 const AssessmentTool = ({ theme, classes, assessmentToolMeta, barColor }) => (
-  <Grid item xs>
+  <Grid item xs data-testid="assessment-tool">
     <Card className={classes.card} style={{ borderTopColor: barColor }}>
       <CardContent className={classes.cardContent}>
         <Typography variant="h3" className={classes.cardElement}>

@@ -51,7 +51,7 @@ export default function AssessmentsTable() {
   const assessmentKeyToName = keyBy(allAssessments.nodes, 'key')
 
   return (
-    <Table padding="dense">
+    <Table padding="dense" data-testid="assessments-table">
       <TableHead>
         <TableRow>
           <TableCell>{t('Your assessments')}</TableCell>

@@ -7,7 +7,7 @@ refs:
 
 deploy_environment: &deploy_environment
   docker:
-    - image: circleci/node:10
+    - image: circleci/node:10-browsers
 
 version: 2
 jobs:
@@ -55,6 +55,16 @@ jobs:
           command: |
             set -e
             npm test
+  e2e:
+    <<: *deploy_environment
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Test e2e
+          command: |
+            set -e
+            npm run 'ci:e2e-test'
   deploy:
     <<: *deploy_environment
     environment:
@@ -123,5 +133,8 @@ workflows:
             branches:
               only:
                 - master
+          requires:
+            - build
+      - e2e:
           requires:
             - build

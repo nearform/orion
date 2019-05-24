@@ -15,7 +15,12 @@
     "lint:fix": "eslint --fix --ext .js --ext .graphql .",
     "postcommit": "git update-index --again",
     "dev:generate-schema": "graphql get-schema --dotenv packages/app/.env.development --output=hasura-schema.json",
-    "generate-schema": "graphql get-schema --output=hasura-schema.json"
+    "generate-schema": "graphql get-schema --output=hasura-schema.json",
+    "start:app": "lerna exec --scope=app npm start",
+    "e2e-test": "lerna run --scope=e2e-tests --stream --no-prefix e2e-test -- ",
+    "dev:e2e-test": "npm run e2e-test -- ./local.js -- --screenshots-on-fails",
+    "hosted:e2e-test": "npm run e2e-test -- ./hosted.js -- --screenshots-on-fails",
+    "ci:e2e-test": "start-server-and-test 'start:app' http-get://localhost:8000 'npm run e2e-test ./local.js'"
   },
   "repository": {
     "type": "git",
@@ -32,6 +37,7 @@
     "babel-eslint": "^10.0.1",
     "cz-conventional-changelog": "^2.1.0",
     "docsify-cli": "^4.3.0",
+    "dotenv": "^8.0.0",
     "eslint": "^5.16.0",
     "eslint-config-google": "^0.10.0",
     "eslint-config-prettier": "^4.1.0",
@@ -42,13 +48,15 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-testcafe": "^0.2.1",
     "graphql": "^14.2.1",
     "graphql-cli": "^3.0.11",
     "husky": "^1.3.1",
     "lerna": "^3.13.3",
     "lint-staged": "^8.1.5",
     "prettier": "^1.17.0",
-    "pretty-quick": "^1.10.0"
+    "pretty-quick": "^1.10.0",
+    "start-server-and-test": "^1.9.0"
   },
   "config": {
     "commitizen": {

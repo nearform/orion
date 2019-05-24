@@ -1,0 +1,7 @@
+{
+  "browsers": "chrome:headless",
+  "concurrency": 2,
+  "selectorTimeout": 10000,
+  "screenshotPath": "./screenshots",
+  "screenshotPathPattern": "${DATE}_${TIME}/${FIXTURE}--${TEST}.png"
+}

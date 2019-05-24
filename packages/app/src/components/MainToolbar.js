@@ -52,18 +52,25 @@ function MainToolbar({ classes, dark }) {
   // darkClass is needed on both outer container and inner padded container
   // to avoid hairline gap between toolbar and main element in mobile WebKit
   return (
-    <div className={darkClass}>
+    <div className={darkClass} data-testid="main-toolbar">
       <div className={classes.gradient} />
       <PaddedContainer className={darkClass}>
         <div className={classes.root}>
-          <Link to="/" className={classes.logoHomeLink}>
+          <Link
+            to="/"
+            className={classes.logoHomeLink}
+            data-testid="main-toolbar__logo"
+          >
             <Img className={classes.logo} fixed={fixed} />
             <Typography variant="h2" className={darkClass}>
               {title}
             </Typography>
           </Link>
           <div className={classes.grow} />
-          <div className={classes.linksContainer}>
+          <div
+            className={classes.linksContainer}
+            data-testid="main-toolbar__links-container"
+          >
             <Button
               partial={false}
               className={navButtonClass}
