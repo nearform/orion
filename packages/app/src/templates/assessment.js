@@ -245,43 +245,54 @@ function AssessmentTemplate({
                   {({ dirty }) => (
                     <Form>
                       <Grid container spacing={theme.spacing.unit * 2}>
-                        {assessment.keyInformation.keyInformationItems.map(
-                          (keyInfo, index) => (
-                            <Fragment key={keyInfo.key}>
-                              <Grid item xs={6}>
-                                <Typography variant="h4" gutterBottom>
-                                  {keyInfo.name}
-                                </Typography>
-                                <Field
-                                  name={keyInfo.key}
-                                  component={TextField}
-                                  fullWidth
-                                  multiline
-                                  rows={5}
-                                />
-                              </Grid>
-                              {index === 0 && <Grid item xs={6} />}
-                            </Fragment>
-                          )
-                        )}
-                      </Grid>
-                      <Grid item xs className={classes.buttonBar}>
-                        <UploadButton
-                          onFileSelected={handleFileUpload}
-                          color="secondary"
-                          variant="outlined"
-                          disabled={!assessmentData}
+                        <Grid item container spacing={theme.spacing.unit * 2}>
+                          {assessment.keyInformation.keyInformationItems.map(
+                            (keyInfo, index) => (
+                              <Fragment key={keyInfo.key}>
+                                <Grid item xs={6}>
+                                  <Typography variant="h4" gutterBottom>
+                                    {keyInfo.name}
+                                  </Typography>
+                                  <Field
+                                    name={keyInfo.key}
+                                    component={TextField}
+                                    fullWidth
+                                    multiline
+                                    rows={5}
+                                  />
+                                </Grid>
+                                {index === 0 && <Grid item xs={6} />}
+                              </Fragment>
+                            )
+                          )}
+                        </Grid>
+                        <Grid
+                          item
+                          container
+                          spacing={theme.spacing.unit * 2}
+                          justify="flex-end"
                         >
-                          upload key information
-                        </UploadButton>
-                        <Button
-                          type="submit"
-                          color="secondary"
-                          variant="contained"
-                          disabled={!assessmentData || !dirty}
-                        >
-                          Save Updates
-                        </Button>
+                          <Grid item>
+                            <UploadButton
+                              onFileSelected={handleFileUpload}
+                              color="secondary"
+                              variant="outlined"
+                              disabled={!assessmentData}
+                            >
+                              upload key information
+                            </UploadButton>
+                          </Grid>
+                          <Grid item>
+                            <Button
+                              type="submit"
+                              color="secondary"
+                              variant="contained"
+                              disabled={!assessmentData || !dirty}
+                            >
+                              Save Updates
+                            </Button>
+                          </Grid>
+                        </Grid>
                       </Grid>
                     </Form>
                   )}
