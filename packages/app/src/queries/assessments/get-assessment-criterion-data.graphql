@@ -13,17 +13,16 @@ query getAssessmentCriterionData(
     criterion_key
     created_at
     data
-    assessment {
-      files(
-        where: {
-          pillar_key: { _eq: $pillarKey }
-          criterion_key: { _eq: $criterionKey }
-          part_number: { _is_null: true }
-        }
-      ) {
-        file_name
-        s3_key
-      }
+  }
+  assessment_file(
+    where: {
+      assessment_id: { _eq: $assessmentId }
+      pillar_key: { _eq: $pillarKey }
+      criterion_key: { _eq: $criterionKey }
+      part_number: { _is_null: true }
     }
+  ) {
+    file_name
+    s3_key
   }
 }

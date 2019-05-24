@@ -12,6 +12,9 @@ export {
   default as createAssessmentMutation,
 } from './create-assessment.graphql'
 export {
+  default as updateAssessmentKeyInfoMutation,
+} from './update-assessment-key-info.graphql'
+export {
   default as insertAssessmentTableDataMutation,
 } from './insert-assessment-table-data.graphql'
 export {

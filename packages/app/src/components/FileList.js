@@ -1,11 +1,13 @@
 import React from 'react'
-import { Grid, Typography, Button, withStyles } from '@material-ui/core'
+import { Grid, Typography, withStyles } from '@material-ui/core'
 import { useMutation } from 'graphql-hooks'
 import T from 'prop-types'
 
-import { uploadFile, downloadFile } from '../utils/storage'
+import { uploadFile } from '../utils/storage'
 import { createFileUploadMutation } from '../queries'
 import UploadButton from './UploadButton'
+import FileItem from './FileItem'
+import { fileType } from '../prop-types'
 
 function FileList({
   theme,
@@ -60,9 +62,7 @@ function FileList({
         <Grid container spacing={theme.spacing.unit}>
           {files.map(file => (
             <Grid item key={file.s3_key}>
-              <Button variant="text" onClick={_ => downloadFile(file)}>
-                {file.file_name}
-              </Button>
+              <FileItem file={file} />
             </Grid>
           ))}
         </Grid>
@@ -87,7 +87,7 @@ FileList.propTypes = {
   criterion: T.object.isRequired,
   partNumber: T.number,
   userId: T.any.isRequired,
-  files: T.array.isRequired,
+  files: T.arrayOf(fileType).isRequired,
   onUploadComplete: T.func.isRequired,
 }
 

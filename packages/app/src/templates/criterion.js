@@ -102,11 +102,7 @@ function CriterionTemplate({
               userId={userId}
               pillar={pillar}
               criterion={criterion}
-              files={get(
-                assessmentCriterionData,
-                'assessment_criterion_data_by_pk.assessment.files',
-                []
-              )}
+              files={get(assessmentCriterionData, 'assessment_file', [])}
               onUploadComplete={refetch}
             />
           </Grid>
