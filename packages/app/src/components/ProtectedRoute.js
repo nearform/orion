@@ -10,12 +10,12 @@ export default function ProtectedRoute({
   ...props
 }) {
   if (!isAuthenticatedSync()) {
-    return <Redirect to="/" noThrow />
+    return <Redirect to="/auth" noThrow />
   }
 
   if (allowedRole) {
     if (!getUserRolesSync().includes(allowedRole)) {
-      return <Redirect to="/" noThrow />
+      return <Redirect to="/auth" noThrow />
     }
   }
 

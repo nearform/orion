@@ -21,13 +21,13 @@ describe('ProtectedRoute', () => {
     expect(tree).toBeDefined()
   })
 
-  it('renders a component that redirects to / when user is not authenticated', () => {
+  it('renders a component that redirects to /auth when user is not authenticated', () => {
     const wrapper = shallow(<ProtectedRoute component={SecretComponent} />)
 
     const redirect = wrapper.find(Redirect)
 
     expect(redirect.length).toBe(1)
-    expect(redirect.props().to).toBe('/')
+    expect(redirect.props().to).toBe('/auth')
   })
 
   it('renders protected component when user is authenticated and no role specified', () => {
@@ -40,7 +40,7 @@ describe('ProtectedRoute', () => {
     expect(wrapper.find(SecretComponent).length).toBe(1)
   })
 
-  it('renders a component that redirects to / when user is authenticated but does not have the right role', () => {
+  it('renders a component that redirects to /auth when user is authenticated but does not have the right role', () => {
     Auth.user = {
       signInUserSession: {
         idToken: {
@@ -60,7 +60,7 @@ describe('ProtectedRoute', () => {
     const redirect = wrapper.find(Redirect)
 
     expect(redirect.length).toBe(1)
-    expect(redirect.props().to).toBe('/')
+    expect(redirect.props().to).toBe('/auth')
   })
 
   it('renders protected component when user has the right role', () => {
