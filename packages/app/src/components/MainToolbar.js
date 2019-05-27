@@ -43,10 +43,12 @@ function MainToolbar({ classes, dark }) {
 
   const isAdmin = useIsAdmin()
   const isAuthenticated = useIsAuthenticated()
+
   const darkClass = classnames({
     [classes.toolbarDark]: dark,
     [classes.toolbarContrast]: dark,
   })
+
   const navButtonClass = classnames(darkClass, classes.navButton)
 
   // darkClass is needed on both outer container and inner padded container

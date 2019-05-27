@@ -22,6 +22,8 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
+    margin: '0 auto',
+    maxWidth: 1440,
     minHeight: '100vh',
   },
   main: {

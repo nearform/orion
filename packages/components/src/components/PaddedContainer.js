@@ -12,16 +12,10 @@ PaddedContainer.propTypes = {
   className: T.string,
 }
 
-const styles = theme => {
-  const horizontalPadding = theme.spacing.unit * 10
-
-  return {
-    root: {
-      margin: '0 auto',
-      maxWidth: theme.breakpoints.values.lg + horizontalPadding * 2,
-      padding: `0 ${horizontalPadding}px`,
-    },
-  }
-}
+const styles = theme => ({
+  root: {
+    padding: `0 ${theme.spacing.unit * 10}px`,
+  },
+})
 
 export default withStyles(styles)(PaddedContainer)
