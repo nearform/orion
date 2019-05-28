@@ -64,7 +64,7 @@ function AssessmentPillarScoring({
     if (currentScoringId) {
       await updateScoringData({
         variables: {
-          id: scoringId,
+          id: currentScoringId,
           scoringValues: values,
         },
       })
