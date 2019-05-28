@@ -21,18 +21,10 @@ jobs:
       - run:
           name: Lint code
           command: npm run lint
-      # npm build runs lerna run build. lerna will potentially build unneeded assets.
-      # if build gets slow in future we should investigate removing unneeded asset builds from lerna
       - run:
-          name: Build bundle
+          name: Build bundles
           command: |
             set -e
-            npm run build
-      - run:
-          name: Build Lambda functions
-          command: |
-            set -e
-            cd packages/functions
             npm run build
       - run:
           name: Build storybook bundle

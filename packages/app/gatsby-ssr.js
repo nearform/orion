@@ -4,6 +4,8 @@ import fetch from 'node-fetch'
 
 import './theme.es'
 
+import Layout from './src/components/layout'
+
 const client = new GraphQLClient({
   url: process.env.GATSBY_GRAPHQL_API,
   fetch,
@@ -11,4 +13,8 @@ const client = new GraphQLClient({
 
 export const wrapRootElement = ({ element }) => (
   <ClientContext.Provider value={client}>{element}</ClientContext.Provider>
+)
+
+export const wrapPageElement = ({ element, props }) => (
+  <Layout darkToolbar={props.location.pathname === '/'}>{element}</Layout>
 )
