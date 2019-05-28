@@ -48,7 +48,6 @@ function AssessmentPillarScoring({
   pillar,
   criterion,
   partNumber,
-  onScoreSaved,
 }) {
   const { scoringId, scoringValues } = getScoringData(assessmentData, pillar)
 
@@ -176,7 +175,6 @@ AssessmentPillarScoring.propTypes = {
   pillar: T.object.isRequired,
   criterion: T.object.isRequired,
   partNumber: T.number.isRequired,
-  onScoreSaved: T.func.isRequired,
 }
 
 export default withTheme()(AssessmentPillarScoring)

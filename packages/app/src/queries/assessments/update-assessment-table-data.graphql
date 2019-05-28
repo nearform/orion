@@ -3,6 +3,9 @@ mutation updateAssessmentTableRow($id: Int!, $tableValues: jsonb!) {
     where: { id: { _eq: $id } }
     _set: { table_values: $tableValues }
   ) {
-    affected_rows
+    returning {
+      id
+      table_values
+    }
   }
 }

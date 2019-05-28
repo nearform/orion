@@ -18,6 +18,7 @@ mutation insertAssessmentTableRow(
   ) {
     returning {
       id
+      table_values
     }
   }
 }

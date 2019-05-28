@@ -3,6 +3,9 @@ mutation deleteAssessmentTableRow($id: Int!, $rowIndex: Int!) {
     where: { id: { _eq: $id } }
     _delete_elem: { table_values: $rowIndex }
   ) {
-    affected_rows
+    returning {
+      id
+      table_values
+    }
   }
 }
