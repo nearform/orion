@@ -1,13 +1,15 @@
 import React from 'react'
 import { Redirect } from '@reach/router'
-import { Authenticator, Greetings } from 'aws-amplify-react'
+import { Authenticator, Greetings, SignIn } from 'aws-amplify-react'
 
+import CustomSignIn from '../../components/CustomSignIn'
 import DisplayIfSignedIn from '../../components/DisplayIfSignedIn'
 
 export default function Auth() {
   return (
     <Authenticator
-      hide={[Greetings]}
+      hide={[Greetings, SignIn]}
+      theme={{ container: { flex: 1, display: 'flex' } }}
       signUpConfig={{
         hideAllDefaults: true,
         signUpFields: [
@@ -57,6 +59,7 @@ export default function Auth() {
         ],
       }}
     >
+      <CustomSignIn />
       <DisplayIfSignedIn>
         <Redirect to="/" noThrow />
       </DisplayIfSignedIn>

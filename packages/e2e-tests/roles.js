@@ -9,7 +9,7 @@ export default function getRoles(url, config) {
 
       const usernameField = Selector('input[name=username]')
       const passwordField = Selector('input[name=password]')
-      const submitButton = Selector('button[type=submit]')
+      const submitButton = Selector('button[name=submit]')
       await t
         .typeText(usernameField, username)
         .typeText(passwordField, password)
