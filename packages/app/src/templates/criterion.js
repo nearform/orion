@@ -17,7 +17,8 @@ import {
   upsertAssessmentCriterionDataMutation,
 } from '../queries'
 import FileList from '../components/FileList'
-import { getUserIdSync } from '../utils/auth'
+import { getUserIdSync, isAdminSync } from '../utils/auth'
+import { assessmentInProgress } from '../utils/assessment-status'
 
 function createFormInitialValues(assessmentCriterionData) {
   if (
@@ -39,6 +40,7 @@ function CriterionTemplate({
   location,
 }) {
   const assessmentId = getAssessmentId(location)
+  const isAdmin = isAdminSync()
   const userId = getUserIdSync()
 
   const { t } = useTranslation()
@@ -80,6 +82,10 @@ function CriterionTemplate({
     }
   }
 
+  const canEditAndUpload =
+    isAdmin &&
+    assessmentInProgress(get(assessmentCriterionData, 'assessment_by_pk'))
+
   return (
     <div className={classes.root} data-testid="criterion">
       <SEO title={criterion.name} />
@@ -103,6 +109,7 @@ function CriterionTemplate({
               pillar={pillar}
               criterion={criterion}
               files={get(assessmentCriterionData, 'assessment_file', [])}
+              canUpload={canEditAndUpload}
               onUploadComplete={refetch}
             />
           </Grid>
@@ -150,22 +157,25 @@ function CriterionTemplate({
                         </Typography>
                         <Field
                           component={TextField}
+                          disabled={!canEditAndUpload}
                           name="summary"
                           multiline
                           rows={4}
                           fullWidth
                         />
                       </Grid>
-                      <Grid item>
-                        <Button
-                          variant="outlined"
-                          color="secondary"
-                          type="submit"
-                          disabled={!dirty || isSubmitting}
-                        >
-                          Save Updates
-                        </Button>
-                      </Grid>
+                      {canEditAndUpload && (
+                        <Grid item>
+                          <Button
+                            variant="outlined"
+                            color="secondary"
+                            type="submit"
+                            disabled={!dirty || isSubmitting}
+                          >
+                            Save Updates
+                          </Button>
+                        </Grid>
+                      )}
                     </Grid>
                   </Form>
                 )}

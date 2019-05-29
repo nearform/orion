@@ -6,6 +6,7 @@ query getAssessments($userId: Int) {
     id
     key
     name
+    status
     created_at
   }
 }

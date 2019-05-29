@@ -2,8 +2,6 @@ import { handler } from './'
 import graphql from '../graphql'
 
 import createUser from './graphql/create-user.graphql'
-import getDefaultRole from './graphql/get-default-role.graphql'
-
 jest.mock('../graphql')
 
 const originalEvent = {
@@ -29,47 +27,13 @@ const originalEvent = {
   response: {},
 }
 
-const noRolesFromDb = Promise.resolve({
-  role: [],
-})
-
-const oneRoleFromDb = Promise.resolve({
-  role: [
-    {
-      id: 'some id',
-      name: 'some role name',
-    },
-  ],
-})
-
 describe('signup-hook', () => {
-  it('it should query the default role', async () => {
-    graphql.mockReturnValue(oneRoleFromDb)
-
+  it('it should create the user with the attributes coming from the request', async () => {
     await handler(originalEvent)
-
-    expect(graphql).toBeCalledWith(getDefaultRole)
-  })
-
-  it('it should return an error if the default role is not found', async () => {
-    graphql.mockReturnValue(noRolesFromDb)
-
-    await expect(handler(originalEvent)).rejects.toThrow(
-      'no default role found'
-    )
-  })
-
-  it('it should create the user with the found role and attributes coming from the request', async () => {
-    graphql.mockReturnValue(oneRoleFromDb)
-
-    await handler(originalEvent)
-
-    const { role } = await oneRoleFromDb
 
     expect(graphql).toBeCalledWith(createUser, {
       cognitoId: originalEvent.request.userAttributes.sub,
       email: originalEvent.request.userAttributes.email,
-      roleId: role[0].id,
       signupRequest: originalEvent.request,
     })
   })

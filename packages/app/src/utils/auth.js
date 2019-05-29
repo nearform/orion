@@ -3,9 +3,12 @@ import { Auth, Hub } from 'aws-amplify'
 
 const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
+const CUSTOM_CLAIMS_NAMESPACE = 'x-raw-salmon-claims'
+const CUSTOM_CLAIMS_CONTRIBUTOR_KEY = 'x-assess-base-contributor'
+const CUSTOM_CLAIMS_ASSESSOR_KEY = 'x-assess-base-assessor'
 const HASURA_ALLOWED_ROLES_KEY = 'x-hasura-allowed-roles'
 const HASURA_USER_ID = 'x-hasura-user-id'
-const ADMIN_ROLE = 'admin'
+const ADMIN_ROLES_REGEX = /admin$/i
 
 const isAuthenticated = async () => {
   try {
@@ -18,8 +21,15 @@ const isAuthenticated = async () => {
 }
 export const isAuthenticatedSync = () => isBrowser && !!Auth.user
 
-const isAdmin = async () => (await getUserRoles()).includes(ADMIN_ROLE)
-export const isAdminSync = () => getUserRolesSync().includes(ADMIN_ROLE)
+const isAdmin = async () =>
+  (await getUserRoles()).some(role => ADMIN_ROLES_REGEX.test(role))
+export const isAdminSync = () =>
+  getUserRolesSync().some(role => ADMIN_ROLES_REGEX.test(role))
+
+export const isContributorSync = () =>
+  !!getCustomClaimsSync()[CUSTOM_CLAIMS_CONTRIBUTOR_KEY]
+export const isAssessorSync = () =>
+  !!getCustomClaimsSync()[CUSTOM_CLAIMS_ASSESSOR_KEY]
 
 export const getUserRolesSync = () => {
   if (!isAuthenticatedSync()) return []
@@ -29,6 +39,12 @@ export const getUserRolesSync = () => {
   } catch (err) {
     return []
   }
+}
+
+export const getCustomClaimsSync = () => {
+  if (!isAuthenticatedSync()) return {}
+
+  return extractCustomClaimsFromTokenPayload()
 }
 
 export const getUserIdSync = () => {
@@ -54,6 +70,16 @@ function extractUserIdFromTokenPayload() {
 function extractHasuraClaimsFromTokenPayload() {
   const tokenPayload = Auth.user.signInUserSession.idToken.payload
   return JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE])
+}
+
+function extractCustomClaimsFromTokenPayload() {
+  const tokenPayload = Auth.user.signInUserSession.idToken.payload
+
+  try {
+    return JSON.parse(tokenPayload[CUSTOM_CLAIMS_NAMESPACE])
+  } catch (err) {
+    return {}
+  }
 }
 
 async function getUserRoles() {

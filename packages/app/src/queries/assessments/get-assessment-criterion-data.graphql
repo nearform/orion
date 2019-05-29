@@ -3,6 +3,9 @@ query getAssessmentCriterionData(
   $pillarKey: String!
   $criterionKey: String!
 ) {
+  assessment_by_pk(id: $assessmentId) {
+    status
+  }
   assessment_criterion_data_by_pk(
     assessment_id: $assessmentId
     pillar_key: $pillarKey

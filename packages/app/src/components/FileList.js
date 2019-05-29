@@ -17,6 +17,7 @@ function FileList({
   partNumber,
   userId,
   files,
+  canUpload,
   onUploadComplete,
 }) {
   const [createFileUpload] = useMutation(createFileUploadMutation)
@@ -67,15 +68,17 @@ function FileList({
           ))}
         </Grid>
       </Grid>
-      <Grid item>
-        <UploadButton
-          onFileSelected={handleFileUpload}
-          color="secondary"
-          variant="outlined"
-        >
-          Upload
-        </UploadButton>
-      </Grid>
+      {canUpload && (
+        <Grid item>
+          <UploadButton
+            onFileSelected={handleFileUpload}
+            color="secondary"
+            variant="outlined"
+          >
+            Upload
+          </UploadButton>
+        </Grid>
+      )}
     </Grid>
   )
 }
@@ -88,6 +91,7 @@ FileList.propTypes = {
   partNumber: T.number,
   userId: T.any.isRequired,
   files: T.arrayOf(fileType).isRequired,
+  canUpload: T.bool.isRequired,
   onUploadComplete: T.func.isRequired,
 }
 

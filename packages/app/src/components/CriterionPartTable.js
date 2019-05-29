@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
 import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
+import T from 'prop-types'
 
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
@@ -52,13 +53,13 @@ function getReturnedTableData(queryAction, result, tableId) {
 function CriterionPartTable({
   theme,
   classes,
-  key,
-  table: tableDef,
+  tableDef,
   assessmentTables,
   assessmentId,
   partNumber,
   criterionKey,
   pillarKey,
+  disableEditing,
 }) {
   const tableData = getExistingTableData(assessmentTables, tableDef)
 
@@ -134,7 +135,7 @@ function CriterionPartTable({
   }
 
   return (
-    <div key={key}>
+    <div>
       <Typography variant="h2" color="primary" gutterBottom>
         {tableDef.name}
         {tableDef.guidance && (
@@ -162,6 +163,7 @@ function CriterionPartTable({
                           {column.name}
                         </Typography>
                         <Field
+                          disabled={disableEditing}
                           component={TextField}
                           name={column.key}
                           fullWidth
@@ -169,35 +171,37 @@ function CriterionPartTable({
                       </Grid>
                     ))}
                   </Grid>
-                  <Grid
-                    container
-                    spacing={theme.spacing.unit * 2}
-                    justify="flex-end"
-                  >
-                    <Grid item>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        color="secondary"
-                        disabled={!dirty || isSubmitting}
-                      >
-                        {rowIndex === tableRows.length
-                          ? 'Save new row'
-                          : 'Save Updates'}
-                      </Button>
-                    </Grid>
-                    {rowIndex !== tableRows.length && (
+                  {!disableEditing && (
+                    <Grid
+                      container
+                      spacing={theme.spacing.unit * 2}
+                      justify="flex-end"
+                    >
                       <Grid item>
                         <Button
-                          onClick={() => handleDeleteTableRow(rowIndex)}
-                          variant="outlined"
+                          type="submit"
+                          variant="contained"
                           color="secondary"
+                          disabled={!dirty || isSubmitting}
                         >
-                          Remove
+                          {rowIndex === tableRows.length
+                            ? 'Save new row'
+                            : 'Save Updates'}
                         </Button>
                       </Grid>
-                    )}
-                  </Grid>
+                      {rowIndex !== tableRows.length && (
+                        <Grid item>
+                          <Button
+                            onClick={() => handleDeleteTableRow(rowIndex)}
+                            variant="outlined"
+                            color="secondary"
+                          >
+                            Remove
+                          </Button>
+                        </Grid>
+                      )}
+                    </Grid>
+                  )}
                 </Form>
               )}
             </Formik>
@@ -206,6 +210,18 @@ function CriterionPartTable({
       )}
     </div>
   )
+}
+
+CriterionPartTable.propTypes = {
+  theme: T.object.isRequired,
+  classes: T.object.isRequired,
+  tableDef: T.object.isRequired,
+  assessmentTables: T.array.isRequired,
+  assessmentId: T.number.isRequired,
+  partNumber: T.number.isRequired,
+  criterionKey: T.string.isRequired,
+  pillarKey: T.string.isRequired,
+  disableEditing: T.bool.isRequired,
 }
 
 const styles = theme => ({

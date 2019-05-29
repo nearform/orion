@@ -1,14 +1,12 @@
 mutation createUser(
   $cognitoId: String!
   $email: String!
-  $roleId: Int!
   $signupRequest: jsonb
 ) {
   insert_user(
     objects: {
       cognito_id: $cognitoId
       email: $email
-      user_roles: { data: [{ role_id: $roleId }] }
       signupRequest: $signupRequest
     }
   ) {

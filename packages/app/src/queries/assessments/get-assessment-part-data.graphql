@@ -6,6 +6,7 @@ query getAssessmentPartData(
 ) {
   assessment_by_pk(id: $id) {
     id
+    status
     tables(
       where: {
         pillar_key: { _eq: $pillarKey }

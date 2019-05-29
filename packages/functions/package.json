@@ -14,18 +14,18 @@
   "dependencies": {
     "graphql-request": "^1.8.2",
     "lodash": "^4.17.11",
-    "node-fetch": "^2.3.0",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0"
+    "node-fetch": "^2.6.0",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
     "babel-eslint": "^10.0.1",
-    "@babel/core": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
-    "babel-jest": "^24.7.1",
-    "babel-loader": "^8.0.5",
+    "babel-jest": "^24.8.0",
+    "babel-loader": "^8.0.6",
     "babel-plugin-inline-import": "^3.0.0",
-    "jest": "^24.5.0",
+    "jest": "^24.8.0",
     "react-test-renderer": "^16.8.6"
   }
 }

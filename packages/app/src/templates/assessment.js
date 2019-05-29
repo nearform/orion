@@ -1,12 +1,13 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
-import { PaddedContainer } from 'components'
+import { PaddedContainer, ASSESSMENT_STATUS } from 'components'
 import { Link, navigate } from 'gatsby'
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
 import { useMutation, useManualQuery } from 'graphql-hooks'
 import HelpIcon from '@material-ui/icons/Help'
+import get from 'lodash/get'
 
 import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
@@ -15,14 +16,17 @@ import {
   getShallowAssessmentData,
   createFileUploadMutation,
   updateAssessmentKeyInfoMutation,
+  updateAssessmentStatusMutation,
 } from '../queries'
-import { getUserIdSync } from '../utils/auth'
+import { getUserIdSync, isAdminSync } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'
 import UploadButton from '../components/UploadButton'
 import ImagePlaceholder from '../components/ImagePlaceholder'
 import FileItem from '../components/FileItem'
+import { Redirect } from '@reach/router'
+import { assessmentInProgress } from '../utils/assessment-status'
 
 function createFormInitialValues(assessmentKeyInfoDef, assessmentData) {
   return assessmentKeyInfoDef.reduce(
@@ -44,6 +48,11 @@ function AssessmentTemplate({
   pageContext: { assessment, pillarColors },
 }) {
   const assessmentId = getAssessmentId(location)
+  const isAdmin = isAdminSync()
+
+  if (!assessmentId && !isAdmin) {
+    return <Redirect to="/auth" noThrow />
+  }
 
   const { t } = useTranslation()
 
@@ -52,6 +61,7 @@ function AssessmentTemplate({
   const [updateAssessmentKeyInfo] = useMutation(updateAssessmentKeyInfoMutation)
   const [getAssessment] = useManualQuery(getShallowAssessmentData)
   const [createFileUpload] = useMutation(createFileUploadMutation)
+  const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
   useEffect(() => {
     if (assessmentId) {
@@ -123,6 +133,22 @@ function AssessmentTemplate({
     await loadAssessment(assessmentId)
   }
 
+  async function handleSubmitAssessment() {
+    await updateAssessmentStatus({
+      variables: {
+        id: assessmentId,
+        status: ASSESSMENT_STATUS.submitted,
+      },
+    })
+
+    loadAssessment(assessmentId)
+  }
+
+  const canEditKeyInformationAndUploadAndSubmit =
+    isAdmin && assessmentInProgress(assessmentData)
+
+  const canCreateAssessment = isAdmin
+
   return (
     <>
       <SEO title={t('Your assessments')} />
@@ -163,21 +189,26 @@ function AssessmentTemplate({
                 </Grid>
                 <Grid item xs />
                 <Grid item>
-                  {assessmentData && (
-                    <Button type="submit" color="secondary" variant="contained">
+                  {canEditKeyInformationAndUploadAndSubmit && (
+                    <Button
+                      type="submit"
+                      color="secondary"
+                      variant="contained"
+                      onClick={handleSubmitAssessment}
+                    >
                       Submit Assessment
                     </Button>
                   )}
                 </Grid>
               </Grid>
               <Grid item xs>
-                {assessmentData ? (
+                {assessmentId ? (
                   <>
                     <Typography variant="h4" gutterBottom>
                       assessment name
                     </Typography>
                     <Typography variant="h2" color="primary">
-                      {assessmentData.name}
+                      {get(assessmentData, 'name', 'Loading...')}
                     </Typography>
                   </>
                 ) : (
@@ -208,7 +239,7 @@ function AssessmentTemplate({
                                 type="submit"
                                 color="secondary"
                                 variant="contained"
-                                disabled={!isValid}
+                                disabled={!isValid || !canCreateAssessment}
                               >
                                 Create Assessment
                               </Button>
@@ -262,6 +293,10 @@ function AssessmentTemplate({
                                     fullWidth
                                     multiline
                                     rows={5}
+                                    disabled={
+                                      !assessmentId ||
+                                      !canEditKeyInformationAndUploadAndSubmit
+                                    }
                                   />
                                 </Grid>
                                 {index === 0 && <Grid item xs={6} />}
@@ -269,33 +304,34 @@ function AssessmentTemplate({
                             )
                           )}
                         </Grid>
-                        <Grid
-                          item
-                          container
-                          spacing={theme.spacing.unit * 2}
-                          justify="flex-end"
-                        >
-                          <Grid item>
-                            <UploadButton
-                              onFileSelected={handleFileUpload}
-                              color="secondary"
-                              variant="outlined"
-                              disabled={!assessmentData}
-                            >
-                              upload key information
-                            </UploadButton>
+                        {canEditKeyInformationAndUploadAndSubmit && (
+                          <Grid
+                            item
+                            container
+                            spacing={theme.spacing.unit * 2}
+                            justify="flex-end"
+                          >
+                            <Grid item>
+                              <UploadButton
+                                onFileSelected={handleFileUpload}
+                                color="secondary"
+                                variant="outlined"
+                              >
+                                upload key information
+                              </UploadButton>
+                            </Grid>
+                            <Grid item>
+                              <Button
+                                type="submit"
+                                color="secondary"
+                                variant="contained"
+                                disabled={!assessmentId || !dirty}
+                              >
+                                Save Updates
+                              </Button>
+                            </Grid>
                           </Grid>
-                          <Grid item>
-                            <Button
-                              type="submit"
-                              color="secondary"
-                              variant="contained"
-                              disabled={!assessmentData || !dirty}
-                            >
-                              Save Updates
-                            </Button>
-                          </Grid>
-                        </Grid>
+                        )}
                       </Grid>
                     </Form>
                   )}
@@ -358,10 +394,14 @@ function AssessmentTemplate({
                   {pillar.criteria.map(criterion => (
                     <Grid item key={criterion.name}>
                       <Typography
-                        component={Link}
-                        to={`assessment/${assessment.key}/${pillar.key}/${
-                          criterion.key
-                        }${assessmentData ? `#${assessmentData.id}` : ''}`}
+                        component={assessmentId ? Link : null}
+                        to={
+                          assessmentId
+                            ? `assessment/${assessment.key}/${pillar.key}/${
+                                criterion.key
+                              }#${assessmentId}}`
+                            : null
+                        }
                         variant="h3"
                         gutterBottom
                         style={{ color: pillarColor }}

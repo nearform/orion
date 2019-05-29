@@ -12,13 +12,12 @@ query getUserByCognitoId($cognitoId: String!) {
       group {
         id
         name
-        roles {
-          role {
-            id
-            name
-            order
-          }
-        }
+        type
+      }
+    }
+    assessment_contributors_aggregate {
+      aggregate {
+        count
       }
     }
   }

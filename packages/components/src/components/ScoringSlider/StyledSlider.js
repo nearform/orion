@@ -34,6 +34,11 @@ const styles = theme => {
       width: theme.spacing.unit * 4,
       backgroundColor: theme.palette.background.default,
       boxShadow: theme.shadows[1],
+      '&$disabled': {
+        backgroundColor: theme.palette.background.default,
+        height: theme.spacing.unit * 4,
+        width: theme.spacing.unit * 4,
+      },
     },
     thumbIcon: {
       color: theme.palette.text.hint,
@@ -55,25 +60,40 @@ const styles = theme => {
       color: theme.palette.secondary.main,
       ...thumbIcon,
     },
+    disabled: {},
   }
 }
 
-const StyledSlider = function({ color, classes, ...props }) {
+const StyledSlider = function({
+  color,
+  classes: {
+    primaryTrackBefore,
+    secondaryTrackBefore,
+    primaryThumbIcon,
+    secondaryThumbIcon,
+    ...defaultClasses
+  },
+  ...props
+}) {
+  const customClasses = {
+    primaryTrackBefore,
+    secondaryTrackBefore,
+    primaryThumbIcon,
+    secondaryThumbIcon,
+  }
+
   const trackBeforeClass = color
-    ? classes[`${color}TrackBefore`]
-    : classes.trackBefore
+    ? customClasses[`${color}TrackBefore`]
+    : defaultClasses.trackBefore
   const thumbIconClass = color
-    ? classes[`${color}ThumbIcon`]
-    : classes.thumbIcon
+    ? customClasses[`${color}ThumbIcon`]
+    : defaultClasses.thumbIcon
 
   return (
     <Slider
       classes={{
-        container: classes.container,
-        track: classes.track,
+        ...defaultClasses,
         trackBefore: trackBeforeClass,
-        trackAfter: classes.trackAfter,
-        thumb: classes.thumb,
         thumbIcon: thumbIconClass,
       }}
       {...props}

@@ -48,6 +48,7 @@ function AssessmentPillarScoring({
   pillar,
   criterion,
   partNumber,
+  disableEditing,
 }) {
   const { scoringId, scoringValues } = getScoringData(assessmentData, pillar)
 
@@ -134,6 +135,7 @@ function AssessmentPillarScoring({
                             {({ field }) => (
                               <ScoringSlider
                                 {...field}
+                                disabled={disableEditing}
                                 color={field.value ? 'secondary' : null}
                                 step={SLIDER_STEP}
                                 label={score.name}
@@ -152,6 +154,7 @@ function AssessmentPillarScoring({
                     })}
                     <Grid item xs>
                       <ScoringSlider
+                        disabled={disableEditing}
                         color={groupOverall ? 'primary' : null}
                         label="Overall"
                         value={groupOverall}
@@ -175,6 +178,7 @@ AssessmentPillarScoring.propTypes = {
   pillar: T.object.isRequired,
   criterion: T.object.isRequired,
   partNumber: T.number.isRequired,
+  disableEditing: T.bool.isRequired,
 }
 
 export default withTheme()(AssessmentPillarScoring)

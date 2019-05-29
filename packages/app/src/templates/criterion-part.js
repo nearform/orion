@@ -8,11 +8,21 @@ import { Redirect } from '@reach/router'
 import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
 import { getAssessmentPartData } from '../queries'
-import { isAuthenticatedSync, getUserIdSync } from '../utils/auth'
+import {
+  isAuthenticatedSync,
+  getUserIdSync,
+  isAdminSync,
+  isContributorSync,
+  isAssessorSync,
+} from '../utils/auth'
 import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
 import { getAssessmentId } from '../utils/url'
 import FileList from '../components/FileList'
 import CriterionPartTable from '../components/CriterionPartTable'
+import {
+  assessmentInProgress,
+  assessmentSubmitted,
+} from '../utils/assessment-status'
 
 function CriterionPartTemplate({
   theme,
@@ -36,6 +46,9 @@ function CriterionPartTemplate({
 
   const assessmentId = getAssessmentId(location)
   const userId = getUserIdSync()
+  const isAdmin = isAdminSync()
+  const isContributor = isContributorSync()
+  const isAssessor = isAssessorSync()
 
   const {
     loading,
@@ -58,6 +71,10 @@ function CriterionPartTemplate({
   if (error) {
     return 'Error'
   }
+
+  const canEditTablesAndUpload =
+    (isAdmin || isContributor) && assessmentInProgress(assessmentData)
+  const canEditScoring = isAssessor && assessmentSubmitted(assessmentData)
 
   return (
     <div className={classes.root} data-testid="criterion-part">
@@ -83,6 +100,7 @@ function CriterionPartTemplate({
               criterion={criterion}
               partNumber={partNumber}
               files={assessmentData.files}
+              canUpload={canEditTablesAndUpload}
               onUploadComplete={refetch}
             />
           </Grid>
@@ -138,15 +156,16 @@ function CriterionPartTemplate({
             </Grid>
           </Grid>
         </div>
-        {part.tables.map(table => (
+        {part.tables.map(tableDef => (
           <CriterionPartTable
-            table={table}
-            key={table.key}
+            key={tableDef.key}
+            tableDef={tableDef}
             assessmentTables={assessmentData.tables}
             assessmentId={assessmentId}
             criterionKey={criterion.key}
             pillarKey={pillar.key}
             partNumber={partNumber}
+            disableEditing={!canEditTablesAndUpload}
           />
         ))}
       </PaddedContainer>
@@ -162,6 +181,7 @@ function CriterionPartTemplate({
             pillar={pillar}
             criterion={criterion}
             partNumber={partNumber}
+            disableEditing={!canEditScoring}
           />
         </PaddedContainer>
       </div>

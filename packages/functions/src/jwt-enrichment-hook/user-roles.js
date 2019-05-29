@@ -1,22 +1,19 @@
 import map from 'lodash/map'
-import flatMap from 'lodash/flatMap'
-import concat from 'lodash/concat'
 import sortBy from 'lodash/sortBy'
 import first from 'lodash/first'
-import uniqBy from 'lodash/uniqBy'
 
-export function selectDefaultRole(roles) {
-  return first(sortBy(roles, 'order'))
+export const DEFAULT_ROLE_NAME = 'user'
+
+export function selectDefaultRoleName(roles, group) {
+  const baseRole = first(sortBy(roles, 'order'))
+
+  if (!group.type) {
+    return baseRole ? baseRole.name : DEFAULT_ROLE_NAME
+  }
+
+  return baseRole ? `${group.type}-${baseRole.name}` : DEFAULT_ROLE_NAME
 }
 
-export function getAllowedRoles(user) {
-  const allRoles = uniqBy(
-    concat(
-      map(user.user_roles, 'role'),
-      map(flatMap(user.user_groups, 'group.roles'), 'role')
-    ),
-    'id'
-  )
-
-  return allRoles
+export function getUserRoles(user) {
+  return map(user.user_roles, 'role')
 }

@@ -35,3 +35,6 @@ export {
 export {
   default as createFileUploadMutation,
 } from './create-file-upload.graphql'
+export {
+  default as updateAssessmentStatusMutation,
+} from './update-assessment-status.graphql'

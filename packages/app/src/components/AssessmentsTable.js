@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { useQuery } from 'graphql-hooks'
 import keyBy from 'lodash/keyBy'
 
-import { AssessmentStatusChip, ASSESSMENT_STATUS } from 'components'
+import { AssessmentStatusChip } from 'components'
 import { getAssessmentsData } from '../queries'
 import { getUserIdSync } from '../utils/auth'
 import { formatDate } from '../utils/date'
@@ -71,7 +71,7 @@ export default function AssessmentsTable() {
             <TableCell>{formatDate(assessment.created_at)}</TableCell>
             <TableCell>{assessmentKeyToName[assessment.key].name}</TableCell>
             <TableCell>
-              <AssessmentStatusChip status={ASSESSMENT_STATUS.inProgress} />
+              <AssessmentStatusChip status={assessment.status} />
             </TableCell>
             <TableCell />
             <TableCell />

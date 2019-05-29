@@ -29,3 +29,39 @@ storiesOf('ScoringSlider', module)
       ))}
     </Container>
   ))
+  .add('primary', () => (
+    <Container>
+      {[0, 25, 50, 75, 100].map(v => (
+        <ScoringSlider
+          key={v}
+          label={text('Label', `Slider ${v}`)}
+          value={number('Value', v)}
+          color="primary"
+        />
+      ))}
+    </Container>
+  ))
+  .add('secondary', () => (
+    <Container>
+      {[0, 25, 50, 75, 100].map(v => (
+        <ScoringSlider
+          key={v}
+          label={text('Label', `Slider ${v}`)}
+          value={number('Value', v)}
+          color="secondary"
+        />
+      ))}
+    </Container>
+  ))
+  .add('disabled', () => (
+    <Container>
+      {[0, 25, 50, 75, 100].map(v => (
+        <ScoringSlider
+          disabled
+          key={v}
+          label={text('Label', `Slider ${v}`)}
+          value={number('Value', v)}
+        />
+      ))}
+    </Container>
+  ))
