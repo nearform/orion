@@ -12,7 +12,13 @@ import {
   withStyles,
 } from '@material-ui/core'
 
-const AssessmentTool = ({ theme, classes, assessmentToolMeta, barColor }) => (
+const AssessmentTool = ({
+  theme,
+  classes,
+  assessmentToolMeta,
+  barColor,
+  isAuthenticated,
+}) => (
   <Grid item xs data-testid="assessment-tool">
     <Card className={classes.card} style={{ borderTopColor: barColor }}>
       <CardContent className={classes.cardContent}>
@@ -27,16 +33,18 @@ const AssessmentTool = ({ theme, classes, assessmentToolMeta, barColor }) => (
           {assessmentToolMeta.shortDescription}
         </Typography>
       </CardContent>
-      <CardActions className={classes.bottom}>
-        <Button
-          component={Link}
-          to={`/assessment/${assessmentToolMeta.key}`}
-          color="secondary"
-          fullWidth
-        >
-          {`Enter ${assessmentToolMeta.name}`}
-        </Button>
-      </CardActions>
+      {isAuthenticated && (
+        <CardActions className={classes.bottom}>
+          <Button
+            component={Link}
+            to={`/assessment/${assessmentToolMeta.key}`}
+            color="secondary"
+            fullWidth
+          >
+            {`Enter ${assessmentToolMeta.name}`}
+          </Button>
+        </CardActions>
+      )}
     </Card>
   </Grid>
 )
@@ -68,6 +76,7 @@ AssessmentTool.propTypes = {
     logo: T.object.isRequired,
   }).isRequired,
   barColor: T.string.isRequired,
+  isAuthenticated: T.bool.isRequired,
 }
 
 export default withStyles(styles, { withTheme: true })(AssessmentTool)

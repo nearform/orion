@@ -55,7 +55,7 @@ All the above considered, the objective is to make it possible to implemented ei
   - providing configuration for the assessments available in the assess base
   - ....
 
-[See here for a quick start guide](quick-start)
+[See here for a quick start guide](quick-start/)
 
 <!-- External Links -->
 [Gatsby]: https://www.gatsbyjs.org/
@@ -69,9 +69,6 @@ All the above considered, the objective is to make it possible to implemented ei
 [Cloudfront]: https://aws.amazon.com/cloudfront/
 [Route53]: https://aws.amazon.com/route53/
 [Terraform]: https://www.terraform.io/
-
-<!-- Internal Links -->
-[quick-start]: quick-start/
 
 <!-- Images -->
 [icon]: images/favicon.png

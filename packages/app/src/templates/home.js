@@ -85,6 +85,7 @@ function AssessmentsHome({ theme, classes, data }) {
                 barColor={assessmentColors[index % assessmentColors.length](
                   theme
                 )}
+                isAuthenticated={isAuthenticated}
               />
             ))}
           </Grid>

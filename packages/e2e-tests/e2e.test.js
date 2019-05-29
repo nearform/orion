@@ -6,53 +6,22 @@ const getWindowLocation = ClientFunction(() => window.location)
 export default function e2eTest(url, config, roles) {
   fixture`e2e-anonymous`.page(url).httpAuth(config.httpAuth)
 
-  test('Navigate anonymous user through templates "assessment", "criterion", towards "criterion-part"', async t => {
+  test('Assessment is inaccessible to anonymous user', async t => {
     // No assessments table until logged in
     const assessmentsTable = Selector('[data-testid="assessments-table"]')
     await t.expect(assessmentsTable.exists).notOk()
 
-    // Confirm that there is a link to the expected assessment type
-    const assessmentLinks = Selector(
-      '[data-testid="assessment-tool"] a[role="button"]'
-    )
+    // Confirm that there are assessment types
+    const assessmentTools = Selector('[data-testid="assessment-tool"]')
+    await t.expect(assessmentTools.exists).ok()
+
+    // Confirm that the links to enter these do not show
+    const assessmentEnterLinks = assessmentTools
+      .find('a[role="button"]')
       .withText(/enter/i)
       .withAttribute('href', /assessment\/.+/)
 
-    await t.expect(assessmentLinks.count).gt(1)
-
-    // Confirm that clicking on it navigates as expected
-    await t.click(assessmentLinks.nth(1))
-
-    const { pathname: assessmentPath } = await getWindowLocation()
-    await t.expect(assessmentPath).match(/assessment\/.+/)
-
-    const assessmentTemplate = Selector('[data-testid="assessment"]')
-    await t.expect(assessmentTemplate.exists).ok()
-
-    const nameInput = assessmentTemplate.find('form input[name="name"]')
-    await t.expect(nameInput.exists).ok()
-
-    // Test that tooltip is present and working
-    const titleWithTooltip = assessmentTemplate
-      .find('[data-testid="contextual-help"]')
-      .withAttribute('title')
-      .nth(0)
-    const tooltipText = await titleWithTooltip.getAttribute('title')
-
-    await t.hover(titleWithTooltip)
-
-    const tooltipId = await assessmentTemplate
-      .find('[data-testid="contextual-help"]')
-      .withAttribute('aria-describedby')
-      .getAttribute('aria-describedby')
-
-    const tooltip = Selector(`#${tooltipId}`)
-
-    await t.expect(tooltip.visible).ok()
-
-    await t.expect(tooltip.textContent).contains(tooltipText)
-
-    // Stop here as other behaviours for anonymous user are likely to change soon
+    await t.expect(assessmentEnterLinks.exists).notOk()
   })
 
   test('Admin section and subpaths are inaccessible to anonymous user', async t => {
@@ -173,5 +142,48 @@ export default function e2eTest(url, config, roles) {
 
     const criterionPart = Selector('[data-testid="criterion-part"]')
     await t.expect(criterionPart.exists).ok()
+  })
+
+  test('Navigate anonymous user through templates "assessment", "criterion", towards "criterion-part"', async t => {
+    // Confirm that there is a link to the expected assessment type
+    const assessmentLinks = Selector(
+      '[data-testid="assessment-tool"] a[role="button"]'
+    )
+      .withText(/enter/i)
+      .withAttribute('href', /assessment\/.+/)
+
+    await t.expect(assessmentLinks.count).gt(1)
+
+    // Confirm that clicking on it navigates as expected
+    await t.click(assessmentLinks.nth(1))
+
+    const { pathname: assessmentPath } = await getWindowLocation()
+    await t.expect(assessmentPath).match(/assessment\/.+/)
+
+    const assessmentTemplate = Selector('[data-testid="assessment"]')
+    await t.expect(assessmentTemplate.exists).ok()
+
+    const nameInput = assessmentTemplate.find('form input[name="name"]')
+    await t.expect(nameInput.exists).ok()
+
+    // Test that tooltip is present and working
+    const titleWithTooltip = assessmentTemplate
+      .find('[data-testid="contextual-help"]')
+      .withAttribute('title')
+      .nth(0)
+    const tooltipText = await titleWithTooltip.getAttribute('title')
+
+    await t.hover(titleWithTooltip)
+
+    const tooltipId = await assessmentTemplate
+      .find('[data-testid="contextual-help"]')
+      .withAttribute('aria-describedby')
+      .getAttribute('aria-describedby')
+
+    const tooltip = Selector(`#${tooltipId}`)
+
+    await t.expect(tooltip.visible).ok()
+
+    await t.expect(tooltip.textContent).contains(tooltipText)
   })
 }
