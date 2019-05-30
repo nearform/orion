@@ -2,8 +2,8 @@ import React from 'react'
 import T from 'prop-types'
 import { withStyles, Typography } from '@material-ui/core'
 
+import ChartTicks from '../ChartTicks'
 import StyledSlider from './StyledSlider'
-import Marks from './Marks'
 import Thumb from './Thumb'
 
 function ScoringSlider({ color, classes, label, ...props }) {
@@ -23,7 +23,7 @@ function ScoringSlider({ color, classes, label, ...props }) {
         thumb={<Thumb value={props.value} />}
         {...props}
       />
-      <Marks />
+      <ChartTicks variant="below" />
     </div>
   )
 }
