@@ -149,6 +149,9 @@ function AssessmentTemplate({
 
   const canCreateAssessment = isAdmin
 
+  // TODO: change this with correct rule based on assessment state
+  const canViewFeedbackReport = !!assessmentId
+
   return (
     <>
       <SEO title={t('Your assessments')} />
@@ -197,6 +200,18 @@ function AssessmentTemplate({
                       onClick={handleSubmitAssessment}
                     >
                       Submit Assessment
+                    </Button>
+                  )}
+                  {canViewFeedbackReport && (
+                    <Button
+                      component={Link}
+                      to={`assessment/${
+                        assessment.key
+                      }/feedback-report/#${assessmentId}`}
+                      color="secondary"
+                      variant="contained"
+                    >
+                      View Feedback Report
                     </Button>
                   )}
                 </Grid>

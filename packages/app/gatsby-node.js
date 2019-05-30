@@ -1,6 +1,5 @@
-const path = require('path')
-
 const currentTheme = require('./theme')
+
 const { theme, config } = currentTheme
 
 const pillarColors = [
@@ -25,11 +24,14 @@ exports.onPreInit = () => {
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const homeTemplate = path.resolve('./src/templates/home.js')
-  const assessmentTemplate = path.resolve('./src/templates/assessment.js')
-  const criterionTemplate = path.resolve('./src/templates/criterion.js')
-  const criterionPartTemplate = path.resolve(
+  const homeTemplate = require.resolve('./src/templates/home.js')
+  const assessmentTemplate = require.resolve('./src/templates/assessment.js')
+  const criterionTemplate = require.resolve('./src/templates/criterion.js')
+  const criterionPartTemplate = require.resolve(
     './src/templates/criterion-part.js'
+  )
+  const feedbackReportTemplate = require.resolve(
+    './src/templates/feedback-report.js'
   )
 
   const assessmentsQueryResults = await graphql(`
@@ -104,6 +106,15 @@ exports.createPages = async ({ graphql, actions }) => {
     createPage({
       path: `assessment/${assessment.key}`,
       component: assessmentTemplate,
+      context: {
+        assessment,
+        pillarColors,
+      },
+    })
+
+    createPage({
+      path: `assessment/${assessment.key}/feedback-report`,
+      component: feedbackReportTemplate,
       context: {
         assessment,
         pillarColors,

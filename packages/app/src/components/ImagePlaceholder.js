@@ -1,8 +1,14 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core'
+import T from 'prop-types'
 
 function ImagePlaceholder({ classes, children }) {
   return <div className={classes.root}>{children}</div>
+}
+
+ImagePlaceholder.propTypes = {
+  classes: T.object.isRequired,
+  children: T.node.isRequired,
 }
 
 const styles = theme => ({

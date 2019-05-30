@@ -1,0 +1,6 @@
+query getAssessmentFeedbackReportData($assessmentId: Int!) {
+  assessment_by_pk(id: $assessmentId) {
+    name
+    status
+  }
+}

@@ -38,3 +38,6 @@ export {
 export {
   default as updateAssessmentStatusMutation,
 } from './update-assessment-status.graphql'
+export {
+  default as getAssessmentFeedbackReportData,
+} from './get-assessment-feedback-report-data.graphql'
