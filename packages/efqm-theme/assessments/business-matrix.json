@@ -52,7 +52,7 @@
               "tables": [
                 {
                   "key": "purpose-vision",
-                  "name": "set & communicate purpose & vision",
+                  "name": "1a. Set & communicate purpose & vision",
                   "guidance": "We are here to guide you how to complete the purpose and vision criterion part",
                   "columns": [
                     {
@@ -80,18 +80,33 @@
                       "name": "efqm links"
                     }
                   ]
-                },
+                }
+              ],
+              "feedbackTables": [
                 {
-                  "key": "strengths-improvement",
-                  "name": "capture overall strengths & area for improvement below",
+                  "key": "strengths",
                   "columns": [
                     {
                       "key": "strengths",
                       "name": "strengths"
-                    },
+                    }
+                  ]
+                },
+                {
+                  "key": "areas-of-improvement",
+                  "columns": [
                     {
-                      "key": "improvement",
-                      "name": "areas for improvement"
+                      "key": "areas-of-improvement",
+                      "name": "areas of improvement"
+                    }
+                  ]
+                },
+                {
+                  "key": "good-practice",
+                  "columns": [
+                    {
+                      "key": "good-practice",
+                      "name": "good practice"
                     }
                   ]
                 }
@@ -123,6 +138,35 @@
                     {
                       "key": "needs",
                       "name": "resources needed not currently available (needs)"
+                    }
+                  ]
+                }
+              ],
+              "feedbackTables": [
+                {
+                  "key": "strengths",
+                  "columns": [
+                    {
+                      "key": "strengths",
+                      "name": "strengths"
+                    }
+                  ]
+                },
+                {
+                  "key": "areas-of-improvement",
+                  "columns": [
+                    {
+                      "key": "areas-of-improvement",
+                      "name": "areas of improvement"
+                    }
+                  ]
+                },
+                {
+                  "key": "good-practice",
+                  "columns": [
+                    {
+                      "key": "good-practice",
+                      "name": "good practice"
                     }
                   ]
                 }
@@ -215,6 +259,35 @@
                     {
                       "key": "example-input-4",
                       "name": "example input 4"
+                    }
+                  ]
+                }
+              ],
+              "feedbackTables": [
+                {
+                  "key": "strengths",
+                  "columns": [
+                    {
+                      "key": "strengths",
+                      "name": "strengths"
+                    }
+                  ]
+                },
+                {
+                  "key": "areas-of-improvement",
+                  "columns": [
+                    {
+                      "key": "areas-of-improvement",
+                      "name": "areas of improvement"
+                    }
+                  ]
+                },
+                {
+                  "key": "good-practice",
+                  "columns": [
+                    {
+                      "key": "good-practice",
+                      "name": "good practice"
                     }
                   ]
                 }
