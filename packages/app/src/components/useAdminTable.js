@@ -54,6 +54,7 @@ export default function useAdminTable({
   return {
     selected,
     setSelected,
+    page: offset / pageSize + 1,
     setPage,
     refetch,
     table: loadingMsg || errorMsg || table,

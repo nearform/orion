@@ -75,12 +75,15 @@ function ContributorsAssessorsTemplate({
         await deleteAssessmentContributor({ variables })
       }
     } finally {
-      setPage(1)
-      refetchUsers()
+      if (page === 1) {
+        refetch()
+      } else {
+        setPage(1)
+      }
     }
   }
 
-  const { table, setPage, refetch: refetchUsers } = useAdminTable({
+  const { table, setPage, page, refetch } = useAdminTable({
     query: getAssessmentContributorsAssessorsData,
     variables: {
       assessmentId,
