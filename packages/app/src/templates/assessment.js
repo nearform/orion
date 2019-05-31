@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
-import { PaddedContainer, ASSESSMENT_STATUS } from 'components'
+import { PaddedContainer, ASSESSMENT_STATUS, BarChart } from 'components'
 import { Link, navigate } from 'gatsby'
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
@@ -23,10 +23,16 @@ import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'
 import UploadButton from '../components/UploadButton'
-import ImagePlaceholder from '../components/ImagePlaceholder'
 import FileItem from '../components/FileItem'
 import { Redirect } from '@reach/router'
-import { assessmentInProgress } from '../utils/assessment-status'
+import {
+  assessmentInProgress,
+  assessmentSubmitted,
+} from '../utils/assessment-status'
+import {
+  getSampleColors,
+  getSampleData,
+} from 'components/src/components/BarChart/util.storybook'
 
 function createFormInitialValues(assessmentKeyInfoDef, assessmentData) {
   return assessmentKeyInfoDef.reduce(
@@ -150,7 +156,10 @@ function AssessmentTemplate({
   const canCreateAssessment = isAdmin
 
   // TODO: change this with correct rule based on assessment state
-  const canViewFeedbackReport = !!assessmentId
+  const canViewFeedbackReport = assessmentSubmitted(assessmentData)
+
+  const sampleColors = getSampleColors(theme)
+  const chartData = getSampleData(sampleColors)
 
   return (
     <>
@@ -450,9 +459,7 @@ function AssessmentTemplate({
                   >
                     Scoring Summary
                   </SectionTitle>
-                  <ImagePlaceholder>
-                    <Typography variant="h4">Scoring Summary</Typography>
-                  </ImagePlaceholder>
+                  <BarChart chartData={chartData} />
                 </Grid>
               </Grid>
             )}

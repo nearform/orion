@@ -13,7 +13,7 @@ import {
   TableBody,
   IconButton,
 } from '@material-ui/core'
-import { PaddedContainer } from 'components'
+import { PaddedContainer, BarChartTable } from 'components'
 import { Link } from 'gatsby'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useQuery } from 'graphql-hooks'
@@ -24,7 +24,10 @@ import SectionTitle from '../components/SectionTitle'
 import { getAssessmentId } from '../utils/url'
 
 import { getAssessmentFeedbackReportData } from '../queries'
-import ImagePlaceholder from '../components/ImagePlaceholder'
+import {
+  getSampleColors,
+  getSampleData,
+} from 'components/src/components/BarChart/util.storybook'
 
 function FeedbackReport({
   theme,
@@ -41,6 +44,9 @@ function FeedbackReport({
       assessmentId,
     },
   })
+
+  const sampleColors = getSampleColors(theme)
+  const chartData = getSampleData(sampleColors)
 
   return (
     <div className={classes.root}>
@@ -106,7 +112,7 @@ function FeedbackReport({
               </Typography>
             </Grid>
             <Grid item xs>
-              <ImagePlaceholder>Scoring Chart</ImagePlaceholder>
+              <BarChartTable chartData={chartData} />
             </Grid>
           </Grid>
         </div>
