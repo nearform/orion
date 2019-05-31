@@ -1,0 +1,19 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - cognito_id
+      - signupRequest
+      - pending
+      - email
+      filter:
+        assessment_contributors:
+          contributor_id:
+            _eq: X-Hasura-User-Id
+      limit: null
+    role: user
+    table:
+      name: user
+      schema: public
+  type: create_select_permission

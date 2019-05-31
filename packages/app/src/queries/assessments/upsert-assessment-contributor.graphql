@@ -1,0 +1,14 @@
+mutation upsertAssessmentContributor(
+  $assessmentId: Int!
+  $contributorId: Int!
+) {
+  insert_assessment_contributor(
+    objects: { assessment_id: $assessmentId, contributor_id: $contributorId }
+    on_conflict: {
+      constraint: assessment_contributor_pkey
+      update_columns: [assessment_id, contributor_id]
+    }
+  ) {
+    affected_rows
+  }
+}

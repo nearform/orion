@@ -1,0 +1,24 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - assessment_id
+      - part_number
+      - user_id
+      - file_name
+      - s3_key
+      - created_at
+      - pillar_key
+      - criterion_key
+      filter:
+        assessment:
+          contributors:
+            contributor_id:
+              _eq: X-Hasura-User-Id
+      limit: null
+    role: user
+    table:
+      name: assessment_file
+      schema: public
+  type: create_select_permission

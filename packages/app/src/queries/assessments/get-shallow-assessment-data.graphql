@@ -4,6 +4,7 @@ query getShallowAssessmentData($id: Int!) {
     key
     name
     status
+    internal
     key_information
     files(
       where: {

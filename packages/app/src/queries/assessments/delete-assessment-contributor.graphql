@@ -1,0 +1,13 @@
+mutation deleteAssessmentContributor(
+  $assessmentId: Int!
+  $contributorId: Int!
+) {
+  delete_assessment_contributor(
+    where: {
+      assessment_id: { _eq: $assessmentId }
+      contributor_id: { _eq: $contributorId }
+    }
+  ) {
+    affected_rows
+  }
+}

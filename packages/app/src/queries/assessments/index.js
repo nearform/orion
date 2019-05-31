@@ -50,3 +50,12 @@ export {
 export {
   default as getAssessmentFeedbackReportData,
 } from './get-assessment-feedback-report-data.graphql'
+export {
+  default as getAssessmentContributorsAssessorsData,
+} from './get-assessment-contributors-assessors-data.graphql'
+export {
+  default as deleteAssessmentContributorMutation,
+} from './delete-assessment-contributor.graphql'
+export {
+  default as upsertAssessmentContributorMutation,
+} from './upsert-assessment-contributor.graphql'

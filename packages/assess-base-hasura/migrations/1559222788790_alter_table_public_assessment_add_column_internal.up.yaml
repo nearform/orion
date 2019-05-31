@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "public"."assessment" ADD COLUMN "internal" boolean NOT NULL
+      DEFAULT true
+  type: run_sql

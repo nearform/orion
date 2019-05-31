@@ -1,12 +1,16 @@
-query getAssessments($userId: Int) {
-  assessment(
-    where: { owner_id: { _eq: $userId } }
-    order_by: { created_at: desc }
-  ) {
+query getAssessments {
+  assessment(order_by: { created_at: desc }) {
     id
     key
     name
     status
     created_at
+    owner {
+      user_groups {
+        group {
+          name
+        }
+      }
+    }
   }
 }

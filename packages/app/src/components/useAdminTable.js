@@ -10,7 +10,11 @@ export default function useAdminTable({
   variables,
   renderTableBody,
 }) {
-  const pageSizes = [4, 8, 12]
+  const pageSizes = [10, 20, 50]
+
+  function setPage(pageNumber) {
+    setOffset(Math.max(0, pageSize * (pageNumber - 1)))
+  }
 
   const [selected, setSelected] = useState(null)
   const [offset, setOffset] = useState(0)
@@ -50,6 +54,7 @@ export default function useAdminTable({
   return {
     selected,
     setSelected,
+    setPage,
     refetch,
     table: loadingMsg || errorMsg || table,
   }

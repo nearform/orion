@@ -1,0 +1,21 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - name
+      - parent_id
+      - type
+      filter:
+        users:
+          user:
+            assessments_owner:
+              contributors:
+                contributor_id:
+                  _eq: X-Hasura-User-Id
+      limit: null
+    role: user
+    table:
+      name: group
+      schema: public
+  type: create_select_permission

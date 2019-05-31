@@ -14,10 +14,10 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from 'graphql-hooks'
 import keyBy from 'lodash/keyBy'
+import get from 'lodash/get'
 
 import { AssessmentStatusChip } from 'components'
 import { getAssessmentsData } from '../queries'
-import { getUserIdSync } from '../utils/auth'
 import { formatDate } from '../utils/date'
 
 export default function AssessmentsTable() {
@@ -36,14 +36,7 @@ export default function AssessmentsTable() {
     `
   )
 
-  const { data: assessmentsData, loading, error } = useQuery(
-    getAssessmentsData,
-    {
-      variables: {
-        userId: getUserIdSync(),
-      },
-    }
-  )
+  const { data: assessmentsData, loading, error } = useQuery(getAssessmentsData)
 
   if (loading) return <Typography>Loading...</Typography>
   if (error) return <Typography>Error loading assessments.</Typography>
@@ -57,6 +50,7 @@ export default function AssessmentsTable() {
           <TableCell>{t('Your assessments')}</TableCell>
           <TableCell>Created</TableCell>
           <TableCell>Assessment Type</TableCell>
+          <TableCell>Company</TableCell>
           <TableCell>Status</TableCell>
           <TableCell>Management Report</TableCell>
           <TableCell>Report</TableCell>
@@ -70,6 +64,9 @@ export default function AssessmentsTable() {
             <TableCell>{assessment.name}</TableCell>
             <TableCell>{formatDate(assessment.created_at)}</TableCell>
             <TableCell>{assessmentKeyToName[assessment.key].name}</TableCell>
+            <TableCell>
+              {get(assessment, 'owner.user_groups[0].group.name')}
+            </TableCell>
             <TableCell>
               <AssessmentStatusChip status={assessment.status} />
             </TableCell>

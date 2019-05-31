@@ -81,9 +81,7 @@ export default function AdminTable({
 }
 
 AdminTable.defaultProps = {
-  pageSize: 10,
   orderBy: { id: 'asc' },
-  pageSizes: [10, 20, 50],
 }
 
 AdminTable.propTypes = {

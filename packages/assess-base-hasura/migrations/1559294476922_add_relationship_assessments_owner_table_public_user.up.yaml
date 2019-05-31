@@ -1,0 +1,12 @@
+- args:
+    name: assessments_owner
+    table:
+      name: user
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: owner_id
+        table:
+          name: assessment
+          schema: public
+  type: create_array_relationship

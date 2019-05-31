@@ -33,6 +33,9 @@ exports.createPages = async ({ graphql, actions }) => {
   const feedbackReportTemplate = require.resolve(
     './src/templates/feedback-report.js'
   )
+  const contributorsAssessorsTemplate = require.resolve(
+    './src/templates/contributors-assessors.js'
+  )
 
   const assessmentsQueryResults = await graphql(`
     {
@@ -125,6 +128,14 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         assessment,
         pillarColors,
+      },
+    })
+
+    createPage({
+      path: `assessment/${assessment.key}/contributors-assessors`,
+      component: contributorsAssessorsTemplate,
+      context: {
+        assessment,
       },
     })
 

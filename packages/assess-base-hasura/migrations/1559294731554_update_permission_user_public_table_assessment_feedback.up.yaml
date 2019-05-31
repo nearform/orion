@@ -1,0 +1,22 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - assessment_id
+      - criterion_key
+      - feedback_values
+      - id
+      - part_number
+      - pillar_key
+      - table_key
+      filter:
+        assessment:
+          contributors:
+            contributor_id:
+              _eq: X-Hasura-User-Id
+      limit: null
+    role: user
+    table:
+      name: assessment_feedback
+      schema: public
+  type: create_select_permission

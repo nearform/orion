@@ -1,13 +1,16 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
-import { useTranslation } from 'react-i18next'
 import { PaddedContainer, ASSESSMENT_STATUS, BarChart } from 'components'
 import { Link, navigate } from 'gatsby'
 import { Formik, Form, Field } from 'formik'
-import { TextField } from 'formik-material-ui'
+import {
+  TextField as FormikTextField,
+  Switch as FormikSwitch,
+} from 'formik-material-ui'
 import { useMutation, useManualQuery } from 'graphql-hooks'
 import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
+import * as Yup from 'yup'
 
 import SEO from '../components/seo'
 import SectionTitle from '../components/SectionTitle'
@@ -47,6 +50,11 @@ function createFormInitialValues(assessmentKeyInfoDef, assessmentData) {
   )
 }
 
+const assessmentValidationSchema = Yup.object().shape({
+  name: Yup.string().required(),
+  internal: Yup.boolean().required(),
+})
+
 function AssessmentTemplate({
   location,
   theme,
@@ -59,8 +67,6 @@ function AssessmentTemplate({
   if (!assessmentId && !isAdmin) {
     return <Redirect to="/auth" noThrow />
   }
-
-  const { t } = useTranslation()
 
   const [assessmentData, setAssessmentData] = useState()
   const [createAssessment] = useMutation(createAssessmentMutation)
@@ -75,9 +81,7 @@ function AssessmentTemplate({
     }
   }, [assessmentId])
 
-  async function handleCreateAssessment({ name }) {
-    const userId = getUserIdSync()
-
+  async function handleCreateAssessment({ name, internal }) {
     const {
       data: {
         insert_assessment: {
@@ -88,7 +92,8 @@ function AssessmentTemplate({
       variables: {
         key: assessment.key,
         name,
-        ownerId: userId,
+        internal,
+        owner_id: getUserIdSync(),
       },
     })
 
@@ -161,9 +166,11 @@ function AssessmentTemplate({
   const sampleColors = getSampleColors(theme)
   const chartData = getSampleData(sampleColors)
 
+  const canAssignContributorsAndAssessors = !!assessmentId && isAdmin
+
   return (
     <>
-      <SEO title={t('Your assessments')} />
+      <SEO title={get(assessmentData, 'name', 'Assessment')} />
       <PaddedContainer data-testid="assessment">
         <Button component={Link} to="/" variant="text" color="secondary">
           ◀ Assess base home
@@ -181,7 +188,7 @@ function AssessmentTemplate({
               wrap="nowrap"
               spacing={theme.spacing.unit * 4}
             >
-              <Grid item container xs={12}>
+              <Grid item container>
                 <Grid item xs={4}>
                   <SectionTitle
                     barColor={theme.palette.primary.dark}
@@ -227,54 +234,118 @@ function AssessmentTemplate({
               </Grid>
               <Grid item xs>
                 {assessmentId ? (
-                  <>
-                    <Typography variant="h4" gutterBottom>
-                      assessment name
-                    </Typography>
-                    <Typography variant="h2" color="primary">
-                      {get(assessmentData, 'name', 'Loading...')}
-                    </Typography>
-                  </>
+                  <Grid
+                    container
+                    direction="column"
+                    spacing={theme.spacing.unit}
+                  >
+                    <Grid item>
+                      <Typography variant="h4">
+                        {get(assessmentData, 'internal') ? 'internal' : ''}{' '}
+                        assessment name
+                      </Typography>
+                    </Grid>
+                    <Grid item xs>
+                      <Typography variant="h2" color="primary">
+                        {get(assessmentData, 'name', 'Loading...')}
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 ) : (
-                  <>
-                    <Typography variant="h4" gutterBottom>
-                      Enter your assessment name
-                    </Typography>
-                    <Formik
-                      enableReinitialize
-                      initialValues={{
-                        name: '',
-                      }}
-                      validate={({ name }) => !!name}
-                      onSubmit={handleCreateAssessment}
-                    >
-                      {({ isValid }) => (
-                        <Form>
-                          <Grid container spacing={theme.spacing.unit * 2}>
-                            <Grid item xs>
-                              <Field
-                                name="name"
-                                component={TextField}
-                                fullWidth
-                              />
-                            </Grid>
-                            <Grid item xs>
-                              <Button
-                                type="submit"
-                                color="secondary"
-                                variant="contained"
-                                disabled={!isValid || !canCreateAssessment}
-                              >
-                                Create Assessment
-                              </Button>
+                  <Formik
+                    enableReinitialize
+                    initialValues={{
+                      name: '',
+                      internal: true,
+                    }}
+                    validationSchema={assessmentValidationSchema}
+                    onSubmit={handleCreateAssessment}
+                  >
+                    {({ isValid }) => (
+                      <Form>
+                        <Grid container spacing={theme.spacing.unit * 2}>
+                          <Grid item xs>
+                            <Grid
+                              container
+                              direction="column"
+                              spacing={theme.spacing.unit}
+                            >
+                              <Grid item>
+                                <Typography variant="h4">
+                                  Enter your assessment name
+                                </Typography>
+                              </Grid>
+                              <Grid item>
+                                <Field
+                                  name="name"
+                                  component={FormikTextField}
+                                  fullWidth
+                                  FormHelperTextProps={{
+                                    classes: { root: classes.displayNone },
+                                  }}
+                                />
+                              </Grid>
                             </Grid>
                           </Grid>
-                        </Form>
-                      )}
-                    </Formik>
-                  </>
+                          <Grid item>
+                            <Grid
+                              container
+                              direction="column"
+                              spacing={theme.spacing.unit}
+                            >
+                              <Grid item>
+                                <Typography variant="h4">Internal</Typography>
+                              </Grid>
+                              <Grid item>
+                                <Field
+                                  name="internal"
+                                  classes={{ switchBase: classes.switch }}
+                                  component={FormikSwitch}
+                                />
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                          <Grid item xs>
+                            <Grid
+                              container
+                              direction="column"
+                              spacing={theme.spacing.unit}
+                            >
+                              <Grid item>
+                                <Typography variant="h4">&nbsp;</Typography>
+                              </Grid>
+                              <Grid item>
+                                <Button
+                                  type="submit"
+                                  color="secondary"
+                                  variant="contained"
+                                  disabled={!isValid || !canCreateAssessment}
+                                >
+                                  Create Assessment
+                                </Button>
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      </Form>
+                    )}
+                  </Formik>
                 )}
               </Grid>
+              {canAssignContributorsAndAssessors && (
+                <Grid item xs>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    component={Link}
+                    to={`assessment/${
+                      assessment.key
+                    }/contributors-assessors#${assessmentId}`}
+                  >
+                    Assign Contributors and Assessors
+                  </Button>
+                </Grid>
+              )}
               <Grid item xs>
                 <Typography
                   variant="h3"
@@ -313,7 +384,7 @@ function AssessmentTemplate({
                                   </Typography>
                                   <Field
                                     name={keyInfo.key}
-                                    component={TextField}
+                                    component={FormikTextField}
                                     fullWidth
                                     multiline
                                     rows={5}
@@ -423,7 +494,7 @@ function AssessmentTemplate({
                           assessmentId
                             ? `assessment/${assessment.key}/${pillar.key}/${
                                 criterion.key
-                              }#${assessmentId}}`
+                              }#${assessmentId}`
                             : null
                         }
                         variant="h3"
@@ -502,6 +573,12 @@ const styles = theme => ({
     '& > * + *': {
       marginLeft: theme.spacing.unit * 2,
     },
+  },
+  displayNone: {
+    display: 'none',
+  },
+  switch: {
+    height: theme.spacing.unit * 4,
   },
 })
 
