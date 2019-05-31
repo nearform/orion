@@ -57,6 +57,7 @@ query getAssessmentPartData(
     ) {
       id
       file_name
+      file_size
       s3_key
     }
   }

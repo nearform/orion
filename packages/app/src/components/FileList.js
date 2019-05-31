@@ -22,7 +22,7 @@ function FileList({
 }) {
   const [createFileUpload] = useMutation(createFileUploadMutation)
 
-  async function createNewFileUpload(fileName, s3Key) {
+  async function createNewFileUpload(file, s3Key) {
     const { error } = await createFileUpload({
       variables: {
         fileUploadData: {
@@ -31,7 +31,8 @@ function FileList({
           pillar_key: pillar.key,
           criterion_key: criterion.key,
           part_number: partNumber,
-          file_name: fileName,
+          file_name: file.name,
+          file_size: file.size,
           s3_key: s3Key,
         },
       },
@@ -42,7 +43,7 @@ function FileList({
 
   async function handleFileUpload(file) {
     const { key: s3Key } = await uploadFile(file, assessmentId)
-    await createNewFileUpload(file.name, s3Key)
+    await createNewFileUpload(file, s3Key)
 
     onUploadComplete()
   }
