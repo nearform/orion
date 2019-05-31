@@ -120,14 +120,15 @@ function AssessmentTemplate({
     await loadAssessment(assessmentId)
   }
 
-  async function createNewFileUpload(assessmentId, fileName, s3Key) {
+  async function createNewFileUpload(assessmentId, file, s3Key) {
     const userId = getUserIdSync()
     const { data, error } = await createFileUpload({
       variables: {
         fileUploadData: {
           user_id: userId,
           assessment_id: assessmentId,
-          file_name: fileName,
+          file_name: file.name,
+          file_size: file.size,
           s3_key: s3Key,
         },
       },
@@ -140,7 +141,7 @@ function AssessmentTemplate({
 
   async function handleFileUpload(file) {
     const { key: s3Key } = await uploadFile(file, assessmentId)
-    await createNewFileUpload(assessmentId, file.name, s3Key)
+    await createNewFileUpload(assessmentId, file, s3Key)
     await loadAssessment(assessmentId)
   }
 

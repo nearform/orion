@@ -14,6 +14,7 @@ query getShallowAssessmentData($id: Int!) {
       }
     ) {
       file_name
+      file_size
       s3_key
     }
   }
