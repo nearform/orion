@@ -1,0 +1,11 @@
+mutation updateAssessmentFeedbackTableRow($id: Int!, $feedbackValues: jsonb!) {
+  update_assessment_feedback(
+    where: { id: { _eq: $id } }
+    _set: { feedback_values: $feedbackValues }
+  ) {
+    returning {
+      id
+      feedback_values
+    }
+  }
+}

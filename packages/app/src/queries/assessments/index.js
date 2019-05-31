@@ -24,6 +24,15 @@ export {
   default as deleteAssessmentTableRowMutation,
 } from './delete-assessment-table-row.graphql'
 export {
+  default as updateAssessmentFeedbackDataMutation,
+} from './update-assessment-feedback-data.graphql'
+export {
+  default as insertAssessmentFeedbackDataMutation,
+} from './insert-assessment-feedback-data.graphql'
+export {
+  default as deleteAssessmentFeedbackRowMutation,
+} from './delete-assessment-feedback-row.graphql'
+export {
   default as insertAssessmentScoringDataMutation,
 } from './insert-assessment-scoring-data.graphql'
 export {

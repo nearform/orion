@@ -76,7 +76,8 @@ function CriterionPartTemplate({
 
   const canEditTablesAndUpload =
     (isAdmin || isContributor) && assessmentInProgress(assessmentData)
-  const canEditScoring = isAssessor && assessmentSubmitted(assessmentData)
+  const canEditFeedbackAndScoring =
+    isAssessor && assessmentSubmitted(assessmentData)
 
   return (
     <div className={classes.root} data-testid="criterion-part">
@@ -127,7 +128,7 @@ function CriterionPartTemplate({
             criterionKey={criterion.key}
             pillarKey={pillar.key}
             partNumber={partNumber}
-            disableEditing={!canEditTablesAndUpload}
+            canEdit={canEditTablesAndUpload}
             paginationNode={
               tableIndex === 0 && (
                 <CriterionPartPagination
@@ -158,13 +159,16 @@ function CriterionPartTemplate({
             </Typography>
           </Grid>
         </Grid>
-        {part.feedbackTables.map(table => (
+        {part.feedbackTables.map(tableDef => (
           <CriterionPartFeedbackTable
-            tableDef={table}
-            key={table.key}
-            assessmentTables={assessmentData.feedbackTables}
+            tableDef={tableDef}
+            key={tableDef.key}
+            assessmentFeedbackTables={assessmentData.feedbackTables}
             assessmentId={assessmentId}
-            disableEditing={!canEditTablesAndUpload}
+            criterionKey={criterion.key}
+            pillarKey={pillar.key}
+            partNumber={partNumber}
+            canEdit={canEditTablesAndUpload}
           />
         ))}
         <div className={classes.section}>
@@ -175,7 +179,6 @@ function CriterionPartTemplate({
             previousLink={previousLink}
             partNumber={partNumber}
             totalParts={totalParts}
-            disableEditing={!canEditTablesAndUpload}
           />
         </div>
       </PaddedContainer>
@@ -191,7 +194,7 @@ function CriterionPartTemplate({
             pillar={pillar}
             criterion={criterion}
             partNumber={partNumber}
-            disableEditing={!canEditScoring}
+            canEdit={canEditFeedbackAndScoring}
           />
         </PaddedContainer>
       </div>

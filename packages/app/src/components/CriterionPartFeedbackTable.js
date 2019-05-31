@@ -1,12 +1,19 @@
+import { useMutation } from 'graphql-hooks'
 import React, { useState } from 'react'
 import T from 'prop-types'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
 import classnames from 'classnames'
+import get from 'lodash/get'
 
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
 
 import ContextualHelp from '../components/ContextualHelp'
+import {
+  deleteAssessmentFeedbackRowMutation,
+  insertAssessmentFeedbackDataMutation,
+  updateAssessmentFeedbackDataMutation,
+} from '../queries/assessments'
 
 function getEmptyTableRow(tableDef) {
   return tableDef.columns.reduce(
@@ -15,36 +22,122 @@ function getEmptyTableRow(tableDef) {
   )
 }
 
-function getExistingTableData(assessmentTables, tableDef) {
+function getExistingTableData(assessmentFeedbackTables, tableDef) {
   return (
-    assessmentTables &&
-    assessmentTables.find(({ table_key }) => table_key === tableDef.key)
+    assessmentFeedbackTables &&
+    assessmentFeedbackTables.find(({ table_key }) => table_key === tableDef.key)
   )
+}
+
+function getReturnedTableData(queryAction, result, tableId) {
+  if (result.error) throw result.error
+  const err = msg => {
+    throw new Error(`Return from ${queryAction} ${msg}`)
+  }
+
+  const expectedProps = `data.${queryAction}.returning`
+  const returning = get(result, expectedProps)
+
+  if (!returning) err(`lacks properties ${expectedProps}`)
+
+  const table = tableId
+    ? returning.find(table => table.id === tableId)
+    : returning[0]
+
+  if (!table) err(`lacks table with id ${tableId}`)
+  if (!table.feedback_values)
+    err(`lacks .feedback_values on table id ${tableId}`)
+
+  return table
 }
 
 function CriterionPartFeedbackTable({
   theme,
   classes,
   tableDef,
-  assessmentTables,
-  disableEditing,
+  assessmentFeedbackTables,
+  assessmentId,
+  pillarKey,
+  criterionKey,
+  partNumber,
+  canEdit,
 }) {
-  const tableData = getExistingTableData(assessmentTables, tableDef)
-
-  // TODO remove eslint disables after implementing https://github.com/nearform/raw-salmon/issues/232
-  // eslint-disable-next-line
+  const tableData = getExistingTableData(assessmentFeedbackTables, tableDef)
   const [tableId, setTableId] = useState(tableData ? tableData.id : null)
-  // eslint-disable-next-line
   const [tableRows, setTableRows] = useState(
-    tableData ? tableData.table_values : []
+    tableData ? tableData.feedback_values : []
   )
 
+  const [insertTableData] = useMutation(insertAssessmentFeedbackDataMutation)
+  const [updateTableData] = useMutation(updateAssessmentFeedbackDataMutation)
+  const [deleteTableRow] = useMutation(deleteAssessmentFeedbackRowMutation)
+
   async function handleDeleteTableRow(rowIndex) {
-    //TBD
+    const result = await deleteTableRow({
+      variables: {
+        id: tableId,
+        rowIndex,
+      },
+    })
+
+    const { feedback_values: returnedRows } = getReturnedTableData(
+      'update_assessment_feedback',
+      result,
+      tableId
+    )
+    setTableRows(returnedRows)
   }
 
   async function handleSaveTable(rowIndex, rowValues, { setSubmitting }) {
-    //TBD
+    if (tableId) {
+      const modifiedRows = [...tableRows]
+      modifiedRows[rowIndex] = rowValues
+
+      const result = await updateTableData({
+        variables: {
+          id: tableId,
+          feedbackValues: modifiedRows,
+        },
+      })
+      // Ensure what was written to db and returned is what is shown
+      const { feedback_values: returnedRows } = getReturnedTableData(
+        'update_assessment_feedback',
+        result,
+        tableId
+      )
+
+      // Update this row only to not erase user's unsaved work on other rows
+      modifiedRows[rowIndex] = returnedRows[rowIndex]
+
+      setTableRows(modifiedRows)
+      setSubmitting(false)
+    } else {
+      const result = await insertTableData({
+        variables: {
+          assessmentId,
+          pillarKey,
+          criterionKey,
+          partNumber,
+          tableKey: tableDef.key,
+          feedbackValues: [rowValues],
+        },
+      })
+
+      const { id, feedback_values: returnedRows } = getReturnedTableData(
+        'insert_assessment_feedback',
+        result,
+        tableId
+      )
+
+      setTableId(id)
+      setTableRows(returnedRows)
+    }
+  }
+
+  let tables = [...tableRows]
+
+  if (canEdit) {
+    tables.push(getEmptyTableRow(tableDef))
   }
 
   return (
@@ -64,85 +157,105 @@ function CriterionPartFeedbackTable({
         )}
         <Grid item xs />
       </Grid>
-      {[...tableRows, getEmptyTableRow(tableDef)].map(
-        (initialValues, rowIndex, { length: totalRows }) => (
-          <Formik
-            enableReinitialize
-            initialValues={initialValues}
-            onSubmit={(values, actions) =>
-              handleSaveTable(rowIndex, values, actions)
-            }
-            key={`${tableDef.key}-${rowIndex}`}
-          >
-            {({ isSubmitting, dirty }) => (
-              <Form>
-                <Grid container spacing={theme.spacing.unit * 2}>
-                  <Grid
-                    item
-                    container
-                    spacing={theme.spacing.unit}
-                    alignItems="baseline"
-                  >
-                    <Grid item>
-                      <Grid container direction="column" alignItems="center">
-                        <Grid item>
-                          <Typography
-                            variant="h4"
-                            gutterBottom
-                            className={classnames({
-                              invisible: rowIndex > 0,
-                            })}
-                          >
-                            ITEM
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="h3" color="primary">
-                            {rowIndex + 1}
-                          </Typography>
-                        </Grid>
+      {tables.map((initialValues, rowIndex, { length: totalRows }) => (
+        <Formik
+          enableReinitialize
+          initialValues={initialValues}
+          onSubmit={(values, actions) =>
+            handleSaveTable(rowIndex, values, actions)
+          }
+          key={`${tableDef.key}-${rowIndex}`}
+        >
+          {({ isSubmitting, dirty }) => (
+            <Form>
+              <Grid container spacing={theme.spacing.unit * 2}>
+                <Grid
+                  item
+                  container
+                  spacing={theme.spacing.unit}
+                  alignItems="baseline"
+                >
+                  <Grid item>
+                    <Grid container direction="column" alignItems="center">
+                      <Grid item>
+                        <Typography
+                          variant="h4"
+                          gutterBottom
+                          className={classnames({
+                            [classes.invisible]: rowIndex > 0,
+                          })}
+                        >
+                          ITEM
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="h3" color="primary">
+                          {rowIndex + 1}
+                        </Typography>
                       </Grid>
                     </Grid>
-                    <Grid item container xs>
-                      <Grid container direction="column">
-                        {tableDef.columns.map(column => (
-                          <div key={column.key}>
-                            <Grid item className={classes.itemColumnName}>
-                              <Typography variant="h4" gutterBottom>
-                                {column.name}
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Grid container>
-                                <Grid item xs className={classes.itemBorder}>
-                                  <Field
-                                    disabled={disableEditing}
-                                    component={TextField}
-                                    name={column.key}
-                                    fullWidth
-                                  />
-                                </Grid>
-                                {!disableEditing && (
-                                  <Grid item>
-                                    <Grid
-                                      container
-                                      spacing={theme.spacing.unit * 2}
-                                    >
+                  </Grid>
+                  <Grid item container xs>
+                    <Grid container direction="column">
+                      {tableDef.columns.map(column => (
+                        <div key={column.key}>
+                          <Grid item className={classes.itemColumnName}>
+                            <Typography
+                              variant="h4"
+                              gutterBottom
+                              className={classnames({
+                                [classes.invisible]: rowIndex > 0,
+                              })}
+                            >
+                              {column.name}
+                            </Typography>
+                          </Grid>
+                          <Grid
+                            item
+                            container
+                            className={classnames(classes.itemBorder, {
+                              [classes.itemBorderNew]:
+                                rowIndex === totalRows - 1,
+                              [classes.itemBorderExisting]:
+                                rowIndex < totalRows - 1,
+                            })}
+                          >
+                            <Grid
+                              container
+                              spacing={theme.spacing.unit * 2}
+                              wrap="nowrap"
+                            >
+                              <Grid item xs>
+                                <Field
+                                  disabled={!canEdit}
+                                  component={TextField}
+                                  name={column.key}
+                                  fullWidth
+                                />
+                              </Grid>
+                              {canEdit && (
+                                <Grid item xs={3}>
+                                  <Grid
+                                    container
+                                    spacing={theme.spacing.unit * 2}
+                                    justify="flex-end"
+                                    wrap="nowrap"
+                                  >
+                                    <Grid item>
+                                      <Button
+                                        type="submit"
+                                        variant="contained"
+                                        color="secondary"
+                                        disabled={!dirty || isSubmitting}
+                                      >
+                                        {rowIndex === tableRows.length
+                                          ? 'Save new row'
+                                          : 'Save Updates'}
+                                      </Button>
+                                    </Grid>
+                                    {rowIndex !== tableRows.length && (
                                       <Grid item>
                                         <Button
-                                          type="submit"
-                                          variant="contained"
-                                          color="secondary"
-                                          disabled={!dirty || isSubmitting}
-                                        >
-                                          {rowIndex === totalRows
-                                            ? 'Save new row'
-                                            : 'Save Updates'}
-                                        </Button>
-                                      </Grid>
-                                      <Grid item>
-                                        <Button
-                                          disabled={rowIndex !== totalRows}
                                           onClick={() =>
                                             handleDeleteTableRow(rowIndex)
                                           }
@@ -152,22 +265,22 @@ function CriterionPartFeedbackTable({
                                           Remove
                                         </Button>
                                       </Grid>
-                                    </Grid>
+                                    )}
                                   </Grid>
-                                )}
-                              </Grid>
+                                </Grid>
+                              )}
                             </Grid>
-                          </div>
-                        ))}
-                      </Grid>
+                          </Grid>
+                        </div>
+                      ))}
                     </Grid>
                   </Grid>
                 </Grid>
-              </Form>
-            )}
-          </Formik>
-        )
-      )}
+              </Grid>
+            </Form>
+          )}
+        </Formik>
+      ))}
     </div>
   )
 }
@@ -175,15 +288,24 @@ function CriterionPartFeedbackTable({
 const styles = theme => ({
   invisible: {
     visibility: 'hidden',
+    height: 0,
+    marginBottom: 0,
   },
   itemColumnName: {
     paddingLeft: theme.spacing.unit * 2,
   },
-  itemBorder: {
-    paddingLeft: theme.spacing.unit,
+  itemBorderNew: {
     borderLeft: `${theme.spacing.unit / 2}px solid ${
       theme.palette.secondary.main
     }`,
+  },
+  itemBorderExisting: {
+    borderLeft: `${theme.spacing.unit / 2}px solid ${
+      theme.palette.background.dark
+    }`,
+  },
+  itemBorder: {
+    paddingLeft: theme.spacing.unit,
   },
 })
 
@@ -191,8 +313,12 @@ CriterionPartFeedbackTable.propTypes = {
   theme: T.object.isRequired,
   classes: T.object.isRequired,
   tableDef: T.object.isRequired,
-  assessmentTables: T.arrayOf(T.object),
-  disableEditing: T.bool.isRequired,
+  assessmentFeedbackTables: T.array.isRequired,
+  assessmentId: T.number.isRequired,
+  partNumber: T.number.isRequired,
+  criterionKey: T.string.isRequired,
+  pillarKey: T.string.isRequired,
+  canEdit: T.bool.isRequired,
 }
 
 export default withStyles(styles, { withTheme: true })(
