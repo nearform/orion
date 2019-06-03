@@ -19,7 +19,7 @@ npm i
 Most of the configuration comes from environment variables. Required environment variables for each part of the architecture are documented in the `.env.sample` files inside the repository.
 
 - app [`.env.sample`](../../packages/app/.env.sample) - build time environment variables for the Gatsby application. They should also be configured in CI, along with any other environment variables required by CI
-- hasura [`.env.sample`](../../packages/hasura/.env.sample) - runtime environment variables for Hasura and Hasura console. They need to be configured when running Hasura or Hasura console.
+- hasura [`.env.sample`](../../packages/hasura/.env.sample) - runtime environment variables for Hasura and Hasura console. To run the Hasura console, it also needs to be installed and seeded as per the [Hasura package readme](../../packages/hasura).
 - functions [`.env.sample`](../../packages/functions/.env.sample) - runtime environment variables for AWS Lambda functions.
 - e2e-tests [`.env.sample`](../../packages/e2e-tests/.env.sample) - runtime environment variables for end-to-end testsusing Testcafe.
 
