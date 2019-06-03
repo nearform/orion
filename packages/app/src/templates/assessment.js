@@ -12,7 +12,7 @@ import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
 import * as Yup from 'yup'
 
-import SEO from '../components/seo'
+import SEO from '../components/SEO'
 import SectionTitle from '../components/SectionTitle'
 import {
   createAssessmentMutation,

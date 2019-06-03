@@ -12,7 +12,7 @@ import {
 import { HowToReg, ErrorOutline, Edit } from '@material-ui/icons'
 import * as Yup from 'yup'
 
-import useAdminTable from './useAdminTable'
+import useAdminTable from '../hooks/useAdminTable'
 import AdminModal from './AdminModal'
 import UserSelectPicker from './UserSelectPicker'
 

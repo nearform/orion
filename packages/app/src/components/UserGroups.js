@@ -20,7 +20,7 @@ import {
   getRoles,
 } from '../queries'
 
-import useAdminTable from './useAdminTable'
+import useAdminTable from '../hooks/useAdminTable'
 
 const GroupSchema = Yup.object().shape({
   name: Yup.string().required(),

@@ -5,7 +5,7 @@ import { Link } from 'gatsby'
 import { useQuery } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 
-import SEO from '../components/seo'
+import SEO from '../components/SEO'
 import SectionTitle from '../components/SectionTitle'
 import { getAssessmentPartData } from '../queries'
 import {

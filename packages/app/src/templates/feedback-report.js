@@ -19,7 +19,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useQuery } from 'graphql-hooks'
 import get from 'lodash/get'
 
-import SEO from '../components/seo'
+import SEO from '../components/SEO'
 import SectionTitle from '../components/SectionTitle'
 import { getAssessmentId } from '../utils/url'
 

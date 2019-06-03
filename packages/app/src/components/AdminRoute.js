@@ -8,7 +8,7 @@ import AllUsers from './AllUsers'
 import AdminToolbar from './AdminToolbar'
 import UserGroups from './UserGroups'
 import GroupUsers from './GroupUsers'
-import SEO from './seo'
+import SEO from './SEO'
 
 function AdminRoute({ classes }) {
   return (

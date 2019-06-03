@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
 
-import AdminTable from './AdminTable'
+import AdminTable from '../components/AdminTable'
 import { useQuery } from 'graphql-hooks'
 
 export default function useAdminTable({
