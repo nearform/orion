@@ -1,8 +1,8 @@
 import React from 'react'
 import { Router } from '@reach/router'
 
-import ProtectedRoute from '../../components/ProtectedRoute'
-import AdminRoute from '../../components/AdminRoute'
+import ProtectedRoute from '../components/ProtectedRoute'
+import AdminRoute from '../components/AdminRoute'
 
 export default function Admin() {
   return (
