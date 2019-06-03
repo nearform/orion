@@ -4,7 +4,7 @@ import fetch from 'node-fetch'
 
 import './theme.es'
 
-import Layout from './src/components/layout'
+import Layout from './src/components/Layout'
 
 const client = new GraphQLClient({
   url: process.env.GATSBY_GRAPHQL_API,
