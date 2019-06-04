@@ -9,7 +9,7 @@ import {
 import * as auth from './utils/auth'
 import * as i18n from './utils/i18n'
 import ThemeWrapper, { theme, assessments } from './theme.es'
-import Layout from './src/components/layout'
+import Layout from './src/components/Layout'
 import addTranslations from './utils/translations'
 
 const client = new GraphQLClient({

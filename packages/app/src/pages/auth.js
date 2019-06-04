@@ -2,8 +2,8 @@ import React from 'react'
 import { Redirect } from '@reach/router'
 import { Authenticator, Greetings, SignIn } from 'aws-amplify-react'
 
-import CustomSignIn from '../../components/CustomSignIn'
-import DisplayIfSignedIn from '../../components/DisplayIfSignedIn'
+import CustomSignIn from '../components/CustomSignIn'
+import DisplayIfSignedIn from '../components/DisplayIfSignedIn'
 
 export default function Auth() {
   return (

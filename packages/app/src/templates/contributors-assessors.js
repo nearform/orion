@@ -16,7 +16,7 @@ import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
 import { Redirect } from '@reach/router'
 
-import SEO from '../components/seo'
+import SEO from '../components/SEO'
 import SectionTitle from '../components/SectionTitle'
 import { isAdminSync } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
@@ -28,7 +28,7 @@ import {
   deleteAssessmentContributorMutation,
 } from '../queries'
 import { useQuery } from 'graphql-hooks'
-import useAdminTable from '../components/useAdminTable'
+import useAdminTable from '../hooks/useAdminTable'
 import { useMutation } from 'graphql-hooks'
 
 const headers = [
