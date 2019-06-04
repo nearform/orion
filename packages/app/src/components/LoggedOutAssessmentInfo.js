@@ -7,7 +7,7 @@ import SectionTitle from '../components/SectionTitle'
 
 function LoggedOutAssessmentInfo({ classes, theme }) {
   return (
-    <Grid container spacing={theme.spacing.unit * 4} className={classes.root}>
+    <Grid container spacing={4} className={classes.root}>
       <Grid item xs={3}>
         <SectionTitle barColor={theme.palette.primary.dark}>
           The EFQM Model 2020
@@ -48,7 +48,7 @@ function LoggedOutAssessmentInfo({ classes, theme }) {
 
 const styles = theme => ({
   root: {
-    marginTop: theme.spacing.unit * 8,
+    marginTop: theme.spacing(8),
   },
   button: {
     paddingLeft: 0,

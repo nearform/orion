@@ -18,9 +18,9 @@ SectionTitle.propTypes = {
 
 const styles = theme => ({
   bar: {
-    height: theme.spacing.unit,
+    height: theme.spacing(1),
     width: '100%',
-    marginBottom: theme.spacing.unit * 0.5,
+    marginBottom: theme.spacing(0.5),
   },
 })
 

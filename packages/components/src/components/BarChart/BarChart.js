@@ -15,7 +15,7 @@ import Bar from './Bar'
 import { getWeightedScore, chartDataPropTypes } from './util.js'
 
 function BarChart({ classes, chartData, theme }) {
-  const barHeight = `${theme.spacing.unit * 4}px`
+  const barHeight = theme.spacing(4)
 
   return (
     <div>

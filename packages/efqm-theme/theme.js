@@ -33,15 +33,19 @@ const typography = {
     fontWeight: 'bold',
   },
   h6: {
+    // Mainly used for bold numbers in tables and graphics
     fontFamily,
-    fontWeight: 'bold',
+    fontSize: 20,
+    fontWeight: '900',
+    lineHeight: 1.4,
+    letterSpacing: -0.2,
   },
-  body1: {
+  body2: {
     fontFamily,
     fontSize: 14,
     letterSpacing: 'normal',
   },
-  body2: {
+  body1: {
     fontFamily,
     fontSize: 16,
     letterSpacing: 'normal',
@@ -164,7 +168,6 @@ exports.muiTheme = {
     },
   },
   typography: {
-    useNextVariants: 'true',
     fontFamily,
     fontWeight: 'normal',
     ...typography,
@@ -191,4 +194,4 @@ exports.muiTheme = {
   shadows,
 }
 
-exports.googleFonts = ['Lato']
+exports.googleFonts = ['Lato:400,700,900']

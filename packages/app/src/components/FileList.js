@@ -49,19 +49,14 @@ function FileList({
   }
 
   return (
-    <Grid
-      container
-      alignItems="center"
-      spacing={theme.spacing.unit * 2}
-      wrap="nowrap"
-    >
+    <Grid container alignItems="center" spacing={2} wrap="nowrap">
       <Grid item>
         <Typography variant="h4" color="textSecondary">
           Supporting documentation
         </Typography>
       </Grid>
       <Grid item>
-        <Grid container spacing={theme.spacing.unit}>
+        <Grid container spacing={1}>
           {files.map(file => (
             <Grid item key={file.s3_key}>
               <FileItem file={file} />

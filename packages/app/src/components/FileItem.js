@@ -40,7 +40,7 @@ FileItem.propTypes = {
 
 const styles = theme => ({
   attachmentIcon: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
     color: theme.palette.secondary.light,
   },
   attachment: {

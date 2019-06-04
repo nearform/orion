@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
-import { number, text } from '@storybook/addon-knobs'
+import { number, text, withKnobs } from '@storybook/addon-knobs'
 import { withStyles } from '@material-ui/core'
 
 import ScoringSlider from './'
@@ -16,52 +16,67 @@ const Container = withStyles(theme => ({
   },
 }))(({ children, classes }) => <div className={classes.root}>{children}</div>)
 
+const intervals = [0, 25, 50, 75, 100]
+
 storiesOf('ScoringSlider', module)
+  .addDecorator(withKnobs)
   .addDecorator(jsxDecorator)
   .add('ScoringSlider', () => (
     <Container>
-      {[0, 25, 50, 75, 100].map(v => (
-        <ScoringSlider
-          key={v}
-          label={text('Label', `Slider ${v}`)}
-          value={number('Value', v)}
-        />
-      ))}
+      {intervals.map((v, i) => {
+        const label = `Slider ${i}`
+        return (
+          <ScoringSlider
+            key={v}
+            label={text(`${label} label`, label)}
+            value={number(label, v)}
+          />
+        )
+      })}
     </Container>
   ))
   .add('primary', () => (
     <Container>
-      {[0, 25, 50, 75, 100].map(v => (
-        <ScoringSlider
-          key={v}
-          label={text('Label', `Slider ${v}`)}
-          value={number('Value', v)}
-          color="primary"
-        />
-      ))}
+      {intervals.map((v, i) => {
+        const label = `Slider ${i}`
+        return (
+          <ScoringSlider
+            key={v}
+            label={text(`${label} label`, label)}
+            value={number(label, v)}
+            color="primary"
+          />
+        )
+      })}
     </Container>
   ))
   .add('secondary', () => (
     <Container>
-      {[0, 25, 50, 75, 100].map(v => (
-        <ScoringSlider
-          key={v}
-          label={text('Label', `Slider ${v}`)}
-          value={number('Value', v)}
-          color="secondary"
-        />
-      ))}
+      {intervals.map((v, i) => {
+        const label = `Slider ${i}`
+        return (
+          <ScoringSlider
+            key={v}
+            label={text(`${label} label`, label)}
+            value={number(label, v)}
+            color="secondary"
+          />
+        )
+      })}
     </Container>
   ))
   .add('disabled', () => (
     <Container>
-      {[0, 25, 50, 75, 100].map(v => (
-        <ScoringSlider
-          disabled
-          key={v}
-          label={text('Label', `Slider ${v}`)}
-          value={number('Value', v)}
-        />
-      ))}
+      {intervals.map((v, i) => {
+        const label = `Slider ${i}`
+        return (
+          <ScoringSlider
+            key={v}
+            label={text(`${label} label`, label)}
+            value={number(label, v)}
+            disabled
+          />
+        )
+      })}
     </Container>
   ))

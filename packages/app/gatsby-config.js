@@ -60,13 +60,9 @@ module.exports = {
       resolve: 'gatsby-plugin-create-client-paths',
       options: { prefixes: ['/admin/*', '/auth/*'] },
     },
-    // include again once the plugin fixes hot-reloading
-    // {
-    //   resolve: 'gatsby-plugin-material-ui',
-    //   options: {
-    //     theme: activeTheme.muiTheme,
-    //   },
-    // },
+    {
+      resolve: 'gatsby-plugin-material-ui',
+    },
     {
       resolve: 'gatsby-plugin-google-fonts',
       options: {

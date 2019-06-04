@@ -37,7 +37,7 @@ function ChartTicks({ classes, children, variant, height }) {
 const styles = theme => {
   const chartTickStyles = {
     root: {
-      margin: `0 ${theme.spacing.unit * 2}px`,
+      margin: theme.spacing(0, 2),
       display: 'flex',
       justifyContent: 'space-between',
     },
@@ -68,19 +68,19 @@ const styles = theme => {
       },
     },
     belowTick: {
-      margin: `-${theme.spacing.unit / 2}px 0 ${theme.spacing.unit * 3}px`,
+      margin: theme.spacing(-0.5, 0, 3),
       '&::before': {
         height: 6,
         width: 1,
         backgroundColor: theme.palette.background.dark,
       },
       '&::after': {
-        top: theme.spacing.unit,
+        top: theme.spacing(1),
       },
     },
     aboveTick: {
       '&::after': {
-        bottom: theme.spacing.unit,
+        bottom: theme.spacing(1),
       },
     },
     tickGap: {
