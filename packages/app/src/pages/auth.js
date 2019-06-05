@@ -1,65 +1,48 @@
 import React from 'react'
 import { Redirect } from '@reach/router'
-import { Authenticator, Greetings, SignIn } from 'aws-amplify-react'
+import {
+  Authenticator,
+  Greetings,
+  SignIn,
+  SignUp,
+  ConfirmSignUp,
+} from 'aws-amplify-react'
 
 import CustomSignIn from '../components/CustomSignIn'
-import DisplayIfSignedIn from '../components/DisplayIfSignedIn'
+import CustomSignUp from '../components/CustomSignUp'
+import CustomConfirmSignUp from '../components/CustomConfirmSignUp'
 
+//TODO: handle all auth states
+// X signIn
+// X signUp
+// - confirmSignIn
+// X confirmSignUp
+// - forgotPassword
+// X verifyContact
+// X signedIn
+// X/- signedUp - added it to DisplayIfSignedIn so redirects to homepage, probably needs something better
+
+import DisplayIfSignedIn from '../components/DisplayIfSignedIn'
+const AlwaysOn = props => {
+  return (
+    <div style={{ position: 'absolute', top: 0 }}>
+      <div>I am always here to show current auth state: {props.authState}</div>
+      <button onClick={() => props.onStateChange('confirmSignUp')}>
+        Show Sign Up
+      </button>
+    </div>
+  )
+}
 export default function Auth() {
   return (
     <Authenticator
-      hide={[Greetings, SignIn]}
+      hide={[Greetings, SignIn, SignUp, ConfirmSignUp]}
       theme={{ container: { flex: 1, display: 'flex' } }}
-      signUpConfig={{
-        hideAllDefaults: true,
-        signUpFields: [
-          {
-            label: 'Email',
-            key: 'username',
-            required: true,
-            placeholder: 'Email',
-            type: 'email',
-            displayOrder: 1,
-          },
-          {
-            label: 'Password',
-            key: 'password',
-            required: true,
-            placeholder: 'Password',
-            type: 'password',
-            displayOrder: 2,
-          },
-          {
-            label: 'Type Of Organisation',
-            key: 'orgType',
-            required: true,
-            custom: true,
-            placeholder: 'Org Type',
-            type: 'text',
-            displayOrder: 3,
-          },
-          {
-            label: 'Name Of Organisation',
-            key: 'orgName',
-            required: true,
-            custom: true,
-            placeholder: 'Org Name',
-            type: 'text',
-            displayOrder: 4,
-          },
-          {
-            label: 'Country',
-            key: 'country',
-            required: true,
-            custom: true,
-            placeholder: 'Country',
-            type: 'text',
-            displayOrder: 5,
-          },
-        ],
-      }}
     >
       <CustomSignIn />
+      <CustomSignUp override={'SignUp'} />
+      <CustomConfirmSignUp override={'ConfirmSignUp'} />
+      <AlwaysOn />
       <DisplayIfSignedIn>
         <Redirect to="/" noThrow />
       </DisplayIfSignedIn>
