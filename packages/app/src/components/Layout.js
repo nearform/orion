@@ -30,7 +30,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    marginBottom: theme.spacing.unit * 4,
+    marginBottom: theme.spacing(4),
   },
 })
 

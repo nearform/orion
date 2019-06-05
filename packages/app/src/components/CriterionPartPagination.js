@@ -12,24 +12,19 @@ function CriterionPartPagination({
   totalParts,
 }) {
   return (
-    <Grid
-      container
-      spacing={theme.spacing.unit * 2}
-      justify="flex-end"
-      alignItems="center"
-    >
+    <Grid container spacing={2} justify="flex-end" alignItems="center">
       <Grid item>
         {previousLink ? (
           <Typography
             color="secondary"
             component={link}
             to={`${previousLink}#${assessmentId}`}
-            variant="body1"
+            variant="body2"
           >
             ❮
           </Typography>
         ) : (
-          <Typography variant="body1" color="textSecondary">
+          <Typography variant="body2" color="textSecondary">
             ❮
           </Typography>
         )}
@@ -42,7 +37,7 @@ function CriterionPartPagination({
       <Grid item>
         {nextLink ? (
           <Typography
-            variant="body1"
+            variant="body2"
             color="secondary"
             component={link}
             to={`${nextLink}#${assessmentId}`}
@@ -50,7 +45,7 @@ function CriterionPartPagination({
             ❯
           </Typography>
         ) : (
-          <Typography variant="body1" color="textSecondary">
+          <Typography variant="body2" color="textSecondary">
             ❯
           </Typography>
         )}
@@ -69,4 +64,4 @@ CriterionPartPagination.propTypes = {
   totalParts: T.number.isRequired,
 }
 
-export default withTheme()(CriterionPartPagination)
+export default withTheme(CriterionPartPagination)

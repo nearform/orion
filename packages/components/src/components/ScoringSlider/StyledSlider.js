@@ -4,40 +4,71 @@ import Slider from '@material-ui/lab/Slider'
 import T from 'prop-types'
 
 const styles = theme => {
-  const trackBefore = {
-    borderTopLeftRadius: theme.spacing.unit,
-    borderBottomLeftRadius: theme.spacing.unit,
-  }
   const thumbIcon = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   }
+  const thumbWrapper = {
+    borderRadius: theme.spacing(0.5),
+    height: theme.spacing(4),
+    width: theme.spacing(4),
+    backgroundColor: theme.palette.background.default,
+    boxShadow: theme.shadows[1],
+  }
+
+  // Fill MUI Slider's hard-coded 6px gap between disabled tracks and thumb
+  const MUI_DISABLED_SLIDER_GAP = '6px' // Counters width of `calc(${percent}% - 6px)` in
+  // https://github.com/mui-org/material-ui/blob/f4dc7bbf32b3c9655e12b73419e5e55b9a6c0532/packages/material-ui-lab/src/Slider/Slider.js#L482
+
+  const disabledTrackGapFiller = {
+    content: '""',
+    position: 'absolute',
+    width: MUI_DISABLED_SLIDER_GAP,
+    height: '100%',
+    background: 'inherit',
+  }
+
+  const trackBefore = {
+    borderTopLeftRadius: theme.spacing(1),
+    borderBottomLeftRadius: theme.spacing(1),
+    '&$disabled': {
+      '&::after': {
+        ...disabledTrackGapFiller,
+        right: `-${MUI_DISABLED_SLIDER_GAP}`,
+      },
+    },
+  }
+  const trackAfter = {
+    borderTopRightRadius: theme.spacing(1),
+    borderBottomRightRadius: theme.spacing(1),
+    '&$disabled': {
+      '&::after': {
+        ...disabledTrackGapFiller,
+        left: `-${MUI_DISABLED_SLIDER_GAP}`,
+      },
+    },
+  }
 
   return {
     container: {
-      padding: theme.spacing.unit * 2,
+      // Leave enough surrounding space to not clip thumb shadow and drag effect
+      margin: theme.spacing(-2.5, -0.5, -2.5, -2.5),
+      padding: theme.spacing(4.5),
+      width: `calc(100% + ${theme.spacing(5)}px)`,
     },
     track: {
-      height: theme.spacing.unit * 2,
+      height: theme.spacing(2),
       backgroundColor: theme.palette.background.default,
       opacity: 1,
     },
     trackBefore,
-    trackAfter: {
-      borderTopRightRadius: theme.spacing.unit,
-      borderBottomRightRadius: theme.spacing.unit,
-    },
+    trackAfter,
     thumb: {
-      borderRadius: theme.spacing.unit / 2,
-      height: theme.spacing.unit * 4,
-      width: theme.spacing.unit * 4,
-      backgroundColor: theme.palette.background.default,
-      boxShadow: theme.shadows[1],
+      ...thumbWrapper,
       '&$disabled': {
-        backgroundColor: theme.palette.background.default,
-        height: theme.spacing.unit * 4,
-        width: theme.spacing.unit * 4,
+        // Stop MUI Slider's .disabled styles overriding ours
+        ...thumbWrapper,
       },
     },
     thumbIcon: {
@@ -85,6 +116,7 @@ const StyledSlider = function({
   const trackBeforeClass = color
     ? customClasses[`${color}TrackBefore`]
     : defaultClasses.trackBefore
+
   const thumbIconClass = color
     ? customClasses[`${color}ThumbIcon`]
     : defaultClasses.thumbIcon

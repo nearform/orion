@@ -79,7 +79,7 @@ function FeedbackReport({
           </Grid>
         </div>
         <div className={classes.section}>
-          <Grid container spacing={theme.spacing.unit * 5}>
+          <Grid container spacing={5}>
             <Grid item xs={3}>
               <SectionTitle
                 barColor={theme.palette.secondary.main}
@@ -92,7 +92,7 @@ function FeedbackReport({
               <TextField multiline fullWidth rows={10} />
             </Grid>
           </Grid>
-          <Grid container justify="flex-end" spacing={theme.spacing.unit * 5}>
+          <Grid container justify="flex-end" spacing={5}>
             <Grid item>
               <Button color="secondary" variant="contained">
                 Save Updates
@@ -101,7 +101,7 @@ function FeedbackReport({
           </Grid>
         </div>
         <div className={classes.section}>
-          <Grid container spacing={theme.spacing.unit * 5}>
+          <Grid container spacing={5}>
             <Grid item xs={3}>
               <SectionTitle barColor={theme.palette.primary.dark} gutterBottom>
                 Assessment scoring summary
@@ -117,14 +117,14 @@ function FeedbackReport({
           </Grid>
         </div>
         <div className={classes.section}>
-          <Grid container spacing={theme.spacing.unit * 4} direction="column">
+          <Grid container spacing={4} direction="column">
             {assessment.pillars.map((pillarDef, pillarIndex) =>
               pillarDef.criteria.map(criterionDef => (
                 <Grid
                   key={criterionDef.key}
                   item
                   container
-                  spacing={theme.spacing.unit * 2}
+                  spacing={2}
                   direction="column"
                 >
                   <Grid item xs={4}>
@@ -134,7 +134,7 @@ function FeedbackReport({
                   </Grid>
                   <Grid item xs>
                     <Paper>
-                      <Table padding="dense">
+                      <Table size="small">
                         <TableHead>
                           <TableRow>
                             <TableCell>Strength</TableCell>
@@ -164,7 +164,7 @@ function FeedbackReport({
                   </Grid>
                   <Grid item xs>
                     <Paper>
-                      <Table padding="dense">
+                      <Table size="small">
                         <TableHead>
                           <TableRow>
                             <TableCell>Area for improvement</TableCell>
@@ -200,7 +200,7 @@ function FeedbackReport({
           </Grid>
         </div>
         <div className={classes.section}>
-          <Grid container spacing={theme.spacing.unit * 5}>
+          <Grid container spacing={5}>
             <Grid item xs={3}>
               <SectionTitle
                 barColor={theme.palette.secondary.main}
@@ -213,7 +213,7 @@ function FeedbackReport({
               <TextField multiline fullWidth rows={6} />
             </Grid>
           </Grid>
-          <Grid container justify="flex-end" spacing={theme.spacing.unit * 5}>
+          <Grid container justify="flex-end" spacing={5}>
             <Grid item>
               <Button color="secondary" variant="contained">
                 Save Updates
@@ -236,7 +236,7 @@ const styles = theme => ({
     flex: 1,
   },
   section: {
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
   },
 })
 

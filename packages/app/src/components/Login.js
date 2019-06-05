@@ -13,7 +13,7 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
   return (
     <div className={classes.root}>
       <div>
-        <Grid container direction="column" spacing={theme.spacing.unit * 3}>
+        <Grid container direction="column" spacing={3}>
           <Grid item xs={9}>
             <SectionTitle gutterBottom barColor={theme.palette.secondary.main}>
               Sign in to your account
@@ -36,13 +36,7 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
               fullWidth
             />
           </Grid>
-          <Grid
-            item
-            container
-            alignItems="baseline"
-            spacing={theme.spacing.unit}
-            wrap="nowrap"
-          >
+          <Grid item container alignItems="baseline" spacing={1} wrap="nowrap">
             <Grid item>
               <Typography variant="h4" color="textSecondary">
                 Forget your password?
@@ -54,13 +48,7 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
               </Button>
             </Grid>
           </Grid>
-          <Grid
-            item
-            container
-            alignItems="baseline"
-            spacing={theme.spacing.unit}
-            wrap="nowrap"
-          >
+          <Grid item container alignItems="baseline" spacing={1} wrap="nowrap">
             <Grid item>
               <Typography variant="h4" color="textSecondary" noWrap>
                 No account?

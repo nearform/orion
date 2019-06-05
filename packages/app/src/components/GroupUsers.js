@@ -11,7 +11,7 @@ export default function GroupUsers({ groupName, groupId }) {
   const pageTitle = (
     <span>
       Users in {groupName}{' '}
-      <Typography inline variant="h3" color="textSecondary">
+      <Typography display="inline" variant="h3" color="textSecondary">
         {' '}
         Group #{groupId}{' '}
       </Typography>

@@ -144,7 +144,7 @@ function CriterionPartTable({
 
   return (
     <div>
-      <Grid container spacing={theme.spacing.unit * 2}>
+      <Grid container spacing={2}>
         <Grid item>
           <Typography variant="h2" color="primary" gutterBottom>
             {tableDef.name}
@@ -171,12 +171,8 @@ function CriterionPartTable({
         >
           {({ isSubmitting, dirty }) => (
             <Form className={classes.section}>
-              <Grid
-                container
-                direction="column"
-                spacing={theme.spacing.unit * 2}
-              >
-                <Grid item container spacing={theme.spacing.unit} wrap="nowrap">
+              <Grid container direction="column" spacing={2}>
+                <Grid item container spacing={1} wrap="nowrap">
                   <Grid item>
                     <Grid container direction="column" alignItems="center">
                       <Grid item>
@@ -225,7 +221,7 @@ function CriterionPartTable({
                     </Grid>
                   </Grid>
                   <Grid item xs>
-                    <Grid container spacing={theme.spacing.unit * 2}>
+                    <Grid container spacing={2}>
                       {tableDef.columns.map(column => (
                         <Grid item xs={4} key={column.key}>
                           <Typography variant="h4" gutterBottom>
@@ -243,12 +239,7 @@ function CriterionPartTable({
                   </Grid>
                 </Grid>
                 {canEdit && (
-                  <Grid
-                    item
-                    container
-                    spacing={theme.spacing.unit * 2}
-                    justify="flex-end"
-                  >
+                  <Grid item container spacing={2} justify="flex-end">
                     <Grid item>
                       <Button
                         type="submit"
@@ -297,7 +288,7 @@ CriterionPartTable.propTypes = {
 }
 const styles = theme => ({
   section: {
-    margin: `${theme.spacing.unit * 3}px 0`,
+    margin: theme.spacing(3, 0),
   },
   invisible: {
     visibility: 'hidden',
@@ -306,7 +297,7 @@ const styles = theme => ({
     height: '100%',
   },
   itemBorder: {
-    width: theme.spacing.unit / 2,
+    width: theme.spacing(0.5),
     backgroundColor: theme.palette.background.dark,
     flex: 1,
   },

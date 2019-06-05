@@ -9,7 +9,7 @@ const Container = withStyles(theme => ({
   root: {
     display: 'flex',
     '& > * + *': {
-      marginLeft: theme.spacing.unit,
+      marginLeft: theme.spacing(1),
     },
   },
 }))(({ classes, ...props }) => <div className={classes.root} {...props} />)

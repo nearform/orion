@@ -22,15 +22,15 @@ import {
 } from './util.js'
 
 function BarChartTable({ classes, chartData, theme }) {
-  const barHeight = theme.spacing.unit * 4
-  const barTicksHeight = theme.spacing.unit * 6
+  const barHeight = theme.spacing(4)
+  const barTicksHeight = theme.spacing(6)
   const overallScore = getOverallScore(chartData)
 
   return (
     <Paper>
-      <Table padding="dense">
+      <Table size="small">
         <TableHead>
-          <TableRow>
+          <TableRow className={classes.headerFooter}>
             <TableCell>Criteria</TableCell>
             <TableCell className={classes.chartColumn}>
               <ChartTicks
@@ -87,7 +87,7 @@ function BarChartTable({ classes, chartData, theme }) {
           })}
         </TableBody>
         <TableFooter>
-          <TableRow>
+          <TableRow className={classes.headerFooter}>
             <TableCell colSpan={3} align="right" padding="none">
               <Typography variant="h4" color="textSecondary">
                 Overall score
@@ -95,6 +95,7 @@ function BarChartTable({ classes, chartData, theme }) {
             </TableCell>
             <TableCell align="center">
               <Typography
+                variant="h6"
                 className={classnames(classes.score, classes.overall)}
               >
                 {overallScore}
@@ -121,17 +122,17 @@ const styles = theme => ({
     whiteSpace: 'nowrap',
   },
   chartColumn: {
-    padding: `0 ${theme.spacing.unit * 3}px 0 0`,
+    padding: theme.spacing(0, 3, 0, 0),
     width: '40%',
-    minWidth: theme.spacing.unit * 20,
+    minWidth: theme.spacing(20),
   },
   score: {
     color: theme.palette.primary.dark,
   },
   weighting: {
     // Fixed width so that alignment is consistent even when empty
-    width: theme.spacing.unit * 4,
-    margin: `0 ${theme.spacing.unit}px ${theme.spacing.unit / 2}px`,
+    width: theme.spacing(4),
+    margin: theme.spacing(0, 1, 0.5),
     display: 'inline-block',
     verticalAlign: 'middle',
     textAlign: 'center',
@@ -141,7 +142,10 @@ const styles = theme => ({
   },
   overall: {
     color: theme.palette.primary.main,
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
+  },
+  headerFooter: {
+    height: theme.spacing(5),
   },
 })
 

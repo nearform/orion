@@ -89,7 +89,7 @@ function AllUsers({ classes, query, pageTitle, variables }) {
     renderTableBody: data => {
       return data.user.map(user => (
         <TableRow key={user.id.toString()} data-testid="all-users">
-          <TableCell padding="dense">{user.id}</TableCell>
+          <TableCell size="small">{user.id}</TableCell>
           <TableCell>
             <Typography>{user.email}</Typography>
           </TableCell>

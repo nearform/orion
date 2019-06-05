@@ -20,8 +20,9 @@ ContextualHelp.propTypes = {
 const styles = theme => ({
   tooltip: {
     backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
     boxShadow: theme.shadows[1],
-    ...theme.typography.body1,
+    ...theme.typography.body2,
   },
   popper: {
     opacity: 1,

@@ -29,7 +29,7 @@ function AdminRoute({ classes }) {
 
 const styles = theme => ({
   toolbar: {
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing(2),
   },
 })
 

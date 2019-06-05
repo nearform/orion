@@ -30,9 +30,9 @@ function AssessmentProgress({
 
   return (
     <PaddedContainer className={classes.root}>
-      <Grid container spacing={theme.spacing.unit * 2} alignItems="center">
+      <Grid container spacing={2} alignItems="center">
         <Grid item xs={3}>
-          <Grid container spacing={theme.spacing.unit * 3} alignItems="center">
+          <Grid container spacing={3} alignItems="center">
             <Grid item>
               <Typography color="inherit" variant="h2">
                 Overall progress

@@ -180,14 +180,14 @@ function AssessmentTemplate({
           className={classes.section}
           data-testid="assessment__key-information"
         >
-          <Grid container spacing={theme.spacing.unit * 4}>
+          <Grid container spacing={4}>
             <Grid
               item
               xs={9}
               container
               direction="column"
               wrap="nowrap"
-              spacing={theme.spacing.unit * 4}
+              spacing={4}
             >
               <Grid item container>
                 <Grid item xs={4}>
@@ -235,11 +235,7 @@ function AssessmentTemplate({
               </Grid>
               <Grid item xs>
                 {assessmentId ? (
-                  <Grid
-                    container
-                    direction="column"
-                    spacing={theme.spacing.unit}
-                  >
+                  <Grid container direction="column" spacing={1}>
                     <Grid item>
                       <Typography variant="h4">
                         {get(assessmentData, 'internal') ? 'internal' : ''}{' '}
@@ -264,13 +260,9 @@ function AssessmentTemplate({
                   >
                     {({ isValid }) => (
                       <Form>
-                        <Grid container spacing={theme.spacing.unit * 2}>
+                        <Grid container spacing={2}>
                           <Grid item xs>
-                            <Grid
-                              container
-                              direction="column"
-                              spacing={theme.spacing.unit}
-                            >
+                            <Grid container direction="column" spacing={1}>
                               <Grid item>
                                 <Typography variant="h4">
                                   Enter your assessment name
@@ -289,29 +281,21 @@ function AssessmentTemplate({
                             </Grid>
                           </Grid>
                           <Grid item>
-                            <Grid
-                              container
-                              direction="column"
-                              spacing={theme.spacing.unit}
-                            >
+                            <Grid container direction="column" spacing={0}>
                               <Grid item>
                                 <Typography variant="h4">Internal</Typography>
                               </Grid>
                               <Grid item>
                                 <Field
                                   name="internal"
-                                  classes={{ switchBase: classes.switch }}
+                                  className={classes.switch}
                                   component={FormikSwitch}
                                 />
                               </Grid>
                             </Grid>
                           </Grid>
                           <Grid item xs>
-                            <Grid
-                              container
-                              direction="column"
-                              spacing={theme.spacing.unit}
-                            >
+                            <Grid container direction="column" spacing={1}>
                               <Grid item>
                                 <Typography variant="h4">&nbsp;</Typography>
                               </Grid>
@@ -374,8 +358,8 @@ function AssessmentTemplate({
                 >
                   {({ dirty }) => (
                     <Form>
-                      <Grid container spacing={theme.spacing.unit * 2}>
-                        <Grid item container spacing={theme.spacing.unit * 2}>
+                      <Grid container spacing={2}>
+                        <Grid item container spacing={2}>
                           {assessment.keyInformation.keyInformationItems.map(
                             (keyInfo, index) => (
                               <Fragment key={keyInfo.key}>
@@ -401,12 +385,7 @@ function AssessmentTemplate({
                           )}
                         </Grid>
                         {canEditKeyInformationAndUploadAndSubmit && (
-                          <Grid
-                            item
-                            container
-                            spacing={theme.spacing.unit * 2}
-                            justify="flex-end"
-                          >
+                          <Grid item container spacing={2} justify="flex-end">
                             <Grid item>
                               <UploadButton
                                 onFileSelected={handleFileUpload}
@@ -463,14 +442,14 @@ function AssessmentTemplate({
           </Grid>
         </div>
         <div className={classes.section} data-testid="assessment__model-areas">
-          <Grid container spacing={theme.spacing.unit * 3}>
+          <Grid container spacing={3}>
             <Grid item>
               <Typography variant="h4" gutterBottom>
                 to enter the assessment please click on an area of the model
               </Typography>
             </Grid>
           </Grid>
-          <Grid container spacing={theme.spacing.unit * 2}>
+          <Grid container spacing={2}>
             {assessment.pillars.map((pillar, pillarIndex) => {
               const pillarColor = pillarColors[pillarIndex]
               return (
@@ -479,7 +458,7 @@ function AssessmentTemplate({
                   item
                   xs
                   container
-                  spacing={theme.spacing.unit * 3}
+                  spacing={3}
                   direction="column"
                 >
                   <Grid item>
@@ -499,6 +478,7 @@ function AssessmentTemplate({
                             : null
                         }
                         variant="h3"
+                        display="block"
                         gutterBottom
                         style={{ color: pillarColor }}
                       >
@@ -521,7 +501,7 @@ function AssessmentTemplate({
                 item
                 xs
                 container
-                spacing={theme.spacing.unit * 3}
+                spacing={3}
                 direction="column"
               >
                 <Grid item xs>
@@ -544,17 +524,17 @@ function AssessmentTemplate({
 
 const styles = theme => ({
   section: {
-    margin: `${theme.spacing.unit * 3}px 0`,
+    margin: theme.spacing(3, 0),
   },
   sectionTitle: {
     display: 'flex',
     alignItems: 'center',
   },
   helpIcon: {
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
   },
   keyInformationInput: {
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing(2),
   },
   sectionProgress: {
     color: theme.palette.primary.dark,
@@ -565,21 +545,22 @@ const styles = theme => ({
   keyInformationHeader: {
     display: 'flex',
     alignItems: 'center',
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing(2),
   },
   buttonBar: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
     display: 'flex',
     justifyContent: 'flex-end',
     '& > * + *': {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing(2),
     },
   },
   displayNone: {
     display: 'none',
   },
   switch: {
-    height: theme.spacing.unit * 4,
+    // Align switch with adjacent button
+    marginTop: theme.spacing(0.75),
   },
 })
 

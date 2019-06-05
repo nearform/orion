@@ -18,8 +18,8 @@ function Bar({ classes, value, color, absolute, max, height }) {
 
 const styles = theme => ({
   root: {
-    height: theme.spacing.unit * 4,
-    padding: `${theme.spacing.unit / 2}px 0`,
+    height: theme.spacing(4),
+    padding: theme.spacing(0.5, 0),
     display: 'flex',
     alignItems: 'center',
   },
@@ -32,8 +32,8 @@ const styles = theme => ({
   },
   bar: {
     backgroundColor: theme.palette.background.light,
-    borderTopRightRadius: theme.spacing.unit,
-    borderBottomRightRadius: theme.spacing.unit,
+    borderTopRightRadius: theme.spacing(1),
+    borderBottomRightRadius: theme.spacing(1),
   },
 })
 

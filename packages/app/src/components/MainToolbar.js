@@ -47,9 +47,10 @@ function MainToolbar({ classes, dark }) {
   const darkClass = classnames({
     [classes.toolbarDark]: dark,
     [classes.toolbarContrast]: dark,
+    [classes.toolbarLightContrast]: !dark,
   })
 
-  const navButtonClass = classnames(darkClass, classes.navButton)
+  const navButtonClass = classnames(classes.navButton, darkClass)
 
   // darkClass is needed on both outer container and inner padded container
   // to avoid hairline gap between toolbar and main element in mobile WebKit
@@ -60,11 +61,11 @@ function MainToolbar({ classes, dark }) {
         <div className={classes.root}>
           <Link
             to="/"
-            className={classes.logoHomeLink}
+            className={classnames(classes.logoHomeLink, darkClass)}
             data-testid="main-toolbar__logo"
           >
             <Img className={classes.logo} fixed={fixed} />
-            <Typography variant="h2" className={darkClass}>
+            <Typography variant="h2" className={classes.logotype}>
               {title}
             </Typography>
           </Link>
@@ -136,18 +137,24 @@ const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 4,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(4),
   },
   logoHomeLink: {
     display: 'flex',
     alignItems: 'center',
   },
   logo: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
+  },
+  logotype: {
+    fontWeight: 900,
   },
   toolbarDark: {
     backgroundColor: theme.palette.primary.dark,
+  },
+  toolbarLightContrast: {
+    color: theme.palette.primary.dark,
   },
   toolbarContrast: {
     color: theme.palette.background.paper,
@@ -156,16 +163,17 @@ const styles = theme => ({
     flexGrow: 1,
   },
   navButton: {
+    fontWeight: 700,
     textTransform: 'none',
   },
   icon: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
     color: 'inherit',
   },
   linksContainer: {
     display: 'flex',
     '& > * + *': {
-      marginLeft: theme.spacing.unit * 4,
+      marginLeft: theme.spacing(4),
     },
   },
 })

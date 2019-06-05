@@ -83,7 +83,7 @@ function CriterionPartTemplate({
     <div className={classes.root} data-testid="criterion-part">
       <SEO title={criterion.name} />
       <PaddedContainer className={classes.paddedContainer}>
-        <Grid container spacing={theme.spacing.unit * 2} wrap="nowrap">
+        <Grid container spacing={2} wrap="nowrap">
           <Grid item>
             <Button
               className={classes.backButton}
@@ -110,7 +110,7 @@ function CriterionPartTemplate({
           </Grid>
         </Grid>
         <div className={classes.section}>
-          <Grid container spacing={theme.spacing.unit * 4}>
+          <Grid container spacing={4}>
             <Grid item xs={3}>
               <SectionTitle barColor={pillarColor}>
                 {pillar.name} <span style={{ color: pillarColor }}>▶</span>{' '}
@@ -144,7 +144,7 @@ function CriterionPartTemplate({
           />
         ))}
         <div className={classes.section}>
-          <Grid container spacing={theme.spacing.unit * 4}>
+          <Grid container spacing={4}>
             <Grid item xs={3}>
               <SectionTitle barColor={pillarColor}>
                 Criteria Assessment
@@ -152,7 +152,7 @@ function CriterionPartTemplate({
             </Grid>
           </Grid>
         </div>
-        <Grid container spacing={theme.spacing.unit * 2}>
+        <Grid container spacing={2}>
           <Grid item>
             <Typography variant="h2" color="primary" gutterBottom>
               Capture Strength, Areas for Improvement and Good Practices
@@ -215,11 +215,11 @@ const styles = theme => ({
     paddingLeft: 0,
   },
   section: {
-    margin: `${theme.spacing.unit * 3}px 0`,
+    margin: theme.spacing(3, 0),
   },
   scoringSection: {
     backgroundColor: theme.palette.background.light,
-    padding: `${theme.spacing.unit * 3}px 0`,
+    padding: theme.spacing(3, 0),
 
     // Work around MUI 3.x sliders bug causing viewport overflow
     // see https://github.com/mui-org/material-ui/issues/13455

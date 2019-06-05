@@ -90,7 +90,7 @@ function CriterionTemplate({
     <div className={classes.root} data-testid="criterion">
       <SEO title={criterion.name} />
       <PaddedContainer className={classes.paddedContainer}>
-        <Grid container spacing={theme.spacing.unit * 2} wrap="nowrap">
+        <Grid container spacing={2} wrap="nowrap">
           <Grid item>
             <Button
               component={Link}
@@ -115,7 +115,7 @@ function CriterionTemplate({
           </Grid>
         </Grid>
         <div className={classes.section}>
-          <Grid container spacing={theme.spacing.unit * 4}>
+          <Grid container spacing={4}>
             <Grid item xs={3}>
               <SectionTitle barColor={pillarColor}>
                 {pillar.name} <span style={{ color: pillarColor }}>▶</span>{' '}
@@ -123,7 +123,7 @@ function CriterionTemplate({
               </SectionTitle>
             </Grid>
             <Grid item xs>
-              <Typography variant="body2" component="div">
+              <Typography component="div">
                 <ReactMarkdown
                   source={t(criterion.description)}
                   renderers={{ paragraph: 'div' }}
@@ -148,7 +148,7 @@ function CriterionTemplate({
                     <Grid
                       container
                       direction="column"
-                      spacing={theme.spacing.unit * 2}
+                      spacing={2}
                       className={classes.section}
                     >
                       <Grid item xs={6}>
@@ -198,7 +198,7 @@ const styles = theme => ({
     flex: 1,
   },
   section: {
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
   },
 })
 

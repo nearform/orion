@@ -54,15 +54,15 @@ const styles = theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    borderTopWidth: theme.spacing.unit,
+    borderTopWidth: theme.spacing(1),
     borderTopStyle: 'solid',
   },
   cardContent: {
-    paddingTop: theme.spacing.unit,
+    paddingTop: theme.spacing(1),
     flex: 1,
   },
   cardElement: {
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing(2),
   },
   bottom: {
     borderTop: `solid 1px ${theme.palette.background.light}`,

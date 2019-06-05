@@ -30,7 +30,7 @@ const styles = theme => ({
   },
   linksContainer: {
     '& > * + *': {
-      marginLeft: theme.spacing.unit * 4,
+      marginLeft: theme.spacing(4),
     },
   },
 })

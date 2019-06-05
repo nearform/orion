@@ -142,7 +142,7 @@ function CriterionPartFeedbackTable({
 
   return (
     <div>
-      <Grid container spacing={theme.spacing.unit * 2}>
+      <Grid container spacing={2}>
         <Grid item>
           <Typography variant="h2" color="primary" gutterBottom>
             {tableDef.name}
@@ -168,13 +168,8 @@ function CriterionPartFeedbackTable({
         >
           {({ isSubmitting, dirty }) => (
             <Form>
-              <Grid container spacing={theme.spacing.unit * 2}>
-                <Grid
-                  item
-                  container
-                  spacing={theme.spacing.unit}
-                  alignItems="baseline"
-                >
+              <Grid container spacing={2}>
+                <Grid item container spacing={1} alignItems="baseline">
                   <Grid item>
                     <Grid container direction="column" alignItems="center">
                       <Grid item>
@@ -220,11 +215,7 @@ function CriterionPartFeedbackTable({
                                 rowIndex < totalRows - 1,
                             })}
                           >
-                            <Grid
-                              container
-                              spacing={theme.spacing.unit * 2}
-                              wrap="nowrap"
-                            >
+                            <Grid container spacing={2} wrap="nowrap">
                               <Grid item xs>
                                 <Field
                                   disabled={!canEdit}
@@ -237,7 +228,7 @@ function CriterionPartFeedbackTable({
                                 <Grid item xs={3}>
                                   <Grid
                                     container
-                                    spacing={theme.spacing.unit * 2}
+                                    spacing={2}
                                     justify="flex-end"
                                     wrap="nowrap"
                                   >
@@ -292,20 +283,18 @@ const styles = theme => ({
     marginBottom: 0,
   },
   itemColumnName: {
-    paddingLeft: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing(2),
   },
   itemBorderNew: {
-    borderLeft: `${theme.spacing.unit / 2}px solid ${
-      theme.palette.secondary.main
-    }`,
+    borderLeft: `${theme.spacing(0.5)}px solid ${theme.palette.secondary.main}`,
   },
   itemBorderExisting: {
-    borderLeft: `${theme.spacing.unit / 2}px solid ${
+    borderLeft: `${theme.spacing(0.5)}px solid ${
       theme.palette.background.dark
     }`,
   },
   itemBorder: {
-    paddingLeft: theme.spacing.unit,
+    paddingLeft: theme.spacing(1),
   },
 })
 

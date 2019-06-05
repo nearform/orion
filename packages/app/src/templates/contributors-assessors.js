@@ -141,7 +141,7 @@ function ContributorsAssessorsTemplate({
           ◀ Assessment Home
         </Button>
         <div className={classes.section}>
-          <Grid container spacing={theme.spacing.unit * 4} direction="column">
+          <Grid container spacing={4} direction="column">
             <Grid item xs={3}>
               <SectionTitle
                 barColor={theme.palette.primary.dark}
@@ -157,7 +157,7 @@ function ContributorsAssessorsTemplate({
               </SectionTitle>
             </Grid>
             <Grid item xs>
-              <Grid container direction="column" spacing={theme.spacing.unit}>
+              <Grid container direction="column" spacing={1}>
                 <Grid item>
                   <Typography variant="h4">
                     {get(assessmentData, 'assessment_by_pk.internal')
@@ -192,17 +192,17 @@ function ContributorsAssessorsTemplate({
 
 const styles = theme => ({
   section: {
-    margin: `${theme.spacing.unit * 3}px 0`,
+    margin: theme.spacing(3, 0),
   },
   sectionTitle: {
     display: 'flex',
     alignItems: 'center',
   },
   helpIcon: {
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
   },
   keyInformationInput: {
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing(2),
   },
   sectionProgress: {
     color: theme.palette.primary.dark,
@@ -213,21 +213,21 @@ const styles = theme => ({
   keyInformationHeader: {
     display: 'flex',
     alignItems: 'center',
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing(2),
   },
   buttonBar: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
     display: 'flex',
     justifyContent: 'flex-end',
     '& > * + *': {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing(2),
     },
   },
   displayNone: {
     display: 'none',
   },
   switch: {
-    height: theme.spacing.unit * 4,
+    height: theme.spacing(4),
   },
 })
 

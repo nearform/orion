@@ -14,7 +14,7 @@ PaddedContainer.propTypes = {
 
 const styles = theme => ({
   root: {
-    padding: `0 ${theme.spacing.unit * 10}px`,
+    padding: theme.spacing(0, 10),
   },
 })
 

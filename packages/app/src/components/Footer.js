@@ -59,12 +59,12 @@ function Footer({ classes, theme }) {
   return (
     <div className={classes.root}>
       <PaddedContainer>
-        <Grid container spacing={theme.spacing.unit * 3}>
+        <Grid container spacing={3}>
           <Grid item xs>
             <Typography variant="h4" gutterBottom>
               Get in touch
             </Typography>
-            <Typography component="div" variant="body1">
+            <Typography component="div" variant="body2">
               <div>Avenue des Olympiades 2</div>
               <div>5th Floor</div>
               <div>B - 1140 Brussels, Belgium</div>
@@ -85,7 +85,7 @@ function Footer({ classes, theme }) {
             <Typography variant="h4" gutterBottom>
               support
             </Typography>
-            <Typography component="div" variant="body1">
+            <Typography component="div" variant="body2">
               <div>Link 1</div>
               <div>Link 2</div>
               <div>Link 3</div>
@@ -96,7 +96,7 @@ function Footer({ classes, theme }) {
             <Typography variant="h4" gutterBottom>
               resources
             </Typography>
-            <Typography component="div" variant="body1">
+            <Typography component="div" variant="body2">
               <div>Link 1</div>
               <div>Link 2</div>
               <div>Link 3</div>
@@ -107,7 +107,7 @@ function Footer({ classes, theme }) {
             <Typography variant="h4" gutterBottom>
               subscribe to our newsletter
             </Typography>
-            <Typography gutterBottom variant="body1">
+            <Typography gutterBottom variant="body2">
               The latest EFQM news, articles, and resources, sent straight to
               your inbox every month.
             </Typography>
@@ -139,24 +139,24 @@ function Footer({ classes, theme }) {
             </div>
           </Grid>
         </Grid>
-        <Grid container spacing={theme.spacing.unit} justify="center">
+        <Grid container spacing={1} justify="center">
           <Grid item>
-            <Typography inline variant="body1">
+            <Typography display="inline" variant="body2">
               © EFQM
             </Typography>
           </Grid>
           <Grid item>
-            <Typography inline variant="body1">
+            <Typography display="inline" variant="body2">
               Terms of Use
             </Typography>
           </Grid>
           <Grid item>
-            <Typography inline variant="body1">
+            <Typography display="inline" variant="body2">
               Privacy Statement
             </Typography>
           </Grid>
           <Grid item>
-            <Typography inline variant="body1">
+            <Typography display="inline" variant="body2">
               (version {version})
             </Typography>
           </Grid>
@@ -169,14 +169,14 @@ function Footer({ classes, theme }) {
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.light,
-    paddingTop: theme.spacing.unit * 7,
-    paddingBottom: theme.spacing.unit * 3,
+    paddingTop: theme.spacing(7),
+    paddingBottom: theme.spacing(3),
   },
   horizontalContainer: {
     display: 'flex',
-    margin: `${theme.spacing.unit * 2}px 0`,
+    margin: theme.spacing(2, 0),
     '& > * + *': {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing(2),
     },
     alignItems: 'flex-end',
   },

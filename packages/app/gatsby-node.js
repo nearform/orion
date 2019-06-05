@@ -1,3 +1,4 @@
+const path = require('path')
 const currentTheme = require('./theme')
 
 const { theme, config } = currentTheme
@@ -201,6 +202,10 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     test: /\.graphql?$/,
     exclude: /node_modules/,
     loader: 'webpack-graphql-loader',
+  })
+  Object.assign(config.resolve.alias, {
+    react: path.resolve('./node_modules/react'),
+    '@material-ui/core': path.resolve('./node_modules/@material-ui/core'),
   })
   actions.replaceWebpackConfig(config)
 }

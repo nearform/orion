@@ -60,7 +60,6 @@ exports.muiTheme = {
     },
   },
   typography: {
-    useNextVariants: 'true',
     fontFamily: fontFamily,
     ...headings,
     button: {

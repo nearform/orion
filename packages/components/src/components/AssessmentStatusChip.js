@@ -45,7 +45,7 @@ function AssessmentStatusChip({ classes, status }) {
       classes={classes}
       label={
         <>
-          <Typography variant="body1">{status}</Typography>
+          <Typography variant="body2">{status}</Typography>
           <Icon fontSize="small" color={color} />
         </>
       }
@@ -63,6 +63,7 @@ const styles = theme => ({
   root: {
     height: 'auto',
     backgroundColor: fade(theme.palette.primary.dark, 0.1),
+    color: theme.palette.text.primary,
   },
   colorPrimary: {
     backgroundColor: fade(theme.palette.primary.light, 0.1),
@@ -74,7 +75,7 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     '& > * + * ': {
-      marginLeft: theme.spacing.unit,
+      marginLeft: theme.spacing(1),
     },
   },
 })

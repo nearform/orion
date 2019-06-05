@@ -112,7 +112,7 @@ function AssessmentPillarScoring({
 
         return (
           <Form>
-            <Grid container direction="column" spacing={theme.spacing.unit * 2}>
+            <Grid container direction="column" spacing={2}>
               {pillar.scoring.map(scoringGroup => {
                 const groupOverall =
                   round(
@@ -120,12 +120,7 @@ function AssessmentPillarScoring({
                   ) * SLIDER_STEP
 
                 return (
-                  <Grid
-                    key={scoringGroup.key}
-                    item
-                    container
-                    spacing={theme.spacing.unit * 2}
-                  >
+                  <Grid key={scoringGroup.key} item container spacing={4}>
                     {scoringGroup.scores.map(score => {
                       const fieldName = `${scoringGroup.key}.${score.key}`
 
@@ -181,4 +176,4 @@ AssessmentPillarScoring.propTypes = {
   canEdit: T.bool.isRequired,
 }
 
-export default withTheme()(AssessmentPillarScoring)
+export default withTheme(AssessmentPillarScoring)
