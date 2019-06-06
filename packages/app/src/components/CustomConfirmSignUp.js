@@ -1,7 +1,6 @@
 import React from 'react'
 import { ConfirmSignUp } from 'aws-amplify-react'
 import RegisterConfirm from './RegisterConfirm'
-//import Login from './Login'
 
 export default class CustomConfirmSignUp extends ConfirmSignUp {
   constructor(props) {
@@ -9,7 +8,7 @@ export default class CustomConfirmSignUp extends ConfirmSignUp {
     this._validAuthStates = ['confirmSignUp']
   }
 
-  showComponent(t) {
+  showComponent() {
     return (
       <RegisterConfirm
         goToSignIn={() => super.changeState('signIn')}

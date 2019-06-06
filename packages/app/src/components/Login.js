@@ -1,4 +1,5 @@
 import React from 'react'
+import T from 'prop-types'
 import {
   Typography,
   withStyles,
@@ -78,6 +79,15 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
       </div>
     </div>
   )
+}
+
+Login.propTypes = {
+  theme: T.object.isRequired,
+  classes: T.object.isRequired,
+  signIn: T.func.isRequired,
+  goToSignUp: T.func.isRequired,
+  goToReset: T.func.isRequired,
+  handleInput: T.func.isRequired,
 }
 
 const styles = {

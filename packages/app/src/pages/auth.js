@@ -31,8 +31,8 @@ export default function Auth() {
       theme={{ container: { flex: 1, display: 'flex' } }}
     >
       <CustomSignIn />
-      <CustomSignUp override={'SignUp'} />
-      <CustomConfirmSignUp override={'ConfirmSignUp'} />
+      <CustomSignUp override="SignUp" />
+      <CustomConfirmSignUp override="ConfirmSignUp" />
       <DisplayIfSignedIn>
         <Redirect to="/" noThrow />
       </DisplayIfSignedIn>

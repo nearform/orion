@@ -5,6 +5,7 @@ import Register from './Register'
 export default class CustomSignUp extends SignUp {
   constructor(props) {
     super(props)
+    //required by the amplify SignUp component
     this.signUpFields = [
       {
         label: 'Email',
@@ -54,7 +55,7 @@ export default class CustomSignUp extends SignUp {
     this._validAuthStates = ['signUp']
   }
 
-  showComponent(t) {
+  showComponent() {
     return (
       <Register
         goToSignIn={() => super.changeState('signIn')}
