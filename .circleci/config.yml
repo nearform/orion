@@ -31,7 +31,7 @@ jobs:
           command: |
             set -e
             cd packages/components
-            npm run build-storybook
+            npm run build-storybook -- --quiet
       - persist_to_workspace:
           root: .
           paths:

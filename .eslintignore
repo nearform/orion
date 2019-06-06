@@ -3,5 +3,6 @@ node_modules
 docs
 packages/app/public
 packages/app/.cache
+packages/components/storybook-static
 packages/functions/build
 /hasura-schema.json
