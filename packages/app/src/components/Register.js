@@ -51,7 +51,7 @@ function Register({
             <Grid key={key} item>
               <Typography variant="h4" gutterBottom>
                 {label}
-                {required ? ' *' : ''}
+                {required && ' *'}
               </Typography>
               {type === 'select' ? (
                 <CustomSelect
