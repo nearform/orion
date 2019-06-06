@@ -8,7 +8,7 @@ import {
   TextField,
 } from '@material-ui/core'
 
-import SectionTitle from '../components/SectionTitle'
+import SectionTitle from '../SectionTitle'
 
 function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
   return (
