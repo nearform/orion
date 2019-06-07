@@ -40,6 +40,7 @@ function CriterionPartTemplate({
     previousLink,
     nextLink,
     totalParts,
+    criteriaList,
   },
 }) {
   if (!isAuthenticatedSync()) {
@@ -129,6 +130,7 @@ function CriterionPartTemplate({
             pillarKey={pillar.key}
             partNumber={partNumber}
             canEdit={canEditTablesAndUpload}
+            criteriaList={criteriaList}
             paginationNode={
               tableIndex === 0 && (
                 <CriterionPartPagination

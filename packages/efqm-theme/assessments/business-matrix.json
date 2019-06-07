@@ -77,7 +77,8 @@
                     },
                     {
                       "key": "links",
-                      "name": "efqm links"
+                      "name": "efqm links",
+                      "type": "link"
                     }
                   ]
                 }

@@ -128,11 +128,7 @@ function MainToolbar({ classes, dark }) {
 const styles = theme => ({
   gradient: {
     height: 8,
-    backgroundImage: `linear-gradient(to right, ${
-      theme.palette.primary.dark
-    }, ${theme.palette.primary.main} 32%, ${theme.palette.primary.light} 56%, ${
-      theme.palette.secondary.main
-    } 80%, ${theme.palette.secondary.dark})`,
+    backgroundImage: `linear-gradient(to right, ${theme.palette.primary.dark}, ${theme.palette.primary.main} 32%, ${theme.palette.primary.light} 56%, ${theme.palette.secondary.main} 80%, ${theme.palette.secondary.dark})`,
   },
   root: {
     display: 'flex',

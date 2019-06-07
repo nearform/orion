@@ -5,8 +5,7 @@ import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 import classnames from 'classnames'
 
-import { Formik, Form, Field } from 'formik'
-import { TextField } from 'formik-material-ui'
+import { Formik, Form } from 'formik'
 
 import {
   insertAssessmentTableDataMutation,
@@ -14,11 +13,15 @@ import {
   deleteAssessmentTableRowMutation,
 } from '../queries'
 
+import CriterionPartInput from '../components/CriterionPartInput'
 import ContextualHelp from '../components/ContextualHelp'
 
 function getEmptyTableRow(tableDef) {
   return tableDef.columns.reduce(
-    (initialValues, { key }) => ({ ...initialValues, [key]: '' }),
+    (initialValues, { key, type }) => ({
+      ...initialValues,
+      [key]: type === 'link' ? [] : '',
+    }),
     {}
   )
 }
@@ -62,6 +65,7 @@ function CriterionPartTable({
   pillarKey,
   canEdit,
   paginationNode,
+  criteriaList,
 }) {
   const tableData = getExistingTableData(assessmentTables, tableDef)
 
@@ -160,116 +164,120 @@ function CriterionPartTable({
         <Grid item xs />
         {paginationNode && <Grid item>{paginationNode}</Grid>}
       </Grid>
-      {tables.map((initialValues, rowIndex, { length: totalRows }) => (
-        <Formik
-          enableReinitialize
-          initialValues={initialValues}
-          onSubmit={(values, actions) =>
-            handleSaveTable(rowIndex, values, actions)
-          }
-          key={`${tableDef.key}-${rowIndex}`}
-        >
-          {({ isSubmitting, dirty }) => (
-            <Form className={classes.section}>
-              <Grid container direction="column" spacing={2}>
-                <Grid item container spacing={1} wrap="nowrap">
-                  <Grid item>
-                    <Grid container direction="column" alignItems="center">
-                      <Grid item>
-                        <Typography
-                          variant="h4"
-                          gutterBottom
-                          className={classnames({
-                            invisible: rowIndex > 0,
+      {tables.map((initialValues, rowIndex, { length: totalRows }) => {
+        const tableKey = `${tableDef.key}-${rowIndex}`
+        return (
+          <Formik
+            enableReinitialize
+            initialValues={initialValues}
+            onSubmit={(values, actions) =>
+              handleSaveTable(rowIndex, values, actions)
+            }
+            key={tableKey}
+          >
+            {({ isSubmitting, dirty, values }) => (
+              <Form className={classes.section}>
+                <Grid container direction="column" spacing={2}>
+                  <Grid item container spacing={1} wrap="nowrap">
+                    <Grid item>
+                      <Grid container direction="column" alignItems="center">
+                        <Grid item>
+                          <Typography
+                            variant="h4"
+                            gutterBottom
+                            className={classnames({
+                              invisible: rowIndex > 0,
+                            })}
+                          >
+                            ITEM
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="h3" color="primary">
+                            {rowIndex + 1}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item>
+                      <Grid
+                        container
+                        className={classes.itemBorderContainer}
+                        direction="column"
+                        alignItems="center"
+                      >
+                        <Grid item>
+                          <Typography
+                            variant="h4"
+                            gutterBottom
+                            className={classes.invisible}
+                          >
+                            {rowIndex}
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          className={classnames(classes.itemBorder, {
+                            [classes.itemBorderActive]:
+                              rowIndex === totalRows - 1,
                           })}
                         >
-                          ITEM
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="h3" color="primary">
-                          {rowIndex + 1}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item>
-                    <Grid
-                      container
-                      className={classes.itemBorderContainer}
-                      direction="column"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <Typography
-                          variant="h4"
-                          gutterBottom
-                          className={classes.invisible}
-                        >
-                          {rowIndex}
-                        </Typography>
-                      </Grid>
-                      <Grid
-                        item
-                        className={classnames(classes.itemBorder, {
-                          [classes.itemBorderActive]:
-                            rowIndex === totalRows - 1,
-                        })}
-                      >
-                        &nbsp;
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs>
-                    <Grid container spacing={2}>
-                      {tableDef.columns.map(column => (
-                        <Grid item xs={4} key={column.key}>
-                          <Typography variant="h4" gutterBottom>
-                            {column.name}
-                          </Typography>
-                          <Field
-                            disabled={!canEdit}
-                            component={TextField}
-                            name={column.key}
-                            fullWidth
-                          />
+                          &nbsp;
                         </Grid>
-                      ))}
+                      </Grid>
+                    </Grid>
+                    <Grid item xs>
+                      <Grid container spacing={2}>
+                        {tableDef.columns.map(column => {
+                          const inputKey = `${tableKey}-${column.key}`
+                          return (
+                            <CriterionPartInput
+                              key={inputKey}
+                              inputKey={inputKey}
+                              column={column}
+                              values={values}
+                              canEdit={canEdit}
+                              criteriaList={criteriaList}
+                              assessmentId={assessmentId}
+                            />
+                          )
+                        })}
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-                {canEdit && (
-                  <Grid item container spacing={2} justify="flex-end">
-                    <Grid item>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        color="secondary"
-                        disabled={!dirty || isSubmitting}
-                      >
-                        {rowIndex === tableRows.length
-                          ? 'Save new row'
-                          : 'Save Updates'}
-                      </Button>
-                    </Grid>
-                    {rowIndex !== tableRows.length && (
+                  {canEdit && (
+                    <Grid item container spacing={2} justify="flex-end">
                       <Grid item>
                         <Button
-                          onClick={() => handleDeleteTableRow(rowIndex)}
-                          variant="outlined"
+                          type="submit"
+                          variant="contained"
                           color="secondary"
+                          disabled={!dirty || isSubmitting}
                         >
-                          Remove
+                          {rowIndex === tableRows.length
+                            ? 'Save new row'
+                            : 'Save Updates'}
                         </Button>
                       </Grid>
-                    )}
-                  </Grid>
-                )}
-              </Grid>
-            </Form>
-          )}
-        </Formik>
-      ))}
+                      {rowIndex !== tableRows.length && (
+                        <Grid item>
+                          <Button
+                            onClick={() => handleDeleteTableRow(rowIndex)}
+                            variant="outlined"
+                            color="secondary"
+                          >
+                            Remove
+                          </Button>
+                        </Grid>
+                      )}
+                    </Grid>
+                  )}
+                </Grid>
+              </Form>
+            )}
+          </Formik>
+        )
+      })}
     </div>
   )
 }

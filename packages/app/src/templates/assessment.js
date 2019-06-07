@@ -222,9 +222,7 @@ function AssessmentTemplate({
                   {canViewFeedbackReport && (
                     <Button
                       component={Link}
-                      to={`assessment/${
-                        assessment.key
-                      }/feedback-report/#${assessmentId}`}
+                      to={`assessment/${assessment.key}/feedback-report/#${assessmentId}`}
                       color="secondary"
                       variant="contained"
                     >
@@ -323,9 +321,7 @@ function AssessmentTemplate({
                     variant="outlined"
                     color="secondary"
                     component={Link}
-                    to={`assessment/${
-                      assessment.key
-                    }/contributors-assessors#${assessmentId}`}
+                    to={`assessment/${assessment.key}/contributors-assessors#${assessmentId}`}
                   >
                     Assign Contributors and Assessors
                   </Button>
@@ -472,9 +468,7 @@ function AssessmentTemplate({
                         component={assessmentId ? Link : null}
                         to={
                           assessmentId
-                            ? `assessment/${assessment.key}/${pillar.key}/${
-                                criterion.key
-                              }#${assessmentId}`
+                            ? `assessment/${assessment.key}/${pillar.key}/${criterion.key}#${assessmentId}`
                             : null
                         }
                         variant="h3"

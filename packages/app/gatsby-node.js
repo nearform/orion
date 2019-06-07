@@ -71,6 +71,7 @@ exports.createPages = async ({ graphql, actions }) => {
                   columns {
                     key
                     name
+                    type
                   }
                 }
                 feedbackTables {
@@ -114,6 +115,24 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 
   assessments.forEach(assessment => {
+    const createCriterionPagePath = (pillar, criterion) =>
+      `assessment/${assessment.key}/${pillar.key}/${criterion.key}`
+
+    const criteriaList = assessment.pillars.reduce(
+      (acc, pillar, pillarIndex) => {
+        const pillarCriteria = pillar.criteria.map(criterion => ({
+          key: JSON.stringify({
+            pillarKey: pillar.key,
+            criterionKey: criterion.key,
+          }),
+          name: criterion.name,
+          path: createCriterionPagePath(pillar, criterion),
+        }))
+        return [...acc, ...pillarCriteria]
+      },
+      []
+    )
+
     createPage({
       path: `assessment/${assessment.key}`,
       component: assessmentTemplate,
@@ -144,8 +163,10 @@ exports.createPages = async ({ graphql, actions }) => {
       const pillarColor = pillarColors[pillarIndex]
 
       pillar.criteria.forEach(criterion => {
+        const criterionPagePath = createCriterionPagePath(pillar, criterion)
+
         createPage({
-          path: `assessment/${assessment.key}/${pillar.key}/${criterion.key}`,
+          path: criterionPagePath,
           component: criterionTemplate,
           context: {
             assessment,
@@ -156,9 +177,7 @@ exports.createPages = async ({ graphql, actions }) => {
         })
 
         const createCriterionPartLink = partNumber =>
-          `assessment/${assessment.key}/${pillar.key}/${
-            criterion.key
-          }/${partNumber}`
+          `${criterionPagePath}/${partNumber}`
 
         criterion.parts.forEach((part, partIndex, { length: totalParts }) => {
           const isFirst = partIndex === 0
@@ -172,9 +191,7 @@ exports.createPages = async ({ graphql, actions }) => {
             : createCriterionPartLink(partNumber + 1)
 
           createPage({
-            path: `assessment/${assessment.key}/${pillar.key}/${
-              criterion.key
-            }/${partNumber}`,
+            path: createCriterionPartLink(partNumber),
             component: criterionPartTemplate,
             context: {
               partNumber,
@@ -186,6 +203,7 @@ exports.createPages = async ({ graphql, actions }) => {
               previousLink,
               nextLink,
               totalParts,
+              criteriaList,
             },
           })
         })
