@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import { Field } from 'formik'
 import { TextField } from 'formik-material-ui'
-import { MenuItem } from '@material-ui/core'
+import { MenuItem, Typography } from '@material-ui/core'
 
 function UserSelectPicker({
   values,
@@ -28,8 +28,10 @@ function UserSelectPicker({
       variant="outlined"
     >
       {!values[fieldName] && (
-        <MenuItem disabled value={null}>
-          No {label.toLowerCase()} selected
+        <MenuItem disabled value={0}>
+          <Typography component="span" color="textSecondary">
+            No {label.toLowerCase()} selected
+          </Typography>
         </MenuItem>
       )}
       {data[entityKey].map(option => (

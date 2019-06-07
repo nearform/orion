@@ -22,11 +22,14 @@ import {
   assignUserGroupMutation,
 } from '../queries'
 
-const styles = {
+const styles = theme => ({
   middle: {
     verticalAlign: 'middle',
   },
-}
+  actionButton: {
+    marginRight: theme.spacing(4),
+  },
+})
 
 const headers = [
   { id: 'id', label: 'ID', sortable: true },
@@ -34,14 +37,28 @@ const headers = [
   { id: 'orgName', label: 'Org name' },
   { id: 'orgType', label: 'Org type' },
   { id: 'country', label: 'Country' },
-  { id: 'action', label: 'Assign group' },
+  {
+    id: 'action',
+    label: 'Assign to group',
+    cellProps: {
+      align: 'right',
+    },
+  },
 ]
 
 function getStyledSignupAttr(user, key) {
   if (!user.signupRequest.userAttributes[key])
-    return <Typography color="textSecondary">None</Typography>
+    return (
+      <Typography variant="body2" color="textSecondary">
+        None
+      </Typography>
+    )
 
-  return <Typography>{user.signupRequest.userAttributes[key]}</Typography>
+  return (
+    <Typography variant="body2">
+      {user.signupRequest.userAttributes[key]}
+    </Typography>
+  )
 }
 
 function PendingUsers({ classes }) {
@@ -51,17 +68,22 @@ function PendingUsers({ classes }) {
     renderTableBody: (data, { setSelected }) => {
       return data.user.map(user => {
         return (
-          <TableRow key={user.id} data-testid="pending-users">
-            <TableCell>{user.id}</TableCell>
+          <TableRow key={user.id} data-testid="pending-users" size="small">
             <TableCell>
-              <Typography>{user.email}</Typography>
+              <Typography variant="body2">{user.id}</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="body2">{user.email}</Typography>
             </TableCell>
             <TableCell>{getStyledSignupAttr(user, 'custom:orgName')}</TableCell>
             <TableCell>{getStyledSignupAttr(user, 'custom:orgType')}</TableCell>
             <TableCell>{getStyledSignupAttr(user, 'custom:country')}</TableCell>
-            <TableCell>
+            <TableCell align="right" padding="none">
               <Tooltip title={`Assign group to ${user.email}`} aria-label="Add">
-                <IconButton onClick={() => setSelected(user)}>
+                <IconButton
+                  onClick={() => setSelected(user)}
+                  className={classes.actionButton}
+                >
                   <HowToReg color="secondary" />
                 </IconButton>
               </Tooltip>
@@ -112,17 +134,14 @@ function PendingUsers({ classes }) {
   const getModalInitialValues = user => {
     const groupId = user.user_groups.length && user.user_groups[0].group.id
     return {
-      userId: user ? user.id : null,
-      groupId: groupId || null,
+      userId: user ? user.id : 0,
+      groupId: groupId,
       groupIsAssigned: !!groupId,
     }
   }
 
   return (
     <>
-      <Typography variant="h1" gutterBottom>
-        Pending Users
-      </Typography>
       <AdminModal
         selected={selected}
         data={modalData}

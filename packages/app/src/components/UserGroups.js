@@ -3,13 +3,7 @@ import slugify from 'slugify'
 import { Link as RouterLink } from '@reach/router'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Formik, Form, Field } from 'formik'
-import {
-  Typography,
-  TableRow,
-  TableCell,
-  Button,
-  IconButton,
-} from '@material-ui/core'
+import { TableRow, TableCell, Button, IconButton } from '@material-ui/core'
 import { TextField } from 'formik-material-ui'
 import * as Yup from 'yup'
 
@@ -35,17 +29,6 @@ const headers = [
   { id: 'roles', label: 'Roles' },
   { id: 'action', label: 'Action' },
 ]
-
-function TitleWrapper({ children }) {
-  return (
-    <>
-      <Typography variant="h1" gutterBottom>
-        Groups
-      </Typography>
-      {children}
-    </>
-  )
-}
 
 export default function UserGroups() {
   const { loading: rolesLoading, error: rolesError, data: roles } = useQuery(
@@ -81,14 +64,11 @@ export default function UserGroups() {
     },
   })
 
-  if (rolesLoading) return <TitleWrapper>Loading roles...</TitleWrapper>
-  if (rolesError) return <TitleWrapper>Error loading roles</TitleWrapper>
+  if (rolesLoading) return 'Loading roles...'
+  if (rolesError) return 'Error loading roles'
 
   return (
-    <TitleWrapper>
-      <Typography variant="h2" gutterBottom>
-        Create group
-      </Typography>
+    <>
       <Formik
         validationSchema={GroupSchema}
         initialValues={{ name: '', roleId: roles.role[0].id }}
@@ -130,6 +110,6 @@ export default function UserGroups() {
         )}
       </Formik>
       {table}
-    </TitleWrapper>
+    </>
   )
 }

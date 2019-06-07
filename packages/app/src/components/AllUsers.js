@@ -81,7 +81,7 @@ function getGroupAndStatus(user, classes) {
   )
 }
 
-function AllUsers({ classes, query, pageTitle, variables }) {
+function AllUsers({ classes, query, variables }) {
   const { table, selected, setSelected, refetch } = useAdminTable({
     query,
     headers,
@@ -180,7 +180,7 @@ function AllUsers({ classes, query, pageTitle, variables }) {
 
     return {
       userId: user ? user.id : null,
-      groupId: groupId || null,
+      groupId: groupId || 0,
       groupIsAssigned: !!groupId,
       roleId: roleId || null,
       roleIsAssigned: !!roleId,
@@ -189,9 +189,6 @@ function AllUsers({ classes, query, pageTitle, variables }) {
 
   return (
     <>
-      <Typography variant="h1" gutterBottom>
-        {pageTitle}
-      </Typography>
       <AdminModal
         selected={selected}
         data={modalData}

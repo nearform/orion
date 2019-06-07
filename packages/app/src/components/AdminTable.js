@@ -1,6 +1,7 @@
 import React from 'react'
 import T from 'prop-types'
 import {
+  Paper,
   Table,
   TableHead,
   TableRow,
@@ -35,48 +36,55 @@ export default function AdminTable({
 
   if (!headers.length) return 'No table headers to show'
   return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          {headers.map(header => {
-            if (!header.sortable) {
-              return <TableCell key={header.id}>{header.label}</TableCell>
-            }
-            const columnIsOrdered = orderBy.hasOwnProperty(header.id)
-            return (
-              <TableCell
-                key={header.id}
-                sortDirection={columnIsOrdered ? orderBy[header.id] : false}
-              >
-                <Tooltip title="Sort" enterDelay={300}>
-                  <TableSortLabel
-                    active={columnIsOrdered}
-                    direction={orderBy[header.id]}
-                    onClick={e => handleChangeOrderBy(header.id)}
-                  >
+    <Paper>
+      <Table>
+        <TableHead>
+          <TableRow>
+            {headers.map(header => {
+              if (!header.sortable) {
+                return (
+                  <TableCell key={header.id} {...header.cellProps}>
                     {header.label}
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
-            )
-          })}
-        </TableRow>
-      </TableHead>
-      <TableBody>{children}</TableBody>
-      <TableFooter>
-        <TableRow>
-          <TablePagination
-            rowsPerPageOptions={pageSizes}
-            colSpan={headers.length}
-            count={data.field_aggregate.aggregate.count}
-            rowsPerPage={pageSize}
-            page={Math.floor(offset / pageSize)}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangePageSize}
-          />
-        </TableRow>
-      </TableFooter>
-    </Table>
+                  </TableCell>
+                )
+              }
+              const columnIsOrdered = orderBy.hasOwnProperty(header.id)
+              return (
+                <TableCell
+                  key={header.id}
+                  sortDirection={columnIsOrdered ? orderBy[header.id] : false}
+                  {...header.cellProps}
+                >
+                  <Tooltip title="Sort" enterDelay={300}>
+                    <TableSortLabel
+                      active={columnIsOrdered}
+                      direction={orderBy[header.id]}
+                      onClick={e => handleChangeOrderBy(header.id)}
+                    >
+                      {header.label}
+                    </TableSortLabel>
+                  </Tooltip>
+                </TableCell>
+              )
+            })}
+          </TableRow>
+        </TableHead>
+        <TableBody>{children}</TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={pageSizes}
+              colSpan={headers.length}
+              count={data.field_aggregate.aggregate.count}
+              rowsPerPage={pageSize}
+              page={Math.floor(offset / pageSize)}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangePageSize}
+            />
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </Paper>
   )
 }
 
@@ -87,7 +95,14 @@ AdminTable.defaultProps = {
 AdminTable.propTypes = {
   children: T.node,
   data: T.object.isRequired,
-  headers: T.arrayOf(T.object).isRequired,
+  headers: T.arrayOf(
+    T.shape({
+      id: T.string.isRequired,
+      label: T.string.isRequired,
+      sortable: T.bool,
+      cellProps: T.object,
+    })
+  ).isRequired,
   pageTitle: T.node,
   offset: T.number.isRequired,
   pageSize: T.number.isRequired,

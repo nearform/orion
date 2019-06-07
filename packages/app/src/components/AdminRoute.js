@@ -1,6 +1,6 @@
-import React from 'react'
-import { Router } from '@reach/router'
-import { withStyles } from '@material-ui/core'
+import React, { useState } from 'react'
+import T from 'prop-types'
+import { Router, Redirect } from '@reach/router'
 import { PaddedContainer } from 'components'
 
 import PendingUsers from './PendingUsers'
@@ -10,27 +10,50 @@ import UserGroups from './UserGroups'
 import GroupUsers from './GroupUsers'
 import SEO from './SEO'
 
-function AdminRoute({ classes }) {
+function AdminRoute() {
+  const [pageTitle, setPageTitle] = useState('')
+
   return (
-    <>
-      <SEO title="Admin" />
-      <PaddedContainer>
-        <AdminToolbar className={classes.toolbar} />
-        <Router>
-          <PendingUsers default path="pending-users" />
-          <AllUsers path="all-users" />
-          <UserGroups path="groups" />
-          <GroupUsers path="groups/:groupId/:groupName" />
-        </Router>
-      </PaddedContainer>
-    </>
+    <PaddedContainer>
+      <SEO title={`${pageTitle} | Admin`} />
+      <AdminToolbar pageTitle={pageTitle} />
+      <Router>
+        <AdminSection
+          path="pending-users"
+          component={PendingUsers}
+          applyPageTitle={() => setPageTitle('Pending users')}
+        />
+        <AdminSection
+          path="all-users"
+          component={AllUsers}
+          applyPageTitle={() => setPageTitle('All users')}
+        />
+        <AdminSection
+          path="groups"
+          component={UserGroups}
+          applyPageTitle={() => setPageTitle('Groups')}
+        />
+        <AdminSection
+          path="groups/:groupIdString/:groupName"
+          component={GroupUsers}
+          applyPageTitle={({ groupName }) =>
+            setPageTitle(`Users in ${groupName}`)
+          }
+        />
+        <Redirect default noThrow from="/admin" to="/admin/pending-users" />
+      </Router>
+    </PaddedContainer>
   )
 }
 
-const styles = theme => ({
-  toolbar: {
-    marginBottom: theme.spacing(2),
-  },
-})
+function AdminSection({ component: AdminComponent, applyPageTitle, ...props }) {
+  applyPageTitle(props)
+  return <AdminComponent {...props} />
+}
 
-export default withStyles(styles)(AdminRoute)
+AdminSection.propTypes = {
+  component: T.elementType.isRequired,
+  applyPageTitle: T.func.isRequired,
+}
+
+export default AdminRoute

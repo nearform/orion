@@ -62,7 +62,6 @@ function AdminModal({
                   >
                     Apply
                   </Button>
-                  )}
                 </DialogActions>
               </Form>
             )
