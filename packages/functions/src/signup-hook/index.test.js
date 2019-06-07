@@ -37,4 +37,13 @@ describe('signup-hook', () => {
       signupRequest: originalEvent.request,
     })
   })
+
+  it('it should ignore the cognito any event where triggerSource is not "PostConfirmation_ConfirmSignUp"', async () => {
+    await handler({
+      ...originalEvent,
+      triggerSource: 'PostConfirmation_ConfirmForgotPassword',
+    })
+
+    expect(graphql).not.toBeCalled()
+  })
 })
