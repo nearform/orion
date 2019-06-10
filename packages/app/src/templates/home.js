@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { graphql } from 'gatsby'
 import { Button, Grid, Paper, Typography, withStyles } from '@material-ui/core'
 import { PaddedContainer } from 'components'
@@ -9,7 +9,7 @@ import SEO from '../components/SEO'
 import SectionTitle from '../components/SectionTitle'
 import AssessmentTool from '../components/AssessmentTool'
 import AssessmentsTable from '../components/AssessmentsTable'
-import { useIsAuthenticated } from '../utils/auth'
+import { useIsAuthenticated, AuthInitContext } from '../utils/auth'
 
 const assessmentColors = [
   theme => theme.palette.primary.light,
@@ -25,7 +25,7 @@ function AssessmentsHome({ theme, classes, data }) {
   } = data
 
   const isAuthenticated = useIsAuthenticated()
-
+  const isAuthInitializided = useContext(AuthInitContext)
   const assessmentItems = assessmentTypes
     .map(type => ({
       ...type,
@@ -63,7 +63,7 @@ function AssessmentsHome({ theme, classes, data }) {
       </div>
       <PaddedContainer>
         <div className={classes.sectionTop}>
-          {isAuthenticated ? (
+          {isAuthenticated && isAuthInitializided ? (
             <Paper>
               <AssessmentsTable />
             </Paper>

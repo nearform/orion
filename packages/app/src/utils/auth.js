@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, createContext } from 'react'
 import { Auth, Hub } from 'aws-amplify'
 
 const isBrowser = typeof window !== 'undefined'
@@ -10,15 +10,17 @@ const HASURA_ALLOWED_ROLES_KEY = 'x-hasura-allowed-roles'
 const HASURA_USER_ID = 'x-hasura-user-id'
 const ADMIN_ROLES_REGEX = /admin$/i
 
+export const AuthInitContext = createContext(false)
+
 const isAuthenticated = async () => {
   try {
     const user = await Auth.currentAuthenticatedUser()
-
     return isBrowser && !!user
   } catch (err) {
     return false
   }
 }
+
 export const isAuthenticatedSync = () => isBrowser && !!Auth.user
 
 const isAdmin = async () =>
