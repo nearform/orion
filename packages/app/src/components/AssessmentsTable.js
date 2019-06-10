@@ -1,5 +1,5 @@
 import React from 'react'
-import { TableRow, TableCell, IconButton, Typography } from '@material-ui/core'
+import { TableRow, TableCell, IconButton } from '@material-ui/core'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
@@ -11,7 +11,6 @@ import { AssessmentStatusChip } from 'components'
 import { getAssessmentsData } from '../queries'
 import { formatDate } from '../utils/date'
 import Table from './Table'
-import useTable from '../hooks/useTable'
 
 const AssessmentsTable = () => {
   const { t } = useTranslation()
@@ -41,20 +40,13 @@ const AssessmentsTable = () => {
     { id: 'link', label: '' },
   ]
 
-  const { data, loading, error, tableProps } = useTable({
-    query: getAssessmentsData,
-    headers,
-  })
-
-  if (!data && loading) return <Typography>Loading...</Typography>
-  if (error) return <Typography>Error loading assessments.{error}</Typography>
-
   const assessmentKeyToName = keyBy(allAssessments.nodes, 'key')
 
   return (
     <Table
       headers={headers}
-      {...tableProps}
+      query={getAssessmentsData}
+      orderBy={{ created_at: 'desc' }}
       renderTableBody={data =>
         data.assessment.map((assessment, index) => (
           <TableRow hover key={index}>

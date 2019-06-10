@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import T from 'prop-types'
 import {
   Paper,
@@ -11,30 +11,35 @@ import {
   TablePagination,
   Tooltip,
   TableSortLabel,
+  Typography,
 } from '@material-ui/core'
+import { useQuery } from 'graphql-hooks'
 
 const Table = ({
-  data,
   headers,
-  offset,
-  pageSize,
-  orderBy,
-  setPageSize,
-  setOrderBy,
-  setOffset,
-  pageSizes,
+  pageSizes = [10, 20, 50],
   renderTableBody,
+  orderBy: orderByProp = { id: 'asc' },
+  query,
+  variables,
 }) => {
-  const toggleOrder = order => (order === 'asc' ? 'desc' : 'asc')
+  const [offset, setOffset] = useState(0)
+  const [pageSize, setPageSize] = useState(pageSizes[0])
+  const [orderBy, setOrderBy] = useState(orderByProp)
 
-  const handleChangePage = (event, page) => setOffset(page * pageSize)
+  const { loading, error, data } = useQuery(query, {
+    variables: {
+      ...variables,
+      offset,
+      limit: pageSize,
+      orderBy,
+    },
+  })
 
-  const handleChangePageSize = event => setPageSize(event.target.value)
+  if (!headers.length) return <Typography>No table headers to show</Typography>
 
-  const handleChangeOrderBy = property =>
-    setOrderBy({ [property]: toggleOrder(orderBy[property]) })
-
-  if (!headers.length) return 'No table headers to show'
+  if (!data && loading) return <Typography>Loading...</Typography>
+  if (error) return <Typography>Error loading data.</Typography>
 
   return (
     <Paper>
@@ -60,7 +65,11 @@ const Table = ({
                     <TableSortLabel
                       active={columnIsOrdered}
                       direction={orderBy[id]}
-                      onClick={() => handleChangeOrderBy(id)}
+                      onClick={() =>
+                        setOrderBy({
+                          [id]: orderBy[id] === 'asc' ? 'desc' : 'asc',
+                        })
+                      }
                     >
                       {label}
                     </TableSortLabel>
@@ -79,8 +88,8 @@ const Table = ({
               count={data.field_aggregate.aggregate.count}
               rowsPerPage={pageSize}
               page={Math.floor(offset / pageSize)}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangePageSize}
+              onChangePage={(event, page) => setOffset(page * pageSize)}
+              onChangeRowsPerPage={event => setPageSize(event.target.value)}
             />
           </TableRow>
         </TableFooter>
@@ -89,13 +98,7 @@ const Table = ({
   )
 }
 
-Table.defaultProps = {
-  orderBy: { id: 'asc' },
-}
-
 Table.propTypes = {
-  children: T.node,
-  data: T.object.isRequired,
   headers: T.arrayOf(
     T.shape({
       id: T.string.isRequired,
@@ -104,13 +107,6 @@ Table.propTypes = {
       cellProps: T.object,
     })
   ).isRequired,
-  pageTitle: T.node,
-  offset: T.number.isRequired,
-  pageSize: T.number.isRequired,
-  orderBy: T.object.isRequired,
-  setPageSize: T.func.isRequired,
-  setOrderBy: T.func.isRequired,
-  setOffset: T.func.isRequired,
   pageSizes: T.arrayOf(T.number).isRequired,
   renderTableBody: T.func.isRequired,
 }
