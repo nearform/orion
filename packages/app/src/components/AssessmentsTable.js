@@ -44,6 +44,7 @@ const AssessmentsTable = () => {
 
   return (
     <Table
+      data-testid="assessments-table"
       headers={headers}
       query={getAssessmentsData}
       orderBy={{ created_at: 'desc' }}
