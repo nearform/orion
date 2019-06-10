@@ -22,6 +22,7 @@ const Table = ({
   orderBy: orderByProp = { id: 'asc' },
   query,
   variables,
+  testid,
 }) => {
   const [offset, setOffset] = useState(0)
   const [pageSize, setPageSize] = useState(pageSizes[0])
@@ -42,7 +43,7 @@ const Table = ({
   if (error) return <Typography>Error loading data.</Typography>
 
   return (
-    <Paper>
+    <Paper data-testid={testid}>
       <MuiTable>
         <TableHead>
           <TableRow>
@@ -109,6 +110,7 @@ Table.propTypes = {
   ).isRequired,
   pageSizes: T.arrayOf(T.number).isRequired,
   renderTableBody: T.func.isRequired,
+  testid: T.string,
 }
 
 export default Table
