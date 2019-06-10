@@ -1,9 +1,9 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import { Auth } from 'aws-amplify'
 import { Redirect } from '@reach/router'
-
+import { AuthInitContext } from '../utils/auth'
 import ProtectedRoute from './ProtectedRoute'
 
 function SecretComponent() {
@@ -22,8 +22,11 @@ describe('ProtectedRoute', () => {
   })
 
   it('renders a component that redirects to /auth when user is not authenticated', () => {
-    const wrapper = shallow(<ProtectedRoute component={SecretComponent} />)
-
+    const wrapper = mount(
+      <AuthInitContext.Provider value={true}>
+        <ProtectedRoute component={SecretComponent} />
+      </AuthInitContext.Provider>
+    )
     const redirect = wrapper.find(Redirect)
 
     expect(redirect.length).toBe(1)
@@ -35,7 +38,11 @@ describe('ProtectedRoute', () => {
       something: 'here',
     }
 
-    const wrapper = shallow(<ProtectedRoute component={SecretComponent} />)
+    const wrapper = mount(
+      <AuthInitContext.Provider value={true}>
+        <ProtectedRoute component={SecretComponent} />
+      </AuthInitContext.Provider>
+    )
 
     expect(wrapper.find(SecretComponent).length).toBe(1)
   })
@@ -53,8 +60,10 @@ describe('ProtectedRoute', () => {
       },
     }
 
-    const wrapper = shallow(
-      <ProtectedRoute component={SecretComponent} allowedRole="admin" />
+    const wrapper = mount(
+      <AuthInitContext.Provider value={true}>
+        <ProtectedRoute component={SecretComponent} allowedRole="admin" />
+      </AuthInitContext.Provider>
     )
 
     const redirect = wrapper.find(Redirect)
@@ -76,8 +85,10 @@ describe('ProtectedRoute', () => {
       },
     }
 
-    const wrapper = shallow(
-      <ProtectedRoute component={SecretComponent} allowedRole="user" />
+    const wrapper = mount(
+      <AuthInitContext.Provider value={true}>
+        <ProtectedRoute component={SecretComponent} allowedRole="user" />
+      </AuthInitContext.Provider>
     )
 
     expect(wrapper.find(SecretComponent).length).toBe(1)

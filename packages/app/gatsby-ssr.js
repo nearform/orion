@@ -1,30 +1,18 @@
 import React from 'react'
-import { GraphQLClient, ClientContext } from 'graphql-hooks'
+import { GraphQLClient } from 'graphql-hooks'
 import fetch from 'node-fetch'
-import {
-  MuiThemeProvider,
-  createMuiTheme,
-  CssBaseline,
-} from '@material-ui/core'
-
-import ThemeWrapper, { theme } from './theme.es'
-
 import Layout from './src/components/Layout'
-
+import RootWrapper from './src/components/RootWrapper'
+import { AuthInitContext } from './src/utils/auth'
 const client = new GraphQLClient({
   url: process.env.GATSBY_GRAPHQL_API,
   fetch,
 })
 
 export const wrapRootElement = ({ element }) => (
-  <ClientContext.Provider value={client}>
-    <MuiThemeProvider theme={createMuiTheme(theme.muiTheme)}>
-      <ThemeWrapper>
-        <CssBaseline />
-        {element}
-      </ThemeWrapper>
-    </MuiThemeProvider>
-  </ClientContext.Provider>
+  <AuthInitContext.Provider value={false}>
+    <RootWrapper client={client}>{element}</RootWrapper>
+  </AuthInitContext.Provider>
 )
 
 export const wrapPageElement = ({ element, props }) => (
