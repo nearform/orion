@@ -1,5 +1,9 @@
-query getAssessments {
-  assessment(order_by: { created_at: desc }) {
+query getAssessments(
+  $limit: Int!
+  $offset: Int!
+  $orderBy: assessment_order_by!
+) {
+  assessment(limit: $limit, offset: $offset, order_by: [$orderBy]) {
     id
     key
     name
@@ -11,6 +15,11 @@ query getAssessments {
           name
         }
       }
+    }
+  }
+  field_aggregate: assessment_aggregate {
+    aggregate {
+      count
     }
   }
 }

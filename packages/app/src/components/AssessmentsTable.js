@@ -1,26 +1,19 @@
 import React from 'react'
-import {
-  TableHead,
-  TableRow,
-  TableCell,
-  Table,
-  TableBody,
-  IconButton,
-  Typography,
-} from '@material-ui/core'
+import { TableRow, TableCell, IconButton, Typography } from '@material-ui/core'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useTranslation } from 'react-i18next'
-import { useQuery } from 'graphql-hooks'
 import keyBy from 'lodash/keyBy'
 import get from 'lodash/get'
 
 import { AssessmentStatusChip } from 'components'
 import { getAssessmentsData } from '../queries'
 import { formatDate } from '../utils/date'
+import Table from './Table'
+import useTable from '../hooks/useTable'
 
-export default function AssessmentsTable() {
+const AssessmentsTable = () => {
   const { t } = useTranslation()
 
   const { allAssessments } = useStaticQuery(
@@ -36,31 +29,35 @@ export default function AssessmentsTable() {
     `
   )
 
-  const { data: assessmentsData, loading, error } = useQuery(getAssessmentsData)
+  const headers = [
+    { id: 'id', label: t('Your assessments'), sortable: true },
+    { id: 'created_at', label: 'Created At', sortable: true },
+    { id: 'assessmentType', label: 'Assessment Type' },
+    { id: 'company', label: 'Company' },
+    { id: 'status', label: 'Status', sortable: true },
+    { id: 'managementReport', label: 'Management Report' },
+    { id: 'feeback', label: 'Feedback' },
+    { id: 'copy', label: 'Copy' },
+    { id: 'link', label: '' },
+  ]
 
-  if (loading) return <Typography>Loading...</Typography>
-  if (error) return <Typography>Error loading assessments.</Typography>
+  const { data, loading, error, tableProps } = useTable({
+    query: getAssessmentsData,
+    headers,
+  })
+
+  if (!data && loading) return <Typography>Loading...</Typography>
+  if (error) return <Typography>Error loading assessments.{error}</Typography>
 
   const assessmentKeyToName = keyBy(allAssessments.nodes, 'key')
 
   return (
-    <Table size="small" data-testid="assessments-table">
-      <TableHead>
-        <TableRow>
-          <TableCell>{t('Your assessments')}</TableCell>
-          <TableCell>Created</TableCell>
-          <TableCell>Assessment Type</TableCell>
-          <TableCell>Company</TableCell>
-          <TableCell>Status</TableCell>
-          <TableCell>Management Report</TableCell>
-          <TableCell>Report</TableCell>
-          <TableCell>Copy</TableCell>
-          <TableCell />
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {assessmentsData.assessment.map(assessment => (
-          <TableRow hover key={assessment.id}>
+    <Table
+      headers={headers}
+      {...tableProps}
+      renderTableBody={data =>
+        data.assessment.map((assessment, index) => (
+          <TableRow hover key={index}>
             <TableCell>{assessment.name}</TableCell>
             <TableCell>{formatDate(assessment.created_at)}</TableCell>
             <TableCell>{assessmentKeyToName[assessment.key].name}</TableCell>
@@ -86,8 +83,10 @@ export default function AssessmentsTable() {
               </IconButton>
             </TableCell>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        ))
+      }
+    />
   )
 }
+
+export default AssessmentsTable

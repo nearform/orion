@@ -50,6 +50,21 @@ const typography = {
     fontSize: 16,
     letterSpacing: 'normal',
   },
+  tableHeader: {
+    fontFamily,
+    color: '#454B66',
+    fontSize: 11,
+    fontWeight: 'bold',
+    letterSpacing: '1.2px',
+    lineHeight: '13px',
+    textTransform: 'uppercase',
+  },
+  tableCell: {
+    fontFamily,
+    fontSize: 14,
+    letterSpacing: 'normal',
+    color: '#454B66',
+  },
   placeholder: {
     fontFamily,
     fontSize: 14,
@@ -152,10 +167,10 @@ exports.muiTheme = {
     },
     MuiTableCell: {
       head: {
-        ...typography.h4,
+        ...typography.tableHeader,
       },
       body: {
-        ...typography.body1,
+        ...typography.tableCell,
       },
     },
   },
