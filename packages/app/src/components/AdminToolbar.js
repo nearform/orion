@@ -12,8 +12,13 @@ import NavLink from './NavLink'
 
 function AdminToolbar({ classes, pageTitle, ...props }) {
   return (
-    <AppBar position="relative" color="inherit" className={classes.root}>
-      <Toolbar>
+    <AppBar
+      position="relative"
+      color="inherit"
+      className={classes.root}
+      elevation={0}
+    >
+      <Toolbar disableGutters>
         <Typography variant="h1">{pageTitle}</Typography>
         <div className={classes.grow} />
         <div className={classes.linksContainer}>
@@ -49,7 +54,7 @@ function AdminToolbar({ classes, pageTitle, ...props }) {
 
 const styles = theme => ({
   root: {
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(1),
   },
   grow: {
     flexGrow: 1,
