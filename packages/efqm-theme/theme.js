@@ -110,6 +110,12 @@ exports.muiTheme = {
       root: {
         whiteSpace: 'nowrap',
         boxShadow: shadows[1],
+        '&$outlined': {
+          '&:disabled': {
+            border: 'none',
+            opacity: 0.7,
+          },
+        },
       },
       text: {
         boxShadow: 'none',

@@ -2,75 +2,102 @@ import React from 'react'
 import T from 'prop-types'
 import { Formik, Form } from 'formik'
 import {
+  withStyles,
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  Button,
+  Typography,
 } from '@material-ui/core'
 
 function AdminModal({
+  classes,
   selected,
   data,
   contents,
-  title,
+  getTitleParts,
   onSave,
   onClose,
   schema,
   getInitialValues,
 }) {
-  const isOpen = !!(selected && data)
-  const initialValues = isOpen && getInitialValues(selected)
+  if (!selected || !data) return ''
+
+  const initialValues = getInitialValues(selected)
+  const [titleAction, titleTarget] = getTitleParts(selected)
+
   return (
-    <Dialog open={isOpen} onClose={onClose}>
-      {title && selected && <DialogTitle>{title(selected)}</DialogTitle>}
-      {isOpen && (
-        <Formik
-          initialValues={initialValues}
-          validationSchema={schema}
-          onSubmit={onSave}
-        >
-          {({ isSubmitting, values, handleChange, isValid, dirty }) => {
-            return (
-              <Form>
-                <DialogContent>
-                  {contents.map(
-                    ({ FieldComponent, entityKey, label }, index) => {
-                      const key = `${FieldComponent.name}_${index}`
-                      return (
-                        <FieldComponent
-                          key={key}
-                          values={values}
-                          handleChange={handleChange}
-                          selected={selected}
-                          data={data}
-                          label={label}
-                          entityKey={entityKey}
-                        />
-                      )
-                    }
-                  )}
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={() => onClose()} color="primary">
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={() => onSave(values)}
-                    color="primary"
-                    disabled={!isValid || isSubmitting || !dirty}
-                  >
-                    Apply
-                  </Button>
-                </DialogActions>
-              </Form>
-            )
-          }}
-        </Formik>
-      )}
+    <Dialog open={true} onClose={onClose}>
+      <DialogTitle disableTypography className={classes.modalTitle}>
+        <Typography variant="h4" className={classes.titleLabel}>
+          {titleAction}
+        </Typography>
+        <Typography variant="body2">{titleTarget}</Typography>
+      </DialogTitle>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={schema}
+        onSubmit={onSave}
+      >
+        {({ isSubmitting, values, handleChange, isValid, dirty }) => {
+          return (
+            <Form>
+              <DialogContent>
+                {contents.map(({ FieldComponent, entityKey, label }, index) => {
+                  const key = `${FieldComponent.name}_${index}`
+                  return (
+                    <FieldComponent
+                      key={key}
+                      values={values}
+                      handleChange={handleChange}
+                      selected={selected}
+                      data={data}
+                      label={label}
+                      entityKey={entityKey}
+                    />
+                  )
+                })}
+              </DialogContent>
+              <DialogActions className={classes.modalButtons}>
+                <Button
+                  onClick={() => onClose()}
+                  color="secondary"
+                  variant="outlined"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => onSave(values)}
+                  color="secondary"
+                  variant="outlined"
+                  disabled={!isValid || isSubmitting || !dirty}
+                >
+                  Apply
+                </Button>
+              </DialogActions>
+            </Form>
+          )
+        }}
+      </Formik>
     </Dialog>
   )
 }
+
+const styles = theme => ({
+  modalTitle: {
+    minWidth: theme.spacing(40),
+    paddingBottom: 0,
+  },
+  titleLabel: {
+    color: theme.palette.primary.dark,
+    fontWeight: 700,
+    margin: theme.spacing(1, 0, 0.5),
+  },
+  modalButtons: {
+    margin: theme.spacing(0, 2, 2),
+  },
+})
 
 AdminModal.propTypes = {
   selected: T.any,
@@ -83,4 +110,4 @@ AdminModal.propTypes = {
   getInitialValues: T.func.isRequired,
 }
 
-export default AdminModal
+export default withStyles(styles)(AdminModal)

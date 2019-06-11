@@ -146,7 +146,7 @@ function PendingUsers({ classes }) {
         selected={selected}
         data={modalData}
         contents={modalContents}
-        title={user => `Assign group to ${user.email}`}
+        getTitleParts={user => ['Assign group to', user.email]}
         onSave={values => onModalSave(values)}
         onClose={() => setSelected(null)}
         schema={modalSchema}

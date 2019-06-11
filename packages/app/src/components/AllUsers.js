@@ -1,5 +1,6 @@
 import React from 'react'
 import { useQuery, useMutation } from 'graphql-hooks'
+import classnames from 'classnames'
 import T from 'prop-types'
 import {
   withStyles,
@@ -12,6 +13,7 @@ import {
 import { HowToReg, ErrorOutline, Edit } from '@material-ui/icons'
 import * as Yup from 'yup'
 
+import { UserRoleChip } from 'components'
 import useAdminTable from '../hooks/useAdminTable'
 import AdminModal from './AdminModal'
 import UserSelectPicker from './UserSelectPicker'
@@ -25,11 +27,14 @@ import {
   assignUserRoleMutation,
 } from '../queries'
 
-const styles = {
+const styles = theme => ({
   middle: {
     verticalAlign: 'middle',
   },
-}
+  assigned: {
+    color: theme.palette.secondary.main,
+  },
+})
 
 const headers = [
   { id: 'id', label: 'ID', sortable: true },
@@ -39,7 +44,13 @@ const headers = [
   { id: 'country', label: 'Country' },
   { id: 'group', label: 'Group' },
   { id: 'role', label: 'Role' },
-  { id: 'edit', label: 'Edit' },
+  {
+    id: 'edit',
+    label: 'Edit',
+    cellProps: {
+      align: 'center',
+    },
+  },
 ]
 
 function getRelationalName(user, relation, entity) {
@@ -49,19 +60,22 @@ function getRelationalName(user, relation, entity) {
 
 function getStyledSignupAttr(user, key) {
   if (!user.signupRequest || !user.signupRequest.userAttributes[key])
-    return <Typography color="textSecondary">None</Typography>
+    return (
+      <Typography variant="body2" color="textSecondary">
+        None
+      </Typography>
+    )
 
-  return <Typography>{user.signupRequest.userAttributes[key]}</Typography>
-}
-
-function getStyledRoleName(user) {
   return (
-    <Typography>{getRelationalName(user, 'user_roles', 'role')}</Typography>
+    <Typography variant="body2">
+      {user.signupRequest.userAttributes[key]}
+    </Typography>
   )
 }
 
 function getGroupAndStatus(user, classes) {
   const StatusIcon = user.pending ? ErrorOutline : HowToReg
+
   const groupName = getRelationalName(user, 'user_groups', 'group')
   return (
     <Tooltip
@@ -69,9 +83,15 @@ function getGroupAndStatus(user, classes) {
       title={user.pending ? 'Pending user' : 'Assigned user'}
       placement="top"
     >
-      <Typography noWrap color={user.pending ? 'textSecondary' : 'textPrimary'}>
+      <Typography
+        variant="body2"
+        noWrap
+        color={user.pending ? 'textSecondary' : 'textPrimary'}
+      >
         <StatusIcon
-          className={classes.middle}
+          className={classnames(classes.middle, {
+            [classes.assigned]: !user.pending,
+          })}
           fontSize="small"
           color="inherit"
         />{' '}
@@ -88,17 +108,25 @@ function AllUsers({ classes, query, variables }) {
     variables,
     renderTableBody: data => {
       return data.user.map(user => (
-        <TableRow key={user.id.toString()} data-testid="all-users">
-          <TableCell size="small">{user.id}</TableCell>
+        <TableRow key={user.id.toString()} data-testid="all-users" size="small">
           <TableCell>
-            <Typography>{user.email}</Typography>
+            <Typography variant="body2">{user.id}</Typography>
+          </TableCell>
+          <TableCell>
+            <Typography variant="body2">{user.email}</Typography>
           </TableCell>
           <TableCell>{getStyledSignupAttr(user, 'custom:orgName')}</TableCell>
           <TableCell>{getStyledSignupAttr(user, 'custom:orgType')}</TableCell>
           <TableCell>{getStyledSignupAttr(user, 'custom:country')}</TableCell>
           <TableCell>{getGroupAndStatus(user, classes)}</TableCell>
-          <TableCell>{getStyledRoleName(user)}</TableCell>
           <TableCell>
+            <UserRoleChip
+              status={
+                getRelationalName(user, 'user_roles', 'role') || 'non-member'
+              }
+            />
+          </TableCell>
+          <TableCell align="center" padding="none">
             <IconButton onClick={() => setSelected(user)}>
               <Edit color="secondary" />
             </IconButton>
@@ -193,7 +221,7 @@ function AllUsers({ classes, query, variables }) {
         selected={selected}
         data={modalData}
         contents={modalContents}
-        title={user => `Edit ${user.email}`}
+        getTitleParts={user => ['Edit', user.email]}
         onSave={onModalSave}
         onClose={() => setSelected(null)}
         schema={modalSchema}

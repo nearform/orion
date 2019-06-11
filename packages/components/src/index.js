@@ -5,5 +5,7 @@ export { default as BarChart } from './components/BarChart/BarChart'
 export { default as BarChartTable } from './components/BarChart/BarChartTable'
 export {
   default as AssessmentStatusChip,
-} from './components/AssessmentStatusChip'
-export * from './components/AssessmentStatusChip'
+} from './components/StatusChip/AssessmentStatusChip'
+export * from './components/StatusChip/AssessmentStatusChip'
+export { default as UserRoleChip } from './components/StatusChip/UserRoleChip'
+export * from './components/StatusChip/UserRoleChip'
