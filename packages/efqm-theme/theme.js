@@ -75,7 +75,7 @@ const typography = {
     lineHeight: '13px',
     textTransform: 'uppercase',
     textAlign: 'center',
-    padding: '10px 14px',
+    padding: '16px 14px 10px',
   },
   tableCell: {
     fontFamily,
