@@ -1,5 +1,7 @@
 import React from 'react'
-import { TableRow, TableCell, IconButton } from '@material-ui/core'
+import MuiTableRow from '@material-ui/core/TableRow'
+import MuiTableCell from '@material-ui/core/TableCell'
+import IconButton from '@material-ui/core/IconButton'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
@@ -12,7 +14,7 @@ import { getAssessmentsData } from '../queries'
 import { formatDate } from '../utils/date'
 import Table from './Table'
 
-const AssessmentsTable = () => {
+function AssessmentsTable() {
   const { t } = useTranslation()
 
   const { allAssessments } = useStaticQuery(
@@ -50,32 +52,34 @@ const AssessmentsTable = () => {
       orderBy={{ created_at: 'desc' }}
       renderTableBody={data =>
         data.assessment.map((assessment, index) => (
-          <TableRow hover key={index}>
-            <TableCell>{assessment.name}</TableCell>
-            <TableCell>{formatDate(assessment.created_at)}</TableCell>
-            <TableCell>{assessmentKeyToName[assessment.key].name}</TableCell>
-            <TableCell>
+          <MuiTableRow hover key={index}>
+            <MuiTableCell>{assessment.name}</MuiTableCell>
+            <MuiTableCell>{formatDate(assessment.created_at)}</MuiTableCell>
+            <MuiTableCell>
+              {assessmentKeyToName[assessment.key].name}
+            </MuiTableCell>
+            <MuiTableCell>
               {get(assessment, 'owner.user_groups[0].group.name')}
-            </TableCell>
-            <TableCell>
+            </MuiTableCell>
+            <MuiTableCell>
               <AssessmentStatusChip status={assessment.status} />
-            </TableCell>
-            <TableCell />
-            <TableCell />
-            <TableCell>
+            </MuiTableCell>
+            <MuiTableCell />
+            <MuiTableCell />
+            <MuiTableCell>
               <IconButton>
                 <FileCopyIcon />
               </IconButton>
-            </TableCell>
-            <TableCell>
+            </MuiTableCell>
+            <MuiTableCell>
               <IconButton
                 component={Link}
                 to={`/assessment/${assessment.key}#${assessment.id}`}
               >
                 <ChevronRightIcon />
               </IconButton>
-            </TableCell>
-          </TableRow>
+            </MuiTableCell>
+          </MuiTableRow>
         ))
       }
     />

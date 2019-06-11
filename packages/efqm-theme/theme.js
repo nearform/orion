@@ -52,7 +52,7 @@ const typography = {
   },
   tableHeader: {
     fontFamily,
-    color: '#454B66',
+    color: efqmDigitalPalette.slateGrey,
     fontSize: 11,
     fontWeight: 'bold',
     letterSpacing: '1.2px',
@@ -63,7 +63,7 @@ const typography = {
     fontFamily,
     fontSize: 14,
     letterSpacing: 'normal',
-    color: '#454B66',
+    color: efqmDigitalPalette.slateGrey,
   },
   placeholder: {
     fontFamily,
@@ -92,8 +92,8 @@ const efqmDigitalPalette = {
   // Shades used in designs not included in EFQM docs
   paleGrey: 'rgb(244, 246, 248)',
   midGrey: 'rgb(152, 175, 198)',
-  white: '#fff',
-  black: '#000',
+  white: 'rgb(255, 255, 255)',
+  black: 'rgb(0, 0, 0)',
 }
 
 const shadows = [

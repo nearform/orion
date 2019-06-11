@@ -1,18 +1,16 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
-import {
-  Paper,
-  Table as MuiTable,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  TableFooter,
-  TablePagination,
-  Tooltip,
-  TableSortLabel,
-  Typography,
-} from '@material-ui/core'
+import MuiTable from '@material-ui/core/Table'
+import MuiTableHead from '@material-ui/core/TableHead'
+import MuiTableRow from '@material-ui/core/TableRow'
+import MuiTableCell from '@material-ui/core/TableCell'
+import MuiTableBody from '@material-ui/core/TableBody'
+import MuiTableFooter from '@material-ui/core/TableFooter'
+import MuiTablePagination from '@material-ui/core/TablePagination'
+import Tooltip from '@material-ui/core/Tooltip'
+import MuiTableSortLabel from '@material-ui/core/TableSortLabel'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
 import { useQuery } from 'graphql-hooks'
 
 const Table = ({
@@ -45,25 +43,25 @@ const Table = ({
   return (
     <Paper data-testid={testid}>
       <MuiTable>
-        <TableHead>
-          <TableRow>
+        <MuiTableHead>
+          <MuiTableRow>
             {headers.map(({ id, sortable, cellProps, label }) => {
               if (!sortable) {
                 return (
-                  <TableCell key={id} {...cellProps}>
+                  <MuiTableCell key={id} {...cellProps}>
                     {label}
-                  </TableCell>
+                  </MuiTableCell>
                 )
               }
               const columnIsOrdered = orderBy.hasOwnProperty(id)
               return (
-                <TableCell
+                <MuiTableCell
                   key={id}
                   sortDirection={columnIsOrdered ? orderBy[id] : false}
                   {...cellProps}
                 >
                   <Tooltip title="Sort" enterDelay={300}>
-                    <TableSortLabel
+                    <MuiTableSortLabel
                       active={columnIsOrdered}
                       direction={orderBy[id]}
                       onClick={() =>
@@ -73,17 +71,17 @@ const Table = ({
                       }
                     >
                       {label}
-                    </TableSortLabel>
+                    </MuiTableSortLabel>
                   </Tooltip>
-                </TableCell>
+                </MuiTableCell>
               )
             })}
-          </TableRow>
-        </TableHead>
-        <TableBody>{renderTableBody(data)}</TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
+          </MuiTableRow>
+        </MuiTableHead>
+        <MuiTableBody>{renderTableBody(data)}</MuiTableBody>
+        <MuiTableFooter>
+          <MuiTableRow>
+            <MuiTablePagination
               rowsPerPageOptions={pageSizes}
               colSpan={headers.length}
               count={data.field_aggregate.aggregate.count}
@@ -92,8 +90,8 @@ const Table = ({
               onChangePage={(event, page) => setOffset(page * pageSize)}
               onChangeRowsPerPage={event => setPageSize(event.target.value)}
             />
-          </TableRow>
-        </TableFooter>
+          </MuiTableRow>
+        </MuiTableFooter>
       </MuiTable>
     </Paper>
   )
