@@ -74,12 +74,15 @@ const typography = {
     letterSpacing: '1.2px',
     lineHeight: '13px',
     textTransform: 'uppercase',
+    textAlign: 'center',
+    padding: '10px 14px',
   },
   tableCell: {
     fontFamily,
     fontSize: 14,
     letterSpacing: 'normal',
     color: efqmDigitalPalette.slateGrey,
+    padding: '10px 14px',
   },
   placeholder: {
     fontFamily,
