@@ -1,5 +1,21 @@
 const fontFamily = (exports.fontFamily = 'Lato, sans-serif')
 
+const efqmDigitalPalette = {
+  // Names / keys are unofficial descriptions
+  slateGrey: 'rgb(69, 75, 102)',
+  navyBlue: 'rgb(73, 98, 173)',
+  cyan: 'rgb(80, 184, 242)',
+  aqua: 'rgb(121, 204, 198)',
+  emeraldGreen: 'rgb(112, 214, 112)',
+  pearGreen: 'rgb(155, 220, 106)',
+
+  // Shades used in designs not included in EFQM docs
+  paleGrey: 'rgb(244, 246, 248)',
+  midGrey: 'rgb(152, 175, 198)',
+  white: 'rgb(255, 255, 255)',
+  black: 'rgb(0, 0, 0)',
+}
+
 const typography = {
   h1: {
     fontFamily,
@@ -50,6 +66,21 @@ const typography = {
     fontSize: 16,
     letterSpacing: 'normal',
   },
+  tableHeader: {
+    fontFamily,
+    color: efqmDigitalPalette.slateGrey,
+    fontSize: 11,
+    fontWeight: 'bold',
+    letterSpacing: '1.2px',
+    lineHeight: '13px',
+    textTransform: 'uppercase',
+  },
+  tableCell: {
+    fontFamily,
+    fontSize: 14,
+    letterSpacing: 'normal',
+    color: efqmDigitalPalette.slateGrey,
+  },
   placeholder: {
     fontFamily,
     fontSize: 14,
@@ -63,22 +94,6 @@ const typography = {
     lineHeight: 'normal',
     letterSpacing: 1.8,
   },
-}
-
-const efqmDigitalPalette = {
-  // Names / keys are unofficial descriptions
-  slateGrey: 'rgb(69, 75, 102)',
-  navyBlue: 'rgb(73, 98, 173)',
-  cyan: 'rgb(80, 184, 242)',
-  aqua: 'rgb(121, 204, 198)',
-  emeraldGreen: 'rgb(112, 214, 112)',
-  pearGreen: 'rgb(155, 220, 106)',
-
-  // Shades used in designs not included in EFQM docs
-  paleGrey: 'rgb(244, 246, 248)',
-  midGrey: 'rgb(152, 175, 198)',
-  white: '#fff',
-  black: '#000',
 }
 
 const shadows = [
@@ -152,10 +167,10 @@ exports.muiTheme = {
     },
     MuiTableCell: {
       head: {
-        ...typography.h4,
+        ...typography.tableHeader,
       },
       body: {
-        ...typography.body1,
+        ...typography.tableCell,
       },
     },
   },
