@@ -74,7 +74,7 @@ const typography = {
     letterSpacing: '1.2px',
     lineHeight: '13px',
     textTransform: 'uppercase',
-    textAlign: 'center',
+    textAlign: 'left',
     padding: '16px 14px 10px',
   },
   tableCell: {
