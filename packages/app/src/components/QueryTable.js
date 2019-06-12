@@ -121,7 +121,7 @@ QueryTable.propTypes = {
       cellProps: T.object,
     })
   ).isRequired,
-  pageSizes: T.arrayOf(T.number).isRequired,
+  pageSizes: T.arrayOf(T.number),
   renderTableBody: T.func.isRequired,
   testid: T.string,
 }

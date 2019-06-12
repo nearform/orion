@@ -1,6 +1,7 @@
 {
   "key": "questionaire",
   "name": "questionaire",
+  "tableName": "Questionaire",
   "orderIndex": 1,
   "logoAsset": "assess-1-img",
   "shortDescription": "Reference determining excellence booklet",

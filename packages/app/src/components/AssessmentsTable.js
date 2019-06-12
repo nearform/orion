@@ -1,7 +1,6 @@
 import React from 'react'
 import { TableRow, TableCell, IconButton } from '@material-ui/core'
 import { Link, useStaticQuery, graphql } from 'gatsby'
-import FileCopyIcon from '@material-ui/icons/FileCopy'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useTranslation } from 'react-i18next'
 import keyBy from 'lodash/keyBy'
@@ -21,7 +20,7 @@ function AssessmentsTable() {
         allAssessments {
           nodes {
             key
-            name
+            tableName
           }
         }
       }
@@ -36,7 +35,6 @@ function AssessmentsTable() {
     { id: 'status', label: 'Status', sortable: true },
     { id: 'managementReport', label: 'Management Report' },
     { id: 'feeback', label: 'Feedback' },
-    { id: 'copy', label: 'Copy' },
     { id: 'link', label: '' },
   ]
 
@@ -51,10 +49,12 @@ function AssessmentsTable() {
       renderTableBody={data =>
         data &&
         data.assessment.map((assessment, index) => (
-          <TableRow hover key={index}>
+          <TableRow hover key={index} size="small">
             <TableCell>{assessment.name}</TableCell>
             <TableCell>{formatDate(assessment.created_at)}</TableCell>
-            <TableCell>{assessmentKeyToName[assessment.key].name}</TableCell>
+            <TableCell>
+              {assessmentKeyToName[assessment.key].tableName}
+            </TableCell>
             <TableCell>
               {get(assessment, 'owner.user_groups[0].group.name')}
             </TableCell>
@@ -63,12 +63,7 @@ function AssessmentsTable() {
             </TableCell>
             <TableCell />
             <TableCell />
-            <TableCell>
-              <IconButton>
-                <FileCopyIcon />
-              </IconButton>
-            </TableCell>
-            <TableCell>
+            <TableCell padding="none">
               <IconButton
                 component={Link}
                 to={`/assessment/${assessment.key}#${assessment.id}`}
