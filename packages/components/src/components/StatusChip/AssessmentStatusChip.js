@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
+import { withStyles, Typography } from '@material-ui/core'
 import T from 'prop-types'
 
 import StatusChip from './StatusChip'
@@ -37,7 +37,7 @@ function getIconDetails(status) {
   }
 }
 
-function AssessmentStatusChip({ status }) {
+function AssessmentStatusChip({ status, classes }) {
   const [Icon, color] = getIconDetails(status)
 
   return (
@@ -46,13 +46,24 @@ function AssessmentStatusChip({ status }) {
       iconColor={color}
       chipColor={getChipColor(status)}
     >
-      <Typography variant="body2">{status}</Typography>
+      <Typography variant="h4" className={classes.status}>
+        {status}
+      </Typography>
     </StatusChip>
   )
 }
 
 AssessmentStatusChip.propTypes = {
   status: T.oneOf(Object.values(ASSESSMENT_STATUS)).isRequired,
+  classes: T.object,
 }
 
-export default AssessmentStatusChip
+const styles = theme => ({
+  status: {
+    textTransform: 'none',
+    color: theme.palette.primary.dark,
+    padding: theme.spacing(0.5, 0),
+  },
+})
+
+export default withStyles(styles)(AssessmentStatusChip)

@@ -49,7 +49,7 @@ function AssessmentsTable() {
       renderTableBody={data =>
         data &&
         data.assessment.map((assessment, index) => (
-          <TableRow hover key={index}>
+          <TableRow hover key={index} size="small">
             <TableCell>{assessment.name}</TableCell>
             <TableCell>{formatDate(assessment.created_at)}</TableCell>
             <TableCell>
@@ -63,7 +63,7 @@ function AssessmentsTable() {
             </TableCell>
             <TableCell />
             <TableCell />
-            <TableCell>
+            <TableCell padding="none">
               <IconButton
                 component={Link}
                 to={`/assessment/${assessment.key}#${assessment.id}`}
