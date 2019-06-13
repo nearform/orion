@@ -1,5 +1,6 @@
 import React from 'react'
-import { TableRow, TableCell, IconButton } from '@material-ui/core'
+import { withStyles, TableRow, TableCell, IconButton } from '@material-ui/core'
+import { AssignmentTurnedIn } from '@material-ui/icons'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useTranslation } from 'react-i18next'
@@ -11,7 +12,7 @@ import { getAssessmentsData } from '../queries'
 import { formatDate } from '../utils/date'
 import QueryTable from './QueryTable'
 
-function AssessmentsTable() {
+function AssessmentsTable({ classes }) {
   const { t } = useTranslation()
 
   const { allAssessments } = useStaticQuery(
@@ -33,8 +34,7 @@ function AssessmentsTable() {
     { id: 'assessmentType', label: 'Assessment Type' },
     { id: 'company', label: 'Company' },
     { id: 'status', label: 'Status', sortable: true },
-    { id: 'managementReport', label: 'Management Report' },
-    { id: 'feeback', label: 'Feedback' },
+    { id: 'feeback', label: 'Feedback ' },
     { id: 'link', label: '' },
   ]
 
@@ -61,8 +61,17 @@ function AssessmentsTable() {
             <TableCell>
               <AssessmentStatusChip status={assessment.status} />
             </TableCell>
-            <TableCell />
-            <TableCell />
+            <TableCell>
+              {assessment.status === 'submitted' && (
+                <Link
+                  to={`/assessment/${assessment.key}/feedback-report/#${assessment.id}`}
+                  className={classes.feedbackLink}
+                >
+                  <AssignmentTurnedIn className={classes.feedbackIcon} />
+                  <span>View</span>
+                </Link>
+              )}
+            </TableCell>
             <TableCell padding="none">
               <IconButton
                 component={Link}
@@ -78,4 +87,16 @@ function AssessmentsTable() {
   )
 }
 
-export default AssessmentsTable
+const styles = theme => ({
+  feedbackLink: {
+    display: 'flex',
+    color: theme.palette.primary.dark,
+    ...theme.typography.body2,
+  },
+  feedbackIcon: {
+    color: theme.palette.secondary.main,
+    marginRight: '6px',
+  },
+})
+
+export default withStyles(styles)(AssessmentsTable)
