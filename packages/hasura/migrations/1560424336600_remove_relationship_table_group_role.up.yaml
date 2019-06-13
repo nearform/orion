@@ -1,0 +1,22 @@
+- args:
+    relationship: role
+    table:
+      name: group_role
+      schema: public
+  type: drop_relationship
+- args:
+    relationship: roles
+    table:
+      name: group
+      schema: public
+  type: drop_relationship
+- args:
+    sql: ALTER TABLE "public"."group_role" DROP CONSTRAINT "group_role_group_id_fkey"
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."group_role" DROP CONSTRAINT "group_role_role_id_fkey"
+  type: run_sql
+- args:
+    sql: DROP TABLE "public"."group_role"
+  type: run_sql
+
