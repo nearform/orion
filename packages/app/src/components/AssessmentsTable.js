@@ -34,7 +34,7 @@ function AssessmentsTable({ classes }) {
     { id: 'assessmentType', label: 'Assessment Type' },
     { id: 'company', label: 'Company' },
     { id: 'status', label: 'Status', sortable: true },
-    { id: 'feeback', label: 'Feedback ' },
+    { id: 'feedback', label: 'Feedback' },
     { id: 'link', label: '' },
   ]
 
