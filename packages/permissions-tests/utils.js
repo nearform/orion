@@ -346,7 +346,7 @@ async function listContributors(client, variables) {
 async function assignAssessorToAssessment(client, variables) {
   await client.request(
     `mutation assignAssessorToAssessment($assessmentId: Int!, $assessorId: Int!) {
-      insert_assessment_contributor(objects: { assessment_id: $assessmentId, assessor_id: $assessorId }) {
+      insert_assessment_assessor(objects: { assessment_id: $assessmentId, assessor_id: $assessorId }) {
         affected_rows
       }
   }`,
@@ -355,7 +355,7 @@ async function assignAssessorToAssessment(client, variables) {
 }
 
 async function listAssessors(client, variables) {
-  const { assessment_contributor } = await client.request(
+  const { assessment_assessor } = await client.request(
     `
   query listAssessors($assessmentId: Int!) {
     assessment_assessor(where: { assessment_id: { _eq: $assessmentId } }) {
@@ -373,7 +373,7 @@ async function listAssessors(client, variables) {
     variables
   )
 
-  return assessment_contributor
+  return assessment_assessor
 }
 
 module.exports = {

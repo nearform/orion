@@ -758,7 +758,7 @@ describe('initial state of the app', () => {
       test('a platform-admin should be able to assign a assessor to an assessment', async () => {
         const client = createClient(HASURA_ROLES.platformAdmin, {
           [CLAIMS.groupId]: companyGroup.id.toString(),
-          [CLAIMS.userId]: platformAdmin.id.toString(),
+          [CLAIMS.userId]: companyUser.id.toString(),
         })
 
         await assignAssessorToAssessment(client, {
@@ -770,18 +770,18 @@ describe('initial state of the app', () => {
       //TODO: implement detailed tests, when all permissions are implemented correctly
     })
 
-    describe('assessment contributor listing', () => {
+    describe('assessment assessor listing', () => {
       test('a platform-admin should be able to list assessors of an assessment', async () => {
         const client = createClient(HASURA_ROLES.platformAdmin, {
           [CLAIMS.groupId]: companyGroup.id.toString(),
-          [CLAIMS.userId]: platformAdmin.id.toString(),
+          [CLAIMS.userId]: companyUser.id.toString(),
         })
 
-        const contributors = await listContributors(client, {
+        const assessors = await listAssessors(client, {
           assessmentId: companyAssessment.id,
         })
 
-        expect(contributors.length).toBe(1)
+        expect(assessors.length).toBe(1)
       })
       //TODO: implement detailed tests, when all permissions are implemented correctly
     })
@@ -801,7 +801,7 @@ describe('initial state of the app', () => {
       test('a normal user should be able to see the assessments he is a assessor ', async () => {
         const client = createClient(HASURA_ROLES.user, {
           [CLAIMS.groupId]: partnerGroup.id.toString(),
-          [CLAIMS.userId]: partnerUser.id.toString(),
+          [CLAIMS.userId]: companyUser.id.toString(),
         })
 
         const assessments = await listAssessments(client)
