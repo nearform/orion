@@ -16,6 +16,8 @@ const {
   listAssessments,
   assignContributorToAssessment,
   listContributors,
+  assignAssessorToAssessment,
+  listAssessors,
   HASURA_ROLES,
   APPLICATION_ROLES,
   CLAIMS,
@@ -751,11 +753,55 @@ describe('initial state of the app', () => {
       })
     })
 
+    // ASSESSORS
+    describe('assessment assessor assignment', () => {
+      test('a platform-admin should be able to assign a assessor to an assessment', async () => {
+        const client = createClient(HASURA_ROLES.platformAdmin, {
+          [CLAIMS.groupId]: companyGroup.id.toString(),
+          [CLAIMS.userId]: platformAdmin.id.toString(),
+        })
+
+        await assignAssessorToAssessment(client, {
+          assessmentId: companyAssessment.id,
+          assessorId: partnerUser.id,
+        })
+      })
+
+      //TODO: implement detailed tests, when all permissions are implemented correctly
+    })
+
+    describe('assessment contributor listing', () => {
+      test('a platform-admin should be able to list assessors of an assessment', async () => {
+        const client = createClient(HASURA_ROLES.platformAdmin, {
+          [CLAIMS.groupId]: companyGroup.id.toString(),
+          [CLAIMS.userId]: platformAdmin.id.toString(),
+        })
+
+        const contributors = await listContributors(client, {
+          assessmentId: companyAssessment.id,
+        })
+
+        expect(contributors.length).toBe(1)
+      })
+      //TODO: implement detailed tests, when all permissions are implemented correctly
+    })
     describe('assessment visibility for normal users', () => {
-      test('a normal user should be able to see only the assessments he is a contributor of', async () => {
+      test('a normal user should be able to see the assessments he is a contributor ', async () => {
         const client = createClient(HASURA_ROLES.user, {
           [CLAIMS.groupId]: companyGroup.id.toString(),
           [CLAIMS.userId]: companyUser.id.toString(),
+        })
+
+        const assessments = await listAssessments(client)
+
+        expect(assessments.length).toBe(1)
+        expect(assessments).toContainEqual(companyAssessment)
+      })
+
+      test('a normal user should be able to see the assessments he is a assessor ', async () => {
+        const client = createClient(HASURA_ROLES.user, {
+          [CLAIMS.groupId]: partnerGroup.id.toString(),
+          [CLAIMS.userId]: partnerUser.id.toString(),
         })
 
         const assessments = await listAssessments(client)

@@ -343,6 +343,39 @@ async function listContributors(client, variables) {
   return assessment_contributor
 }
 
+async function assignAssessorToAssessment(client, variables) {
+  await client.request(
+    `mutation assignAssessorToAssessment($assessmentId: Int!, $assessorId: Int!) {
+      insert_assessment_contributor(objects: { assessment_id: $assessmentId, assessor_id: $assessorId }) {
+        affected_rows
+      }
+  }`,
+    variables
+  )
+}
+
+async function listAssessors(client, variables) {
+  const { assessment_contributor } = await client.request(
+    `
+  query listAssessors($assessmentId: Int!) {
+    assessment_assessor(where: { assessment_id: { _eq: $assessmentId } }) {
+      assessment {
+        id
+        name
+        owner_id
+      }
+      assessor {
+        id
+        email
+      }
+    }
+  }`,
+    variables
+  )
+
+  return assessment_contributor
+}
+
 module.exports = {
   getDeleteMutations,
   deleteAllData,
@@ -361,6 +394,8 @@ module.exports = {
   listAssessments,
   assignContributorToAssessment,
   listContributors,
+  assignAssessorToAssessment,
+  listAssessors,
   HASURA_ROLES,
   APPLICATION_ROLES,
   CLAIMS,
