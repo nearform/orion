@@ -26,6 +26,8 @@ import {
   getShallowAssessmentData,
   upsertAssessmentContributorMutation,
   deleteAssessmentContributorMutation,
+  upsertAssessmentAssessorMutation,
+  deleteAssessmentAssessorMutation,
 } from '../queries'
 import { useQuery } from 'graphql-hooks'
 import useAdminTable from '../hooks/useAdminTable'
@@ -65,6 +67,13 @@ function ContributorsAssessorsTemplate({
     deleteAssessmentContributorMutation
   )
 
+  const [upsertAssessmentAssessor] = useMutation(
+    upsertAssessmentAssessorMutation
+  )
+  const [deleteAssessmentAssessor] = useMutation(
+    deleteAssessmentAssessorMutation
+  )
+
   async function handleToggleContributor(user, checked) {
     const variables = { assessmentId, contributorId: user.id }
 
@@ -73,6 +82,24 @@ function ContributorsAssessorsTemplate({
         await upsertAssessmentContributor({ variables })
       } else {
         await deleteAssessmentContributor({ variables })
+      }
+    } finally {
+      if (page === 1) {
+        refetch()
+      } else {
+        setPage(1)
+      }
+    }
+  }
+
+  async function handleToggleAssessor(user, checked) {
+    const variables = { assessmentId, assessorId: user.id }
+
+    try {
+      if (checked) {
+        await upsertAssessmentAssessor({ variables })
+      } else {
+        await deleteAssessmentAssessor({ variables })
       }
     } finally {
       if (page === 1) {
@@ -115,6 +142,7 @@ function ContributorsAssessorsTemplate({
                   get(user, 'assessment_assessors_aggregate.aggregate.count') >
                   0
                 }
+                onChange={e => handleToggleAssessor(user, e.target.checked)}
               />
             </TableCell>
           </TableRow>
