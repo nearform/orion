@@ -2,7 +2,7 @@
   args:
     comment: Allow platform admin to query assessors
     permission:
-      allow_aggregations: false
+      allow_aggregations: true
       columns:
       - assessment_id
       - assessor_id
