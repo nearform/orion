@@ -1,0 +1,6 @@
+- args:
+    relationship: assessor
+    table:
+      name: assessment_assessor
+      schema: public
+  type: drop_relationship

@@ -320,6 +320,27 @@ async function assignContributorToAssessment(client, variables) {
     variables
   )
 }
+async function unassignContributorToAssessment(client, variables) {
+  await client.request(
+    `
+    mutation deleteAssessmentContributor(
+      $assessmentId: Int!
+      $contributorId: Int!
+    ) {
+      delete_assessment_contributor(
+        where: {
+          assessment_id: { _eq: $assessmentId }
+          contributor_id: { _eq: $contributorId }
+        }
+      ) {
+        affected_rows
+      }
+    }
+    
+    `,
+    variables
+  )
+}
 
 async function listContributors(client, variables) {
   const { assessment_contributor } = await client.request(
@@ -343,6 +364,57 @@ async function listContributors(client, variables) {
   return assessment_contributor
 }
 
+async function assignAssessorToAssessment(client, variables) {
+  await client.request(
+    `mutation assignAssessorToAssessment($assessmentId: Int!, $assessorId: Int!) {
+      insert_assessment_assessor(objects: { assessment_id: $assessmentId, assessor_id: $assessorId }) {
+        affected_rows
+      }
+  }`,
+    variables
+  )
+}
+
+async function listAssessors(client, variables) {
+  const { assessment_assessor } = await client.request(
+    `query listAssessors($assessmentId: Int!) {
+      assessment_assessor(where: { assessment_id: { _eq: $assessmentId } }) {
+        assessment {
+          id
+          name
+          owner_id
+        }
+        assessor {
+          id
+          email
+        }
+      }
+    }`,
+    variables
+  )
+
+  return assessment_assessor
+}
+
+async function unassignAssessorToAssessment(client, variables) {
+  await client.request(
+    `mutation deleteAssessmentAssessor(
+      $assessmentId: Int!
+      $assessorId: Int!
+    ) {
+      delete_assessment_assessor(
+        where: {
+          assessment_id: { _eq: $assessmentId }
+          assessor_id: { _eq: $assessorId }
+        }
+      ) {
+        affected_rows
+      }
+    }`,
+    variables
+  )
+}
+
 module.exports = {
   getDeleteMutations,
   deleteAllData,
@@ -360,7 +432,11 @@ module.exports = {
   createAssessment,
   listAssessments,
   assignContributorToAssessment,
+  unassignContributorToAssessment,
   listContributors,
+  assignAssessorToAssessment,
+  unassignAssessorToAssessment,
+  listAssessors,
   HASURA_ROLES,
   APPLICATION_ROLES,
   CLAIMS,
