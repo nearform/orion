@@ -1,6 +1,6 @@
 - args:
-    relationship: contributor
+    relationship: assessor
     table:
-      name: assessment_contributor
+      name: assessment_assessor
       schema: public
   type: drop_relationship

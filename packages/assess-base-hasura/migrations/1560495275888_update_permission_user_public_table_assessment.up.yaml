@@ -1,14 +1,12 @@
-- type: drop_select_permission
-  args:
+- args:
     role: user
     table:
       name: assessment
       schema: public
-- type: create_select_permission
-  args:
-    comment: Allow users that are contributors or assessors to view the assessment
+  type: drop_select_permission
+- args:
     permission:
-      allow_aggregations: false
+      allow_aggregations: true
       columns:
       - created_at
       - id
@@ -26,8 +24,8 @@
         - assessors:
             assessor_id:
               _eq: X-Hasura-User-Id
-      limit: null
     role: user
     table:
       name: assessment
       schema: public
+  type: create_select_permission

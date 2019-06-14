@@ -786,7 +786,7 @@ describe('initial state of the app', () => {
       //TODO: implement detailed tests, when all permissions are implemented correctly
     })
     describe('assessment visibility for normal users', () => {
-      test('a normal user should be able to see the assessments he is a contributor ', async () => {
+      test('a normal user should be able to see the assessments he is a contributor of', async () => {
         const client = createClient(HASURA_ROLES.user, {
           [CLAIMS.groupId]: companyGroup.id.toString(),
           [CLAIMS.userId]: companyUser.id.toString(),
@@ -798,7 +798,7 @@ describe('initial state of the app', () => {
         expect(assessments).toContainEqual(companyAssessment)
       })
 
-      test('a normal user should be able to see the assessments he is a assessor ', async () => {
+      test('a normal user should be able to see the assessments he is a assessor of', async () => {
         const client = createClient(HASURA_ROLES.user, {
           [CLAIMS.groupId]: partnerGroup.id.toString(),
           [CLAIMS.userId]: companyUser.id.toString(),

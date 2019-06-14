@@ -6,7 +6,7 @@
   type: drop_select_permission
 - args:
     permission:
-      allow_aggregations: false
+      allow_aggregations: true
       columns:
       - created_at
       - id
