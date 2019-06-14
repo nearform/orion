@@ -15,8 +15,10 @@ const {
   createAssessment,
   listAssessments,
   assignContributorToAssessment,
+  unassignContributorToAssessment,
   listContributors,
   assignAssessorToAssessment,
+  unassignAssessorToAssessment,
   listAssessors,
   HASURA_ROLES,
   APPLICATION_ROLES,
@@ -752,8 +754,33 @@ describe('initial state of the app', () => {
         expect(contributors.length).toBe(0)
       })
     })
+    describe('assessment visibility for contributors', () => {
+      test('a normal user should be able to see the assessments he is a contributor of', async () => {
+        const client = createClient(HASURA_ROLES.user, {
+          [CLAIMS.groupId]: companyGroup.id.toString(),
+          [CLAIMS.userId]: companyUser.id.toString(),
+        })
 
-    // ASSESSORS
+        let assessments = await listAssessments(client)
+
+        expect(assessments.length).toBe(1)
+        expect(assessments).toContainEqual(companyAssessment)
+
+        //remove it as contributor
+        const clientAdmin = createClient(HASURA_ROLES.admin, {
+          [CLAIMS.groupId]: platformGroup.id.toString(),
+          [CLAIMS.userId]: platformAdmin.id.toString(),
+        })
+
+        await unassignContributorToAssessment(clientAdmin, {
+          assessmentId: companyAssessment.id,
+          contributorId: platformUser.id,
+        })
+        assessments = await listAssessments(client)
+
+        expect(assessments.length).toBe(0)
+      })
+    })
     describe('assessment assessor assignment', () => {
       test('a platform-admin should be able to assign a assessor to an assessment', async () => {
         const client = createClient(HASURA_ROLES.platformAdmin, {
@@ -785,29 +812,30 @@ describe('initial state of the app', () => {
       })
       //TODO: implement detailed tests, when all permissions are implemented correctly
     })
-    describe('assessment visibility for normal users', () => {
-      test('a normal user should be able to see the assessments he is a contributor of', async () => {
-        const client = createClient(HASURA_ROLES.user, {
-          [CLAIMS.groupId]: companyGroup.id.toString(),
-          [CLAIMS.userId]: companyUser.id.toString(),
-        })
-
-        const assessments = await listAssessments(client)
-
-        expect(assessments.length).toBe(1)
-        expect(assessments).toContainEqual(companyAssessment)
-      })
-
+    describe('assessment visibility for assessors', () => {
       test('a normal user should be able to see the assessments he is a assessor of', async () => {
         const client = createClient(HASURA_ROLES.user, {
-          [CLAIMS.groupId]: partnerGroup.id.toString(),
-          [CLAIMS.userId]: companyUser.id.toString(),
+          [CLAIMS.userId]: platformUser.id.toString(),
         })
 
-        const assessments = await listAssessments(client)
+        let assessments = await listAssessments(client)
 
         expect(assessments.length).toBe(1)
         expect(assessments).toContainEqual(companyAssessment)
+
+        //remove it as contributor
+        const clientAdmin = createClient(HASURA_ROLES.admin, {
+          [CLAIMS.groupId]: platformGroup.id.toString(),
+          [CLAIMS.userId]: platformUser.id.toString(),
+        })
+
+        await unassignAssessorToAssessment(clientAdmin, {
+          assessmentId: companyAssessment.id,
+          assessorId: platformUser.id,
+        })
+        assessments = await listAssessments(client)
+
+        expect(assessments.length).toBe(0)
       })
     })
   })
