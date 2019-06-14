@@ -1,0 +1,8 @@
+mutation updateAssessmentAdvice($id: Int!, $advice: String!) {
+  update_assessment(where: { id: { _eq: $id } }, _set: { advice: $advice }) {
+    returning {
+      id
+      advice
+    }
+  }
+}

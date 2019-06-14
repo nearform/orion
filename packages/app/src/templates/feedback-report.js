@@ -4,7 +4,6 @@ import {
   Grid,
   Button,
   Typography,
-  TextField,
   Paper,
   Table,
   TableHead,
@@ -21,9 +20,14 @@ import get from 'lodash/get'
 
 import SEO from '../components/SEO'
 import SectionTitle from '../components/SectionTitle'
+import FeedbackReportInput from '../components/FeedbackReportInput'
 import { getAssessmentId } from '../utils/url'
-
-import { getAssessmentFeedbackReportData } from '../queries'
+import { isAdminSync, isAssessorSync } from '../utils/auth'
+import {
+  getAssessmentFeedbackReportData,
+  updateAssessmentExecSummaryMutation,
+  updateAssessmentAdviceMutation,
+} from '../queries'
 import {
   getSampleColors,
   getSampleData,
@@ -44,6 +48,12 @@ function FeedbackReport({
       assessmentId,
     },
   })
+
+  const isAdmin = isAdminSync()
+  const isAssessor = isAssessorSync()
+
+  // TODO: Check that this is correct
+  const canEditSummaryAndAdvice = isAdmin || isAssessor
 
   const sampleColors = getSampleColors(theme)
   const chartData = getSampleData(sampleColors)
@@ -79,26 +89,17 @@ function FeedbackReport({
           </Grid>
         </div>
         <div className={classes.section}>
-          <Grid container spacing={5}>
-            <Grid item xs={3}>
-              <SectionTitle
-                barColor={theme.palette.secondary.main}
-                gutterBottom
-              >
-                Executive Summary
-              </SectionTitle>
-            </Grid>
-            <Grid item xs>
-              <TextField multiline fullWidth rows={10} />
-            </Grid>
-          </Grid>
-          <Grid container justify="flex-end" spacing={5}>
-            <Grid item>
-              <Button color="secondary" variant="contained">
-                Save Updates
-              </Button>
-            </Grid>
-          </Grid>
+          {assessmentData && (
+            <FeedbackReportInput
+              label="Executive summary"
+              name="exec_summary"
+              assessmentId={assessmentId}
+              initialValue={assessmentData.exec_summary}
+              mutation={updateAssessmentExecSummaryMutation}
+              canEdit={canEditSummaryAndAdvice}
+              rows={10}
+            />
+          )}
         </div>
         <div className={classes.section}>
           <Grid container spacing={5}>
@@ -200,26 +201,17 @@ function FeedbackReport({
           </Grid>
         </div>
         <div className={classes.section}>
-          <Grid container spacing={5}>
-            <Grid item xs={3}>
-              <SectionTitle
-                barColor={theme.palette.secondary.main}
-                gutterBottom
-              >
-                Advice for Company
-              </SectionTitle>
-            </Grid>
-            <Grid item xs>
-              <TextField multiline fullWidth rows={6} />
-            </Grid>
-          </Grid>
-          <Grid container justify="flex-end" spacing={5}>
-            <Grid item>
-              <Button color="secondary" variant="contained">
-                Save Updates
-              </Button>
-            </Grid>
-          </Grid>
+          {assessmentData && (
+            <FeedbackReportInput
+              label="Advice for Company"
+              name="advice"
+              assessmentId={assessmentId}
+              initialValue={assessmentData.advice}
+              mutation={updateAssessmentAdviceMutation}
+              canEdit={canEditSummaryAndAdvice}
+              rows={6}
+            />
+          )}
         </div>
       </PaddedContainer>
     </div>

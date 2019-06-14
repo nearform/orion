@@ -1,0 +1,11 @@
+mutation updateAssessmentExecSummary($id: Int!, $exec_summary: String!) {
+  update_assessment(
+    where: { id: { _eq: $id } }
+    _set: { exec_summary: $exec_summary }
+  ) {
+    returning {
+      id
+      exec_summary
+    }
+  }
+}

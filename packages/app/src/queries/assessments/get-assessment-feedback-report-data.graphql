@@ -2,5 +2,14 @@ query getAssessmentFeedbackReportData($assessmentId: Int!) {
   assessment_by_pk(id: $assessmentId) {
     name
     status
+    exec_summary
+    advice
+    feedbackTables {
+      feedback_values
+      criterion_key
+      part_number
+      pillar_key
+      table_key
+    }
   }
 }
