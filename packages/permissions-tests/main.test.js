@@ -758,26 +758,26 @@ describe('initial state of the app', () => {
       test('a normal user should be able to see the assessments he is a contributor of', async () => {
         const client = createClient(HASURA_ROLES.user, {
           [CLAIMS.groupId]: companyGroup.id.toString(),
-          [CLAIMS.userId]: companyUser.id.toString(),
+          [CLAIMS.userId]: platformUser.id.toString(),
         })
 
         let assessments = await listAssessments(client)
 
         expect(assessments.length).toBe(1)
-        expect(assessments).toContainEqual(companyAssessment)
+        expect(assessments).toContainEqual(platformAssessment)
 
-        //remove it as contributor
+        // Have an admin remove user's contributor status from one assessment
         const clientAdmin = createClient(HASURA_ROLES.admin, {
           [CLAIMS.groupId]: platformGroup.id.toString(),
           [CLAIMS.userId]: platformAdmin.id.toString(),
         })
 
         await unassignContributorToAssessment(clientAdmin, {
-          assessmentId: companyAssessment.id,
+          assessmentId: platformAssessment.id,
           contributorId: platformUser.id,
         })
-        assessments = await listAssessments(client)
 
+        assessments = await listAssessments(client)
         expect(assessments.length).toBe(0)
       })
     })
@@ -790,7 +790,7 @@ describe('initial state of the app', () => {
 
         await assignAssessorToAssessment(client, {
           assessmentId: companyAssessment.id,
-          assessorId: partnerUser.id,
+          assessorId: platformUser.id,
         })
       })
 
@@ -823,7 +823,7 @@ describe('initial state of the app', () => {
         expect(assessments.length).toBe(1)
         expect(assessments).toContainEqual(companyAssessment)
 
-        //remove it as contributor
+        // Have an admin remove user's assessor status from one assessment
         const clientAdmin = createClient(HASURA_ROLES.admin, {
           [CLAIMS.groupId]: platformGroup.id.toString(),
           [CLAIMS.userId]: platformUser.id.toString(),
