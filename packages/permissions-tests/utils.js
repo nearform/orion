@@ -300,6 +300,11 @@ async function listAssessments(client) {
       name
       owner_id
     }
+    assessment_aggregate {
+      aggregate {
+        count
+      }
+    }
   }`)
 
   return assessment
