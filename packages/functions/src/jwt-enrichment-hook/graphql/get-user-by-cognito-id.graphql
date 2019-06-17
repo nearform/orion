@@ -20,5 +20,10 @@ query getUserByCognitoId($cognitoId: String!) {
         count
       }
     }
+    assessment_assessors_aggregate {
+      aggregate {
+        count
+      }
+    }
   }
 }

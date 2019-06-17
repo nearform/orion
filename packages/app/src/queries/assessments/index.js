@@ -65,3 +65,9 @@ export {
 export {
   default as upsertAssessmentContributorMutation,
 } from './upsert-assessment-contributor.graphql'
+export {
+  default as deleteAssessmentAssessorMutation,
+} from './delete-assessment-assessor.graphql'
+export {
+  default as upsertAssessmentAssessorMutation,
+} from './upsert-assessment-assessor.graphql'
