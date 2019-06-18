@@ -4,13 +4,11 @@ import {
   withStyles,
   Grid,
   Button,
-  Switch,
-  AppBar,
-  Toolbar,
   TableRow,
   TableCell,
 } from '@material-ui/core'
-import { PaddedContainer } from 'components'
+import { PaddedContainer, AssesmentParticipantChip } from 'components'
+import { Input } from '@material-ui/core'
 import { Link } from 'gatsby'
 import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
@@ -22,6 +20,7 @@ import { isAdminSync } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
 import ContextualHelp from '../components/ContextualHelp'
 import {
+  getUnassignedContributorsAssessorsData,
   getAssessmentContributorsAssessorsData,
   getShallowAssessmentData,
   upsertAssessmentContributorMutation,
@@ -32,6 +31,15 @@ import {
 import { useQuery } from 'graphql-hooks'
 import useAdminTable from '../hooks/useAdminTable'
 import { useMutation } from 'graphql-hooks'
+import FilterListIcon from '@material-ui/icons/filterList'
+
+function _placeholderEtoN(email) {
+  return email
+    .split('@')[0]
+    .split('.')
+    .map(n => n.charAt(0).toUpperCase() + n.slice(1))
+    .join(' ')
+}
 
 const headers = [
   { id: 'id', label: 'ID' },
@@ -60,58 +68,57 @@ function ContributorsAssessorsTemplate({
     },
   })
 
+  const { data, refetch: refetchParticipants } = useQuery(
+    getAssessmentContributorsAssessorsData,
+    {
+      variables: { assessmentId },
+    }
+  )
+  const assessors = get(data, 'assessors', [])
+  const contributors = get(data, 'contributors', [])
+
   const [upsertAssessmentContributor] = useMutation(
     upsertAssessmentContributorMutation
   )
+  async function assignContributor(user) {
+    const variables = { assessmentId, contributorId: user.id }
+    await upsertAssessmentContributor({ variables })
+    refetchUnassigned()
+    refetchParticipants()
+  }
+
   const [deleteAssessmentContributor] = useMutation(
     deleteAssessmentContributorMutation
   )
+  async function unassignContributor(user) {
+    const variables = { assessmentId, contributorId: user.id }
+    await deleteAssessmentContributor({ variables })
+    refetchUnassigned()
+    refetchParticipants()
+  }
 
   const [upsertAssessmentAssessor] = useMutation(
     upsertAssessmentAssessorMutation
   )
+  async function assignAssessor(user) {
+    const variables = { assessmentId, assessorId: user.id }
+    await upsertAssessmentAssessor({ variables })
+    refetchUnassigned()
+    refetchParticipants()
+  }
+
   const [deleteAssessmentAssessor] = useMutation(
     deleteAssessmentAssessorMutation
   )
-
-  async function handleToggleContributor(user, checked) {
-    const variables = { assessmentId, contributorId: user.id }
-
-    try {
-      if (checked) {
-        await upsertAssessmentContributor({ variables })
-      } else {
-        await deleteAssessmentContributor({ variables })
-      }
-    } finally {
-      if (page === 1) {
-        refetch()
-      } else {
-        setPage(1)
-      }
-    }
-  }
-
-  async function handleToggleAssessor(user, checked) {
+  async function unassignAssessor(user) {
     const variables = { assessmentId, assessorId: user.id }
-
-    try {
-      if (checked) {
-        await upsertAssessmentAssessor({ variables })
-      } else {
-        await deleteAssessmentAssessor({ variables })
-      }
-    } finally {
-      if (page === 1) {
-        refetch()
-      } else {
-        setPage(1)
-      }
-    }
+    await deleteAssessmentAssessor({ variables })
+    refetchUnassigned()
+    refetchParticipants()
   }
 
-  const { table, setPage, page, refetch } = useAdminTable({
-    query: getAssessmentContributorsAssessorsData,
+  const { table, refetch: refetchUnassigned } = useAdminTable({
+    query: getUnassignedContributorsAssessorsData,
     variables: {
       assessmentId,
     },
@@ -126,24 +133,22 @@ function ContributorsAssessorsTemplate({
             </TableCell>
             <TableCell>{get(user, 'user_groups[0].group.name', '-')}</TableCell>
             <TableCell>
-              <Switch
-                checked={
-                  get(
-                    user,
-                    'assessment_contributors_aggregate.aggregate.count'
-                  ) > 0
-                }
-                onChange={e => handleToggleContributor(user, e.target.checked)}
-              />
+              <Button
+                onClick={e => assignContributor(user)}
+                color="secondary"
+                variant="outlined"
+              >
+                Select
+              </Button>
             </TableCell>
             <TableCell>
-              <Switch
-                checked={
-                  get(user, 'assessment_assessors_aggregate.aggregate.count') >
-                  0
-                }
-                onChange={e => handleToggleAssessor(user, e.target.checked)}
-              />
+              <Button
+                onClick={e => assignAssessor(user)}
+                color="secondary"
+                variant="outlined"
+              >
+                Select
+              </Button>
             </TableCell>
           </TableRow>
         )
@@ -204,15 +209,39 @@ function ContributorsAssessorsTemplate({
           </Grid>
         </div>
         <div className={classes.section}>
-          <AppBar position="relative" color="default">
-            <Toolbar>
-              <Typography variant="h1">
-                Assign contributors and assessors
-              </Typography>
-            </Toolbar>
-          </AppBar>
+          <Typography variant="h1">
+            Assign contributors and assessors
+          </Typography>
         </div>
-        <div className={classes.section}>{table}</div>
+        <div className={classes.section}>
+          <Grid container>
+            <Grid item sm={12} md className={classes.filterContainer}>
+              <Input
+                fullWidth
+                endAdornment={<FilterListIcon color="secondary" />}
+              />
+            </Grid>
+            <Grid item md className={classes.participants}>
+              {assessors.map(({ assessor }) => (
+                <AssesmentParticipantChip
+                  key={assessor.id}
+                  name={_placeholderEtoN(assessor.email)}
+                  onDelete={() => unassignAssessor(assessor)}
+                  type="assessor"
+                />
+              ))}
+              {contributors.map(({ contributor }) => (
+                <AssesmentParticipantChip
+                  key={contributor.id}
+                  name={_placeholderEtoN(contributor.email)}
+                  onDelete={() => unassignContributor(contributor)}
+                  type="contributor"
+                />
+              ))}
+            </Grid>
+          </Grid>
+          {table}
+        </div>
       </PaddedContainer>
     </>
   )
@@ -256,6 +285,23 @@ const styles = theme => ({
   },
   switch: {
     height: theme.spacing(4),
+  },
+  filterContainer: {
+    maxWidth: 318,
+    margin: theme.spacing(1),
+    marginLeft: 0,
+    display: 'flex',
+    alignItems: 'flex-end',
+  },
+  participants: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end',
+    marginRight: -theme.spacing(1),
+    '& > *': {
+      margin: theme.spacing(1),
+      marginTop: 0,
+    },
   },
 })
 

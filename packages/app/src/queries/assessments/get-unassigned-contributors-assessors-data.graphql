@@ -1,0 +1,43 @@
+query getUnassignedContributorsAssessorsData(
+  $assessmentId: Int!
+  $limit: Int!
+  $offset: Int!
+  $orderBy: user_order_by!
+) {
+  user(
+    limit: $limit
+    offset: $offset
+    order_by: [{ assessment_assessors_aggregate: { count: desc } }, $orderBy]
+    where: {
+      _not:{ 
+        _or:[
+          {assessment_assessors: {assessment_id: {_eq: $assessmentId}}}, 
+          {assessment_contributors: {assessment_id: {_eq: $assessmentId}}}
+        ]
+      }
+    }
+  ) {
+    id
+    email
+    user_groups {
+      group {
+        id
+        name
+      }
+    }
+  }
+  field_aggregate: user_aggregate(
+    where: {
+      _not:{ 
+        _or:[
+          {assessment_assessors: {assessment_id: {_eq: $assessmentId}}}, 
+          {assessment_contributors: {assessment_id: {_eq: $assessmentId}}}
+        ]
+      }
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}

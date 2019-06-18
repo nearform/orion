@@ -57,6 +57,9 @@ export {
   default as getAssessmentFeedbackReportData,
 } from './get-assessment-feedback-report-data.graphql'
 export {
+  default as getUnassignedContributorsAssessorsData,
+} from './get-unassigned-contributors-assessors-data.graphql'
+export {
   default as getAssessmentContributorsAssessorsData,
 } from './get-assessment-contributors-assessors-data.graphql'
 export {
