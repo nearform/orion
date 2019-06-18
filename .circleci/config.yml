@@ -17,7 +17,7 @@ jobs:
       - checkout
       - run:
           name: Install npm deps
-          command: npm install
+          command: npm install --no-save
       - run:
           name: Lint code
           command: npm run lint
