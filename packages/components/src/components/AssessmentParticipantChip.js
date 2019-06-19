@@ -9,17 +9,12 @@ export const PARTICIPANT_TYPE = {
   contributor: 'Contributor',
 }
 
-function AssesmentParticipantChip({
-  type,
-  name,
-  onDelete,
-  classes: { name: nameClass, ...chipClasses },
-}) {
+function AssessmentParticipantChip({ type, name, onDelete, classes }) {
   return (
     <Chip
       onDelete={onDelete}
       deleteIcon={<ClearIcon fontSize="small" />}
-      classes={chipClasses}
+      classes={classes}
       clickable={false}
       label={
         <>
@@ -33,7 +28,7 @@ function AssesmentParticipantChip({
   )
 }
 
-AssesmentParticipantChip.propTypes = {
+AssessmentParticipantChip.propTypes = {
   name: T.string.isRequired,
   classes: T.object,
   type: T.oneOf(Object.keys(PARTICIPANT_TYPE)).isRequired,
@@ -85,4 +80,6 @@ const styles = theme => ({
   },
 })
 
-export default withStyles(styles, { withTheme: true })(AssesmentParticipantChip)
+export default withStyles(styles, { withTheme: true })(
+  AssessmentParticipantChip
+)

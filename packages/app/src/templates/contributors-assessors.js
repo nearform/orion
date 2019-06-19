@@ -7,7 +7,7 @@ import {
   TableRow,
   TableCell,
 } from '@material-ui/core'
-import { PaddedContainer, AssesmentParticipantChip } from 'components'
+import { PaddedContainer, AssessmentParticipantChip } from 'components'
 import { Input } from '@material-ui/core'
 import { Link } from 'gatsby'
 import HelpIcon from '@material-ui/icons/Help'
@@ -225,7 +225,7 @@ function ContributorsAssessorsTemplate({
           <Grid container>
             <Grid item xs={12} className={classes.participants}>
               {assessors.map(({ assessor }) => (
-                <AssesmentParticipantChip
+                <AssessmentParticipantChip
                   key={assessor.id}
                   name={_placeholderEtoN(assessor.email)}
                   onDelete={
@@ -235,7 +235,7 @@ function ContributorsAssessorsTemplate({
                 />
               ))}
               {contributors.map(({ contributor }) => (
-                <AssesmentParticipantChip
+                <AssessmentParticipantChip
                   key={contributor.id}
                   name={_placeholderEtoN(contributor.email)}
                   onDelete={
