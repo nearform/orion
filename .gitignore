@@ -64,9 +64,6 @@ typings/
 # dotenv environment variables file
 .env
 
-# package-lock
-package-lock.json
-
 # custom
 build/
 /hasura-schema.json
