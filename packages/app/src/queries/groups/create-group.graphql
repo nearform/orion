@@ -1,5 +1,5 @@
-mutation createGroup($name: String!, $type: String!) {
-  insert_group(objects: { name: $name, type: $type }) {
+mutation createGroup($name: String!, $type: String!, $parentId: Int! ) {
+  insert_group(objects: { name: $name, type: $type, parent_id: $parentId }) {
     returning {
       id
       name
