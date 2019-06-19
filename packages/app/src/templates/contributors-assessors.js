@@ -132,6 +132,7 @@ function ContributorsAssessorsTemplate({
     query: getUnassignedContributorsAssessorsData,
     variables: {
       assessmentId,
+      groupId,
     },
     headers,
     renderTableBody: data => {
