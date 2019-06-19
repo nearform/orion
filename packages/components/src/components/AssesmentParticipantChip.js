@@ -37,7 +37,7 @@ AssesmentParticipantChip.propTypes = {
   name: T.string.isRequired,
   classes: T.object,
   type: T.oneOf(Object.keys(PARTICIPANT_TYPE)).isRequired,
-  onDelete: T.func.isRequired,
+  onDelete: T.func,
 }
 
 const styles = theme => ({

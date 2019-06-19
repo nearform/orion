@@ -16,7 +16,8 @@ import { Redirect } from '@reach/router'
 
 import SEO from '../components/SEO'
 import SectionTitle from '../components/SectionTitle'
-import { isAdminSync } from '../utils/auth'
+import { isAdminSync, getGroupIdSync } from '../utils/auth'
+
 import { getAssessmentId } from '../utils/url'
 import ContextualHelp from '../components/ContextualHelp'
 import {
@@ -31,8 +32,11 @@ import {
 import { useQuery } from 'graphql-hooks'
 import useAdminTable from '../hooks/useAdminTable'
 import { useMutation } from 'graphql-hooks'
-import FilterListIcon from '@material-ui/icons/filterList'
-
+import FilterListIcon from '@material-ui/icons/FilterList'
+import {
+  getCanEditAssesors,
+  getCanEditContributors,
+} from '../utils/permission-checks'
 function _placeholderEtoN(email) {
   return email
     .split('@')[0]
@@ -40,14 +44,6 @@ function _placeholderEtoN(email) {
     .map(n => n.charAt(0).toUpperCase() + n.slice(1))
     .join(' ')
 }
-
-const headers = [
-  { id: 'id', label: 'ID' },
-  { id: 'email', label: 'Email' },
-  { id: 'group', label: 'Group' },
-  { id: 'contributor', label: 'Contributor' },
-  { id: 'assessor', label: 'Assessor' },
-]
 
 function ContributorsAssessorsTemplate({
   location,
@@ -57,16 +53,16 @@ function ContributorsAssessorsTemplate({
 }) {
   const assessmentId = getAssessmentId(location)
   const isAdmin = isAdminSync()
-
   if (!assessmentId && !isAdmin) {
     return <Redirect to="/auth" noThrow />
   }
 
-  const { data: assessmentData } = useQuery(getShallowAssessmentData, {
+  const { data: assessmentByPk } = useQuery(getShallowAssessmentData, {
     variables: {
       id: assessmentId,
     },
   })
+  const assessmentData = get(assessmentByPk, 'assessment_by_pk')
 
   const { data, refetch: refetchParticipants } = useQuery(
     getAssessmentContributorsAssessorsData,
@@ -77,6 +73,21 @@ function ContributorsAssessorsTemplate({
   const assessors = get(data, 'assessors', [])
   const contributors = get(data, 'contributors', [])
 
+  const groupId = getGroupIdSync()
+  const canEditAssesors = getCanEditAssesors(groupId, assessmentData)
+  const canEditContributors = getCanEditContributors(groupId, assessmentData)
+
+  const headers = [
+    { id: 'id', label: 'ID' },
+    { id: 'email', label: 'Email' },
+    { id: 'group', label: 'Group' },
+  ]
+  if (canEditContributors) {
+    headers.push({ id: 'contributor', label: 'Contributor' })
+  }
+  if (canEditAssesors) {
+    headers.push({ id: 'assessor', label: 'Assessor' })
+  }
   const [upsertAssessmentContributor] = useMutation(
     upsertAssessmentContributorMutation
   )
@@ -132,24 +143,28 @@ function ContributorsAssessorsTemplate({
               <Typography>{user.email}</Typography>
             </TableCell>
             <TableCell>{get(user, 'user_groups[0].group.name', '-')}</TableCell>
-            <TableCell>
-              <Button
-                onClick={e => assignContributor(user)}
-                color="secondary"
-                variant="outlined"
-              >
-                Select
-              </Button>
-            </TableCell>
-            <TableCell>
-              <Button
-                onClick={e => assignAssessor(user)}
-                color="secondary"
-                variant="outlined"
-              >
-                Select
-              </Button>
-            </TableCell>
+            {canEditContributors ? (
+              <TableCell>
+                <Button
+                  onClick={e => assignContributor(user)}
+                  color="secondary"
+                  variant="outlined"
+                >
+                  Select
+                </Button>
+              </TableCell>
+            ) : null}
+            {canEditAssesors ? (
+              <TableCell>
+                <Button
+                  onClick={e => assignAssessor(user)}
+                  color="secondary"
+                  variant="outlined"
+                >
+                  Select
+                </Button>
+              </TableCell>
+            ) : null}
           </TableRow>
         )
       })
@@ -158,13 +173,7 @@ function ContributorsAssessorsTemplate({
 
   return (
     <>
-      <SEO
-        title={get(
-          assessmentData,
-          'assessment_by_pk.name',
-          'Contributors and Assessors'
-        )}
-      />
+      <SEO title={get(assessmentData, 'name', 'Contributors and Assessors')} />
       <PaddedContainer>
         <Button
           component={Link}
@@ -193,15 +202,13 @@ function ContributorsAssessorsTemplate({
               <Grid container direction="column" spacing={1}>
                 <Grid item>
                   <Typography variant="h4">
-                    {get(assessmentData, 'assessment_by_pk.internal')
-                      ? 'internal'
-                      : ''}{' '}
+                    {get(assessmentData, 'internal') ? 'internal' : ''}{' '}
                     assessment name
                   </Typography>
                 </Grid>
                 <Grid item xs>
                   <Typography variant="h2" color="primary">
-                    {get(assessmentData, 'assessment_by_pk.name', 'Loading...')}
+                    {get(assessmentData, 'name', 'Loading...')}
                   </Typography>
                 </Grid>
               </Grid>
@@ -215,18 +222,14 @@ function ContributorsAssessorsTemplate({
         </div>
         <div className={classes.section}>
           <Grid container>
-            <Grid item sm={12} md className={classes.filterContainer}>
-              <Input
-                fullWidth
-                endAdornment={<FilterListIcon color="secondary" />}
-              />
-            </Grid>
-            <Grid item md className={classes.participants}>
+            <Grid item xs={12} className={classes.participants}>
               {assessors.map(({ assessor }) => (
                 <AssesmentParticipantChip
                   key={assessor.id}
                   name={_placeholderEtoN(assessor.email)}
-                  onDelete={() => unassignAssessor(assessor)}
+                  onDelete={
+                    canEditAssesors ? () => unassignAssessor(assessor) : null
+                  }
                   type="assessor"
                 />
               ))}
@@ -234,10 +237,20 @@ function ContributorsAssessorsTemplate({
                 <AssesmentParticipantChip
                   key={contributor.id}
                   name={_placeholderEtoN(contributor.email)}
-                  onDelete={() => unassignContributor(contributor)}
+                  onDelete={
+                    canEditContributors
+                      ? () => unassignContributor(contributor)
+                      : null
+                  }
                   type="contributor"
                 />
               ))}
+            </Grid>
+            <Grid item xs={12} className={classes.filterContainer}>
+              <Input
+                fullWidth
+                endAdornment={<FilterListIcon color="secondary" />}
+              />
             </Grid>
           </Grid>
           {table}
