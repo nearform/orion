@@ -24,6 +24,8 @@ import { GroupTypeChip, GROUP_TYPES } from 'components'
 
 import useAdminTable from '../hooks/useAdminTable'
 
+import { getGroupIdSync } from '../utils/auth'
+
 const groupTypeKeys = Object.keys(GROUP_TYPES)
 const groupTypes = groupTypeKeys.map(key => ({ key, value: GROUP_TYPES[key] }))
 
@@ -48,7 +50,6 @@ const headers = [
 function UserGroups({ classes }) {
   const [createGroup] = useMutation(createGroupMutation)
   const [deleteGroup] = useMutation(deleteGroupMutation)
-
   const { refetch: refetchGroups, table } = useAdminTable({
     query: getGroups,
     headers,
@@ -89,10 +90,15 @@ function UserGroups({ classes }) {
     <>
       <Formik
         validationSchema={GroupSchema}
-        initialValues={{ name: '', type: groupTypes[0].key }}
+        initialValues={{
+          name: '',
+          type: groupTypes[0].key,
+        }}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            await createGroup({ variables: values })
+            await createGroup({
+              variables: { ...values, parentId: getGroupIdSync() },
+            })
             refetchGroups()
           } finally {
             setSubmitting(false)
