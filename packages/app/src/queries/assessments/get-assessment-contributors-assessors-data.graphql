@@ -1,40 +1,16 @@
 query getAssessmentContributorsAssessorsData(
   $assessmentId: Int!
-  $limit: Int!
-  $offset: Int!
-  $orderBy: user_order_by!
 ) {
-  user(
-    limit: $limit
-    offset: $offset
-    order_by: [{ assessment_assessors_aggregate: { count: desc } }, $orderBy]
-  ) {
-    id
-    email
-    user_groups {
-      group {
-        id
-        name
-      }
-    }
-    assessment_contributors_aggregate(
-      where: { assessment_id: { _eq: $assessmentId } }
-    ) {
-      aggregate {
-        count
-      }
-    }
-    assessment_assessors_aggregate(
-      where: { assessment_id: { _eq: $assessmentId } }
-    ) {
-      aggregate {
-        count
-      }
+  contributors: assessment_contributor(where: {assessment_id: {_eq: $assessmentId}}) {
+    contributor {
+      id
+      email
     }
   }
-  field_aggregate: user_aggregate {
-    aggregate {
-      count
+  assessors: assessment_assessor(where: {assessment_id: {_eq: $assessmentId}}) {
+    assessor {
+      id
+      email
     }
   }
 }

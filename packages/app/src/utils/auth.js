@@ -8,6 +8,7 @@ const CUSTOM_CLAIMS_CONTRIBUTOR_KEY = 'x-assess-base-contributor'
 const CUSTOM_CLAIMS_ASSESSOR_KEY = 'x-assess-base-assessor'
 const HASURA_ALLOWED_ROLES_KEY = 'x-hasura-allowed-roles'
 const HASURA_USER_ID = 'x-hasura-user-id'
+const HASURA_GROUP_ID = 'x-hasura-group-id'
 const ADMIN_ROLES_REGEX = /admin$/i
 
 export const AuthInitContext = createContext(false)
@@ -59,6 +60,16 @@ export const getUserIdSync = () => {
   }
 }
 
+export const getGroupIdSync = () => {
+  if (!isAuthenticatedSync()) return null
+
+  try {
+    return extractGroupIdFromTokenPayload()
+  } catch (err) {
+    return null
+  }
+}
+
 function extractUserRolesFromTokenPayload() {
   const hasuraClaims = extractHasuraClaimsFromTokenPayload()
   return hasuraClaims[HASURA_ALLOWED_ROLES_KEY]
@@ -67,6 +78,10 @@ function extractUserRolesFromTokenPayload() {
 function extractUserIdFromTokenPayload() {
   const hasuraClaims = extractHasuraClaimsFromTokenPayload()
   return hasuraClaims[HASURA_USER_ID]
+}
+function extractGroupIdFromTokenPayload() {
+  const hasuraClaims = extractHasuraClaimsFromTokenPayload()
+  return Number(hasuraClaims[HASURA_GROUP_ID])
 }
 
 function extractHasuraClaimsFromTokenPayload() {

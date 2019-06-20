@@ -24,6 +24,7 @@ export default function useAdminTable({
   })
 
   const { loading, error, data, refetch } = useQuery(query, {
+    updateData: (data, nextData) => nextData, //fixes pagination flashing
     variables: {
       ...variables,
       offset,
@@ -31,11 +32,11 @@ export default function useAdminTable({
       orderBy,
     },
   })
-
-  const loadingMsg = loading && 'Loading table...'
+  //TODO: better loading indicator for refetching, paginating
+  //example: https://codesandbox.io/s/material-demo-be724
+  const loadingMsg = loading && !data && 'Loading table...'
   const errorMsg = error && 'Error loading table.'
-
-  const table = !loading && !error && (
+  const table = !(loading && !data) && !error && (
     <AdminTable
       headers={headers}
       data={data}

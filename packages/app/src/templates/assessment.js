@@ -21,7 +21,7 @@ import {
   updateAssessmentKeyInfoMutation,
   updateAssessmentStatusMutation,
 } from '../queries'
-import { getUserIdSync, isAdminSync } from '../utils/auth'
+import { getUserIdSync, isAdminSync, getGroupIdSync } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'
@@ -36,6 +36,10 @@ import {
   getSampleColors,
   getSampleData,
 } from 'components/src/components/BarChart/util.storybook'
+import {
+  getCanEditAssesors,
+  getCanEditContributors,
+} from '../utils/permission-checks'
 
 function createFormInitialValues(assessmentKeyInfoDef, assessmentData) {
   return assessmentKeyInfoDef.reduce(
@@ -167,7 +171,11 @@ function AssessmentTemplate({
   const sampleColors = getSampleColors(theme)
   const chartData = getSampleData(sampleColors)
 
-  const canAssignContributorsAndAssessors = !!assessmentId && isAdmin
+  const groupId = getGroupIdSync()
+
+  const canAssignContributorsAndAssessors =
+    (isAdmin && getCanEditAssesors(groupId, assessmentData)) ||
+    getCanEditContributors(groupId, assessmentData)
 
   return (
     <>
