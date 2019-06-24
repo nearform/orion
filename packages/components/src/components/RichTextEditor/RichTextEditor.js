@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import CKEditor from '@ckeditor/ckeditor5-react'
-import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { withStyles } from '@material-ui/core'
+
+let CKEditor
+let InlineEditor
+
+if (typeof window !== 'undefined') {
+  CKEditor = require('@ckeditor/ckeditor5-react')
+  InlineEditor = require('@ckeditor/ckeditor5-build-inline')
+}
 
 const defaultConfig = {
   removePlugins: ['Table', 'MediaEmbed'],
@@ -22,6 +28,8 @@ const RichTextEditor = ({
   onChange = () => null,
 }) => {
   const [editor, setEditor] = useState()
+
+  if (!CKEditor || !InlineEditor) return null
 
   return (
     <div className={classes.editor}>
