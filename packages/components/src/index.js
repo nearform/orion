@@ -3,6 +3,9 @@ export { default as PaddedContainer } from './components/PaddedContainer'
 export { default as ScoringSlider } from './components/ScoringSlider'
 export { default as BarChart } from './components/BarChart/BarChart'
 export { default as BarChartTable } from './components/BarChart/BarChartTable'
+export {
+  default as RichTextEditor,
+} from './components/RichTextEditor/RichTextEditor'
 
 export {
   default as AssessmentStatusChip,
