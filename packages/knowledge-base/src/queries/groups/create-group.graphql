@@ -1,0 +1,8 @@
+mutation createGroup($name: String!, $type: String!) {
+  insert_group(objects: { name: $name, type: $type }) {
+    returning {
+      id
+      name
+    }
+  }
+}

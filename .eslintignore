@@ -1,8 +1,15 @@
 node_modules
 .circleci
 docs
-packages/app/public
-packages/app/.cache
 packages/components/storybook-static
 packages/functions/build
 /hasura-schema.json
+
+# temporary until we remove default files
+packages/knowledge-base
+
+# ingore the build result.
+packages/knowledge-base/.cache
+packages/knowledge-base/public
+packages/assess-base/.cache
+packages/assess-base/public

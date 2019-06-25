@@ -1,0 +1,35 @@
+query getUsersInGroup(
+  $groupId: Int!
+  $limit: Int!
+  $offset: Int!
+  $orderBy: user_order_by!
+) {
+  user(
+    where: { user_groups: { group_id: { _eq: $groupId } } }
+    limit: $limit
+    offset: $offset
+    order_by: [$orderBy]
+  ) {
+    id
+    signupRequest
+    pending
+    email
+    user_groups {
+      group {
+        name
+      }
+    }
+    user_roles {
+      role {
+        name
+      }
+    }
+  }
+  field_aggregate: user_aggregate(
+    where: { user_groups: { group_id: { _eq: $groupId } } }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "keywords": [],
-  "author": "",
+  "author": "NearForm",
   "license": "ISC",
   "scripts": {
     "test": "jest --passWithNoTests",
@@ -18,7 +18,8 @@
     "efqm-theme": "^1.0.0",
     "nearform-theme": "^1.0.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
