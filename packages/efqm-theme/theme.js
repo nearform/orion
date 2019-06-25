@@ -17,7 +17,7 @@ const efqmDigitalPalette = {
   black: 'rgb(0, 0, 0)',
 }
 
-const articleTypograpghy = {
+const articleTypography = {
   heading1: {
     fontFamily,
     fontSize: '32px',
@@ -170,6 +170,7 @@ const articleTypograpghy = {
       fontStyle: 'italic',
       lineHeight: 'normal',
       letterSpacing: '-0.19px',
+      color: efqmDigitalPalette.slateGrey,
       '&:first-child': {
         marginTop: '2px',
       },
@@ -377,7 +378,7 @@ exports.muiTheme = {
     contrastThreshold: 1.6,
   },
   shadows,
-  articleTypograpghy,
+  articleTypography,
 }
 
 exports.googleFonts = ['Lato:400,700,900']
