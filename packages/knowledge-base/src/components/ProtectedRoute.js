@@ -3,7 +3,7 @@ import T from 'prop-types'
 import { Redirect } from '@reach/router'
 
 import { isAuthenticatedSync, getUserRolesSync } from '../utils/auth'
-import  AuthInitContext from '../utils/AuthInitContext'
+import AuthInitContext from '../utils/AuthInitContext'
 
 export default function ProtectedRoute({
   allowedRole,

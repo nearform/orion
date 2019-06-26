@@ -4,13 +4,7 @@ import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import {
-  addTranslations,
-  RootWrapper,
-  Layout,
-  ThemeWrapper,
-  theme,
-} from 'components'
+import { RootWrapper, Layout, ThemeWrapper, theme } from 'components'
 import * as auth from './utils/auth'
 import AuthInitContext from './src/utils/AuthInitContext'
 // import * as i18n from './utils/i18n' - TODO: add with content

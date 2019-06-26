@@ -1,0 +1,75 @@
+// adapted gatsby copy https://raw.githubusercontent.com/gatsbyjs/gatsby/master/.eslintrc.json
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "google",
+    "eslint:recommended",
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/flowtype",
+    "prettier/react"
+  ],
+  "plugins": [
+    "flowtype",
+    "prettier",
+    "react"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2016,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "globals": {
+    "before": true,
+    "spyOn": true,
+    "__PATH_PREFIX__": true
+  },
+  "rules": {
+    "react/display-name": "off",
+    "react/jsx-key": "warn",
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "packages/**/gatsby-browser.js",
+        "packages/gatsby/cache-dir/**/*"
+      ],
+      "env": {
+        "browser": true
+      },
+      "globals": {
+        "___loader": false,
+        "___emitter": false
+      }
+    },
+    {
+      "files": [
+        "**/cypress/integration/**/*",
+        "**/cypress/support/**/*"
+      ],
+      "globals": {
+        "cy": false,
+        "Cypress": false
+      }
+    }
+  ],
+  "settings": {
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "React",
+      // Pragma to use, default to "React"
+      "version": "16.8.4"
+    }
+  }
+}

@@ -1,17 +1,10 @@
 const path = require('path')
 const currentTheme = require('./theme')
 
-const { theme, config } = currentTheme
-
-const pillarColors = [
-  theme.muiTheme.palette.primary.light,
-  theme.muiTheme.palette.primary.main,
-  theme.muiTheme.palette.secondary.dark,
-]
+const { config } = currentTheme
 
 exports.onPreInit = () => {
   //add validations!
-  
   // const logger = console
   // try {
   //   const { validateAssessmentFiles } = require('./src/validations')
@@ -29,7 +22,6 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const homeTemplate = require.resolve('./src/templates/home.js')
 
-
   createPage({
     path: '/',
     component: homeTemplate,
@@ -38,7 +30,7 @@ exports.createPages = async ({ graphql, actions }) => {
     },
   })
 
-    return null
+  return null
 }
 
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {

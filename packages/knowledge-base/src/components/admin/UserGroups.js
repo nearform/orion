@@ -18,7 +18,11 @@ import { TextField } from 'formik-material-ui'
 import { DeleteForever, KeyboardArrowUp } from '@material-ui/icons'
 import * as Yup from 'yup'
 
-import { createGroupMutation, getGroups, deleteGroupMutation } from '../../queries'
+import {
+  createGroupMutation,
+  getGroups,
+  deleteGroupMutation,
+} from '../../queries'
 
 import { GroupTypeChip, GROUP_TYPES } from 'components'
 
