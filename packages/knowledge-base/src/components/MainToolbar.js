@@ -10,7 +10,7 @@ import { PaddedContainer, getLanguageSwitcher } from 'components'
 
 import { useIsAdmin, useIsAuthenticated } from '../utils/auth'
 import NavLink from './NavLink'
-
+import SecondaryNavigation from './SecondaryNavigation'
 // TODO: dedupe this from AssessBase
 
 function MainToolbar({ classes, dark }) {
@@ -53,7 +53,7 @@ function MainToolbar({ classes, dark }) {
     [classes.toolbarContrast]: dark,
     [classes.toolbarLightContrast]: !dark,
   })
-
+  
   const navButtonClass = classnames(classes.navButton, darkClass)
 
   // darkClass is needed on both outer container and inner padded container
@@ -124,6 +124,9 @@ function MainToolbar({ classes, dark }) {
             <LanguageSwitcher />
           </div>
         </div>
+        <div>
+        <SecondaryNavigation dark={dark}/>
+        </div>
       </PaddedContainer>
     </div>
   )
@@ -138,7 +141,7 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(4),
+    paddingBottom: theme.spacing(2),
   },
   logoHomeLink: {
     display: 'flex',
@@ -151,7 +154,7 @@ const styles = theme => ({
     fontWeight: 900,
   },
   toolbarDark: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.main,
   },
   toolbarLightContrast: {
     color: theme.palette.primary.dark,
@@ -163,7 +166,7 @@ const styles = theme => ({
     flexGrow: 1,
   },
   navButton: {
-    fontWeight: 700,
+    fontWeight: 'normal',
     textTransform: 'none',
   },
   icon: {
@@ -173,7 +176,7 @@ const styles = theme => ({
   linksContainer: {
     display: 'flex',
     '& > * + *': {
-      marginLeft: theme.spacing(4),
+      marginLeft: theme.spacing(2),
     },
   },
 })

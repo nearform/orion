@@ -26,7 +26,7 @@ exports.createPages = async ({ graphql, actions }) => {
     path: '/',
     component: homeTemplate,
     context: {
-      heroImageName: config.heroImageName,
+      heroImageName: config.heroImageNameKB,
     },
   })
 
