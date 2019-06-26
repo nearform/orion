@@ -5,9 +5,6 @@ packages/components/storybook-static
 packages/functions/build
 /hasura-schema.json
 
-# temporary until we remove default files
-packages/knowledge-base
-
 # ingore the build result.
 packages/knowledge-base/.cache
 packages/knowledge-base/public

@@ -5,12 +5,7 @@ import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import {
-  RootWrapper,
-  Layout,
-  ThemeWrapper,
-  theme,
-} from 'components'
+import { RootWrapper, Layout, ThemeWrapper, theme } from 'components'
 import MainToolbar from './src/components/MainToolbar'
 import AppFooter from './src/components/AppFooter'
 import AuthInitContext from './src/utils/AuthInitContext'

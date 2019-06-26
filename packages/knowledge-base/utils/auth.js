@@ -1,8 +1,6 @@
 import Amplify, { Auth, Hub } from 'aws-amplify'
 import awsConfig from './aws-exports'
 
-
-
 export async function init(graphqlClient) {
   const setClientToken = session => {
     graphqlClient.setHeader(
