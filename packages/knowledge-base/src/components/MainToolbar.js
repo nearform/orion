@@ -53,7 +53,7 @@ function MainToolbar({ classes, dark }) {
     [classes.toolbarContrast]: dark,
     [classes.toolbarLightContrast]: !dark,
   })
-  
+
   const navButtonClass = classnames(classes.navButton, darkClass)
 
   // darkClass is needed on both outer container and inner padded container
@@ -124,9 +124,7 @@ function MainToolbar({ classes, dark }) {
             <LanguageSwitcher />
           </div>
         </div>
-        <div>
-        <SecondaryNavigation dark={dark}/>
-        </div>
+        <SecondaryNavigation dark={dark} />
       </PaddedContainer>
     </div>
   )

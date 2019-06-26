@@ -1,16 +1,13 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { graphql } from 'gatsby'
-import { Button, Grid, Paper, Typography, withStyles } from '@material-ui/core'
-import { PaddedContainer, SectionTitle } from 'components'
+import { Button, Grid, Typography, withStyles } from '@material-ui/core'
+import { PaddedContainer } from 'components'
 import BackgroundImage from 'gatsby-background-image'
 
 import SEO from '../components/SEO'
 
-
 function KnowledgeHome({ theme, classes, data }) {
-  const {
-    heroBanner,
-  } = data
+  const { heroBanner } = data
 
   return (
     <BackgroundImage
@@ -23,30 +20,33 @@ function KnowledgeHome({ theme, classes, data }) {
           <Grid container spacing={3} direction="column">
             <Grid item xs={4}>
               <Typography variant="h1">
-                Gain knowledge from the 
-worlds leading organisations
+                Gain knowledge from the worlds leading organisations
               </Typography>
             </Grid>
             <Grid item xs={5}>
               <Typography variant="body2">
-              EFQM pride themselves on their knowledge base. We want you our members to learn and improve and see how your company can reach excellence.
+                EFQM pride themselves on their knowledge base. We want you our
+                members to learn and improve and see how your company can reach
+                excellence.
               </Typography>
             </Grid>
-            
+
             <Grid item container spacing={3} direction="row">
               <Grid item>
-                <Button color="secondary" variant="contained" >Explore the knowledge base</Button>
+                <Button color="secondary" variant="contained">
+                  Explore the knowledge base
+                </Button>
               </Grid>
               <Grid item>
-                <Button color="secondary" variant="outlined">Submit to knowledge base</Button>
+                <Button color="secondary" variant="outlined">
+                  Submit to knowledge base
+                </Button>
               </Grid>
             </Grid>
           </Grid>
         </PaddedContainer>
       </div>
-      <PaddedContainer>
-        
-      </PaddedContainer>
+      <PaddedContainer>{/*Home Body*/}</PaddedContainer>
     </BackgroundImage>
   )
 }
