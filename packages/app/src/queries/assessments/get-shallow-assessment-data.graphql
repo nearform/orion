@@ -6,6 +6,12 @@ query getShallowAssessmentData($id: Int!) {
     status
     internal
     key_information
+    scoring {
+      scoring_values
+      criterion_key
+      part_number
+      pillar_key
+    }
     owner {
       user_groups {
         group {

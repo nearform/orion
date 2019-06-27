@@ -13,25 +13,23 @@ import {
 } from '@material-ui/core'
 import classnames from 'classnames'
 
-import Bar from './Bar'
+import BarChartTableRow from './BarChartTableRow'
 import ChartTicks from '../ChartTicks'
-import {
-  getWeightedScore,
-  getOverallScore,
-  chartDataPropTypes,
-} from './util.js'
+import { getOverallScore, chartDataShape } from './util.js'
 
-function BarChartTable({ classes, chartData, theme }) {
+function BarChartTable({ classes, theme, chartData, assessmentId }) {
   const barHeight = theme.spacing(4)
   const barTicksHeight = theme.spacing(6)
-  const overallScore = getOverallScore(chartData)
+  const overallScore = chartData
+    ? Math.round(getOverallScore(chartData))
+    : 'Loading...'
 
   return (
     <Paper>
-      <Table size="small">
+      <Table size="small" className={classes.table}>
         <TableHead>
           <TableRow className={classes.headerFooter}>
-            <TableCell>Criteria</TableCell>
+            <TableCell className={classes.labelColumn}>Criteria</TableCell>
             <TableCell className={classes.chartColumn}>
               <ChartTicks
                 variant="above"
@@ -39,52 +37,31 @@ function BarChartTable({ classes, chartData, theme }) {
                 className={classes.barContainer}
               />
             </TableCell>
-            <TableCell align="center">Score</TableCell>
-            <TableCell align="center" className={classes.nowrap}>
+            <TableCell className={classes.scoreColumn} align="center">
+              Score
+            </TableCell>
+            <TableCell
+              className={classnames(classes.weightedColumn, classes.nowrap)}
+              align="center"
+            >
               Weighted score
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {chartData.map((dataItem, index) => {
-            const weightedScore = getWeightedScore(dataItem)
-            return (
-              <TableRow key={`bar_row_${index}`} hover>
-                <TableCell>
-                  <Typography style={{ color: dataItem.color }} variant="h3">
-                    {dataItem.label}
-                  </Typography>
-                </TableCell>
-                <TableCell className={classes.chartColumn}>
-                  <ChartTicks
-                    variant="across"
-                    height={barTicksHeight}
-                    className={classes.barContainer}
-                  >
-                    <Bar
-                      value={weightedScore}
-                      color={dataItem.color}
-                      height={barHeight}
-                      absolute
-                    />
-                  </ChartTicks>
-                </TableCell>
-                <TableCell align="right">
-                  <Typography variant="h6" className={classes.score}>
-                    {dataItem.score}
-                  </Typography>
-                </TableCell>
-                <TableCell align="right">
-                  <Typography variant="h6" className={classes.score}>
-                    {weightedScore}
-                    <Typography component="span" className={classes.weighting}>
-                      {dataItem.weighting && `(${dataItem.weighting})`}
-                    </Typography>
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            )
-          })}
+          {chartData &&
+            chartData.map((chartDataItem, index) => (
+              <BarChartTableRow
+                key={chartDataItem.key}
+                isVisible={true}
+                chartDataItem={chartDataItem}
+                barHeight={barHeight}
+                barTicksHeight={barTicksHeight}
+                assessmentId={assessmentId}
+                isFirst={index === 0}
+                isLast={index === chartData.length - 1}
+              />
+            ))}
         </TableBody>
         <TableFooter>
           <TableRow className={classes.headerFooter}>
@@ -93,7 +70,7 @@ function BarChartTable({ classes, chartData, theme }) {
                 Overall score
               </Typography>
             </TableCell>
-            <TableCell align="center">
+            <TableCell align="right">
               <Typography
                 variant="h6"
                 className={classnames(classes.score, classes.overall)}
@@ -111,38 +88,37 @@ function BarChartTable({ classes, chartData, theme }) {
 BarChartTable.propTypes = {
   classes: T.object.isRequired,
   theme: T.object.isRequired,
-  chartData: chartDataPropTypes,
+  chartData: T.arrayOf(chartDataShape),
+  assessmentId: T.number,
 }
 
 const styles = theme => ({
-  label: {
-    color: theme.palette.primary.dark,
+  table: {
+    tableLayout: 'fixed',
   },
-  nowrap: {
-    whiteSpace: 'nowrap',
+  labelColumn: {
+    width: '30%',
   },
   chartColumn: {
     padding: theme.spacing(0, 3, 0, 0),
     width: '40%',
     minWidth: theme.spacing(20),
   },
+  scoreColumn: {
+    width: '10%',
+  },
+  weightedColumn: {
+    width: '20%',
+  },
+  nowrap: {
+    whiteSpace: 'nowrap',
+  },
   score: {
     color: theme.palette.primary.dark,
   },
-  weighting: {
-    // Fixed width so that alignment is consistent even when empty
-    width: theme.spacing(4),
-    margin: theme.spacing(0, 1, 0.5),
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    textAlign: 'center',
-    fontSize: 11,
-    fontWeight: 'bold',
-    color: theme.palette.primary.main,
-  },
   overall: {
     color: theme.palette.primary.main,
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(6),
   },
   headerFooter: {
     height: theme.spacing(5),
