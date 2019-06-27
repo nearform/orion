@@ -18,7 +18,7 @@ import QuickLinksMenu, {
 const SubmitButton = withStyles(theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    marginTop: '2px',
+    marginTop: '2px', //for alignment purposes to avoid flexboxing, depending on the difference between regular button and the quicklink menu button
     marginLeft: theme.spacing(1),
     '&:hover': {
       backgroundColor: theme.palette.background.paper,
@@ -96,35 +96,21 @@ function SecondaryNavigation({ classes, dark }) {
 }
 const styles = theme => ({
   inputCloseIcon: {
-    fontSize: 16,
+    fontSize: 16, //tiny icon size, overriding MUI defaults
   },
   inputClass: {
     padding: `0px  ${theme.spacing(1)}px`,
     borderRadius: '3px',
-    margin: '2px 0px 4px 0px',
-
+    margin: '2px 0px 4px 0px', //vertical aligment so glitching when showing search bar is minimal, not neccesarry if we implment a nice transition animation
     '&>input': {
       color: theme.palette.primary.dark,
       minWidth: '280px',
-      backgroundColor: '#f6f8fa',
-      padding: '4px 12px 6px 12px',
-      lineHeight: '20px',
-      height: '20px',
-      '&::-webkit-input-placeholder': {
-        fontSize: '11px',
-        fontWeight: 'bolder',
-        textTransform: 'uppercase',
-      },
-      '&::-moz-placeholder': {
-        fontSize: '11px',
-        fontWeight: 'bolder',
-        textTransform: 'uppercase',
-      },
-      '&:-ms-input-placeholder': {
-        fontSize: '11px',
-        fontWeight: 'bolder',
-        textTransform: 'uppercase',
-      },
+      padding: `4px ${theme.spacing(2)}px 6px ${theme.spacing(2)}px`, //the top and bottom padding are alignment related, and text size dependant
+      lineHeight: '20px', //input box height, overriding MUI defaults
+      height: '20px', //input box height, overriding MUI defaults
+      '&::-webkit-input-placeholder': { ...theme.typography.h3 },
+      '&::-moz-placeholder': { ...theme.typography.h3 },
+      '&:-ms-input-placeholder': { ...theme.typography.h3 },
     },
   },
 })

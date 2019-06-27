@@ -1,17 +1,13 @@
 import React, { useState, useRef } from 'react'
-import { Button, withStyles } from '@material-ui/core'
+import { Button, Icon, Menu, MenuItem, withStyles } from '@material-ui/core'
 import classnames from 'classnames'
-import Icon from '@material-ui/core/Icon'
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
 
 export const QuickLinkButton = withStyles(theme => ({
   root: {
     color: theme.palette.primary.dark,
-    letterSpacing: '1.75px',
     borderRadius: 0,
-    paddingLeft: '15px',
+    paddingLeft: theme.spacing(2),
     textTransform: 'uppercase',
   },
   menuDarkContrast: {
@@ -67,7 +63,7 @@ export const QuickLinksMenuItem = withStyles(theme => ({
     ...theme.typography.button,
     minHeight: theme.spacing(4),
 
-    borderLeft: '4px solid transparent',
+    borderLeft: `${theme.spacing(0.5)}px solid transparent`,
     '&:hover, &:focus': {
       borderLeftColor: theme.palette.primary.light,
     },
