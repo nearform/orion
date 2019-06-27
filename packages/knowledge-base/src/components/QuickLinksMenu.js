@@ -42,22 +42,25 @@ const QuickLinksMenu = withStyles(theme => ({
     textTransform: 'uppercase',
     borderRadius: 0,
   },
-}))(props => (
-  <Menu
-    elevation={0}
-    getContentAnchorEl={null}
-    keepMounted
-    anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'right',
-    }}
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'right',
-    }}
-    {...props}
-  />
-))
+}))(
+  React.forwardRef((props, ref) => (
+    <Menu
+      elevation={0}
+      getContentAnchorEl={null}
+      keepMounted
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'right',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      ref={ref}
+      {...props}
+    />
+  ))
+)
 
 export const QuickLinksMenuItem = withStyles(theme => ({
   root: {
@@ -69,7 +72,7 @@ export const QuickLinksMenuItem = withStyles(theme => ({
       borderLeftColor: theme.palette.primary.light,
     },
   },
-}))(props => <MenuItem {...props} />)
+}))(MenuItem)
 
 function QuickLinkMenu({ dark, label, children }) {
   const menuButtonRef = useRef(null)
