@@ -20,7 +20,7 @@ function KnowledgeHome({ theme, classes, data }) {
           <Grid container spacing={3} direction="column">
             <Grid item xs={4}>
               <Typography variant="h1">
-                Gain knowledge from the worlds leading organisations
+                Gain knowledge from the world's leading organisations
               </Typography>
             </Grid>
             <Grid item xs={5}>
