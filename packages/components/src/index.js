@@ -7,9 +7,7 @@ export { default as PaddedContainer } from './components/PaddedContainer'
 export { default as ScoringSlider } from './components/ScoringSlider'
 export { default as BarChart } from './components/BarChart/BarChart'
 export { default as BarChartTable } from './components/BarChart/BarChartTable'
-export {
-  default as RichTextEditor,
-} from './components/RichTextEditor/RichTextEditor'
+export { getChartData } from './components/BarChart/util.js'
 
 // status chips
 export {
@@ -24,6 +22,11 @@ export { default as UserRoleChip } from './components/StatusChip/UserRoleChip'
 export * from './components/StatusChip/UserRoleChip'
 export { default as GroupTypeChip } from './components/StatusChip/GroupTypeChip'
 export * from './components/StatusChip/GroupTypeChip'
+
+// content editting
+export {
+  default as RichTextEditor,
+} from './components/RichTextEditor/RichTextEditor'
 
 // i18n / translation / language switching
 export { default as addTranslations } from './components/translations/util'
