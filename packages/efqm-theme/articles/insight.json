@@ -1,0 +1,47 @@
+{
+  "key": "insight",
+  "name": "insight",
+  "orderIndex": 3,
+  "fields": [
+    {
+      "key": "about",
+      "name": "About the organisation",
+      "type": "rich-text"
+    },
+    {
+      "key": "approach",
+      "name": "Approach (What)",
+      "type": "rich-text"
+    },
+    {
+      "key": "why",
+      "name": "Why and how was the approach implemented",
+      "type": "rich-text"
+    },
+    {
+      "key": "when",
+      "name": "When – things to do, if you want to implement",
+      "type": "rich-text"
+    },
+    {
+      "key": "results",
+      "name": "Results achieved",
+      "type": "rich-text"
+    },
+    {
+      "key": "do",
+      "name": "Do’s: Things to do if you want to implement this",
+      "type": "rich-text"
+    },
+    {
+      "key": "dont",
+      "name": "Don’ts: Things not to do if you want to implement this successfully",
+      "type": "rich-text"
+    },
+    {
+      "key": "diagram",
+      "name": "Diagram / Picture",
+      "type": "image"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+- args:
+    relationship: article_authors
+    table:
+      name: user
+      schema: public
+  type: drop_relationship
+
+- args:
+    relationship: authors
+    table:
+      name: article
+      schema: public
+  type: drop_relationship
+
+- args:
+    relationship: author
+    table:
+      name: article_author
+      schema: public
+  type: drop_relationship
+
+- args:
+    relationship: article
+    table:
+      name: article_author
+      schema: public
+  type: drop_relationship
+
+- args:
+    sql: DROP TABLE "public"."article_author"
+  type: run_sql

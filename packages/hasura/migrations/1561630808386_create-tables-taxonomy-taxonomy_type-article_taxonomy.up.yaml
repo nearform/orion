@@ -1,0 +1,76 @@
+- args:
+    sql: CREATE TABLE "public"."taxonomy"("id" serial NOT NULL, "taxonomy_type_id" integer
+      NOT NULL, "name" text NOT NULL, PRIMARY KEY ("id") );
+  type: run_sql
+- args:
+    name: taxonomy
+    schema: public
+  type: add_existing_table_or_view
+
+- args:
+    sql: CREATE TABLE "public"."taxonomy_type"("id" serial NOT NULL, "name" text
+      NOT NULL, PRIMARY KEY ("id") );
+  type: run_sql
+- args:
+    name: taxonomy_type
+    schema: public
+  type: add_existing_table_or_view
+
+- args:
+    sql: ALTER TABLE "public"."taxonomy" ADD FOREIGN KEY ("taxonomy_type_id") REFERENCES "public"."taxonomy_type"
+      ("id")
+  type: run_sql
+
+- args:
+    name: taxonomy_type
+    table:
+      name: taxonomy
+      schema: public
+    using:
+      foreign_key_constraint_on: taxonomy_type_id
+  type: create_object_relationship
+
+- args:
+    name: taxonomy_items
+    table:
+      name: taxonomy_type
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: taxonomy_type_id
+        table:
+          name: taxonomy
+          schema: public
+  type: create_array_relationship
+
+- args:
+    sql: CREATE TABLE "public"."article_taxonomy"("id" serial NOT NULL, "article_id"
+      integer NOT NULL, "taxonomy_id" integer NOT NULL, PRIMARY KEY ("id") );
+  type: run_sql
+- args:
+    name: article_taxonomy
+    schema: public
+  type: add_existing_table_or_view
+
+- args:
+    sql: ALTER TABLE "public"."article_taxonomy" ADD FOREIGN KEY ("article_id") REFERENCES
+      "public"."article" ("id")
+  type: run_sql
+
+- args:
+    sql: ALTER TABLE "public"."article_taxonomy" ADD FOREIGN KEY ("taxonomy_id") REFERENCES
+      "public"."taxonomy" ("id")
+  type: run_sql
+
+- args:
+    name: taxonomy_items
+    table:
+      name: article
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: article_id
+        table:
+          name: article_taxonomy
+          schema: public
+  type: create_array_relationship
