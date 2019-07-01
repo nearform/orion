@@ -1,12 +1,11 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { useStaticQuery, graphql, navigate, Link } from 'gatsby'
 import Img from 'gatsby-image'
 import { Typography, Button, withStyles } from '@material-ui/core'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
-import { PaddedContainer, getLanguageSwitcher } from 'components'
+import { PaddedContainer } from 'components'
 
 import { useIsAdmin, useIsAuthenticated } from '../utils/auth'
 import NavLink from './NavLink'
@@ -35,8 +34,6 @@ function MainToolbar({ classes, dark }) {
       }
     }
   `)
-
-  const LanguageSwitcher = getLanguageSwitcher(useTranslation)
 
   const doLogout = () => {
     Auth.signOut()
@@ -119,7 +116,6 @@ function MainToolbar({ classes, dark }) {
                 LOGOUT
               </Button>
             )}
-            <LanguageSwitcher />
           </div>
         </div>
       </PaddedContainer>
