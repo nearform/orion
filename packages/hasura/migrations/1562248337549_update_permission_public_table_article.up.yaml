@@ -1,0 +1,340 @@
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
+      - published_at
+      - created_at
+      - updated_at
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: company-admin
+    table:
+      name: article
+      schema: public
+  type: create_insert_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
+      - published_at
+      - created_at
+      - updated_at
+      filter: {}
+      limit: null
+    role: company-admin
+    table:
+      name: article
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      columns:
+      - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
+      - published_at
+      - created_at
+      - updated_at
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: company-admin
+    table:
+      name: article
+      schema: public
+  type: create_update_permission
+- args:
+    permission:
+      filter: {}
+    role: company-admin
+    table:
+      name: article
+      schema: public
+  type: create_delete_permission
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
+      - published_at
+      - created_at
+      - updated_at
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: partner-admin
+    table:
+      name: article
+      schema: public
+  type: create_insert_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
+      - published_at
+      - created_at
+      - updated_at
+      filter: {}
+      limit: null
+    role: partner-admin
+    table:
+      name: article
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      columns:
+      - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
+      - published_at
+      - created_at
+      - updated_at
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: partner-admin
+    table:
+      name: article
+      schema: public
+  type: create_update_permission
+- args:
+    permission:
+      filter: {}
+    role: partner-admin
+    table:
+      name: article
+      schema: public
+  type: create_delete_permission
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
+      - published_at
+      - created_at
+      - updated_at
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: article
+      schema: public
+  type: create_insert_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
+      - published_at
+      - created_at
+      - updated_at
+      filter: {}
+      limit: null
+    role: platform-admin
+    table:
+      name: article
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      columns:
+      - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
+      - published_at
+      - created_at
+      - updated_at
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: article
+      schema: public
+  type: create_update_permission
+- args:
+    permission:
+      filter: {}
+    role: platform-admin
+    table:
+      name: article
+      schema: public
+  type: create_delete_permission
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
+      - published_at
+      - created_at
+      - updated_at
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: user
+    table:
+      name: article
+      schema: public
+  type: create_insert_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
+      - published_at
+      - created_at
+      - updated_at
+      filter: {}
+      limit: null
+    role: user
+    table:
+      name: article
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      columns:
+      - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
+      - published_at
+      - created_at
+      - updated_at
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: user
+    table:
+      name: article
+      schema: public
+  type: create_update_permission
+- args:
+    permission:
+      filter: {}
+    role: user
+    table:
+      name: article
+      schema: public
+  type: create_delete_permission
