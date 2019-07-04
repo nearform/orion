@@ -1,0 +1,87 @@
+- args:
+    sql: ALTER TABLE "public"."article" DROP COLUMN "body";
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."article" ALTER COLUMN "recommended" DROP NOT NULL;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."article"."recommended" IS ''
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."article" ALTER COLUMN "image" DROP NOT NULL;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."article"."image" IS ''
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."article" ALTER COLUMN "title" DROP NOT NULL;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."article"."title" IS ''
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."article" ALTER COLUMN "subtitle" DROP NOT NULL;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."article"."subtitle" IS ''
+  type: run_sql
+- args:
+    sql: ALTER TABLE ONLY "public"."article" ALTER COLUMN "fields" SET DEFAULT jsonb_build_object();
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."article"."fields" IS ''
+  type: run_sql
+- args:
+    sql: ALTER TABLE ONLY "public"."article" ALTER COLUMN "updated_at" SET DEFAULT now();
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."article"."updated_at" IS ''
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."article" ALTER COLUMN "summary" DROP NOT NULL;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."article"."summary" IS ''
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."article" ALTER COLUMN "published_at" DROP NOT NULL;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."article"."published_at" IS ''
+  type: run_sql
+- args:
+    sql: ALTER TABLE ONLY "public"."article" ALTER COLUMN "path" SET DEFAULT concat('untitled-',currval('article_id_seq'::regclass));
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."article"."path" IS ''
+  type: run_sql
+- args:
+    relationship: visibleTo
+    table:
+      name: article
+      schema: public
+  type: drop_relationship
+- args:
+    sql: ALTER TABLE "public"."article" DROP COLUMN "visible_to";
+  type: run_sql
+- args:
+    relationship: author
+    table:
+      name: article
+      schema: public
+  type: drop_relationship
+- args:
+    sql: alter table "public"."article" rename column "author_id" to "created_by_id";
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."article"."created_by_id" IS ''
+  type: run_sql
+- args:
+    name: createdBy
+    table:
+      name: article
+      schema: public
+    using:
+      foreign_key_constraint_on: created_by_id
+  type: create_object_relationship
+
