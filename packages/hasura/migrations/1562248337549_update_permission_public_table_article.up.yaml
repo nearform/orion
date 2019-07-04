@@ -3,16 +3,19 @@
       allow_upsert: true
       check: {}
       columns:
-      - title
-      - image
-      - visible_to
-      - content
-      - description
-      - author_id
       - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
       - published_at
-      - updated_at
       - created_at
+      - updated_at
       localPresets:
       - key: ""
         value: ""
@@ -26,16 +29,19 @@
     permission:
       allow_aggregations: true
       columns:
-      - title
-      - image
-      - visible_to
-      - content
-      - description
-      - author_id
       - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
       - published_at
-      - updated_at
       - created_at
+      - updated_at
       filter: {}
       limit: null
     role: company-admin
@@ -46,16 +52,19 @@
 - args:
     permission:
       columns:
-      - title
-      - image
-      - visible_to
-      - content
-      - description
-      - author_id
       - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
       - published_at
-      - updated_at
       - created_at
+      - updated_at
       filter: {}
       localPresets:
       - key: ""
@@ -79,16 +88,19 @@
       allow_upsert: true
       check: {}
       columns:
-      - title
-      - image
-      - visible_to
-      - content
-      - description
-      - author_id
       - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
       - published_at
-      - updated_at
       - created_at
+      - updated_at
       localPresets:
       - key: ""
         value: ""
@@ -102,16 +114,19 @@
     permission:
       allow_aggregations: true
       columns:
-      - title
-      - image
-      - visible_to
-      - content
-      - description
-      - author_id
       - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
       - published_at
-      - updated_at
       - created_at
+      - updated_at
       filter: {}
       limit: null
     role: partner-admin
@@ -122,16 +137,19 @@
 - args:
     permission:
       columns:
-      - title
-      - image
-      - visible_to
-      - content
-      - description
-      - author_id
       - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
       - published_at
-      - updated_at
       - created_at
+      - updated_at
       filter: {}
       localPresets:
       - key: ""
@@ -155,16 +173,19 @@
       allow_upsert: true
       check: {}
       columns:
-      - title
-      - image
-      - visible_to
-      - content
-      - description
-      - author_id
       - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
       - published_at
-      - updated_at
       - created_at
+      - updated_at
       localPresets:
       - key: ""
         value: ""
@@ -178,16 +199,19 @@
     permission:
       allow_aggregations: true
       columns:
-      - title
-      - image
-      - visible_to
-      - content
-      - description
-      - author_id
       - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
       - published_at
-      - updated_at
       - created_at
+      - updated_at
       filter: {}
       limit: null
     role: platform-admin
@@ -198,16 +222,19 @@
 - args:
     permission:
       columns:
-      - title
-      - image
-      - visible_to
-      - content
-      - description
-      - author_id
       - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
       - published_at
-      - updated_at
       - created_at
+      - updated_at
       filter: {}
       localPresets:
       - key: ""
@@ -231,16 +258,19 @@
       allow_upsert: true
       check: {}
       columns:
-      - title
-      - image
-      - visible_to
-      - content
-      - description
-      - author_id
       - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
       - published_at
-      - updated_at
       - created_at
+      - updated_at
       localPresets:
       - key: ""
         value: ""
@@ -254,16 +284,19 @@
     permission:
       allow_aggregations: true
       columns:
-      - title
-      - image
-      - visible_to
-      - content
-      - description
-      - author_id
       - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
       - published_at
-      - updated_at
       - created_at
+      - updated_at
       filter: {}
       limit: null
     role: user
@@ -274,16 +307,19 @@
 - args:
     permission:
       columns:
-      - title
-      - image
-      - visible_to
-      - content
-      - description
-      - author_id
       - id
+      - created_by_id
+      - title
+      - summary
+      - image
+      - subtitle
+      - path
+      - status
+      - recommended
+      - fields
       - published_at
-      - updated_at
       - created_at
+      - updated_at
       filter: {}
       localPresets:
       - key: ""

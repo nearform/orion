@@ -17,12 +17,6 @@
       schema: public
   type: drop_update_permission
 - args:
-    role: company-admin
-    table:
-      name: article
-      schema: public
-  type: drop_update_permission
-- args:
     role: partner-admin
     table:
       name: article
@@ -34,12 +28,6 @@
       name: article
       schema: public
   type: drop_select_permission
-- args:
-    role: partner-admin
-    table:
-      name: article
-      schema: public
-  type: drop_update_permission
 - args:
     role: partner-admin
     table:
@@ -65,12 +53,6 @@
       schema: public
   type: drop_update_permission
 - args:
-    role: platform-admin
-    table:
-      name: article
-      schema: public
-  type: drop_update_permission
-- args:
     role: user
     table:
       name: article
@@ -82,12 +64,6 @@
       name: article
       schema: public
   type: drop_select_permission
-- args:
-    role: user
-    table:
-      name: article
-      schema: public
-  type: drop_update_permission
 - args:
     role: user
     table:
