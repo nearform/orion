@@ -93,4 +93,48 @@ describe('ProtectedRoute', () => {
 
     expect(wrapper.find(SecretComponent).length).toBe(1)
   })
+
+  it('renders protected component when user has a group assigned', () => {
+    Auth.user = {
+      signInUserSession: {
+        idToken: {
+          payload: {
+            'https://hasura.io/jwt/claims': JSON.stringify({
+              'x-hasura-group-id': '123',
+            }),
+          },
+        },
+      },
+    }
+
+    const wrapper = mount(
+      <AuthInitContext.Provider value={true}>
+        <ProtectedRoute component={SecretComponent} requiresGroup />
+      </AuthInitContext.Provider>
+    )
+
+    expect(wrapper.find(SecretComponent).length).toBe(1)
+  })
+
+  it('renders protected component when user has one of the specified roles assigned', () => {
+    Auth.user = {
+      signInUserSession: {
+        idToken: {
+          payload: {
+            'https://hasura.io/jwt/claims': JSON.stringify({
+              'x-hasura-allowed-roles': ['user'],
+            }),
+          },
+        },
+      },
+    }
+
+    const wrapper = mount(
+      <AuthInitContext.Provider value={true}>
+        <ProtectedRoute component={SecretComponent} allowedRoles={['user']} />
+      </AuthInitContext.Provider>
+    )
+
+    expect(wrapper.find(SecretComponent).length).toBe(1)
+  })
 })
