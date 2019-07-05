@@ -1,0 +1,38 @@
+- args:
+    relationship: article
+    table:
+      name: article_author
+      schema: public
+  type: drop_relationship
+- args:
+    relationship: authors
+    table:
+      name: article
+      schema: public
+  type: drop_relationship
+- args:
+    sql: "\n          alter table \"public\".\"article_author\" drop constraint \"article_author_article_id_fkey\",\n
+      \         add constraint \"article_author_article_id_fkey\" \n          foreign
+      key (\"article_id\") \n          references \"public\".\"article\"\n          (\"id\")
+      \n          on update restrict\n          on delete restrict;\n        "
+  type: run_sql
+- args:
+    name: article
+    table:
+      name: article_author
+      schema: public
+    using:
+      foreign_key_constraint_on: article_id
+  type: create_object_relationship
+- args:
+    name: authors
+    table:
+      name: article
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: article_id
+        table:
+          name: article_author
+          schema: public
+  type: create_array_relationship
