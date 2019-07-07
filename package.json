@@ -5,6 +5,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap --concurrency=2",
     "build": "lerna run build",
+    "artifact:create": "lerna run artifact:create",
     "test": "lerna run test",
     "clean": "lerna clean",
     "docs": "docsify serve -p 4000 docs",
@@ -16,11 +17,11 @@
     "postcommit": "git update-index --again",
     "dev:generate-schema": "graphql get-schema --dotenv packages/app/.env.development --output=hasura-schema.json",
     "generate-schema": "graphql get-schema --output=hasura-schema.json",
-    "start:app": "lerna exec --scope=app npm start",
+    "start:assess-base": "lerna exec --scope=assess-base npm start",
     "e2e-test": "lerna run --scope=e2e-tests --stream --no-prefix e2e-test -- ",
     "dev:e2e-test": "npm run e2e-test -- ./local.js -- --screenshots-on-fails",
     "hosted:e2e-test": "npm run e2e-test -- ./hosted.js -- --screenshots-on-fails",
-    "ci:e2e-test": "start-server-and-test 'start:app' http-get://localhost:8000 'npm run e2e-test ./local.js'"
+    "ci:e2e-test": "start-server-and-test 'start:assess-base' http-get://localhost:8000 'npm run e2e-test ./local.js'"
   },
   "repository": {
     "type": "git",

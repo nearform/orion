@@ -1,13 +1,45 @@
-refs:
-  install_hasura_cli: &install_hasura_cli
+
+install_hasura_cli: &install_hasura_cli
+  run:
+    name: Install Hasura CLI
+    command: |
+      curl -L https://github.com/hasura/graphql-engine/raw/master/cli/get.sh | bash
+
+install_awscli: &install_awscli
     run:
-      name: Install Hasura CLI
+      name: Install awscli
       command: |
-        curl -L https://github.com/hasura/graphql-engine/raw/master/cli/get.sh | bash
+        sudo apt-get install python-pip python
+        sudo pip install awscli
 
 deploy_environment: &deploy_environment
   docker:
     - image: circleci/node:10-browsers
+
+get_envars: &get_envars
+    run:
+      name: Get environment variables from AWS
+      environment:
+        ORG: "digitalefqm"
+        AWS_DEFAULT_REGION: 'eu-west-1'
+      command: |
+        echo "export ORG=${ORG}" >> environ.tmp
+        echo "export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" >> environ.tmp
+        echo "export BUILD=${CIRCLE_BUILD_NUM}" >> environ.tmp
+        echo "export GATSBY_GRAPHQL_API=$(aws ssm get-parameters --name /${ORG}/GATSBY_GRAPHQL_API --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
+        echo "export GATSBY_AWS_REGION=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_REGION --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
+        echo "export GATSBY_AWS_COGNITO_IDENTITY_POOL_ID=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_COGNITO_IDENTITY_POOL_ID --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
+        echo "export GATSBY_AWS_COGNITO_USER_POOL_ID=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_COGNITO_USER_POOL_ID --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
+        echo "export GATSBY_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
+        echo "export GATSBY_AWS_S3_BUCKET=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_S3_BUCKET --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
+        echo "export HASURA_GRAPHQL_ADMIN_SECRET=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ADMIN_SECRET --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
+        echo "export ARTIFACTS_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/s3_deploy_artifacts --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
+
+load_envars: &load_envars
+    run:
+        name: Load environment variables
+        command: |
+          cat environ.tmp >> $BASH_ENV
 
 version: 2
 jobs:
@@ -15,6 +47,9 @@ jobs:
     <<: *deploy_environment
     steps:
       - checkout
+      - *install_awscli
+      - *get_envars
+      - *load_envars
       - run:
           name: Install npm deps
           command: npm install --no-save
@@ -24,6 +59,7 @@ jobs:
       - run:
           name: Build bundles
           command: |
+            echo $ORG
             set -e
             npm run build
       - run:
@@ -41,6 +77,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - *load_envars
       - *install_hasura_cli
       - run:
           name: Test
@@ -52,6 +89,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - *load_envars
       - run:
           name: Test e2e
           command: |
@@ -59,16 +97,11 @@ jobs:
             npm run 'ci:e2e-test'
   deploy:
     <<: *deploy_environment
-    environment:
-      AWS_DEFAULT_REGION: 'eu-west-1'
     steps:
       - attach_workspace:
           at: .
-      - run:
-          name: Install awscli
-          command: |
-            sudo apt-get install python-pip python
-            sudo pip install awscli
+      - *load_envars
+      - *install_awscli
       - run:
           name: Deploy app bundle to S3
           command: aws s3 sync packages/app/public ${APP_S3_BUCKET_PATH} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
@@ -85,11 +118,39 @@ jobs:
           command: |
             zip signup-hook.zip -FSj packages/functions/build/signup-hook.js
             aws lambda update-function-code --function-name rawsalmon_signup_hook --zip-file fileb://signup-hook.zip
+  publish-artifacts:
+    <<: *deploy_environment
+    steps:
+      - attach_workspace:
+          at: .
+      - *load_envars
+      - run:
+          name: Create artifacts
+          command: |
+            npm run artifact:create
+      - run:
+          name: Set artifact name envars
+          command: |
+            echo 'export ENRICHMENT_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-enrichment-hook --silent`"' >> $BASH_ENV
+            echo 'export SIGNUP_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-signup-hook --silent`"' >> $BASH_ENV
+            echo 'export HASURA_ARTIFACT="packages/`cd packages/hasura && npm run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export ASSESS_BASE_ARTIFACT="packages/app/`cd packages/app && npm run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export ASSESS_BASE_HASURA_ARTIFACT="packages/`cd packages/assess-base-hasura && npm run artifact:name --silent`"' >> $BASH_ENV
+      - *install_awscli
+      - run:
+          name: Copy artifacts to S3 bucket
+          command: |
+            aws s3 cp ${ASSESS_BASE_ARTIFACT} ${ARTIFACTS_BUCKET}
+            aws s3 cp ${ENRICHMENT_ARTIFACT} ${ARTIFACTS_BUCKET}
+            aws s3 cp ${SIGNUP_ARTIFACT} ${ARTIFACTS_BUCKET}
+            aws s3 cp ${HASURA_ARTIFACT} ${ARTIFACTS_BUCKET}
+            aws s3 cp ${ASSESS_BASE_HASURA_ARTIFACT} ${ARTIFACTS_BUCKET}
   apply-hasura-migrations:
     <<: *deploy_environment
     steps:
       - attach_workspace:
           at: .
+      - *load_envars
       - *install_hasura_cli
       - run:
           name: Apply Hasura migrations
@@ -113,13 +174,9 @@ workflows:
       - test:
           requires:
             - build
-      - deploy:
-          filters:
-            branches:
-              only:
-                - master
+      - e2e:
           requires:
-            - test
+            - build
       - apply-hasura-migrations:
           filters:
             branches:
@@ -127,6 +184,20 @@ workflows:
                 - master
           requires:
             - build
-      - e2e:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - test
+            - e2e
+      - publish-artifacts:
+          filters:
+            branches:
+              only:
+                - master
           requires:
             - build
+            - test
+            - e2e

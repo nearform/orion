@@ -1,12 +1,9 @@
 {
-  "name": "app",
+  "name": "assess-base",
   "private": true,
-  "description": "A starter for a blog powered by Gatsby and Markdown",
-  "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
-  },
+  "description": "Assess Base",
+  "version": "1.0.0",
+  "author": "NearForm",
   "dependencies": {
     "@material-ui/core": "^4.0.0",
     "@material-ui/icons": "^4.0.1",
@@ -63,21 +60,15 @@
     "react-test-renderer": "^16.8.6",
     "webpack-graphql-loader": "^1.0.2"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
-  "keywords": [
-    "gatsby"
-  ],
   "license": "MIT",
   "main": "n/a",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
-  },
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "test": "jest"
+    "test": "jest",
+    "artifact:create": "tar -zcf $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz public",
+    "artifact:name": "echo $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz"
   }
 }
