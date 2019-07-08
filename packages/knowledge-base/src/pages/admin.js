@@ -7,7 +7,16 @@ import AdminRoute from '../components/admin/AdminRoute'
 export default function Admin() {
   return (
     <Router basepath="/admin">
-      <ProtectedRoute allowedRole="admin" component={AdminRoute} path="*" />
+      <ProtectedRoute
+        allowedRoles={[
+          'admin',
+          'platform-admin',
+          'company-admin',
+          'partner-admin',
+        ]}
+        component={AdminRoute}
+        path="*"
+      />
     </Router>
   )
 }

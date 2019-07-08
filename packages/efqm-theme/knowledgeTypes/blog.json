@@ -2,6 +2,6 @@
   "key": "blog",
   "name": "blog",
   "orderIndex": 4,
-  "fields": [
+  "input_fields": [
   ]
 }

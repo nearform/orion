@@ -2,7 +2,7 @@
   "key": "insight",
   "name": "insight",
   "orderIndex": 3,
-  "fields": [
+  "input_fields": [
     {
       "key": "about",
       "name": "About the organisation",

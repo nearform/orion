@@ -36,7 +36,6 @@ export const isAssessorSync = () =>
 
 export const getUserRolesSync = () => {
   if (!isAuthenticatedSync()) return []
-
   try {
     return extractUserRolesFromTokenPayload()
   } catch (err) {

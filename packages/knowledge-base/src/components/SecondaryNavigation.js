@@ -9,6 +9,7 @@ import {
   IconButton,
   ClickAwayListener,
 } from '@material-ui/core'
+import NavLink from './NavLink'
 import Icon from '@material-ui/core/Icon'
 import SearchIcon from '@material-ui/icons/Search'
 import QuickLinksMenu, {
@@ -22,6 +23,9 @@ const SubmitButton = withStyles(theme => ({
     marginLeft: theme.spacing(1),
     '&:hover': {
       backgroundColor: theme.palette.background.paper,
+    },
+    '&::after': {
+      content: 'none',
     },
   },
 }))(Button)
@@ -63,7 +67,9 @@ function SecondaryNavigation({ classes, dark }) {
         </QuickLinkButton>
       </Grid>
       <Grid item>
-        <SubmitButton>Submit</SubmitButton>
+        <SubmitButton component={NavLink} to="/submit">
+          Submit
+        </SubmitButton>
       </Grid>
     </Grid>
   ) : (

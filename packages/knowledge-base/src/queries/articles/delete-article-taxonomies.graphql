@@ -1,0 +1,8 @@
+mutation deleteArticleTaxonomies($removeTaxonomies:[article_taxonomy_bool_exp]) {
+  delete_article_taxonomy(where: {_or: $removeTaxonomies}) {
+    returning {
+      taxonomy_id
+      article_id
+    }
+  }
+}

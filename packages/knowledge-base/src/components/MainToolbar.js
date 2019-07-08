@@ -152,6 +152,7 @@ const styles = theme => ({
   },
   toolbarLightContrast: {
     color: theme.palette.primary.dark,
+    marginBottom: theme.spacing(2),
   },
   toolbarContrast: {
     color: theme.palette.background.paper,
