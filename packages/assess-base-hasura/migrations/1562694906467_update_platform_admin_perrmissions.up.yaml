@@ -1,0 +1,579 @@
+- args:
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check: {}
+      columns:
+      - id
+      - owner_id
+      - key
+      - created_at
+      - name
+      - key_information
+      - status
+      - internal
+      - exec_summary
+      - advice
+      localPresets:
+      - key: owner_id
+        value: x-hasura-User-Id
+      - key: ""
+        value: ""
+      set:
+        owner_id: x-hasura-User-Id
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: create_insert_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - advice
+      - created_at
+      - exec_summary
+      - id
+      - internal
+      - key
+      - key_information
+      - name
+      - owner_id
+      - status
+      filter: {}
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      columns: []
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: create_update_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: drop_update_permission
+- args:
+    permission:
+      columns:
+      - advice
+      - created_at
+      - exec_summary
+      - id
+      - internal
+      - key
+      - key_information
+      - name
+      - owner_id
+      - status
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: create_update_permission
+- args:
+    permission:
+      filter: {}
+    role: platform-admin
+    table:
+      name: assessment_assessor
+      schema: public
+  type: create_delete_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check: {}
+      columns:
+      - assessment_id
+      - contributor_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: create_insert_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - assessment_id
+      - contributor_id
+      filter: {}
+    role: platform-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      filter: {}
+    role: platform-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: create_delete_permission
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns: []
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: create_insert_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check: {}
+      columns:
+      - criterion_key
+      - assessment_id
+      - created_at
+      - pillar_key
+      - data
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: create_insert_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - criterion_key
+      - assessment_id
+      - created_at
+      - pillar_key
+      - data
+      filter: {}
+      limit: null
+    role: platform-admin
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      columns:
+      - criterion_key
+      - assessment_id
+      - created_at
+      - pillar_key
+      - data
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: create_update_permission
+- args:
+    permission:
+      filter: {}
+    role: platform-admin
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: create_delete_permission
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - id
+      - pillar_key
+      - criterion_key
+      - part_number
+      - table_key
+      - feedback_values
+      - assessment_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_feedback
+      schema: public
+  type: create_insert_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - assessment_id
+      - feedback_values
+      - table_key
+      - part_number
+      - criterion_key
+      - pillar_key
+      filter: {}
+      limit: null
+    role: platform-admin
+    table:
+      name: assessment_feedback
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      columns:
+      - id
+      - assessment_id
+      - feedback_values
+      - table_key
+      - part_number
+      - criterion_key
+      - pillar_key
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_feedback
+      schema: public
+  type: create_update_permission
+- args:
+    permission:
+      filter: {}
+    role: platform-admin
+    table:
+      name: assessment_feedback
+      schema: public
+  type: create_delete_permission
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - id
+      - assessment_id
+      - part_number
+      - user_id
+      - file_name
+      - s3_key
+      - created_at
+      - pillar_key
+      - criterion_key
+      - file_size
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_file
+      schema: public
+  type: create_insert_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - criterion_key
+      - file_size
+      - pillar_key
+      - created_at
+      - s3_key
+      - file_name
+      - user_id
+      - part_number
+      - assessment_id
+      filter: {}
+      limit: null
+    role: platform-admin
+    table:
+      name: assessment_file
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      columns:
+      - id
+      - criterion_key
+      - file_size
+      - pillar_key
+      - created_at
+      - s3_key
+      - file_name
+      - user_id
+      - part_number
+      - assessment_id
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_file
+      schema: public
+  type: create_update_permission
+- args:
+    permission:
+      filter: {}
+    role: platform-admin
+    table:
+      name: assessment_file
+      schema: public
+  type: create_delete_permission
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - id
+      - pillar_key
+      - criterion_key
+      - part_number
+      - assessment_id
+      - scoring_values
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_scoring
+      schema: public
+  type: create_insert_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - assessment_id
+      - part_number
+      - criterion_key
+      - pillar_key
+      - id
+      - scoring_values
+      filter: {}
+      limit: null
+    role: platform-admin
+    table:
+      name: assessment_scoring
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      columns:
+      - assessment_id
+      - part_number
+      - criterion_key
+      - pillar_key
+      - id
+      - scoring_values
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_scoring
+      schema: public
+  type: create_update_permission
+- args:
+    permission:
+      filter: {}
+    role: platform-admin
+    table:
+      name: assessment_scoring
+      schema: public
+  type: create_delete_permission
+- args:
+    role: platform-admin
+    table:
+      name: user
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - cognito_id
+      - signupRequest
+      - pending
+      - email
+      filter: {}
+    role: platform-admin
+    table:
+      name: user
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      columns:
+      - email
+      - signupRequest
+      - cognito_id
+      - id
+      - pending
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: user
+      schema: public
+  type: create_update_permission
+- args:
+    role: platform-admin
+    table:
+      name: user_group
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check: {}
+      columns:
+      - id
+      - user_id
+      - group_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: user_group
+      schema: public
+  type: create_insert_permission
+- args:
+    role: platform-admin
+    table:
+      name: user_group
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - group_id
+      - id
+      - user_id
+      filter: {}
+    role: platform-admin
+    table:
+      name: user_group
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      filter: {}
+    role: platform-admin
+    table:
+      name: user_group
+      schema: public
+  type: create_delete_permission
+- args:
+    role: platform-admin
+    table:
+      name: user_role
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check: {}
+      columns:
+      - id
+      - user_id
+      - role_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: user_role
+      schema: public
+  type: create_insert_permission
+- args:
+    role: platform-admin
+    table:
+      name: user_role
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - role_id
+      - user_id
+      filter: {}
+    role: platform-admin
+    table:
+      name: user_role
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      filter: {}
+    role: platform-admin
+    table:
+      name: user_role
+      schema: public
+  type: create_delete_permission
