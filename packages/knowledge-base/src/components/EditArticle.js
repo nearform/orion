@@ -1,7 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { UserAvatar, RichTextEditor } from 'components'
 import { useQuery, useMutation } from 'graphql-hooks'
+import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
+import { getUserRolesSync, getUserIdSync } from '../utils/auth'
 import {
   getTaxonomyTypes,
   getArticleDetails,
@@ -21,6 +23,11 @@ import {
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  DialogContentText,
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { useStaticQuery, graphql } from 'gatsby'
@@ -32,7 +39,6 @@ import BoxControlLabel from '../components/BoxControlLabel'
 
 const FormikRichTextEditor = ({
   field: { name, value, onChange }, // { name, value, onChange, onBlur }
-  form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
   ...props
 }) => {
   const ref = useRef()
@@ -84,7 +90,6 @@ function CreateArticle({ classes, articleId }) {
   const { data: taxonomyData } = useQuery(getTaxonomyTypes)
   const taxonomyTypes = get(taxonomyData, 'taxonomy_type', [])
 
-  //  getArticleDetails
   const { data: articleData, refetch: refetchArticle } = useQuery(
     getArticleDetails,
     {
@@ -94,7 +99,19 @@ function CreateArticle({ classes, articleId }) {
     }
   )
   const articleDetails = get(articleData, 'articleDetails')
+
+  const [publishModalOpen, setPublishModalOpen] = useState(false)
+  //TODO: nicer loading indication
   if (!articleDetails || !taxonomyTypes) return null
+
+  //TODO: better handling of roles, reddirect to a article list page?
+  if (
+    (articleDetails.created_by_id !== Number(getUserIdSync()) ||
+      articleDetails.status !== 'in-progress') &&
+    !getUserRolesSync().includes('platform-admin')
+  ) {
+    return <Redirect to="/" noThrow />
+  }
 
   const initialValues = {
     knowledgeType: articleDetails.knowledge_type,
@@ -108,7 +125,7 @@ function CreateArticle({ classes, articleId }) {
     }, []),
   }
 
-  async function saveDraft(values, actions) {
+  async function saveArticle(values, actions) {
     //just take taxonomy and knowledgeType out, so they are not submitted (yet)
     const { taxonomy, knowledgeType, ...updatableFields } = values //eslint-disable-line no-unused-vars
 
@@ -157,7 +174,7 @@ function CreateArticle({ classes, articleId }) {
           id: articleId,
           changes: {
             ...updatableFields,
-            path: urlSlug(`${updatableFields.title}-${articleId}`),
+            path: urlSlug(`${articleId}-${updatableFields.title}`),
           },
         },
       })
@@ -169,7 +186,7 @@ function CreateArticle({ classes, articleId }) {
   }
   return (
     <>
-      <Formik initialValues={initialValues} onSubmit={saveDraft}>
+      <Formik initialValues={initialValues} onSubmit={saveArticle}>
         {({
           values,
           handleSubmit,
@@ -208,13 +225,43 @@ function CreateArticle({ classes, articleId }) {
                     <Button
                       variant="contained"
                       color="secondary"
-                      onClick={() => {
-                        // setFieldValue('status', 'review')
-                        // setImmediate(submitForm)
-                      }}
+                      onClick={() => setPublishModalOpen(true)}
                     >
                       Submit
                     </Button>
+                    <Dialog
+                      open={publishModalOpen}
+                      onClose={() => setPublishModalOpen(false)}
+                    >
+                      <DialogTitle id="alert-dialog-title">
+                        {'Publish Article?'}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                          {/* TODO: better text? */}
+                          After submitting the article you will no longer be
+                          able to edit it.
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button
+                          onClick={() => setPublishModalOpen(false)}
+                          color="secondary"
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            setFieldValue('status', 'in-review')
+                            setImmediate(submitForm)
+                            setPublishModalOpen(false)
+                          }}
+                          color="primary"
+                        >
+                          Submit for review
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
                   </Grid>
                 </Grid>
 
@@ -324,19 +371,6 @@ function CreateArticle({ classes, articleId }) {
               </Grid>
               <Grid item xs={1}></Grid>
             </Grid>
-            <pre>{JSON.stringify(values, null, 2)}</pre>
-            <pre>
-              {JSON.stringify(
-                Object.keys(values.taxonomy || {}).reduce((res, it) => {
-                  if (values.taxonomy[it]) {
-                    res.push(it)
-                  }
-                  return res
-                }, []),
-                null,
-                2
-              )}
-            </pre>
           </Form>
         )}
       </Formik>
@@ -387,8 +421,6 @@ export default withStyles(theme => ({
       backgroundColor: theme.palette.primary.dark,
       width: '100%',
     },
-
-    //margin: `0px ${theme.spacing(1)}px`,
   },
   knowledgeTypeContainer: {
     '&>*>*': {
@@ -406,7 +438,6 @@ export default withStyles(theme => ({
     padding: `${theme.spacing(1.5)}px ${theme.spacing(2)}px`,
     minHeight: '0 !important',
     '&>div:first-child': {
-      //temporary until refactor
       margin: 0,
     },
     color: theme.articleTypography.heading3.color,

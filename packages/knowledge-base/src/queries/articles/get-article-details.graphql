@@ -1,6 +1,7 @@
 query getArticleDetails($id: Int!){
   articleDetails: article_by_pk(id: $id) {
     fields
+    created_by_id
     authors {
       author {
         email
