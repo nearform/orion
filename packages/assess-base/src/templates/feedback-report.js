@@ -12,7 +12,12 @@ import {
   TableBody,
   IconButton,
 } from '@material-ui/core'
-import { BarChartTable, PaddedContainer, SectionTitle } from 'components'
+import {
+  getChartData,
+  BarChartTable,
+  PaddedContainer,
+  SectionTitle,
+} from 'components'
 import { Link } from 'gatsby'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useQuery } from 'graphql-hooks'
@@ -27,10 +32,6 @@ import {
   updateAssessmentExecSummaryMutation,
   updateAssessmentAdviceMutation,
 } from '../queries'
-import {
-  getSampleColors,
-  getSampleData,
-} from 'components/src/components/BarChart/util.storybook'
 
 function sortByPart(obj, key) {
   if (!obj[key]) return null
@@ -65,8 +66,7 @@ function FeedbackReport({
   // TODO: Check that this is correct
   const canEditSummaryAndAdvice = isAdmin || isAssessor
 
-  const sampleColors = getSampleColors(theme)
-  const chartData = getSampleData(sampleColors)
+  const chartData = getChartData(assessment, assessmentData, pillarColors)
 
   return (
     <div className={classes.root}>
@@ -123,7 +123,12 @@ function FeedbackReport({
               </Typography>
             </Grid>
             <Grid item xs>
-              <BarChartTable chartData={chartData} />
+              {assessmentData && (
+                <BarChartTable
+                  chartData={chartData}
+                  assessmentId={assessmentId}
+                />
+              )}
             </Grid>
           </Grid>
         </div>

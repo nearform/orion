@@ -1,11 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
-import {
-  ASSESSMENT_STATUS,
-  BarChart,
-  PaddedContainer,
-  SectionTitle,
-} from 'components'
 import { Link, navigate } from 'gatsby'
 import { Formik, Form, Field } from 'formik'
 import {
@@ -17,6 +11,13 @@ import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
 import * as Yup from 'yup'
 
+import {
+  PaddedContainer,
+  ASSESSMENT_STATUS,
+  BarChart,
+  getChartData,
+  SectionTitle,
+} from 'components'
 import SEO from '../components/SEO'
 import {
   createAssessmentMutation,
@@ -36,10 +37,6 @@ import {
   assessmentInProgress,
   assessmentSubmitted,
 } from '../utils/assessment-status'
-import {
-  getSampleColors,
-  getSampleData,
-} from 'components/src/components/BarChart/util.storybook'
 import {
   getCanEditAssesors,
   getCanEditContributors,
@@ -172,8 +169,7 @@ function AssessmentTemplate({
   // TODO: change this with correct rule based on assessment state
   const canViewFeedbackReport = assessmentSubmitted(assessmentData)
 
-  const sampleColors = getSampleColors(theme)
-  const chartData = getSampleData(sampleColors)
+  const chartData = getChartData(assessment, assessmentData, pillarColors)
 
   const groupId = getGroupIdSync()
 

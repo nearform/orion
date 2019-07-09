@@ -263,6 +263,20 @@
                       "name": "example input 4"
                     }
                   ]
+                },
+                {
+                  "key": "example-table-2",
+                  "name": "example table 2",
+                  "columns": [
+                    {
+                      "key": "example-input-5",
+                      "name": "example input 5"
+                    },
+                    {
+                      "key": "example-input-6",
+                      "name": "example input 6"
+                    }
+                  ]
                 }
               ],
               "feedbackTables": [
