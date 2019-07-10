@@ -31,7 +31,7 @@ const styles = theme => ({
     height: '100%',
   },
   bar: {
-    backgroundColor: theme.palette.background.light,
+    backgroundColor: theme.palette.primary.dark,
     borderTopRightRadius: theme.spacing(1),
     borderBottomRightRadius: theme.spacing(1),
   },

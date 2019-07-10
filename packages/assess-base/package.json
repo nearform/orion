@@ -1,12 +1,9 @@
 {
   "name": "assess-base",
   "private": true,
-  "description": "A tool for assessments, built on NearForm KnowledgeBase",
-  "version": "0.2.0",
+  "description": "Assess Base",
+  "version": "1.0.0",
   "author": "NearForm",
-  "bugs": {
-    "url": "https://github.com/nearform/raw-salmon/issues"
-  },
   "dependencies": {
     "@aws-amplify/analytics": "1.2.16",
     "@aws-amplify/ui": "1.0.19",
@@ -80,6 +77,8 @@
     "develop": "gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "test": "jest"
+    "test": "jest",
+    "artifact:create": "tar -zcf $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz public",
+    "artifact:name": "echo $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz"
   }
 }

@@ -11,5 +11,11 @@ query getAssessmentFeedbackReportData($assessmentId: Int!) {
       pillar_key
       table_key
     }
+    scoring {
+      scoring_values
+      criterion_key
+      part_number
+      pillar_key
+    }
   }
 }
