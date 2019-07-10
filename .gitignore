@@ -67,6 +67,7 @@ typings/
 # custom
 build/
 /hasura-schema.json
+package-lock.json
 
 .cache
 packages/app
