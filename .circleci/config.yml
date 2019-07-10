@@ -198,11 +198,18 @@ workflows:
           requires:
             - build
       - deploy:
+          filters:
+            branches:
+              only:
+                - master
           requires:
             - test
             - e2e
       - publish-artifacts:
+          filters:
+            branches:
+              only:
+                - master
           requires:
-            - build
             - test
             - e2e
