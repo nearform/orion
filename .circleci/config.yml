@@ -35,7 +35,9 @@ get_envars: &get_envars
         echo "export HASURA_GRAPHQL_ADMIN_SECRET=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ADMIN_SECRET --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
         echo "export ARTIFACTS_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/s3_deploy_artifacts --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
         echo "export ASSESSBASE_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/assessbase_bucket --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
+        echo "export KNOWLEDGEBASE_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/assessbase_bucket --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
         echo "export STORYBOOK_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/storybook_bucket --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
+
 
 load_envars: &load_envars
     run:
@@ -111,8 +113,10 @@ jobs:
             sudo pip install awscli
       - run:
           name: Deploy assess-base bundle to S3
-          command: aws s3 sync packages/assess-base/public ${APP_S3_BUCKET_PATH} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
-      # TODO: deploy knowledge-base bundle too, when there's enough built to deploy
+          command: aws s3 sync packages/assess-base/public ${ASSESSBASE_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+      - run:
+          name: Deploy knowledge-base bundle to S3
+          command: aws s3 sync packages/knowledge-base/public ${KNOWLEDGEBASE_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
       - run:
           name: Deploy storybook bundle to S3
           command: aws s3 sync packages/components/storybook-static ${STORYBOOK_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
@@ -193,10 +197,6 @@ workflows:
           requires:
             - build
       - deploy:
-          filters:
-            branches:
-              only:
-                - master
           requires:
             - test
             - e2e
