@@ -1,0 +1,11 @@
+mutation upsertAssessmentAssessor($assessmentId: Int!, $assessorId: Int!) {
+  insert_assessment_assessor(
+    objects: { assessment_id: $assessmentId, assessor_id: $assessorId }
+    on_conflict: {
+      constraint: assessment_assessor_pkey
+      update_columns: [assessment_id, assessor_id]
+    }
+  ) {
+    affected_rows
+  }
+}

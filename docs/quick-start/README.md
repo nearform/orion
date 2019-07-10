@@ -18,7 +18,8 @@ npm i
 
 Most of the configuration comes from environment variables. Required environment variables for each part of the architecture are documented in the `.env.sample` files inside the repository.
 
-- app [`.env.sample`](../../packages/app/.env.sample) - build time environment variables for the Gatsby application. They should also be configured in CI, along with any other environment variables required by CI
+- knowledge-base [`.env.sample`](../../packages/knowledge-base/.env.sample) - build time environment variables for the Gatsby applications. They should also be configured in CI, along with any other environment variables required by CI
+- assess-base [`.env.sample`](../../packages/assess-base/.env.sample) - optional overrides if assess-base needs different env variables to those it inherits from knowledge-base
 - hasura [`.env.sample`](../../packages/hasura/.env.sample) - runtime environment variables for Hasura and Hasura console. To run the Hasura console, it also needs to be installed and seeded as per the [Hasura package readme](../../packages/hasura).
 - functions [`.env.sample`](../../packages/functions/.env.sample) - runtime environment variables for AWS Lambda functions.
 - e2e-tests [`.env.sample`](../../packages/e2e-tests/.env.sample) - runtime environment variables for end-to-end testsusing Testcafe.
@@ -40,8 +41,14 @@ Shared secrets are stored in a vault. Get in touch with a team member to get acc
 Ensure you have a local `.env.development` file available.
 
 ```
-cd packages/app
-npm start
+# Starts knowledge-base via `gatsby develop`
+npm start:kb
+
+# Starts assess-base via `gatsby develop`
+npm start:ab
+
+# Runs both the above in parallel
+npm start:apps
 ```
 
 ## Storybook

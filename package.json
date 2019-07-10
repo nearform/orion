@@ -15,20 +15,22 @@
     "dev:lint": "npm run dev:generate-schema && npm run lint-files",
     "lint:fix": "eslint --fix --ext .js --ext .graphql .",
     "postcommit": "git update-index --again",
-    "dev:generate-schema": "graphql get-schema --dotenv packages/app/.env.development --output=hasura-schema.json",
+    "dev:generate-schema": "graphql get-schema --dotenv packages/knowledge-base/.env.development --output=hasura-schema.json",
     "generate-schema": "graphql get-schema --output=hasura-schema.json",
-    "start:assess-base": "lerna exec --scope=assess-base npm start",
+    "start:ab": "lerna exec --scope=assess-base npm start",
+    "start:kb": "lerna exec --scope=knowledge-base npm start",
+    "start:apps": "npm run start:ab & npm run start:kb",
     "e2e-test": "lerna run --scope=e2e-tests --stream --no-prefix e2e-test -- ",
     "dev:e2e-test": "npm run e2e-test -- ./local.js -- --screenshots-on-fails",
     "hosted:e2e-test": "npm run e2e-test -- ./hosted.js -- --screenshots-on-fails",
-    "ci:e2e-test": "start-server-and-test 'start:assess-base' http-get://localhost:8000 'npm run e2e-test ./local.js'"
+    "ci:e2e-test": "start-server-and-test 'start:apps' http-get://localhost:8000 'npm run e2e-test ./local.js'"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nearform/raw-salmon.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "NearForm",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/nearform/raw-salmon/issues"

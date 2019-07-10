@@ -1,0 +1,10 @@
+query getEdittableUserFields {
+  role {
+    id
+    name
+  }
+  group {
+    id
+    name
+  }
+}

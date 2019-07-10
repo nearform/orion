@@ -1,0 +1,10 @@
+mutation deleteAssessmentAssessor($assessmentId: Int!, $assessorId: Int!) {
+  delete_assessment_assessor(
+    where: {
+      assessment_id: { _eq: $assessmentId }
+      assessor_id: { _eq: $assessorId }
+    }
+  ) {
+    affected_rows
+  }
+}

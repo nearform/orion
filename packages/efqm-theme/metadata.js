@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'EFQM Assess Base',
+  title: 'EFQM Knowledge Base',
   author: 'EFQM',
   description: "EFQM's Digital Assess Base.",
   siteUrl: 'https://www.knowledge-base.efqm.org',

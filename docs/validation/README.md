@@ -8,9 +8,9 @@ Assessment(s) data that comes into the application (currently brought in by the 
 ### JSON Schema Validation
 To accomplish validation, we use [JSON Schema](https://json-schema.org/) and a fast validator tool called [AJV](https://github.com/epoberezkin/ajv). We chose those tools because they are very generic, performant and can be easily used on client side as well as the backend.
 
-The schema used for assessments can be found in `packages/app/src/validations/schemas/assessment.json` and is the main schema that validated the structure of the assessment data used by the application. Look in it for more details about the validations (there are many) or if you need to extend the schema which is usually a part of the evolution of the data model for assessments.
+The schema used for assessments can be found in `packages/assess-base/src/validations/schemas/assessment.json` and is the main schema that validated the structure of the assessment data used by the application. Look in it for more details about the validations (there are many) or if you need to extend the schema which is usually a part of the evolution of the data model for assessments.
 
-There is also `packages/app/src/validations/schemas/definitions.jso`n which holds common components of the assessment (and possibly other) structure and are to be re used across schema with goal of reducing duplication and maintaining data conformity (sameness, eg. key is property that is equal on all items in the schema).
+There is also `packages/assess-base/src/validations/schemas/definitions.jso`n which holds common components of the assessment (and possibly other) structure and are to be re used across schema with goal of reducing duplication and maintaining data conformity (sameness, eg. key is property that is equal on all items in the schema).
 
 Note that those schemas are "living" documents that need to be updated and maintained as data schema evolves. 
 To be able to do this, one needs to get acquainted with the [AJV validations](https://ajv.js.org/) and the [JSON Schema](http://json-schema.org/learn/) in general.

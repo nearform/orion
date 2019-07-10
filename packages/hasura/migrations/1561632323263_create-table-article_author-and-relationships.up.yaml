@@ -1,0 +1,56 @@
+- args:
+    sql: CREATE TABLE "public"."article_author"("article_id" integer NOT
+      NULL, "author_id" integer NOT NULL, PRIMARY KEY ("article_id","author_id")
+      , FOREIGN KEY ("article_id") REFERENCES "public"."article"("id") ON UPDATE
+      restrict ON DELETE restrict, FOREIGN KEY ("author_id") REFERENCES "public"."user"("id")
+      ON UPDATE restrict ON DELETE restrict);
+  type: run_sql
+- args:
+    name: article_author
+    schema: public
+  type: add_existing_table_or_view
+
+- args:
+    name: article
+    table:
+      name: article_author
+      schema: public
+    using:
+      foreign_key_constraint_on: article_id
+  type: create_object_relationship
+
+- args:
+    name: author
+    table:
+      name: article_author
+      schema: public
+    using:
+      foreign_key_constraint_on: author_id
+  type: create_object_relationship
+
+- args:
+    name: authors
+    table:
+      name: article
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: article_id
+        table:
+          name: article_author
+          schema: public
+  type: create_array_relationship
+
+- args:
+    name: article_authors
+    table:
+      name: user
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: author_id
+        table:
+          name: article_author
+          schema: public
+  type: create_array_relationship
+

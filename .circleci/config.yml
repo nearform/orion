@@ -105,8 +105,14 @@ jobs:
       - *load_envars
       - *install_awscli
       - run:
-          name: Deploy assessbase bundle to S3
-          command: aws s3 sync packages/app/public ${ASSESSBASE_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+          name: Install awscli
+          command: |
+            sudo apt-get install python-pip python
+            sudo pip install awscli
+      - run:
+          name: Deploy assess-base bundle to S3
+          command: aws s3 sync packages/assess-base/public ${APP_S3_BUCKET_PATH} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+      # TODO: deploy knowledge-base bundle too, when there's enough built to deploy
       - run:
           name: Deploy storybook bundle to S3
           command: aws s3 sync packages/components/storybook-static ${STORYBOOK_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate

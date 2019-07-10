@@ -40,10 +40,17 @@ This package contains the assess-base specific Hasura schema and metatada.
   [saluki](https://github.com/nearform/saluki) for its CSS-in-JS modular
   approach with sane defaults similar in concept to [tailwind](https://tailwindcss.com/docs/what-is-tailwind/)
 
-### [./packages/app](./packages/app)
+### [./packages/knowledge-base](./packages/knowledge-base)
 
 - a static build enabled app based on [gatsby](https://www.gatsbyjs.org)
 - Gatsby uses [graphql](https://graphql.org/) to fetch data from the API
+- exports commonjs logic and config
+
+### [./packages/assess-base](./packages/assess-base)
+
+- another static build app based on [gatsby](https://www.gatsbyjs.org)
+- Gatsby uses [graphql](https://graphql.org/) to fetch data from the API
+- builds on knowledge-base, importing gatsby-config and some other logic
 
 ### [./packages/nearform-theme](./packages/nearform-theme)
 

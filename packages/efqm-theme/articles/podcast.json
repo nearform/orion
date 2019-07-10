@@ -1,0 +1,12 @@
+{
+  "key": "podcast",
+  "name": "podcast",
+  "orderIndex": 7,
+  "fields": [
+    {
+      "key": "podcast",
+      "type": "embed-link",
+      "name": "podcast link"
+    }
+  ]
+}

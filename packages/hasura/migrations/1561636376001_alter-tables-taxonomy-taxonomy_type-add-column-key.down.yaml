@@ -1,0 +1,9 @@
+- args:
+    sql: ALTER TABLE "public"."taxonomy"
+      DROP COLUMN "key"
+  type: run_sql
+
+- args:
+    sql: ALTER TABLE "public"."taxonomy_type"
+      DROP COLUMN "key"
+  type: run_sql

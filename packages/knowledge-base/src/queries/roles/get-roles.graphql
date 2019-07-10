@@ -1,0 +1,12 @@
+query getRoles {
+  role {
+    id
+    name
+  }
+
+  field_aggregate: role_aggregate {
+    aggregate {
+      count
+    }
+  }
+}
