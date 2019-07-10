@@ -146,13 +146,15 @@ jobs:
             echo 'export ENRICHMENT_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-enrichment-hook --silent`"' >> $BASH_ENV
             echo 'export SIGNUP_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-signup-hook --silent`"' >> $BASH_ENV
             echo 'export HASURA_ARTIFACT="packages/`cd packages/hasura && npm run artifact:name --silent`"' >> $BASH_ENV
-            echo 'export ASSESS_BASE_ARTIFACT="packages/app/`cd packages/app && npm run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export ASSESS_BASE_ARTIFACT="packages/assess-base/`cd packages/app && npm run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export ASSESS_BASE_ARTIFACT="packages/knowledge-base/`cd packages/app && npm run artifact:name --silent`"' >> $BASH_ENV
             echo 'export ASSESS_BASE_HASURA_ARTIFACT="packages/`cd packages/assess-base-hasura && npm run artifact:name --silent`"' >> $BASH_ENV
       - *install_awscli
       - run:
           name: Copy artifacts to S3 bucket
           command: |
             aws s3 cp ${ASSESS_BASE_ARTIFACT} ${ARTIFACTS_BUCKET}
+            aws s3 cp ${KNOWLEDGE_BASE_ARTIFACT} ${ARTIFACTS_BUCKET}
             aws s3 cp ${ENRICHMENT_ARTIFACT} ${ARTIFACTS_BUCKET}
             aws s3 cp ${SIGNUP_ARTIFACT} ${ARTIFACTS_BUCKET}
             aws s3 cp ${HASURA_ARTIFACT} ${ARTIFACTS_BUCKET}
