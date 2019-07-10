@@ -461,8 +461,9 @@ describe('initial state of the app', () => {
 
         const users = await listUsers(client)
 
-        expect(users.length).toBe(7)
+        expect(users.length).toBe(8)
         expect(users).toContainEqual(platformAdmin)
+        expect(users).toContainEqual(platformUser)
         expect(users).toContainEqual(partnerAdmin)
         expect(users).toContainEqual(partnerUser)
         expect(users).toContainEqual(partnerCompanyAdmin)
@@ -660,19 +661,9 @@ describe('initial state of the app', () => {
         })
       })
 
-      test('a platform admin should not be able to assign a contributor to an assessment he did not create', async () => {
-        const client = createClient(HASURA_ROLES.platformAdmin, {
-          [CLAIMS.groupId]: platformGroup.id.toString(),
-          [CLAIMS.userId]: platformAdmin.id.toString(),
-        })
-
-        await expect(
-          assignContributorToAssessment(client, {
-            assessmentId: companyAssessment.id,
-            contributorId: platformUser.id,
-          })
-        ).rejects.toThrow()
-      })
+      test.todo(
+        'any limits for platform-admin on assigning contributors to assements?'
+      )
     })
 
     describe('assessment contributor listing', () => {

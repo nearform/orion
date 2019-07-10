@@ -1,0 +1,368 @@
+- args:
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check: {}
+      columns:
+      - created_at
+      - id
+      - internal
+      - key
+      - key_information
+      - name
+      - owner_id
+      - status
+      localPresets:
+      - key: owner_id
+        value: x-hasura-User-Id
+      - key: ""
+        value: ""
+      set:
+        owner_id: x-hasura-User-Id
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: create_insert_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - created_at
+      - id
+      - key
+      - key_information
+      - name
+      - owner_id
+      - status
+      filter: {}
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: create_select_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: drop_update_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_assessor
+      schema: public
+  type: drop_delete_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check:
+        assessment:
+          owner_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - assessment_id
+      - contributor_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: create_insert_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - assessment_id
+      - contributor_id
+      filter:
+        assessment:
+          owner_id:
+            _eq: X-Hasura-User-Id
+    role: platform-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: create_select_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: drop_delete_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: drop_insert_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: drop_select_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: drop_update_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: drop_delete_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_feedback
+      schema: public
+  type: drop_insert_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_feedback
+      schema: public
+  type: drop_select_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_feedback
+      schema: public
+  type: drop_update_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_feedback
+      schema: public
+  type: drop_delete_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_file
+      schema: public
+  type: drop_insert_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_file
+      schema: public
+  type: drop_select_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_file
+      schema: public
+  type: drop_update_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_file
+      schema: public
+  type: drop_delete_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_scoring
+      schema: public
+  type: drop_insert_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_scoring
+      schema: public
+  type: drop_select_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_scoring
+      schema: public
+  type: drop_update_permission
+- args:
+    role: platform-admin
+    table:
+      name: assessment_scoring
+      schema: public
+  type: drop_delete_permission
+- args:
+    role: platform-admin
+    table:
+      name: user
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - cognito_id
+      - signupRequest
+      - pending
+      - email
+      filter:
+        _or:
+        - user_groups:
+            group:
+              parent_id:
+                _eq: X-Hasura-Group-Id
+        - user_groups:
+            group_id:
+              _eq: X-Hasura-Group-Id
+        - user_groups:
+            group:
+              parent_group:
+                parent_id:
+                  _eq: X-Hasura-Group-Id
+    role: platform-admin
+    table:
+      name: user
+      schema: public
+  type: create_select_permission
+- args:
+    role: platform-admin
+    table:
+      name: user
+      schema: public
+  type: drop_update_permission
+- args:
+    role: platform-admin
+    table:
+      name: user_group
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check:
+        _or:
+        - group_id:
+            _eq: X-Hasura-Group-Id
+        - group:
+            parent_id:
+              _eq: X-Hasura-Group-Id
+      columns:
+      - id
+      - user_id
+      - group_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: user_group
+      schema: public
+  type: create_insert_permission
+- args:
+    role: platform-admin
+    table:
+      name: user_group
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - group_id
+      - id
+      - user_id
+      filter:
+        _or:
+        - group_id:
+            _eq: X-Hasura-Group-Id
+        - group:
+            parent_id:
+              _eq: X-Hasura-Group-Id
+    role: platform-admin
+    table:
+      name: user_group
+      schema: public
+  type: create_select_permission
+- args:
+    role: platform-admin
+    table:
+      name: user_group
+      schema: public
+  type: drop_delete_permission
+- args:
+    role: platform-admin
+    table:
+      name: user_role
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check:
+        user:
+          user_groups:
+            group:
+              parent_id:
+                _eq: X-Hasura-Group-Id
+      columns:
+      - id
+      - user_id
+      - role_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: user_role
+      schema: public
+  type: create_insert_permission
+- args:
+    role: platform-admin
+    table:
+      name: user_role
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - role_id
+      - user_id
+      filter:
+        user:
+          user_groups:
+            group:
+              parent_id:
+                _eq: X-Hasura-Group-Id
+    role: platform-admin
+    table:
+      name: user_role
+      schema: public
+  type: create_select_permission
+- args:
+    role: platform-admin
+    table:
+      name: user_role
+      schema: public
+  type: drop_delete_permission
