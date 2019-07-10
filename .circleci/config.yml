@@ -35,7 +35,7 @@ get_envars: &get_envars
         echo "export HASURA_GRAPHQL_ADMIN_SECRET=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ADMIN_SECRET --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
         echo "export ARTIFACTS_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/s3_deploy_artifacts --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
         echo "export ASSESSBASE_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/assessbase_bucket --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
-        echo "export KNOWLEDGEBASE_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/assessbase_bucket --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
+        echo "export KNOWLEDGEBASE_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/knowledgebase_bucket --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
         echo "export STORYBOOK_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/storybook_bucket --with-decryption --query Parameters[0].Value --output=text)" >> environ.tmp
 
 
