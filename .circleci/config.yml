@@ -203,10 +203,6 @@ workflows:
             - test
             - e2e
       - publish-artifacts:
-          filters:
-            branches:
-              only:
-                - master
           requires:
             - build
             - test
