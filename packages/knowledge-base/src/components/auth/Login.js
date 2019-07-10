@@ -14,7 +14,7 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
   return (
     <div className={classes.root}>
       <div>
-        <Grid container spacing={3} xs={5} style={{ margin: 'auto' }}>
+        <Grid container spacing={3} xs={5} className={classes.form}>
           <Grid item xs={8}>
             <SectionTitle gutterBottom barColor={theme.palette.secondary.main}>
               Sign in to your account
@@ -110,6 +110,9 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+  },
+  form: {
+    margin: 'auto',
   },
 }
 
