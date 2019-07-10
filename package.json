@@ -5,6 +5,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap --concurrency=2",
     "build": "lerna run build",
+    "artifact:create": "lerna run artifact:create",
     "test": "lerna run test",
     "clean": "lerna clean",
     "docs": "docsify serve -p 4000 docs",

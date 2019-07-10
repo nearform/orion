@@ -2,11 +2,15 @@
   "name": "functions",
   "version": "1.0.0",
   "description": "",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "build": "webpack -p",
     "test": "jest",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "artifact:create": "zip $ORG-jwt-enrichment-hook-$npm_package_version-$BUILD.zip -FSj build/jwt-enrichment-hook.js && zip $ORG-signup-hook-$npm_package_version-$BUILD.zip -FSj build/signup-hook.js",
+    "artifact:name-enrichment-hook": "echo $ORG-jwt-enrichment-hook-$npm_package_version-$BUILD.zip",
+    "artifact:name-signup-hook": "echo $ORG-signup-hook-$npm_package_version-$BUILD.zip"
   },
   "keywords": [],
   "author": "",
