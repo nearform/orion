@@ -8,6 +8,8 @@ const originalEvent = {
   version: '1',
   region: 'eu-west-1',
   userPoolId: 'eu-west-1_QeZSaIzBc',
+  firstname: 'Simone',
+  lastname: 'Busoli',
   userName: 'simone3',
   callerContext: {
     awsSdkVersion: 'aws-sdk-unknown-unknown',
@@ -34,6 +36,8 @@ describe('signup-hook', () => {
     expect(graphql).toBeCalledWith(createUser, {
       cognitoId: originalEvent.request.userAttributes.sub,
       email: originalEvent.request.userAttributes.email,
+      firstName: event.request.userAttributes.firstname,
+      lastName: event.request.userAttributes.lastname,
       signupRequest: originalEvent.request,
     })
   })
