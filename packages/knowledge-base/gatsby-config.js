@@ -1,7 +1,7 @@
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV || 'development'}`,
 })
-
+const upperFirst = require('lodash/upperFirst')
 const path = require('path')
 
 const currentTheme = require('./theme')
@@ -10,7 +10,11 @@ const { getThemePaths } = require('./utils/paths')
 const { version } = require('./package.json')
 const { getApplicationVersion } = require('./utils/version')
 
-const { themeAssetsPath, themeAssessmentsPath } = getThemePaths(currentTheme)
+const {
+  themeAssetsPath,
+  themeAssessmentsPath,
+  themeKnowledgeTypes,
+} = getThemePaths(currentTheme)
 
 module.exports = {
   siteMetadata: {
@@ -35,13 +39,23 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
+        name: 'theme-knowledge-types',
+        path: themeKnowledgeTypes,
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
         name: 'theme-assessments',
         path: themeAssessmentsPath,
       },
     },
     {
       resolve: 'gatsby-transformer-json',
-      options: { typeName: 'Assessments' },
+      options: {
+        //uses the folder name to set the typename: qfqm-theme/articles => Articles
+        typeName: ({ node }) => upperFirst(path.basename(node.dir)),
+      },
     },
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
@@ -60,7 +74,7 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     {
       resolve: 'gatsby-plugin-create-client-paths',
-      options: { prefixes: ['/admin/*', '/auth/*'] },
+      options: { prefixes: ['/admin/*', '/auth/*', '/submit/*'] },
     },
     {
       resolve: 'gatsby-plugin-material-ui',

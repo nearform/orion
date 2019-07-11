@@ -3,7 +3,7 @@ import { graphql } from 'gatsby'
 import { Button, Grid, Typography, withStyles } from '@material-ui/core'
 import { PaddedContainer } from 'components'
 import BackgroundImage from 'gatsby-background-image'
-
+import { Link as RouterLink } from '@reach/router'
 import SEO from '../components/SEO'
 
 function KnowledgeHome({ theme, classes, data }) {
@@ -38,7 +38,12 @@ function KnowledgeHome({ theme, classes, data }) {
                 </Button>
               </Grid>
               <Grid item>
-                <Button color="secondary" variant="outlined">
+                <Button
+                  color="secondary"
+                  variant="outlined"
+                  component={RouterLink}
+                  to={'/submit'}
+                >
                   Submit to knowledge base
                 </Button>
               </Grid>

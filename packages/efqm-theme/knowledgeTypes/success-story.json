@@ -1,0 +1,12 @@
+{
+  "key": "success-story",
+  "name": "success story",
+  "orderIndex": 0,
+  "input_fields": [
+    {
+      "key": "body",
+      "name": "Body",
+      "type": "rich-text"
+    }
+  ]
+}

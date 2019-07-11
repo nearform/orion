@@ -1,0 +1,12 @@
+{
+
+  taxonomy_type(order_by: {id: asc}) {
+    taxonomy_items {
+      id
+      key
+      name
+    }
+    name
+    key
+  }
+}

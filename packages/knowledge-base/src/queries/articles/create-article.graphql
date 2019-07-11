@@ -1,0 +1,16 @@
+mutation createArticle(
+  $creatorId: Int!
+  $knowledgeType: String!
+) {
+  insert_article(
+    objects: {
+      created_by_id: $creatorId
+      authors: {data: [{author_id: $creatorId}]}
+      knowledge_type: $knowledgeType
+    }
+  ) {
+    returning {
+      id
+    }
+  }
+}

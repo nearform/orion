@@ -2,7 +2,7 @@
   "key": "tool",
   "name": "tool",
   "orderIndex": 1,
-  "fields": [
+  "input_fields": [
     {
       "key": "description",
       "name": "Short decription of tool",
@@ -42,6 +42,6 @@
       "key": "example",
       "name": "Example of tool in use",
       "type": "image"
-    },
+    }
   ]
 }

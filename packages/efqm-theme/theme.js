@@ -155,7 +155,7 @@ const articleTypography = {
     position: 'relative',
     '&::before': {
       borderRadius: '4px',
-      backgroundColor: 'rgb(243,245,248)',
+      backgroundColor: efqmDigitalPalette.paleGrey,
       color: 'transparent',
       position: 'absolute',
       width: '8px',
