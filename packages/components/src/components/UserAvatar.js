@@ -96,7 +96,6 @@ export default withStyles(
       lineHeight: `${theme.typography.h2.fontSize}px`,
       fontWeight: 'normal',
       marginRight: theme.spacing(1),
-      //fontSize: theme.typography.h6.fontSize,
     },
     memberType: {
       ...theme.typography.h4,
