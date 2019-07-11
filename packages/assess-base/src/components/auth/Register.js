@@ -42,39 +42,47 @@ function Register({
   return (
     <div className={classes.root}>
       <div>
-        <Grid container direction="column" spacing={3}>
-          <Grid item xs={9}>
+        <Grid container spacing={3} xs={5} className={classes.form}>
+          <Grid item xs={8}>
             <SectionTitle gutterBottom barColor={theme.palette.secondary.main}>
               Create a new account
             </SectionTitle>
           </Grid>
-          {signUpFields.map(({ label, key, required, type, options = [] }) => (
-            <Grid key={key} item>
-              <Typography variant="h4" gutterBottom>
-                {label}
-                {required && ' *'}
-              </Typography>
-              {type === 'select' ? (
-                <CustomSelect
-                  required={required}
-                  name={key}
-                  options={options}
-                  onChange={handleInput}
-                  fullWidth
-                />
-              ) : (
-                <TextField
-                  name={key}
-                  type={type}
-                  required={required}
-                  onChange={handleInput}
-                  fullWidth
-                />
-              )}
-            </Grid>
-          ))}
-
-          <Grid item container alignItems="baseline" spacing={1} wrap="nowrap">
+          {signUpFields.map(params => {
+            return (
+              <Grid key={params.key} item xs={params.xs}>
+                <Typography variant="h4" gutterBottom>
+                  {params.label}
+                  {params.required && ' *'}
+                </Typography>
+                {params.type === 'select' ? (
+                  <CustomSelect
+                    required={params.required}
+                    name={params.key}
+                    options={params.options}
+                    onChange={handleInput}
+                    fullWidth
+                  />
+                ) : (
+                  <TextField
+                    name={params.key}
+                    type={params.type}
+                    required={params.required}
+                    onChange={handleInput}
+                    fullWidth
+                  />
+                )}
+              </Grid>
+            )
+          })}
+          <Grid
+            item
+            container
+            alignItems="baseline"
+            xs={9}
+            spacing={1}
+            wrap="nowrap"
+          >
             <Grid item>
               <Typography variant="h4" color="textSecondary" noWrap>
                 Have an account?
@@ -121,6 +129,9 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+  },
+  form: {
+    margin: 'auto',
   },
 }
 

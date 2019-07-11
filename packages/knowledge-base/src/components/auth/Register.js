@@ -74,7 +74,6 @@ function Register({
               </Grid>
             )
           })}
-
           <Grid
             item
             container
