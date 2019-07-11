@@ -36,8 +36,8 @@ describe('signup-hook', () => {
     expect(graphql).toBeCalledWith(createUser, {
       cognitoId: originalEvent.request.userAttributes.sub,
       email: originalEvent.request.userAttributes.email,
-      firstName: event.request.userAttributes.firstname,
-      lastName: event.request.userAttributes.lastname,
+      firstName: originalEvent.request.userAttributes.firstname,
+      lastName: originalEvent.request.userAttributes.lastname,
       signupRequest: originalEvent.request,
     })
   })
