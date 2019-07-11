@@ -46,7 +46,8 @@
     "typeface-montserrat": "0.0.54",
     "typography": "^0.16.19",
     "typography-theme-wordpress-2016": "^0.16.19",
-    "webpack-graphql-loader": "^1.0.2"
+    "webpack-graphql-loader": "^1.0.2",
+    "url-slug":"^2.1.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.4.4",
@@ -79,6 +80,8 @@
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
+    "artifact:create": "tar -zcf $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz public",
+    "artifact:name": "echo $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz"
   }
 }

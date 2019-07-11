@@ -1,3 +1,5 @@
 export * from './groups'
 export * from './roles'
 export * from './users'
+export * from './taxonomy'
+export * from './articles'

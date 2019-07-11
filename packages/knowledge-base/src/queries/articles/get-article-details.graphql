@@ -1,0 +1,23 @@
+query getArticleDetails($id: Int!){
+  articleDetails: article_by_pk(id: $id) {
+    fields
+    created_by_id
+    authors {
+      author {
+        email
+        id
+      }
+    }
+    subtitle
+    taxonomy_items {
+      taxonomy_id
+    }
+    title
+    path
+    knowledge_type
+    id
+    image
+    status
+    summary
+  }
+}

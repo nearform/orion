@@ -2,7 +2,7 @@
   "key": "podcast",
   "name": "podcast",
   "orderIndex": 7,
-  "fields": [
+  "input_fields": [
     {
       "key": "podcast",
       "type": "embed-link",

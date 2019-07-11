@@ -5,7 +5,7 @@
   "disable": [
     "image"
   ],
-  "fields": [
+  "input_fields": [
     {
       "key": "video",
       "type": "embed-link",

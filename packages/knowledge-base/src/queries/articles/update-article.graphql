@@ -1,0 +1,12 @@
+mutation updateArticle($id: Int, $changes: article_set_input) {
+  update_article(
+    where: {id: {_eq: $id}},
+    _set: $changes
+  ) {
+    affected_rows
+    returning {
+      id
+      title
+    }
+  }
+}

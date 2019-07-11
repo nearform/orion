@@ -46,7 +46,7 @@
     "require-jsdoc": "off",
     "valid-jsdoc": "off",
     "graphql/template-strings": [
-      "error",
+      "warn",
       {
         "env": "literal",
         "projectName": "raw-salmon",
