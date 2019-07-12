@@ -3,6 +3,8 @@ import { UserAvatar, RichTextEditor } from 'components'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
+import { getCKEUploaderPlugin } from '../utils/imageUpload'
+import UploadImageWidget from './UploadImageWidget'
 import { getUserRolesSync, getUserIdSync } from '../utils/auth'
 import {
   getTaxonomyTypes,
@@ -39,6 +41,7 @@ import BoxControlLabel from '../components/BoxControlLabel'
 
 const FormikRichTextEditor = ({
   field: { name, value, onChange }, // { name, value, onChange, onBlur }
+  articleId,
   ...props
 }) => {
   const ref = useRef()
@@ -57,6 +60,9 @@ const FormikRichTextEditor = ({
         onChange={debounce(dispatchChangeEvent, 150)}
         {...props}
         data={value}
+        config={{
+          extraPlugins: [getCKEUploaderPlugin(`uploads/articles/${articleId}`)],
+        }}
       />
       <input type="hidden" name={name} ref={ref} />
     </>
@@ -72,6 +78,7 @@ function CreateArticle({ classes, articleId }) {
           key
           name
           orderIndex
+          disable
           input_fields {
             key
             name
@@ -119,6 +126,7 @@ function CreateArticle({ classes, articleId }) {
     subtitle: articleDetails.subtitle,
     summary: articleDetails.summary,
     fields: articleDetails.fields,
+    image: articleDetails.image,
     taxonomy: articleDetails.taxonomy_items.reduce((res, item) => {
       res[item.taxonomy_id] = true
       return res
@@ -184,6 +192,11 @@ function CreateArticle({ classes, articleId }) {
 
     actions.setSubmitting(false)
   }
+
+  const isFieldDisabled = (values, fieldname) =>
+    get(knowledgeTypeMap[values.knowledgeType], 'disabled', []).includes(
+      fieldname
+    ) || undefined
   return (
     <>
       <Formik initialValues={initialValues} onSubmit={saveArticle}>
@@ -339,6 +352,20 @@ function CreateArticle({ classes, articleId }) {
                   placeholder="Add Subtitle"
                   className={classes.subtitleInput}
                 />
+                {/*todo better handling of disabled fields}*/}
+                {isFieldDisabled('image') && (
+                  <div className={classes.fieldLabel}>
+                    <UploadImageWidget
+                      path={`uploads/articles/${articleId}`}
+                      value={values.image}
+                      onChange={s3key => {
+                        setFieldValue('image', s3key)
+                        setImmediate(submitForm)
+                      }}
+                    />
+                  </div>
+                )}
+
                 <div>
                   <Typography
                     color="secondary"
@@ -347,7 +374,11 @@ function CreateArticle({ classes, articleId }) {
                   >
                     Summary
                   </Typography>
-                  <Field name={'summary'} component={FormikRichTextEditor} />
+                  <Field
+                    name={'summary'}
+                    component={FormikRichTextEditor}
+                    articleId={articleId}
+                  />
                 </div>
                 {knowledgeTypeMap[values.knowledgeType].input_fields.map(
                   ({ key, name, type }) => (
@@ -363,6 +394,17 @@ function CreateArticle({ classes, articleId }) {
                         <FastField
                           name={`fields.${key}`}
                           component={FormikRichTextEditor}
+                          articleId={articleId}
+                        />
+                      ) : null}
+                      {type === 'image' ? (
+                        <UploadImageWidget
+                          path={`uploads/articles/${articleId}`}
+                          value={values.fields[key]}
+                          onChange={s3key => {
+                            setFieldValue(`fields.${key}`, s3key)
+                            setImmediate(submitForm)
+                          }}
                         />
                       ) : null}
                     </div>

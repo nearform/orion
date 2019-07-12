@@ -24,19 +24,18 @@ const defaultConfig = {
 const RichTextEditor = ({
   classes,
   data,
-  config = defaultConfig,
+  config = {},
   onChange = () => null,
 }) => {
   const [editor, setEditor] = useState()
 
   if (!CKEditor || !InlineEditor) return null
-
   return (
     <div className={classes.editor}>
       <CKEditor
         editor={InlineEditor}
         data={data}
-        config={config}
+        config={{ ...defaultConfig, ...config }}
         onInit={editor => {
           setEditor(editor)
         }}
