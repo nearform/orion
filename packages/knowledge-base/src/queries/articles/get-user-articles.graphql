@@ -1,4 +1,4 @@
-query getArticles(
+query getUserArticles(
   $createdById: Int!
   $limit: Int!
   $offset: Int!

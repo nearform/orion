@@ -2,7 +2,6 @@ import React from 'react'
 import { Chip, withStyles, Typography } from '@material-ui/core'
 import T from 'prop-types'
 
-// import StatusChip from './StatusChip'
 import EditIcon from '@material-ui/icons/Edit'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
@@ -40,15 +39,6 @@ function ArticleStatusChip({ status, classes }) {
       icon={Icon && <Icon />}
       clickable={false}
     />
-    // <StatusChip
-    //   IconComponent={Icon}
-    //   iconColor={iconColor}
-    //   chipColor={chipColor}
-    // >
-    //   <Typography variant="h4" className={classes.status}>
-    //     {text}
-    //   </Typography>
-    // </StatusChip>
   )
 }
 
