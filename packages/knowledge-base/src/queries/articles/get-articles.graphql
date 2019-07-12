@@ -1,0 +1,20 @@
+query getArticles($limit: Int!, $offset: Int!, $orderBy: article_order_by!) {
+  article(limit: $limit, offset: $offset, order_by: [$orderBy]) {
+    id
+    title
+    subtitle
+    updated_at
+    status
+    createdBy {
+      first_name
+      last_name
+    }
+    knowledge_type
+    path
+  }
+  field_aggregate: article_aggregate {
+    aggregate {
+      count
+    }
+  }
+}

@@ -11,6 +11,9 @@ export { getChartData } from './components/BarChart/util.js'
 
 // status chips
 export {
+  default as ArticleStatusChip,
+} from './components/StatusChip/ArticleStatusChip'
+export {
   default as AssessmentStatusChip,
 } from './components/StatusChip/AssessmentStatusChip'
 export * from './components/StatusChip/AssessmentStatusChip'

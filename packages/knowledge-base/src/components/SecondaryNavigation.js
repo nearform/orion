@@ -16,6 +16,7 @@ import QuickLinksMenu, {
   QuickLinksMenuItem,
   QuickLinkButton,
 } from './QuickLinksMenu'
+
 const SubmitButton = withStyles(theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
@@ -67,8 +68,8 @@ function SecondaryNavigation({ classes, dark }) {
         </QuickLinkButton>
       </Grid>
       <Grid item>
-        <SubmitButton component={NavLink} to="/submit">
-          Submit
+        <SubmitButton component={NavLink} to="/my-content">
+          My Content
         </SubmitButton>
       </Grid>
     </Grid>
