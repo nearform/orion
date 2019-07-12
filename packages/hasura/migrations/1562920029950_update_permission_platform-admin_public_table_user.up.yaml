@@ -1,0 +1,23 @@
+- args:
+    role: platform-admin
+    table:
+      name: user
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - cognito_id
+      - email
+      - first_name
+      - id
+      - last_name
+      - pending
+      - signupRequest
+      filter: {}
+    role: platform-admin
+    table:
+      name: user
+      schema: public
+  type: create_select_permission
