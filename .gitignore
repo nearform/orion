@@ -63,10 +63,12 @@ typings/
 
 # dotenv environment variables file
 .env
+.env.staging
 
 # custom
 build/
 /hasura-schema.json
+dumpfile
 
 .cache
 packages/app

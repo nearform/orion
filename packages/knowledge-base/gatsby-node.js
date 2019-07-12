@@ -21,6 +21,17 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const homeTemplate = require.resolve('./src/templates/home.js')
+  // const articlesQueryResults = await graphql(`
+  //   {
+  //     allArticles {
+  //       totalCount
+  //     }
+  //   }
+  // `)
+
+  // if (articlesQueryResults.errors) {
+  //   throw articlesQueryResults.errors
+  // }
 
   createPage({
     path: '/',

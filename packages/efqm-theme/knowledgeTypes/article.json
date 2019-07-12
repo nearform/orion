@@ -1,0 +1,12 @@
+{
+  "key": "article",
+  "name": "article",
+  "orderIndex": 2,
+  "input_fields": [
+    {
+      "key": "body",
+      "name": "Body",
+      "type": "rich-text"
+    }
+  ]
+}

@@ -11,9 +11,13 @@ function getThemePaths(currentTheme) {
     themeRootPath,
     currentTheme.config.assessmentsPath
   )
-
+  const themeKnowledgeTypes = path.join(
+    themeRootPath,
+    currentTheme.config.knowledgeTypesPath
+  )
   return {
     themeAssessmentsPath,
+    themeKnowledgeTypes,
     themeAssetsPath,
     themeRootPath,
   }

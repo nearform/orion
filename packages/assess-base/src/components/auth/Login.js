@@ -14,19 +14,19 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
   return (
     <div className={classes.root}>
       <div>
-        <Grid container direction="column" spacing={3}>
-          <Grid item xs={9}>
+        <Grid container spacing={3} xs={5} className={classes.form}>
+          <Grid item xs={8}>
             <SectionTitle gutterBottom barColor={theme.palette.secondary.main}>
               Sign in to your account
             </SectionTitle>
           </Grid>
-          <Grid item>
+          <Grid item xs={10}>
             <Typography variant="h4" gutterBottom>
               please enter your username
             </Typography>
             <TextField name="username" onChange={handleInput} fullWidth />
           </Grid>
-          <Grid item>
+          <Grid item xs={10}>
             <Typography variant="h4" gutterBottom>
               please enter your password
             </Typography>
@@ -37,7 +37,14 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
               fullWidth
             />
           </Grid>
-          <Grid item container alignItems="baseline" spacing={1} wrap="nowrap">
+          <Grid
+            item
+            container
+            alignItems="baseline"
+            spacing={1}
+            xs={10}
+            wrap="nowrap"
+          >
             <Grid item>
               <Typography variant="h4" color="textSecondary">
                 Forget your password?
@@ -49,7 +56,14 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
               </Button>
             </Grid>
           </Grid>
-          <Grid item container alignItems="baseline" spacing={1} wrap="nowrap">
+          <Grid
+            item
+            container
+            alignItems="baseline"
+            spacing={1}
+            xs={10}
+            wrap="nowrap"
+          >
             <Grid item>
               <Typography variant="h4" color="textSecondary" noWrap>
                 No account?
@@ -96,6 +110,9 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+  },
+  form: {
+    margin: 'auto',
   },
 }
 
