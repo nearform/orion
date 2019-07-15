@@ -10,6 +10,7 @@ const HASURA_ALLOWED_ROLES_KEY = 'x-hasura-allowed-roles'
 const HASURA_USER_ID = 'x-hasura-user-id'
 const HASURA_GROUP_ID = 'x-hasura-group-id'
 const ADMIN_ROLES_REGEX = /admin$/i
+const PLATFORM_GROUP_REGEX = /^platform/i
 
 export const AuthInitContext = createContext(false)
 
@@ -28,6 +29,11 @@ const isAdmin = async () =>
   (await getUserRoles()).some(role => ADMIN_ROLES_REGEX.test(role))
 export const isAdminSync = () =>
   getUserRolesSync().some(role => ADMIN_ROLES_REGEX.test(role))
+
+const isPlatformGroup = async () =>
+  (await getUserRoles()).some(role => PLATFORM_GROUP_REGEX.test(role))
+export const isPlatformGroupSync = () =>
+  getUserRolesSync().some(role => PLATFORM_GROUP_REGEX.test(role))
 
 export const isContributorSync = () =>
   !!getCustomClaimsSync()[CUSTOM_CLAIMS_CONTRIBUTOR_KEY]
@@ -97,6 +103,20 @@ function extractCustomClaimsFromTokenPayload() {
   }
 }
 
+async function getUserId() {
+  if (!(await isAuthenticated())) return []
+
+  try {
+    return extractUserIdFromTokenPayload()
+  } catch (err) {
+    return []
+  }
+}
+
+export function useUserId() {
+  return useAuthState(getUserIdSync(), getUserId)
+}
+
 async function getUserRoles() {
   if (!(await isAuthenticated())) return []
 
@@ -113,6 +133,9 @@ export function useUserRoles() {
 
 export function useIsAdmin() {
   return useAuthState(isAdminSync(), isAdmin)
+}
+export function useIsPlatformGroup() {
+  return useAuthState(isPlatformGroupSync(), isPlatformGroup)
 }
 
 export function useIsAuthenticated() {

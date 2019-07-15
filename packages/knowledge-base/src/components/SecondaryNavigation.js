@@ -16,7 +16,9 @@ import QuickLinksMenu, {
   QuickLinksMenuItem,
   QuickLinkButton,
 } from './QuickLinksMenu'
-const SubmitButton = withStyles(theme => ({
+import { useIsAuthenticated } from '../utils/auth'
+
+const MyContentButton = withStyles(theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     marginTop: '2px', //for alignment purposes to avoid flexboxing, depending on the difference between regular button and the quicklink menu button
@@ -29,13 +31,17 @@ const SubmitButton = withStyles(theme => ({
     },
   },
 }))(Button)
-SubmitButton.defaultProps = {
+MyContentButton.defaultProps = {
   variant: 'outlined',
   color: 'secondary',
+  component: NavLink,
+  to: '/my-content',
+  children: 'My Content',
 }
 
 function SecondaryNavigation({ classes, dark }) {
   const [search, setSearch] = useState(false)
+  const isAuthenticated = useIsAuthenticated()
 
   return !search ? (
     <Grid container justify="flex-end" spacing={3}>
@@ -66,11 +72,7 @@ function SecondaryNavigation({ classes, dark }) {
           Search
         </QuickLinkButton>
       </Grid>
-      <Grid item>
-        <SubmitButton component={NavLink} to="/submit">
-          Submit
-        </SubmitButton>
-      </Grid>
+      <Grid item>{isAuthenticated && <MyContentButton />}</Grid>
     </Grid>
   ) : (
     <>
