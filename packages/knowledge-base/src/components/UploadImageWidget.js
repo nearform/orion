@@ -132,7 +132,6 @@ export default withStyles(theme => ({
       },
       '& $imageTitle': {
         opacity: 1,
-        //border: '2px solid currentColor',
       },
     },
   },
@@ -172,8 +171,6 @@ export default withStyles(theme => ({
     alignItems: 'center',
     opacity: 0,
     transition: theme.transitions.create('opacity'),
-    //padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) +
-    //  6}px`,
   },
   progress: {
     position: 'absolute',
@@ -182,15 +179,12 @@ export default withStyles(theme => ({
     width: '60px !important',
   },
   addPhotoButton: {
-    ...theme.typography.button,
-    padding: `${theme.spacing(1)}px ${theme.spacing(3)}px`,
-    backgroundColor: 'rgb(243,245,248)',
+    ...theme.articleTypography.articleEditButton,
+    padding: theme.spacing(1, 3),
     borderRadius: theme.spacing(0.5),
-    color: theme.articleTypography.heading2.color,
-    boxShadow: 'none',
   },
   addPhotoIcon: {
     marginRight: theme.spacing(1),
-    marginLeft: `-${theme.spacing(1)}px`,
+    marginLeft: theme.spacing(-1),
   },
 }))(UploadImageWidget)
