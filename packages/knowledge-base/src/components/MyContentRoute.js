@@ -28,7 +28,7 @@ const headers = [
 ]
 
 const MyContentRoute = ({ classes }) => {
-  const isPlatformId = useIsPlatformGroup()
+  const isPlatformGroup = useIsPlatformGroup()
   const userId = useUserId()
   const staticResult = useStaticQuery(graphql`
     {
@@ -51,7 +51,7 @@ const MyContentRoute = ({ classes }) => {
   let query
   let variables
 
-  if (isPlatformId) {
+  if (isPlatformGroup) {
     query = getArticlesData
     variables = {}
   } else {
@@ -85,6 +85,7 @@ const MyContentRoute = ({ classes }) => {
                 <IconButton
                   className={classes.icon}
                   component={Link}
+                  disabled={status !== 'in-progress' && !isPlatformGroup}
                   to={`/submit/${article.id}`}
                 >
                   <EditIcon />
