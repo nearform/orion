@@ -8,9 +8,11 @@ import {
   withStyles,
 } from '@material-ui/core'
 
-import NavLink from './NavLink'
+import NavLink from '../NavLink'
+import { useIsPlatformGroup } from '../../utils/auth'
 
 function ContentToolbar({ classes, pageTitle }) {
+  const isPlatformGroup = useIsPlatformGroup()
   return (
     <AppBar
       position="relative"
@@ -34,18 +36,20 @@ function ContentToolbar({ classes, pageTitle }) {
             color="inherit"
             component={NavLink}
             className={classes.navLink}
-            to="/"
+            to="all-stories"
           >
             All Stories
           </Button>
-          <Button
-            color="inherit"
-            component={NavLink}
-            className={classes.navLink}
-            to="needs-review"
-          >
-            Needs Review
-          </Button>
+          {isPlatformGroup && (
+            <Button
+              color="inherit"
+              component={NavLink}
+              className={classes.navLink}
+              to="needs-review"
+            >
+              Needs Review
+            </Button>
+          )}
           <Button
             color="inherit"
             component={NavLink}
