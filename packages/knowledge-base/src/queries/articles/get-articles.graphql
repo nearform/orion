@@ -1,5 +1,15 @@
-query getArticles($limit: Int!, $offset: Int!, $orderBy: article_order_by!) {
-  article(limit: $limit, offset: $offset, order_by: [$orderBy]) {
+query getArticles(
+  $status: String
+  $limit: Int!
+  $offset: Int!
+  $orderBy: article_order_by!
+) {
+  article(
+    where: { status: { _eq: $status } }
+    limit: $limit
+    offset: $offset
+    order_by: [$orderBy]
+  ) {
     id
     title
     subtitle

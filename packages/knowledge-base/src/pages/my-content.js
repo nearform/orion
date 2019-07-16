@@ -2,7 +2,7 @@ import React from 'react'
 import { Router } from '@reach/router'
 
 import ProtectedRoute from '../components/ProtectedRoute'
-import MyContentRoute from '../components/MyContentRoute'
+import MyContentRoute from '../components/my-content/MyContentRoute'
 
 export default function MyContent() {
   return (
