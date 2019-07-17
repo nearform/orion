@@ -2,7 +2,7 @@ const { fade } = require('@material-ui/core/styles/colorManipulator')
 
 const fontFamily = (exports.fontFamily = 'Lato, sans-serif')
 
-const efqmDigitalPalette = {
+const colorDefinitions = {
   // Names / keys are unofficial descriptions
   slateGrey: 'rgb(69, 75, 102)',
   navyBlue: 'rgb(73, 98, 173)',
@@ -29,7 +29,7 @@ const articleTypography = {
     fontStretch: 'normal',
     lineHeight: 'normal',
     letterSpacing: '-0.23px',
-    color: efqmDigitalPalette.slateGrey,
+    color: colorDefinitions.slateGrey,
     margin: '18px 0 2px',
     '& + h3': {
       marginTop: '3px',
@@ -43,7 +43,7 @@ const articleTypography = {
     fontStretch: 'normal',
     lineHeight: 'normal',
     letterSpacing: '-0.17px',
-    color: efqmDigitalPalette.lightGrey,
+    color: colorDefinitions.lightGrey,
     margin: '16px 0 2px',
   },
   heading3: {
@@ -54,7 +54,7 @@ const articleTypography = {
     fontStretch: 'normal',
     lineHeight: 'normal',
     letterSpacing: 'normal',
-    color: efqmDigitalPalette.lightGrey,
+    color: colorDefinitions.lightGrey,
     margin: '14px 0 2px',
   },
   heading4: {
@@ -65,7 +65,7 @@ const articleTypography = {
     fontStretch: 'normal',
     lineHeight: 'normal',
     letterSpacing: 'normal',
-    color: efqmDigitalPalette.slateGrey,
+    color: colorDefinitions.slateGrey,
     margin: '12px 0 2px',
   },
   firstParagraph: {
@@ -92,7 +92,7 @@ const articleTypography = {
     fontStyle: 'italic',
   },
   link: {
-    color: efqmDigitalPalette.aqua,
+    color: colorDefinitions.aqua,
   },
   bulletedList: {
     margin: '36px 0 2px',
@@ -158,7 +158,7 @@ const articleTypography = {
     position: 'relative',
     '&::before': {
       borderRadius: '4px',
-      backgroundColor: efqmDigitalPalette.paleGrey,
+      backgroundColor: colorDefinitions.paleGrey,
       color: 'transparent',
       position: 'absolute',
       width: '8px',
@@ -173,36 +173,52 @@ const articleTypography = {
       fontStyle: 'italic',
       lineHeight: 'normal',
       letterSpacing: '-0.19px',
-      color: efqmDigitalPalette.slateGrey,
+      color: colorDefinitions.slateGrey,
       '&:first-child': {
         marginTop: '2px',
       },
     },
   },
+
+  articleEditButton: {
+    fontFamily,
+    fontSize: 12,
+    fontWeight: '900',
+    lineHeight: 'normal',
+    letterSpacing: 1.8,
+    backgroundColor: colorDefinitions.paleGrey,
+    color: colorDefinitions.lightGrey,
+    boxShadow: 'none',
+  },
+
+  input: {
+    backgroundColor: colorDefinitions.paleGrey,
+    color: colorDefinitions.lightGrey,
+  },
 }
 
 const articleStatusColor = {
-  inProgress: fade(efqmDigitalPalette.cyan, 0.1),
-  inReview: fade(efqmDigitalPalette.yellow, 0.2),
-  published: efqmDigitalPalette.navyBlue,
-  hidden: fade(efqmDigitalPalette.lightGrey, 0.07),
+  inProgress: fade(colorDefinitions.cyan, 0.1),
+  inReview: fade(colorDefinitions.yellow, 0.2),
+  published: colorDefinitions.navyBlue,
+  hidden: fade(colorDefinitions.lightGrey, 0.07),
 }
 
 const articleStatusLabelColor = {
-  inProgress: efqmDigitalPalette.slateGrey,
-  inReview: efqmDigitalPalette.slateGrey,
-  published: efqmDigitalPalette.white,
-  hidden: efqmDigitalPalette.slateGrey,
+  inProgress: colorDefinitions.slateGrey,
+  inReview: colorDefinitions.slateGrey,
+  published: colorDefinitions.white,
+  hidden: colorDefinitions.slateGrey,
 }
 
 const articleStatusIconColor = {
-  inProgress: efqmDigitalPalette.cyan,
-  inReview: efqmDigitalPalette.slateGrey,
-  published: efqmDigitalPalette.white,
-  hidden: efqmDigitalPalette.lightGrey,
+  inProgress: colorDefinitions.cyan,
+  inReview: colorDefinitions.slateGrey,
+  published: colorDefinitions.white,
+  hidden: colorDefinitions.lightGrey,
 }
 
-const articleTableIconColor = efqmDigitalPalette.lightGrey
+const articleTableIconColor = colorDefinitions.lightGrey
 
 const typography = {
   h1: {
@@ -256,7 +272,7 @@ const typography = {
   },
   tableHeader: {
     fontFamily,
-    color: efqmDigitalPalette.slateGrey,
+    color: colorDefinitions.slateGrey,
     fontSize: 11,
     fontWeight: 'bold',
     letterSpacing: '1.2px',
@@ -269,7 +285,7 @@ const typography = {
     fontFamily,
     fontSize: 14,
     letterSpacing: 'normal',
-    color: efqmDigitalPalette.slateGrey,
+    color: colorDefinitions.slateGrey,
     padding: '10px 14px',
   },
   placeholder: {
@@ -337,7 +353,7 @@ exports.muiTheme = {
       root: {
         ...typography.body1,
         borderRadius: 3,
-        backgroundColor: efqmDigitalPalette.paleGrey,
+        backgroundColor: colorDefinitions.paleGrey,
       },
       input: {
         padding: '7.5px 12px 8.5px',
@@ -348,7 +364,7 @@ exports.muiTheme = {
         ...typography.body1,
         borderRadius: 3,
         boxShadow: shadows[1],
-        background: efqmDigitalPalette.white,
+        background: colorDefinitions.white,
       },
       notchedOutline: {
         border: 'none',
@@ -386,20 +402,20 @@ exports.muiTheme = {
   },
   palette: {
     primary: {
-      main: efqmDigitalPalette.navyBlue,
-      light: efqmDigitalPalette.cyan,
-      dark: efqmDigitalPalette.slateGrey,
+      main: colorDefinitions.navyBlue,
+      light: colorDefinitions.cyan,
+      dark: colorDefinitions.slateGrey,
     },
     secondary: {
-      main: efqmDigitalPalette.aqua,
-      light: efqmDigitalPalette.pearGreen,
-      dark: efqmDigitalPalette.emeraldGreen,
+      main: colorDefinitions.aqua,
+      light: colorDefinitions.pearGreen,
+      dark: colorDefinitions.emeraldGreen,
     },
     background: {
-      default: efqmDigitalPalette.white,
-      paper: efqmDigitalPalette.white,
-      light: efqmDigitalPalette.paleGrey,
-      dark: efqmDigitalPalette.midGrey,
+      default: colorDefinitions.white,
+      paper: colorDefinitions.white,
+      light: colorDefinitions.paleGrey,
+      dark: colorDefinitions.midGrey,
     },
     contrastThreshold: 1.6,
   },
@@ -409,6 +425,7 @@ exports.muiTheme = {
   articleStatusLabelColor,
   articleStatusIconColor,
   articleTableIconColor,
+  colorDefinitions,
 }
 
 exports.googleFonts = ['Lato:400,700,900']

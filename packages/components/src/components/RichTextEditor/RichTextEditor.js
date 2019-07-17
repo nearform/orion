@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 
 let CKEditor
 let InlineEditor
@@ -24,19 +25,18 @@ const defaultConfig = {
 const RichTextEditor = ({
   classes,
   data,
-  config = defaultConfig,
+  config = {},
   onChange = () => null,
 }) => {
   const [editor, setEditor] = useState()
 
   if (!CKEditor || !InlineEditor) return null
-
   return (
     <div className={classes.editor}>
       <CKEditor
         editor={InlineEditor}
         data={data}
-        config={config}
+        config={{ ...defaultConfig, ...config }}
         onInit={editor => {
           setEditor(editor)
         }}
@@ -59,7 +59,7 @@ RichTextEditor.propTypes = {
 const styles = theme => ({
   '@global': {
     '.ck.ck-content': {
-      backgroundColor: 'rgb(243,245,248, 0.5)',
+      backgroundColor: fade(theme.articleTypography.input.backgroundColor, 0.5),
       // border: 0,
       padding: '9px 14px',
       '& > :first-child': {
@@ -82,7 +82,7 @@ const styles = theme => ({
       '& a': theme.articleTypography.link,
     },
     '.ck.ck-balloon-panel': {
-      backgroundColor: 'rgb(243,245,248)',
+      backgroundColor: theme.articleTypography.input.backgroundColor,
       border: 'none',
       boxShadow: '0 2px 10px 0 rgba(0,0,0,0.1), 0 0 5px 0 rgba(0,0,0,0.1)',
       transform: 'translateY(-4px)',
@@ -91,7 +91,7 @@ const styles = theme => ({
       borderRadius: '5px',
     },
     '.ck.ck-toolbar': {
-      backgroundColor: 'rgb(243,245,248)',
+      backgroundColor: theme.articleTypography.input.backgroundColor,
     },
   },
   editor: {
