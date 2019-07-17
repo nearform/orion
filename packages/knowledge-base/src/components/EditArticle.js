@@ -12,6 +12,8 @@ import {
   updateArticleMutation,
   addArticleTaxonomiesMutation,
   deleteArticleTaxonomiesMutation,
+  addArticleAuthorsMutation,
+  deleteArticleAuthorsMutation,
 } from '../queries'
 import { Formik, Form, Field, FastField } from 'formik'
 import { fieldToCheckbox, TextField } from 'formik-material-ui'
@@ -38,7 +40,7 @@ import keyBy from 'lodash/keyBy'
 import debounce from 'lodash/debounce'
 import difference from 'lodash/difference'
 import BoxControlLabel from '../components/BoxControlLabel'
-
+import SelectAuthor from './SelectAuthor'
 const FormikRichTextEditor = ({
   field: { name, value, onChange }, // { name, value, onChange, onBlur }
   articleId,
@@ -91,6 +93,8 @@ function CreateArticle({ classes, articleId }) {
   const [updateArticle] = useMutation(updateArticleMutation)
   const [addArticleTaxonomies] = useMutation(addArticleTaxonomiesMutation)
   const [deleteArticleTaxonomies] = useMutation(deleteArticleTaxonomiesMutation)
+  const [addArticleAuthors] = useMutation(addArticleAuthorsMutation)
+  const [deleteArticleAuthors] = useMutation(deleteArticleAuthorsMutation)
   const knowledgeTypes = get(staticResult, 'allKnowledgeTypes.nodes')
   const knowledgeTypeMap = keyBy(knowledgeTypes, 'key')
 
@@ -122,6 +126,7 @@ function CreateArticle({ classes, articleId }) {
 
   const initialValues = {
     knowledgeType: articleDetails.knowledge_type,
+    authors: articleDetails.authors,
     title: articleDetails.title,
     subtitle: articleDetails.subtitle,
     summary: articleDetails.summary,
@@ -135,9 +140,40 @@ function CreateArticle({ classes, articleId }) {
 
   async function saveArticle(values, actions) {
     //just take taxonomy and knowledgeType out, so they are not submitted (yet)
-    const { taxonomy, knowledgeType, ...updatableFields } = values //eslint-disable-line no-unused-vars
+    const { taxonomy, authors, knowledgeType, ...updatableFields } = values //eslint-disable-line no-unused-vars
 
     const mutationPromises = []
+
+    const extracted_authors = values.authors.map(({ author: { id } }) => id)
+    const previous_authors = articleDetails.authors.map(
+      ({ author: { id } }) => id
+    )
+
+    const addAuthors = difference(extracted_authors, previous_authors).map(
+      author_id => ({
+        article_id: articleId,
+        author_id,
+      })
+    )
+    if (addAuthors.length > 0) {
+      mutationPromises.push(addArticleAuthors({ variables: { addAuthors } }))
+    }
+
+    const removeAuthors = difference(previous_authors, extracted_authors).map(
+      author_id => ({
+        _and: [
+          { article_id: { _eq: articleId } },
+          { author_id: { _eq: author_id } },
+        ],
+      })
+    )
+    if (removeAuthors.length > 0) {
+      mutationPromises.push(
+        deleteArticleAuthors({
+          variables: { removeAuthors },
+        })
+      )
+    }
 
     const extracted_taxonomy = Object.keys(taxonomy || {}).reduce((res, it) => {
       if (values.taxonomy[it]) {
@@ -145,6 +181,7 @@ function CreateArticle({ classes, articleId }) {
       }
       return res
     }, [])
+
     const previous_taxonomy = articleDetails.taxonomy_items.map(
       t => t.taxonomy_id
     )
@@ -289,14 +326,18 @@ function CreateArticle({ classes, articleId }) {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.expansionDetails}>
                       <div>
-                        {articleDetails.authors.map(({ author }) => (
+                        {values.authors.map(({ author }) => (
                           <UserAvatar
                             key={author.id}
-                            email={author.email || ''}
-                            memberType="efqm member"
+                            user={author}
+                            className={classes.author}
                           />
                         ))}
                       </div>
+                      <SelectAuthor
+                        selectedUsers={values.authors}
+                        onChange={authors => setFieldValue('authors', authors)}
+                      />
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
                   {taxonomyTypes.map(type => (
@@ -491,5 +532,10 @@ export default withStyles(theme => ({
     padding: theme.spacing(2),
     flexDirection: 'column',
     paddingTop: 0,
+  },
+  author: {
+    '&:not(:first-child)': {
+      marginTop: theme.spacing(1),
+    },
   },
 }))(CreateArticle)
