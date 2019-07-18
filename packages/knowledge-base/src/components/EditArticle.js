@@ -230,8 +230,8 @@ function CreateArticle({ classes, articleId }) {
     actions.setSubmitting(false)
   }
 
-  const isFieldDisabled = (values, fieldname) =>
-    get(knowledgeTypeMap[values.knowledgeType], 'disabled', []).includes(
+  const isFieldEnabled = (values, fieldname) =>
+    !get(knowledgeTypeMap[values.knowledgeType], 'disabled', []).includes(
       fieldname
     ) || undefined
   return (
@@ -394,7 +394,7 @@ function CreateArticle({ classes, articleId }) {
                   className={classes.subtitleInput}
                 />
                 {/*todo better handling of disabled fields}*/}
-                {isFieldDisabled('image') && (
+                {isFieldEnabled('image') && (
                   <div className={classes.fieldLabel}>
                     <UploadImageWidget
                       path={`uploads/articles/${articleId}`}

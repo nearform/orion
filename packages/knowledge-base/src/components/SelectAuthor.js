@@ -144,7 +144,9 @@ export default withStyles(theme => ({
   openBbutton: {
     marginTop: theme.spacing(2),
   },
-  tableContainer: {},
+  tableContainer: {
+    minHeight: '620px',
+  },
   removeAuthorButton: {
     '& svg': {
       width: '1rem',
@@ -175,6 +177,7 @@ export default withStyles(theme => ({
     },
   },
   modal: {
+    width: '60%',
     padding: theme.spacing(2),
     position: 'absolute',
     top: `50%`,
