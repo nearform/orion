@@ -13,7 +13,8 @@ import { getArticlesData, getUserArticlesData } from '../../queries'
 import { useUserId, useIsPlatformGroup } from '../../utils/auth'
 import { formatDate } from '../../utils/date'
 import get from 'lodash/get'
-
+import ContentToolbar from './ContentToolbar'
+import SEO from '../SEO'
 const headers = [
   { id: 'title', label: 'Title', sortable: true },
   { id: 'createdBy', label: 'Created By' },
@@ -24,8 +25,9 @@ const headers = [
   { id: 'view', label: 'View', cellProps: { align: 'center' } },
 ]
 
-const ArticleList = ({ classes, setPageTitle, path }) => {
+const ArticleList = ({ classes, path }) => {
   const [statusFilter, setStatusFilter] = useState()
+  const [pageTitle, setPageTitle] = useState()
   useEffect(() => {
     const inReview = path === '/needs-review'
     setStatusFilter(inReview ? 'in-review' : undefined)
@@ -63,53 +65,56 @@ const ArticleList = ({ classes, setPageTitle, path }) => {
   }
 
   return (
-    <QueryTable
-      headers={headers}
-      query={query}
-      variables={variables}
-      orderBy={{ updated_at: 'desc' }}
-      renderTableBody={data =>
-        data &&
-        data.article.map(article => (
-          <TableRow hover key={article.id} size="small">
-            <TableCell>{article.title}</TableCell>
-            <TableCell>
-              {article.createdBy.first_name} {article.createdBy.last_name}
-            </TableCell>
-            <TableCell>{formatDate(article.updated_at)}</TableCell>
-            <TableCell>{knowledgeTypes[article.knowledge_type]}</TableCell>
-            <TableCell>
-              <ArticleStatusChip status={article.status} />
-            </TableCell>
-            <TableCell align="center" padding="none">
-              <IconButton
-                className={classes.icon}
-                component={Link}
-                disabled={status !== 'in-progress' && !isPlatformGroup}
-                to={`/submit/${article.id}`}
-              >
-                <EditIcon />
-              </IconButton>
-            </TableCell>
-            <TableCell align="center" padding="none">
-              <IconButton
-                className={classes.icon}
-                component={Link}
-                to={`/content/${article.path}`}
-              >
-                <InsertDriveFileIcon />
-              </IconButton>
-            </TableCell>
-          </TableRow>
-        ))
-      }
-    />
+    <>
+      <SEO pageTitle={pageTitle} />
+      <ContentToolbar pageTitle="Content" />
+      <QueryTable
+        headers={headers}
+        query={query}
+        variables={variables}
+        orderBy={{ updated_at: 'desc' }}
+        renderTableBody={data =>
+          data &&
+          data.article.map(article => (
+            <TableRow hover key={article.id} size="small">
+              <TableCell>{article.title}</TableCell>
+              <TableCell>
+                {article.createdBy.first_name} {article.createdBy.last_name}
+              </TableCell>
+              <TableCell>{formatDate(article.updated_at)}</TableCell>
+              <TableCell>{knowledgeTypes[article.knowledge_type]}</TableCell>
+              <TableCell>
+                <ArticleStatusChip status={article.status} />
+              </TableCell>
+              <TableCell align="center" padding="none">
+                <IconButton
+                  className={classes.icon}
+                  component={Link}
+                  disabled={status !== 'in-progress' && !isPlatformGroup}
+                  to={`/my-content/edit/${article.id}`}
+                >
+                  <EditIcon />
+                </IconButton>
+              </TableCell>
+              <TableCell align="center" padding="none">
+                <IconButton
+                  className={classes.icon}
+                  component={Link}
+                  to={`/content/${article.path}`}
+                >
+                  <InsertDriveFileIcon />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))
+        }
+      />
+    </>
   )
 }
 
 ArticleList.propTypes = {
   classes: PropTypes.object,
-  setPageTitle: PropTypes.func,
 }
 
 const styles = theme => ({
