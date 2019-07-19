@@ -6,6 +6,7 @@ import CreateArticle from '../CreateArticle'
 import EditArticle from '../EditArticle'
 
 import ArticleList from './ArticleList'
+import EditorsPicks from './EditorsPicks'
 
 const MyContentRoute = () => {
   return (
@@ -15,6 +16,7 @@ const MyContentRoute = () => {
         <ArticleList path="/needs-review" />
         <CreateArticle path="/add" />
         <EditArticle path="/edit/:articleId" />
+        <EditorsPicks path="/editors-picks" />
         <Redirect
           default
           noThrow

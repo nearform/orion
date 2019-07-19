@@ -1,11 +1,12 @@
 query getArticles(
   $status: String
+  $editorsPick: Boolean
   $limit: Int!
   $offset: Int!
   $orderBy: article_order_by!
 ) {
   article(
-    where: { status: { _eq: $status } }
+    where: { status: { _eq: $status }, editors_pick: { _eq: $editorsPick } }
     limit: $limit
     offset: $offset
     order_by: [$orderBy]
@@ -20,7 +21,8 @@ query getArticles(
       last_name
     }
     knowledge_type
-    path
+    path,
+    editors_pick
   }
   field_aggregate: article_aggregate {
     aggregate {

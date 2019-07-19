@@ -221,6 +221,7 @@ function CreateArticle({ classes, articleId }) {
           changes: {
             ...updatableFields,
             path: urlSlug(`${articleId}-${updatableFields.title}`),
+            updated_at: new Date(),
           },
         },
       })

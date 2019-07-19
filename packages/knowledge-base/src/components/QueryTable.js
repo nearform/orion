@@ -27,11 +27,9 @@ function QueryTable({
   const [offset, setOffset] = useState(0)
   const [pageSize, setPageSize] = useState(pageSizes[0])
   const [orderBy, setOrderBy] = useState(orderByProp)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-  const [data, setData] = useState()
 
-  const response = useQuery(query, {
+  const { loading, error, data, refetch } = useQuery(query, {
+    updateData: (_, nextData) => nextData, //fixes pagination flashing
     variables: {
       ...variables,
       offset,
@@ -39,14 +37,6 @@ function QueryTable({
       orderBy,
     },
   })
-
-  useEffect(() => {
-    setLoading(response.loading)
-    setError(response.error)
-    if (!response.loading) {
-      setData(response.data)
-    }
-  }, [response])
 
   if (!headers.length) return <Typography>No table headers to show</Typography>
 
@@ -92,7 +82,7 @@ function QueryTable({
               })}
             </TableRow>
           </TableHead>
-          <TableBody>{renderTableBody(data)}</TableBody>
+          <TableBody>{renderTableBody(data, refetch)}</TableBody>
           <TableFooter>
             <TableRow>
               <TablePagination

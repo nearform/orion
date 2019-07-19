@@ -1,40 +1,44 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { TableRow, TableCell, IconButton, withStyles } from '@material-ui/core'
-import EditIcon from '@material-ui/icons/Edit'
+import {
+  TableRow,
+  TableCell,
+  IconButton,
+  withStyles,
+  Checkbox,
+} from '@material-ui/core'
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 import { Link, useStaticQuery, graphql } from 'gatsby'
+import { useMutation, useQuery } from 'graphql-hooks'
 
-import { ArticleStatusChip } from 'components'
+import { updateArticleMutation } from '../../queries'
 
 import QueryTable from '../QueryTable'
-import { getArticlesData, getUserArticlesData } from '../../queries'
+import { getArticlesData } from '../../queries'
 
-import { useUserId, useIsPlatformGroup } from '../../utils/auth'
 import { formatDateTime } from '../../utils/date'
 import get from 'lodash/get'
-import ContentToolbar from './ContentToolbar'
-import SEO from '../SEO'
+import FeatureArticles from '../FeatureArticles'
+
 const headers = [
   { id: 'title', label: 'Title', sortable: true },
   { id: 'createdBy', label: 'Created By' },
   { id: 'updated_at', label: 'Last Updated', sortable: true },
   { id: 'knowledge_type', label: 'Type', sortable: true },
-  { id: 'status', label: 'Status', sortable: true },
-  { id: 'edit', label: 'Edit', cellProps: { align: 'center' } },
+  {
+    id: 'editorsPicks',
+    label: "Editor's Picks",
+    cellProps: { align: 'center' },
+  },
   { id: 'view', label: 'View', cellProps: { align: 'center' } },
 ]
 
-const ArticleList = ({ classes, path }) => {
-  const [statusFilter, setStatusFilter] = useState()
-  const [pageTitle, setPageTitle] = useState()
+const EditorsPicks = ({ classes, setPageTitle }) => {
   useEffect(() => {
-    const inReview = path === '/needs-review'
-    setStatusFilter(inReview ? 'in-review' : undefined)
-    setPageTitle(inReview ? 'Needs Review' : 'All Stories')
-  }, [path])
-  const isPlatformGroup = useIsPlatformGroup()
-  const userId = useUserId()
+    setPageTitle("Editor's Picks")
+  }, [])
+  const [updateEditorsPick] = useMutation(updateArticleMutation)
+
   const staticResult = useStaticQuery(graphql`
     {
       allKnowledgeTypes(sort: { fields: orderIndex, order: ASC }) {
@@ -53,27 +57,37 @@ const ArticleList = ({ classes, path }) => {
     {}
   )
 
-  let query
-  let variables
+  const {
+    data: { article: editorsPicks = [] } = {},
+    refetch: refetchEditorsPicks,
+  } = useQuery(getArticlesData, {
+    variables: {
+      editorsPick: true,
+      offset: 0,
+      limit: 3,
+      orderBy: { updated_at: 'desc' },
+    },
+  })
 
-  if (isPlatformGroup) {
-    query = getArticlesData
-    variables = { status: statusFilter }
-  } else {
-    query = getUserArticlesData
-    variables = { createdById: userId }
-  }
+  const toggleEditorPick = async (id, editors_pick) =>
+    await updateEditorsPick({
+      variables: {
+        id,
+        changes: {
+          editors_pick,
+        },
+      },
+    })
 
   return (
     <>
-      <SEO pageTitle={pageTitle} />
-      <ContentToolbar pageTitle="Content" />
+      <FeatureArticles title="Editors' Picks Preview" articles={editorsPicks} />
       <QueryTable
         headers={headers}
-        query={query}
-        variables={variables}
+        query={getArticlesData}
+        // variables={{ status: 'published' }}
         orderBy={{ updated_at: 'desc' }}
-        renderTableBody={data =>
+        renderTableBody={(data, refetchArticles) =>
           data &&
           data.article.map(article => (
             <TableRow hover key={article.id} size="small">
@@ -83,18 +97,17 @@ const ArticleList = ({ classes, path }) => {
               </TableCell>
               <TableCell>{formatDateTime(article.updated_at)}</TableCell>
               <TableCell>{knowledgeTypes[article.knowledge_type]}</TableCell>
-              <TableCell>
-                <ArticleStatusChip status={article.status} />
-              </TableCell>
-              <TableCell align="center" padding="none">
-                <IconButton
-                  className={classes.icon}
-                  component={Link}
-                  disabled={status !== 'in-progress' && !isPlatformGroup}
-                  to={`/submit/${article.id}`}
-                >
-                  <EditIcon />
-                </IconButton>
+              <TableCell align="center">
+                <Checkbox
+                  color="default"
+                  checked={article.editors_pick}
+                  onChange={async (event, checked) => {
+                    await toggleEditorPick(article.id, checked)
+                    refetchEditorsPicks()
+                    refetchArticles()
+                  }}
+                  disabled={!article.editors_pick && editorsPicks.length > 2}
+                />
               </TableCell>
               <TableCell align="center" padding="none">
                 <IconButton
@@ -113,9 +126,9 @@ const ArticleList = ({ classes, path }) => {
   )
 }
 
-ArticleList.propTypes = {
+EditorsPicks.propTypes = {
   classes: PropTypes.object,
-  path: PropTypes.string,
+  setPageTitle: PropTypes.func,
 }
 
 const styles = theme => ({
@@ -124,4 +137,4 @@ const styles = theme => ({
   },
 })
 
-export default withStyles(styles)(ArticleList)
+export default withStyles(styles)(EditorsPicks)
