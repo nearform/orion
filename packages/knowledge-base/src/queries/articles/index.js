@@ -9,3 +9,9 @@ export {
 } from './delete-article-taxonomies.graphql'
 export { default as getArticlesData } from './get-articles.graphql'
 export { default as getUserArticlesData } from './get-user-articles.graphql'
+export {
+  default as addArticleAuthorsMutation,
+} from './add-article-authors.graphql'
+export {
+  default as deleteArticleAuthorsMutation,
+} from './delete-article-authors.graphql'

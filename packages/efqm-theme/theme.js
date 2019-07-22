@@ -337,6 +337,7 @@ exports.muiTheme = {
         },
       },
       outlinedSecondary: {
+        background: colorDefinitions.white,
         border: 'none',
         '&:hover': {
           border: 'none',
