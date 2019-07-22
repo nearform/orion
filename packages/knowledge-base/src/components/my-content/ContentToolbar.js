@@ -26,7 +26,7 @@ function ContentToolbar({ classes, pageTitle }) {
           variant="contained"
           color="secondary"
           component={NavLink}
-          to="/submit"
+          to="/my-content/add"
           className={classes.newButton}
         >
           Create New

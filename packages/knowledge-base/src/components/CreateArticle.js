@@ -53,7 +53,7 @@ function CreateArticle({ classes }) {
     } = await createArticle({ variables: { ...values, creatorId } })
 
     actions.setSubmitting(false)
-    navigate(`/submit/${id}`)
+    navigate(`/my-content/edit/${id}`)
   }
 
   return (

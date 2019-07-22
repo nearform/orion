@@ -6,6 +6,7 @@ import urlSlug from 'url-slug'
 import { getCKEUploaderPlugin } from '../utils/imageUpload'
 import UploadImageWidget from './UploadImageWidget'
 import { getUserRolesSync, getUserIdSync } from '../utils/auth'
+import SEO from '../components/SEO'
 import {
   getTaxonomyTypes,
   getArticleDetails,
@@ -236,6 +237,7 @@ function CreateArticle({ classes, articleId }) {
     ) || undefined
   return (
     <>
+      <SEO title={`Edit Article - ${articleDetails.id}`} />
       <Formik initialValues={initialValues} onSubmit={saveArticle}>
         {({
           values,

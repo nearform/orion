@@ -42,7 +42,7 @@ function KnowledgeHome({ theme, classes, data }) {
                   color="secondary"
                   variant="outlined"
                   component={RouterLink}
-                  to={'/submit'}
+                  to="/my-content/add"
                 >
                   Submit to knowledge base
                 </Button>
