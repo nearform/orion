@@ -6,6 +6,13 @@ export function formatDate(dateValue) {
   })
 }
 
+export function formatDateAsMonthAndYear(dateValue) {
+  return new Date(dateValue).toLocaleDateString('default', {
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
 export function formatDateTime(dateValue) {
   return new Date(dateValue).toLocaleString('default', {
     day: 'numeric',

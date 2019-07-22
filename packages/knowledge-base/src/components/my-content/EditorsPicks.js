@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {
   TableRow,
@@ -10,6 +10,9 @@ import {
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 import { useMutation, useQuery } from 'graphql-hooks'
+
+import SEO from '../SEO'
+import ContentToolbar from './ContentToolbar'
 
 import { updateArticleMutation } from '../../queries'
 
@@ -33,10 +36,7 @@ const headers = [
   { id: 'view', label: 'View', cellProps: { align: 'center' } },
 ]
 
-const EditorsPicks = ({ classes, setPageTitle }) => {
-  useEffect(() => {
-    setPageTitle("Editor's Picks")
-  }, [])
+const EditorsPicks = ({ classes }) => {
   const [updateEditorsPick] = useMutation(updateArticleMutation)
 
   const staticResult = useStaticQuery(graphql`
@@ -81,11 +81,13 @@ const EditorsPicks = ({ classes, setPageTitle }) => {
 
   return (
     <>
+      <SEO pageTitle="Editor's Picks" />
+      <ContentToolbar pageTitle="Content" />
       <FeatureArticles title="Editors' Picks Preview" articles={editorsPicks} />
       <QueryTable
         headers={headers}
         query={getArticlesData}
-        // variables={{ status: 'published' }}
+        variables={{ status: 'published' }}
         orderBy={{ updated_at: 'desc' }}
         renderTableBody={(data, refetchArticles) =>
           data &&
