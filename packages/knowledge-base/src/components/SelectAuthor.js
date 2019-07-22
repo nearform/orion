@@ -1,10 +1,11 @@
-import useAdminTable from '../hooks/useAdminTable'
 import React, { useEffect, useState } from 'react'
 import { UserAvatar } from 'components'
 import { getUsers } from '../queries'
 import CloseIcon from '@material-ui/icons/Close'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import debounce from 'lodash/debounce'
+import QueryTable from './QueryTable'
+
 import {
   Typography,
   withStyles,
@@ -52,38 +53,6 @@ function SelectAuthors({ classes, selectedUsers, onChange }) {
       email: { _ilike: `%${filter}%` },
     }
   }
-  const { table } = useAdminTable({
-    query: getUsers,
-    variables: queryVariables,
-    headers,
-    options: { pageSizes: [10] },
-    renderTableBody: data => {
-      return data.user.map(user => {
-        return (
-          <TableRow key={user.id}>
-            <TableCell>
-              {user.first_name} {user.last_name}
-            </TableCell>
-            <TableCell>
-              <Typography>{user.email}</Typography>
-            </TableCell>
-            <TableCell>
-              <Button
-                color="secondary"
-                variant="outlined"
-                disabled={cachedSelectedUser.some(
-                  ({ author }) => user.id === author.id
-                )}
-                onClick={() => addUser(user)}
-              >
-                Add
-              </Button>
-            </TableCell>
-          </TableRow>
-        )
-      })
-    },
-  })
 
   const handleFilterChange = debounce(value => {
     setFilter(value)
@@ -97,7 +66,7 @@ function SelectAuthors({ classes, selectedUsers, onChange }) {
   return (
     <>
       <Button
-        className={classes.openBbutton}
+        className={classes.openButton}
         variant="outlined"
         color="secondary"
         onClick={() => setModalOpen(true)}
@@ -133,7 +102,42 @@ function SelectAuthors({ classes, selectedUsers, onChange }) {
               onChange={e => handleFilterChange(e.target.value)}
             />
           </div>
-          <div className={classes.tableContainer}>{table}</div>
+          <div className={classes.tableContainer}>
+            <QueryTable
+              testid="assessments-table"
+              headers={headers}
+              query={getUsers}
+              variables={queryVariables}
+              orderBy={{ id: 'desc' }}
+              pageSizes={[10]}
+              renderTableBody={data => {
+                return data.user.map(user => {
+                  return (
+                    <TableRow key={user.id}>
+                      <TableCell>
+                        {user.first_name} {user.last_name}
+                      </TableCell>
+                      <TableCell>
+                        <Typography>{user.email}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          color="secondary"
+                          variant="outlined"
+                          disabled={cachedSelectedUser.some(
+                            ({ author }) => user.id === author.id
+                          )}
+                          onClick={() => addUser(user)}
+                        >
+                          Add
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
+              }}
+            />
+          </div>
         </div>
       </Modal>
     </>
@@ -141,7 +145,7 @@ function SelectAuthors({ classes, selectedUsers, onChange }) {
 }
 
 export default withStyles(theme => ({
-  openBbutton: {
+  openButton: {
     marginTop: theme.spacing(2),
   },
   tableContainer: {
