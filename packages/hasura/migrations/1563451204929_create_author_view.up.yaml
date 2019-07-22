@@ -1,0 +1,28 @@
+- args:
+    cascade: false
+    sql: "CREATE OR REPLACE VIEW \"public\".\"author\" AS \n SELECT * FROM \"user\"\n
+      \ WHERE (\"user\".id IN ( SELECT article_author.author_id\n           FROM article_author));"
+  type: run_sql
+- args:
+    name: author
+    schema: public
+  type: add_existing_table_or_view
+- args:
+    relationship: author
+    table:
+      name: article_author
+      schema: public
+  type: drop_relationship
+- args:
+    name: author
+    table:
+      name: article_author
+      schema: public
+    using:
+      manual_configuration:
+        column_mapping:
+          author_id: id
+        remote_table:
+          name: author
+          schema: public
+  type: create_object_relationship
