@@ -18,7 +18,10 @@ query getArticleDetails($id: Int!) {
     path
     knowledge_type
     id
+<<<<<<< HEAD
     thumbnail
+=======
+>>>>>>> Recommended changes to route and body text
     banner
     status
     summary

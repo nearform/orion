@@ -49,7 +49,7 @@ const ViewArticle = ({ classes, contentId }) => {
       <Grid item xs={8}>
         <Typography variant="h1">{articleDetails.title}</Typography>
         <Typography variant="h2">{articleDetails.subtitle}</Typography>
-        <Typography>{articleDetails.fields.body}</Typography>
+        <div dangerouslySetInnerHTML={{ __html: articleDetails.fields.body }} />
       </Grid>
       <Grid item xs={1}></Grid>
     </Grid>
