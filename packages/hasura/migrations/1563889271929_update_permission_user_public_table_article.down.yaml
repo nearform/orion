@@ -1,0 +1,31 @@
+- args:
+    role: user
+    table:
+      name: article
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - created_at
+      - created_by_id
+      - editors_pick
+      - fields
+      - id
+      - thumbnail
+      - knowledge_type
+      - path
+      - published_at
+      - recommended
+      - status
+      - subtitle
+      - summary
+      - title
+      - updated_at
+      filter: {}
+    role: user
+    table:
+      name: article
+      schema: public
+  type: create_select_permission

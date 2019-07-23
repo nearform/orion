@@ -19,6 +19,7 @@ query getArticleDetails($id: Int!) {
     knowledge_type
     id
     thumbnail
+    banner
     status
     summary
   }

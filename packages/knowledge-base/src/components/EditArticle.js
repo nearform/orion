@@ -81,7 +81,6 @@ function CreateArticle({ classes, articleId }) {
           key
           name
           orderIndex
-          disable
           input_fields {
             key
             name
@@ -133,6 +132,7 @@ function CreateArticle({ classes, articleId }) {
     summary: articleDetails.summary,
     fields: articleDetails.fields,
     thumbnail: articleDetails.thumbnail,
+    banner: articleDetails.banner,
     taxonomy: articleDetails.taxonomy_items.reduce((res, item) => {
       res[item.taxonomy_id] = true
       return res
@@ -232,10 +232,6 @@ function CreateArticle({ classes, articleId }) {
     actions.setSubmitting(false)
   }
 
-  const isFieldEnabled = (values, fieldname) =>
-    !get(knowledgeTypeMap[values.knowledgeType], 'disabled', []).includes(
-      fieldname
-    ) || undefined
   return (
     <>
       <SEO title={`Edit Article - ${articleDetails.id}`} />
@@ -248,7 +244,7 @@ function CreateArticle({ classes, articleId }) {
           setFieldValue,
         }) => (
           <Form onSubmit={handleSubmit}>
-            <Grid container spacing={7} className={classes.sidebar}>
+            <Grid container spacing={7}>
               <Grid item xs={3}>
                 <Grid
                   container
@@ -381,7 +377,7 @@ function CreateArticle({ classes, articleId }) {
                   ))}
                 </Grid>
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={7}>
                 <Field
                   name="title"
                   component={TextField}
@@ -396,20 +392,16 @@ function CreateArticle({ classes, articleId }) {
                   placeholder="Add Subtitle"
                   className={classes.subtitleInput}
                 />
-                {/*todo better handling of disabled fields}*/}
-                {isFieldEnabled('thumbnail') && (
-                  <div className={classes.fieldLabel}>
-                    <UploadImageWidget
-                      path={`uploads/articles/${articleId}`}
-                      value={values.thumbnail}
-                      onChange={s3key => {
-                        setFieldValue('thumbnail', s3key)
-                        setImmediate(submitForm)
-                      }}
-                    />
-                  </div>
-                )}
-
+                <div className={classes.fieldLabel}>
+                  <UploadImageWidget
+                    path={`uploads/articles/${articleId}`}
+                    value={values.banner}
+                    onChange={s3key => {
+                      setFieldValue('banner', s3key)
+                      setImmediate(submitForm)
+                    }}
+                  />
+                </div>
                 <div>
                   <Typography
                     color="secondary"
@@ -455,7 +447,19 @@ function CreateArticle({ classes, articleId }) {
                   )
                 )}
               </Grid>
-              <Grid item xs={1}></Grid>
+              <Grid item xs={2} className={classes.rightToolbar}>
+                {/*todo better handling of disabled fields}*/}
+                <div className={classes.fieldLabel}>
+                  <UploadImageWidget
+                    path={`uploads/articles/${articleId}`}
+                    value={values.thumbnail}
+                    onChange={s3key => {
+                      setFieldValue('thumbnail', s3key)
+                      setImmediate(submitForm)
+                    }}
+                  />
+                </div>
+              </Grid>
             </Grid>
           </Form>
         )}
@@ -467,6 +471,10 @@ function CreateArticle({ classes, articleId }) {
 export default withStyles(theme => ({
   selectedContentType: {
     margin: 0,
+  },
+  rightToolbar: {
+    paddingRight: [0, '!important'],
+    paddingLeft: [0, '!important'],
   },
   titleInput: {
     '& input': {
