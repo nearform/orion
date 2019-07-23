@@ -1,4 +1,4 @@
-query getArticleDetails($id: Int!){
+query getArticleDetails($id: Int!) {
   articleDetails: article_by_pk(id: $id) {
     fields
     created_by_id
@@ -18,7 +18,7 @@ query getArticleDetails($id: Int!){
     path
     knowledge_type
     id
-    image
+    thumbnail
     status
     summary
   }

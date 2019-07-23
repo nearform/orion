@@ -41,31 +41,33 @@ function ContentToolbar({ classes, pageTitle }) {
             All Stories
           </Button>
           {isPlatformGroup && (
-            <Button
-              color="inherit"
-              component={NavLink}
-              className={classes.navLink}
-              to="needs-review"
-            >
-              Needs Review
-            </Button>
+            <>
+              <Button
+                color="inherit"
+                component={NavLink}
+                className={classes.navLink}
+                to="needs-review"
+              >
+                Needs Review
+              </Button>
+              <Button
+                color="inherit"
+                component={NavLink}
+                className={classes.navLink}
+                to="editors-picks"
+              >
+                Editors Picks
+              </Button>
+              <Button
+                color="inherit"
+                component={NavLink}
+                className={classes.navLink}
+                to="tag-manager"
+              >
+                Tag Manager
+              </Button>
+            </>
           )}
-          <Button
-            color="inherit"
-            component={NavLink}
-            className={classes.navLink}
-            to="editors-picks"
-          >
-            Editors Picks
-          </Button>
-          <Button
-            color="inherit"
-            component={NavLink}
-            className={classes.navLink}
-            to="tag-manager"
-          >
-            Tag Manager
-          </Button>
         </div>
       </Toolbar>
     </AppBar>

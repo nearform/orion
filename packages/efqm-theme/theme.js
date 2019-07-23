@@ -11,6 +11,7 @@ const colorDefinitions = {
   emeraldGreen: 'rgb(112, 214, 112)',
   pearGreen: 'rgb(155, 220, 106)',
   yellow: 'rgb(255, 204, 0)',
+  purple: 'rgb(97, 89, 128)',
 
   // Shades used in designs not included in EFQM docs
   paleGrey: 'rgb(244, 246, 248)',
@@ -220,6 +221,32 @@ const articleStatusIconColor = {
 
 const articleTableIconColor = colorDefinitions.lightGrey
 
+const editorsPicks = {
+  title: {
+    fontFamily,
+    fontSize: 14,
+    fontWeight: 700,
+    letterSpacing: '-0.1px',
+    color: colorDefinitions.slateGrey,
+  },
+  date: {
+    fontFamily,
+    fontSize: 11,
+    fontWeight: 700,
+    letterSpacing: '1.23px',
+    color: colorDefinitions.purple,
+    textTransform: 'uppercase',
+  },
+  author: {
+    fontFamily,
+    fontSize: 11,
+    fontWeight: 700,
+    letterSpacing: '1.23px',
+    color: colorDefinitions.lightGrey,
+    textTransform: 'uppercase',
+  },
+}
+
 const typography = {
   h1: {
     fontFamily,
@@ -427,6 +454,7 @@ exports.muiTheme = {
   articleStatusIconColor,
   articleTableIconColor,
   colorDefinitions,
+  editorsPicks,
 }
 
 exports.googleFonts = ['Lato:400,700,900']
