@@ -16,6 +16,7 @@ query getArticleDetails($id: Int!) {
     path
     knowledge_type
     id
+    image
     status
     summary
   }
