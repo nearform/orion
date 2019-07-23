@@ -132,7 +132,7 @@ function CreateArticle({ classes, articleId }) {
     subtitle: articleDetails.subtitle,
     summary: articleDetails.summary,
     fields: articleDetails.fields,
-    image: articleDetails.image,
+    thumbnail: articleDetails.thumbnail,
     taxonomy: articleDetails.taxonomy_items.reduce((res, item) => {
       res[item.taxonomy_id] = true
       return res
@@ -397,13 +397,13 @@ function CreateArticle({ classes, articleId }) {
                   className={classes.subtitleInput}
                 />
                 {/*todo better handling of disabled fields}*/}
-                {isFieldEnabled('image') && (
+                {isFieldEnabled('thumbnail') && (
                   <div className={classes.fieldLabel}>
                     <UploadImageWidget
                       path={`uploads/articles/${articleId}`}
-                      value={values.image}
+                      value={values.thumbnail}
                       onChange={s3key => {
-                        setFieldValue('image', s3key)
+                        setFieldValue('thumbnail', s3key)
                         setImmediate(submitForm)
                       }}
                     />
