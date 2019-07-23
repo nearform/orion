@@ -16,11 +16,9 @@ services:
     - "postgres"
     restart: always
     environment:
-      HASURA_GRAPHQL_ENDPOINT: https://raw-salmon-hasura.nearform.com
-      ## HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:Uqb;jVjX8qANEQPy@knowledgebase-db.cbbm7etlo64v.eu-west-1.rds.amazonaws.com:5432/knowledgebasedb
+      HASURA_GRAPHQL_ENDPOINT: postgres://postgres:@postgres:5432/postgres
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
       ## uncomment next line to set an admin secret
-      ## HASURA_GRAPHQL_ADMIN_SECRET: azPS7MbM5cHa
+      ## HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
 volumes:
   db_data:
