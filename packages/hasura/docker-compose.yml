@@ -9,16 +9,18 @@ services:
     - db_data:/var/lib/postgresql/data
     - ./:/local_dir #mount current dir so you can access the pg_dump file
   graphql-engine:
-    image: hasura/graphql-engine:v1.0.0-beta.2 
+    image: hasura/graphql-engine:v1.0.0-beta.3 
     ports:
     - "8080:8080"
     depends_on:
     - "postgres"
     restart: always
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
+      HASURA_GRAPHQL_ENDPOINT: https://raw-salmon-hasura.nearform.com
+      ## HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:Uqb;jVjX8qANEQPy@knowledgebase-db.cbbm7etlo64v.eu-west-1.rds.amazonaws.com:5432/knowledgebasedb
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
       ## uncomment next line to set an admin secret
-      # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+      ## HASURA_GRAPHQL_ADMIN_SECRET: azPS7MbM5cHa
 volumes:
   db_data:
