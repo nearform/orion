@@ -7,7 +7,7 @@ import ViewArticle from '../components/ViewArticle'
 export default function Content() {
   return (
     <Router basepath="/content">
-      <ProtectedRoute component={ViewArticle} path="*" />
+      <ProtectedRoute component={ViewArticle} path=":contentId" />
     </Router>
   )
 }
