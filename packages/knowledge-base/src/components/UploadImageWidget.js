@@ -11,7 +11,13 @@ import {
 import classnames from 'classnames'
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate'
 
-function UploadImageWidget({ path, value, onChange = () => null, classes }) {
+function UploadImageWidget({
+  path,
+  value,
+  aspectRatio = 0.5,
+  onChange = () => null,
+  classes,
+}) {
   const inputFieldRef = useRef()
   const [imageURL, setImageURL] = useState()
   const [valueCache, setValueCache] = useState(value)
@@ -68,6 +74,7 @@ function UploadImageWidget({ path, value, onChange = () => null, classes }) {
             disabled={isLoading}
             focusRipple
             className={classes.image}
+            style={{ paddingTop: `${aspectRatio * 100}%` }}
             focusVisibleClassName={classes.focusVisible}
             onClick={() => inputFieldRef.current.click()}
           >

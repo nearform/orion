@@ -1,0 +1,35 @@
+- args:
+    role: company-admin
+    table:
+      name: article
+      schema: public
+  type: drop_update_permission
+- args:
+    permission:
+      columns:
+      - editors_pick
+      - created_by_id
+      - id
+      - fields
+      - recommended
+      - banner
+      - knowledge_type
+      - path
+      - status
+      - subtitle
+      - summary
+      - thumbnail
+      - title
+      - created_at
+      - published_at
+      - updated_at
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: company-admin
+    table:
+      name: article
+      schema: public
+  type: create_update_permission

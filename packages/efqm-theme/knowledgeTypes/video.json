@@ -2,9 +2,6 @@
   "key": "video",
   "name": "Video",
   "orderIndex": 6,
-  "disable": [
-    "image"
-  ],
   "input_fields": [
     {
       "key": "video",
