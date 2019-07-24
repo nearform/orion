@@ -74,7 +74,15 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     {
       resolve: 'gatsby-plugin-create-client-paths',
-      options: { prefixes: ['/admin/*', '/auth/*', '/submit/*', '/content/*'] },
+      options: {
+        prefixes: [
+          '/my-content/*',
+          '/admin/*',
+          '/auth/*',
+          '/submit/*',
+          '/content/*',
+        ],
+      },
     },
     {
       resolve: 'gatsby-plugin-material-ui',

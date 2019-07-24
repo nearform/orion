@@ -1,22 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { TableRow, TableCell, IconButton, withStyles } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
-import { PaddedContainer } from 'components'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 
 import { ArticleStatusChip } from 'components'
 
-import QueryTable from '../components/QueryTable'
-import { getArticlesData, getUserArticlesData } from '../queries'
-import SEO from './SEO'
+import QueryTable from '../QueryTable'
+import { getArticlesData, getUserArticlesData } from '../../queries'
 
-import { useUserId, useIsPlatformGroup } from '../utils/auth'
-import { formatDate } from '../utils/date'
+import { useUserId, useIsPlatformGroup } from '../../utils/auth'
+import { formatDateTime } from '../../utils/date'
 import get from 'lodash/get'
 import ContentToolbar from './ContentToolbar'
-
+import SEO from '../SEO'
 const headers = [
   { id: 'title', label: 'Title', sortable: true },
   { id: 'createdBy', label: 'Created By' },
@@ -27,7 +25,14 @@ const headers = [
   { id: 'view', label: 'View', cellProps: { align: 'center' } },
 ]
 
-const MyContentRoute = ({ classes }) => {
+const ArticleList = ({ classes, path }) => {
+  const [statusFilter, setStatusFilter] = useState()
+  const [pageTitle, setPageTitle] = useState()
+  useEffect(() => {
+    const inReview = path === '/needs-review'
+    setStatusFilter(inReview ? 'in-review' : undefined)
+    setPageTitle(inReview ? 'Needs Review' : 'All Stories')
+  }, [path])
   const isPlatformGroup = useIsPlatformGroup()
   const userId = useUserId()
   const staticResult = useStaticQuery(graphql`
@@ -53,15 +58,15 @@ const MyContentRoute = ({ classes }) => {
 
   if (isPlatformGroup) {
     query = getArticlesData
-    variables = {}
+    variables = { status: statusFilter }
   } else {
     query = getUserArticlesData
     variables = { createdById: userId }
   }
 
   return (
-    <PaddedContainer>
-      <SEO title="My Content" />
+    <>
+      <SEO pageTitle={pageTitle} />
       <ContentToolbar pageTitle="Content" />
       <QueryTable
         headers={headers}
@@ -70,13 +75,13 @@ const MyContentRoute = ({ classes }) => {
         orderBy={{ updated_at: 'desc' }}
         renderTableBody={data =>
           data &&
-          data.article.map((article, index) => (
-            <TableRow hover key={index} size="small">
+          data.article.map(article => (
+            <TableRow hover key={article.id} size="small">
               <TableCell>{article.title}</TableCell>
               <TableCell>
                 {article.createdBy.first_name} {article.createdBy.last_name}
               </TableCell>
-              <TableCell>{formatDate(article.updated_at)}</TableCell>
+              <TableCell>{formatDateTime(article.updated_at)}</TableCell>
               <TableCell>{knowledgeTypes[article.knowledge_type]}</TableCell>
               <TableCell>
                 <ArticleStatusChip status={article.status} />
@@ -86,7 +91,7 @@ const MyContentRoute = ({ classes }) => {
                   className={classes.icon}
                   component={Link}
                   disabled={status !== 'in-progress' && !isPlatformGroup}
-                  to={`/submit/${article.id}`}
+                  to={`/my-content/edit/${article.id}`}
                 >
                   <EditIcon />
                 </IconButton>
@@ -104,12 +109,13 @@ const MyContentRoute = ({ classes }) => {
           ))
         }
       />
-    </PaddedContainer>
+    </>
   )
 }
 
-MyContentRoute.propTypes = {
+ArticleList.propTypes = {
   classes: PropTypes.object,
+  path: PropTypes.string,
 }
 
 const styles = theme => ({
@@ -118,4 +124,4 @@ const styles = theme => ({
   },
 })
 
-export default withStyles(styles)(MyContentRoute)
+export default withStyles(styles)(ArticleList)

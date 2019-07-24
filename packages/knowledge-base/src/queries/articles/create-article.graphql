@@ -1,12 +1,14 @@
 mutation createArticle(
   $creatorId: Int!
   $knowledgeType: String!
+  $fields: jsonb!
 ) {
   insert_article(
     objects: {
       created_by_id: $creatorId
-      authors: {data: [{author_id: $creatorId}]}
+      authors: { data: [{ author_id: $creatorId }] }
       knowledge_type: $knowledgeType
+      fields: $fields
     }
   ) {
     returning {

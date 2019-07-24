@@ -1,0 +1,35 @@
+- args:
+    role: platform-admin
+    table:
+      name: article
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check: {}
+      columns:
+      - editors_pick
+      - created_by_id
+      - id
+      - fields
+      - recommended
+      - banner
+      - knowledge_type
+      - path
+      - status
+      - subtitle
+      - summary
+      - thumbnail
+      - title
+      - created_at
+      - published_at
+      - updated_at
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: article
+      schema: public
+  type: create_insert_permission

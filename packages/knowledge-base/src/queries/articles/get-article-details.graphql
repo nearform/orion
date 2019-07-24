@@ -4,6 +4,8 @@ query getArticleDetails($id: Int!) {
     created_by_id
     authors {
       author {
+        first_name
+        last_name
         email
         id
       }
@@ -16,6 +18,7 @@ query getArticleDetails($id: Int!) {
     path
     knowledge_type
     id
+    thumbnail
     banner
     status
     summary

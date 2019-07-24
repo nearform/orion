@@ -8,9 +8,11 @@ import {
   withStyles,
 } from '@material-ui/core'
 
-import NavLink from './NavLink'
+import NavLink from '../NavLink'
+import { useIsPlatformGroup } from '../../utils/auth'
 
 function ContentToolbar({ classes, pageTitle }) {
+  const isPlatformGroup = useIsPlatformGroup()
   return (
     <AppBar
       position="relative"
@@ -24,7 +26,7 @@ function ContentToolbar({ classes, pageTitle }) {
           variant="contained"
           color="secondary"
           component={NavLink}
-          to="/submit"
+          to="/my-content/add"
           className={classes.newButton}
         >
           Create New
@@ -34,34 +36,38 @@ function ContentToolbar({ classes, pageTitle }) {
             color="inherit"
             component={NavLink}
             className={classes.navLink}
-            to="/"
+            to="all-stories"
           >
             All Stories
           </Button>
-          <Button
-            color="inherit"
-            component={NavLink}
-            className={classes.navLink}
-            to="needs-review"
-          >
-            Needs Review
-          </Button>
-          <Button
-            color="inherit"
-            component={NavLink}
-            className={classes.navLink}
-            to="editors-picks"
-          >
-            Editors Picks
-          </Button>
-          <Button
-            color="inherit"
-            component={NavLink}
-            className={classes.navLink}
-            to="tag-manager"
-          >
-            Tag Manager
-          </Button>
+          {isPlatformGroup && (
+            <>
+              <Button
+                color="inherit"
+                component={NavLink}
+                className={classes.navLink}
+                to="needs-review"
+              >
+                Needs Review
+              </Button>
+              <Button
+                color="inherit"
+                component={NavLink}
+                className={classes.navLink}
+                to="editors-picks"
+              >
+                Editors Picks
+              </Button>
+              <Button
+                color="inherit"
+                component={NavLink}
+                className={classes.navLink}
+                to="tag-manager"
+              >
+                Tag Manager
+              </Button>
+            </>
+          )}
         </div>
       </Toolbar>
     </AppBar>

@@ -1,0 +1,6 @@
+- args:
+    sql: COMMENT ON COLUMN "public"."article"."image" IS 'null'
+  type: run_sql
+- args:
+    sql: alter table "public"."article" rename column "thumbnail" to "image";
+  type: run_sql

@@ -4,13 +4,18 @@ import T from 'prop-types'
 import AdminTable from '../components/admin/AdminTable'
 import { useQuery } from 'graphql-hooks'
 
+const defaultOptions = {
+  pageSizes: [10, 20, 50],
+}
+
 export default function useAdminTable({
   query,
   headers,
   variables,
   renderTableBody,
+  options,
 }) {
-  const pageSizes = [10, 20, 50]
+  const { pageSizes } = options || defaultOptions
 
   function setPage(pageNumber) {
     setOffset(Math.max(0, pageSize * (pageNumber - 1)))
@@ -24,6 +29,7 @@ export default function useAdminTable({
   })
 
   const { loading, error, data, refetch } = useQuery(query, {
+    updateData: (data, nextData) => nextData, //fixes pagination flashing
     variables: {
       ...variables,
       offset,
@@ -32,10 +38,9 @@ export default function useAdminTable({
     },
   })
 
-  const loadingMsg = loading && 'Loading table...'
+  const loadingMsg = loading && !data && 'Loading table...'
   const errorMsg = error && 'Error loading table.'
-
-  const table = !loading && !error && (
+  const table = !(loading && !data) && !error && (
     <AdminTable
       headers={headers}
       data={data}
@@ -61,12 +66,11 @@ export default function useAdminTable({
   }
 }
 
-useAdminTable.defaultProps = {
-  variables: {},
-}
-
 useAdminTable.propTypes = {
   headers: T.array,
   query: T.string,
   variables: T.object,
+  options: T.shape({
+    pageSizes: T.arrayOf(T.number),
+  }),
 }

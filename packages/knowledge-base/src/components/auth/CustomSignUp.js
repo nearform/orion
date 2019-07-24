@@ -9,14 +9,14 @@ export default class CustomSignUp extends SignUp {
     this.signUpFields = [
       {
         label: 'First Name',
-        key: 'firstname',
+        key: 'given_name',
         required: true,
         type: 'text',
         xs: 5,
       },
       {
         label: 'Last Name',
-        key: 'lastname',
+        key: 'family_name',
         required: true,
         type: 'text',
         xs: 5,

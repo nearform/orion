@@ -2,6 +2,7 @@ import React from 'react'
 import { Avatar, withStyles, makeStyles } from '@material-ui/core'
 import classnames from 'classnames'
 import T from 'prop-types'
+import get from 'lodash/get'
 import * as colors from '@material-ui/core/colors'
 const validColors = Object.keys(colors)
   .filter(c => !!colors[c][500])
@@ -39,16 +40,18 @@ function _placeholderEtoN(email) {
     .join(' ')
 }
 
-const UserAvatar = ({
-  theme,
-  classes,
-  email,
-  memberType,
-  fullName,
-  picture,
-  className,
-}) => {
-  const name = fullName ? fullName : _placeholderEtoN(email)
+const UserAvatar = ({ theme, classes, user, className }) => {
+  const { email, firstName, lastName, picture, title } = user
+  let fullName
+  if (firstName) {
+    fullName = firstName
+    if (lastName) {
+      fullName += ` ${lastName}`
+    }
+  } else {
+    fullName = _placeholderEtoN(email)
+  }
+
   const color = getColorFromEmail(email)
   return (
     <div className={classnames(classes.root, className)}>
@@ -60,23 +63,28 @@ const UserAvatar = ({
         }}
         src={picture}
       >
-        {getInitials(name)}
+        {getInitials(fullName)}
       </Avatar>
       <div>
-        <div className={classes.fullName}>{name}</div>
-        {memberType && <div className={classes.memberType}>{memberType}</div>}
+        <div className={classes.fullName}>{fullName}</div>
+        {title && <div className={classes.title}>{title}</div>}
       </div>
     </div>
   )
 }
-
+UserAvatar.defaultProps = {
+  user: {},
+}
 UserAvatar.propTypes = {
   theme: T.any,
   classes: T.any,
-  email: T.string.isRequired,
-  memberType: T.string,
-  fullName: T.string,
-  picture: T.string,
+  user: T.shape({
+    email: T.string.isRequired,
+    firstName: T.string,
+    lastName: T.string,
+    picture: T.string,
+    title: T.string,
+  }),
   className: T.string,
 }
 export default withStyles(
@@ -97,7 +105,7 @@ export default withStyles(
       fontWeight: 'normal',
       marginRight: theme.spacing(1),
     },
-    memberType: {
+    title: {
       ...theme.typography.h4,
       color: theme.articleTypography.heading3.color,
       marginTop: theme.spacing(0.5),

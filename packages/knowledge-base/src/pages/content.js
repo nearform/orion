@@ -1,13 +1,12 @@
 import React from 'react'
 import { Router } from '@reach/router'
 
-import ProtectedRoute from '../components/ProtectedRoute'
-import ViewArticle from '../components/ViewArticle'
+import ViewArticle from '../components/content/ViewArticle'
 
 export default function Content() {
   return (
-    <Router basepath="/content">
-      <ProtectedRoute component={ViewArticle} path=":contentId" />
+    <Router>
+      <ViewArticle path="/content/:slug" />
     </Router>
   )
 }

@@ -3,13 +3,18 @@ import { UserAvatar, RichTextEditor } from 'components'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
+import { getCKEUploaderPlugin } from '../utils/imageUpload'
+import UploadImageWidget from './UploadImageWidget'
 import { getUserRolesSync, getUserIdSync } from '../utils/auth'
+import SEO from '../components/SEO'
 import {
   getTaxonomyTypes,
   getArticleDetails,
   updateArticleMutation,
   addArticleTaxonomiesMutation,
   deleteArticleTaxonomiesMutation,
+  addArticleAuthorsMutation,
+  deleteArticleAuthorsMutation,
 } from '../queries'
 import { Formik, Form, Field, FastField } from 'formik'
 import { fieldToCheckbox, TextField } from 'formik-material-ui'
@@ -30,15 +35,14 @@ import {
   DialogContentText,
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { useStaticQuery, graphql } from 'gatsby'
 import get from 'lodash/get'
-import keyBy from 'lodash/keyBy'
 import debounce from 'lodash/debounce'
 import difference from 'lodash/difference'
 import BoxControlLabel from '../components/BoxControlLabel'
-
+import SelectAuthor from './SelectAuthor'
 const FormikRichTextEditor = ({
   field: { name, value, onChange }, // { name, value, onChange, onBlur }
+  articleId,
   ...props
 }) => {
   const ref = useRef()
@@ -57,6 +61,9 @@ const FormikRichTextEditor = ({
         onChange={debounce(dispatchChangeEvent, 150)}
         {...props}
         data={value}
+        config={{
+          extraPlugins: [getCKEUploaderPlugin(`uploads/articles/${articleId}`)],
+        }}
       />
       <input type="hidden" name={name} ref={ref} />
     </>
@@ -64,28 +71,11 @@ const FormikRichTextEditor = ({
 }
 
 function CreateArticle({ classes, articleId }) {
-  //fetch all knowledge types so we can implement knowledge type changing in the future
-  const staticResult = useStaticQuery(graphql`
-    {
-      allKnowledgeTypes {
-        nodes {
-          key
-          name
-          orderIndex
-          input_fields {
-            key
-            name
-            type
-          }
-        }
-      }
-    }
-  `)
   const [updateArticle] = useMutation(updateArticleMutation)
   const [addArticleTaxonomies] = useMutation(addArticleTaxonomiesMutation)
   const [deleteArticleTaxonomies] = useMutation(deleteArticleTaxonomiesMutation)
-  const knowledgeTypes = get(staticResult, 'allKnowledgeTypes.nodes')
-  const knowledgeTypeMap = keyBy(knowledgeTypes, 'key')
+  const [addArticleAuthors] = useMutation(addArticleAuthorsMutation)
+  const [deleteArticleAuthors] = useMutation(deleteArticleAuthorsMutation)
 
   const { data: taxonomyData } = useQuery(getTaxonomyTypes)
   const taxonomyTypes = get(taxonomyData, 'taxonomy_type', [])
@@ -113,12 +103,19 @@ function CreateArticle({ classes, articleId }) {
     return <Redirect to="/my-content" noThrow />
   }
 
+  const fieldsMap = articleDetails.fields.reduce((res, field) => {
+    res[field.key] = field.value
+    return res
+  }, {})
   const initialValues = {
     knowledgeType: articleDetails.knowledge_type,
+    authors: articleDetails.authors,
     title: articleDetails.title,
     subtitle: articleDetails.subtitle,
     summary: articleDetails.summary,
-    fields: articleDetails.fields,
+    fields: fieldsMap,
+    thumbnail: articleDetails.thumbnail,
+    banner: articleDetails.banner,
     taxonomy: articleDetails.taxonomy_items.reduce((res, item) => {
       res[item.taxonomy_id] = true
       return res
@@ -127,9 +124,46 @@ function CreateArticle({ classes, articleId }) {
 
   async function saveArticle(values, actions) {
     //just take taxonomy and knowledgeType out, so they are not submitted (yet)
-    const { taxonomy, knowledgeType, ...updatableFields } = values //eslint-disable-line no-unused-vars
+    const {
+      taxonomy,
+      authors, //eslint-disable-line no-unused-vars
+      knowledgeType, //eslint-disable-line no-unused-vars
+      fields,
+      ...updatableFields
+    } = values
 
     const mutationPromises = []
+
+    const extracted_authors = values.authors.map(({ author: { id } }) => id)
+    const previous_authors = articleDetails.authors.map(
+      ({ author: { id } }) => id
+    )
+
+    const addAuthors = difference(extracted_authors, previous_authors).map(
+      author_id => ({
+        article_id: articleId,
+        author_id,
+      })
+    )
+    if (addAuthors.length > 0) {
+      mutationPromises.push(addArticleAuthors({ variables: { addAuthors } }))
+    }
+
+    const removeAuthors = difference(previous_authors, extracted_authors).map(
+      author_id => ({
+        _and: [
+          { article_id: { _eq: articleId } },
+          { author_id: { _eq: author_id } },
+        ],
+      })
+    )
+    if (removeAuthors.length > 0) {
+      mutationPromises.push(
+        deleteArticleAuthors({
+          variables: { removeAuthors },
+        })
+      )
+    }
 
     const extracted_taxonomy = Object.keys(taxonomy || {}).reduce((res, it) => {
       if (values.taxonomy[it]) {
@@ -137,6 +171,7 @@ function CreateArticle({ classes, articleId }) {
       }
       return res
     }, [])
+
     const previous_taxonomy = articleDetails.taxonomy_items.map(
       t => t.taxonomy_id
     )
@@ -167,14 +202,21 @@ function CreateArticle({ classes, articleId }) {
         })
       )
     }
-
+    const storeFields = articleDetails.fields.map(field => {
+      return {
+        ...field,
+        value: fields[field.key],
+      }
+    })
     mutationPromises.push(
       updateArticle({
         variables: {
           id: articleId,
           changes: {
             ...updatableFields,
+            fields: storeFields,
             path: urlSlug(`${articleId}-${updatableFields.title}`),
+            updated_at: new Date(),
           },
         },
       })
@@ -184,8 +226,10 @@ function CreateArticle({ classes, articleId }) {
 
     actions.setSubmitting(false)
   }
+
   return (
     <>
+      <SEO title={`Edit Article - ${articleDetails.id}`} />
       <Formik initialValues={initialValues} onSubmit={saveArticle}>
         {({
           values,
@@ -195,7 +239,7 @@ function CreateArticle({ classes, articleId }) {
           setFieldValue,
         }) => (
           <Form onSubmit={handleSubmit}>
-            <Grid container spacing={7} className={classes.sidebar}>
+            <Grid container spacing={7}>
               <Grid item xs={3}>
                 <Grid
                   container
@@ -276,14 +320,18 @@ function CreateArticle({ classes, articleId }) {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.expansionDetails}>
                       <div>
-                        {articleDetails.authors.map(({ author }) => (
+                        {values.authors.map(({ author }) => (
                           <UserAvatar
                             key={author.id}
-                            email={author.email || ''}
-                            memberType="efqm member"
+                            user={author}
+                            className={classes.author}
                           />
                         ))}
                       </div>
+                      <SelectAuthor
+                        selectedUsers={values.authors}
+                        onChange={authors => setFieldValue('authors', authors)}
+                      />
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
                   {taxonomyTypes.map(type => (
@@ -324,7 +372,7 @@ function CreateArticle({ classes, articleId }) {
                   ))}
                 </Grid>
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={7}>
                 <Field
                   name="title"
                   component={TextField}
@@ -339,6 +387,16 @@ function CreateArticle({ classes, articleId }) {
                   placeholder="Add Subtitle"
                   className={classes.subtitleInput}
                 />
+                <div className={classes.fieldLabel}>
+                  <UploadImageWidget
+                    path={`uploads/articles/${articleId}`}
+                    value={values.banner}
+                    onChange={s3key => {
+                      setFieldValue('banner', s3key)
+                      setImmediate(submitForm)
+                    }}
+                  />
+                </div>
                 <div>
                   <Typography
                     color="secondary"
@@ -347,29 +405,54 @@ function CreateArticle({ classes, articleId }) {
                   >
                     Summary
                   </Typography>
-                  <Field name={'summary'} component={FormikRichTextEditor} />
+                  <Field
+                    name={'summary'}
+                    component={FormikRichTextEditor}
+                    articleId={articleId}
+                  />
                 </div>
-                {knowledgeTypeMap[values.knowledgeType].input_fields.map(
-                  ({ key, name, type }) => (
-                    <div key={key}>
-                      <Typography
-                        color="secondary"
-                        variant="h4"
-                        className={classes.fieldLabel}
-                      >
-                        {name}
-                      </Typography>
-                      {type === 'rich-text' ? (
-                        <FastField
-                          name={`fields.${key}`}
-                          component={FormikRichTextEditor}
-                        />
-                      ) : null}
-                    </div>
-                  )
-                )}
+                {articleDetails.fields.map(({ key, name, type }) => (
+                  <div key={key}>
+                    <Typography
+                      color="secondary"
+                      variant="h4"
+                      className={classes.fieldLabel}
+                    >
+                      {name}
+                    </Typography>
+                    {type === 'rich-text' ? (
+                      <FastField
+                        name={`fields.${key}`}
+                        component={FormikRichTextEditor}
+                        articleId={articleId}
+                      />
+                    ) : null}
+                    {type === 'image' ? (
+                      <UploadImageWidget
+                        path={`uploads/articles/${articleId}`}
+                        value={values.fields[key]}
+                        onChange={s3key => {
+                          setFieldValue(`fields.${key}`, s3key)
+                          setImmediate(submitForm)
+                        }}
+                      />
+                    ) : null}
+                  </div>
+                ))}
               </Grid>
-              <Grid item xs={1}></Grid>
+              <Grid item xs={2} className={classes.rightToolbar}>
+                {/*todo better handling of disabled fields}*/}
+                <div className={classes.fieldLabel}>
+                  <UploadImageWidget
+                    path={`uploads/articles/${articleId}`}
+                    value={values.thumbnail}
+                    onChange={s3key => {
+                      setFieldValue('thumbnail', s3key)
+                      setImmediate(submitForm)
+                    }}
+                  />
+                </div>
+              </Grid>
             </Grid>
           </Form>
         )}
@@ -381,6 +464,10 @@ function CreateArticle({ classes, articleId }) {
 export default withStyles(theme => ({
   selectedContentType: {
     margin: 0,
+  },
+  rightToolbar: {
+    paddingRight: [0, '!important'],
+    paddingLeft: [0, '!important'],
   },
   titleInput: {
     '& input': {
@@ -449,5 +536,10 @@ export default withStyles(theme => ({
     padding: theme.spacing(2),
     flexDirection: 'column',
     paddingTop: 0,
+  },
+  author: {
+    '&:not(:first-child)': {
+      marginTop: theme.spacing(1),
+    },
   },
 }))(CreateArticle)
