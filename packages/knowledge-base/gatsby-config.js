@@ -75,7 +75,13 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-create-client-paths',
       options: {
-        prefixes: ['/my-content/*', '/admin/*', '/auth/*'],
+        prefixes: [
+          '/my-content/*',
+          '/admin/*',
+          '/auth/*',
+          '/submit/*',
+          '/content/*',
+        ],
       },
     },
     {
