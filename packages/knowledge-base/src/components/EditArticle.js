@@ -110,7 +110,7 @@ function CreateArticle({ classes, articleId }) {
       articleDetails.status !== 'in-progress') &&
     !getUserRolesSync().includes('platform-admin')
   ) {
-    return <Redirect to="/" noThrow />
+    return <Redirect to="/my-content" noThrow />
   }
 
   const initialValues = {

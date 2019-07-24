@@ -1,3 +1,5 @@
+const { fade } = require('@material-ui/core/styles/colorManipulator')
+
 const fontFamily = (exports.fontFamily = 'Lato, sans-serif')
 
 const efqmDigitalPalette = {
@@ -8,6 +10,7 @@ const efqmDigitalPalette = {
   aqua: 'rgb(121, 204, 198)',
   emeraldGreen: 'rgb(112, 214, 112)',
   pearGreen: 'rgb(155, 220, 106)',
+  yellow: 'rgb(255, 204, 0)',
 
   // Shades used in designs not included in EFQM docs
   paleGrey: 'rgb(244, 246, 248)',
@@ -177,6 +180,29 @@ const articleTypography = {
     },
   },
 }
+
+const articleStatusColor = {
+  inProgress: fade(efqmDigitalPalette.cyan, 0.1),
+  inReview: fade(efqmDigitalPalette.yellow, 0.2),
+  published: efqmDigitalPalette.navyBlue,
+  hidden: fade(efqmDigitalPalette.lightGrey, 0.07),
+}
+
+const articleStatusLabelColor = {
+  inProgress: efqmDigitalPalette.slateGrey,
+  inReview: efqmDigitalPalette.slateGrey,
+  published: efqmDigitalPalette.white,
+  hidden: efqmDigitalPalette.slateGrey,
+}
+
+const articleStatusIconColor = {
+  inProgress: efqmDigitalPalette.cyan,
+  inReview: efqmDigitalPalette.slateGrey,
+  published: efqmDigitalPalette.white,
+  hidden: efqmDigitalPalette.lightGrey,
+}
+
+const articleTableIconColor = efqmDigitalPalette.lightGrey
 
 const typography = {
   h1: {
@@ -379,6 +405,10 @@ exports.muiTheme = {
   },
   shadows,
   articleTypography,
+  articleStatusColor,
+  articleStatusLabelColor,
+  articleStatusIconColor,
+  articleTableIconColor,
 }
 
 exports.googleFonts = ['Lato:400,700,900']

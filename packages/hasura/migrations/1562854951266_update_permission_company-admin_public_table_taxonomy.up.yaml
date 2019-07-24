@@ -1,0 +1,116 @@
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - id
+      - key
+      - name
+      - taxonomy_type_id
+      filter: {}
+      limit: null
+    role: company-admin
+    table:
+      name: taxonomy
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - id
+      - key
+      - name
+      - taxonomy_type_id
+      filter: {}
+      limit: null
+    role: partner-admin
+    table:
+      name: taxonomy
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - id
+      - key
+      - name
+      - taxonomy_type_id
+      filter: {}
+      limit: null
+    role: platform-admin
+    table:
+      name: taxonomy
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - id
+      - key
+      - name
+      - taxonomy_type_id
+      filter: {}
+      limit: null
+    role: user
+    table:
+      name: taxonomy
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - id
+      - name
+      - key
+      filter: {}
+      limit: null
+    role: company-admin
+    table:
+      name: taxonomy_type
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - key
+      - id
+      - name
+      filter: {}
+      limit: null
+    role: partner-admin
+    table:
+      name: taxonomy_type
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - key
+      - id
+      - name
+      filter: {}
+      limit: null
+    role: platform-admin
+    table:
+      name: taxonomy_type
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - key
+      - id
+      - name
+      filter: {}
+      limit: null
+    role: user
+    table:
+      name: taxonomy_type
+      schema: public
+  type: create_select_permission

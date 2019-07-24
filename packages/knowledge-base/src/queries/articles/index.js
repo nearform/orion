@@ -7,3 +7,5 @@ export {
 export {
   default as deleteArticleTaxonomiesMutation,
 } from './delete-article-taxonomies.graphql'
+export { default as getArticlesData } from './get-articles.graphql'
+export { default as getUserArticlesData } from './get-user-articles.graphql'

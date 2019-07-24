@@ -1,6 +1,6 @@
 {
   "key": "video",
-  "name": "video",
+  "name": "Video",
   "orderIndex": 6,
   "disable": [
     "image"
