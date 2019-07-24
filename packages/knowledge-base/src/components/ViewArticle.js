@@ -1,7 +1,7 @@
 import React from 'react'
 import { useQuery } from 'graphql-hooks'
 import { getTaxonomyTypes, getArticleDetails } from '../queries'
-import { UserAvatar } from 'components'
+import ContentMetadata from './ContentMetadata'
 import { withStyles, Grid, Typography } from '@material-ui/core'
 import get from 'lodash/get'
 
@@ -20,34 +20,25 @@ const ViewArticle = ({ classes, contentId }) => {
   if (!articleDetails || !taxonomyTypes) return null
 
   return (
-    <Grid container spacing={11}>
+    <Grid container spacing={2}>
       <Grid item className={classes.spacer}></Grid>
-      <Grid item xs={3}>
-        <div>
-          <Typography variant="h4">knowledge type</Typography>
-          <Typography variant="h4">{articleDetails.knowledge_type}</Typography>
-          {articleDetails.authors.map(({ author }) => (
-            <UserAvatar
-              key={author.id}
-              email={author.email || ''}
-              memberType="efqm member"
-            />
-          ))}
-          {taxonomyTypes.map(type => (
-            <Typography key={type.name} variant="h3">
-              {type.name}
-            </Typography>
-          ))}
-        </div>
+      <Grid inputMode>
+        <ContentMetadata content={articleDetails} />
       </Grid>
-      <Grid item xs={5}>
-        <Typography variant="h1">{articleDetails.title}</Typography>
-        <Typography variant="h2">{articleDetails.subtitle}</Typography>
-        <div dangerouslySetInnerHTML={{ __html: articleDetails.fields.body }} />
+      <Grid item xs={6}>
+        <Typography className={classes.heading1}>
+          {articleDetails.title}
+        </Typography>
+        <Typography className={classes.heading2}>
+          {articleDetails.subtitle}
+        </Typography>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: articleDetails.fields.body,
+          }}
+        />
       </Grid>
-      <Grid item xs={3}>
-        RIGHT COLUMN
-      </Grid>
+      <Grid item>RIGHT COLUMN</Grid>
       <Grid item className={classes.spacer}></Grid>
     </Grid>
   )
@@ -58,4 +49,5 @@ export default withStyles(theme => ({
     display: 'block',
     width: '88px',
   },
+  ...theme.articleTypography,
 }))(ViewArticle)
