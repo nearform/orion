@@ -12,6 +12,7 @@ import { RadioGroup } from 'formik-material-ui'
 import { withStyles, Radio, Typography } from '@material-ui/core'
 import { useStaticQuery, graphql } from 'gatsby'
 import get from 'lodash/get'
+import keyBy from 'lodash/keyBy'
 
 const CustomRadioGroup = withStyles(theme => ({
   root: {
@@ -30,19 +31,34 @@ const CustomRadioGroup = withStyles(theme => ({
 function CreateArticle({ classes }) {
   const staticResult = useStaticQuery(graphql`
     {
-      allKnowledgeTypes(sort: { fields: orderIndex, order: ASC }) {
+      allKnowledgeTypes {
         nodes {
-          name
           key
+          name
+          orderIndex
+          input_fields {
+            key
+            name
+            type
+          }
         }
       }
     }
   `)
   const knowledgeTypes = get(staticResult, 'allKnowledgeTypes.nodes')
+  const knowledgeTypeMap = keyBy(knowledgeTypes, 'key')
   const [createArticle] = useMutation(createArticleMutation)
 
-  const handleSelectType = async (values, actions) => {
+  const handleSelectType = async ({ knowledgeType }, actions) => {
     const creatorId = getUserIdSync()
+    const knowledgeTypeDefinition = get(
+      knowledgeTypeMap,
+      `${knowledgeType}.input_fields`
+    )
+    const fields = knowledgeTypeDefinition.map(field => ({
+      ...field,
+      value: null,
+    }))
     //TODO: graceful error handling
     const {
       data: {
@@ -50,7 +66,7 @@ function CreateArticle({ classes }) {
           returning: [{ id }],
         },
       },
-    } = await createArticle({ variables: { ...values, creatorId } })
+    } = await createArticle({ variables: { knowledgeType, fields, creatorId } })
 
     actions.setSubmitting(false)
     navigate(`/my-content/edit/${id}`)

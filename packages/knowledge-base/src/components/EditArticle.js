@@ -35,9 +35,7 @@ import {
   DialogContentText,
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { useStaticQuery, graphql } from 'gatsby'
 import get from 'lodash/get'
-import keyBy from 'lodash/keyBy'
 import debounce from 'lodash/debounce'
 import difference from 'lodash/difference'
 import BoxControlLabel from '../components/BoxControlLabel'
@@ -73,30 +71,11 @@ const FormikRichTextEditor = ({
 }
 
 function CreateArticle({ classes, articleId }) {
-  //fetch all knowledge types so we can implement knowledge type changing in the future
-  const staticResult = useStaticQuery(graphql`
-    {
-      allKnowledgeTypes {
-        nodes {
-          key
-          name
-          orderIndex
-          input_fields {
-            key
-            name
-            type
-          }
-        }
-      }
-    }
-  `)
   const [updateArticle] = useMutation(updateArticleMutation)
   const [addArticleTaxonomies] = useMutation(addArticleTaxonomiesMutation)
   const [deleteArticleTaxonomies] = useMutation(deleteArticleTaxonomiesMutation)
   const [addArticleAuthors] = useMutation(addArticleAuthorsMutation)
   const [deleteArticleAuthors] = useMutation(deleteArticleAuthorsMutation)
-  const knowledgeTypes = get(staticResult, 'allKnowledgeTypes.nodes')
-  const knowledgeTypeMap = keyBy(knowledgeTypes, 'key')
 
   const { data: taxonomyData } = useQuery(getTaxonomyTypes)
   const taxonomyTypes = get(taxonomyData, 'taxonomy_type', [])
@@ -124,13 +103,17 @@ function CreateArticle({ classes, articleId }) {
     return <Redirect to="/my-content" noThrow />
   }
 
+  const fieldsMap = articleDetails.fields.reduce((res, field) => {
+    res[field.key] = field.value
+    return res
+  }, {})
   const initialValues = {
     knowledgeType: articleDetails.knowledge_type,
     authors: articleDetails.authors,
     title: articleDetails.title,
     subtitle: articleDetails.subtitle,
     summary: articleDetails.summary,
-    fields: articleDetails.fields,
+    fields: fieldsMap,
     thumbnail: articleDetails.thumbnail,
     banner: articleDetails.banner,
     taxonomy: articleDetails.taxonomy_items.reduce((res, item) => {
@@ -141,7 +124,13 @@ function CreateArticle({ classes, articleId }) {
 
   async function saveArticle(values, actions) {
     //just take taxonomy and knowledgeType out, so they are not submitted (yet)
-    const { taxonomy, authors, knowledgeType, ...updatableFields } = values //eslint-disable-line no-unused-vars
+    const {
+      taxonomy,
+      authors, //eslint-disable-line no-unused-vars
+      knowledgeType, //eslint-disable-line no-unused-vars
+      fields,
+      ...updatableFields
+    } = values
 
     const mutationPromises = []
 
@@ -213,13 +202,19 @@ function CreateArticle({ classes, articleId }) {
         })
       )
     }
-
+    const storeFields = articleDetails.fields.map(field => {
+      return {
+        ...field,
+        value: fields[field.key],
+      }
+    })
     mutationPromises.push(
       updateArticle({
         variables: {
           id: articleId,
           changes: {
             ...updatableFields,
+            fields: storeFields,
             path: urlSlug(`${articleId}-${updatableFields.title}`),
             updated_at: new Date(),
           },
@@ -416,36 +411,34 @@ function CreateArticle({ classes, articleId }) {
                     articleId={articleId}
                   />
                 </div>
-                {knowledgeTypeMap[values.knowledgeType].input_fields.map(
-                  ({ key, name, type }) => (
-                    <div key={key}>
-                      <Typography
-                        color="secondary"
-                        variant="h4"
-                        className={classes.fieldLabel}
-                      >
-                        {name}
-                      </Typography>
-                      {type === 'rich-text' ? (
-                        <FastField
-                          name={`fields.${key}`}
-                          component={FormikRichTextEditor}
-                          articleId={articleId}
-                        />
-                      ) : null}
-                      {type === 'image' ? (
-                        <UploadImageWidget
-                          path={`uploads/articles/${articleId}`}
-                          value={values.fields[key]}
-                          onChange={s3key => {
-                            setFieldValue(`fields.${key}`, s3key)
-                            setImmediate(submitForm)
-                          }}
-                        />
-                      ) : null}
-                    </div>
-                  )
-                )}
+                {articleDetails.fields.map(({ key, name, type }) => (
+                  <div key={key}>
+                    <Typography
+                      color="secondary"
+                      variant="h4"
+                      className={classes.fieldLabel}
+                    >
+                      {name}
+                    </Typography>
+                    {type === 'rich-text' ? (
+                      <FastField
+                        name={`fields.${key}`}
+                        component={FormikRichTextEditor}
+                        articleId={articleId}
+                      />
+                    ) : null}
+                    {type === 'image' ? (
+                      <UploadImageWidget
+                        path={`uploads/articles/${articleId}`}
+                        value={values.fields[key]}
+                        onChange={s3key => {
+                          setFieldValue(`fields.${key}`, s3key)
+                          setImmediate(submitForm)
+                        }}
+                      />
+                    ) : null}
+                  </div>
+                ))}
               </Grid>
               <Grid item xs={2} className={classes.rightToolbar}>
                 {/*todo better handling of disabled fields}*/}
