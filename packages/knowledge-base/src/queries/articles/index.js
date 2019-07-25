@@ -18,3 +18,9 @@ export {
 export {
   default as getArticleBookmarked,
 } from './get-article-bookmarked.graphql'
+export {
+  default as deleteRecommendedArticlesMutation,
+} from './delete-article-recommendations.graphql'
+export {
+  default as addRecommendedArticlesMutation,
+} from './add-article-recommendations.graphql'

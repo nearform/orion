@@ -14,6 +14,13 @@ query getArticleDetails($id: Int!) {
     taxonomy_items {
       taxonomy_id
     }
+    recommended_articles {
+      recommended_article {
+        id
+        title
+        knowledge_type
+      }
+    }
     title
     path
     knowledge_type

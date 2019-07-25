@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { UserAvatar } from 'components'
-import { getUsers } from '../queries'
+import { getUsers } from '../../../queries'
 import CloseIcon from '@material-ui/icons/Close'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import debounce from 'lodash/debounce'
-import QueryTable from './QueryTable'
+import QueryTable from '../../QueryTable'
 
 import {
   Typography,

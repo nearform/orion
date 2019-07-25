@@ -9,7 +9,7 @@ export const PARTICIPANT_TYPE = {
   contributor: 'Contributor',
 }
 
-function AssessmentParticipantChip({ type, name, onDelete, classes }) {
+function TypedChip({ type, color, name, onDelete, classes }) {
   return (
     <Chip
       onDelete={onDelete}
@@ -19,8 +19,8 @@ function AssessmentParticipantChip({ type, name, onDelete, classes }) {
       label={
         <>
           <Typography className={'name'}>{name}</Typography>
-          <Typography variant="h4" className={type}>
-            {PARTICIPANT_TYPE[type]}
+          <Typography variant="h4" className={classes.type} color={color}>
+            {type}
           </Typography>
         </>
       }
@@ -28,10 +28,11 @@ function AssessmentParticipantChip({ type, name, onDelete, classes }) {
   )
 }
 
-AssessmentParticipantChip.propTypes = {
+TypedChip.propTypes = {
   name: T.string.isRequired,
   classes: T.object,
-  type: T.oneOf(Object.keys(PARTICIPANT_TYPE)).isRequired,
+  color: T.oneOf(['primary', 'secondary']),
+  type: T.string,
   onDelete: T.func,
 }
 
@@ -53,6 +54,10 @@ const styles = theme => ({
       backgroundColor: theme.palette.background.light,
     },
   },
+  type: {
+    fontSize: '10px',
+    fontWeight: 'bold',
+  },
   label: {
     display: 'flex',
     flexDirection: 'column',
@@ -60,16 +65,6 @@ const styles = theme => ({
     paddingRight: theme.spacing(2),
     '& > * ': {
       marginLeft: theme.spacing(1),
-    },
-    '& > .assessor': {
-      color: theme.palette.primary.main,
-    },
-    '& > .contributor': {
-      color: theme.palette.primary.light,
-    },
-    '& > .contributor, & > .assessor': {
-      fontSize: '10px',
-      fontWeight: 'bold',
     },
     '& > .name': {
       textTransform: 'none',
@@ -80,6 +75,4 @@ const styles = theme => ({
   },
 })
 
-export default withStyles(styles, { withTheme: true })(
-  AssessmentParticipantChip
-)
+export default withStyles(styles, { withTheme: true })(TypedChip)

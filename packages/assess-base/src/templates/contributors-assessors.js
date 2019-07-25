@@ -13,11 +13,7 @@ import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
 import { Redirect } from '@reach/router'
 
-import {
-  AssessmentParticipantChip,
-  PaddedContainer,
-  SectionTitle,
-} from 'components'
+import { TypedChip, PaddedContainer, SectionTitle } from 'components'
 
 import SEO from '../components/SEO'
 import { isAdminSync, getGroupIdSync } from '../utils/auth'
@@ -229,17 +225,18 @@ function ContributorsAssessorsTemplate({
           <Grid container>
             <Grid item xs={12} className={classes.participants}>
               {assessors.map(({ assessor }) => (
-                <AssessmentParticipantChip
+                <TypedChip
                   key={assessor.id}
                   name={_placeholderEtoN(assessor.email)}
                   onDelete={
                     canEditAssesors ? () => unassignAssessor(assessor) : null
                   }
-                  type="assessor"
+                  type="Assessor"
+                  color="primary"
                 />
               ))}
               {contributors.map(({ contributor }) => (
-                <AssessmentParticipantChip
+                <TypedChip
                   key={contributor.id}
                   name={_placeholderEtoN(contributor.email)}
                   onDelete={
@@ -247,7 +244,8 @@ function ContributorsAssessorsTemplate({
                       ? () => unassignContributor(contributor)
                       : null
                   }
-                  type="contributor"
+                  type="Contributor"
+                  color="secondary"
                 />
               ))}
             </Grid>

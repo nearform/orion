@@ -17,10 +17,8 @@ export {
   default as AssessmentStatusChip,
 } from './components/StatusChip/AssessmentStatusChip'
 export * from './components/StatusChip/AssessmentStatusChip'
-export {
-  default as AssessmentParticipantChip,
-} from './components/AssessmentParticipantChip'
-export * from './components/AssessmentParticipantChip'
+export { default as TypedChip } from './components/TypedChip'
+export * from './components/TypedChip'
 export { default as UserRoleChip } from './components/StatusChip/UserRoleChip'
 export * from './components/StatusChip/UserRoleChip'
 export { default as GroupTypeChip } from './components/StatusChip/GroupTypeChip'

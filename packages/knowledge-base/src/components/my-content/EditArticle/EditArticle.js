@@ -1,12 +1,12 @@
-import React, { useRef } from 'react'
-import { UserAvatar, RichTextEditor } from 'components'
+import React from 'react'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
-import { getCKEUploaderPlugin } from '../../../utils/imageUpload'
 import UploadImageWidget from '../../UploadImageWidget'
 import { useIsPlatformGroup, useUserId } from '../../../utils/auth'
 import SEO from '../../SEO'
+import { UserAvatar } from 'components'
+
 import {
   getTaxonomyTypes,
   getArticleDetails,
@@ -15,6 +15,8 @@ import {
   deleteArticleTaxonomiesMutation,
   addArticleAuthorsMutation,
   deleteArticleAuthorsMutation,
+  deleteRecommendedArticlesMutation,
+  addRecommendedArticlesMutation,
 } from '../../../queries'
 import { Formik, Form, Field, FastField } from 'formik'
 import { fieldToCheckbox, TextField } from 'formik-material-ui'
@@ -30,57 +32,34 @@ import {
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import get from 'lodash/get'
-import debounce from 'lodash/debounce'
 import difference from 'lodash/difference'
-
 import BoxControlLabel from '../../BoxControlLabel'
-import SelectAuthor from '../../SelectAuthor'
+import SelectAuthor from './SelectAuthor'
 import EditArticleButtons from './EditArticleButtons'
 import ReviewArticleButtons from './ReviewArticleButtons'
 import PublishedArticleButtons from './PublishedArticleButtons'
+import SelectArticleRecommendations from './SelectArticleRecommendations'
+import FormikRichTextEditor from './FormikRichTextEditor'
 
-const FormikRichTextEditor = ({
-  field: { name, value, onChange }, // { name, value, onChange, onBlur }
-  articleId,
-  ...props
-}) => {
-  const ref = useRef()
-  function dispatchChangeEvent(d) {
-    if (ref.current) {
-      var ev = new Event('input')
-      ev.simulated = true
-      ref.current.value = d
-      ref.current.dispatchEvent(ev)
-      onChange({ ...ev, target: ref.current })
-    }
-  }
-  return (
-    <>
-      <RichTextEditor
-        onChange={debounce(dispatchChangeEvent, 150)}
-        {...props}
-        data={value}
-        config={{
-          extraPlugins: [getCKEUploaderPlugin(`uploads/articles/${articleId}`)],
-        }}
-      />
-      <input type="hidden" name={name} ref={ref} />
-    </>
-  )
-}
+const path = path => obj => get(obj, path)
 
-const getAuthorId = obj => get(obj, 'author.id')
-const getTaxonomyId = obj => get(obj, 'taxonomy_id')
+const diff = (previous, current) => [
+  difference(current, previous),
+  difference(previous, current),
+]
 
-function CreateArticle({ classes, articleId }) {
+function EditArticle({ classes, articleId }) {
   const isPlatformGroup = useIsPlatformGroup()
   const userId = useUserId()
-
   const [updateArticle] = useMutation(updateArticleMutation)
   const [addArticleTaxonomies] = useMutation(addArticleTaxonomiesMutation)
   const [deleteArticleTaxonomies] = useMutation(deleteArticleTaxonomiesMutation)
   const [addArticleAuthors] = useMutation(addArticleAuthorsMutation)
   const [deleteArticleAuthors] = useMutation(deleteArticleAuthorsMutation)
+  const [addRecommendedArticles] = useMutation(addRecommendedArticlesMutation)
+  const [deleteRecommendedArticles] = useMutation(
+    deleteRecommendedArticlesMutation
+  )
 
   const { data: taxonomyData } = useQuery(getTaxonomyTypes)
   const taxonomyTypes = get(taxonomyData, 'taxonomy_type', [])
@@ -122,6 +101,7 @@ function CreateArticle({ classes, articleId }) {
     fields: fieldsMap,
     thumbnail: articleDetails.thumbnail,
     banner: articleDetails.banner,
+    recommendations: articleDetails.recommended_articles,
     taxonomy: articleDetails.taxonomy_items.reduce((res, item) => {
       res[item.taxonomy_id] = true
       return res
@@ -132,77 +112,111 @@ function CreateArticle({ classes, articleId }) {
     //just take taxonomy and knowledgeType out, so they are not submitted (yet)
     const {
       taxonomy,
+      recommendations,
       authors, //eslint-disable-line no-unused-vars
       knowledgeType, //eslint-disable-line no-unused-vars
       fields,
       ...updatableFields
     } = values
     const mutationPromises = []
-
-    const extracted_authors = values.authors.map(getAuthorId)
-    const previous_authors = articleDetails.authors.map(getAuthorId)
-
-    const addAuthors = difference(extracted_authors, previous_authors).map(
-      author_id => ({
-        article_id: articleId,
-        author_id,
-      })
+    const [addAuthors, removeAuthors] = diff(
+      articleDetails.authors.map(path('author.id')),
+      values.authors.map(path('author.id'))
     )
     if (addAuthors.length > 0) {
-      mutationPromises.push(addArticleAuthors({ variables: { addAuthors } }))
+      const addAuthorsInsert = addAuthors.map(author_id => ({
+        article_id: articleId,
+        author_id,
+      }))
+      mutationPromises.push(
+        addArticleAuthors({ variables: { addAuthors: addAuthorsInsert } })
+      )
     }
 
-    const removeAuthors = difference(previous_authors, extracted_authors).map(
-      author_id => ({
+    if (removeAuthors.length > 0) {
+      const removeAuthorsDelete = removeAuthors.map(author_id => ({
         _and: [
           { article_id: { _eq: articleId } },
           { author_id: { _eq: author_id } },
         ],
-      })
-    )
-    if (removeAuthors.length > 0) {
+      }))
       mutationPromises.push(
         deleteArticleAuthors({
-          variables: { removeAuthors },
+          variables: { removeAuthors: removeAuthorsDelete },
         })
       )
     }
+    const [addTaxonomies, removeTaxonomies] = diff(
+      articleDetails.taxonomy_items.map(path('taxonomy_id')),
+      Object.keys(taxonomy || {}).reduce((res, it) => {
+        if (values.taxonomy[it]) {
+          res.push(Number(it))
+        }
+        return res
+      }, [])
+    )
 
-    const extracted_taxonomy = Object.keys(taxonomy || {}).reduce((res, it) => {
-      if (values.taxonomy[it]) {
-        res.push(Number(it))
-      }
-      return res
-    }, [])
-
-    const previous_taxonomy = articleDetails.taxonomy_items.map(getTaxonomyId)
-    const addTaxonomies = difference(extracted_taxonomy, previous_taxonomy).map(
-      taxonomy_id => ({
+    if (addTaxonomies.length > 0) {
+      const addTaxonomiesInsert = addTaxonomies.map(taxonomy_id => ({
         article_id: articleId,
         taxonomy_id,
-      })
-    )
-    if (addTaxonomies.length > 0) {
+      }))
       mutationPromises.push(
-        addArticleTaxonomies({ variables: { addTaxonomies } })
-      )
-    }
-    const removeTaxonomies = difference(
-      previous_taxonomy,
-      extracted_taxonomy
-    ).map(taxonomy_id => ({
-      _and: [
-        { article_id: { _eq: articleId } },
-        { taxonomy_id: { _eq: taxonomy_id } },
-      ],
-    }))
-    if (removeTaxonomies.length > 0) {
-      mutationPromises.push(
-        deleteArticleTaxonomies({
-          variables: { removeTaxonomies },
+        addArticleTaxonomies({
+          variables: { addTaxonomies: addTaxonomiesInsert },
         })
       )
     }
+    if (removeTaxonomies.length > 0) {
+      const removeTaxonomiesDelete = removeTaxonomies.map(taxonomy_id => ({
+        _and: [
+          { article_id: { _eq: articleId } },
+          { taxonomy_id: { _eq: taxonomy_id } },
+        ],
+      }))
+      mutationPromises.push(
+        deleteArticleTaxonomies({
+          variables: { removeTaxonomies: removeTaxonomiesDelete },
+        })
+      )
+    }
+
+    const [addRecommendations, removeRecommendations] = diff(
+      articleDetails.recommended_articles.map(path('recommended_article.id')),
+      recommendations.map(path('recommended_article.id'))
+    )
+
+    if (addRecommendations.length > 0) {
+      const addRecommendationsInsert = addRecommendations.map(
+        recommended_id => ({
+          article_id: articleId,
+          recommended_id,
+        })
+      )
+
+      mutationPromises.push(
+        addRecommendedArticles({
+          variables: { addRecommendations: addRecommendationsInsert },
+        })
+      )
+    }
+
+    if (removeRecommendations.length > 0) {
+      const removeRecommendationsDelete = removeRecommendations.map(
+        recommended_id => ({
+          _and: [
+            { article_id: { _eq: articleId } },
+            { recommended_id: { _eq: recommended_id } },
+          ],
+        })
+      )
+      mutationPromises.push(
+        deleteRecommendedArticles({
+          variables: { removeRecommended: removeRecommendationsDelete },
+        })
+      )
+    }
+
     const storeFields = articleDetails.fields.map(field => {
       return {
         ...field,
@@ -413,6 +427,21 @@ function CreateArticle({ classes, articleId }) {
                     ) : null}
                   </div>
                 ))}
+                <div>
+                  <Typography
+                    color="secondary"
+                    variant="h4"
+                    className={classes.fieldLabel}
+                  >
+                    Recommendations for further reading
+                  </Typography>
+                  <SelectArticleRecommendations
+                    onChange={articles =>
+                      setFieldValue('recommendations', articles)
+                    }
+                    selectedArticles={values.recommendations}
+                  />
+                </div>
               </Grid>
               <Grid item xs={2} className={classes.rightToolbar}>
                 {/*todo better handling of disabled fields}*/}
@@ -516,4 +545,4 @@ export default withStyles(theme => ({
       marginTop: theme.spacing(1),
     },
   },
-}))(CreateArticle)
+}))(EditArticle)
