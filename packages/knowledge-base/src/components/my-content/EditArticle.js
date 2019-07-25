@@ -1,12 +1,12 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { UserAvatar, RichTextEditor } from 'components'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
-import { getCKEUploaderPlugin } from '../utils/imageUpload'
-import UploadImageWidget from './UploadImageWidget'
-import { getUserRolesSync, getUserIdSync } from '../utils/auth'
-import SEO from '../components/SEO'
+import { getCKEUploaderPlugin } from '../../utils/imageUpload'
+import UploadImageWidget from '../UploadImageWidget'
+import { useIsPlatformGroup, useUserId } from '../../utils/auth'
+import SEO from '../SEO'
 import {
   getTaxonomyTypes,
   getArticleDetails,
@@ -15,31 +15,30 @@ import {
   deleteArticleTaxonomiesMutation,
   addArticleAuthorsMutation,
   deleteArticleAuthorsMutation,
-} from '../queries'
+} from '../../queries'
 import { Formik, Form, Field, FastField } from 'formik'
 import { fieldToCheckbox, TextField } from 'formik-material-ui'
 import {
   Checkbox,
   withStyles,
   Radio,
-  Button,
   Grid,
   Typography,
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  DialogContentText,
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import get from 'lodash/get'
 import debounce from 'lodash/debounce'
 import difference from 'lodash/difference'
-import BoxControlLabel from '../components/BoxControlLabel'
-import SelectAuthor from './SelectAuthor'
+
+import BoxControlLabel from '../BoxControlLabel'
+import SelectAuthor from '../SelectAuthor'
+import EditArticleButtons from './EditArticleButtons'
+import ReviewArticleButtons from './ReviewArticleButtons'
+import PublishedArticleButtons from './PublishedArticleButtons'
+
 const FormikRichTextEditor = ({
   field: { name, value, onChange }, // { name, value, onChange, onBlur }
   articleId,
@@ -70,7 +69,12 @@ const FormikRichTextEditor = ({
   )
 }
 
+const getAuthorId = obj => get(obj, 'author.id')
+
 function CreateArticle({ classes, articleId }) {
+  const isPlatformGroup = useIsPlatformGroup()
+  const userId = useUserId()
+
   const [updateArticle] = useMutation(updateArticleMutation)
   const [addArticleTaxonomies] = useMutation(addArticleTaxonomiesMutation)
   const [deleteArticleTaxonomies] = useMutation(deleteArticleTaxonomiesMutation)
@@ -90,15 +94,16 @@ function CreateArticle({ classes, articleId }) {
   )
   const articleDetails = get(articleData, 'articleDetails')
 
-  const [publishModalOpen, setPublishModalOpen] = useState(false)
   //TODO: nicer loading indication
   if (!articleDetails || !taxonomyTypes) return null
 
   //TODO: better handling of roles, reddirect to a article list page?
   if (
-    (articleDetails.created_by_id !== Number(getUserIdSync()) ||
-      articleDetails.status !== 'in-progress') &&
-    !getUserRolesSync().includes('platform-admin')
+    !(
+      articleDetails.created_by_id === userId &&
+      articleDetails.status === 'in-progress'
+    ) &&
+    !isPlatformGroup
   ) {
     return <Redirect to="/my-content" noThrow />
   }
@@ -131,13 +136,10 @@ function CreateArticle({ classes, articleId }) {
       fields,
       ...updatableFields
     } = values
-
     const mutationPromises = []
 
-    const extracted_authors = values.authors.map(({ author: { id } }) => id)
-    const previous_authors = articleDetails.authors.map(
-      ({ author: { id } }) => id
-    )
+    const extracted_authors = values.authors.map(getAuthorId)
+    const previous_authors = articleDetails.authors.map(getAuthorId)
 
     const addAuthors = difference(extracted_authors, previous_authors).map(
       author_id => ({
@@ -172,8 +174,8 @@ function CreateArticle({ classes, articleId }) {
       return res
     }, [])
 
-    const previous_taxonomy = articleDetails.taxonomy_items.map(
-      t => t.taxonomy_id
+    const previous_taxonomy = articleDetails.taxonomy_items.map(obj =>
+      get(obj, 'taxonomy_id')
     )
     const addTaxonomies = difference(extracted_taxonomy, previous_taxonomy).map(
       taxonomy_id => ({
@@ -229,7 +231,7 @@ function CreateArticle({ classes, articleId }) {
 
   return (
     <>
-      <SEO title={`Edit Article - ${articleDetails.id}`} />
+      <SEO title={`Edit Article - ${articleDetails.title}`} />
       <Formik initialValues={initialValues} onSubmit={saveArticle}>
         {({
           values,
@@ -260,53 +262,26 @@ function CreateArticle({ classes, articleId }) {
                     />
                   </Grid>
                   <Grid item xs={12} className={classes.spacer}></Grid>
-                  <Grid item xs={6}>
-                    <Button variant="outlined" color="secondary" type="submit">
-                      Save Draft
-                    </Button>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => setPublishModalOpen(true)}
-                    >
-                      Submit
-                    </Button>
-                    <Dialog
-                      open={publishModalOpen}
-                      onClose={() => setPublishModalOpen(false)}
-                    >
-                      <DialogTitle id="alert-dialog-title">
-                        {'Publish Article?'}
-                      </DialogTitle>
-                      <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                          {/* TODO: better text? */}
-                          After submitting the article you will no longer be
-                          able to edit it.
-                        </DialogContentText>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button
-                          onClick={() => setPublishModalOpen(false)}
-                          color="secondary"
-                        >
-                          Cancel
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            setFieldValue('status', 'in-review')
-                            setImmediate(submitForm)
-                            setPublishModalOpen(false)
-                          }}
-                          color="primary"
-                        >
-                          Submit for review
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
-                  </Grid>
+                  {articleDetails.status === 'in-progress' && (
+                    <EditArticleButtons
+                      submitArticle={() => {
+                        setFieldValue('status', 'in-review')
+                        setImmediate(submitForm)
+                      }}
+                    />
+                  )}
+                  {articleDetails.status === 'in-review' && (
+                    <ReviewArticleButtons
+                      publishArticle={() => {
+                        setFieldValue('status', 'published')
+                        setFieldValue('published_at', new Date())
+                        setImmediate(submitForm)
+                      }}
+                    />
+                  )}
+                  {articleDetails.status === 'published' && (
+                    <PublishedArticleButtons />
+                  )}
                 </Grid>
 
                 <Grid item>
