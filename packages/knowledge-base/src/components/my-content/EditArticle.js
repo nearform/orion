@@ -70,6 +70,7 @@ const FormikRichTextEditor = ({
 }
 
 const getAuthorId = obj => get(obj, 'author.id')
+const getTaxonomyId = obj => get(obj, 'taxonomy_id')
 
 function CreateArticle({ classes, articleId }) {
   const isPlatformGroup = useIsPlatformGroup()
@@ -174,9 +175,7 @@ function CreateArticle({ classes, articleId }) {
       return res
     }, [])
 
-    const previous_taxonomy = articleDetails.taxonomy_items.map(obj =>
-      get(obj, 'taxonomy_id')
-    )
+    const previous_taxonomy = articleDetails.taxonomy_items.map(getTaxonomyId)
     const addTaxonomies = difference(extracted_taxonomy, previous_taxonomy).map(
       taxonomy_id => ({
         article_id: articleId,
