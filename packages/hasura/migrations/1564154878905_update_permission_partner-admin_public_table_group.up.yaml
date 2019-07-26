@@ -1,0 +1,25 @@
+- args:
+    role: partner-admin
+    table:
+      name: group
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - id
+      - name
+      - parent_id
+      - type
+      filter:
+        _or:
+        - id:
+            _eq: X-Hasura-Group-Id
+        - parent_id:
+            _eq: X-Hasura-Group-Id
+    role: partner-admin
+    table:
+      name: group
+      schema: public
+  type: create_select_permission
