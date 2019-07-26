@@ -114,7 +114,7 @@ async function getUserId() {
 }
 
 export function useUserId() {
-  return useAuthState(getUserIdSync(), getUserId)
+  return Number(useAuthState(getUserIdSync(), getUserId))
 }
 
 async function getUserRoles() {
