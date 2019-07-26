@@ -1,0 +1,13 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns: []
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      limit: null
+    role: company-admin
+    table:
+      name: user_bookmarks
+      schema: public
+  type: create_select_permission

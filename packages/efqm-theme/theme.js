@@ -220,6 +220,7 @@ const articleStatusIconColor = {
 }
 
 const articleTableIconColor = colorDefinitions.lightGrey
+const bookmarkButtonColor = colorDefinitions.purple
 
 const editorsPicks = {
   title: {
@@ -453,7 +454,7 @@ exports.muiTheme = {
   articleStatusLabelColor,
   articleStatusIconColor,
   articleTableIconColor,
-  colorDefinitions,
+  bookmarkButtonColor,
   editorsPicks,
 }
 

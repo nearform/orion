@@ -1,21 +1,44 @@
 import React from 'react'
 import { useQuery } from 'graphql-hooks'
-import { getTaxonomyTypes, getArticleDetails } from '../../queries'
 import { UserAvatar } from 'components'
 import { withStyles, Grid, Typography } from '@material-ui/core'
 import get from 'lodash/get'
+import {
+  getTaxonomyTypes,
+  getArticleDetails,
+  getArticleBookmarked,
+} from '../../queries'
 import RichText from './RichText'
+import BookmarkButton from '../BookmarkButton'
+import { useUserId } from '../../utils/auth'
 
 const ViewArticle = ({ classes, slug }) => {
   const contentId = slug.split('-')[0]
+  const userId = useUserId()
+
   const { data: taxonomyData } = useQuery(getTaxonomyTypes)
   const taxonomyTypes = get(taxonomyData, 'taxonomy_type', [])
+
+  const {
+    data: articleBookmarkedData,
+    refetch: refetchArticleBookmarked,
+    loading: loadingBookmarked,
+  } = useQuery(getArticleBookmarked, {
+    variables: {
+      articleId: contentId,
+      userId,
+    },
+  })
+
+  const articleBookmarked =
+    get(articleBookmarkedData, 'bookmarked_aggregate.aggregate.count') > 0
 
   const { data: articleData } = useQuery(getArticleDetails, {
     variables: {
       id: contentId,
     },
   })
+
   const articleDetails = get(articleData, 'articleDetails')
 
   //TODO: nicer loading indication
@@ -36,6 +59,12 @@ const ViewArticle = ({ classes, slug }) => {
             {articleDetails.authors.map(({ author }) => (
               <UserAvatar key={author.id} user={author} />
             ))}
+            <BookmarkButton
+              articleId={contentId}
+              bookmarked={articleBookmarked}
+              disabled={loadingBookmarked}
+              onToggle={refetchArticleBookmarked}
+            />
             {taxonomyTypes.map(type => (
               <Typography key={type.name} variant="h3">
                 {type.name}

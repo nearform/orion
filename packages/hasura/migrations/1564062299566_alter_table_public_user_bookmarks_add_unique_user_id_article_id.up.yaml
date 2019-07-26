@@ -1,0 +1,4 @@
+- args:
+    sql: alter table "public"."user_bookmarks" add constraint "user_bookmarks_user_id_article_id_key"
+      unique ("user_id", "article_id");
+  type: run_sql

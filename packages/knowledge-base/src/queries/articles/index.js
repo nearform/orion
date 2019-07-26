@@ -15,3 +15,6 @@ export {
 export {
   default as deleteArticleAuthorsMutation,
 } from './delete-article-authors.graphql'
+export {
+  default as getArticleBookmarked,
+} from './get-article-bookmarked.graphql'
