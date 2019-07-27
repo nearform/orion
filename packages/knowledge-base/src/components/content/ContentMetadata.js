@@ -1,6 +1,6 @@
 import React from 'react'
 import { useQuery } from 'graphql-hooks'
-import { getTaxonomyTypes } from '../queries'
+import { getTaxonomyTypes } from '../../queries'
 import { UserAvatar } from 'components'
 import { withStyles, Typography } from '@material-ui/core'
 import get from 'lodash/get'
@@ -22,10 +22,15 @@ const ContentMetadata = ({ classes, content }) => {
       {content.authors.map(({ author }) => (
         <UserAvatar
           key={author.id}
-          email={author.email || ''}
-          memberType="efqm member"
+          user={{
+            firstName: author.first_name,
+            lastName: author.last_name,
+            ...author,
+            title: 'efqm member',
+          }}
         />
       ))}
+      <Typography variant="h3">Bookmark</Typography>
       {taxonomyTypes.map(type => (
         <Typography key={type.name} variant="h3">
           {type.name}
