@@ -1,0 +1,8 @@
+- args:
+    name: article
+    table:
+      name: recommended_articles
+      schema: public
+    using:
+      foreign_key_constraint_on: article_id
+  type: create_object_relationship

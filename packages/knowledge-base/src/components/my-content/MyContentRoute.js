@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Router, Redirect } from '@reach/router'
 import { PaddedContainer } from 'components'
-import CreateArticle from '../CreateArticle'
+import CreateArticle from './CreateArticle'
 import EditArticle from './EditArticle/EditArticle'
 
 import ArticleList from './ArticleList'
