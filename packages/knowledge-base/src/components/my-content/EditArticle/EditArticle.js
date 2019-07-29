@@ -447,6 +447,7 @@ function EditArticle({ classes, articleId }) {
                 {/*todo better handling of disabled fields}*/}
                 <div className={classes.fieldLabel}>
                   <UploadImageWidget
+                    alwaysShowBox
                     path={`uploads/articles/${articleId}`}
                     value={values.thumbnail}
                     onChange={s3key => {
@@ -454,6 +455,12 @@ function EditArticle({ classes, articleId }) {
                       setImmediate(submitForm)
                     }}
                   />
+                  <div>
+                    <Typography variant="caption">
+                      This image will be used in categories, search results and
+                      in search engines.
+                    </Typography>
+                  </div>
                 </div>
               </Grid>
             </Grid>

@@ -288,6 +288,12 @@ const typography = {
     lineHeight: 1.4,
     letterSpacing: -0.2,
   },
+  caption: {
+    fontFamily,
+    fontSize: 14,
+    letterSpacing: 'normal',
+    color: colorDefinitions.lightGrey,
+  },
   body2: {
     fontFamily,
     fontSize: 14,
