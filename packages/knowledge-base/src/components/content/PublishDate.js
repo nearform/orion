@@ -1,4 +1,5 @@
 import React from 'react'
+import T from 'prop-types'
 import { withStyles, Typography } from '@material-ui/core'
 import { CalendarTodayOutlined } from '@material-ui/icons'
 
@@ -17,10 +18,15 @@ const PublishDate = ({ classes, date }) => {
   )
 }
 
+PublishDate.propTypes = {
+  classes: T.object.isRequired,
+  date: T.string.isRequired,
+}
+
 export default withStyles(theme => ({
   wrapper: {
     height: '24px',
-    color: theme.articleTableIconColor,
+    color: theme.palette.tertiary.main,
   },
   snippet: {
     color: theme.palette.primary.dark,

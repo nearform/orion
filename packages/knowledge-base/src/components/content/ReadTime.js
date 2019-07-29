@@ -1,4 +1,5 @@
 import React from 'react'
+import T from 'prop-types'
 import { withStyles, Typography } from '@material-ui/core'
 import { Schedule } from '@material-ui/icons'
 
@@ -24,10 +25,14 @@ const ReadTime = ({ classes, fields }) => {
   )
 }
 
+ReadTime.propTypes = {
+  classes: T.object.isRequired,
+  fields: T.array.isRequired,
+}
+
 export default withStyles(theme => ({
   wrapper: {
-    height: '24px',
-    color: theme.articleTableIconColor,
+    color: theme.palette.tertiary.main,
   },
   snippet: {
     color: theme.palette.secondary.main,
