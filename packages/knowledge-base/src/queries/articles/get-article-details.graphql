@@ -22,5 +22,6 @@ query getArticleDetails($id: Int!) {
     banner
     status
     summary
+    created_at
   }
 }

@@ -2,7 +2,10 @@ import React from 'react'
 import { useQuery } from 'graphql-hooks'
 import { getTaxonomyTypes } from '../../queries'
 import { UserAvatar } from 'components'
+import PublishDate from './PublishDate'
+import ReadTime from './ReadTime'
 import { withStyles, Typography } from '@material-ui/core'
+import { BookmarkOutlined } from '@material-ui/icons'
 import get from 'lodash/get'
 
 const ContentMetadata = ({ classes, content }) => {
@@ -30,7 +33,12 @@ const ContentMetadata = ({ classes, content }) => {
           }}
         />
       ))}
-      <Typography variant="h3">Bookmark</Typography>
+      <PublishDate date={content.created_at} />
+      <ReadTime fields={content.fields} />
+      <Typography variant="h4">
+        <BookmarkOutlined fontSize="small" />
+        Bookmark
+      </Typography>
       {taxonomyTypes.map(type => (
         <Typography key={type.name} variant="h3">
           {type.name}
@@ -39,6 +47,7 @@ const ContentMetadata = ({ classes, content }) => {
     </div>
   )
 }
+
 export default withStyles(theme => ({
   spacerBar: {
     display: 'block',
