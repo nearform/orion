@@ -9,3 +9,7 @@ export { default as getUsersInGroup } from './get-users-in-group.graphql'
 export { default as addUserGroupMutation } from './add-user-group.graphql'
 export { default as addUserRoleMutation } from './add-user-role.graphql'
 export { default as updateUserGroup } from './update-user-group.graphql'
+export { default as addUserBookmarkMutation } from './add-user-bookmark.graphql'
+export {
+  default as deleteUserBookmarkMutation,
+} from './delete-user-bookmark.graphql'

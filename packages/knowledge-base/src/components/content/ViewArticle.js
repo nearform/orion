@@ -1,26 +1,25 @@
 import React from 'react'
 import { useQuery } from 'graphql-hooks'
-import { getTaxonomyTypes, getArticleDetails } from '../../queries'
+import { getArticleDetails } from '../../queries'
 import RichText from './RichText'
 import ContentMetadata from './ContentMetadata'
 import ContentOptions from './ContentOptions'
+
 import { withStyles, Grid, Typography } from '@material-ui/core'
 import get from 'lodash/get'
 
 const ViewArticle = ({ classes, slug }) => {
   const contentId = slug.split('-')[0]
-  const { data: taxonomyData } = useQuery(getTaxonomyTypes)
-  const taxonomyTypes = get(taxonomyData, 'taxonomy_type', [])
-
   const { data: articleData } = useQuery(getArticleDetails, {
     variables: {
       id: contentId,
     },
   })
+
   const articleDetails = get(articleData, 'articleDetails')
 
   //TODO: nicer loading indication
-  if (!articleDetails || !taxonomyTypes) return null
+  if (!articleDetails) return null
 
   return (
     <Grid container spacing={2}>

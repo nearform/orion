@@ -1,0 +1,21 @@
+- args:
+    role: partner-admin
+    table:
+      name: user_bookmarks
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns: []
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: partner-admin
+    table:
+      name: user_bookmarks
+      schema: public
+  type: create_insert_permission

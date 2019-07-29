@@ -1,0 +1,20 @@
+- args:
+    role: platform-admin
+    table:
+      name: group
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - name
+      - parent_id
+      - type
+      filter: {}
+    role: platform-admin
+    table:
+      name: group
+      schema: public
+  type: create_select_permission

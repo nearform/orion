@@ -1,0 +1,8 @@
+- args:
+    name: user_bookmarks
+    table:
+      name: user_bookmarks
+      schema: public
+    using:
+      foreign_key_constraint_on: article_id
+  type: create_object_relationship

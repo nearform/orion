@@ -26,7 +26,7 @@ function ContentToolbar({ classes, pageTitle }) {
           variant="contained"
           color="secondary"
           component={NavLink}
-          to="/my-content/add"
+          to="../add"
           className={classes.newButton}
         >
           Create New
@@ -36,7 +36,7 @@ function ContentToolbar({ classes, pageTitle }) {
             color="inherit"
             component={NavLink}
             className={classes.navLink}
-            to="all-stories"
+            to="../all-stories"
           >
             All Stories
           </Button>
@@ -46,7 +46,7 @@ function ContentToolbar({ classes, pageTitle }) {
                 color="inherit"
                 component={NavLink}
                 className={classes.navLink}
-                to="needs-review"
+                to="../needs-review"
               >
                 Needs Review
               </Button>
@@ -54,7 +54,7 @@ function ContentToolbar({ classes, pageTitle }) {
                 color="inherit"
                 component={NavLink}
                 className={classes.navLink}
-                to="editors-picks"
+                to="../editors-picks"
               >
                 Editors Picks
               </Button>
@@ -62,7 +62,7 @@ function ContentToolbar({ classes, pageTitle }) {
                 color="inherit"
                 component={NavLink}
                 className={classes.navLink}
-                to="tag-manager"
+                to="../tag-manager"
               >
                 Tag Manager
               </Button>

@@ -15,15 +15,6 @@ import { formatDateTime } from '../../utils/date'
 import get from 'lodash/get'
 import ContentToolbar from './ContentToolbar'
 import SEO from '../SEO'
-const headers = [
-  { id: 'title', label: 'Title', sortable: true },
-  { id: 'createdBy', label: 'Created By' },
-  { id: 'updated_at', label: 'Last Updated', sortable: true },
-  { id: 'knowledge_type', label: 'Type', sortable: true },
-  { id: 'status', label: 'Status', sortable: true },
-  { id: 'edit', label: 'Edit', cellProps: { align: 'center' } },
-  { id: 'view', label: 'View', cellProps: { align: 'center' } },
-]
 
 const ArticleList = ({ classes, path }) => {
   const [statusFilter, setStatusFilter] = useState()
@@ -64,6 +55,20 @@ const ArticleList = ({ classes, path }) => {
     variables = { createdById: userId }
   }
 
+  const headers = [
+    { id: 'title', label: 'Title', sortable: true },
+    { id: 'createdBy', label: 'Created By' },
+    { id: 'updated_at', label: 'Last Updated', sortable: true },
+    { id: 'knowledge_type', label: 'Type', sortable: true },
+    { id: 'status', label: 'Status', sortable: true },
+    { id: 'edit', label: 'Edit', cellProps: { align: 'center' } },
+    { id: 'view', label: 'View', cellProps: { align: 'center' } },
+  ]
+
+  if (!isPlatformGroup) {
+    headers.splice(1, 1)
+  }
+
   return (
     <>
       <SEO pageTitle={pageTitle} />
@@ -78,9 +83,11 @@ const ArticleList = ({ classes, path }) => {
           data.article.map(article => (
             <TableRow hover key={article.id} size="small">
               <TableCell>{article.title}</TableCell>
-              <TableCell>
-                {article.createdBy.first_name} {article.createdBy.last_name}
-              </TableCell>
+              {isPlatformGroup && (
+                <TableCell>
+                  {article.createdBy.first_name} {article.createdBy.last_name}
+                </TableCell>
+              )}
               <TableCell>{formatDateTime(article.updated_at)}</TableCell>
               <TableCell>{knowledgeTypes[article.knowledge_type]}</TableCell>
               <TableCell>
