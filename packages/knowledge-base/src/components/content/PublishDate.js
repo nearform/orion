@@ -1,5 +1,6 @@
 import React from 'react'
 import T from 'prop-types'
+import { formatDate } from '../../utils/date'
 import { withStyles, Typography } from '@material-ui/core'
 import { CalendarTodayOutlined } from '@material-ui/icons'
 
@@ -8,11 +9,7 @@ const PublishDate = ({ classes, date }) => {
     <div className={classes.wrapper}>
       <CalendarTodayOutlined fontSize="small" />
       <Typography variant="h4" className={classes.snippet}>
-        {new Date(date).toLocaleDateString('en-GB', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-        })}{' '}
+        {formatDate(date)}
       </Typography>
     </div>
   )

@@ -55,9 +55,6 @@ export default withStyles(theme => ({
     width: '88px',
   },
   article: {
-    // by default heading 1 maps to h2, heading 2 to h3 etc (but we've customised this to map correctly)
-    // see - https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#heading-levels
-    // heading 1 and 2 reseved for title and subtitle
     '& h1': theme.articleTypography.heading1,
     '& h2': theme.articleTypography.heading2,
     '& h3': theme.articleTypography.heading3,

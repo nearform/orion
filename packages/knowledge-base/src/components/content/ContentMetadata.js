@@ -5,14 +5,18 @@ import ReadTime from './ReadTime'
 import Taxonomies from './Taxonomies'
 import BookmarkButton from '../BookmarkButton'
 import { withStyles, Typography } from '@material-ui/core'
+import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
 
 const ContentMetadata = ({ classes, content }) => {
+  const knowledgeTypes = useKnowledgeTypes()
   return (
     <div className={classes.wrapper}>
       <Typography variant="h4" color="secondary">
         knowledge type
       </Typography>
-      <Typography variant="h3">{content.knowledge_type}</Typography>
+      <Typography variant="h3">
+        {knowledgeTypes[content.knowledge_type]}
+      </Typography>
       <div className={classes.spacerBar} />
       {content.authors.map(({ author }) => (
         <UserAvatar

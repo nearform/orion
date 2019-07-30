@@ -3,18 +3,18 @@ import T from 'prop-types'
 import { withStyles, Typography } from '@material-ui/core'
 import { Schedule } from '@material-ui/icons'
 
-const ReadTime = ({ classes, fields }) => {
-  const getTimeToRead = fields => {
-    let readTime = 0
-    fields.map(field => {
-      switch (field.type) {
-        case 'rich-text':
-          readTime = Math.ceil(field.value.split(' ').length / 225)
-      }
-    })
-    return readTime
-  }
+const getTimeToRead = fields => {
+  let readTime = 0
+  fields.map(field => {
+    switch (field.type) {
+      case 'rich-text':
+        readTime = Math.ceil(field.value.split(' ').length / 225)
+    }
+  })
+  return readTime
+}
 
+const ReadTime = ({ classes, fields }) => {
   return (
     <div className={classes.wrapper}>
       <Schedule fontSize="small" />
