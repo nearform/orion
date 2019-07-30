@@ -8,6 +8,7 @@ query getArticleDetails($id: Int!) {
         last_name
         email
         id
+        title
       }
     }
     subtitle
