@@ -1,38 +1,15 @@
 import React from 'react'
 import { useQuery } from 'graphql-hooks'
-import { UserAvatar } from 'components'
+import { getArticleDetails } from '../../queries'
+import RichText from './RichText'
+import ContentMetadata from './ContentMetadata'
+import ContentOptions from './ContentOptions'
+
 import { withStyles, Grid, Typography } from '@material-ui/core'
 import get from 'lodash/get'
-import {
-  getTaxonomyTypes,
-  getArticleDetails,
-  getArticleBookmarked,
-} from '../../queries'
-import RichText from './RichText'
-import BookmarkButton from '../BookmarkButton'
-import { useUserId } from '../../utils/auth'
 
 const ViewArticle = ({ classes, slug }) => {
   const contentId = slug.split('-')[0]
-  const userId = useUserId()
-
-  const { data: taxonomyData } = useQuery(getTaxonomyTypes)
-  const taxonomyTypes = get(taxonomyData, 'taxonomy_type', [])
-
-  const {
-    data: articleBookmarkedData,
-    refetch: refetchArticleBookmarked,
-    loading: loadingBookmarked,
-  } = useQuery(getArticleBookmarked, {
-    variables: {
-      articleId: contentId,
-      userId,
-    },
-  })
-
-  const articleBookmarked =
-    get(articleBookmarkedData, 'bookmarked_aggregate.aggregate.count') > 0
-
   const { data: articleData } = useQuery(getArticleDetails, {
     variables: {
       id: contentId,
@@ -42,43 +19,23 @@ const ViewArticle = ({ classes, slug }) => {
   const articleDetails = get(articleData, 'articleDetails')
 
   //TODO: nicer loading indication
-  if (!articleDetails || !taxonomyTypes) return null
+  if (!articleDetails) return null
 
   return (
-    <Grid container spacing={7} className={classes.sidebar}>
-      <Grid item xs={3}>
-        <Grid
-          container
-          spacing={1}
-          className={classes.knowledgeTypeContainer}
-          justify="space-between"
-        >
-          <div>
-            <Typography variant="h4">knowledge type</Typography>
-            <Typography>{articleDetails.knowledge_type}</Typography>
-            {articleDetails.authors.map(({ author }) => (
-              <UserAvatar key={author.id} user={author} />
-            ))}
-            <BookmarkButton
-              articleId={contentId}
-              bookmarked={articleBookmarked}
-              disabled={loadingBookmarked}
-              onToggle={refetchArticleBookmarked}
-            />
-            {taxonomyTypes.map(type => (
-              <Typography key={type.name} variant="h3">
-                {type.name}
-              </Typography>
-            ))}
-          </div>
-        </Grid>
+    <Grid container spacing={2}>
+      <Grid item className={classes.spacer}></Grid>
+      <Grid item>
+        <ContentMetadata content={articleDetails} />
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={6} className={classes.article}>
         <Typography variant="h1">{articleDetails.title}</Typography>
         <Typography variant="h2">{articleDetails.subtitle}</Typography>
         {articleDetails.fields.map(getFieldType)}
       </Grid>
-      <Grid item xs={1}></Grid>
+      <Grid item>
+        <ContentOptions />
+      </Grid>
+      <Grid item className={classes.spacer}></Grid>
     </Grid>
   )
 }
@@ -92,4 +49,25 @@ const getFieldType = field => {
   }
 }
 
-export default withStyles(theme => ({}))(ViewArticle)
+export default withStyles(theme => ({
+  spacer: {
+    display: 'block',
+    width: '88px',
+  },
+  article: {
+    '& h1': theme.articleTypography.heading1,
+    '& h2': theme.articleTypography.heading2,
+    '& h3': theme.articleTypography.heading3,
+    '& h4': theme.articleTypography.heading4,
+    '& > p:first-of-type': theme.articleTypography.firstParagraph,
+    '& p': theme.articleTypography.paragraph,
+    '& ul': theme.articleTypography.bulletedList,
+    '& ul li': theme.articleTypography.bulletedListItem,
+    '& ol': theme.articleTypography.numberedList,
+    '& ol li': theme.articleTypography.numberedListItem,
+    '& blockquote': theme.articleTypography.blockquote,
+    '& strong': theme.articleTypography.bold,
+    '& i': theme.articleTypography.italic,
+    '& a': theme.articleTypography.link,
+  },
+}))(ViewArticle)

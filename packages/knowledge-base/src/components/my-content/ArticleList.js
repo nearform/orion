@@ -3,16 +3,16 @@ import PropTypes from 'prop-types'
 import { TableRow, TableCell, IconButton, withStyles } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
-import { Link, useStaticQuery, graphql } from 'gatsby'
+import { Link } from 'gatsby'
 
 import { ArticleStatusChip } from 'components'
+import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
 
 import QueryTable from '../QueryTable'
 import { getArticlesData, getUserArticlesData } from '../../queries'
 
 import { useUserId, useIsPlatformGroup } from '../../utils/auth'
 import { formatDateTime } from '../../utils/date'
-import get from 'lodash/get'
 import ContentToolbar from './ContentToolbar'
 import SEO from '../SEO'
 
@@ -26,23 +26,7 @@ const ArticleList = ({ classes, path }) => {
   }, [path])
   const isPlatformGroup = useIsPlatformGroup()
   const userId = useUserId()
-  const staticResult = useStaticQuery(graphql`
-    {
-      allKnowledgeTypes(sort: { fields: orderIndex, order: ASC }) {
-        nodes {
-          name
-          key
-        }
-      }
-    }
-  `)
-  const knowledgeTypes = get(staticResult, 'allKnowledgeTypes.nodes').reduce(
-    (acc, { key, name }) => {
-      acc[key] = name
-      return acc
-    },
-    {}
-  )
+  const knowledgeTypes = useKnowledgeTypes()
 
   let query
   let variables

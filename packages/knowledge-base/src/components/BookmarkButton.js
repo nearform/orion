@@ -6,6 +6,7 @@ import { BookmarkOutlined, BookmarkBorderOutlined } from '@material-ui/icons'
 import { withStyles, Button, CircularProgress } from '@material-ui/core'
 import { addUserBookmarkMutation, deleteUserBookmarkMutation } from '../queries'
 import { useUserId } from '../utils/auth'
+import useBookmarkData from '../hooks/useBookmarkData'
 
 const BookmarkButton = ({
   articleId,
@@ -15,6 +16,16 @@ const BookmarkButton = ({
   classes,
 }) => {
   const userId = useUserId()
+  if (!disabled || !onToggle) {
+    const {
+      articleBookmarked,
+      refetchArticleBookmarked,
+      loadingBookmarked,
+    } = useBookmarkData(articleId)
+    bookmarked = articleBookmarked
+    disabled = loadingBookmarked
+    onToggle = refetchArticleBookmarked
+  }
 
   const [bookmarkArticle, { loading: bookmarking }] = useMutation(
     addUserBookmarkMutation
@@ -67,8 +78,8 @@ const BookmarkButton = ({
 }
 
 BookmarkButton.propTypes = {
-  articleId: T.string.isRequired,
-  bookmarked: T.bool.isRequired,
+  articleId: T.number.isRequired,
+  bookmarked: T.bool,
   classes: T.object.isRequired,
   disabled: T.bool,
   onToggle: T.func,
@@ -77,6 +88,8 @@ BookmarkButton.propTypes = {
 export default withStyles(theme => ({
   iconButtonPrimary: {
     color: theme.bookmarkButtonColor,
+    padding: '0px',
+    fontWeight: 'bold',
   },
   sidebarButtonIcon: {
     marginRight: theme.spacing(1),

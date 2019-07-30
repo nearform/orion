@@ -440,6 +440,11 @@ exports.muiTheme = {
       light: colorDefinitions.pearGreen,
       dark: colorDefinitions.emeraldGreen,
     },
+    tertiary: {
+      main: colorDefinitions.lightGrey,
+      light: colorDefinitions.paleGrey,
+      dark: colorDefinitions.midGrey,
+    },
     background: {
       default: colorDefinitions.white,
       paper: colorDefinitions.white,

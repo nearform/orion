@@ -1,9 +1,8 @@
-mutation deleteArticleAuthors($removeAuthors:[article_author_bool_exp]) {
-  delete_article_author(where: {_or: $removeAuthors}) {
+mutation deleteArticleAuthors($removeAuthors: [article_author_bool_exp]) {
+  delete_article_author(where: { _or: $removeAuthors }) {
     returning {
       author_id
       article_id
     }
   }
 }
-
