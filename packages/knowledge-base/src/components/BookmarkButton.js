@@ -1,45 +1,27 @@
 import React from 'react'
 import T from 'prop-types'
-import { useQuery, useMutation } from 'graphql-hooks'
+import { useMutation } from 'graphql-hooks'
 import classnames from 'classnames'
 import { BookmarkOutlined, BookmarkBorderOutlined } from '@material-ui/icons'
 import { withStyles, Button, CircularProgress } from '@material-ui/core'
-import {
-  getArticleBookmarked,
-  addUserBookmarkMutation,
-  deleteUserBookmarkMutation,
-} from '../queries'
+import { addUserBookmarkMutation, deleteUserBookmarkMutation } from '../queries'
 import { useUserId } from '../utils/auth'
-import get from 'lodash/get'
+import useBookmarkData from '../hooks/useBookmarkData'
 
-const LoadBookmark = articleId => {
-  const userId = useUserId()
-
-  const {
-    data: articleBookmarkedData,
-    refetch: refetchArticleBookmarked,
-    loading: loadingBookmarked,
-  } = useQuery(getArticleBookmarked, {
-    variables: {
-      articleId: articleId,
-      userId,
-    },
-  })
-
-  const articleBookmarked =
-    get(articleBookmarkedData, 'bookmarked_aggregate.aggregate.count') > 0
-
-  return { articleBookmarked, refetchArticleBookmarked, loadingBookmarked }
-}
-
-const Bookmark = ({ articleId, bookmarked, disabled, onToggle, classes }) => {
+const BookmarkButton = ({
+  articleId,
+  bookmarked,
+  disabled,
+  onToggle,
+  classes,
+}) => {
   const userId = useUserId()
   if (!disabled || !onToggle) {
     const {
       articleBookmarked,
       refetchArticleBookmarked,
       loadingBookmarked,
-    } = LoadBookmark(articleId)
+    } = useBookmarkData(articleId)
     bookmarked = articleBookmarked
     disabled = loadingBookmarked
     onToggle = refetchArticleBookmarked
@@ -95,11 +77,7 @@ const Bookmark = ({ articleId, bookmarked, disabled, onToggle, classes }) => {
   )
 }
 
-LoadBookmark.propTypes = {
-  articleId: T.number.isRequired,
-}
-
-Bookmark.propTypes = {
+BookmarkButton.propTypes = {
   articleId: T.number.isRequired,
   bookmarked: T.bool,
   classes: T.object.isRequired,
@@ -107,7 +85,7 @@ Bookmark.propTypes = {
   onToggle: T.func,
 }
 
-const BookmarkButton = withStyles(theme => ({
+export default withStyles(theme => ({
   iconButtonPrimary: {
     color: theme.bookmarkButtonColor,
     padding: '0px',
@@ -119,6 +97,4 @@ const BookmarkButton = withStyles(theme => ({
   secondaryIcon: {
     color: theme.palette.secondary.main,
   },
-}))(Bookmark)
-
-export { LoadBookmark, BookmarkButton }
+}))(BookmarkButton)
