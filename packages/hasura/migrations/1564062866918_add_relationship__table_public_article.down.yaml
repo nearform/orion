@@ -1,0 +1,6 @@
+- args:
+    relationship: recommended_articles
+    table:
+      name: article
+      schema: public
+  type: drop_relationship

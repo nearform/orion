@@ -2,11 +2,12 @@ query getArticles(
   $status: String
   $editorsPick: Boolean
   $limit: Int!
+  $titleLike: String
   $offset: Int!
   $orderBy: article_order_by!
 ) {
   article(
-    where: { status: { _eq: $status }, editors_pick: { _eq: $editorsPick } }
+    where: { status: { _eq: $status }, editors_pick: { _eq: $editorsPick }, title:{ _ilike: $titleLike} }
     limit: $limit
     offset: $offset
     order_by: [$orderBy]

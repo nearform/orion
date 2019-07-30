@@ -1,0 +1,3 @@
+- args:
+    sql: DROP TABLE "public"."recommended_articles"
+  type: run_sql
