@@ -443,45 +443,6 @@
 - args:
     role: platform-admin
     table:
-      name: user
-      schema: public
-  type: drop_select_permission
-- args:
-    permission:
-      allow_aggregations: false
-      columns:
-      - id
-      - cognito_id
-      - signupRequest
-      - pending
-      - email
-      filter: {}
-    role: platform-admin
-    table:
-      name: user
-      schema: public
-  type: create_select_permission
-- args:
-    permission:
-      columns:
-      - email
-      - signupRequest
-      - cognito_id
-      - id
-      - pending
-      filter: {}
-      localPresets:
-      - key: ""
-        value: ""
-      set: {}
-    role: platform-admin
-    table:
-      name: user
-      schema: public
-  type: create_update_permission
-- args:
-    role: platform-admin
-    table:
       name: user_group
       schema: public
   type: drop_insert_permission
