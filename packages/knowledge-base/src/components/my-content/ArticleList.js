@@ -97,7 +97,9 @@ const ArticleList = ({ classes, path }) => {
                 <IconButton
                   className={classes.icon}
                   component={Link}
-                  disabled={status !== 'in-progress' && !isPlatformGroup}
+                  disabled={
+                    article.status !== 'in-progress' && !isPlatformGroup
+                  }
                   to={`/my-content/edit/${article.id}`}
                 >
                   <EditIcon />
