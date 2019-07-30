@@ -3,7 +3,7 @@ import { UserAvatar } from 'components'
 import PublishDate from './PublishDate'
 import ReadTime from './ReadTime'
 import Taxonomies from './Taxonomies'
-import BookmarkButton from '../BookmarkButton'
+import { BookmarkButton } from '../BookmarkButton'
 import { withStyles, Typography } from '@material-ui/core'
 
 const ContentMetadata = ({ classes, content }) => {

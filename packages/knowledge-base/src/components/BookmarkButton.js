@@ -12,7 +12,7 @@ import {
 import { useUserId } from '../utils/auth'
 import get from 'lodash/get'
 
-const BookmarkButton = ({ articleId, classes }) => {
+const LoadBookmark = articleId => {
   const userId = useUserId()
 
   const {
@@ -29,6 +29,22 @@ const BookmarkButton = ({ articleId, classes }) => {
   const articleBookmarked =
     get(articleBookmarkedData, 'bookmarked_aggregate.aggregate.count') > 0
 
+  return { articleBookmarked, refetchArticleBookmarked, loadingBookmarked }
+}
+
+const Bookmark = ({ articleId, bookmarked, disabled, onToggle, classes }) => {
+  const userId = useUserId()
+  if (!disabled || !onToggle) {
+    const {
+      articleBookmarked,
+      refetchArticleBookmarked,
+      loadingBookmarked,
+    } = LoadBookmark(articleId)
+    bookmarked = articleBookmarked
+    disabled = loadingBookmarked
+    onToggle = refetchArticleBookmarked
+  }
+
   const [bookmarkArticle, { loading: bookmarking }] = useMutation(
     addUserBookmarkMutation
   )
@@ -36,14 +52,10 @@ const BookmarkButton = ({ articleId, classes }) => {
     deleteUserBookmarkMutation
   )
 
-  const BookmarkIcon = articleBookmarked
-    ? BookmarkOutlined
-    : BookmarkBorderOutlined
+  const BookmarkIcon = bookmarked ? BookmarkOutlined : BookmarkBorderOutlined
 
   const toggleBookmark = async () => {
-    const toggleBookmark = articleBookmarked
-      ? unbookmarkArticle
-      : bookmarkArticle
+    const toggleBookmark = bookmarked ? unbookmarkArticle : bookmarkArticle
 
     await toggleBookmark({
       variables: {
@@ -51,7 +63,7 @@ const BookmarkButton = ({ articleId, classes }) => {
         articleId,
       },
     })
-    refetchArticleBookmarked && refetchArticleBookmarked()
+    onToggle && onToggle()
   }
 
   const loading = bookmarking || unbookmarking
@@ -61,7 +73,7 @@ const BookmarkButton = ({ articleId, classes }) => {
       size="small"
       color="primary"
       className={classes.iconButtonPrimary}
-      disabled={loadingBookmarked || loading}
+      disabled={disabled || loading}
       onClick={toggleBookmark}
     >
       {loading ? (
@@ -78,17 +90,24 @@ const BookmarkButton = ({ articleId, classes }) => {
           ])}
         />
       )}
-      {articleBookmarked ? 'Bookmarked' : 'Bookmark'}
+      {bookmarked ? 'Bookmarked' : 'Bookmark'}
     </Button>
   )
 }
 
-BookmarkButton.propTypes = {
+LoadBookmark.propTypes = {
   articleId: T.number.isRequired,
-  classes: T.object.isRequired,
 }
 
-export default withStyles(theme => ({
+Bookmark.propTypes = {
+  articleId: T.number.isRequired,
+  bookmarked: T.bool,
+  classes: T.object.isRequired,
+  disabled: T.bool,
+  onToggle: T.func,
+}
+
+const BookmarkButton = withStyles(theme => ({
   iconButtonPrimary: {
     color: theme.bookmarkButtonColor,
     padding: '0px',
@@ -100,4 +119,6 @@ export default withStyles(theme => ({
   secondaryIcon: {
     color: theme.palette.secondary.main,
   },
-}))(BookmarkButton)
+}))(Bookmark)
+
+export { LoadBookmark, BookmarkButton }
