@@ -1,4 +1,3 @@
-import T from 'prop-types'
 import { useQuery } from 'graphql-hooks'
 import { getArticleBookmarked } from '../queries'
 import { useUserId } from '../utils/auth'
@@ -22,10 +21,6 @@ const useBookmarkData = articleId => {
     get(articleBookmarkedData, 'bookmarked_aggregate.aggregate.count') > 0
 
   return { articleBookmarked, refetchArticleBookmarked, loadingBookmarked }
-}
-
-useBookmarkData.propTypes = {
-  articleId: T.number.isRequired,
 }
 
 export default useBookmarkData
