@@ -39,9 +39,23 @@ MyContentButton.defaultProps = {
   children: 'My Content',
 }
 
+const ENTER_KEY = 13
+const WAIT_INTERVAL = 500
+
 function SecondaryNavigation({ classes, dark }) {
   const [search, setSearch] = useState(false)
   const isAuthenticated = useIsAuthenticated()
+  let typingTimeout
+
+  const handleChange = e => {
+    window.clearTimeout(typingTimeout)
+    typingTimeout = setTimeout(() => setSearch(e.target.value), WAIT_INTERVAL)
+  }
+  const handleKeyDown = e => {
+    if (e.keyCode === ENTER_KEY) {
+      setSearch(e.target.value)
+    }
+  }
 
   return !search ? (
     <Grid container justify="flex-end" spacing={3}>
@@ -82,6 +96,8 @@ function SecondaryNavigation({ classes, dark }) {
             <Input
               autoFocus
               placeholder="Search The Knowledge Base"
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
               className={classes.inputClass}
               endAdornment={
                 <InputAdornment position="end">
