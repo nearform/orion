@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Storage } from 'aws-amplify'
 import { sha256 } from 'js-sha256'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 import {
   ButtonBase,
   CircularProgress,
@@ -16,6 +17,7 @@ function UploadImageWidget({
   value,
   aspectRatio = 0.5,
   onChange = () => null,
+  alwaysShowBox,
   classes,
 }) {
   const inputFieldRef = useRef()
@@ -69,11 +71,14 @@ function UploadImageWidget({
         onChange={event => handleFileUpload(event.target.files[0])}
       />
       <div className={classes.root}>
-        {hasImage || isLoading ? (
+        {hasImage || isLoading || alwaysShowBox ? (
           <ButtonBase
             disabled={isLoading}
             focusRipple
-            className={classes.image}
+            className={classnames({
+              [classes.image]: true,
+              alwaysShowBox: alwaysShowBox && !hasImage,
+            })}
             style={{ paddingTop: `${aspectRatio * 100}%` }}
             focusVisibleClassName={classes.focusVisible}
             onClick={() => inputFieldRef.current.click()}
@@ -95,7 +100,7 @@ function UploadImageWidget({
                 )}
               >
                 <AddPhotoIcon className={classes.addPhotoIcon} />
-                Replace
+                {hasImage ? 'Replace' : 'Upload Image'}
               </Typography>
               {isLoading && (
                 <CircularProgress
@@ -131,7 +136,7 @@ export default withStyles(theme => ({
     paddingTop: '50%',
     width: '100%',
     color: 'transparent',
-    '&:hover, &$focusVisible': {
+    '&:hover, &$focusVisible, &.alwaysShowBox': {
       zIndex: 1,
       color: theme.palette.common.white,
       '& $imageBackdrop': {
@@ -160,7 +165,7 @@ export default withStyles(theme => ({
     bottom: 0,
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
-    backgroundColor: theme.palette.background.light,
+    backgroundColor: fade(theme.palette.common.black, 0.5),
   },
   imageBackdrop: {
     position: 'absolute',
