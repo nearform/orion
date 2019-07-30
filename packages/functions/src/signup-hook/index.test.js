@@ -39,6 +39,7 @@ describe('signup-hook', () => {
       firstName: originalEvent.request.userAttributes.firstname,
       lastName: originalEvent.request.userAttributes.lastname,
       signupRequest: originalEvent.request,
+      title: 'EFQM Member',
     })
   })
 
