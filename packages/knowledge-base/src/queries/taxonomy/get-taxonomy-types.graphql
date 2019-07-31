@@ -1,6 +1,6 @@
 {
 
-  taxonomy_type(order_by: {id: asc}) {
+  taxonomy_type(order_by: {order_index: asc}) {
     taxonomy_items {
       id
       key

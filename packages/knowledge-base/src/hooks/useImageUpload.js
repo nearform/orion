@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { sha256 } from 'js-sha256'
 import { Storage } from 'aws-amplify'
+import useAmplifyImage from './useAmplifyImage'
 
 function useImageUpload({ path, onChange = () => null, value }) {
   const inputFieldRef = useRef()
-  const [imageURL, setImageURL] = useState(null)
   const [uploadProgress, setUploadProgress] = useState(0)
   const [valueCache, setValueCache] = useState(value || null)
 
@@ -12,14 +12,7 @@ function useImageUpload({ path, onChange = () => null, value }) {
     setValueCache(value)
   }, [value])
 
-  useEffect(() => {
-    if (valueCache) {
-      Storage.get(valueCache, { level: 'public' }).then(setImageURL)
-    } else {
-      setImageURL(null)
-    }
-  }, [valueCache])
-
+  const imageURL = useAmplifyImage(valueCache)
   async function handleFileUpload(file) {
     if (!file || !file.name) {
       return

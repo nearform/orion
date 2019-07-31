@@ -4,7 +4,7 @@ import { getArticleDetails } from '../../queries'
 import RichText from './RichText'
 import ContentMetadata from './ContentMetadata'
 import ContentOptions from './ContentOptions'
-
+import FeatureArticles from '../FeatureArticles'
 import { withStyles, Grid, Typography } from '@material-ui/core'
 import get from 'lodash/get'
 
@@ -17,10 +17,13 @@ const ViewArticle = ({ classes, slug }) => {
   })
 
   const articleDetails = get(articleData, 'articleDetails')
-
+  const recomended_articles = get(
+    articleDetails,
+    'recommended_articles',
+    []
+  ).map(({ recommended_article }) => recommended_article)
   //TODO: nicer loading indication
   if (!articleDetails) return null
-
   return (
     <Grid container spacing={2}>
       <Grid item className={classes.spacer}></Grid>
@@ -28,12 +31,23 @@ const ViewArticle = ({ classes, slug }) => {
         <ContentMetadata content={articleDetails} />
       </Grid>
       <Grid item xs={6} className={classes.article}>
-        <Typography variant="h1">{articleDetails.title}</Typography>
-        <Typography variant="h2">{articleDetails.subtitle}</Typography>
-        {articleDetails.fields.map(getFieldType)}
+        <div>
+          <Typography variant="h1">{articleDetails.title}</Typography>
+          <Typography variant="h2">{articleDetails.subtitle}</Typography>
+          {articleDetails.fields
+            .filter(({ value }) => !!value)
+            .map(getFieldType)}
+        </div>
       </Grid>
       <Grid item>
         <ContentOptions />
+      </Grid>
+      <Grid item className={classes.spacer}></Grid>
+      <Grid item xs={10}>
+        <FeatureArticles
+          title="Further reading"
+          articles={recomended_articles}
+        />
       </Grid>
       <Grid item className={classes.spacer}></Grid>
     </Grid>

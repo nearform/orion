@@ -227,6 +227,7 @@ const profileSpacerBackground = colorDefinitions.purple
 
 const editorsPicks = {
   title: {
+    textAlign: 'left',
     fontFamily,
     fontSize: 14,
     fontWeight: 700,
@@ -247,6 +248,14 @@ const editorsPicks = {
     fontWeight: 700,
     letterSpacing: '1.23px',
     color: colorDefinitions.lightGrey,
+    textTransform: 'uppercase',
+  },
+  caption: {
+    fontFamily,
+    fontSize: 12,
+    fontWeight: 900,
+    letterSpacing: '2.45px',
+    color: colorDefinitions.white,
     textTransform: 'uppercase',
   },
 }

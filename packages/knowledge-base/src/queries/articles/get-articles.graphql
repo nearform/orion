@@ -18,6 +18,7 @@ query getArticles(
   ) {
     id
     title
+    thumbnail
     subtitle
     published_at
     updated_at
@@ -25,6 +26,12 @@ query getArticles(
     createdBy {
       first_name
       last_name
+    }
+    primary_taxonomy: taxonomy_items(limit: 1, order_by: {taxonomy: {taxonomy_type: {order_index: asc}}}) {
+      taxonomy {
+        name
+        key
+      }
     }
     knowledge_type
     path
