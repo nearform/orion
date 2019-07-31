@@ -1,5 +1,7 @@
-mutation deleteRecommendedArticlesMutation($removeRecommended:[recommended_articles_bool_exp]) {
-  delete_recommended_articles(where: {_or: $removeRecommended}) {
+mutation deleteRecommendedArticlesMutation(
+  $removeRecommended: [recommended_articles_bool_exp]
+) {
+  delete_recommended_articles(where: { _or: $removeRecommended }) {
     returning {
       recommended_id
       article_id

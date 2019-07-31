@@ -219,8 +219,11 @@ const articleStatusIconColor = {
   hidden: colorDefinitions.lightGrey,
 }
 
-const articleTableIconColor = colorDefinitions.lightGrey
+const iconLight = {
+  color: colorDefinitions.lightGrey,
+}
 const bookmarkButtonColor = colorDefinitions.purple
+const profileSpacerBackground = colorDefinitions.purple
 
 const editorsPicks = {
   title: {
@@ -460,12 +463,13 @@ exports.muiTheme = {
     contrastThreshold: 1.6,
   },
   shadows,
+  iconLight,
   articleTypography,
   articleStatusColor,
   articleStatusLabelColor,
   articleStatusIconColor,
-  articleTableIconColor,
   bookmarkButtonColor,
+  profileSpacerBackground,
   editorsPicks,
 }
 

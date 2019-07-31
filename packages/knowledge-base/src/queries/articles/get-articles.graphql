@@ -7,7 +7,11 @@ query getArticles(
   $orderBy: article_order_by!
 ) {
   article(
-    where: { status: { _eq: $status }, editors_pick: { _eq: $editorsPick }, title:{ _ilike: $titleLike} }
+    where: {
+      status: { _eq: $status }
+      editors_pick: { _eq: $editorsPick }
+      title: { _ilike: $titleLike }
+    }
     limit: $limit
     offset: $offset
     order_by: [$orderBy]

@@ -1,7 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { Storage } from 'aws-amplify'
-import { sha256 } from 'js-sha256'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import React, { useEffect } from 'react'
+import T from 'prop-types'
 import {
   ButtonBase,
   CircularProgress,
@@ -9,127 +7,117 @@ import {
   Typography,
   withStyles,
 } from '@material-ui/core'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 import classnames from 'classnames'
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate'
+import useImageUpload from '../hooks/useImageUpload'
 
 function UploadImageWidget({
   path,
   value,
   aspectRatio = 0.5,
-  onChange = () => null,
+  onChange,
+  onUpload = () => {},
   alwaysShowBox,
   classes,
+  children,
 }) {
-  const inputFieldRef = useRef()
-  const [imageURL, setImageURL] = useState()
-  const [valueCache, setValueCache] = useState(value)
+  const {
+    ImageInput,
+    startImageUpload,
+    uploadProgress,
+    imageURL,
+    hasImage,
+    isLoading,
+  } = useImageUpload({
+    path,
+    onChange,
+    value,
+  })
 
   useEffect(() => {
-    setValueCache(value)
-  }, [value])
-
-  useEffect(() => {
-    if (valueCache) {
-      Storage.get(valueCache, { level: 'public' }).then(setImageURL)
-    } else {
-      setImageURL(null)
-    }
-  }, [valueCache])
-
-  const [uploadProgress, setUploadProgress] = useState(0)
-  async function handleFileUpload(file) {
-    const ext = file.name.split('.').pop()
-    if (valueCache) {
-      await Storage.remove(valueCache)
-    }
-    const { key: s3Key } = await Storage.put(
-      `${path}/${sha256(`${file.name}${Date.now()}`)}.${ext}`,
-      file,
-      {
-        progressCallback({ loaded, total }) {
-          const currentProgress = (loaded / total) * 100
-          setUploadProgress(currentProgress)
-        },
-        level: 'public',
-      }
-    )
-    setValueCache(s3Key) //set the cached s3 key
-    setUploadProgress(0) //remove the progress bar
-    onChange(s3Key) //trigger onchange event
-  }
-
-  const hasImage = !!valueCache
-  const isLoading = !!uploadProgress
+    onUpload(imageURL)
+  }, [imageURL])
 
   return (
     <>
-      <input
-        accept="image/*"
-        ref={inputFieldRef}
-        type="file"
-        className={classes.hiddenInput}
-        onChange={event => handleFileUpload(event.target.files[0])}
-      />
-      <div className={classes.root}>
-        {hasImage || isLoading || alwaysShowBox ? (
-          <ButtonBase
-            disabled={isLoading}
-            focusRipple
-            className={classnames({
-              [classes.image]: true,
-              alwaysShowBox: alwaysShowBox && !hasImage,
-            })}
-            style={{ paddingTop: `${aspectRatio * 100}%` }}
-            focusVisibleClassName={classes.focusVisible}
-            onClick={() => inputFieldRef.current.click()}
-          >
-            <span
-              className={classes.imageSrc}
-              style={{
-                backgroundImage: `url(${imageURL})`,
-              }}
-            />
-
-            <span className={classes.imageBackdrop} />
-            <span className={classes.imageButton}>
-              <Typography
-                component="span"
-                className={classnames(
-                  classes.imageTitle,
-                  classes.addPhotoButton
-                )}
-              >
-                <AddPhotoIcon className={classes.addPhotoIcon} />
-                {hasImage ? 'Replace' : 'Upload Image'}
-              </Typography>
-              {isLoading && (
-                <CircularProgress
-                  variant="determinate"
-                  className={classes.progress}
-                  value={uploadProgress}
-                />
-              )}
-            </span>
-          </ButtonBase>
+      <ImageInput></ImageInput>
+      {children ? (
+        typeof children === 'function' ? (
+          children({ startImageUpload, isLoading, uploadProgress })
         ) : (
-          <Button
-            variant="contained"
-            className={classes.addPhotoButton}
-            onClick={() => inputFieldRef.current.click()}
-          >
-            <AddPhotoIcon className={classes.addPhotoIcon} />
-            Upload Image
-          </Button>
-        )}
-      </div>
+          children
+        )
+      ) : (
+        <div className={classes.root}>
+          {hasImage || isLoading || alwaysShowBox ? (
+            <ButtonBase
+              disabled={isLoading}
+              focusRipple
+              className={classnames({
+                [classes.image]: true,
+                alwaysShowBox: alwaysShowBox && !hasImage,
+              })}
+              style={{ paddingTop: `${aspectRatio * 100}%` }}
+              focusVisibleClassName={classes.focusVisible}
+              onClick={startImageUpload}
+            >
+              <span
+                className={classes.imageSrc}
+                style={{
+                  backgroundImage: `url(${imageURL})`,
+                }}
+              />
+
+              <span className={classes.imageBackdrop} />
+              <span className={classes.imageButton}>
+                <Typography
+                  component="span"
+                  className={classnames(
+                    classes.imageTitle,
+                    classes.addPhotoButton
+                  )}
+                >
+                  <AddPhotoIcon className={classes.addPhotoIcon} />
+                  {hasImage ? 'Replace' : 'Upload Image'}
+                </Typography>
+                {isLoading && (
+                  <CircularProgress
+                    variant="determinate"
+                    className={classes.progress}
+                    value={uploadProgress}
+                  />
+                )}
+              </span>
+            </ButtonBase>
+          ) : (
+            <Button
+              variant="contained"
+              className={classes.addPhotoButton}
+              onClick={startImageUpload}
+            >
+              <AddPhotoIcon className={classes.addPhotoIcon} />
+              Upload Image
+            </Button>
+          )}
+        </div>
+      )}
     </>
   )
 }
 
+UploadImageWidget.propTypes = {
+  path: T.string.isRequired,
+  children: T.func,
+  value: T.string,
+  onChange: T.func,
+  onUpload: T.func,
+  classes: T.object.isRequired,
+  aspectRatio: T.number,
+  alwaysShowBox: T.bool,
+}
+
 export default withStyles(theme => ({
-  hiddenInput: {
-    display: 'none',
-  },
   image: {
     position: 'relative',
     height: 0,
