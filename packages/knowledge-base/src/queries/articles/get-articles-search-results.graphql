@@ -12,6 +12,7 @@ query getArticles(
     order_by: [$orderBy]
   ) {
     id
+    banner
     thumbnail
     title
     summary
@@ -19,6 +20,9 @@ query getArticles(
     published_at
     updated_at
     status
+    taxonomy_items {
+      taxonomy_id
+    }
     createdBy {
       first_name
       last_name

@@ -1,9 +1,22 @@
 import React from 'react'
 import { useQuery } from 'graphql-hooks'
 import { getArticlesSearchResults } from '../../queries'
-import { withStyles, Grid } from '@material-ui/core'
-//import Taxonomies from './Taxonomies'
+import { withStyles, Grid, Typography } from '@material-ui/core'
+import SEO from '../SEO'
+import Taxonomies from './Taxonomies'
 import ArticleSummary from './ArticleSummary'
+
+const extractArticleData = data => {
+  const summaries = []
+  const taxonomyItems = []
+  data.article.map(item => {
+    summaries.push(
+      <ArticleSummary key={'article_id_' + item.id} article={item} />
+    )
+    taxonomyItems.push(...item.taxonomy_items)
+  })
+  return { taxonomyItems, summaries }
+}
 
 const SearchResults = ({ classes, term }) => {
   const { data: articleData } = useQuery(getArticlesSearchResults, {
@@ -17,39 +30,61 @@ const SearchResults = ({ classes, term }) => {
   //TODO: nicer loading indication
   if (!articleData) return null
 
+  const { taxonomyItems, summaries } = extractArticleData(articleData)
+
   return (
-    <Grid container spacing={2}>
-      <Grid item className={classes.spacer}></Grid>
-      <Grid item></Grid>
-      <Grid item xs={9} className={classes.article}>
-        {articleData.article.map(item => (
-          <ArticleSummary key={'article_id_' + item.id} article={item} />
-        ))}
+    <>
+      <SEO title={`Search Results - ${term}`} />
+      <Grid container spacing={3}>
+        <Grid item xs={12} className={classes.pageHeader}>
+          <Grid container spacing={3} alignItems="flex-end">
+            <Grid item xs={9}>
+              <Typography variant="h4" color="secondary">
+                SEARCH RESULTS FOR
+              </Typography>
+              <Typography variant="h1">&lsquo;{term}&rsquo;</Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography>
+                Showing 1-10, of {articleData.field_aggregate.aggregate.count}{' '}
+                results
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={3} className={classes.taxonomyWrapper}>
+          <Taxonomies showAll={true} items={taxonomyItems} />
+        </Grid>
+        <Grid item xs={8}>
+          {summaries}
+        </Grid>
       </Grid>
-      <Grid item className={classes.spacer}></Grid>
-    </Grid>
+    </>
   )
 }
 
 export default withStyles(theme => ({
-  spacer: {
-    display: 'block',
-    width: '88px',
+  pageHeader: {
+    borderBottom: `1px solid ${theme.palette.tertiary.light}`,
+    margin: theme.spacing(3),
+    '& h1': {
+      fontSize: '28px',
+      fontWeight: '900',
+      lineHeight: '1.29',
+      letterSpacing: '0.51px',
+      color: '#2e2e2e',
+      margin: '2px 4px',
+    },
+    '& p': {
+      fontSize: '18px',
+      fontWeight: 'bold',
+      letterSpacing: '-0.13px',
+      color: theme.palette.primary.main,
+    },
   },
-  article: {
-    '& h1': theme.articleTypography.heading1,
-    '& h2': theme.articleTypography.heading2,
-    '& h3': theme.articleTypography.heading3,
-    '& h4': theme.articleTypography.heading4,
-    '& > p:first-of-type': theme.articleTypography.firstParagraph,
-    '& p': theme.articleTypography.paragraph,
-    '& ul': theme.articleTypography.bulletedList,
-    '& ul li': theme.articleTypography.bulletedListItem,
-    '& ol': theme.articleTypography.numberedList,
-    '& ol li': theme.articleTypography.numberedListItem,
-    '& blockquote': theme.articleTypography.blockquote,
-    '& strong': theme.articleTypography.bold,
-    '& i': theme.articleTypography.italic,
-    '& a': theme.articleTypography.link,
+  taxonomyWrapper: {
+    marginLeft: '12px',
+    overflow: 'hidden',
+    maxWidth: '100%',
   },
 }))(SearchResults)

@@ -32,7 +32,7 @@ const ContentMetadata = ({ classes, content }) => {
       <PublishDate date={content.created_at} />
       <ReadTime fields={content.fields} />
       <BookmarkButton articleId={content.id} />
-      <Taxonomies items={content.taxonomy_items} />
+      <Taxonomies items={content.taxonomy_items} showAll={false} />
     </div>
   )
 }
