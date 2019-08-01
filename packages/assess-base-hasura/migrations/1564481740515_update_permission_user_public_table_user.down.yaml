@@ -1,5 +1,12 @@
 - args:
+    role: user
+    table:
+      name: user
+      schema: public
+  type: drop_select_permission
+- args:
     permission:
+      allow_aggregations: false
       columns:
       - cognito_id
       - email
@@ -9,12 +16,8 @@
       - pending
       - signupRequest
       filter: {}
-      localPresets:
-      - key: ""
-        value: ""
-      set: {}
-    role: platform-admin
+    role: user
     table:
       name: user
       schema: public
-  type: create_update_permission
+  type: create_select_permission

@@ -213,46 +213,6 @@
 - args:
     role: platform-admin
     table:
-      name: user
-      schema: public
-  type: drop_select_permission
-- args:
-    permission:
-      allow_aggregations: false
-      columns:
-      - id
-      - cognito_id
-      - signupRequest
-      - pending
-      - email
-      filter:
-        _or:
-        - user_groups:
-            group:
-              parent_id:
-                _eq: X-Hasura-Group-Id
-        - user_groups:
-            group_id:
-              _eq: X-Hasura-Group-Id
-        - user_groups:
-            group:
-              parent_group:
-                parent_id:
-                  _eq: X-Hasura-Group-Id
-    role: platform-admin
-    table:
-      name: user
-      schema: public
-  type: create_select_permission
-- args:
-    role: platform-admin
-    table:
-      name: user
-      schema: public
-  type: drop_update_permission
-- args:
-    role: platform-admin
-    table:
       name: user_group
       schema: public
   type: drop_insert_permission
