@@ -10,6 +10,7 @@ export const handler = async event => {
       firstName: event.request.userAttributes.given_name,
       lastName: event.request.userAttributes.family_name,
       signupRequest: event.request,
+      title: 'EFQM Member',
     })
     console.log('created user', JSON.stringify(user))
   }
