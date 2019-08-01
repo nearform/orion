@@ -1,4 +1,10 @@
 - args:
+    role: user
+    table:
+      name: user
+      schema: public
+  type: drop_select_permission
+- args:
     permission:
       allow_aggregations: false
       columns:
