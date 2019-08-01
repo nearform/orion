@@ -81,6 +81,7 @@ module.exports = {
           '/auth/*',
           '/submit/*',
           '/content/*',
+          '/search/*',
         ],
       },
     },

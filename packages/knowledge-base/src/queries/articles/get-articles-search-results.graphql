@@ -1,0 +1,35 @@
+query getArticles(
+  $status: String
+  $limit: Int!
+  $titleLike: String
+  $offset: Int!
+  $orderBy: article_order_by!
+) {
+  article(
+    where: { status: { _eq: $status }, title: { _ilike: $titleLike } }
+    limit: $limit
+    offset: $offset
+    order_by: [$orderBy]
+  ) {
+    id
+    thumbnail
+    title
+    summary
+    created_at
+    published_at
+    updated_at
+    status
+    createdBy {
+      first_name
+      last_name
+    }
+    knowledge_type
+    path
+    editors_pick
+  }
+  field_aggregate: article_aggregate {
+    aggregate {
+      count
+    }
+  }
+}

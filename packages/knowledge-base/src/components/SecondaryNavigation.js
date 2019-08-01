@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { navigate } from '@reach/router'
 import Close from '@material-ui/icons/Close'
 import {
   Grid,
@@ -17,6 +18,7 @@ import QuickLinksMenu, {
   QuickLinkButton,
 } from './QuickLinksMenu'
 import { useIsAuthenticated } from '../utils/auth'
+import usePrevious from '../hooks/usePrevious'
 
 const MyContentButton = withStyles(theme => ({
   root: {
@@ -40,21 +42,36 @@ MyContentButton.defaultProps = {
 }
 
 const ENTER_KEY = 13
-const WAIT_INTERVAL = 500
+const WAIT_INTERVAL = 1000
 
 function SecondaryNavigation({ classes, dark }) {
   const [search, setSearch] = useState(false)
+  const [searchText, setSearchText] = useState('')
   const isAuthenticated = useIsAuthenticated()
-  let typingTimeout
+  const prevSearchText = usePrevious(searchText)
+  let typingTimeout = null
+
+  useEffect(() => {
+    if (searchText && searchText !== prevSearchText) {
+      typingTimeout = setTimeout(
+        () => navigate('/search/' + searchText),
+        WAIT_INTERVAL
+      )
+    }
+  })
 
   const handleChange = e => {
-    window.clearTimeout(typingTimeout)
-    typingTimeout = setTimeout(() => setSearch(e.target.value), WAIT_INTERVAL)
+    clearTimeout(typingTimeout)
+    setSearchText(e.target.value)
   }
   const handleKeyDown = e => {
     if (e.keyCode === ENTER_KEY) {
-      setSearch(e.target.value)
+      navigate('/search/' + searchText)
     }
+  }
+  const handleCloseSearch = e => {
+    setSearch(false)
+    setSearchText('')
   }
 
   return !search ? (
@@ -99,12 +116,13 @@ function SecondaryNavigation({ classes, dark }) {
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               className={classes.inputClass}
+              value={searchText}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     size="small"
                     aria-label="Close search"
-                    onClick={() => setSearch(false)}
+                    onClick={handleCloseSearch}
                   >
                     <Close className={classes.inputCloseIcon} />
                   </IconButton>
