@@ -40,9 +40,11 @@ const Taxonomies = ({ classes, items }) => {
       {taxonomyTypes.map(type => {
         taxonomyColor++
         return (
-          <div className={classes.TaxonomyType}>
+          <div
+            className={classes.TaxonomyType}
+            key={'taxonomy_type_' + type.name}
+          >
             <Typography
-              key={'taxonomy_type_' + type.name}
               className={classnames(classes.inlinable, classes.subhead)}
             >
               {type.name}

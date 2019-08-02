@@ -12,8 +12,15 @@ const FeatureArticles = ({ classes, title = '', articles = [] }) => {
         </Typography>
       </Grid>
       {articles.map(article => (
-        <Grid item xs={12} sm={4} md={3} className={classes.clip}>
-          <ArticlePreview key={article.id} article={article} />
+        <Grid
+          item
+          xs={12}
+          sm={4}
+          md={3}
+          className={classes.clip}
+          key={article.id}
+        >
+          <ArticlePreview article={article} />
         </Grid>
       ))}
     </Grid>

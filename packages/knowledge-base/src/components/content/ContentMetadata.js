@@ -29,9 +29,8 @@ const ContentMetadata = ({ classes, content }) => {
       <Grid item xs={12}>
         {content.authors.map(({ author }) => (
           // TODO: Collapse this on narrow view for multiple authors
-          <div className={classes.listedUser}>
+          <div className={classes.listedUser} key={author.id}>
             <UserAvatar
-              key={author.id}
               user={{
                 firstName: author.first_name,
                 lastName: author.last_name,
