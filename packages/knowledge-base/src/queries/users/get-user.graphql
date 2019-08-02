@@ -1,0 +1,20 @@
+query getUser($id: Int!) {
+  user(where: { id: { _eq: $id } }) {
+    first_name
+    last_name
+    signupRequest
+    avatar
+    biography
+    linkedin
+    website
+    twitter
+    title
+    consent_contact
+    consent_directory
+    user_roles {
+      role {
+        name
+      }
+    }
+  }
+}

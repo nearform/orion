@@ -113,7 +113,7 @@ ArticleList.propTypes = {
 
 const styles = theme => ({
   icon: {
-    color: theme.articleTableIconColor,
+    ...theme.iconLight,
   },
 })
 

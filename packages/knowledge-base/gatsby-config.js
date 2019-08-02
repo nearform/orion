@@ -51,6 +51,14 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        rule: {
+          include: /assets/, // See below to configure properly
+        },
+      },
+    },
+    {
       resolve: 'gatsby-transformer-json',
       options: {
         //uses the folder name to set the typename: qfqm-theme/articles => Articles
@@ -82,6 +90,7 @@ module.exports = {
           '/submit/*',
           '/content/*',
           '/search/*',
+          '/profile/*',
         ],
       },
     },

@@ -1,5 +1,7 @@
-mutation addRecommendedArticlesMutation($addRecommendations:[recommended_articles_insert_input!]!) {
-   insert_recommended_articles(objects: $addRecommendations) {
+mutation addRecommendedArticlesMutation(
+  $addRecommendations: [recommended_articles_insert_input!]!
+) {
+  insert_recommended_articles(objects: $addRecommendations) {
     returning {
       recommended_id
       article_id

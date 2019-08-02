@@ -7,13 +7,18 @@ query getArticles(
   $orderBy: article_order_by!
 ) {
   article(
-    where: { status: { _eq: $status }, editors_pick: { _eq: $editorsPick }, title:{ _ilike: $titleLike} }
+    where: {
+      status: { _eq: $status }
+      editors_pick: { _eq: $editorsPick }
+      title: { _ilike: $titleLike }
+    }
     limit: $limit
     offset: $offset
     order_by: [$orderBy]
   ) {
     id
     title
+    thumbnail
     subtitle
     published_at
     updated_at
@@ -21,6 +26,15 @@ query getArticles(
     createdBy {
       first_name
       last_name
+    }
+    primary_taxonomy: taxonomy_items(
+      limit: 1
+      order_by: { taxonomy: { taxonomy_type: { order_index: asc } } }
+    ) {
+      taxonomy {
+        name
+        key
+      }
     }
     knowledge_type
     path

@@ -25,7 +25,7 @@ const ContentMetadata = ({ classes, content }) => {
             firstName: author.first_name,
             lastName: author.last_name,
             ...author,
-            title: 'efqm member',
+            title: author.title || 'EFQM Member',
           }}
         />
       ))}

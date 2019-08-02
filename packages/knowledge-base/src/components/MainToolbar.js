@@ -7,7 +7,7 @@ import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
 import { PaddedContainer } from 'components'
 
-import { useIsAdmin, useIsAuthenticated } from '../utils/auth'
+import { useIsAdmin, useUserId, useIsAuthenticated } from '../utils/auth'
 import NavLink from './NavLink'
 import SecondaryNavigation from './SecondaryNavigation'
 // TODO: dedupe this from AssessBase
@@ -42,6 +42,7 @@ function MainToolbar({ classes, dark }) {
     navigate('/auth')
   }
 
+  const userId = useUserId()
   const isAdmin = useIsAdmin()
   const isAuthenticated = useIsAuthenticated()
 
@@ -91,7 +92,11 @@ function MainToolbar({ classes, dark }) {
               EFQM.ORG
             </Button>
             {isAuthenticated && (
-              <Button className={navButtonClass} component={NavLink} to="#">
+              <Button
+                className={navButtonClass}
+                component={NavLink}
+                to={userId ? `/profile/${userId}` : '#'}
+              >
                 <AccountCircleOutlinedIcon
                   className={classes.icon}
                   fontSize="large"

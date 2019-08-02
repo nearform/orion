@@ -2,16 +2,12 @@
     permission:
       allow_aggregations: false
       columns:
-      - id
       - cognito_id
-      - signupRequest
-      - pending
       - email
-      filter:
-        assessment_contributors:
-          contributor_id:
-            _eq: X-Hasura-User-Id
-      limit: null
+      - id
+      - pending
+      - signupRequest
+      filter: {}
     role: user
     table:
       name: user

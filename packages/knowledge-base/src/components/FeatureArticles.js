@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Typography, withStyles } from '@material-ui/core'
-
-import { getArticleThumbnail } from '../utils/image'
-import { formatDateAsMonthAndYear } from '../utils/date'
+import ArticlePreview from './ArticlePreview'
 
 const FeatureArticles = ({ classes, title = '', articles = [] }) => {
   return (
@@ -12,32 +10,9 @@ const FeatureArticles = ({ classes, title = '', articles = [] }) => {
         <Typography variant="h3">{title}</Typography>
       </div>
       <div className={classes.articleContainer}>
-        {articles.map(article => {
-          const thumbnail = getArticleThumbnail(article)
-          // TODO Make the article a link
-          return (
-            <div key={article.id} className={classes.article}>
-              <div
-                className={classes.articleImage}
-                style={{
-                  backgroundImage: thumbnail ? `url(${thumbnail})` : undefined,
-                }}
-              />
-              <div className={classes.taxonomyLabel}>
-                {/* TODO query taxonomies and display 1st topic */}
-              </div>
-              <div className={classes.articleTitle}>{article.title}</div>
-              <div className={classes.articleMeta}>
-                <div className={classes.articleDate}>
-                  {formatDateAsMonthAndYear(article.published_at)}
-                </div>
-                <div className={classes.articleAuthor}>
-                  {article.createdBy.first_name} {article.createdBy.last_name}
-                </div>
-              </div>
-            </div>
-          )
-        })}
+        {articles.map(article => (
+          <ArticlePreview key={article.id} article={article} />
+        ))}
       </div>
     </div>
   )
@@ -66,35 +41,6 @@ const styles = theme => ({
     flexShrink: 0,
     display: 'flex',
   },
-  article: {
-    marginLeft: theme.spacing(3),
-    '&:first-child': {
-      marginLeft: theme.spacing(2),
-    },
-  },
-  articleImage: {
-    width: '320px',
-    height: '160px',
-    backgroundColor: theme.palette.background.light,
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-  },
-  taxonomyLabel: {
-    width: '255px',
-    height: '40px',
-    backgroundColor: theme.palette.primary.main,
-    marginTop: `-26px`,
-    marginBottom: theme.spacing(1),
-  },
-  articleTitle: theme.editorsPicks.title,
-  articleMeta: {
-    display: 'flex',
-  },
-  articleDate: {
-    ...theme.editorsPicks.date,
-    marginRight: theme.spacing(1),
-  },
-  articleAuthor: theme.editorsPicks.author,
 })
 
 export default withStyles(styles)(FeatureArticles)

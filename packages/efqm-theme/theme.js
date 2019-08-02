@@ -219,11 +219,15 @@ const articleStatusIconColor = {
   hidden: colorDefinitions.lightGrey,
 }
 
-const articleTableIconColor = colorDefinitions.lightGrey
+const iconLight = {
+  color: colorDefinitions.lightGrey,
+}
 const bookmarkButtonColor = colorDefinitions.purple
+const profileSpacerBackground = colorDefinitions.purple
 
 const editorsPicks = {
   title: {
+    textAlign: 'left',
     fontFamily,
     fontSize: 14,
     fontWeight: 700,
@@ -244,6 +248,14 @@ const editorsPicks = {
     fontWeight: 700,
     letterSpacing: '1.23px',
     color: colorDefinitions.lightGrey,
+    textTransform: 'uppercase',
+  },
+  caption: {
+    fontFamily,
+    fontSize: 12,
+    fontWeight: 900,
+    letterSpacing: '2.45px',
+    color: colorDefinitions.white,
     textTransform: 'uppercase',
   },
 }
@@ -287,6 +299,12 @@ const typography = {
     fontWeight: '900',
     lineHeight: 1.4,
     letterSpacing: -0.2,
+  },
+  caption: {
+    fontFamily,
+    fontSize: 14,
+    letterSpacing: 'normal',
+    color: colorDefinitions.lightGrey,
   },
   body2: {
     fontFamily,
@@ -454,12 +472,13 @@ exports.muiTheme = {
     contrastThreshold: 1.6,
   },
   shadows,
+  iconLight,
   articleTypography,
   articleStatusColor,
   articleStatusLabelColor,
   articleStatusIconColor,
-  articleTableIconColor,
   bookmarkButtonColor,
+  profileSpacerBackground,
   editorsPicks,
 }
 
