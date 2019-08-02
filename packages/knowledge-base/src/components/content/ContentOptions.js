@@ -13,9 +13,8 @@ const ContentOptions = ({ classes, content }) => {
 }
 export default withStyles(theme => ({
   wrapper: {
-    width: '304px',
     '&>*': {
-      margin: '16px',
+      margin: theme.spacing(2, 0),
     },
   },
 }))(ContentOptions)

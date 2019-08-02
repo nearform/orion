@@ -14,7 +14,18 @@ PaddedContainer.propTypes = {
 
 const styles = theme => ({
   root: {
-    padding: theme.spacing(0, 10),
+    [theme.breakpoints.up('xs')]: {
+      padding: theme.spacing(0, 2),
+    },
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(0, 4),
+    },
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(0, 8),
+    },
+    [theme.breakpoints.up('lg')]: {
+      padding: theme.spacing(0, 10),
+    },
   },
 })
 

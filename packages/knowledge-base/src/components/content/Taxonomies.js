@@ -1,8 +1,10 @@
 import React from 'react'
+import classnames from 'classnames'
 import { useQuery } from 'graphql-hooks'
-import { getTaxonomyTypes } from '../../queries'
-import { withStyles, Typography } from '@material-ui/core'
 import get from 'lodash/get'
+import { withStyles, Typography } from '@material-ui/core'
+
+import { getTaxonomyTypes } from '../../queries'
 
 const Taxonomies = ({ classes, items }) => {
   const { data: taxonomyData } = useQuery(getTaxonomyTypes)
@@ -20,10 +22,11 @@ const Taxonomies = ({ classes, items }) => {
       return (
         <div
           key={'taxonomy_item_' + item.id}
-          className={[
+          className={classnames(
+            classes.inlinable,
             classes.TaxonomyItem,
-            classes['TaxonomyC' + taxonomyColor],
-          ].join(' ')}
+            classes['TaxonomyC' + taxonomyColor]
+          )}
         >
           {item.name}
         </div>
@@ -37,15 +40,15 @@ const Taxonomies = ({ classes, items }) => {
       {taxonomyTypes.map(type => {
         taxonomyColor++
         return (
-          <>
+          <div className={classes.TaxonomyType}>
             <Typography
               key={'taxonomy_type_' + type.name}
-              className={classes.subhead}
+              className={classnames(classes.inlinable, classes.subhead)}
             >
               {type.name}
             </Typography>
             {type.taxonomy_items.map(item => listMatchingItems(item))}
-          </>
+          </div>
         )
       })}
     </>
@@ -59,6 +62,17 @@ export default withStyles(theme => ({
     letterSpacing: 1.8,
     textTransform: 'uppercase',
     color: theme.palette.tertiary.main,
+    [theme.breakpoints.down('xs')]: {
+      marginRight: theme.spacing(1.5),
+    },
+  },
+  inlinable: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'inline-block',
+    },
+  },
+  TaxonomyType: {
+    margin: theme.spacing(1, 0, 2),
   },
   TaxonomyItem: {
     color: 'white',
@@ -71,15 +85,35 @@ export default withStyles(theme => ({
     width: 'max-content',
   },
   TaxonomyC1: {
-    backgroundColor: theme.palette.primary.dark,
+    [theme.breakpoints.down('xs')]: {
+      color: theme.palette.primary.dark,
+    },
+    [theme.breakpoints.up('sm')]: {
+      backgroundColor: theme.palette.primary.dark,
+    },
   },
   TaxonomyC2: {
-    backgroundColor: theme.palette.primary.main,
+    [theme.breakpoints.down('xs')]: {
+      color: theme.palette.primary.main,
+    },
+    [theme.breakpoints.up('sm')]: {
+      backgroundColor: theme.palette.primary.main,
+    },
   },
   TaxonomyC3: {
-    backgroundColor: theme.palette.primary.light,
+    [theme.breakpoints.down('xs')]: {
+      color: theme.palette.primary.light,
+    },
+    [theme.breakpoints.up('sm')]: {
+      backgroundColor: theme.palette.primary.light,
+    },
   },
   TaxonomyC4: {
-    backgroundColor: theme.palette.secondary.dark,
+    [theme.breakpoints.down('xs')]: {
+      color: theme.palette.secondary.dark,
+    },
+    [theme.breakpoints.up('sm')]: {
+      backgroundColor: theme.palette.secondary.dark,
+    },
   },
 }))(Taxonomies)
