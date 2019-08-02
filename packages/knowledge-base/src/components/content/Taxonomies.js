@@ -1,15 +1,9 @@
 import React from 'react'
 import classnames from 'classnames'
-import { useQuery } from 'graphql-hooks'
-import get from 'lodash/get'
 import { withStyles, Typography } from '@material-ui/core'
-
-import { getTaxonomyTypes } from '../../queries'
-
+import useTaxonomyDefinitions from '../../hooks/useTaxonomyDefinitions'
 const Taxonomies = ({ classes, items }) => {
-  const { data: taxonomyData } = useQuery(getTaxonomyTypes)
-  const taxonomyTypes = get(taxonomyData, 'taxonomy_type', [])
-  //TODO: nicer loading indication
+  const taxonomyTypes = useTaxonomyDefinitions()
   if (!taxonomyTypes) return null
 
   const taxonomyIds = []

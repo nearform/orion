@@ -88,7 +88,6 @@ module.exports = {
           '/admin/*',
           '/auth/*',
           '/submit/*',
-          '/content/*',
           '/profile/*',
         ],
       },

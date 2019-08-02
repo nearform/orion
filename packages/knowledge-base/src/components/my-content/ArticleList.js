@@ -90,13 +90,15 @@ const ArticleList = ({ classes, path }) => {
                 </IconButton>
               </TableCell>
               <TableCell align="center" padding="none">
-                <IconButton
-                  className={classes.icon}
-                  component={Link}
-                  to={`/content/${article.path}`}
-                >
-                  <InsertDriveFileIcon />
-                </IconButton>
+                {article.status === 'published' && (
+                  <IconButton
+                    className={classes.icon}
+                    component={Link}
+                    to={`/content/${article.path}`}
+                  >
+                    <InsertDriveFileIcon />
+                  </IconButton>
+                )}
               </TableCell>
             </TableRow>
           ))

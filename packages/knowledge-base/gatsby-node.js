@@ -1,6 +1,6 @@
 const path = require('path')
 const currentTheme = require('./theme')
-
+const get = require('lodash/get')
 const { config } = currentTheme
 
 exports.onPreInit = () => {
@@ -17,21 +17,88 @@ exports.onPreInit = () => {
   // }
 }
 
+/*
+{
+  article(where: {status: {_eq: "published"}}) {
+    primary_taxonomy: taxonomy_items(limit: 1, order_by: {taxonomy: {taxonomy_type: {order_index: asc}}}) {
+      taxonomy {
+        name
+        key
+      }
+    }
+    taxonomy_items {
+      taxonomy_id
+    }
+    thumbnail
+    title
+    summary
+    subtitle
+    authors {
+      author {
+        first_name
+        last_name
+      }
+    }
+    banner
+    published_at
+    path
+    id
+  }
+}
+
+*/
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const homeTemplate = require.resolve('./src/templates/home.js')
-  // const articlesQueryResults = await graphql(`
-  //   {
-  //     allArticles {
-  //       totalCount
-  //     }
-  //   }
-  // `)
+  const contentViewTemplate = require.resolve('./src/templates/contentView.js')
+  const articlesQueryResults = await graphql(`
+    {
+      raw_salmon {
+        article(where: { status: { _eq: "published" } }) {
+          primary_taxonomy: taxonomy_items(
+            limit: 1
+            order_by: { taxonomy: { taxonomy_type: { order_index: asc } } }
+          ) {
+            taxonomy {
+              name
+              key
+            }
+          }
+          taxonomy_items {
+            taxonomy_id
+          }
+          thumbnail
+          title
+          summary
+          subtitle
+          authors {
+            author {
+              first_name
+              last_name
+              title
+              id
+              email
+            }
+          }
+          banner
+          published_at
+          path
+          id
+        }
+      }
+    }
+  `)
 
-  // if (articlesQueryResults.errors) {
-  //   throw articlesQueryResults.errors
-  // }
+  if (articlesQueryResults.errors) {
+    throw articlesQueryResults.errors
+  }
+  const publishedArticles = get(
+    articlesQueryResults,
+    'data.raw_salmon.article',
+    []
+  )
 
   createPage({
     path: '/',
@@ -39,6 +106,14 @@ exports.createPages = async ({ graphql, actions }) => {
     context: {
       heroImageName: config.heroImageNameKB,
     },
+  })
+
+  publishedArticles.forEach(articleSummary => {
+    createPage({
+      path: `/content/${articleSummary.path}`,
+      component: contentViewTemplate,
+      context: { articleSummary },
+    })
   })
 
   return null

@@ -44,5 +44,6 @@ query getArticleDetails($id: Int!) {
     status
     summary
     created_at
+    published_at
   }
 }
