@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'gatsby'
 import BookmarkButton from '../BookmarkButton'
 import RichText from './RichText'
+//import useAmplifyImage from '../../hooks/useAmplifyImage'
 import { formatDateAsMonthAndYear } from '../../utils/date'
 import { withStyles, Grid, Typography } from '@material-ui/core'
 

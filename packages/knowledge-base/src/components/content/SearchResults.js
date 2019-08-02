@@ -1,7 +1,7 @@
 import React from 'react'
 import { useQuery } from 'graphql-hooks'
 import { getArticlesSearchResults } from '../../queries'
-import { withStyles, Grid, Typography } from '@material-ui/core'
+import { withStyles, Grid, Typography, Button } from '@material-ui/core'
 import SEO from '../SEO'
 import Taxonomies from './Taxonomies'
 import ArticleSummary from './ArticleSummary'
@@ -53,10 +53,23 @@ const SearchResults = ({ classes, term }) => {
           </Grid>
         </Grid>
         <Grid item xs={3} className={classes.taxonomyWrapper}>
-          <Taxonomies showAll={true} items={taxonomyItems} />
+          <Taxonomies items={taxonomyItems} showAll={true} />
         </Grid>
         <Grid item xs={8}>
           {summaries}
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container spacing={3} alignItems="center">
+            <Grid item xs={7}></Grid>
+            <Grid item xs={4}>
+              <Button variant="contained" className={classes.PrevButton}>
+                Previous Page
+              </Button>
+              <Button variant="contained" className={classes.NextButton}>
+                Next Page
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </>
@@ -83,8 +96,21 @@ export default withStyles(theme => ({
     },
   },
   taxonomyWrapper: {
-    marginLeft: '12px',
-    overflow: 'hidden',
-    maxWidth: '100%',
+    marginLeft: theme.spacing(3),
+  },
+  PrevButton: {
+    backgroundColor: 'white',
+    color: theme.palette.secondary.main,
+    '&:hover': {
+      backgroundColor: 'white',
+    },
+  },
+  NextButton: {
+    backgroundColor: theme.palette.secondary.main,
+    color: 'white',
+    marginLeft: theme.spacing(1),
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main,
+    },
   },
 }))(SearchResults)

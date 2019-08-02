@@ -65,6 +65,7 @@ export default withStyles(theme => ({
     fontSize: '12px',
     letterSpacing: '1.8px',
     textTransform: 'uppercase',
+    marginTop: '16px',
     color: theme.palette.tertiary.main,
   },
   TaxonomyItem: {
@@ -74,6 +75,7 @@ export default withStyles(theme => ({
     letterSpacing: '2.45px',
     textTransform: 'uppercase',
     padding: '4px 8px',
+    marginTop: '16px',
     width: 'max-content',
   },
   TaxonomyC1: {
