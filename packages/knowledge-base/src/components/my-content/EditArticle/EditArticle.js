@@ -5,7 +5,7 @@ import urlSlug from 'url-slug'
 import UploadImageWidget from '../../UploadImageWidget'
 import { useIsPlatformGroup, useUserId } from '../../../utils/auth'
 import SEO from '../../SEO'
-import { UserAvatar } from 'components'
+import { UserAvatar, EmbededVideo } from 'components'
 
 import {
   getTaxonomyTypes,
@@ -408,6 +408,20 @@ function EditArticle({ classes, articleId }) {
                     >
                       {name}
                     </Typography>
+                    {type === 'embed-video-link' ? (
+                      <>
+                        <Field
+                          name={`fields.${key}`}
+                          component={TextField}
+                          fullWidth
+                          placeholder="Paste YouTube or Vimeo URL"
+                        />
+                        <EmbededVideo
+                          url={values.fields[key]}
+                          className={classes.embededVideo}
+                        />
+                      </>
+                    ) : null}
                     {type === 'rich-text' ? (
                       <FastField
                         name={`fields.${key}`}
@@ -551,5 +565,8 @@ export default withStyles(theme => ({
     '&:not(:first-child)': {
       marginTop: theme.spacing(1),
     },
+  },
+  embededVideo: {
+    marginTop: theme.spacing(1),
   },
 }))(EditArticle)

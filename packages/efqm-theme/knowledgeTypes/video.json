@@ -5,7 +5,7 @@
   "input_fields": [
     {
       "key": "video",
-      "type": "embed-link",
+      "type": "embed-video-link",
       "name": "embed video link",
       "providers": [ "youtube", "vimeo" ]
     }

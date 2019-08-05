@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useQuery } from 'graphql-hooks'
 import { getArticlesSearchResults } from '../../queries'
 import { withStyles, Grid, Typography, Button } from '@material-ui/core'
@@ -30,7 +30,7 @@ const buildWhereClause = taxonomies => {
 }
 
 const SearchResults = ({ classes, term }) => {
-  const [taxonomies] = useState([])
+  const taxonomies = []
   const { data: articleData } = useQuery(getArticlesSearchResults, {
     variables: {
       titleLike: term,
