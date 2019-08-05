@@ -17,34 +17,30 @@ import ContentMetadata from '../components/content/ContentMetadata'
 import ContentOptions from '../components/content/ContentOptions'
 import FeatureArticles from '../components/FeatureArticles'
 
-function AssessmentTemplate({ pageContext: { articleSummary }, classes }) {
-  const { path } = articleSummary || {}
+function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
+  const { path } = articleSummary || { path: slug }
   const isAuthenticated = useIsAuthenticated()
   const [articleFull, setArticleFull] = useState(null)
   const [isLoading, setIsLoading] = useState(isAuthenticatedSync())
   const [getArticleDetailsQuery] = useManualQuery(getArticleDetails)
   const contentId = path.split('-')[0]
-
   useEffect(() => {
     if (contentId && isAuthenticated) {
-      loadArticleData(contentId)
+      setIsLoading(true)
+      getArticleDetailsQuery({
+        variables: { id: contentId },
+      })
+        .then(({ data }) => {
+          setArticleFull(get(data, 'articleDetails'))
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
     }
-  }, [isAuthenticated, contentId])
+  }, [isAuthenticated, contentId, getArticleDetailsQuery])
 
-  async function loadArticleData(contentId) {
-    setIsLoading(true)
-    await new Promise(res => {
-      setTimeout(res, 1000)
-    })
-    const { data } = await getArticleDetailsQuery({
-      variables: { id: contentId },
-    })
-    setIsLoading(false)
-    setArticleFull(get(data, 'articleDetails'))
-  }
   const articleData = articleFull || articleSummary
   if (!articleData) return null
-  //   console.log({ isAuthenticated, articleData, isLoading })
   return (
     <PaddedContainer>
       <Grid
@@ -153,4 +149,4 @@ export default withStyles(theme => ({
     '& i': theme.articleTypography.italic,
     '& a': theme.articleTypography.link,
   },
-}))(AssessmentTemplate)
+}))(ContentView)

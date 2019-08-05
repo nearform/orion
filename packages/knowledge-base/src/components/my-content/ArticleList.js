@@ -90,15 +90,15 @@ const ArticleList = ({ classes, path }) => {
                 </IconButton>
               </TableCell>
               <TableCell align="center" padding="none">
-                {article.status === 'published' && (
-                  <IconButton
-                    className={classes.icon}
-                    component={Link}
-                    to={`/content/${article.path}`}
-                  >
-                    <InsertDriveFileIcon />
-                  </IconButton>
-                )}
+                <IconButton
+                  className={classes.icon}
+                  component={Link}
+                  to={`/content${
+                    article.status !== 'published' ? '-preview' : ''
+                  }/${article.path}`}
+                >
+                  <InsertDriveFileIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))

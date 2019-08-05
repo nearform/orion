@@ -17,42 +17,11 @@ exports.onPreInit = () => {
   // }
 }
 
-/*
-{
-  article(where: {status: {_eq: "published"}}) {
-    primary_taxonomy: taxonomy_items(limit: 1, order_by: {taxonomy: {taxonomy_type: {order_index: asc}}}) {
-      taxonomy {
-        name
-        key
-      }
-    }
-    taxonomy_items {
-      taxonomy_id
-    }
-    thumbnail
-    title
-    summary
-    subtitle
-    authors {
-      author {
-        first_name
-        last_name
-      }
-    }
-    banner
-    published_at
-    path
-    id
-  }
-}
-
-*/
-
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const homeTemplate = require.resolve('./src/templates/home.js')
-  const contentViewTemplate = require.resolve('./src/templates/contentView.js')
+  const ContentViewTemplate = require.resolve('./src/templates/ContentView.js')
   const articlesQueryResults = await graphql(`
     {
       raw_salmon {
@@ -111,7 +80,7 @@ exports.createPages = async ({ graphql, actions }) => {
   publishedArticles.forEach(articleSummary => {
     createPage({
       path: `/content/${articleSummary.path}`,
-      component: contentViewTemplate,
+      component: ContentViewTemplate,
       context: { articleSummary },
     })
   })
