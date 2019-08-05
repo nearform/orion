@@ -1,0 +1,6 @@
+- args:
+    cascade: false
+    sql: |-
+      CREATE INDEX title_gin_indx ON article
+      USING GIN ((title) gin_trgm_ops);
+  type: run_sql

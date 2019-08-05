@@ -1,18 +1,16 @@
-query getArticles(
-  $status: String
+query getSearchArticles(
+  $titleLike: String!
+  $whereClause: article_bool_exp
   $limit: Int!
-  $titleLike: String
   $offset: Int!
-  $orderBy: article_order_by!
 ) {
-  article(
-    where: { status: { _eq: $status }, title: { _ilike: $titleLike } }
+  search_article(
+    args: { search: $titleLike }
     limit: $limit
     offset: $offset
-    order_by: [$orderBy]
+    where: $whereClause
   ) {
     id
-    banner
     thumbnail
     title
     summary
@@ -20,6 +18,15 @@ query getArticles(
     published_at
     updated_at
     status
+    primary_taxonomy: taxonomy_items(
+      limit: 1
+      order_by: { taxonomy: { taxonomy_type: { order_index: asc } } }
+    ) {
+      taxonomy {
+        name
+        key
+      }
+    }
     taxonomy_items {
       taxonomy_id
     }
@@ -31,7 +38,7 @@ query getArticles(
     path
     editors_pick
   }
-  field_aggregate: article_aggregate {
+  search_article_aggregate(args: { search: $titleLike }, where: $whereClause) {
     aggregate {
       count
     }

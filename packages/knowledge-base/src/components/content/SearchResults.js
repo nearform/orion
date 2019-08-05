@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from 'graphql-hooks'
 import { getArticlesSearchResults } from '../../queries'
 import { withStyles, Grid, Typography, Button } from '@material-ui/core'
@@ -9,7 +9,7 @@ import ArticleSummary from './ArticleSummary'
 const extractArticleData = data => {
   const summaries = []
   const taxonomyItems = []
-  data.article.map(item => {
+  data.search_article.map(item => {
     summaries.push(
       <ArticleSummary key={'article_id_' + item.id} article={item} />
     )
@@ -18,12 +18,25 @@ const extractArticleData = data => {
   return { taxonomyItems, summaries }
 }
 
+const buildWhereClause = taxonomies => {
+  const clause = {
+    status: { _in: ['in-review', 'published'] },
+  }
+  if (taxonomies.length >= 1) {
+    clause.taxonomy_items = { taxonomy_id: { _in: taxonomies } }
+  }
+
+  return clause
+}
+
 const SearchResults = ({ classes, term }) => {
+  const [taxonomies] = useState([])
   const { data: articleData } = useQuery(getArticlesSearchResults, {
     variables: {
-      orderBy: { published_at: 'desc' },
+      titleLike: term,
       limit: 10,
       offset: 0,
+      whereClause: buildWhereClause(taxonomies),
     },
   })
 
@@ -31,6 +44,8 @@ const SearchResults = ({ classes, term }) => {
   if (!articleData) return null
 
   const { taxonomyItems, summaries } = extractArticleData(articleData)
+  const totalArticles = articleData.search_article_aggregate.aggregate.count
+  const range = totalArticles >= 10 ? 10 : totalArticles
 
   return (
     <>
@@ -46,8 +61,8 @@ const SearchResults = ({ classes, term }) => {
             </Grid>
             <Grid item xs={3}>
               <Typography>
-                Showing 1-10, of {articleData.field_aggregate.aggregate.count}{' '}
-                results
+                Showing 1-{range}, of{' '}
+                {articleData.search_article_aggregate.aggregate.count} results
               </Typography>
             </Grid>
           </Grid>

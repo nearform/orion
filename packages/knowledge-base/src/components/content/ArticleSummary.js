@@ -2,21 +2,27 @@ import React from 'react'
 import { Link } from 'gatsby'
 import BookmarkButton from '../BookmarkButton'
 import RichText from './RichText'
-//import useAmplifyImage from '../../hooks/useAmplifyImage'
+import useAmplifyImage from '../../hooks/useAmplifyImage'
 import { formatDateAsMonthAndYear } from '../../utils/date'
 import { withStyles, Grid, Typography } from '@material-ui/core'
+import get from 'lodash/get'
 
 const ArticleSummary = ({ classes, article }) => {
   return (
     <Grid container spacing={1} className={classes.summaryObj}>
       <Grid item xs={3}>
         <img
-          src={article.banner || 'https://via.placeholder.com/280x140.png'}
+          src={
+            useAmplifyImage(article.thumbnail) ||
+            'https://via.placeholder.com/280x140.png'
+          }
           width="100%"
           height="auto"
         />
         <div className={classes.topicBox}>
-          <Typography variant="h2">Geopolitics</Typography>
+          <Typography variant="h2">
+            {get(article, 'primary_taxonomy[0].taxonomy.name') || 'No Topic'}
+          </Typography>
         </div>
       </Grid>
       <Grid item className={classes.articleSummary} xs={9}>
@@ -86,7 +92,7 @@ export default withStyles(theme => ({
       letterSpacing: '2.45px',
       color: 'white',
       textTransform: 'uppercase',
-      padding: '12px 4px',
+      padding: '12px 8px',
     },
   },
   articleSummary: {
