@@ -3,7 +3,7 @@ import T from 'prop-types'
 import { useMutation } from 'graphql-hooks'
 import classnames from 'classnames'
 import { BookmarkOutlined, BookmarkBorderOutlined } from '@material-ui/icons'
-import { withStyles, Button, CircularProgress } from '@material-ui/core'
+import { withStyles, Button, CircularProgress, Hidden } from '@material-ui/core'
 import { addUserBookmarkMutation, deleteUserBookmarkMutation } from '../queries'
 import { useUserId } from '../utils/auth'
 import useBookmarkData from '../hooks/useBookmarkData'
@@ -72,7 +72,7 @@ const BookmarkButton = ({
           ])}
         />
       )}
-      {bookmarked ? 'Bookmarked' : 'Bookmark'}
+      <Hidden only="xs">{bookmarked ? 'Bookmarked' : 'Bookmark'}</Hidden>
     </Button>
   )
 }

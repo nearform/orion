@@ -4,53 +4,70 @@ import PublishDate from './PublishDate'
 import ReadTime from './ReadTime'
 import Taxonomies from './Taxonomies'
 import BookmarkButton from '../BookmarkButton'
-import { withStyles, Typography } from '@material-ui/core'
+import { withStyles, Grid, Hidden, Typography } from '@material-ui/core'
 import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
 
 const ContentMetadata = ({ classes, content }) => {
   const knowledgeTypes = useKnowledgeTypes()
   return (
-    <div className={classes.wrapper}>
-      <Typography variant="h4" color="secondary">
-        knowledge type
-      </Typography>
-      <Typography variant="h3">
-        {knowledgeTypes[content.knowledge_type]}
-      </Typography>
-      <div className={classes.spacerBar} />
-      {content.authors.map(({ author }) => (
-        <UserAvatar
-          key={author.id}
-          user={{
-            firstName: author.first_name,
-            lastName: author.last_name,
-            ...author,
-            title: author.title || 'EFQM Member',
-          }}
-        />
-      ))}
-      <PublishDate date={content.created_at} />
-      <ReadTime fields={content.fields} />
-      <BookmarkButton articleId={content.id} />
-      <Taxonomies items={content.taxonomy_items} />
-    </div>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Typography variant="h4" color="secondary">
+          knowledge type
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant="h3" className={classes.knowledgeType}>
+          {knowledgeTypes[content.knowledge_type]}
+        </Typography>
+      </Grid>
+      <Hidden only="xs">
+        <Grid item sm={12}>
+          <div className={classes.spacerBar} />
+        </Grid>
+      </Hidden>
+      <Grid item xs={12}>
+        {content.authors.map(({ author }) => (
+          // TODO: Collapse this on narrow view for multiple authors
+          <div className={classes.listedUser} key={author.id}>
+            <UserAvatar
+              user={{
+                firstName: author.first_name,
+                lastName: author.last_name,
+                ...author,
+                title: author.title || 'EFQM Member',
+              }}
+            />
+          </div>
+        ))}
+      </Grid>
+      <Grid item xs={5} sm={12}>
+        <PublishDate date={content.created_at} />
+      </Grid>
+      <Grid item xs={5} sm={12}>
+        <ReadTime fields={content.fields} />
+      </Grid>
+      <Grid item xs={2} sm={12}>
+        <BookmarkButton articleId={content.id} />
+      </Grid>
+      <Grid item xs={12}>
+        <Taxonomies items={content.taxonomy_items} />
+      </Grid>
+    </Grid>
   )
 }
 
 export default withStyles(theme => ({
   spacerBar: {
-    display: 'block',
-    width: '264px',
-    height: '8px',
-    backgroundColor: theme.palette.primary.dark,
+    [theme.breakpoints.up('sm')]: {
+      height: theme.spacing(),
+      backgroundColor: theme.palette.primary.dark,
+    },
   },
-  wrapper: {
-    width: '304px',
-    '&>*': {
-      marginTop: '16px',
-    },
-    '& h3': {
-      color: theme.palette.primary.dark,
-    },
+  knowledgeType: {
+    color: theme.palette.primary.dark,
+  },
+  listedUser: {
+    marginBottom: theme.spacing(1),
   },
 }))(ContentMetadata)
