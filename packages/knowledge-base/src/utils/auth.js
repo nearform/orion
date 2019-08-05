@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext } from 'react'
+import { useEffect, useState, createContext, useCallback } from 'react'
 import { Auth, Hub } from 'aws-amplify'
 
 const isBrowser = typeof window !== 'undefined'
@@ -143,15 +143,15 @@ export function useIsAuthenticated() {
 }
 
 function useAuthState(initialState, asyncStateGetter) {
-  async function checkState() {
-    setState(await asyncStateGetter())
-  }
-
   const [state, setState] = useState(initialState)
+  const checkState = useCallback(
+    async () => setState(await asyncStateGetter()),
+    [asyncStateGetter]
+  )
 
   useEffect(() => {
     checkState()
-  }, [asyncStateGetter])
+  }, [checkState])
 
   useAmplifyEvent('auth', checkState)
 

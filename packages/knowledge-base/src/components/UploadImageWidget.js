@@ -37,7 +37,7 @@ function UploadImageWidget({
 
   useEffect(() => {
     onUpload(imageURL)
-  }, [imageURL])
+  }, [imageURL, onUpload])
 
   return (
     <>

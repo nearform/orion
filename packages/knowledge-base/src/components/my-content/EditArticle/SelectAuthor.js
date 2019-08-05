@@ -27,22 +27,24 @@ function SelectAuthors({ classes, selectedUsers, onChange }) {
   const [isModalOpen, setModalOpen] = useState(false)
   const [cachedSelectedUser, setCachedSelectedUsers] = useState(selectedUsers)
   const [filter, setFilter] = useState()
+
   useEffect(() => {
     setCachedSelectedUsers(selectedUsers)
   }, [selectedUsers])
 
-  useEffect(() => {
-    onChange(cachedSelectedUser)
-  }, [cachedSelectedUser])
-
   function addUser(author) {
-    setCachedSelectedUsers([...cachedSelectedUser, { author }])
+    updateUserSelection([...cachedSelectedUser, { author }])
   }
 
   function removeUser(userId) {
-    setCachedSelectedUsers(
+    updateUserSelection(
       cachedSelectedUser.filter(({ author }) => author.id !== userId)
     )
+  }
+
+  function updateUserSelection(newSelectedUsers) {
+    setCachedSelectedUsers(newSelectedUsers)
+    onChange(newSelectedUsers)
   }
 
   const queryVariables = {}
