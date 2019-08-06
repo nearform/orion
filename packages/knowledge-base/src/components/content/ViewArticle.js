@@ -25,6 +25,7 @@ const ViewArticle = ({ classes, slug }) => {
     []
   ).map(({ recommended_article }) => recommended_article)
   //TODO: nicer loading indication
+
   if (!articleDetails) return null
   return (
     <PaddedContainer>
@@ -39,7 +40,10 @@ const ViewArticle = ({ classes, slug }) => {
             <ContentMetadata content={articleDetails} />
             <Hidden only={['xs', 'lg', 'xl']}>
               <div className={classes.gapAbove}>
-                <ContentOptions className={classes.gapAbove} />
+                <ContentOptions
+                  className={classes.gapAbove}
+                  articleDetails={articleDetails}
+                />
               </div>
             </Hidden>
           </div>
@@ -56,7 +60,10 @@ const ViewArticle = ({ classes, slug }) => {
         <Hidden only={['sm', 'md']}>
           <Grid item xs={12} lg={3}>
             <div className={classes.spacingLeft}>
-              <ContentOptions className={classes.spacingLeft} />
+              <ContentOptions
+                className={classes.spacingLeft}
+                articleDetails={articleDetails}
+              />
             </div>
           </Grid>
         </Hidden>
