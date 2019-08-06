@@ -28,7 +28,7 @@ const PlaceholderButton = withStyles(theme => ({
   )
 })
 
-const ContentOptions = ({ classes, articleDetails, refetchArticle }) => {
+const ContentOptions = ({ classes, articleData, refetchArticle }) => {
   const isAdmin = useIsAdmin()
   const isPlatformGroup = useIsPlatformGroup()
 
@@ -52,8 +52,8 @@ const ContentOptions = ({ classes, articleDetails, refetchArticle }) => {
       {canHideArticles && (
         <Grid item xs={12} sm={6} lg={12}>
           <HideButton
-            status={articleDetails.status}
-            articleId={articleDetails.id}
+            status={articleData.status}
+            articleId={articleData.id}
             refetchArticle={refetchArticle}
           />
         </Grid>
@@ -69,7 +69,7 @@ const ContentOptions = ({ classes, articleDetails, refetchArticle }) => {
 
 ContentOptions.propTypes = {
   classes: T.object.isRequired,
-  articleDetails: T.object.isRequired,
+  articleData: T.object.isRequired,
   refetchArticle: T.func.isRequired,
 }
 

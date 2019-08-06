@@ -32,7 +32,7 @@ const HideButton = ({ classes, articleId, status, refetchArticle }) => {
     })
 
     const savedStatus = get(result, 'data.update_article.returning[0].status')
-    if (savedStatus !== status) await refetchArticle()
+    if (savedStatus !== status) refetchArticle(true)
     setIsLoading(false)
   }
 
