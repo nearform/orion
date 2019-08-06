@@ -12,11 +12,14 @@ import FeatureArticles from '../FeatureArticles'
 
 const ViewArticle = ({ classes, slug }) => {
   const contentId = slug.split('-')[0]
-  const { data: articleData } = useQuery(getArticleDetails, {
-    variables: {
-      id: contentId,
-    },
-  })
+  const { data: articleData, refetch: refetchArticle } = useQuery(
+    getArticleDetails,
+    {
+      variables: {
+        id: contentId,
+      },
+    }
+  )
 
   const articleDetails = get(articleData, 'articleDetails')
   const recomended_articles = get(
@@ -27,6 +30,13 @@ const ViewArticle = ({ classes, slug }) => {
   //TODO: nicer loading indication
 
   if (!articleDetails) return null
+
+  const ContentOptionsBlock = (
+    <ContentOptions
+      articleDetails={articleDetails}
+      refetchArticle={refetchArticle}
+    />
+  )
   return (
     <PaddedContainer>
       <Grid
@@ -39,12 +49,7 @@ const ViewArticle = ({ classes, slug }) => {
           <div className={classes.spacingRight}>
             <ContentMetadata content={articleDetails} />
             <Hidden only={['xs', 'lg', 'xl']}>
-              <div className={classes.gapAbove}>
-                <ContentOptions
-                  className={classes.gapAbove}
-                  articleDetails={articleDetails}
-                />
-              </div>
+              <div className={classes.gapAbove}>{ContentOptionsBlock}</div>
             </Hidden>
           </div>
         </Grid>
@@ -59,12 +64,7 @@ const ViewArticle = ({ classes, slug }) => {
         </Grid>
         <Hidden only={['sm', 'md']}>
           <Grid item xs={12} lg={3}>
-            <div className={classes.spacingLeft}>
-              <ContentOptions
-                className={classes.spacingLeft}
-                articleDetails={articleDetails}
-              />
-            </div>
+            <div className={classes.spacingLeft}>{ContentOptionsBlock}</div>
           </Grid>
         </Hidden>
       </Grid>

@@ -25,7 +25,7 @@ const PlaceholderButton = withStyles(theme => ({
   )
 })
 
-const ContentOptions = ({ articleDetails }) => {
+const ContentOptions = ({ articleDetails, refetchArticle }) => {
   const isAdmin = useIsAdmin()
   const isPlatformGroup = useIsPlatformGroup()
 
@@ -41,6 +41,7 @@ const ContentOptions = ({ articleDetails }) => {
         <HideButton
           status={articleDetails.status}
           articleId={articleDetails.id}
+          refetchArticle={refetchArticle}
         />
       )}
     </div>
@@ -49,6 +50,7 @@ const ContentOptions = ({ articleDetails }) => {
 
 ContentOptions.propTypes = {
   articleDetails: T.object.isRequired,
+  refetchArticle: T.func.isRequired,
 }
 
 export default ContentOptions

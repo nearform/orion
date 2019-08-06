@@ -9,15 +9,11 @@ import VisibilityIcon from '@material-ui/icons/Visibility'
 
 import { updateArticleMutation } from '../../queries'
 
-function isStatusHidden(status) {
-  return status === 'hidden'
-}
-
-const HideButton = ({ classes, status, articleId, disabled, onChange }) => {
-  const [isHidden, setIsHidden] = useState(isStatusHidden(status))
+const HideButton = ({ classes, articleId, status, refetchArticle }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [updateArticle] = useMutation(updateArticleMutation)
 
+  const isHidden = status === 'hidden'
   const actionVerb = isHidden ? 'Show' : 'Hide'
   const ActionIcon = isHidden ? VisibilityIcon : VisibilityOffIcon
 
@@ -36,11 +32,8 @@ const HideButton = ({ classes, status, articleId, disabled, onChange }) => {
     })
 
     const savedStatus = get(result, 'data.update_article.returning[0].status')
-    if (savedStatus) {
-      if (onChange) onChange(savedStatus)
-      setIsHidden(isStatusHidden(savedStatus))
-      setIsLoading(false)
-    }
+    if (savedStatus !== status) await refetchArticle()
+    setIsLoading(false)
   }
 
   return (
@@ -67,11 +60,12 @@ HideButton.propTypes = {
   articleId: T.number.isRequired,
   status: T.string.isRequired,
   classes: T.object.isRequired,
-  onChange: T.func,
+  refetchArticle: T.func,
 }
 
 export default withStyles(theme => ({
   root: {
+    display: 'flex',
     ...theme.typography.h4,
   },
   icon: {
