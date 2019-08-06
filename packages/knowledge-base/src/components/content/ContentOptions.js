@@ -1,22 +1,42 @@
 import React from 'react'
 import T from 'prop-types'
-import { withStyles, Typography } from '@material-ui/core'
+import { withStyles, Button } from '@material-ui/core'
 import { useIsAdmin, useIsPlatformGroup } from '../../utils/auth'
+import PlaceholderIcon from '@material-ui/icons/MoreHoriz'
 
 import HideButton from './HideButton'
 
-const ContentOptions = ({ classes, articleDetails }) => {
+// TODO: delete this placeholder component when each button is implemented
+const PlaceholderButton = withStyles(theme => ({
+  root: {
+    cursor: 'default',
+    ...theme.typography.h4,
+  },
+  icon: {
+    marginRight: theme.spacing(),
+    color: theme.palette.text.secondary,
+  },
+}))(({ classes, children }) => {
+  return (
+    <Button className={classes.root}>
+      <PlaceholderIcon className={classes.icon} />
+      {children}
+    </Button>
+  )
+})
+
+const ContentOptions = ({ articleDetails }) => {
   const isAdmin = useIsAdmin()
   const isPlatformGroup = useIsPlatformGroup()
 
   const canHideArticles = isAdmin && isPlatformGroup
 
   return (
-    <div className={classes.wrapper}>
-      <Typography variant="h4">Download PDF</Typography>
-      <Typography variant="h4">Print this page</Typography>
-      <Typography variant="h4">Share this article</Typography>
-      <Typography variant="h4">Rate this article</Typography>
+    <div>
+      <PlaceholderButton>Download PDF</PlaceholderButton>
+      <PlaceholderButton>Print this page</PlaceholderButton>
+      <PlaceholderButton>Share this article</PlaceholderButton>
+      <PlaceholderButton>Rate this article</PlaceholderButton>
       {canHideArticles && (
         <HideButton
           status={articleDetails.status}
@@ -29,13 +49,6 @@ const ContentOptions = ({ classes, articleDetails }) => {
 
 ContentOptions.propTypes = {
   articleDetails: T.object.isRequired,
-  classes: T.object.isRequired,
 }
 
-export default withStyles(theme => ({
-  wrapper: {
-    '&>*': {
-      margin: theme.spacing(2, 0),
-    },
-  },
-}))(ContentOptions)
+export default ContentOptions
