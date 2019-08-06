@@ -10,6 +10,7 @@ import HideButton from './HideButton'
 const PlaceholderButton = withStyles(theme => ({
   root: {
     cursor: 'default',
+    display: 'flex',
     ...theme.typography.h4,
   },
   icon: {
@@ -25,14 +26,14 @@ const PlaceholderButton = withStyles(theme => ({
   )
 })
 
-const ContentOptions = ({ articleDetails, refetchArticle }) => {
+const ContentOptions = ({ classes, articleDetails, refetchArticle }) => {
   const isAdmin = useIsAdmin()
   const isPlatformGroup = useIsPlatformGroup()
 
   const canHideArticles = isAdmin && isPlatformGroup
 
   return (
-    <div>
+    <div className={classes.wrapper}>
       <PlaceholderButton>Download PDF</PlaceholderButton>
       <PlaceholderButton>Print this page</PlaceholderButton>
       <PlaceholderButton>Share this article</PlaceholderButton>
@@ -49,8 +50,14 @@ const ContentOptions = ({ articleDetails, refetchArticle }) => {
 }
 
 ContentOptions.propTypes = {
+  classes: T.object.isRequired,
   articleDetails: T.object.isRequired,
   refetchArticle: T.func.isRequired,
 }
 
-export default ContentOptions
+export default withStyles(theme => ({
+  wrapper: {
+    // Balances buttons' click/hover highlight areas in layout
+    marginLeft: theme.spacing(-1),
+  },
+}))(ContentOptions)
