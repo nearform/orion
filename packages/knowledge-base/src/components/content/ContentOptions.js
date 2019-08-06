@@ -1,6 +1,6 @@
 import React from 'react'
 import T from 'prop-types'
-import { withStyles, Button } from '@material-ui/core'
+import { withStyles, Button, Grid } from '@material-ui/core'
 import { useIsAdmin, useIsPlatformGroup } from '../../utils/auth'
 import PlaceholderIcon from '@material-ui/icons/MoreHoriz'
 
@@ -11,6 +11,8 @@ const PlaceholderButton = withStyles(theme => ({
   root: {
     cursor: 'default',
     display: 'flex',
+    whiteSpace: 'initial',
+    textAlign: 'left',
     ...theme.typography.h4,
   },
   icon: {
@@ -31,21 +33,37 @@ const ContentOptions = ({ classes, articleDetails, refetchArticle }) => {
   const isPlatformGroup = useIsPlatformGroup()
 
   const canHideArticles = isAdmin && isPlatformGroup
+  const canEditArticles = isAdmin // TODO: check and implement this feature
 
   return (
-    <div className={classes.wrapper}>
-      <PlaceholderButton>Download PDF</PlaceholderButton>
-      <PlaceholderButton>Print this page</PlaceholderButton>
-      <PlaceholderButton>Share this article</PlaceholderButton>
-      <PlaceholderButton>Rate this article</PlaceholderButton>
+    <Grid container spacing={2} className={classes.wrapper}>
+      <Grid item xs={12} sm={6} lg={12}>
+        <PlaceholderButton>Download PDF</PlaceholderButton>
+      </Grid>
+      <Grid item xs={12} sm={6} lg={12}>
+        <PlaceholderButton>Print this page</PlaceholderButton>
+      </Grid>
+      <Grid item xs={12} sm={6} lg={12}>
+        <PlaceholderButton>Share this article</PlaceholderButton>
+      </Grid>
+      <Grid item xs={12} sm={6} lg={12}>
+        <PlaceholderButton>Rate this article</PlaceholderButton>
+      </Grid>
       {canHideArticles && (
-        <HideButton
-          status={articleDetails.status}
-          articleId={articleDetails.id}
-          refetchArticle={refetchArticle}
-        />
+        <Grid item xs={12} sm={6} lg={12}>
+          <HideButton
+            status={articleDetails.status}
+            articleId={articleDetails.id}
+            refetchArticle={refetchArticle}
+          />
+        </Grid>
       )}
-    </div>
+      {canEditArticles && (
+        <Grid item xs={12} sm={6} lg={12}>
+          <PlaceholderButton>Edit mode</PlaceholderButton>
+        </Grid>
+      )}
+    </Grid>
   )
 }
 
@@ -57,7 +75,18 @@ ContentOptions.propTypes = {
 
 export default withStyles(theme => ({
   wrapper: {
+    marginTop: theme.spacing(1),
     // Balances buttons' click/hover highlight areas in layout
     marginLeft: theme.spacing(-1),
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(),
+      marginBottom: theme.spacing(),
+      paddingTop: theme.spacing(),
+      paddingBottom: theme.spacing(),
+      borderWidth: '2px',
+      borderColor: theme.palette.background.light,
+      borderTopStyle: 'solid',
+      borderBottomStyle: 'solid',
+    },
   },
 }))(ContentOptions)

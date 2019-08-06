@@ -14,7 +14,7 @@ const HideButton = ({ classes, articleId, status, refetchArticle }) => {
   const [updateArticle] = useMutation(updateArticleMutation)
 
   const isHidden = status === 'hidden'
-  const actionVerb = isHidden ? 'Show' : 'Hide'
+  const actionVerb = isHidden ? 'Republish' : 'Hide'
   const ActionIcon = isHidden ? VisibilityIcon : VisibilityOffIcon
 
   const onClick = async () => {
@@ -66,6 +66,8 @@ HideButton.propTypes = {
 export default withStyles(theme => ({
   root: {
     display: 'flex',
+    whiteSpace: 'initial',
+    textAlign: 'left',
     ...theme.typography.h4,
   },
   icon: {
