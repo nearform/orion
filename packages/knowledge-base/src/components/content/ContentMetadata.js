@@ -6,6 +6,7 @@ import Taxonomies from './Taxonomies'
 import BookmarkButton from '../BookmarkButton'
 import { withStyles, Grid, Hidden, Typography } from '@material-ui/core'
 import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
+import { isAuthenticatedSync } from '../../utils/auth'
 
 const ContentMetadata = ({ classes, content }) => {
   const knowledgeTypes = useKnowledgeTypes()
@@ -42,13 +43,13 @@ const ContentMetadata = ({ classes, content }) => {
         ))}
       </Grid>
       <Grid item xs={5} sm={12}>
-        <PublishDate date={content.created_at} />
+        <PublishDate date={content.published_at} />
       </Grid>
       <Grid item xs={5} sm={12}>
-        <ReadTime fields={content.fields} />
+        {content.fields && <ReadTime fields={content.fields} />}
       </Grid>
       <Grid item xs={2} sm={12}>
-        <BookmarkButton articleId={content.id} />
+        {isAuthenticatedSync() && <BookmarkButton articleId={content.id} />}
       </Grid>
       <Grid item xs={12}>
         <Taxonomies items={content.taxonomy_items} />

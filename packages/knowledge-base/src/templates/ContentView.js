@@ -1,31 +1,46 @@
-import React from 'react'
-import { useQuery } from 'graphql-hooks'
-import { withStyles, Grid, Hidden, Typography } from '@material-ui/core'
+import React, { useState, useEffect } from 'react'
+import { useIsAuthenticated, isAuthenticatedSync } from '../utils/auth'
 import get from 'lodash/get'
-
+import { useManualQuery } from 'graphql-hooks'
+import { getArticleDetails } from '../queries'
+import classnames from 'classnames'
+import {
+  withStyles,
+  Grid,
+  Hidden,
+  Typography,
+  LinearProgress,
+} from '@material-ui/core'
 import { PaddedContainer } from 'components'
-import { getArticleDetails } from '../../queries'
-import RichText from './RichText'
-import ContentMetadata from './ContentMetadata'
-import ContentOptions from './ContentOptions'
-import FeatureArticles from '../FeatureArticles'
+import RichText from '../components/content//RichText'
+import ContentMetadata from '../components/content/ContentMetadata'
+import ContentOptions from '../components/content/ContentOptions'
+import FeatureArticles from '../components/FeatureArticles'
 
-const ViewArticle = ({ classes, slug }) => {
-  const contentId = slug.split('-')[0]
-  const { data: articleData } = useQuery(getArticleDetails, {
-    variables: {
-      id: contentId,
-    },
-  })
+function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
+  const { path } = articleSummary || { path: slug }
+  const isAuthenticated = useIsAuthenticated()
+  const [articleFull, setArticleFull] = useState(null)
+  const [isLoading, setIsLoading] = useState(isAuthenticatedSync())
+  const [getArticleDetailsQuery] = useManualQuery(getArticleDetails)
+  const contentId = path.split('-')[0]
+  useEffect(() => {
+    if (contentId && isAuthenticated) {
+      setIsLoading(true)
+      getArticleDetailsQuery({
+        variables: { id: contentId },
+      })
+        .then(({ data }) => {
+          setArticleFull(get(data, 'articleDetails'))
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
+    }
+  }, [isAuthenticated, contentId, getArticleDetailsQuery])
 
-  const articleDetails = get(articleData, 'articleDetails')
-  const recomended_articles = get(
-    articleDetails,
-    'recommended_articles',
-    []
-  ).map(({ recommended_article }) => recommended_article)
-  //TODO: nicer loading indication
-  if (!articleDetails) return null
+  const articleData = articleFull || articleSummary
+  if (!articleData) return null
   return (
     <PaddedContainer>
       <Grid
@@ -36,7 +51,7 @@ const ViewArticle = ({ classes, slug }) => {
       >
         <Grid item xs={12} sm={4} lg={3}>
           <div className={classes.spacingRight}>
-            <ContentMetadata content={articleDetails} />
+            <ContentMetadata content={articleData} />
             <Hidden only={['xs', 'lg', 'xl']}>
               <div className={classes.gapAbove}>
                 <ContentOptions className={classes.gapAbove} />
@@ -46,9 +61,16 @@ const ViewArticle = ({ classes, slug }) => {
         </Grid>
         <Grid item xs={12} sm={8} lg={6} className={classes.article}>
           <div>
-            <Typography variant="h1">{articleDetails.title}</Typography>
-            <Typography variant="h2">{articleDetails.subtitle}</Typography>
-            {articleDetails.fields
+            <LinearProgress
+              className={classnames({
+                [classes.loadingBar]: true,
+                show: isLoading,
+              })}
+            />
+            <Typography variant="h1">{articleData.title}</Typography>
+            <Typography variant="h2">{articleData.subtitle}</Typography>
+            {!articleFull && <RichText value={articleData.summary} />}
+            {get(articleData, 'fields', [])
               .filter(({ value }) => !!value)
               .map(getFieldType)}
           </div>
@@ -61,7 +83,13 @@ const ViewArticle = ({ classes, slug }) => {
           </Grid>
         </Hidden>
       </Grid>
-      <FeatureArticles title="Further reading" articles={recomended_articles} />
+      <FeatureArticles
+        hideEmpty
+        title="Further reading"
+        articles={get(articleData, 'recommended_articles', []).map(
+          ({ recommended_article }) => recommended_article
+        )}
+      />
     </PaddedContainer>
   )
 }
@@ -78,6 +106,15 @@ const getFieldType = field => {
 export default withStyles(theme => ({
   mainWrapper: {
     marginBottom: theme.spacing(),
+  },
+  loadingBar: {
+    marginTop: theme.spacing(-0.5),
+    height: theme.spacing(0.5),
+    transition: theme.transitions.create('opacity'),
+    opacity: 0,
+    '&.show': {
+      opacity: 1,
+    },
   },
   gapAbove: {
     marginTop: theme.spacing(8),
@@ -112,4 +149,4 @@ export default withStyles(theme => ({
     '& i': theme.articleTypography.italic,
     '& a': theme.articleTypography.link,
   },
-}))(ViewArticle)
+}))(ContentView)
