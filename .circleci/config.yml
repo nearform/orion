@@ -1,4 +1,3 @@
-
 install_hasura_cli: &install_hasura_cli
   run:
     name: Install Hasura CLI
@@ -42,7 +41,7 @@ get_envars: &get_envars
         echo "export GATSBY_AWS_COGNITO_USER_POOL_ID=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_COGNITO_USER_POOL_ID --with-decryption --query Parameters[0].Value --output=text)" >> .env
         echo "export GATSBY_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID --with-decryption --query Parameters[0].Value --output=text)" >> .env
         echo "export GATSBY_AWS_S3_BUCKET=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_S3_BUCKET --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export HASURA_GRAPHQL_ENDPOINT=$(aws ssm get-parameters --name /${ORG}/GATSBY_GRAPHQL_API --with-decryption --query Parameters[0].Value --output=text)" >> .env
+        echo "export HASURA_GRAPHQL_ENDPOINT=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ENDPOINT --with-decryption --query Parameters[0].Value --output=text)" >> .env
         echo "export HASURA_GRAPHQL_ADMIN_SECRET=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ADMIN_SECRET --with-decryption --query Parameters[0].Value --output=text)" >> .env
         echo "export ARTIFACTS_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/s3_deploy_artifacts --with-decryption --query Parameters[0].Value --output=text)" >> .env
         echo "export ASSESSBASE_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/assessbase_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
