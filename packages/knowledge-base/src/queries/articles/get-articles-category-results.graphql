@@ -1,0 +1,40 @@
+query getCategoryArticles(
+  $whereClause: article_bool_exp
+  $limit: Int!
+  $offset: Int!
+) {
+  article(where: $whereClause, limit: $limit, offset: $offset) {
+    id
+    thumbnail
+    title
+    summary
+    created_at
+    published_at
+    updated_at
+    status
+    primary_taxonomy: taxonomy_items(
+      limit: 1
+      order_by: { taxonomy: { taxonomy_type: { order_index: asc } } }
+    ) {
+      taxonomy {
+        name
+        key
+      }
+    }
+    taxonomy_items {
+      taxonomy_id
+    }
+    createdBy {
+      first_name
+      last_name
+    }
+    knowledge_type
+    path
+    editors_pick
+  }
+  article_aggregate(where: $whereClause) {
+    aggregate {
+      count
+    }
+  }
+}

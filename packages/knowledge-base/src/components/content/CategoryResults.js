@@ -1,6 +1,6 @@
 import React from 'react'
 import { useQuery } from 'graphql-hooks'
-import { getArticlesSearchResults } from '../../queries'
+import { getArticlesCategoryResults } from '../../queries'
 import { Grid } from '@material-ui/core'
 import ArticleSummary from './ArticleSummary'
 
@@ -8,7 +8,7 @@ const extractArticleData = data => {
   const summaries = []
   const taxonomyIds = []
   if (data !== undefined) {
-    data.search_article.map(item => {
+    data.article.map(item => {
       summaries.push(
         <ArticleSummary key={'article_id_' + item.id} article={item} />
       )
@@ -20,25 +20,23 @@ const extractArticleData = data => {
   return { taxonomyIds, summaries }
 }
 
-const buildWhereClause = tax => {
+const buildWhereClause = (cat, tax) => {
   const clause = {
     status: { _in: ['in-progress', 'in-review', 'published'] },
-    //status: 'published'
+    _and: [{ taxonomy_items: { taxonomy: { key: { _ilike: cat } } } }],
   }
-  if (tax.length >= 1) {
-    clause.taxonomy_items = { taxonomy_id: { _in: tax } }
+  if (tax.length > 0) {
+    clause._and.push({ taxonomy_items: { taxonomy_id: { _in: tax } } })
   }
-
   return clause
 }
 
-const SearchResults = ({ term, taxonomy = [], callback, offset }) => {
-  const { data: articleData } = useQuery(getArticlesSearchResults, {
+const CategoryResults = ({ cat, taxonomy = [], callback, offset }) => {
+  const { data: articleData } = useQuery(getArticlesCategoryResults, {
     variables: {
-      titleLike: term,
+      whereClause: buildWhereClause(cat, taxonomy),
       limit: 10,
       offset: offset,
-      whereClause: buildWhereClause(taxonomy),
     },
     useCache: false,
   })
@@ -47,7 +45,7 @@ const SearchResults = ({ term, taxonomy = [], callback, offset }) => {
   if (!articleData) return null
 
   const { taxonomyIds, summaries } = extractArticleData(articleData)
-  const totalResults = articleData.search_article_aggregate.aggregate.count
+  const totalResults = articleData.article_aggregate.aggregate.count
   const range = totalResults >= 10 ? 10 : totalResults
   callback({ totalResults, range, taxonomyIds })
 
@@ -60,4 +58,4 @@ const SearchResults = ({ term, taxonomy = [], callback, offset }) => {
   )
 }
 
-export default SearchResults
+export default CategoryResults

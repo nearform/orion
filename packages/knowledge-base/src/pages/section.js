@@ -10,9 +10,9 @@ export default function Content() {
       <ProtectedRoute
         requiresGroup
         component={ListContent}
-        path="/search/:term"
+        path="/section/:cat"
       />
-      <ListContent path="/search/:term" />
+      <ListContent path="/section/:cat" />
     </Router>
   )
 }

@@ -1,51 +1,27 @@
 import React from 'react'
+import { navigate } from '@reach/router'
 import classnames from 'classnames'
-import { useQuery } from 'graphql-hooks'
-import get from 'lodash/get'
+import TaxonomyItem from './TaxonomyItem'
+import useTaxonomies from '../../hooks/useTaxonomies'
 import { withStyles, Typography } from '@material-ui/core'
 
-import { getTaxonomyTypes } from '../../queries'
-
-const Taxonomies = ({ classes, items, showAll }) => {
-  const { data: taxonomyData } = useQuery(getTaxonomyTypes)
-  const taxonomyTypes = get(taxonomyData, 'taxonomy_type', [])
-  //TODO: nicer loading indication
-  if (!taxonomyTypes) return null
-
-  const taxonomyDirty = []
-  for (let obj of items) {
-    taxonomyDirty.push(obj.taxonomy_id)
-  }
-  const taxonomyIds = taxonomyDirty.filter((val, i, a) => a.indexOf(val) === i)
-
-  const listMatchingItems = item => {
-    if (taxonomyIds.find(itemId => itemId === item.id)) {
-      return (
-        <div
-          key={'taxonomy_item_' + item.id}
-          className={classnames(
-            classes.inlinable,
-            classes.TaxonomyItem,
-            classes['TaxonomyC' + taxonomyColor]
-          )}
-        >
-          {item.name}
-        </div>
-      )
-    } else if (showAll) {
-      return (
-        <div key={'taxonomy_item_' + item.id} className={classes.TaxonomyItem}>
-          {item.name}
-        </div>
-      )
+const Taxonomies = ({ classes, taxonomyIds, showAll, callback }) => {
+  const taxonomyTypes = useTaxonomies(taxonomyIds)
+  const handleCallback = (id, active, key) => {
+    if (!showAll) {
+      navigate('/section/' + key)
+    } else {
+      active
+        ? (taxonomyIds = [...taxonomyIds, id])
+        : (taxonomyIds = taxonomyIds.filter(item => item !== id))
+      if (typeof callback === 'function') {
+        callback(taxonomyIds)
+      }
     }
   }
-  let taxonomyColor = 0
-
   return (
     <>
       {taxonomyTypes.map(type => {
-        taxonomyColor++
         return (
           <div
             className={classes.TaxonomyType}
@@ -56,7 +32,16 @@ const Taxonomies = ({ classes, items, showAll }) => {
             >
               {type.name}
             </Typography>
-            {type.taxonomy_items.map(item => listMatchingItems(item))}
+            {type.taxonomy_items.map(item =>
+              showAll || item.active ? (
+                <TaxonomyItem
+                  key={`tax_item_${item.id}`}
+                  item={item}
+                  filter={taxonomyIds}
+                  callback={handleCallback}
+                />
+              ) : null
+            )}
           </div>
         )
       })}
@@ -76,62 +61,7 @@ export default withStyles(theme => ({
       marginRight: theme.spacing(1.5),
     },
   },
-  inlinable: {
-    [theme.breakpoints.down('xs')]: {
-      display: 'inline-block',
-    },
-  },
   TaxonomyType: {
     margin: theme.spacing(1, 0, 2),
-  },
-  TaxonomyItem: {
-    color: theme.palette.primary.dark,
-    fontWeight: '900',
-    fontSize: '12px',
-    letterSpacing: '2.45px',
-    textTransform: 'uppercase',
-    padding: '4px 8px',
-    marginTop: '16px',
-    width: 'max-content',
-  },
-  TaxonomyC1: {
-    [theme.breakpoints.down('xs')]: {
-      color: theme.palette.primary.dark,
-    },
-    [theme.breakpoints.up('sm')]: {
-      color: 'white',
-      letterSpacing: '1.8px',
-      backgroundColor: theme.palette.primary.dark,
-    },
-  },
-  TaxonomyC2: {
-    [theme.breakpoints.down('xs')]: {
-      color: theme.palette.primary.main,
-    },
-    [theme.breakpoints.up('sm')]: {
-      color: 'white',
-      letterSpacing: '1.8px',
-      backgroundColor: theme.palette.primary.main,
-    },
-  },
-  TaxonomyC3: {
-    [theme.breakpoints.down('xs')]: {
-      color: theme.palette.primary.light,
-    },
-    [theme.breakpoints.up('sm')]: {
-      color: 'white',
-      letterSpacing: '1.8px',
-      backgroundColor: theme.palette.primary.light,
-    },
-  },
-  TaxonomyC4: {
-    [theme.breakpoints.down('xs')]: {
-      color: theme.palette.secondary.dark,
-    },
-    [theme.breakpoints.up('sm')]: {
-      color: 'white',
-      letterSpacing: '1.8px',
-      backgroundColor: theme.palette.secondary.dark,
-    },
   },
 }))(Taxonomies)

@@ -18,6 +18,7 @@ import QuickLinksMenu, {
   QuickLinkButton,
 } from './QuickLinksMenu'
 import { useIsAuthenticated } from '../utils/auth'
+import useTaxonomies from '../hooks/useTaxonomies'
 import usePrevious from '../hooks/usePrevious'
 
 const MyContentButton = withStyles(theme => ({
@@ -47,8 +48,9 @@ const WAIT_INTERVAL = 1000
 function SecondaryNavigation({ classes, dark }) {
   const [search, setSearch] = useState(false)
   const [searchText, setSearchText] = useState('')
-  const isAuthenticated = useIsAuthenticated()
   const prevSearchText = usePrevious(searchText)
+  const isAuthenticated = useIsAuthenticated()
+  const taxonomyTypes = useTaxonomies()
   let typingTimeout = null
 
   useEffect(() => {
@@ -76,27 +78,20 @@ function SecondaryNavigation({ classes, dark }) {
 
   return !search ? (
     <Grid container justify="flex-end" spacing={3}>
-      <Grid item>
-        <QuickLinksMenu dark={dark} label={'Topics'}>
-          <QuickLinksMenuItem>Test 1</QuickLinksMenuItem>
-          <QuickLinksMenuItem>Test 2</QuickLinksMenuItem>
-          <QuickLinksMenuItem>Test Longer</QuickLinksMenuItem>
-        </QuickLinksMenu>
-      </Grid>
-      <Grid item>
-        <QuickLinksMenu dark={dark} label={'Categories'}>
-          <QuickLinksMenuItem>Test 1</QuickLinksMenuItem>
-          <QuickLinksMenuItem>Test 2</QuickLinksMenuItem>
-          <QuickLinksMenuItem>Test Longer</QuickLinksMenuItem>
-        </QuickLinksMenu>
-      </Grid>
-      <Grid item>
-        <QuickLinksMenu dark={dark} label={'Sectors'}>
-          <QuickLinksMenuItem>Test 1</QuickLinksMenuItem>
-          <QuickLinksMenuItem>Test 2</QuickLinksMenuItem>
-          <QuickLinksMenuItem>Test Longer</QuickLinksMenuItem>
-        </QuickLinksMenu>
-      </Grid>
+      {taxonomyTypes.map(type => (
+        <Grid item key={`tax_type_${type.key}`}>
+          <QuickLinksMenu dark={dark} label={type.name}>
+            {type.taxonomy_items.map(item => (
+              <QuickLinksMenuItem
+                key={`quick_link_${item.key}`}
+                onClick={() => navigate('/section/' + item.key)}
+              >
+                {item.name}
+              </QuickLinksMenuItem>
+            ))}
+          </QuickLinksMenu>
+        </Grid>
+      ))}
       <Grid item>
         <QuickLinkButton dark={dark} onClick={() => setSearch(!search)}>
           <Icon component={SearchIcon} color="secondary" />

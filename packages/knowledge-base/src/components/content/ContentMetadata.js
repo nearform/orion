@@ -9,6 +9,9 @@ import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
 
 const ContentMetadata = ({ classes, content }) => {
   const knowledgeTypes = useKnowledgeTypes()
+  const taxonomyIds = [
+    ...content.taxonomy_items.map(({ taxonomy_id }) => taxonomy_id),
+  ]
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -51,7 +54,7 @@ const ContentMetadata = ({ classes, content }) => {
         <BookmarkButton articleId={content.id} />
       </Grid>
       <Grid item xs={12}>
-        <Taxonomies items={content.taxonomy_items} showAll={false} />
+        <Taxonomies taxonomyIds={taxonomyIds} showAll={false} />
       </Grid>
     </Grid>
   )
