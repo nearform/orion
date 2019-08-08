@@ -1,0 +1,15 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns: []
+      filter:
+        user:
+          user_groups:
+            group_id:
+              _eq: X-Hasura-Group-Id
+      limit: null
+    role: company-admin
+    table:
+      name: user_role
+      schema: public
+  type: create_select_permission

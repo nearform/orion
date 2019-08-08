@@ -3,7 +3,12 @@ import { sha256 } from 'js-sha256'
 import { Storage } from 'aws-amplify'
 import useAmplifyImage from './useAmplifyImage'
 
-function useImageUpload({ path, onChange = () => null, value }) {
+function useImageUpload({
+  path,
+  onChange = () => null,
+  value,
+  generateFileName = true,
+}) {
   const inputFieldRef = useRef()
   const [uploadProgress, setUploadProgress] = useState(0)
   const [valueCache, setValueCache] = useState(value || null)
@@ -22,7 +27,9 @@ function useImageUpload({ path, onChange = () => null, value }) {
       await Storage.remove(valueCache)
     }
     const { key: s3Key } = await Storage.put(
-      `${path}/${sha256(`${file.name}${Date.now()}`)}.${ext}`,
+      generateFileName
+        ? `${path}/${sha256(`${file.name}${Date.now()}`)}.${ext}`
+        : `${path}.${ext}`,
       file,
       {
         progressCallback({ loaded, total }) {

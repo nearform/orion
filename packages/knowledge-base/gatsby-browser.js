@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 import { RootWrapper, Layout, ThemeWrapper, theme } from 'components'
 import * as auth from './utils/auth'
-import AuthInitContext from './src/utils/AuthInitContext'
+import { AuthInitContext } from './src/utils/auth'
 // import * as i18n from './utils/i18n' - TODO: add with content
 import { useState, useEffect } from 'react'
 import AppFooter from './src/components/AppFooter'

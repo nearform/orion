@@ -22,6 +22,16 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const homeTemplate = require.resolve('./src/templates/home.js')
   const ContentViewTemplate = require.resolve('./src/templates/ContentView.js')
+  const ProfileViewTemplate = require.resolve('./src/templates/Profile.js')
+
+  createPage({
+    path: '/',
+    component: homeTemplate,
+    context: {
+      heroImageName: config.heroImageNameKB,
+    },
+  })
+
   const articlesQueryResults = await graphql(`
     {
       raw_salmon {
@@ -69,19 +79,51 @@ exports.createPages = async ({ graphql, actions }) => {
     []
   )
 
-  createPage({
-    path: '/',
-    component: homeTemplate,
-    context: {
-      heroImageName: config.heroImageNameKB,
-    },
-  })
-
   publishedArticles.forEach(articleSummary => {
     createPage({
       path: `/content/${articleSummary.path}`,
       component: ContentViewTemplate,
       context: { articleSummary },
+    })
+  })
+
+  const usersQueryResults = await graphql(`
+    {
+      raw_salmon {
+        user {
+          id
+          first_name
+          last_name
+          email
+          signupRequest
+          avatar
+          biography
+          linkedin
+          website
+          twitter
+          title
+          consent_contact
+          consent_directory
+          user_roles {
+            role {
+              name
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  if (usersQueryResults.errors) {
+    throw usersQueryResults.errors
+  }
+  const users = get(usersQueryResults, 'data.raw_salmon.user', [])
+
+  users.forEach(user => {
+    createPage({
+      path: `/profile/${user.id}`,
+      component: ProfileViewTemplate,
+      context: { user },
     })
   })
 
