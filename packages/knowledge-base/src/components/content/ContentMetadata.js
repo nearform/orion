@@ -1,5 +1,6 @@
-import React from 'react'
-import { UserAvatar } from 'components'
+import React, { useState } from 'react'
+import classnames from 'classnames'
+import { UserAvatar, CollapsedAvatars } from 'components'
 import PublishDate from './PublishDate'
 import ReadTime from './ReadTime'
 import Taxonomies from './Taxonomies'
@@ -9,6 +10,8 @@ import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
 import { isAuthenticatedSync } from '../../utils/auth'
 
 const ContentMetadata = ({ classes, content }) => {
+  const [avatarsOpen, setAvatarsOpen] = useState(false)
+
   const knowledgeTypes = useKnowledgeTypes()
   return (
     <Grid container spacing={2}>
@@ -28,9 +31,24 @@ const ContentMetadata = ({ classes, content }) => {
         </Grid>
       </Hidden>
       <Grid item xs={12}>
+        {content.authors.length > 1 && (
+          <Hidden smUp>
+            <CollapsedAvatars
+              users={content.authors.map(({ author }) => author)}
+              label="Multiple authors"
+              onClick={isOpen => setAvatarsOpen(isOpen)}
+              isOpen={avatarsOpen}
+            />
+          </Hidden>
+        )}
         {content.authors.map(({ author }) => (
-          // TODO: Collapse this on narrow view for multiple authors
-          <div className={classes.listedUser} key={author.id}>
+          <div
+            key={author.id}
+            className={classnames(
+              { [classes.xsHidden]: !avatarsOpen },
+              classes.listedUser
+            )}
+          >
             <UserAvatar
               user={{
                 firstName: author.first_name,
@@ -70,5 +88,10 @@ export default withStyles(theme => ({
   },
   listedUser: {
     marginBottom: theme.spacing(1),
+  },
+  xsHidden: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
   },
 }))(ContentMetadata)

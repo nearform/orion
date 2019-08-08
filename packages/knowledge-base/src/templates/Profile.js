@@ -4,7 +4,6 @@ import {
   Grid,
   Typography,
   Button,
-  Avatar,
   Checkbox,
   FormControlLabel,
   CircularProgress,
@@ -16,7 +15,7 @@ import get from 'lodash/get'
 import omit from 'lodash/omit'
 import { Formik, Form, Field } from 'formik'
 import { fieldToCheckbox } from 'formik-material-ui'
-import { PaddedContainer } from 'components'
+import { AvatarImage, PaddedContainer } from 'components'
 import { updateUserMutation, getUser } from '../queries'
 import { UserInfo, formFields, validationSchema } from '../components/profile'
 import UploadImageWidget from '../components/UploadImageWidget'
@@ -96,7 +95,7 @@ const Profile = ({ pageContext: { user: userContext } = {}, classes }) => {
                   <Grid container item xs={2} direction="column">
                     <Grid item>
                       <div className={classes.flexContainerHorizontalVertical}>
-                        <Avatar
+                        <AvatarImage
                           {...(values.avatar && {
                             src: constructImageUrl(
                               `${values.avatar}${
@@ -106,14 +105,12 @@ const Profile = ({ pageContext: { user: userContext } = {}, classes }) => {
                               }`
                             ),
                           })}
+                          user={user}
                           className={classnames([
                             classes.avatar,
                             { [classes.avatarSmall]: editMode },
                           ])}
-                        >
-                          {(user.first_name || '').charAt(0)}
-                          {(user.last_name || '').charAt(0)}
-                        </Avatar>
+                        />
                       </div>
                     </Grid>
 

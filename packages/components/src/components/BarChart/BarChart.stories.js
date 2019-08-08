@@ -6,7 +6,7 @@ import { withKnobs, number } from '@storybook/addon-knobs'
 import { withStyles } from '@material-ui/core'
 
 import BarChart from './BarChart'
-import { getSampleColors, getSampleData } from './util.storybook.js'
+import { getSampleColors, getSampleData } from './utils.storybook.js'
 
 const containerStyles = theme => ({
   root: {

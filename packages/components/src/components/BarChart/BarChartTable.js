@@ -15,7 +15,7 @@ import classnames from 'classnames'
 
 import BarChartTableRow from './BarChartTableRow'
 import ChartTicks from '../ChartTicks'
-import { getOverallScore, chartDataShape } from './util.js'
+import { getOverallScore, chartDataShape } from './utils'
 
 function BarChartTable({ classes, theme, chartData, assessmentId }) {
   const barHeight = theme.spacing(4)

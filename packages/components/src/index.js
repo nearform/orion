@@ -7,7 +7,7 @@ export { default as PaddedContainer } from './components/PaddedContainer'
 export { default as ScoringSlider } from './components/ScoringSlider'
 export { default as BarChart } from './components/BarChart/BarChart'
 export { default as BarChartTable } from './components/BarChart/BarChartTable'
-export { getChartData } from './components/BarChart/util.js'
+export { getChartData } from './components/BarChart/utils'
 
 // status chips
 export {
@@ -30,7 +30,7 @@ export {
 } from './components/RichTextEditor/RichTextEditor'
 
 // i18n / translation / language switching
-export { default as addTranslations } from './components/translations/util'
+export { default as addTranslations } from './components/translations/utils'
 export {
   default as getLanguageSwitcher,
 } from './components/translations/getLanguageSwitcher'
@@ -46,5 +46,9 @@ export { default as Layout } from './components/page/Layout'
 export { default as RootWrapper } from './components/page/RootWrapper'
 export { default as SectionTitle } from './components/page/SectionTitle'
 export { default as SEOHeaders } from './components/page/SEOHeaders'
-export { default as UserAvatar } from './components/UserAvatar'
+export { default as UserAvatar } from './components/UserAvatar/UserAvatar'
+export { default as AvatarImage } from './components/UserAvatar/AvatarImage'
+export {
+  default as CollapsedAvatars,
+} from './components/UserAvatar/CollapsedAvatars'
 export { default as EmbededVideo } from './components/EmbededVideo'
