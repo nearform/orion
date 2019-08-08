@@ -22,8 +22,10 @@ const extractArticleData = data => {
 
 const buildWhereClause = tax => {
   const clause = {
-    status: { _in: ['in-progress', 'in-review', 'published'] },
-    //status: 'published'
+    //FOR TESTING, CAN SELECT ALL STATUS TYPES BY UNCOMMENTING BELOW
+    //status: { _in: ['in-progress', 'in-review', 'published'] },
+    //IF ABOVE IS UNCOMMENTED, COMMENT OUT BELOW
+    status: { _eq: 'published' },
   }
   if (tax.length >= 1) {
     clause.taxonomy_items = { taxonomy_id: { _in: tax } }
@@ -49,7 +51,7 @@ const SearchResults = ({ term, taxonomy = [], callback, offset }) => {
   const { taxonomyIds, summaries } = extractArticleData(articleData)
   const totalResults = articleData.search_article_aggregate.aggregate.count
   const range = totalResults >= 10 ? 10 : totalResults
-  callback({ totalResults, range, taxonomyIds })
+  callback({ taxonomyIds, totalResults, range })
 
   return (
     <>

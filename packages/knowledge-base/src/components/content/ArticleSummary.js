@@ -72,7 +72,6 @@ export default withStyles(theme => ({
     color: theme.palette.secondary.main,
   },
   readMore: {
-    fontFamily: 'Lato',
     fontSize: '11px',
     fontWeight: 'bold',
     letterSpacing: '1.23px',
@@ -86,7 +85,6 @@ export default withStyles(theme => ({
     position: 'relative',
     top: '-33px',
     '& h2': {
-      fontFamily: 'Lato',
       fontSize: '12px',
       fontWeight: '900',
       letterSpacing: '2.45px',
@@ -98,7 +96,6 @@ export default withStyles(theme => ({
   articleSummary: {
     '& h1': {
       fontSize: '21px',
-      fontFamily: 'Lato',
       fontWeight: 'bold',
       fontStyle: 'normal',
       fontStretch: 'normal',
@@ -107,7 +104,6 @@ export default withStyles(theme => ({
       color: theme.palette.primary.dark,
     },
     '& h3': {
-      fontFamily: 'Lato',
       fontSize: '11px',
       fongWeight: 'bold',
       letterSpacing: '1.23px',
@@ -116,7 +112,6 @@ export default withStyles(theme => ({
     '& p': {
       height: '64px',
       overflow: 'hidden',
-      fontFamily: 'Lato',
       fontSize: '14px',
       letterSpacing: '-0.15px',
       margin: '2px 4px',
