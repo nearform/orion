@@ -3,6 +3,7 @@ import SearchResults from './SearchResults'
 import CategoryResults from './CategoryResults'
 import Taxonomies from './Taxonomies'
 import usePrevious from '../../hooks/usePrevious'
+import useTaxonomies from '../../hooks/useTaxonomies'
 import { withStyles, Grid, Typography, Button } from '@material-ui/core'
 import SEO from '../SEO'
 
@@ -14,6 +15,7 @@ const ListContent = ({ classes, term, cat }) => {
   const [range, setRange] = useState(0)
   const [taxonomyIds, setTaxonomyIds] = useState([])
   const [offset, setOffset] = useState(0)
+  const taxonomyTypes = useTaxonomies()
   const handleContentData = ({ taxonomyIds, totalResults, range }) => {
     setTotalResults(totalResults)
     setRange(range)
@@ -28,19 +30,36 @@ const ListContent = ({ classes, term, cat }) => {
   const handlePagination = dir => {
     setOffset(offset + 10 * dir)
   }
+  let section = {
+    id: 0,
+    key: '',
+    name: '',
+  }
+  if (cat) {
+    taxonomyTypes.map(type => {
+      type.taxonomy_items.map(item => {
+        if (item.key === cat) {
+          section = item
+          section.type = type.name
+        }
+      })
+    })
+  }
 
   return (
     <>
-      <SEO title={term ? `Search Results - ${term}` : `${cat} Section`} />
+      <SEO
+        title={term ? `Search Results - ${term}` : `${section.name} Section`}
+      />
       <Grid container spacing={3}>
         <Grid item xs={12} className={classes.pageHeader}>
           <Grid container spacing={3} alignItems="flex-end">
             <Grid item xs={9}>
               <Typography variant="h4" color="secondary">
-                {term ? 'SEARCH RESULTS FOR' : 'SECTION'}
+                {term ? 'SEARCH RESULTS FOR' : section.type}
               </Typography>
               <Typography variant="h1">
-                &lsquo;{term ? term : cat}&rsquo;
+                &lsquo;{term ? term : section.name}&rsquo;
               </Typography>
             </Grid>
             <Grid item xs={3}>

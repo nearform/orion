@@ -3,13 +3,14 @@ import classnames from 'classnames'
 import { withStyles, Button } from '@material-ui/core'
 
 const TaxonomyItem = ({ classes, item, filter, callback }) => {
+  let isActive = false
   const handleCallback = () => {
     if (typeof callback === 'function') {
-      callback(item.id, !item.active, item.key)
+      callback(item.id, !isActive, item.key)
     }
   }
   if (filter.includes(item.id)) {
-    item.active = true
+    isActive = true
     return (
       <Button
         key={'taxonomy_item_' + item.id}
@@ -24,7 +25,7 @@ const TaxonomyItem = ({ classes, item, filter, callback }) => {
       </Button>
     )
   } else {
-    item.active = false
+    isActive = false
     return (
       <Button
         key={'taxonomy_item_' + item.id}
