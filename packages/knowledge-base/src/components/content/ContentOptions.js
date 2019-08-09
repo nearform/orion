@@ -32,7 +32,10 @@ const ContentOptions = ({ classes, articleData, refetchArticle }) => {
   const isAdmin = useIsAdmin()
   const isPlatformGroup = useIsPlatformGroup()
 
-  const canHideArticles = isAdmin && isPlatformGroup
+  const { id, status } = articleData
+
+  const canShowHideArticle =
+    isAdmin && isPlatformGroup && ['published', 'hidden'].includes(status)
   const canEditArticles = isAdmin // TODO: check and implement this feature
 
   return (
@@ -49,11 +52,11 @@ const ContentOptions = ({ classes, articleData, refetchArticle }) => {
       <Grid item xs={12} sm={6} lg={12}>
         <PlaceholderButton>Rate this article</PlaceholderButton>
       </Grid>
-      {canHideArticles && (
+      {canShowHideArticle && (
         <Grid item xs={12} sm={6} lg={12}>
           <HideButton
-            status={articleData.status}
-            articleId={articleData.id}
+            status={status}
+            articleId={id}
             refetchArticle={refetchArticle}
           />
         </Grid>
