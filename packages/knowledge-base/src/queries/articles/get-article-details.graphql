@@ -9,6 +9,7 @@ query getArticleDetails($id: Int!) {
         email
         id
         title
+        avatar
       }
     }
     subtitle

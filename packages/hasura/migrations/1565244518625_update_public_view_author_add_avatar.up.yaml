@@ -1,0 +1,8 @@
+- args:
+    cascade: true
+    sql: "CREATE OR REPLACE VIEW \"public\".\"author\" AS \n SELECT \"user\".id,\n
+      \   \"user\".cognito_id,\n    \"user\".\"signupRequest\",\n    \"user\".pending,\n
+      \   \"user\".email,\n    \"user\".first_name,\n    \"user\".last_name,\n    \"user\".title,\n
+      \   \"user\".avatar\n   FROM \"user\"\n  WHERE (\"user\".id IN ( SELECT article_author.author_id\n
+      \          FROM article_author));"
+  type: run_sql

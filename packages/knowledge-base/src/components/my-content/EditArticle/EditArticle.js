@@ -6,6 +6,7 @@ import UploadImageWidget from '../../UploadImageWidget'
 import { useIsPlatformGroup, useUserId } from '../../../utils/auth'
 import SEO from '../../SEO'
 import { UserAvatar, EmbededVideo } from 'components'
+import { constructImageUrl } from '../../../utils/image'
 
 import {
   getTaxonomyTypes,
@@ -313,6 +314,7 @@ function EditArticle({ classes, articleId }) {
                             key={author.id}
                             user={author}
                             className={classes.author}
+                            src={constructImageUrl(author.avatar)}
                           />
                         ))}
                       </div>
