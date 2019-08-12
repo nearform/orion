@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useIsAuthenticated, isAuthenticatedSync } from '../utils/auth'
 import get from 'lodash/get'
 import { useManualQuery } from 'graphql-hooks'
-import { getArticleDetails } from '../queries'
 import classnames from 'classnames'
-import {
-  withStyles,
-  Grid,
-  Hidden,
-  Typography,
-  LinearProgress,
-} from '@material-ui/core'
+import { withStyles, Grid, Typography, LinearProgress } from '@material-ui/core'
+
+import { getArticleDetails } from '../queries'
+import { useIsAuthenticated, isAuthenticatedSync } from '../utils/auth'
 import { PaddedContainer } from 'components'
 import RichText from '../components/content//RichText'
 import ContentMetadata from '../components/content/ContentMetadata'
@@ -22,6 +17,7 @@ function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
   const isAuthenticated = useIsAuthenticated()
   const [articleFull, setArticleFull] = useState(null)
   const [isLoading, setIsLoading] = useState(isAuthenticatedSync())
+  const [isChanged, setIsChanged] = useState(Symbol())
   const [getArticleDetailsQuery] = useManualQuery(getArticleDetails)
   const contentId = path.split('-')[0]
   useEffect(() => {
@@ -37,7 +33,8 @@ function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
           setIsLoading(false)
         })
     }
-  }, [isAuthenticated, contentId, getArticleDetailsQuery])
+  }, [isAuthenticated, contentId, getArticleDetailsQuery, isChanged])
+  const refetchArticle = () => setIsChanged(Symbol())
 
   const articleData = articleFull || articleSummary
   if (!articleData) return null
@@ -46,17 +43,12 @@ function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
       <Grid
         container
         spacing={2}
-        justify="center"
+        justify="flex-end"
         className={classes.mainWrapper}
       >
         <Grid item xs={12} sm={4} lg={3}>
           <div className={classes.spacingRight}>
             <ContentMetadata content={articleData} />
-            <Hidden only={['xs', 'lg', 'xl']}>
-              <div className={classes.gapAbove}>
-                <ContentOptions className={classes.gapAbove} />
-              </div>
-            </Hidden>
           </div>
         </Grid>
         <Grid item xs={12} sm={8} lg={6} className={classes.article}>
@@ -75,13 +67,12 @@ function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
               .map(getFieldType)}
           </div>
         </Grid>
-        <Hidden only={['sm', 'md']}>
-          <Grid item xs={12} lg={3}>
-            <div className={classes.spacingLeft}>
-              <ContentOptions className={classes.spacingLeft} />
-            </div>
-          </Grid>
-        </Hidden>
+        <Grid item xs={12} sm={8} lg={3}>
+          <ContentOptions
+            articleData={articleData}
+            refetchArticle={refetchArticle}
+          />
+        </Grid>
       </Grid>
       <FeatureArticles
         hideEmpty

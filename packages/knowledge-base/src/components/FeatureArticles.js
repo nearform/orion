@@ -6,8 +6,8 @@ import ArticlePreview from './ArticlePreview'
 const FeatureArticles = ({ classes, title = '', articles = [], hideEmpty }) => {
   if (hideEmpty && !articles.length) return null
   return (
-    <Grid container spacing={2} justify="center">
-      <Grid item xs={12} md={2}>
+    <Grid container spacing={2} justify="flex-end" className={classes.root}>
+      <Grid item xs={12} md={3} lg={2}>
         <Typography variant="h3" className={classes.title}>
           {title}
         </Typography>
@@ -36,8 +36,11 @@ FeatureArticles.propTypes = {
 
 const styles = theme => ({
   root: {
-    display: 'flex',
     marginBottom: theme.spacing(4),
+    [theme.breakpoints.up('lg')]: {
+      // Align edge of boxes with article text
+      marginLeft: theme.spacing(-3),
+    },
   },
   clip: {
     overflowX: 'hidden',
