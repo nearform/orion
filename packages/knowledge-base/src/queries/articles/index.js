@@ -24,3 +24,7 @@ export {
 export {
   default as addRecommendedArticlesMutation,
 } from './add-article-recommendations.graphql'
+export {
+  default as addArticleRatingMutation,
+} from './add-article-rating.graphql'
+export { default as getArticleRating } from './get-article-rating.graphql'

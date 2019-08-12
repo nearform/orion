@@ -1,0 +1,16 @@
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - article_id
+      - id
+      - rating
+      - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+    role: user
+    table:
+      name: article_rating
+      schema: public
+  type: create_select_permission

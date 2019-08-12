@@ -71,7 +71,12 @@ const ContentMetadata = ({ classes, content }) => {
         {content.fields && <ReadTime fields={content.fields} />}
       </Grid>
       <Grid item xs={2} sm={12}>
-        {isAuthenticatedSync() && <BookmarkButton articleId={content.id} />}
+        {isAuthenticatedSync() && (
+          <BookmarkButton
+            articleId={content.id}
+            className={classes.bookmarkButton}
+          />
+        )}
       </Grid>
       <Grid item xs={12}>
         <Taxonomies items={content.taxonomy_items} />
@@ -86,6 +91,10 @@ export default withStyles(theme => ({
       height: theme.spacing(),
       backgroundColor: theme.palette.primary.dark,
     },
+  },
+  bookmarkButton: {
+    marginLeft: theme.spacing(1) * -1 - 2,
+    marginTop: theme.spacing(1) * -1,
   },
   knowledgeType: {
     color: theme.palette.primary.dark,

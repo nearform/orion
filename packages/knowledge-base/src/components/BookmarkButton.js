@@ -13,6 +13,7 @@ const BookmarkButton = ({
   bookmarked: bookmarkedProp,
   disabled: disabledProp,
   onToggle: onToggleProp,
+  className,
   classes,
 }) => {
   const userId = useUserId()
@@ -60,7 +61,7 @@ const BookmarkButton = ({
     <Button
       size="small"
       color="primary"
-      className={classes.iconButtonPrimary}
+      className={classnames([classes.iconButtonPrimary, className])}
       disabled={disabled || loading}
       onClick={toggleBookmark}
     >
@@ -93,8 +94,7 @@ BookmarkButton.propTypes = {
 
 export default withStyles(theme => ({
   iconButtonPrimary: {
-    color: theme.bookmarkButtonColor,
-    padding: '0px',
+    color: theme.articleWidgetColor,
     fontWeight: 'bold',
   },
   sidebarButtonIcon: {

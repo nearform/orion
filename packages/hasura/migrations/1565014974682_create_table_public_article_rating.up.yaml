@@ -1,0 +1,9 @@
+- args:
+    sql: CREATE TABLE "public"."article_rating"("id" serial NOT NULL, "article_id"
+      integer NOT NULL, "user_id" integer NOT NULL, "rating" integer NOT NULL, PRIMARY
+      KEY ("id") , UNIQUE ("id"), UNIQUE ("article_id", "user_id"));
+  type: run_sql
+- args:
+    name: article_rating
+    schema: public
+  type: add_existing_table_or_view

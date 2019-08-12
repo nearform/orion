@@ -24,10 +24,11 @@ export * from './components/StatusChip/UserRoleChip'
 export { default as GroupTypeChip } from './components/StatusChip/GroupTypeChip'
 export * from './components/StatusChip/GroupTypeChip'
 
-// content editting
+// content editting and widgets
 export {
   default as RichTextEditor,
 } from './components/RichTextEditor/RichTextEditor'
+export { default as RatingWidget } from './components/RatingWidget/RatingWidget'
 
 // i18n / translation / language switching
 export { default as addTranslations } from './components/translations/utils'

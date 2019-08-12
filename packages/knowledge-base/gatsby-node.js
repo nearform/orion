@@ -45,6 +45,14 @@ exports.createPages = async ({ graphql, actions }) => {
               key
             }
           }
+          rating: article_ratings_aggregate {
+            aggregate {
+              count
+              avg {
+                rating
+              }
+            }
+          }
           taxonomy_items {
             taxonomy_id
           }
