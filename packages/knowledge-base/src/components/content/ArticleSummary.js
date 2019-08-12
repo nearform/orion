@@ -2,7 +2,8 @@ import React from 'react'
 import { Link } from 'gatsby'
 import BookmarkButton from '../BookmarkButton'
 import RichText from './RichText'
-import useAmplifyImage from '../../hooks/useAmplifyImage'
+import { ImagePlaceholder } from 'components'
+import { constructImageUrl } from '../../utils/image'
 import { formatDateAsMonthAndYear } from '../../utils/date'
 import { withStyles, Grid, Typography } from '@material-ui/core'
 import get from 'lodash/get'
@@ -10,31 +11,32 @@ import get from 'lodash/get'
 const ArticleSummary = ({ classes, article }) => {
   return (
     <Grid container spacing={1} className={classes.summaryObj}>
-      <Grid item xs={3}>
-        <img
-          src={
-            useAmplifyImage(article.thumbnail) ||
-            'https://via.placeholder.com/280x140.png'
-          }
-          width="100%"
-          height="auto"
-        />
-        <div className={classes.topicBox}>
-          <Typography variant="h2">
-            {get(article, 'primary_taxonomy[0].taxonomy.name') || 'No Topic'}
-          </Typography>
-        </div>
-      </Grid>
+      <Link to={`/content/${article.path}`}>
+        <Grid item xs={3}>
+          <img
+            src={constructImageUrl(article.thumbnail) || ImagePlaceholder()}
+            width="100%"
+            height="auto"
+          />
+          <div className={classes.topicBox}>
+            <Typography variant="h3">
+              {get(article, 'primary_taxonomy[0].taxonomy.name') || 'No Topic'}
+            </Typography>
+          </div>
+        </Grid>
+      </Link>
       <Grid item className={classes.articleSummary} xs={9}>
-        <Typography variant="h1">{article.title || 'No Title'}</Typography>
+        <Link to={`/content/${article.path}`}>
+          <Typography variant="h2">{article.title || 'No Title'}</Typography>
+        </Link>
         <Grid container spacing={1} alignItems="center">
           <Grid item xs={3}>
-            <Typography variant="h3">
+            <Typography variant="h4">
               {formatDateAsMonthAndYear(article.created_at)}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography variant="h3" className={classes.subtle}>
+            <Typography variant="h4" className={classes.subtle}>
               {article.createdBy.first_name} {article.createdBy.last_name}
             </Typography>
           </Grid>
@@ -84,7 +86,7 @@ export default withStyles(theme => ({
     backgroundColor: theme.palette.primary.main,
     position: 'relative',
     top: '-33px',
-    '& h2': {
+    '& h3': {
       fontSize: '12px',
       fontWeight: '900',
       letterSpacing: '2.45px',
@@ -94,7 +96,7 @@ export default withStyles(theme => ({
     },
   },
   articleSummary: {
-    '& h1': {
+    '& h2': {
       fontSize: '21px',
       fontWeight: 'bold',
       fontStyle: 'normal',
@@ -103,7 +105,7 @@ export default withStyles(theme => ({
       letterSpacing: '-0.15px',
       color: theme.palette.primary.dark,
     },
-    '& h3': {
+    '& h4': {
       fontSize: '11px',
       fongWeight: 'bold',
       letterSpacing: '1.23px',

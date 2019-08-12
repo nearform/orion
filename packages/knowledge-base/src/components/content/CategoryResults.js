@@ -4,6 +4,8 @@ import { getArticlesCategoryResults } from '../../queries'
 import { Grid } from '@material-ui/core'
 import ArticleSummary from './ArticleSummary'
 
+const PAGE_SIZE = 10
+
 const extractArticleData = data => {
   const summaries = []
   const taxonomyIds = []
@@ -49,7 +51,7 @@ const CategoryResults = ({ cat, taxonomy = [], callback, offset }) => {
 
   const { taxonomyIds, summaries } = extractArticleData(articleData)
   const totalResults = articleData.article_aggregate.aggregate.count
-  const range = totalResults >= 10 ? 10 : totalResults
+  const range = Math.min(totalResults, PAGE_SIZE)
   callback({ taxonomyIds, totalResults, range })
 
   return (
