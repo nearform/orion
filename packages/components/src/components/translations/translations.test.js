@@ -1,4 +1,4 @@
-import addTranslations from './util'
+import addTranslations from './utils'
 
 const fakeI18next = () => ({
   resources: [],

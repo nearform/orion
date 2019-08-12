@@ -21,6 +21,7 @@ function UploadImageWidget({
   alwaysShowBox,
   classes,
   children,
+  generateFileName,
 }) {
   const {
     ImageInput,
@@ -33,11 +34,12 @@ function UploadImageWidget({
     path,
     onChange,
     value,
+    generateFileName,
   })
 
   useEffect(() => {
     onUpload(imageURL)
-  }, [imageURL])
+  }, [imageURL, onUpload])
 
   return (
     <>
@@ -115,6 +117,7 @@ UploadImageWidget.propTypes = {
   classes: T.object.isRequired,
   aspectRatio: T.number,
   alwaysShowBox: T.bool,
+  generateFileName: T.bool,
 }
 
 export default withStyles(theme => ({

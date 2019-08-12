@@ -1,4 +1,10 @@
-import { useEffect, useState, createContext } from 'react'
+import {
+  useEffect,
+  useState,
+  createContext,
+  useCallback,
+  useContext,
+} from 'react'
 import { Auth, Hub } from 'aws-amplify'
 
 const isBrowser = typeof window !== 'undefined'
@@ -12,7 +18,17 @@ const HASURA_GROUP_ID = 'x-hasura-group-id'
 const ADMIN_ROLES_REGEX = /admin$/i
 const PLATFORM_GROUP_REGEX = /^platform/i
 
-export const AuthInitContext = createContext(false)
+export const AuthInitContext = createContext()
+
+export const useIsAuthInitialized = () => {
+  const context = useContext(AuthInitContext)
+  if (context === undefined) {
+    throw new Error(
+      'useIsAuthInitialized must be used inside AuthInitContext.Provider'
+    )
+  }
+  return context
+}
 
 const isAuthenticated = async () => {
   try {
@@ -143,15 +159,15 @@ export function useIsAuthenticated() {
 }
 
 function useAuthState(initialState, asyncStateGetter) {
-  async function checkState() {
-    setState(await asyncStateGetter())
-  }
-
   const [state, setState] = useState(initialState)
+  const checkState = useCallback(
+    async () => setState(await asyncStateGetter()),
+    [asyncStateGetter]
+  )
 
   useEffect(() => {
     checkState()
-  }, [asyncStateGetter])
+  }, [checkState])
 
   useAmplifyEvent('auth', checkState)
 

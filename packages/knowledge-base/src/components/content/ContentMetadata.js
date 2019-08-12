@@ -1,13 +1,17 @@
-import React from 'react'
-import { UserAvatar } from 'components'
+import React, { useState } from 'react'
+import classnames from 'classnames'
+import { UserAvatar, CollapsedAvatars } from 'components'
 import PublishDate from './PublishDate'
 import ReadTime from './ReadTime'
 import Taxonomies from './Taxonomies'
 import BookmarkButton from '../BookmarkButton'
 import { withStyles, Grid, Hidden, Typography } from '@material-ui/core'
 import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
+import { isAuthenticatedSync } from '../../utils/auth'
 
 const ContentMetadata = ({ classes, content }) => {
+  const [avatarsOpen, setAvatarsOpen] = useState(false)
+
   const knowledgeTypes = useKnowledgeTypes()
   const taxonomyIds = [
     ...content.taxonomy_items.map(({ taxonomy_id }) => taxonomy_id),
@@ -30,9 +34,24 @@ const ContentMetadata = ({ classes, content }) => {
         </Grid>
       </Hidden>
       <Grid item xs={12}>
+        {content.authors.length > 1 && (
+          <Hidden smUp>
+            <CollapsedAvatars
+              users={content.authors.map(({ author }) => author)}
+              label="Multiple authors"
+              onClick={isOpen => setAvatarsOpen(isOpen)}
+              isOpen={avatarsOpen}
+            />
+          </Hidden>
+        )}
         {content.authors.map(({ author }) => (
-          // TODO: Collapse this on narrow view for multiple authors
-          <div className={classes.listedUser} key={author.id}>
+          <div
+            key={author.id}
+            className={classnames(
+              { [classes.xsHidden]: !avatarsOpen },
+              classes.listedUser
+            )}
+          >
             <UserAvatar
               user={{
                 firstName: author.first_name,
@@ -45,13 +64,13 @@ const ContentMetadata = ({ classes, content }) => {
         ))}
       </Grid>
       <Grid item xs={5} sm={12}>
-        <PublishDate date={content.created_at} />
+        <PublishDate date={content.published_at} />
       </Grid>
       <Grid item xs={5} sm={12}>
-        <ReadTime fields={content.fields} />
+        {content.fields && <ReadTime fields={content.fields} />}
       </Grid>
       <Grid item xs={2} sm={12}>
-        <BookmarkButton articleId={content.id} />
+        {isAuthenticatedSync() && <BookmarkButton articleId={content.id} />}
       </Grid>
       <Grid item xs={12}>
         <Taxonomies taxonomyIds={taxonomyIds} showAll={false} />
@@ -72,5 +91,10 @@ export default withStyles(theme => ({
   },
   listedUser: {
     marginBottom: theme.spacing(1),
+  },
+  xsHidden: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
   },
 }))(ContentMetadata)

@@ -92,6 +92,7 @@ module.exports = {
           '/search/*',
           '/section/*',
           '/submit/*',
+          '/content-preview/*',
         ],
       },
     },

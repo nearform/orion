@@ -17,7 +17,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator'
 
 import Bar from './Bar'
 import ChartTicks from '../ChartTicks'
-import { getWeightedScore, chartDataShape } from './util.js'
+import { getWeightedScore, chartDataShape } from './utils'
 
 function BarChartTableRow({
   classes,

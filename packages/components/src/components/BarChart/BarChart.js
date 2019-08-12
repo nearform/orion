@@ -12,7 +12,7 @@ import {
 
 import ChartTicks from '../ChartTicks'
 import Bar from './Bar'
-import { getWeightedScore, chartDataShape } from './util.js'
+import { getWeightedScore, chartDataShape } from './utils'
 
 function BarChart({ classes, chartData, theme }) {
   const barHeight = theme.spacing(4)

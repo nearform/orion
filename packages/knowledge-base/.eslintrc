@@ -10,11 +10,7 @@
     "prettier/flowtype",
     "prettier/react"
   ],
-  "plugins": [
-    "flowtype",
-    "prettier",
-    "react"
-  ],
+  "plugins": ["flowtype", "react-hooks", "react", "prettier"],
   "parserOptions": {
     "ecmaVersion": 2016,
     "sourceType": "module",
@@ -37,7 +33,9 @@
     "react/display-name": "off",
     "react/jsx-key": "warn",
     "react/no-unescaped-entities": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   },
   "overrides": [
     {
@@ -54,10 +52,7 @@
       }
     },
     {
-      "files": [
-        "**/cypress/integration/**/*",
-        "**/cypress/support/**/*"
-      ],
+      "files": ["**/cypress/integration/**/*", "**/cypress/support/**/*"],
       "globals": {
         "cy": false,
         "Cypress": false

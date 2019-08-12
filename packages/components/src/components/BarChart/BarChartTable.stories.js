@@ -6,7 +6,7 @@ import { jsxDecorator } from 'storybook-addon-jsx'
 import { withStyles } from '@material-ui/core'
 
 import BarChartTable from './BarChartTable'
-import { getSampleColors, getSampleData } from './util.storybook.js'
+import { getSampleColors, getSampleData } from './utils.storybook'
 
 const containerStyles = theme => ({
   root: {

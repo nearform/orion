@@ -1,4 +1,4 @@
-import { useQuery } from 'graphql-hooks'
+import { useManualQuery } from 'graphql-hooks'
 import { getArticleBookmarked } from '../queries'
 import { useUserId } from '../utils/auth'
 import get from 'lodash/get'
@@ -6,13 +6,12 @@ import get from 'lodash/get'
 const useBookmarkData = articleId => {
   const userId = useUserId()
 
-  const {
-    data: articleBookmarkedData,
-    refetch: refetchArticleBookmarked,
-    loading: loadingBookmarked,
-  } = useQuery(getArticleBookmarked, {
+  const [
+    fetchArticleBookmarked,
+    { data: articleBookmarkedData, loading: loadingBookmarked },
+  ] = useManualQuery(getArticleBookmarked, {
     variables: {
-      articleId: articleId,
+      articleId,
       userId,
     },
   })
@@ -20,7 +19,11 @@ const useBookmarkData = articleId => {
   const articleBookmarked =
     get(articleBookmarkedData, 'bookmarked_aggregate.aggregate.count') > 0
 
-  return { articleBookmarked, refetchArticleBookmarked, loadingBookmarked }
+  return {
+    fetchArticleBookmarked,
+    articleBookmarked,
+    loadingBookmarked,
+  }
 }
 
 export default useBookmarkData

@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import T from 'prop-types'
 import { Redirect } from '@reach/router'
 
 import { getUserRolesSync, getUserGroupIdSync } from '../utils/auth'
-import AuthInitContext from '../utils/AuthInitContext'
+import { useIsAuthInitialized } from '../utils/auth'
 
 export default function ProtectedRoute({
   allowedRole,
@@ -12,7 +12,7 @@ export default function ProtectedRoute({
   component: Component,
   ...props
 }) {
-  const isAuthInitialized = useContext(AuthInitContext)
+  const isAuthInitialized = useIsAuthInitialized()
   //skip rendering if auth is not yet initialized
   if (!isAuthInitialized) {
     return null

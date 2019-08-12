@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import T from 'prop-types'
 import { useMutation } from 'graphql-hooks'
 import classnames from 'classnames'
@@ -10,22 +10,28 @@ import useBookmarkData from '../hooks/useBookmarkData'
 
 const BookmarkButton = ({
   articleId,
-  bookmarked,
-  disabled,
-  onToggle,
+  bookmarked: bookmarkedProp,
+  disabled: disabledProp,
+  onToggle: onToggleProp,
   classes,
 }) => {
   const userId = useUserId()
-  if (!disabled || !onToggle) {
-    const {
-      articleBookmarked,
-      refetchArticleBookmarked,
-      loadingBookmarked,
-    } = useBookmarkData(articleId)
-    bookmarked = articleBookmarked
-    disabled = loadingBookmarked
-    onToggle = refetchArticleBookmarked
-  }
+
+  const {
+    fetchArticleBookmarked,
+    articleBookmarked,
+    loadingBookmarked,
+  } = useBookmarkData(articleId)
+
+  useEffect(() => {
+    if (disabledProp === undefined && onToggleProp === undefined) {
+      fetchArticleBookmarked()
+    }
+  }, [disabledProp, onToggleProp, fetchArticleBookmarked])
+
+  const bookmarked = bookmarkedProp || articleBookmarked
+  const disabled = disabledProp || loadingBookmarked
+  const onToggle = onToggleProp || fetchArticleBookmarked
 
   const [bookmarkArticle, { loading: bookmarking }] = useMutation(
     addUserBookmarkMutation
