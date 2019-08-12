@@ -145,7 +145,7 @@ export default withStyles(theme => ({
     marginLeft: theme.spacing(3),
   },
   PrevButton: {
-    backgroundColor: 'white',
+    backgroundColor: 'theme.palette.background.paper',
     color: theme.palette.secondary.main,
     '&:hover': {
       backgroundColor: 'white',
