@@ -8,7 +8,7 @@ import { withStyles, Grid, Typography, Button } from '@material-ui/core'
 import SEO from '../SEO'
 
 const ListContent = ({ classes, term, cat }) => {
-  const t = term ? term : cat
+  const t = term || cat
   const [searchTerm, setSearchTerm] = useState(t)
   const prevTerm = usePrevious(searchTerm)
   const [totalResults, setTotalResults] = useState(0)
