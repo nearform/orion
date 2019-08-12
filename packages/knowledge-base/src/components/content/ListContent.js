@@ -131,7 +131,7 @@ export default withStyles(theme => ({
       fontWeight: '900',
       lineHeight: '1.29',
       letterSpacing: '0.51px',
-      color: '#2e2e2e',
+      color: theme.palette.text.primary,
       margin: '2px 4px',
     },
     '& p': {
