@@ -1,7 +1,7 @@
 import { useStaticQuery, graphql } from 'gatsby'
 import get from 'lodash/get'
 
-const useTaxonomyDefinitions = () => {
+const useTaxonomies = (taxonomyData = []) => {
   const taxonomyQueryResult = useStaticQuery(
     graphql`
       query {
@@ -26,7 +26,23 @@ const useTaxonomyDefinitions = () => {
     []
   ).sort((a, b) => a.order_index - b.order_index)
 
+  const taxonomyIds =
+    taxonomyData.length > 0
+      ? taxonomyData.filter((val, i, a) => a.indexOf(val) === i)
+      : []
+
+  let order = 0
+  for (let type of taxonomyTypes) {
+    order++
+    for (let item of type.taxonomy_items) {
+      item.order_index = order
+      taxonomyIds.find(itemId => itemId === item.id)
+        ? (item.active = true)
+        : (item.active = false)
+    }
+  }
+
   return taxonomyTypes
 }
 
-export default useTaxonomyDefinitions
+export default useTaxonomies

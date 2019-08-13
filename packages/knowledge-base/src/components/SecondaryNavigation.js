@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { navigate } from '@reach/router'
 import Close from '@material-ui/icons/Close'
 import {
   Grid,
@@ -17,6 +18,8 @@ import QuickLinksMenu, {
   QuickLinkButton,
 } from './QuickLinksMenu'
 import { useIsAuthenticated } from '../utils/auth'
+import useTaxonomies from '../hooks/useTaxonomies'
+import usePrevious from '../hooks/usePrevious'
 
 const MyContentButton = withStyles(theme => ({
   root: {
@@ -39,33 +42,58 @@ MyContentButton.defaultProps = {
   children: 'My Content',
 }
 
+const ENTER_KEY = 13
+const WAIT_INTERVAL = 1000
+
 function SecondaryNavigation({ classes, dark }) {
   const [search, setSearch] = useState(false)
+  const [searchText, setSearchText] = useState('')
+  const prevSearchText = usePrevious(searchText)
   const isAuthenticated = useIsAuthenticated()
+  const taxonomyTypes = useTaxonomies()
+  let typingTimeout = null
+
+  useEffect(() => {
+    if (searchText && searchText !== prevSearchText) {
+      // Not a problem that the value of typingTimeout is lost on unmount etc
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      typingTimeout = setTimeout(
+        () => navigate('/search/' + searchText),
+        WAIT_INTERVAL
+      )
+    }
+  })
+
+  const handleChange = e => {
+    clearTimeout(typingTimeout)
+    setSearchText(e.target.value)
+  }
+  const handleKeyDown = e => {
+    if (e.keyCode === ENTER_KEY) {
+      navigate('/search/' + searchText)
+    }
+  }
+  const handleCloseSearch = e => {
+    setSearch(false)
+    setSearchText('')
+  }
 
   return !search ? (
     <Grid container justify="flex-end" spacing={3}>
-      <Grid item>
-        <QuickLinksMenu dark={dark} label={'Topics'}>
-          <QuickLinksMenuItem>Test 1</QuickLinksMenuItem>
-          <QuickLinksMenuItem>Test 2</QuickLinksMenuItem>
-          <QuickLinksMenuItem>Test Longer</QuickLinksMenuItem>
-        </QuickLinksMenu>
-      </Grid>
-      <Grid item>
-        <QuickLinksMenu dark={dark} label={'Categories'}>
-          <QuickLinksMenuItem>Test 1</QuickLinksMenuItem>
-          <QuickLinksMenuItem>Test 2</QuickLinksMenuItem>
-          <QuickLinksMenuItem>Test Longer</QuickLinksMenuItem>
-        </QuickLinksMenu>
-      </Grid>
-      <Grid item>
-        <QuickLinksMenu dark={dark} label={'Sectors'}>
-          <QuickLinksMenuItem>Test 1</QuickLinksMenuItem>
-          <QuickLinksMenuItem>Test 2</QuickLinksMenuItem>
-          <QuickLinksMenuItem>Test Longer</QuickLinksMenuItem>
-        </QuickLinksMenu>
-      </Grid>
+      {taxonomyTypes.map(type => (
+        <Grid item key={`tax_type_${type.key}`}>
+          <QuickLinksMenu dark={dark} label={type.name}>
+            {type.taxonomy_items.map(item => (
+              <QuickLinksMenuItem
+                key={`quick_link_${item.key}`}
+                onClick={() => navigate('/section/' + item.key)}
+              >
+                {item.name}
+              </QuickLinksMenuItem>
+            ))}
+          </QuickLinksMenu>
+        </Grid>
+      ))}
       <Grid item>
         <QuickLinkButton dark={dark} onClick={() => setSearch(!search)}>
           <Icon component={SearchIcon} color="secondary" />
@@ -82,13 +110,16 @@ function SecondaryNavigation({ classes, dark }) {
             <Input
               autoFocus
               placeholder="Search The Knowledge Base"
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
               className={classes.inputClass}
+              value={searchText}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     size="small"
                     aria-label="Close search"
-                    onClick={() => setSearch(false)}
+                    onClick={handleCloseSearch}
                   >
                     <Close className={classes.inputCloseIcon} />
                   </IconButton>

@@ -8,6 +8,12 @@ export {
   default as deleteArticleTaxonomiesMutation,
 } from './delete-article-taxonomies.graphql'
 export { default as getArticlesData } from './get-articles.graphql'
+export {
+  default as getArticlesSearchResults,
+} from './get-articles-search-results.graphql'
+export {
+  default as getArticlesCategoryResults,
+} from './get-articles-category-results.graphql'
 export { default as getUserArticlesData } from './get-user-articles.graphql'
 export {
   default as addArticleAuthorsMutation,

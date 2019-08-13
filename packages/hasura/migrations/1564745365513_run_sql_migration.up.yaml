@@ -1,0 +1,4 @@
+- args:
+    cascade: false
+    sql: CREATE EXTENSION pg_trgm;
+  type: run_sql

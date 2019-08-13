@@ -1,38 +1,27 @@
 import React from 'react'
+import { navigate } from '@reach/router'
 import classnames from 'classnames'
+import TaxonomyItem from './TaxonomyItem'
+import useTaxonomies from '../../hooks/useTaxonomies'
 import { withStyles, Typography } from '@material-ui/core'
-import useTaxonomyDefinitions from '../../hooks/useTaxonomyDefinitions'
-const Taxonomies = ({ classes, items }) => {
-  const taxonomyTypes = useTaxonomyDefinitions()
-  if (!taxonomyTypes) return null
 
-  const taxonomyIds = []
-  for (let obj of items) {
-    taxonomyIds.push(obj.taxonomy_id)
-  }
-
-  const listMatchingItems = item => {
-    if (taxonomyIds.find(itemId => itemId === item.id)) {
-      return (
-        <div
-          key={'taxonomy_item_' + item.id}
-          className={classnames(
-            classes.inlinable,
-            classes.TaxonomyItem,
-            classes['TaxonomyC' + taxonomyColor]
-          )}
-        >
-          {item.name}
-        </div>
-      )
+const Taxonomies = ({ classes, taxonomyIds, showAll, callback }) => {
+  const taxonomyTypes = useTaxonomies(taxonomyIds)
+  const handleCallback = (id, active, key) => {
+    if (!showAll) {
+      navigate('/section/' + key)
+    } else {
+      active
+        ? (taxonomyIds = [...taxonomyIds, id])
+        : (taxonomyIds = taxonomyIds.filter(item => item !== id))
+      if (typeof callback === 'function') {
+        callback(taxonomyIds)
+      }
     }
   }
-  let taxonomyColor = 0
-
   return (
     <>
       {taxonomyTypes.map(type => {
-        taxonomyColor++
         return (
           <div
             className={classes.TaxonomyType}
@@ -43,7 +32,16 @@ const Taxonomies = ({ classes, items }) => {
             >
               {type.name}
             </Typography>
-            {type.taxonomy_items.map(item => listMatchingItems(item))}
+            {type.taxonomy_items.map(item =>
+              showAll || item.active ? (
+                <TaxonomyItem
+                  key={`tax_item_${item.id}`}
+                  item={item}
+                  filter={taxonomyIds}
+                  callback={handleCallback}
+                />
+              ) : null
+            )}
           </div>
         )
       })}
@@ -54,62 +52,16 @@ const Taxonomies = ({ classes, items }) => {
 export default withStyles(theme => ({
   subhead: {
     fontWeight: '900',
-    fontSize: 12,
-    letterSpacing: 1.8,
+    fontSize: '12px',
+    letterSpacing: '1.8px',
     textTransform: 'uppercase',
+    marginTop: '16px',
     color: theme.palette.tertiary.main,
     [theme.breakpoints.down('xs')]: {
       marginRight: theme.spacing(1.5),
     },
   },
-  inlinable: {
-    [theme.breakpoints.down('xs')]: {
-      display: 'inline-block',
-    },
-  },
   TaxonomyType: {
     margin: theme.spacing(1, 0, 2),
-  },
-  TaxonomyItem: {
-    color: 'white',
-    fontWeight: '900',
-    fontSize: 12,
-    letterSpacing: 1.8,
-    textTransform: 'uppercase',
-    padding: '4px 8px',
-    marginTop: '4px !important',
-    width: 'max-content',
-  },
-  TaxonomyC1: {
-    [theme.breakpoints.down('xs')]: {
-      color: theme.palette.primary.dark,
-    },
-    [theme.breakpoints.up('sm')]: {
-      backgroundColor: theme.palette.primary.dark,
-    },
-  },
-  TaxonomyC2: {
-    [theme.breakpoints.down('xs')]: {
-      color: theme.palette.primary.main,
-    },
-    [theme.breakpoints.up('sm')]: {
-      backgroundColor: theme.palette.primary.main,
-    },
-  },
-  TaxonomyC3: {
-    [theme.breakpoints.down('xs')]: {
-      color: theme.palette.primary.light,
-    },
-    [theme.breakpoints.up('sm')]: {
-      backgroundColor: theme.palette.primary.light,
-    },
-  },
-  TaxonomyC4: {
-    [theme.breakpoints.down('xs')]: {
-      color: theme.palette.secondary.dark,
-    },
-    [theme.breakpoints.up('sm')]: {
-      backgroundColor: theme.palette.secondary.dark,
-    },
   },
 }))(Taxonomies)
