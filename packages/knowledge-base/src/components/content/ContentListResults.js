@@ -10,9 +10,9 @@ import ArticleSummary from './ArticleSummary'
 const PAGE_SIZE = 10
 
 const extractArticleData = data => {
-  if (data === undefined) return { summaries: [], taxonomyIds: [] }
   const summaries = []
   const taxonomyIds = []
+  if (data === undefined) return { summaries, taxonomyIds }
   for (let item of data) {
     summaries.push(
       <ArticleSummary key={'article_id_' + item.id} article={item} />
@@ -27,9 +27,9 @@ const extractArticleData = data => {
 const buildWhereClause = (cat, tax) => {
   const clause = {
     //FOR TESTING, CAN SELECT ALL STATUS TYPES BY UNCOMMENTING BELOW
-    status: { _in: ['in-progress', 'in-review', 'published'] },
+    //status: { _in: ['in-progress', 'in-review', 'published'] },
     //IF ABOVE IS UNCOMMENTED, COMMENT OUT BELOW
-    //status: { _eq: 'published' },
+    status: { _eq: 'published' },
     _and: [],
   }
   cat

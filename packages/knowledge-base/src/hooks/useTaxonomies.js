@@ -32,18 +32,15 @@ const useTaxonomies = (taxonomyData = []) => {
       : []
 
   let order = 0
-  taxonomyTypes.map(type => {
+  for (let type of taxonomyTypes) {
     order++
-    type.taxonomy_items.map(item => {
-      if (taxonomyIds.find(itemId => itemId === item.id)) {
-        item.active = true
-        item.order_index = order
-      } else {
-        item.active = false
-        item.order_index = order
-      }
-    })
-  })
+    for (let item of type.taxonomy_items) {
+      item.order_index = order
+      taxonomyIds.find(itemId => itemId === item.id)
+        ? (item.active = true)
+        : (item.active = false)
+    }
+  }
 
   return taxonomyTypes
 }
