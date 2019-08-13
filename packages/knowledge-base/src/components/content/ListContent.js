@@ -9,7 +9,7 @@ import { withStyles, Grid, Typography, Button } from '@material-ui/core'
 import SEO from '../SEO'
 
 const ListContent = ({ classes, term, cat }) => {
-  const t = term ? term : cat
+  const t = term || cat
   const [searchTerm, setSearchTerm] = useState(t)
   const prevTerm = usePrevious(searchTerm)
   const [totalResults, setTotalResults] = useState(0)
@@ -113,7 +113,7 @@ export default withStyles(theme => ({
       fontWeight: '900',
       lineHeight: '1.29',
       letterSpacing: '0.51px',
-      color: '#2e2e2e',
+      color: theme.palette.text.primary,
       margin: '2px 4px',
     },
     '& p': {
@@ -127,7 +127,7 @@ export default withStyles(theme => ({
     marginLeft: theme.spacing(3),
   },
   PrevButton: {
-    backgroundColor: 'white',
+    backgroundColor: 'theme.palette.background.paper',
     color: theme.palette.secondary.main,
     '&:hover': {
       backgroundColor: 'white',
