@@ -8,9 +8,20 @@ import BookmarkButton from '../BookmarkButton'
 import { withStyles, Grid, Hidden, Typography } from '@material-ui/core'
 import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
 import { isAuthenticatedSync } from '../../utils/auth'
+import { constructImageUrl } from '../../utils/image'
 
 const ContentMetadata = ({ classes, content }) => {
   const [avatarsOpen, setAvatarsOpen] = useState(false)
+
+  const users = content.authors.map(({ author }) => {
+    return {
+      picture: constructImageUrl(author.avatar),
+      firstName: author.first_name,
+      lastName: author.last_name,
+      ...author,
+      title: author.title || 'EFQM Member',
+    }
+  })
 
   const knowledgeTypes = useKnowledgeTypes()
   const taxonomyIds = [
@@ -34,32 +45,25 @@ const ContentMetadata = ({ classes, content }) => {
         </Grid>
       </Hidden>
       <Grid item xs={12}>
-        {content.authors.length > 1 && (
+        {users.length > 1 && (
           <Hidden smUp>
             <CollapsedAvatars
-              users={content.authors.map(({ author }) => author)}
+              users={users}
               label="Multiple authors"
               onClick={isOpen => setAvatarsOpen(isOpen)}
               isOpen={avatarsOpen}
             />
           </Hidden>
         )}
-        {content.authors.map(({ author }) => (
+        {users.map(user => (
           <div
-            key={author.id}
+            key={user.id}
             className={classnames(
               { [classes.xsHidden]: !avatarsOpen },
               classes.listedUser
             )}
           >
-            <UserAvatar
-              user={{
-                firstName: author.first_name,
-                lastName: author.last_name,
-                ...author,
-                title: author.title || 'EFQM Member',
-              }}
-            />
+            <UserAvatar user={user} />
           </div>
         ))}
       </Grid>
@@ -70,7 +74,12 @@ const ContentMetadata = ({ classes, content }) => {
         {content.fields && <ReadTime fields={content.fields} />}
       </Grid>
       <Grid item xs={2} sm={12}>
-        {isAuthenticatedSync() && <BookmarkButton articleId={content.id} />}
+        {isAuthenticatedSync() && (
+          <BookmarkButton
+            articleId={content.id}
+            className={classes.bookmarkButton}
+          />
+        )}
       </Grid>
       <Grid item xs={12}>
         <Taxonomies taxonomyIds={taxonomyIds} showAll={false} />
@@ -85,6 +94,10 @@ export default withStyles(theme => ({
       height: theme.spacing(),
       backgroundColor: theme.palette.primary.dark,
     },
+  },
+  bookmarkButton: {
+    marginLeft: theme.spacing(1) * -1 - 2,
+    marginTop: theme.spacing(1) * -1,
   },
   knowledgeType: {
     color: theme.palette.primary.dark,

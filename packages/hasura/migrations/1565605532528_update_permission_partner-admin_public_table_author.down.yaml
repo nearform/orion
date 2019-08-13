@@ -1,0 +1,24 @@
+- args:
+    role: partner-admin
+    table:
+      name: author
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - pending
+      - id
+      - signupRequest
+      - cognito_id
+      - email
+      - first_name
+      - last_name
+      - title
+      filter: {}
+    role: partner-admin
+    table:
+      name: author
+      schema: public
+  type: create_select_permission

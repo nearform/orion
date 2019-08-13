@@ -3,7 +3,7 @@ import T from 'prop-types'
 import { withStyles, Button, Grid } from '@material-ui/core'
 import { useIsAdmin, useIsPlatformGroup } from '../../utils/auth'
 import PlaceholderIcon from '@material-ui/icons/MoreHoriz'
-
+import RateArticle from './RateArticle'
 import HideButton from './HideButton'
 
 // TODO: delete this placeholder component when each button is implemented
@@ -50,7 +50,7 @@ const ContentOptions = ({ classes, articleData, refetchArticle }) => {
         <PlaceholderButton>Share this article</PlaceholderButton>
       </Grid>
       <Grid item xs={12} sm={6} lg={12}>
-        <PlaceholderButton>Rate this article</PlaceholderButton>
+        <RateArticle id={articleData.id} content={articleData}></RateArticle>
       </Grid>
       {canShowHideArticle && (
         <Grid item xs={12} sm={6} lg={12}>

@@ -1,0 +1,11 @@
+- args:
+    permission:
+      allow_aggregations: true
+      columns: []
+      filter: {}
+      limit: null
+    role: partner-admin
+    table:
+      name: article_rating
+      schema: public
+  type: create_select_permission

@@ -5,6 +5,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import debounce from 'lodash/debounce'
 import QueryTable from '../../QueryTable'
+import { constructImageUrl } from '../../../utils/image'
 
 import {
   Typography,
@@ -85,7 +86,10 @@ function SelectAuthors({ classes, selectedUsers, onChange }) {
           <div className={classes.userList}>
             {cachedSelectedUser.map(({ author }) => (
               <div key={author.id}>
-                <UserAvatar user={author} />
+                <UserAvatar
+                  user={author}
+                  src={constructImageUrl(author.avatar)}
+                />
                 <IconButton
                   className={classes.removeAuthorButton}
                   onClick={() => removeUser(author.id)}

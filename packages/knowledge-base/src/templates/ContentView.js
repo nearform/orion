@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import { withStyles, Grid, Typography, LinearProgress } from '@material-ui/core'
 
 import { getArticleDetails } from '../queries'
-import { useIsAuthenticated, isAuthenticatedSync } from '../utils/auth'
+import { useIsAuthInitialized, isAuthenticatedSync } from '../utils/auth'
 import { PaddedContainer } from 'components'
 import RichText from '../components/content//RichText'
 import ContentMetadata from '../components/content/ContentMetadata'
@@ -14,28 +14,30 @@ import FeatureArticles from '../components/FeatureArticles'
 
 function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
   const { path } = articleSummary || { path: slug }
-  const isAuthenticated = useIsAuthenticated()
-  const [articleFull, setArticleFull] = useState(null)
-  const [isLoading, setIsLoading] = useState(isAuthenticatedSync())
+  const isAuthInitialized = useIsAuthInitialized()
+  const isAuthenticated = isAuthenticatedSync()
+  const [getArticleDetailsQuery, { loading, data }] = useManualQuery(
+    getArticleDetails
+  )
+
   const [isChanged, setIsChanged] = useState(Symbol())
-  const [getArticleDetailsQuery] = useManualQuery(getArticleDetails)
   const contentId = path.split('-')[0]
   useEffect(() => {
-    if (contentId && isAuthenticated) {
-      setIsLoading(true)
+    if (contentId && isAuthInitialized && isAuthenticated) {
       getArticleDetailsQuery({
         variables: { id: contentId },
       })
-        .then(({ data }) => {
-          setArticleFull(get(data, 'articleDetails'))
-        })
-        .finally(() => {
-          setIsLoading(false)
-        })
     }
-  }, [isAuthenticated, contentId, getArticleDetailsQuery, isChanged])
+  }, [
+    contentId,
+    isAuthInitialized,
+    isAuthenticated,
+    getArticleDetailsQuery,
+    isChanged,
+  ])
   const refetchArticle = () => setIsChanged(Symbol())
 
+  const articleFull = get(data, 'articleDetails')
   const articleData = articleFull || articleSummary
   if (!articleData) return null
   return (
@@ -56,7 +58,7 @@ function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
             <LinearProgress
               className={classnames({
                 [classes.loadingBar]: true,
-                show: isLoading,
+                show: loading,
               })}
             />
             <Typography variant="h1">{articleData.title}</Typography>

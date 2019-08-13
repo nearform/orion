@@ -1,0 +1,7 @@
+mutation addArticleRating($articleId: Int!, $userId: Int!, $rating: Int!) {
+  insert_article_rating(
+    objects: { article_id: $articleId, user_id: $userId, rating: $rating }
+  ) {
+    affected_rows
+  }
+}

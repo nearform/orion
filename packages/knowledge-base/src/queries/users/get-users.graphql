@@ -10,6 +10,7 @@ query getUsers(
     email
     first_name
     last_name
+    avatar
     signupRequest
     user_groups {
       group {

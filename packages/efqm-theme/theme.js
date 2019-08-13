@@ -219,10 +219,15 @@ const articleStatusIconColor = {
   hidden: colorDefinitions.lightGrey,
 }
 
+const articleRateIconColor = {
+  empty: colorDefinitions.lightGrey,
+  filled: colorDefinitions.yellow,
+}
+
 const iconLight = {
   color: colorDefinitions.lightGrey,
 }
-const bookmarkButtonColor = colorDefinitions.purple
+const articleWidgetColor = colorDefinitions.purple
 const profileSpacerBackground = colorDefinitions.purple
 
 const editorsPicks = {
@@ -477,7 +482,8 @@ exports.muiTheme = {
   articleStatusColor,
   articleStatusLabelColor,
   articleStatusIconColor,
-  bookmarkButtonColor,
+  articleWidgetColor,
+  articleRateIconColor,
   profileSpacerBackground,
   editorsPicks,
 }

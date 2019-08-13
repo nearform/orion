@@ -1,3 +1,5 @@
+#import "./fragments.graphql"
+
 query getArticleDetails($id: Int!) {
   articleDetails: article_by_pk(id: $id) {
     fields
@@ -9,11 +11,15 @@ query getArticleDetails($id: Int!) {
         email
         id
         title
+        avatar
       }
     }
     subtitle
     taxonomy_items {
       taxonomy_id
+    }
+    rating: article_ratings_aggregate {
+      ...rating
     }
     recommended_articles {
       recommended_article {
