@@ -95,6 +95,9 @@ export default withStyles(theme => ({
       textTransform: 'uppercase',
       padding: '12px 8px',
     },
+    '&:hover': {
+      textDecoration: 'none',
+    },
   },
   articleSummary: {
     '& h2': {

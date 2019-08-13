@@ -27,9 +27,9 @@ const extractArticleData = data => {
 const buildWhereClause = (cat, tax) => {
   const clause = {
     //FOR TESTING, CAN SELECT ALL STATUS TYPES BY UNCOMMENTING BELOW
-    //status: { _in: ['in-progress', 'in-review', 'published'] },
+    status: { _in: ['in-progress', 'in-review', 'published'] },
     //IF ABOVE IS UNCOMMENTED, COMMENT OUT BELOW
-    status: { _eq: 'published' },
+    //status: { _eq: 'published' },
     _and: [],
   }
   cat

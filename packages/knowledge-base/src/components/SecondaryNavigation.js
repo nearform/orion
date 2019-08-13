@@ -55,6 +55,7 @@ function SecondaryNavigation({ classes, dark }) {
 
   useEffect(() => {
     if (searchText && searchText !== prevSearchText) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       typingTimeout = setTimeout(
         () => navigate('/search/' + searchText),
         WAIT_INTERVAL
