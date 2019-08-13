@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
+//import Img from 'gatsby-image'
 import BookmarkButton from '../BookmarkButton'
 import RichText from './RichText'
 import { ImagePlaceholder } from 'components'
@@ -11,8 +12,8 @@ import get from 'lodash/get'
 const ArticleSummary = ({ classes, article }) => {
   return (
     <Grid container spacing={1} className={classes.summaryObj}>
-      <Link to={`/content/${article.path}`}>
-        <Grid item xs={3}>
+      <Grid item xs={3}>
+        <Link to={`/content/${article.path}`}>
           <img
             src={constructImageUrl(article.thumbnail) || ImagePlaceholder()}
             width="100%"
@@ -23,8 +24,8 @@ const ArticleSummary = ({ classes, article }) => {
               {get(article, 'primary_taxonomy[0].taxonomy.name') || 'No Topic'}
             </Typography>
           </div>
-        </Grid>
-      </Link>
+        </Link>
+      </Grid>
       <Grid item className={classes.articleSummary} xs={9}>
         <Link to={`/content/${article.path}`}>
           <Typography variant="h2">{article.title || 'No Title'}</Typography>
@@ -61,7 +62,7 @@ const ArticleSummary = ({ classes, article }) => {
 
 export default withStyles(theme => ({
   summaryObj: {
-    height: '200px',
+    height: theme.spacing(25),
     overflow: 'hidden',
     color: theme.palette.primary.dark,
     borderBottom: `1px solid ${theme.palette.tertiary.light}`,
@@ -78,11 +79,11 @@ export default withStyles(theme => ({
     fontWeight: 'bold',
     letterSpacing: '1.23px',
     color: theme.palette.secondary.main,
-    margin: '4px',
+    margin: theme.spacing(0.5),
   },
   topicBox: {
     width: '73%',
-    height: '40px',
+    height: theme.spacing(5),
     backgroundColor: theme.palette.primary.main,
     position: 'relative',
     top: '-33px',
@@ -109,7 +110,7 @@ export default withStyles(theme => ({
       fontSize: '11px',
       fongWeight: 'bold',
       letterSpacing: '1.23px',
-      margin: '4px',
+      margin: theme.spacing(0.5),
     },
     '& p': {
       height: '64px',

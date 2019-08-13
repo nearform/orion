@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import SearchResults from './SearchResults'
-import CategoryResults from './CategoryResults'
+import ContentListResults from './ContentListResults'
 import Taxonomies from './Taxonomies'
 import usePrevious from '../../hooks/usePrevious'
 import useTaxonomies from '../../hooks/useTaxonomies'
+import { useIsAuthInitialized } from '../../utils/auth'
+import { getTaxonomyItemByKey } from '../../utils/taxonomy'
 import { withStyles, Grid, Typography, Button } from '@material-ui/core'
 import SEO from '../SEO'
 
@@ -16,6 +17,9 @@ const ListContent = ({ classes, term, cat }) => {
   const [taxonomyIds, setTaxonomyIds] = useState([])
   const [offset, setOffset] = useState(0)
   const taxonomyTypes = useTaxonomies()
+  // isAuthInitialized prevents occurance of JWT authentication bug
+  const isAuthInitialized = useIsAuthInitialized()
+  if (!isAuthInitialized) return null
   const handleContentData = ({ taxonomyIds, totalResults, range }) => {
     setTotalResults(totalResults)
     setRange(range)
@@ -30,21 +34,7 @@ const ListContent = ({ classes, term, cat }) => {
   const handlePagination = dir => {
     setOffset(offset + 10 * dir)
   }
-  let section = {
-    id: 0,
-    key: '',
-    name: '',
-  }
-  if (cat) {
-    taxonomyTypes.map(type => {
-      type.taxonomy_items.map(item => {
-        if (item.key === cat) {
-          section = item
-          section.type = type.name
-        }
-      })
-    })
-  }
+  const section = getTaxonomyItemByKey(taxonomyTypes, cat)
 
   return (
     <>
@@ -77,21 +67,13 @@ const ListContent = ({ classes, term, cat }) => {
             callback={handleTaxonomyFilter}
           />
         </Grid>
-        {term ? (
-          <SearchResults
-            term={term}
-            taxonomy={taxonomyIds}
-            callback={handleContentData}
-            offset={offset}
-          />
-        ) : (
-          <CategoryResults
-            cat={cat}
-            taxonomy={taxonomyIds}
-            callback={handleContentData}
-            offset={offset}
-          />
-        )}
+        <ContentListResults
+          term={term}
+          cat={cat}
+          taxonomy={taxonomyIds}
+          callback={handleContentData}
+          offset={offset}
+        />
         <Grid item xs={12}>
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={7}></Grid>
