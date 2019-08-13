@@ -1,21 +1,20 @@
 import React from 'react'
 import { Link } from 'gatsby'
-//import Img from 'gatsby-image'
 import BookmarkButton from '../BookmarkButton'
 import RichText from './RichText'
-import { ImagePlaceholder } from 'components'
 import { constructImageUrl } from '../../utils/image'
 import { formatDateAsMonthAndYear } from '../../utils/date'
 import { withStyles, Grid, Typography } from '@material-ui/core'
 import get from 'lodash/get'
 
 const ArticleSummary = ({ classes, article }) => {
+  //TODO: Replace <img> on line 16 with gatsby-image
   return (
     <Grid container spacing={1} className={classes.summaryObj}>
       <Grid item xs={3}>
         <Link to={`/content/${article.path}`}>
           <img
-            src={constructImageUrl(article.thumbnail) || ImagePlaceholder()}
+            src={constructImageUrl(article.thumbnail)}
             width="100%"
             height="auto"
           />

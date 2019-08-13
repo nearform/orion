@@ -24,7 +24,7 @@ const useTaxonomies = (taxonomyData = []) => {
     taxonomyQueryResult,
     'raw_salmon.taxonomy_type',
     []
-  ).sort((a, b) => b.order_index - a.order_index)
+  ).sort((a, b) => a.order_index - b.order_index)
 
   const taxonomyIds =
     taxonomyData.length > 0
