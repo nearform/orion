@@ -55,6 +55,7 @@ function SecondaryNavigation({ classes, dark }) {
 
   useEffect(() => {
     if (searchText && searchText !== prevSearchText) {
+      // Not a problem that the value of typingTimeout is lost on unmount etc
       // eslint-disable-next-line react-hooks/exhaustive-deps
       typingTimeout = setTimeout(
         () => navigate('/search/' + searchText),
