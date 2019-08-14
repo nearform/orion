@@ -1,6 +1,6 @@
 import React from 'react'
 import T from 'prop-types'
-import { StarRate } from '@material-ui/icons'
+import StarRate from '@material-ui/icons/StarRate'
 import classnames from 'classnames'
 import { withStyles } from '@material-ui/core'
 
