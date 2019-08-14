@@ -22,7 +22,7 @@ const Taxonomies = ({ classes, taxonomyIds, showAll, callback }) => {
   return (
     <>
       {taxonomyTypes.map(type => {
-        return (
+        return showAll || type.active ? (
           <div
             className={classes.TaxonomyType}
             key={'taxonomy_type_' + type.name}
@@ -43,7 +43,7 @@ const Taxonomies = ({ classes, taxonomyIds, showAll, callback }) => {
               ) : null
             )}
           </div>
-        )
+        ) : null
       })}
     </>
   )
