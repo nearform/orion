@@ -9,7 +9,7 @@ const PublishDate = ({ classes, date }) => {
     <div className={classes.wrapper}>
       <CalendarTodayOutlined fontSize="small" />
       <Typography variant="h4" className={classes.snippet}>
-        {formatDate(date)}
+        {formatDate(date || Date.now())}
       </Typography>
     </div>
   )

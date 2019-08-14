@@ -24,9 +24,10 @@ const ContentMetadata = ({ classes, content }) => {
   })
 
   const knowledgeTypes = useKnowledgeTypes()
-  const taxonomyIds = [
-    ...content.taxonomy_items.map(({ taxonomy_id }) => taxonomy_id),
-  ]
+  const taxonomyIds = content.taxonomy_items.map(
+    ({ taxonomy_id }) => taxonomy_id
+  )
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
