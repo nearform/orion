@@ -75,12 +75,11 @@ const ContentMetadata = ({ classes, content }) => {
         {content.fields && <ReadTime fields={content.fields} />}
       </Grid>
       <Grid item xs={2} sm={12}>
-        {isAuthenticatedSync() && (
-          <BookmarkButton
-            articleId={content.id}
-            className={classes.bookmarkButton}
-          />
-        )}
+        <BookmarkButton
+          articleId={content.id}
+          className={classes.bookmarkButton}
+          disabled={!isAuthenticatedSync() || content.status !== 'published'}
+        />
       </Grid>
       <Grid item xs={12}>
         <Taxonomies taxonomyIds={taxonomyIds} showAll={false} />
