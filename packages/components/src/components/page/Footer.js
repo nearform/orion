@@ -45,28 +45,6 @@ function Footer({ classes, theme, content, Img }) {
               </div>
             </Typography>
           </Grid>
-          <Grid item xs>
-            <Typography variant="h4" gutterBottom>
-              support
-            </Typography>
-            <Typography component="div" variant="body2">
-              <div>Link 1</div>
-              <div>Link 2</div>
-              <div>Link 3</div>
-              <div>Link 4</div>
-            </Typography>
-          </Grid>
-          <Grid item xs>
-            <Typography variant="h4" gutterBottom>
-              resources
-            </Typography>
-            <Typography component="div" variant="body2">
-              <div>Link 1</div>
-              <div>Link 2</div>
-              <div>Link 3</div>
-              <div>Link 4</div>
-            </Typography>
-          </Grid>
           <Grid item xs={4}>
             <Typography variant="h4" gutterBottom>
               subscribe to our newsletter
