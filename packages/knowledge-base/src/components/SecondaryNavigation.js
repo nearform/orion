@@ -147,9 +147,12 @@ const styles = theme => ({
       padding: `4px ${theme.spacing(2)}px 6px ${theme.spacing(2)}px`, //the top and bottom padding are alignment related, and text size dependant
       lineHeight: '20px', //input box height, overriding MUI defaults
       height: '20px', //input box height, overriding MUI defaults
-      '&::-webkit-input-placeholder': { ...theme.typography.h3 },
-      '&::-moz-placeholder': { ...theme.typography.h3 },
-      '&:-ms-input-placeholder': { ...theme.typography.h3 },
+      '&::-webkit-input-placeholder': {
+        ...theme.typography.h3,
+        lineHeight: '20px',
+      },
+      '&::-moz-placeholder': { ...theme.typography.h3, lineHeight: '20px' },
+      '&:-ms-input-placeholder': { ...theme.typography.h3, lineHeight: '20px' },
     },
   },
 })
