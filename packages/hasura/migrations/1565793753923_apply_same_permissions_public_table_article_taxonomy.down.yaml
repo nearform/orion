@@ -1,0 +1,28 @@
+- args:
+    role: public
+    table:
+      name: article_taxonomy
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check: {}
+      columns:
+      - article_id
+      - id
+      - taxonomy_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: user
+    table:
+      name: article_taxonomy
+      schema: public
+  type: create_insert_permission
+- args:
+    role: user
+    table:
+      name: article_taxonomy
+      schema: public
+  type: drop_insert_permission

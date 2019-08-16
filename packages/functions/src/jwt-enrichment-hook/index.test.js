@@ -159,7 +159,7 @@ describe('jwt-enrichment-hook', () => {
             event = await handler(originalEvent)
           })
 
-          it('it should have allowed role user in claims', async () => {
+          it('it should have allowed role "user" in claims', async () => {
             const allowedRoles = JSON.parse(
               event.response.claimsOverrideDetails.claimsToAddOrOverride[
                 'https://hasura.io/jwt/claims'
@@ -171,7 +171,7 @@ describe('jwt-enrichment-hook', () => {
             expect(allowedRoles).toEqual(['user'])
           })
 
-          it('it should have default role user in claims', async () => {
+          it('it should have default role "user" in claims', async () => {
             const defaultRole = JSON.parse(
               event.response.claimsOverrideDetails.claimsToAddOrOverride[
                 'https://hasura.io/jwt/claims'
@@ -198,7 +198,7 @@ describe('jwt-enrichment-hook', () => {
           })
         })
 
-        describe(`when the user belongs to a group of type ${groupType} with a role`, () => {
+        describe(`when the user belongs to a group of type ${groupType} with a role "admin"`, () => {
           let event
           let query
 
@@ -209,7 +209,7 @@ describe('jwt-enrichment-hook', () => {
             event = await handler(originalEvent)
           })
 
-          it(`it should have allowed role ${groupType}-admin in claims`, async () => {
+          it(`it should have allowed role "${groupType}-admin" in claims`, async () => {
             const allowedRoles = JSON.parse(
               event.response.claimsOverrideDetails.claimsToAddOrOverride[
                 'https://hasura.io/jwt/claims'
@@ -221,7 +221,7 @@ describe('jwt-enrichment-hook', () => {
             expect(allowedRoles).toEqual([`${groupType}-admin`])
           })
 
-          it(`it should have default role ${groupType}-admin in claims`, async () => {
+          it(`it should have default role "${groupType}-admin" in claims`, async () => {
             const defaultRole = JSON.parse(
               event.response.claimsOverrideDetails.claimsToAddOrOverride[
                 'https://hasura.io/jwt/claims'
@@ -231,6 +231,106 @@ describe('jwt-enrichment-hook', () => {
             await query
 
             expect(defaultRole).toEqual(`${groupType}-admin`)
+          })
+
+          it('it should have group id in claims', async () => {
+            const groupId = JSON.parse(
+              event.response.claimsOverrideDetails.claimsToAddOrOverride[
+                'https://hasura.io/jwt/claims'
+              ]
+            )['x-hasura-group-id']
+
+            const graphqlResponse = await query
+
+            expect(groupId).toEqual(
+              graphqlResponse.user[0].user_groups[0].group.id.toString()
+            )
+          })
+        })
+
+        describe(`when the user belongs to a group of type ${groupType} with a role "member"`, () => {
+          let event
+          let query
+
+          beforeEach(async () => {
+            query = oneUserWithGroupAndRoleFromDb(groupType, 'member')
+            graphql.mockReturnValue(query)
+
+            event = await handler(originalEvent)
+          })
+
+          it('it should have allowed role "user" in claims', async () => {
+            const allowedRoles = JSON.parse(
+              event.response.claimsOverrideDetails.claimsToAddOrOverride[
+                'https://hasura.io/jwt/claims'
+              ]
+            )['x-hasura-allowed-roles']
+
+            await query
+
+            expect(allowedRoles).toEqual(['user'])
+          })
+
+          it('it should have default role "user" in claims', async () => {
+            const defaultRole = JSON.parse(
+              event.response.claimsOverrideDetails.claimsToAddOrOverride[
+                'https://hasura.io/jwt/claims'
+              ]
+            )['x-hasura-default-role']
+
+            await query
+
+            expect(defaultRole).toEqual('user')
+          })
+
+          it('it should have group id in claims', async () => {
+            const groupId = JSON.parse(
+              event.response.claimsOverrideDetails.claimsToAddOrOverride[
+                'https://hasura.io/jwt/claims'
+              ]
+            )['x-hasura-group-id']
+
+            const graphqlResponse = await query
+
+            expect(groupId).toEqual(
+              graphqlResponse.user[0].user_groups[0].group.id.toString()
+            )
+          })
+        })
+
+        describe(`when the user belongs to a group of type ${groupType} with a role "non-member"`, () => {
+          let event
+          let query
+
+          beforeEach(async () => {
+            query = oneUserWithGroupAndRoleFromDb(groupType, 'non-member')
+            graphql.mockReturnValue(query)
+
+            event = await handler(originalEvent)
+          })
+
+          it('it should have allowed role "public" in claims', async () => {
+            const allowedRoles = JSON.parse(
+              event.response.claimsOverrideDetails.claimsToAddOrOverride[
+                'https://hasura.io/jwt/claims'
+              ]
+            )['x-hasura-allowed-roles']
+
+            await query
+
+            expect(allowedRoles).toEqual(['public'])
+          })
+
+          it('it should have default role "public" in claims', async () => {
+            const defaultRole = JSON.parse(
+              event.response.claimsOverrideDetails.claimsToAddOrOverride[
+                'https://hasura.io/jwt/claims'
+              ]
+            )['x-hasura-default-role']
+
+            await query
+
+            expect(defaultRole).toEqual('public')
           })
 
           it('it should have group id in claims', async () => {
@@ -259,7 +359,7 @@ describe('jwt-enrichment-hook', () => {
             event = await handler(originalEvent)
           })
 
-          it('it should have allowed role admin in claims', async () => {
+          it('it should have allowed role "admin" in claims', async () => {
             const allowedRoles = JSON.parse(
               event.response.claimsOverrideDetails.claimsToAddOrOverride[
                 'https://hasura.io/jwt/claims'
@@ -271,7 +371,7 @@ describe('jwt-enrichment-hook', () => {
             expect(allowedRoles).toEqual(['admin'])
           })
 
-          it('it should have default role admin in claims', async () => {
+          it('it should have default role "admin" in claims', async () => {
             const defaultRole = JSON.parse(
               event.response.claimsOverrideDetails.claimsToAddOrOverride[
                 'https://hasura.io/jwt/claims'
@@ -309,7 +409,7 @@ describe('jwt-enrichment-hook', () => {
             event = await handler(originalEvent)
           })
 
-          it('it should have allowed role user in claims', async () => {
+          it('it should have allowed role "user" in claims', async () => {
             const allowedRoles = JSON.parse(
               event.response.claimsOverrideDetails.claimsToAddOrOverride[
                 'https://hasura.io/jwt/claims'
@@ -321,7 +421,7 @@ describe('jwt-enrichment-hook', () => {
             expect(allowedRoles).toEqual(['user'])
           })
 
-          it('it should have default role user in claims', async () => {
+          it('it should have default role "user" in claims', async () => {
             const defaultRole = JSON.parse(
               event.response.claimsOverrideDetails.claimsToAddOrOverride[
                 'https://hasura.io/jwt/claims'
@@ -347,6 +447,42 @@ describe('jwt-enrichment-hook', () => {
             )
           })
         })
+      })
+    })
+
+    describe('user without group', () => {
+      let event
+      let query
+
+      beforeEach(async () => {
+        query = oneUserFromDb
+        graphql.mockReturnValue(query)
+
+        event = await handler(originalEvent)
+      })
+
+      it('it should have allowed role "public" in claims', async () => {
+        const allowedRoles = JSON.parse(
+          event.response.claimsOverrideDetails.claimsToAddOrOverride[
+            'https://hasura.io/jwt/claims'
+          ]
+        )['x-hasura-allowed-roles']
+
+        await query
+
+        expect(allowedRoles).toEqual(['public'])
+      })
+
+      it('it should have default role "public" in claims', async () => {
+        const defaultRole = JSON.parse(
+          event.response.claimsOverrideDetails.claimsToAddOrOverride[
+            'https://hasura.io/jwt/claims'
+          ]
+        )['x-hasura-default-role']
+
+        await query
+
+        expect(defaultRole).toEqual('public')
       })
     })
   })

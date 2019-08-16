@@ -1,9 +1,17 @@
 - args:
-    role: user
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - name
+      - parent_id
+      - type
+      filter: {}
+    role: public
     table:
       name: group
       schema: public
-  type: drop_select_permission
+  type: create_select_permission
 - args:
     permission:
       allow_aggregations: false
@@ -12,14 +20,7 @@
       - name
       - parent_id
       - type
-      filter:
-        users:
-          user:
-            assessments_owner:
-              contributors:
-                contributor_id:
-                  _eq: X-Hasura-User-Id
-      limit: null
+      filter: {}
     role: user
     table:
       name: group

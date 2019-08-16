@@ -1,0 +1,31 @@
+- args:
+    role: public
+    table:
+      name: article_rating
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - id
+      - article_id
+      - user_id
+      - rating
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: user
+    table:
+      name: article_rating
+      schema: public
+  type: create_insert_permission
+- args:
+    role: user
+    table:
+      name: article_rating
+      schema: public
+  type: drop_insert_permission

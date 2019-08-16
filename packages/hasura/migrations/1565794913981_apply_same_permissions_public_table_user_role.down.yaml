@@ -1,7 +1,7 @@
 - args:
-    role: user
+    role: public
     table:
-      name: user_group
+      name: user_role
       schema: public
   type: drop_select_permission
 - args:
@@ -10,16 +10,18 @@
       columns:
       - id
       - user_id
-      - group_id
+      - role_id
       filter:
-        user:
-          assessments_owner:
-            contributors:
-              contributor_id:
-                _eq: X-Hasura-User-Id
-      limit: null
+        user_id:
+          _eq: X-Hasura-User-Id
     role: user
     table:
-      name: user_group
+      name: user_role
       schema: public
   type: create_select_permission
+- args:
+    role: user
+    table:
+      name: user_role
+      schema: public
+  type: drop_select_permission

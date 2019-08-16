@@ -1,0 +1,26 @@
+- args:
+    role: public
+    table:
+      name: taxonomy
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - id
+      - key
+      - name
+      - taxonomy_type_id
+      filter: {}
+    role: user
+    table:
+      name: taxonomy
+      schema: public
+  type: create_select_permission
+- args:
+    role: user
+    table:
+      name: taxonomy
+      schema: public
+  type: drop_select_permission

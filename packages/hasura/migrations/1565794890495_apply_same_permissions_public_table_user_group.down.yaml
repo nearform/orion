@@ -1,5 +1,5 @@
 - args:
-    role: user
+    role: public
     table:
       name: user_group
       schema: public
@@ -11,15 +11,15 @@
       - id
       - user_id
       - group_id
-      filter:
-        user:
-          assessments_owner:
-            contributors:
-              contributor_id:
-                _eq: X-Hasura-User-Id
-      limit: null
+      filter: {}
     role: user
     table:
       name: user_group
       schema: public
   type: create_select_permission
+- args:
+    role: user
+    table:
+      name: user_group
+      schema: public
+  type: drop_select_permission

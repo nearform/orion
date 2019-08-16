@@ -6,6 +6,7 @@ import StatusChip from './StatusChip'
 
 export const ROLE_STATUS = {
   admin: 'admin',
+  user: 'member',
   none: 'non-member',
 }
 

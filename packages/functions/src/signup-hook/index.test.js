@@ -1,7 +1,9 @@
-import { handler } from './'
+import { handler, NON_MEMBER_ROLE_NAME } from './'
 import graphql from '../graphql'
 
+import getRoleByName from './graphql/get-role-by-name.graphql'
 import createUser from './graphql/create-user.graphql'
+import createUserRole from './graphql/create-user-role.graphql'
 jest.mock('../graphql')
 
 const originalEvent = {
@@ -30,16 +32,34 @@ const originalEvent = {
 }
 
 describe('signup-hook', () => {
-  it('it should create the user with the attributes coming from the request', async () => {
+  it('it should create the user with the attributes coming from the request and assign him a non-member role', async () => {
+    const role = { id: 156, name: NON_MEMBER_ROLE_NAME }
+    const createdUser = { id: 'some-user-id' }
+    graphql.mockResolvedValueOnce({ role: [role] })
+    graphql.mockResolvedValueOnce({
+      insert_user: {
+        returning: [createdUser],
+      },
+    })
+
     await handler(originalEvent)
 
-    expect(graphql).toBeCalledWith(createUser, {
+    expect(graphql).toHaveBeenNthCalledWith(1, getRoleByName, {
+      name: NON_MEMBER_ROLE_NAME,
+    })
+
+    expect(graphql).toHaveBeenNthCalledWith(2, createUser, {
       cognitoId: originalEvent.request.userAttributes.sub,
       email: originalEvent.request.userAttributes.email,
       firstName: originalEvent.request.userAttributes.firstname,
       lastName: originalEvent.request.userAttributes.lastname,
       signupRequest: originalEvent.request,
       title: 'EFQM Member',
+    })
+
+    expect(graphql).toHaveBeenLastCalledWith(createUserRole, {
+      userId: createdUser.id,
+      roleId: role.id,
     })
   })
 

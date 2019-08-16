@@ -1,0 +1,48 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - pillar_key
+      - criterion_key
+      - part_number
+      - table_key
+      - table_values
+      - assessment_id
+      filter:
+        assessment:
+          contributors:
+            contributor_id:
+              _eq: X-Hasura-User-Id
+    role: public
+    table:
+      name: assessment_table
+      schema: public
+  type: create_select_permission
+- args:
+    role: user
+    table:
+      name: assessment_table
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - pillar_key
+      - criterion_key
+      - part_number
+      - table_key
+      - table_values
+      - assessment_id
+      filter:
+        assessment:
+          contributors:
+            contributor_id:
+              _eq: X-Hasura-User-Id
+    role: user
+    table:
+      name: assessment_table
+      schema: public
+  type: create_select_permission

@@ -1,0 +1,42 @@
+- args:
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - id
+      - user_id
+      - article_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: public
+    table:
+      name: user_bookmarks
+      schema: public
+  type: create_insert_permission
+- args:
+    role: user
+    table:
+      name: user_bookmarks
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - id
+      - user_id
+      - article_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: user
+    table:
+      name: user_bookmarks
+      schema: public
+  type: create_insert_permission

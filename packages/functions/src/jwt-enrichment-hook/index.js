@@ -25,11 +25,13 @@ export const handler = async event => {
   const userGroup = getUserGroup(user)
 
   if (userGroup) {
-    console.log(`user ${cognitoId} belongs to group ${userGroup.id}`)
+    console.log(
+      `user ${cognitoId} belongs to group ${JSON.stringify(userGroup)}`
+    )
 
     const userRoles = getUserRoles(user)
 
-    console.log(`user ${cognitoId} has roles ${userRoles}`)
+    console.log(`user ${cognitoId} has roles ${JSON.stringify(userRoles)}`)
 
     const defaultRoleName = selectDefaultRoleName(userRoles, userGroup)
 
