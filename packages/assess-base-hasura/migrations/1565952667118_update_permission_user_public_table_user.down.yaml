@@ -8,22 +8,17 @@
     permission:
       allow_aggregations: false
       columns:
-      - id
       - cognito_id
-      - signupRequest
-      - pending
       - email
       - first_name
+      - id
       - last_name
-      - consent_contact
-      - consent_directory
-      - title
-      - avatar
-      - biography
-      - linkedin
-      - website
-      - twitter
-      filter: {}
+      - pending
+      - signupRequest
+      filter:
+        assessment_contributors:
+          contributor_id:
+            _eq: X-Hasura-User-Id
     role: user
     table:
       name: user

@@ -24,12 +24,8 @@
       - website
       - twitter
       filter:
-        _or:
-        - assessment_contributors:
-            contributor_id:
-              _eq: X-Hasura-User-Id
-        - id:
-            _eq: X-Hasura-User-Id
+        id:
+          _eq: X-Hasura-User-Id
     role: user
     table:
       name: user

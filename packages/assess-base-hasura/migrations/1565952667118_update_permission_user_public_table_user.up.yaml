@@ -23,7 +23,10 @@
       - linkedin
       - website
       - twitter
-      filter: {}
+      filter:
+        assessment_contributors:
+          contributor_id:
+            _eq: X-Hasura-User-Id
     role: user
     table:
       name: user
