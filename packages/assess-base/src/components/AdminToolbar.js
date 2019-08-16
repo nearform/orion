@@ -10,7 +10,7 @@ import {
 
 import NavLink from './NavLink'
 
-function AdminToolbar({ classes, pageTitle, ...props }) {
+function AdminToolbar({ classes, pageTitle, userCanAccess, ...props }) {
   return (
     <AppBar
       position="relative"
@@ -22,30 +22,36 @@ function AdminToolbar({ classes, pageTitle, ...props }) {
         <Typography variant="h1">{pageTitle}</Typography>
         <div className={classes.grow} />
         <div className={classes.linksContainer}>
-          <Button
-            color="inherit"
-            component={NavLink}
-            className={classes.navLink}
-            to="pending-users"
-          >
-            Pending users
-          </Button>
-          <Button
-            color="inherit"
-            component={NavLink}
-            className={classes.navLink}
-            to="all-users"
-          >
-            All Users
-          </Button>
-          <Button
-            color="inherit"
-            component={NavLink}
-            className={classes.navLink}
-            to="groups"
-          >
-            Groups
-          </Button>
+          {userCanAccess.pendingUsers && (
+            <Button
+              color="inherit"
+              component={NavLink}
+              className={classes.navLink}
+              to="pending-users"
+            >
+              Pending users
+            </Button>
+          )}
+          {userCanAccess.allUsers && (
+            <Button
+              color="inherit"
+              component={NavLink}
+              className={classes.navLink}
+              to="all-users"
+            >
+              All Users
+            </Button>
+          )}
+          {userCanAccess.groups && (
+            <Button
+              color="inherit"
+              component={NavLink}
+              className={classes.navLink}
+              to="groups"
+            >
+              Groups
+            </Button>
+          )}
         </div>
       </Toolbar>
     </AppBar>
@@ -71,7 +77,8 @@ const styles = theme => ({
 })
 
 AdminToolbar.propTypes = {
-  pageTitle: T.string,
+  pageTitle: T.string.isRequired,
+  userCanAccess: T.object.isRequired,
   classes: T.object,
 }
 

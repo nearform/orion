@@ -6,10 +6,12 @@ import { isAuthenticatedSync, getUserRolesSync } from '../utils/auth'
 import { AuthInitContext } from '../utils/auth'
 
 export default function ProtectedRoute({
-  allowedRole,
+  allowedRoles,
   component: Component,
   ...props
 }) {
+  // TODO: dedupe all this from KnowledgeBase
+
   const isAuthInitialized = useContext(AuthInitContext)
   //skip rendering if auth is not yet initialized
   if (!isAuthInitialized) {
@@ -20,8 +22,8 @@ export default function ProtectedRoute({
     return <Redirect to="/auth" noThrow />
   }
 
-  if (allowedRole) {
-    if (!getUserRolesSync().includes(allowedRole)) {
+  if (allowedRoles) {
+    if (!allowedRoles.some(role => getUserRolesSync().includes(role))) {
       return <Redirect to="/auth" noThrow />
     }
   }
