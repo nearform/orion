@@ -24,7 +24,7 @@ import {
   deleteGroupMutation,
 } from '../../queries'
 
-import { GroupTypeChip, GROUP_TYPES } from 'components'
+import { ConfirmDialog, GroupTypeChip, GROUP_TYPES } from 'components'
 
 import useAdminTable from '../../hooks/useAdminTable'
 
@@ -77,12 +77,16 @@ function UserGroups({ classes }) {
             <GroupTypeChip status={group.type} />
           </TableCell>
           <TableCell align="right" padding="none">
-            <IconButton
-              onClick={() => doDeleteGroup(group.id)}
-              className={classes.actionButton}
+            <ConfirmDialog
+              title={`Delete group “${group.name}”?`}
+              text="This group will be permanently deleted. This cannot be undone."
+              onConfirm={() => doDeleteGroup(group.id)}
+              okayLabel="Delete"
             >
-              <DeleteForever />
-            </IconButton>
+              <IconButton className={classes.actionButton}>
+                <DeleteForever />
+              </IconButton>
+            </ConfirmDialog>
           </TableCell>
         </TableRow>
       ))

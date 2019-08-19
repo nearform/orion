@@ -16,6 +16,7 @@ import {
   ASSESSMENT_STATUS,
   BarChart,
   getChartData,
+  ConfirmDialog,
   SectionTitle,
 } from 'components'
 import SEO from '../components/SEO'
@@ -177,6 +178,8 @@ function AssessmentTemplate({
     (isAdmin && getCanEditAssesors(groupId, assessmentData)) ||
     getCanEditContributors(groupId, assessmentData)
 
+  const assessmentName = get(assessmentData, 'name', 'Loading...')
+
   return (
     <>
       <SEO title={get(assessmentData, 'name', 'Assessment')} />
@@ -218,14 +221,26 @@ function AssessmentTemplate({
                 <Grid item xs />
                 <Grid item>
                   {canEditKeyInformationAndUploadAndSubmit && (
-                    <Button
+                    <ConfirmDialog
+                      disabled={!assessmentData}
+                      onConfirm={handleSubmitAssessment}
                       type="submit"
-                      color="secondary"
-                      variant="contained"
-                      onClick={handleSubmitAssessment}
+                      title={`Submit assessment “${assessmentName}”?`}
+                      text={
+                        <>
+                          <p>
+                            This assessment will be submitted to the assessors
+                            for scoring and evaluation. Contributors will no
+                            longer be able to edit the assessment content.
+                          </p>
+                          <p>This cannot be undone.</p>
+                        </>
+                      }
                     >
-                      Submit Assessment
-                    </Button>
+                      <Button color="secondary" variant="contained">
+                        Submit Assessment
+                      </Button>
+                    </ConfirmDialog>
                   )}
                   {canViewFeedbackReport && (
                     <Button
@@ -250,7 +265,7 @@ function AssessmentTemplate({
                     </Grid>
                     <Grid item xs>
                       <Typography variant="h2" color="primary">
-                        {get(assessmentData, 'name', 'Loading...')}
+                        {assessmentName}
                       </Typography>
                     </Grid>
                   </Grid>
