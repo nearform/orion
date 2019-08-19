@@ -86,9 +86,7 @@ module.exports = {
         prefixes: [
           '/admin/*',
           '/auth/*',
-          '/content/*',
           '/my-content/*',
-          '/profile/*',
           '/search/*',
           '/section/*',
           '/submit/*',
