@@ -193,7 +193,15 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build
+      - apply-hasura-migrations:
+          filters:
+            branches:
+              only:
+                - master
+                - production
+      - build:
+          requires:
+            - apply-hasura-migrations
       - test:
           requires:
             - build
@@ -202,14 +210,6 @@ workflows:
             branches:
               only:
                 - e2e-test
-          requires:
-            - build
-      - apply-hasura-migrations:
-          filters:
-            branches:
-              only:
-                - master
-                - production
           requires:
             - build
       - deploy:
