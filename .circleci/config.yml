@@ -73,6 +73,8 @@ jobs:
   build:
     <<: *deploy_environment
     steps:
+      - attach_workspace:
+          at: .
       - *load_envars
       - run:
           name: Lint code
