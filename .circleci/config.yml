@@ -57,13 +57,16 @@ load_envars: &load_envars
 
 version: 2
 jobs:
+  setup:
+    <<: *deploy_environment
+    steps:
+    - checkout
+    - *install_awscli
+    - *get_envars
+    - *load_envars
   build:
     <<: *deploy_environment
     steps:
-      - checkout
-      - *install_awscli
-      - *get_envars
-      - *load_envars
       - run:
           name: Install npm deps
           command: npm install --no-save
@@ -173,7 +176,6 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - *load_envars
       - *install_hasura_cli
       - run:
           name: Apply Hasura migrations
@@ -193,12 +195,16 @@ workflows:
   version: 2
   build-only:
     jobs:
-      - build:
+      - setup:
           filters:
             branches:
               ignore:
                 - master
                 - production
+                - fix-deploy
+      - build:
+          requires:
+            - setup
       - test:
           requires:
             - build
@@ -211,12 +217,16 @@ workflows:
             - build
   build-and-deploy:
     jobs:
-      - apply-hasura-migrations:
+      - setup:
           filters:
             branches:
               only:
                 - master
                 - production
+                - fix-deploy
+      - apply-hasura-migrations:
+          requires:
+            - setup
       - build:
           requires:
             - apply-hasura-migrations
