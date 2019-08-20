@@ -63,6 +63,10 @@ jobs:
     - checkout
     - *install_awscli
     - *get_envars
+    - persist_to_workspace:
+        root: .
+        paths:
+          - .
   build:
     <<: *deploy_environment
     steps:
@@ -84,10 +88,6 @@ jobs:
             set -e
             cd packages/components
             npm run build-storybook -- --quiet
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
   test:
     <<: *deploy_environment
     steps:
