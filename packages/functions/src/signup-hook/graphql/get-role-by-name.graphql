@@ -1,0 +1,6 @@
+query getRoleByName($name: String!) {
+  role(where: { name: { _eq: $name } }) {
+    id
+    name
+  }
+}

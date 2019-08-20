@@ -1,0 +1,28 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - name
+      - parent_id
+      - type
+      filter: {}
+    role: public
+    table:
+      name: group
+      schema: public
+  type: create_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - name
+      - parent_id
+      - type
+      filter: {}
+    role: user
+    table:
+      name: group
+      schema: public
+  type: create_select_permission

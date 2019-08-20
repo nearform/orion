@@ -15,6 +15,7 @@ import {
 import {
   getChartData,
   BarChartTable,
+  ConfirmDialog,
   PaddedContainer,
   SectionTitle,
 } from 'components'
@@ -68,6 +69,8 @@ function FeedbackReport({
 
   const chartData = getChartData(assessment, assessmentData, pillarColors)
 
+  const assessmentName = get(assessmentData, 'name', 'Loading...')
+
   return (
     <div className={classes.root}>
       <SEO title={assessment.name} />
@@ -87,14 +90,24 @@ function FeedbackReport({
                 feedback report
               </Typography>
               <Typography variant="h2" color="primary">
-                {get(assessmentData, 'name', 'Loading...')}
+                {assessmentName}
               </Typography>
             </Grid>
             <Grid item xs />
             <Grid item>
-              <Button color="secondary" variant="contained">
-                Submit Feedback Report
-              </Button>
+              <ConfirmDialog
+                disabled={!assessmentData}
+                onConfirm={() => {
+                  /* TODO */
+                }}
+                title={`Submit report for “${assessmentName}”?`}
+                text={`The feedback report for this assessment will be finalised.
+                  No more edits or scoring will be possible. This cannot be undone.`}
+              >
+                <Button color="secondary" variant="contained">
+                  Submit Feedback Report
+                </Button>
+              </ConfirmDialog>
             </Grid>
           </Grid>
         </div>

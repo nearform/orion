@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "npm run migrate:all",
-    "test": "env-cmd -f async-env.js jest",
+    "dev:test": "env-cmd -f async-env.js jest",
     "migrate:all": "npm run migrate:common -- apply && npm run migrate:assess-base -- apply",
     "migrate:common": "env-cmd -f async-env.js hasura migrate --project ../hasura",
     "migrate:assess-base": "env-cmd -f async-env.js hasura migrate --project ../assess-base-hasura"

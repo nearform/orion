@@ -1,0 +1,30 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - article_id
+      - author_id
+      filter: {}
+    role: public
+    table:
+      name: article_author
+      schema: public
+  type: create_select_permission
+- args:
+    role: user
+    table:
+      name: article_author
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - article_id
+      - author_id
+      filter: {}
+    role: user
+    table:
+      name: article_author
+      schema: public
+  type: create_select_permission
