@@ -63,10 +63,10 @@ jobs:
     - checkout
     - *install_awscli
     - *get_envars
-    - *load_envars
   build:
     <<: *deploy_environment
     steps:
+      - *load_envars
       - run:
           name: Install npm deps
           command: npm install --no-save
@@ -177,6 +177,7 @@ jobs:
       - attach_workspace:
           at: .
       - *install_hasura_cli
+      - *load_envars
       - run:
           name: Apply Hasura migrations
           command: |
