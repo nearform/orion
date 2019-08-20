@@ -71,6 +71,7 @@ const ListContent = ({ classes, term, cat }) => {
           term={term}
           cat={cat}
           taxonomy={taxonomyIds}
+          taxonomyTypes={taxonomyTypes}
           callback={handleContentData}
           offset={offset}
         />

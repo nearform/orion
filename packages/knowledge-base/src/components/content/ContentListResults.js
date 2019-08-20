@@ -1,5 +1,7 @@
 import React from 'react'
 import { useQuery } from 'graphql-hooks'
+import { sortTaxonomyIdsByType } from '../../utils/taxonomy'
+import useTaxonomies from '../../hooks/useTaxonomies'
 import {
   getArticlesSearchResults,
   getArticlesCategoryResults,
@@ -24,11 +26,8 @@ const extractArticleData = data => {
   return { taxonomyIds, summaries }
 }
 
-const buildWhereClause = (cat, tax) => {
+const buildWhereClause = (cat, tax, taxonomyTypes) => {
   const clause = {
-    //FOR TESTING, CAN SELECT ALL STATUS TYPES BY UNCOMMENTING BELOW
-    //status: { _in: ['in-progress', 'in-review', 'published'] },
-    //IF ABOVE IS UNCOMMENTED, COMMENT OUT BELOW
     status: { _eq: 'published' },
     _and: [],
   }
@@ -37,16 +36,24 @@ const buildWhereClause = (cat, tax) => {
         taxonomy_items: { taxonomy: { key: { _ilike: cat } } },
       })
     : null
-  tax.length >= 1
-    ? clause._and.push({ taxonomy_items: { taxonomy_id: { _in: tax } } })
-    : null
+  if (tax.length >= 1) {
+    const sortedTax = sortTaxonomyIdsByType(taxonomyTypes, tax)
+    for (let type in sortedTax) {
+      if (sortedTax[type].length >= 1) {
+        clause._and.push({
+          taxonomy_items: { taxonomy_id: { _in: sortedTax[type] } },
+        })
+      }
+    }
+  }
 
   return clause
 }
 
 const ContentListResults = ({ term, cat, taxonomy = [], callback, offset }) => {
+  const taxonomyTypes = useTaxonomies()
   const vars = {
-    whereClause: buildWhereClause(cat, taxonomy),
+    whereClause: buildWhereClause(cat, taxonomy, taxonomyTypes),
     limit: PAGE_SIZE,
     offset: offset,
   }
