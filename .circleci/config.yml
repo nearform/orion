@@ -63,6 +63,9 @@ jobs:
     - checkout
     - *install_awscli
     - *get_envars
+    - run:
+      name: Install npm deps
+      command: npm install --no-save
     - persist_to_workspace:
         root: .
         paths:
@@ -71,9 +74,6 @@ jobs:
     <<: *deploy_environment
     steps:
       - *load_envars
-      - run:
-          name: Install npm deps
-          command: npm install --no-save
       - run:
           name: Lint code
           command: npm run lint
