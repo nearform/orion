@@ -199,9 +199,7 @@ workflows:
               only:
                 - master
                 - production
-      - build:
-          requires:
-            - apply-hasura-migrations
+      - build
       - test:
           requires:
             - build
