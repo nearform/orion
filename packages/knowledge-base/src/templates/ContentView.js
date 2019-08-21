@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import { withStyles, Grid, Typography, LinearProgress } from '@material-ui/core'
 
 import { getArticleDetails } from '../queries'
-import { useIsAuthInitialized, isAuthenticatedSync } from '../utils/auth'
+import { useIsValidUser } from '../utils/auth'
 import { PaddedContainer } from 'components'
 import RichText from '../components/content//RichText'
 import ContentMetadata from '../components/content/ContentMetadata'
@@ -14,8 +14,7 @@ import FeatureArticles from '../components/FeatureArticles'
 
 function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
   const { path } = articleSummary || { path: slug }
-  const isAuthInitialized = useIsAuthInitialized()
-  const isAuthenticated = isAuthenticatedSync()
+  const isValidUser = useIsValidUser()
   const [getArticleDetailsQuery, { loading, data }] = useManualQuery(
     getArticleDetails
   )
@@ -23,18 +22,12 @@ function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
   const [isChanged, setIsChanged] = useState(Symbol())
   const contentId = path.split('-')[0]
   useEffect(() => {
-    if (contentId && isAuthInitialized && isAuthenticated) {
+    if (contentId && isValidUser) {
       getArticleDetailsQuery({
         variables: { id: contentId },
       })
     }
-  }, [
-    contentId,
-    isAuthInitialized,
-    isAuthenticated,
-    getArticleDetailsQuery,
-    isChanged,
-  ])
+  }, [contentId, isValidUser, getArticleDetailsQuery, isChanged])
   const refetchArticle = () => setIsChanged(Symbol())
 
   const articleFull = get(data, 'articleDetails')

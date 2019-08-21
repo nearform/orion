@@ -4,10 +4,11 @@ import T from 'prop-types'
 import get from 'lodash/get'
 import { RatingWidget } from 'components'
 import { getArticleRating, addArticleRatingMutation } from '../../queries'
-import { useUserId } from '../../utils/auth'
+import { useUserId, useIsAuthInitialized } from '../../utils/auth'
 
 const RateArticle = ({ id: articleId, content }) => {
   const userId = useUserId()
+  const isAuthInitialized = useIsAuthInitialized()
   const [fetchRatingData, { data, loading: fetching }] = useManualQuery(
     getArticleRating,
     {
@@ -22,10 +23,10 @@ const RateArticle = ({ id: articleId, content }) => {
   )
 
   useEffect(() => {
-    if (userId) {
+    if (userId && isAuthInitialized) {
       fetchRatingData()
     }
-  }, [userId, fetchRatingData])
+  }, [userId, isAuthInitialized, fetchRatingData])
 
   const ratingData = data || content
   const rating = get(ratingData, 'rating.aggregate.avg.rating') || 0

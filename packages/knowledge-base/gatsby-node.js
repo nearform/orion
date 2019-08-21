@@ -69,6 +69,7 @@ exports.createPages = async ({ graphql, actions }) => {
               email
             }
           }
+          status
           banner
           published_at
           path
