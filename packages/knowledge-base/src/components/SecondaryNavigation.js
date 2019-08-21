@@ -45,7 +45,7 @@ MyContentButton.defaultProps = {
 const ENTER_KEY = 13
 const WAIT_INTERVAL = 1000
 
-function SecondaryNavigation({ classes, dark }) {
+function SecondaryNavigation({ classes, dark, theme }) {
   const [search, setSearch] = useState(false)
   const [searchText, setSearchText] = useState('')
   const prevSearchText = usePrevious(searchText)
@@ -80,13 +80,14 @@ function SecondaryNavigation({ classes, dark }) {
 
   return !search ? (
     <Grid container justify="flex-end" spacing={3}>
-      {taxonomyTypes.map(type => (
+      {taxonomyTypes.map((type, index) => (
         <Grid item key={`tax_type_${type.key}`}>
           <QuickLinksMenu dark={dark} label={type.name}>
             {type.taxonomy_items.map(item => (
               <QuickLinksMenuItem
                 key={`quick_link_${item.key}`}
                 onClick={() => navigate('/section/' + item.key)}
+                borderColor={theme.taxonomyColor[`C${index + 1}`]}
               >
                 {item.name}
               </QuickLinksMenuItem>
@@ -157,4 +158,4 @@ const styles = theme => ({
   },
 })
 
-export default withStyles(styles)(SecondaryNavigation)
+export default withStyles(styles, { withTheme: true })(SecondaryNavigation)

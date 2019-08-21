@@ -57,16 +57,25 @@ load_envars: &load_envars
 
 version: 2
 jobs:
+  setup:
+    <<: *deploy_environment
+    steps:
+    - checkout
+    - *install_awscli
+    - *get_envars
+    - run:
+        name: Install npm deps
+        command: npm install --no-save
+    - persist_to_workspace:
+        root: .
+        paths:
+          - .
   build:
     <<: *deploy_environment
     steps:
-      - checkout
-      - *install_awscli
-      - *get_envars
+      - attach_workspace:
+          at: .
       - *load_envars
-      - run:
-          name: Install npm deps
-          command: npm install --no-save
       - run:
           name: Lint code
           command: npm run lint
@@ -173,8 +182,8 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - *load_envars
       - *install_hasura_cli
+      - *load_envars
       - run:
           name: Apply Hasura migrations
           command: |
@@ -191,9 +200,17 @@ jobs:
             npm run seed
 workflows:
   version: 2
-  build-and-deploy:
+  build-only:
     jobs:
-      - build
+      - setup:
+          filters:
+            branches:
+              ignore:
+                - master
+                - production
+      - build:
+          requires:
+            - setup
       - test:
           requires:
             - build
@@ -204,27 +221,33 @@ workflows:
                 - e2e-test
           requires:
             - build
-      - apply-hasura-migrations:
+  build-and-deploy:
+    jobs:
+      - setup:
           filters:
             branches:
               only:
                 - master
                 - production
+      - apply-hasura-migrations:
+          requires:
+            - setup
+      - build:
+          requires:
+            - apply-hasura-migrations
+      - test:
+          requires:
+            - build
+      - e2e:
+          filters:
+            branches:
+              only:
+                - e2e-test
           requires:
             - build
       - deploy:
-          filters:
-            branches:
-              only:
-                - master
-                - production
           requires:
             - test
       - publish-artifacts:
-          filters:
-            branches:
-              only:
-                - master
-                - production
           requires:
             - test

@@ -44,7 +44,7 @@ const Profile = ({ pageContext: { user: userContext } = {}, classes }) => {
   const initialValues = !user
     ? {}
     : formFields
-        .filter(field => !field.name.includes('.'))
+        .filter(field => !field.name.includes('.') && field.name !== 'fullName')
         .map(field => field.name)
         .reduce(
           (acc, key) => {
@@ -53,15 +53,22 @@ const Profile = ({ pageContext: { user: userContext } = {}, classes }) => {
           },
           {
             signupRequest,
+            fullName: `${user.first_name || ''} ${user.last_name || ''}`,
           }
         )
 
   const saveProfile = async (values, actions) => {
+    const formValues = {
+      ...omit(values, ['avatarChanged', 'fullName']),
+      first_name: get(values.fullName.split(' '), '0', ''),
+      last_name: get(values.fullName.split(' '), '1', ''),
+    }
+
     try {
       await updateUser({
         variables: {
           id: userId,
-          input: omit(values, 'avatarChanged'),
+          input: formValues,
         },
       })
       setEditMode(false)
@@ -157,9 +164,10 @@ const Profile = ({ pageContext: { user: userContext } = {}, classes }) => {
                   <Grid item xs={2}>
                     <div className={classes.nameWrapper}>
                       <UserInfo
-                        title="Name"
-                        value={`${user.first_name || ''} ${user.last_name ||
-                          ''}`}
+                        title={formFields[0].label}
+                        name={formFields[0].name}
+                        value={get(values, formFields[0].name)}
+                        editMode={editMode}
                         size="large"
                       ></UserInfo>
                     </div>
@@ -208,9 +216,9 @@ const Profile = ({ pageContext: { user: userContext } = {}, classes }) => {
 
                   <Grid item xs={2}>
                     <UserInfo
-                      title={formFields[0].label}
-                      name={formFields[0].name}
-                      value={get(values, formFields[0].name)}
+                      title={formFields[1].label}
+                      name={formFields[1].name}
+                      value={get(values, formFields[1].name)}
                       editMode={editMode}
                     ></UserInfo>
 
@@ -228,18 +236,18 @@ const Profile = ({ pageContext: { user: userContext } = {}, classes }) => {
                     ></UserInfo>
 
                     <UserInfo
-                      title={formFields[1].label}
-                      name={formFields[1].name}
-                      value={get(values, formFields[1].name)}
+                      title={formFields[2].label}
+                      name={formFields[2].name}
+                      value={get(values, formFields[2].name)}
                       editMode={editMode}
                     ></UserInfo>
                   </Grid>
 
                   <Grid item xs={6}>
                     <UserInfo
-                      title={formFields[2].label}
-                      name={formFields[2].name}
-                      value={get(values, formFields[2].name)}
+                      title={formFields[3].label}
+                      name={formFields[3].name}
+                      value={get(values, formFields[3].name)}
                       editMode={editMode}
                       rows={4}
                     ></UserInfo>
@@ -253,7 +261,7 @@ const Profile = ({ pageContext: { user: userContext } = {}, classes }) => {
                     </Typography>
 
                     {formFields
-                      .slice(4, 8)
+                      .slice(5, 9)
                       .map(({ name, icon: Icon, iconClass, label }) => (
                         <Grid
                           container

@@ -4,6 +4,10 @@ import Twitter from '../../assets/social/twitter.svg'
 
 export default [
   {
+    name: 'fullName',
+    label: 'Name',
+  },
+  {
     name: 'title',
     label: 'Title',
   },

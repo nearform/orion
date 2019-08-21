@@ -62,13 +62,13 @@ export const QuickLinksMenuItem = withStyles(theme => ({
   root: {
     ...theme.typography.button,
     minHeight: theme.spacing(4),
-
     borderLeft: `${theme.spacing(0.5)}px solid transparent`,
     '&:hover, &:focus': {
-      borderLeftColor: theme.palette.primary.light,
+      borderLeftColor: props =>
+        props.borderColor || theme.palette.primary.light,
     },
   },
-}))(MenuItem)
+}))(React.forwardRef(({ borderColor, ...props }) => <MenuItem {...props} />))
 
 function QuickLinkMenu({ dark, label, children }) {
   const menuButtonRef = useRef(null)
