@@ -34,3 +34,4 @@ export {
   default as addArticleRatingMutation,
 } from './add-article-rating.graphql'
 export { default as getArticleRating } from './get-article-rating.graphql'
+export { default as getEditorsPicks } from './get-editors-picks.graphql'

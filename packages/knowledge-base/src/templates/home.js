@@ -2,6 +2,7 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Button, Grid, Typography, withStyles } from '@material-ui/core'
 import { PaddedContainer } from 'components'
+import EditorsPicks from '../components/EditorsPicks'
 import BackgroundImage from 'gatsby-background-image'
 import { Link as RouterLink } from '@reach/router'
 import SEO from '../components/SEO'
@@ -14,7 +15,7 @@ function KnowledgeHome({ theme, classes, data }) {
       className={classes.heroContainer}
       fluid={heroBanner.childImageSharp.fluid}
     >
-      <SEO title="Assessment Home Page" />
+      <SEO title="Knowledge Base Home Page" />
       <div className={classes.header}>
         <PaddedContainer className={classes.heroDescription}>
           <Grid container spacing={3} direction="column">
@@ -51,7 +52,16 @@ function KnowledgeHome({ theme, classes, data }) {
           </Grid>
         </PaddedContainer>
       </div>
-      <PaddedContainer>{/*Home Body*/}</PaddedContainer>
+      <PaddedContainer>
+        <Grid
+          container
+          spacing={3}
+          direction="column"
+          className={classes.mainBody}
+        >
+          <EditorsPicks />
+        </Grid>
+      </PaddedContainer>
     </BackgroundImage>
   )
 }
@@ -73,6 +83,9 @@ const styles = theme => ({
   sectionBottom: {
     marginTop: theme.spacing(4),
     marginBottom: theme.spacing(4),
+  },
+  mainBody: {
+    marginTop: theme.spacing(20),
   },
 })
 
