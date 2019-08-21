@@ -55,7 +55,9 @@ export default withStyles(theme => ({
     textTransform: 'uppercase',
     padding: '4px 8px',
     marginTop: '16px',
-    width: 'max-content',
+    width: 'auto',
+    whiteSpace: 'normal',
+    textAlign: 'left',
     borderRadius: '0',
   },
   TaxonomyC1: {
