@@ -1,6 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 import { withStyles, Button } from '@material-ui/core'
+import { fade } from '@material-ui/core/styles'
 
 const TaxonomyItem = ({ classes, item, filter, callback }) => {
   let isActive = false
@@ -53,49 +54,60 @@ export default withStyles(theme => ({
     fontSize: '12px',
     letterSpacing: '2.45px',
     textTransform: 'uppercase',
-    padding: '4px 8px',
-    marginTop: '16px',
+    padding: '8px 10px',
+    marginTop: '4px',
     width: 'max-content',
     borderRadius: '0',
-  },
-  TaxonomyC1: {
-    [theme.breakpoints.down('xs')]: {
-      color: theme.palette.primary.dark,
+    '&:first-of-type': {
+      marginTop: '10px',
     },
     [theme.breakpoints.up('sm')]: {
       color: 'white',
       letterSpacing: '1.8px',
-      backgroundColor: theme.palette.primary.dark,
+    },
+  },
+  TaxonomyC1: {
+    [theme.breakpoints.down('xs')]: {
+      color: theme.taxonomyColor.C1,
+    },
+    [theme.breakpoints.up('sm')]: {
+      backgroundColor: theme.taxonomyColor.C1,
+      '&:hover, &:focus': {
+        backgroundColor: fade(theme.taxonomyColor.C1, 0.8),
+      },
     },
   },
   TaxonomyC2: {
     [theme.breakpoints.down('xs')]: {
-      color: theme.palette.primary.main,
+      color: theme.taxonomyColor.C2,
     },
     [theme.breakpoints.up('sm')]: {
-      color: 'white',
-      letterSpacing: '1.8px',
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.taxonomyColor.C2,
+      '&:hover, &:focus': {
+        backgroundColor: fade(theme.taxonomyColor.C2, 0.8),
+      },
     },
   },
   TaxonomyC3: {
     [theme.breakpoints.down('xs')]: {
-      color: theme.palette.primary.light,
+      color: theme.taxonomyColor.C3,
     },
     [theme.breakpoints.up('sm')]: {
-      color: 'white',
-      letterSpacing: '1.8px',
-      backgroundColor: theme.palette.primary.light,
+      backgroundColor: theme.taxonomyColor.C3,
+      '&:hover, &:focus': {
+        backgroundColor: fade(theme.taxonomyColor.C3, 0.8),
+      },
     },
   },
   TaxonomyC4: {
     [theme.breakpoints.down('xs')]: {
-      color: theme.palette.secondary.dark,
+      color: theme.taxonomyColor.C4,
     },
     [theme.breakpoints.up('sm')]: {
-      color: 'white',
-      letterSpacing: '1.8px',
-      backgroundColor: theme.palette.secondary.dark,
+      backgroundColor: theme.taxonomyColor.C4,
+      '&:hover, &:focus': {
+        backgroundColor: fade(theme.taxonomyColor.C4, 0.8),
+      },
     },
   },
 }))(TaxonomyItem)

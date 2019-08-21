@@ -12,6 +12,7 @@ const colorDefinitions = {
   pearGreen: 'rgb(155, 220, 106)',
   yellow: 'rgb(255, 204, 0)',
   purple: 'rgb(97, 89, 128)',
+  orange: 'rgb(250,119,94)',
 
   // Shades used in designs not included in EFQM docs
   paleGrey: 'rgb(244, 246, 248)',
@@ -229,6 +230,13 @@ const iconLight = {
 }
 const articleWidgetColor = colorDefinitions.purple
 const profileSpacerBackground = colorDefinitions.purple
+
+const taxonomyColor = {
+  C1: colorDefinitions.orange,
+  C2: colorDefinitions.navyBlue,
+  C3: colorDefinitions.cyan,
+  C4: colorDefinitions.emeraldGreen,
+}
 
 const editorsPicks = {
   title: {
@@ -485,6 +493,7 @@ exports.muiTheme = {
   articleWidgetColor,
   articleRateIconColor,
   profileSpacerBackground,
+  taxonomyColor,
   editorsPicks,
 }
 

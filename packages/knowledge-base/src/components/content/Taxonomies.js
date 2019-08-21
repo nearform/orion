@@ -55,13 +55,13 @@ export default withStyles(theme => ({
     fontSize: '12px',
     letterSpacing: '1.8px',
     textTransform: 'uppercase',
-    marginTop: '16px',
+    marginTop: '12px',
     color: theme.palette.tertiary.main,
     [theme.breakpoints.down('xs')]: {
       marginRight: theme.spacing(1.5),
     },
   },
   TaxonomyType: {
-    margin: theme.spacing(1, 0, 2),
+    margin: theme.spacing(1, 0, 1.5),
   },
 }))(Taxonomies)
