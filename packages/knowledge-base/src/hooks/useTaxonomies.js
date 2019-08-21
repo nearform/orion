@@ -34,11 +34,15 @@ const useTaxonomies = (taxonomyData = []) => {
   let order = 0
   for (let type of taxonomyTypes) {
     order++
+    type.active = false
     for (let item of type.taxonomy_items) {
       item.order_index = order
-      taxonomyIds.find(itemId => itemId === item.id)
-        ? (item.active = true)
-        : (item.active = false)
+      if (taxonomyIds.find(itemId => itemId === item.id)) {
+        item.active = true
+        type.active = true
+      } else {
+        item.active = false
+      }
     }
   }
 
