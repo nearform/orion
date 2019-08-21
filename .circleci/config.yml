@@ -90,6 +90,10 @@ jobs:
             set -e
             cd packages/components
             npm run build-storybook -- --quiet
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
   test:
     <<: *deploy_environment
     steps:
@@ -242,18 +246,8 @@ workflows:
           requires:
             - build
       - deploy:
-          filters:
-            branches:
-              only:
-                - master
-                - production
           requires:
             - test
       - publish-artifacts:
-          filters:
-            branches:
-              only:
-                - master
-                - production
           requires:
             - test

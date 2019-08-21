@@ -54,11 +54,11 @@ export default withStyles(theme => ({
     fontSize: '12px',
     letterSpacing: '2.45px',
     textTransform: 'uppercase',
-    padding: '8px 10px',
-    marginTop: '4px',
     width: 'auto',
     whiteSpace: 'normal',
     textAlign: 'left',
+    padding: '8px 10px',
+    marginTop: '4px',
     borderRadius: '0',
     '&:first-of-type': {
       marginTop: '10px',
