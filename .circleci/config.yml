@@ -208,7 +208,6 @@ workflows:
               ignore:
                 - master
                 - production
-                - fix-deploy
       - build:
           requires:
             - setup
@@ -230,7 +229,6 @@ workflows:
               only:
                 - master
                 - production
-                - fix-deploy
       - apply-hasura-migrations:
           requires:
             - setup
