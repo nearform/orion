@@ -56,7 +56,9 @@ export default withStyles(theme => ({
     textTransform: 'uppercase',
     padding: '8px 10px',
     marginTop: '4px',
-    width: 'max-content',
+    width: 'auto',
+    whiteSpace: 'normal',
+    textAlign: 'left',
     borderRadius: '0',
     '&:first-of-type': {
       marginTop: '10px',
