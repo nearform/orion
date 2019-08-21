@@ -90,6 +90,10 @@ jobs:
             set -e
             cd packages/components
             npm run build-storybook -- --quiet
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
   test:
     <<: *deploy_environment
     steps:
@@ -204,6 +208,7 @@ workflows:
               ignore:
                 - master
                 - production
+                - fix-deploy
       - build:
           requires:
             - setup
@@ -225,6 +230,7 @@ workflows:
               only:
                 - master
                 - production
+                - fix-deploy
       - apply-hasura-migrations:
           requires:
             - setup
@@ -242,18 +248,8 @@ workflows:
           requires:
             - build
       - deploy:
-          filters:
-            branches:
-              only:
-                - master
-                - production
           requires:
             - test
       - publish-artifacts:
-          filters:
-            branches:
-              only:
-                - master
-                - production
           requires:
             - test
