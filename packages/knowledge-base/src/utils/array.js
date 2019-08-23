@@ -1,6 +1,6 @@
 export const getRandomRows = (source, num) => {
   const results = []
-  const origin = source
+  const origin = [...source]
   if (origin.length <= num) {
     results.push(...origin)
   } else {
