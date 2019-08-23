@@ -1,9 +1,9 @@
 import React from 'react'
 import get from 'lodash/get'
 import { useQuery } from 'graphql-hooks'
-import { getRandomRows } from '../utils/array'
-import FeatureArticles from '../components/FeatureArticles'
-import { getEditorsPicks } from '../queries'
+import { getRandomRows } from '../../utils/array'
+import FeatureArticles from './FeatureArticles'
+import { getEditorsPicks } from '../../queries'
 import { Grid } from '@material-ui/core'
 
 function EditorsPicks() {

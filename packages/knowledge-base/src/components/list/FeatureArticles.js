@@ -1,16 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles, Grid, Typography } from '@material-ui/core'
+import { withStyles, Grid } from '@material-ui/core'
 import ArticlePreview from './ArticlePreview'
+import ListTitle from './ListTitle'
 
 const FeatureArticles = ({ classes, title = '', articles = [], hideEmpty }) => {
   if (hideEmpty && !articles.length) return null
   return (
     <Grid container spacing={2} justify="flex-end" className={classes.root}>
       <Grid item xs={12} md={3} lg={2}>
-        <Typography variant="h3" className={classes.title}>
-          {title}
-        </Typography>
+        <ListTitle title={title} />
       </Grid>
       {articles.map(article => (
         <Grid

@@ -10,7 +10,7 @@ import { PaddedContainer } from 'components'
 import RichText from '../components/content//RichText'
 import ContentMetadata from '../components/content/ContentMetadata'
 import ContentOptions from '../components/content/ContentOptions'
-import FeatureArticles from '../components/FeatureArticles'
+import FeatureArticles from '../components/list/FeatureArticles'
 
 function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
   const { path } = articleSummary || { path: slug }
