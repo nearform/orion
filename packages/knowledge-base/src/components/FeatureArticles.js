@@ -41,6 +41,7 @@ const styles = theme => ({
       // Align edge of boxes with article text
       marginLeft: theme.spacing(-3),
     },
+    justifyContent: 'flex-start',
   },
   clip: {
     overflowX: 'hidden',
