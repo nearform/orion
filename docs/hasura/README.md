@@ -66,7 +66,7 @@ _4_ **Get a dump file of the current shared Hasura content**, using the Hasura A
 
 ```sh
 SECRET=<insert here>
-curl -H 'x-hasura-admin-secret: $SECRET' -d'{"opts": ["--data-only", "-Fc"]}' https://raw-salmon-hasura.nearform.com/v1alpha1/pg_dump > dumpfile
+curl -H "x-hasura-admin-secret: $SECRET" -d'{"opts": ["--data-only", "-Fc"]}' https://raw-salmon-hasura.nearform.com/v1alpha1/pg_dump > dumpfile
 
 ```
 
