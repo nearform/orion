@@ -1,4 +1,16 @@
 - args:
+    role: user
+    table:
+      name: group
+      schema: public
+  type: drop_select_permission
+- args:
+    role: user
+    table:
+      name: user-group
+      schema: public
+  type: drop_select_permission
+- args:
     relationship: groups
     table:
       name: user

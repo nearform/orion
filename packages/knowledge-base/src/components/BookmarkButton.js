@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import { BookmarkOutlined, BookmarkBorderOutlined } from '@material-ui/icons'
 import { withStyles, Button, CircularProgress, Hidden } from '@material-ui/core'
 import { addUserBookmarkMutation, deleteUserBookmarkMutation } from '../queries'
-import { useUserId } from '../utils/auth'
+import { useUserId, useIsAuthInitialized } from '../utils/auth'
 import useBookmarkData from '../hooks/useBookmarkData'
 
 const BookmarkButton = ({
@@ -17,6 +17,7 @@ const BookmarkButton = ({
   classes,
 }) => {
   const userId = useUserId()
+  const isAuthInitialized = useIsAuthInitialized()
 
   const {
     fetchArticleBookmarked,
@@ -25,13 +26,13 @@ const BookmarkButton = ({
   } = useBookmarkData(articleId)
 
   useEffect(() => {
-    if (disabledProp === undefined && onToggleProp === undefined) {
+    if (bookmarkedProp === undefined && userId && isAuthInitialized) {
       fetchArticleBookmarked()
     }
-  }, [disabledProp, onToggleProp, fetchArticleBookmarked])
+  }, [bookmarkedProp, userId, isAuthInitialized, fetchArticleBookmarked])
 
   const bookmarked = bookmarkedProp || articleBookmarked
-  const disabled = disabledProp || loadingBookmarked
+  const disabled = disabledProp || loadingBookmarked || !userId
   const onToggle = onToggleProp || fetchArticleBookmarked
 
   const [bookmarkArticle, { loading: bookmarking }] = useMutation(

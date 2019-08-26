@@ -16,6 +16,7 @@ const HASURA_ALLOWED_ROLES_KEY = 'x-hasura-allowed-roles'
 const HASURA_USER_ID = 'x-hasura-user-id'
 const HASURA_GROUP_ID = 'x-hasura-group-id'
 const ADMIN_ROLES_REGEX = /admin$/i
+const PUBLIC_ROLE_REGEX = /^public$/i
 const PLATFORM_GROUP_REGEX = /^platform/i
 
 export const AuthInitContext = createContext()
@@ -28,6 +29,12 @@ export const useIsAuthInitialized = () => {
     )
   }
   return context
+}
+
+export const useIsValidUser = () => {
+  const isAuthInitialized = useIsAuthInitialized()
+  const isAuthenticated = isAuthenticatedSync()
+  return isAuthInitialized && isAuthenticated && !isPublicSync()
 }
 
 const isAuthenticated = async () => {
@@ -50,6 +57,9 @@ const isPlatformGroup = async () =>
   (await getUserRoles()).some(role => PLATFORM_GROUP_REGEX.test(role))
 export const isPlatformGroupSync = () =>
   getUserRolesSync().some(role => PLATFORM_GROUP_REGEX.test(role))
+
+const isPublicSync = () =>
+  getUserRolesSync().some(role => PUBLIC_ROLE_REGEX.test(role))
 
 export const isContributorSync = () =>
   !!getCustomClaimsSync()[CUSTOM_CLAIMS_CONTRIBUTOR_KEY]

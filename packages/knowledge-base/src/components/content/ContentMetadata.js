@@ -7,7 +7,6 @@ import Taxonomies from './Taxonomies'
 import BookmarkButton from '../BookmarkButton'
 import { withStyles, Grid, Hidden, Typography } from '@material-ui/core'
 import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
-import { isAuthenticatedSync } from '../../utils/auth'
 import { constructImageUrl } from '../../utils/image'
 
 const ContentMetadata = ({ classes, content }) => {
@@ -78,7 +77,7 @@ const ContentMetadata = ({ classes, content }) => {
         <BookmarkButton
           articleId={content.id}
           className={classes.bookmarkButton}
-          disabled={!isAuthenticatedSync() || content.status !== 'published'}
+          disabled={content.status !== 'published'}
         />
       </Grid>
       <Grid item xs={12}>
