@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 import { Button, Grid, Typography, withStyles } from '@material-ui/core'
 import { PaddedContainer } from 'components'
 import EditorsPicks from '../components/list/EditorsPicks'
+import PersonalizedLists from '../components/list/PersonalizedLists'
 import BackgroundImage from 'gatsby-background-image'
 import { Link as RouterLink } from '@reach/router'
 import SEO from '../components/SEO'
@@ -60,6 +61,7 @@ function KnowledgeHome({ theme, classes, data }) {
           className={classes.mainBody}
         >
           <EditorsPicks />
+          <PersonalizedLists />
         </Grid>
       </PaddedContainer>
     </BackgroundImage>

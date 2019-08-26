@@ -1,19 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles, Grid } from '@material-ui/core'
-import ArticlePreview from './ArticlePreview'
+import SmallPreview from './SmallPreview'
 import ListTitle from './ListTitle'
 
 const ThemedList = ({ classes, title = '', articles = [], hideEmpty }) => {
   if (hideEmpty && !articles.length) return null
   return (
-    <Grid container spacing={2} className={classes.root}>
-      <Grid item xs={12} md={3} lg={2}>
-        <ListTitle title={title} />
-        {articles.map(article => (
-          <ArticlePreview key={'article_' + article.id} article={article} />
-        ))}
-      </Grid>
+    <Grid item xs={12} md={3} sm={4}>
+      <ListTitle title={title} />
+      {articles.map(article => (
+        <SmallPreview key={'article_' + article.id} article={article} />
+      ))}
     </Grid>
   )
 }
