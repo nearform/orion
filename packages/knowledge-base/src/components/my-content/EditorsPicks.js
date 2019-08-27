@@ -21,7 +21,7 @@ import { getArticlesData } from '../../queries'
 
 import { formatDateTime } from '../../utils/date'
 import get from 'lodash/get'
-import FeatureArticles from '../FeatureArticles'
+import FeatureArticles from '../list/FeatureArticles'
 
 const headers = [
   { id: 'title', label: 'Title', sortable: true },

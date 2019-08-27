@@ -1,16 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles, Grid, Typography } from '@material-ui/core'
+import { withStyles, Grid } from '@material-ui/core'
 import ArticlePreview from './ArticlePreview'
+import ListTitle from './ListTitle'
 
-const FeatureArticles = ({ classes, title = '', articles = [], hideEmpty }) => {
+const FeatureArticles = ({
+  classes,
+  title = '',
+  articles = [],
+  hideEmpty,
+  align = 'flex-end',
+}) => {
   if (hideEmpty && !articles.length) return null
   return (
-    <Grid container spacing={2} justify="flex-end" className={classes.root}>
+    <Grid container spacing={2} justify={align} className={classes.root}>
       <Grid item xs={12} md={3} lg={2}>
-        <Typography variant="h3" className={classes.title}>
-          {title}
-        </Typography>
+        <ListTitle title={title} />
       </Grid>
       {articles.map(article => (
         <Grid
@@ -41,7 +46,6 @@ const styles = theme => ({
       // Align edge of boxes with article text
       marginLeft: theme.spacing(-3),
     },
-    justifyContent: 'flex-start',
   },
   clip: {
     overflowX: 'hidden',

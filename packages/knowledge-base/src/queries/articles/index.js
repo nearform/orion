@@ -35,3 +35,8 @@ export {
 } from './add-article-rating.graphql'
 export { default as getArticleRating } from './get-article-rating.graphql'
 export { default as getEditorsPicks } from './get-editors-picks.graphql'
+export { default as getRecentArticles } from './get-recent-articles.graphql'
+export {
+  default as getBookmarkedArticles,
+} from './get-bookmarked-articles.graphql'
+export { default as getReadArticles } from './get-read-articles.graphql'

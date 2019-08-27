@@ -1,0 +1,6 @@
+- args:
+    relationship: bookmarked_article
+    table:
+      name: user_bookmarks
+      schema: public
+  type: drop_relationship
