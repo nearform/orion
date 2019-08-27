@@ -1,12 +1,12 @@
 import React from 'react'
 import { Router } from '@reach/router'
 
-import ListContent from '../components/content/ListContent'
+import ContentListView from '../templates/ContentListView'
 
 export default function Content() {
   return (
     <Router>
-      <ListContent path="/search/:term" />
+      <ContentListView path="/search/:term" />
     </Router>
   )
 }

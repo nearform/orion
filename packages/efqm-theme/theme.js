@@ -95,6 +95,12 @@ const articleTypography = {
   },
   link: {
     color: colorDefinitions.aqua,
+    paddingBottom: '2px',
+    borderBottom: '2px solid',
+    '&:hover': {
+      borderBottom: 'none',
+      textDecoration: 'none',
+    },
   },
   bulletedList: {
     margin: '36px 0 2px',

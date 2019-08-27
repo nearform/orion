@@ -1,6 +1,12 @@
 const path = require('path')
 const currentTheme = require('./theme')
 const get = require('lodash/get')
+const zipWith = require('lodash/zipWith')
+const chunk = require('lodash/chunk')
+const getArticlesQuery = require('./queries/get-articles')
+const getUsersQuery = require('./queries/get-users')
+const getTaxonomiesQuery = require('./queries/get-taxonomies')
+const getArticlesByTaxonomyQuery = require('./queries/get-articles-by-taxonomy')
 const { config } = currentTheme
 
 exports.onPreInit = () => {
@@ -22,7 +28,10 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const homeTemplate = require.resolve('./src/templates/home.js')
   const ContentViewTemplate = require.resolve('./src/templates/ContentView.js')
-  const ProfileViewTemplate = require.resolve('./src/templates/Profile.js')
+  const ProfileViewTemplate = require.resolve('./src/templates/ProfileView.js')
+  const ContentListViewTemplate = require.resolve(
+    './src/templates/ContentListView.js'
+  )
 
   createPage({
     path: '/',
@@ -32,52 +41,54 @@ exports.createPages = async ({ graphql, actions }) => {
     },
   })
 
-  const articlesQueryResults = await graphql(`
-    {
-      raw_salmon {
-        article(where: { status: { _eq: "published" } }) {
-          primary_taxonomy: taxonomy_items(
-            limit: 1
-            order_by: { taxonomy: { taxonomy_type: { order_index: asc } } }
-          ) {
-            taxonomy {
-              name
-              key
-            }
-          }
-          rating: article_ratings_aggregate {
-            aggregate {
-              count
-              avg {
-                rating
-              }
-            }
-          }
-          taxonomy_items {
-            taxonomy_id
-          }
-          thumbnail
-          title
-          summary
-          subtitle
-          authors {
-            author {
-              first_name
-              last_name
-              title
-              id
-              email
-            }
-          }
-          status
-          banner
-          published_at
-          path
-          id
-        }
-      }
-    }
-  `)
+  const PAGE_SIZE = 10
+  const taxonomiesQueryResults = await graphql(getTaxonomiesQuery)
+
+  if (taxonomiesQueryResults.errors) {
+    throw taxonomiesQueryResults.errors
+  }
+  const taxonomies = get(taxonomiesQueryResults, 'data.raw_salmon.taxonomy', [])
+
+  const articlesByTaxonomiesPromises = []
+  taxonomies.forEach(taxonomy =>
+    articlesByTaxonomiesPromises.push(
+      graphql(getArticlesByTaxonomyQuery, {
+        taxonomy: taxonomy.key,
+      })
+    )
+  )
+
+  const articlesByTaxonomies = await Promise.all(articlesByTaxonomiesPromises)
+    .then(response => response.map(data => data.data.raw_salmon))
+    .then(data =>
+      zipWith(data, taxonomies, (data, taxonomy) => ({
+        ...data,
+        taxonomy,
+      }))
+    )
+    .catch(error => {
+      throw error
+    })
+
+  articlesByTaxonomies.forEach(results =>
+    chunk(results.article, PAGE_SIZE).forEach((articles, index) => {
+      createPage({
+        path: `/section/${results.taxonomy.key}${
+          index !== 0 ? `/page/${index + 1}` : ''
+        }`,
+        component: ContentListViewTemplate,
+        context: {
+          results: {
+            ...results,
+            article: articles,
+          },
+          page: index + 1,
+        },
+      })
+    })
+  )
+
+  const articlesQueryResults = await graphql(getArticlesQuery)
 
   if (articlesQueryResults.errors) {
     throw articlesQueryResults.errors
@@ -96,32 +107,7 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
-  const usersQueryResults = await graphql(`
-    {
-      raw_salmon {
-        user {
-          id
-          first_name
-          last_name
-          email
-          signupRequest
-          avatar
-          biography
-          linkedin
-          website
-          twitter
-          title
-          consent_contact
-          consent_directory
-          user_roles {
-            role {
-              name
-            }
-          }
-        }
-      }
-    }
-  `)
+  const usersQueryResults = await graphql(getUsersQuery)
 
   if (usersQueryResults.errors) {
     throw usersQueryResults.errors

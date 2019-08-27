@@ -11,17 +11,12 @@ const Taxonomies = ({ classes, taxonomyIds, showAll, callback }) => {
     if (!showAll) {
       navigate('/section/' + key)
     } else {
-      active
-        ? (taxonomyIds = [...taxonomyIds, id])
-        : (taxonomyIds = taxonomyIds.filter(item => item !== id))
-      if (typeof callback === 'function') {
-        callback(taxonomyIds)
-      }
+      typeof callback === 'function' && callback(id, active)
     }
   }
   return (
     <>
-      {taxonomyTypes.map(type => {
+      {taxonomyTypes.map((type, index) => {
         return showAll || type.active ? (
           <div
             className={classes.TaxonomyType}
@@ -37,7 +32,8 @@ const Taxonomies = ({ classes, taxonomyIds, showAll, callback }) => {
                 <TaxonomyItem
                   key={`tax_item_${item.id}`}
                   item={item}
-                  filter={taxonomyIds}
+                  active={taxonomyIds.includes(item.id)}
+                  activeClassName={`TaxonomyC${index + 1}`}
                   callback={handleCallback}
                 />
               ) : null

@@ -81,7 +81,7 @@ const ContentMetadata = ({ classes, content }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Taxonomies taxonomyIds={taxonomyIds} showAll={false} />
+        <Taxonomies taxonomyIds={taxonomyIds} />
       </Grid>
     </Grid>
   )

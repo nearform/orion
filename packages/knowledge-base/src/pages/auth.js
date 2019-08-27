@@ -1,4 +1,5 @@
 import React from 'react'
+import T from 'prop-types'
 import { Redirect } from '@reach/router'
 import {
   Authenticator,
@@ -26,14 +27,16 @@ import { PaddedContainer } from 'components'
 
 import DisplayIfSignedIn from '../components/DisplayIfSignedIn'
 
-export default function Auth() {
+function Auth({ location }) {
+  const showRegister = location.pathname === '/auth/register'
+
   return (
     <PaddedContainer>
       <Authenticator
         hide={[Greetings, SignIn, SignUp, ConfirmSignUp, ForgotPassword]}
         theme={{ container: { flex: 1, display: 'flex' } }}
       >
-        <CustomSignIn />
+        <CustomSignIn showRegister={showRegister} />
         <CustomSignUp override="SignUp" />
         <CustomConfirmSignUp override="ConfirmSignUp" />
         <CustomForgotPassword override="ForgotPassword" />
@@ -44,3 +47,9 @@ export default function Auth() {
     </PaddedContainer>
   )
 }
+
+Auth.propTypes = {
+  location: T.object.isRequired,
+}
+
+export default Auth

@@ -1,12 +1,19 @@
 import React from 'react'
+import T from 'prop-types'
 import { SignIn } from 'aws-amplify-react'
 
 import Login from './Login'
 
-export default class CustomSignIn extends SignIn {
+class CustomSignIn extends SignIn {
   constructor(props) {
     super(props)
     this._validAuthStates = ['signIn']
+  }
+
+  componentDidUpdate() {
+    if (this.props.showRegister) {
+      super.changeState('signUp')
+    }
   }
 
   showComponent() {
@@ -20,3 +27,9 @@ export default class CustomSignIn extends SignIn {
     )
   }
 }
+
+CustomSignIn.propTypes = {
+  showRegister: T.bool,
+}
+
+export default CustomSignIn

@@ -2,6 +2,7 @@ export { default as assignUserGroupMutation } from './assign-user-group.graphql'
 export { default as assignUserRoleMutation } from './assign-user-role.graphql'
 export { default as getUser } from './get-user.graphql'
 export { default as getUsers } from './get-users.graphql'
+export { default as getUserBookmarks } from './get-user-bookmarks.graphql'
 export {
   default as getEdittableUserFields,
 } from './get-edittable-user-fields.graphql'
