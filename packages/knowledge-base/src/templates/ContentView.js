@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Cache } from 'aws-amplify'
 import get from 'lodash/get'
 import { useManualQuery } from 'graphql-hooks'
 import classnames from 'classnames'
@@ -33,6 +34,16 @@ function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
   const articleFull = get(data, 'articleDetails')
   const articleData = articleFull || articleSummary
   if (!articleData) return null
+
+  const readCache = Cache.getItem('readArticles') || []
+  const readIds = readCache.includes(articleData.id)
+    ? readCache
+    : [articleData.id, ...readCache]
+  Cache.setItem(
+    'readArticles',
+    readIds.length > 3 ? readIds.splice(0, 3) : readIds
+  )
+
   return (
     <PaddedContainer>
       <Grid

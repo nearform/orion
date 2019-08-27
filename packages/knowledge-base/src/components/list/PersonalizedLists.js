@@ -1,22 +1,53 @@
 import React from 'react'
+import { Cache } from 'aws-amplify'
 import get from 'lodash/get'
 import { useQuery } from 'graphql-hooks'
+import { useUserId } from '../../utils/auth'
 import { getRandomRows } from '../../utils/array'
 import ThemedList from './ThemedList'
 import ListTitle from './ListTitle'
-import { getEditorsPicks } from '../../queries'
+import PromoSpot from '../PromoSpot'
+import {
+  getRecentArticles,
+  getBookmarkedArticles,
+  getReadArticles,
+} from '../../queries'
 import { withStyles, Grid } from '@material-ui/core'
 
 function PersonalizedLists({ classes }) {
-  const { data: editorsPicksData } = useQuery(getEditorsPicks)
+  const userId = useUserId()
+  const readArticleIds = Cache.getItem('readArticles') || []
+  const { data: recentArticlesData } = useQuery(getRecentArticles)
+  const { data: bookmarkedArticlesData } = useQuery(getBookmarkedArticles, {
+    variables: {
+      userId: userId,
+    },
+  })
+  const { data: readArticlesData } = useQuery(getReadArticles, {
+    variables: {
+      ids: readArticleIds,
+    },
+  })
 
   //TODO: nicer loading indication
-  if (!editorsPicksData) return null
+  if (!recentArticlesData || !bookmarkedArticlesData || !readArticlesData)
+    return null
 
-  const editorsPicks =
-    editorsPicksData.editors_picks.length > 3
-      ? getRandomRows(editorsPicksData.editors_picks, 3)
-      : editorsPicksData.editors_picks
+  const readArticles =
+    readArticlesData.read_articles.length > 0
+      ? readArticlesData.read_articles
+      : recentArticlesData.recent_articles
+
+  bookmarkedArticlesData.user_bookmarks.flat()
+  const bookmarkedArticles =
+    bookmarkedArticlesData.user_bookmarks.length > 0
+      ? getRandomRows(
+          bookmarkedArticlesData.user_bookmarks.map(
+            article => article.bookmarked_article
+          ),
+          3
+        )
+      : recentArticlesData.recent_articles
 
   return (
     <Grid item container spacing={3} direction="row">
@@ -26,22 +57,31 @@ function PersonalizedLists({ classes }) {
         </Grid>
         <ThemedList
           hideEmpty
-          title="Last Read"
-          articles={get({ editors_picks: editorsPicks }, 'editors_picks', [])}
+          title={
+            readArticlesData.read_articles.length > 0
+              ? 'Last Read'
+              : 'Recent Articles'
+          }
+          articles={get(
+            { read_articles: readArticles.splice(0, 3) },
+            'read_articles',
+            []
+          )}
         />
         <ThemedList
           hideEmpty
-          title="Bookmarked Articles"
-          articles={get({ editors_picks: editorsPicks }, 'editors_picks', [])}
+          title={
+            bookmarkedArticlesData.user_bookmarks.length > 0
+              ? 'Bookmarked Articles'
+              : 'Recent Articles'
+          }
+          articles={get(
+            { bookmarked_articles: bookmarkedArticles.splice(0, 3) },
+            'bookmarked_articles',
+            []
+          )}
         />
-        <Grid item xs={12} md={3} sm={4}>
-          <div
-            className={classes.promoImage}
-            style={{
-              backgroundImage: undefined,
-            }}
-          />
-        </Grid>
+        <PromoSpot />
       </Grid>
     </Grid>
   )
@@ -54,13 +94,6 @@ const styles = theme => ({
       // Align edge of boxes with article text
       marginLeft: theme.spacing(-3),
     },
-  },
-  promoImage: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: theme.palette.background.light,
-    backgroundPosition: 'left',
-    backgroundSize: 'cover',
   },
 })
 

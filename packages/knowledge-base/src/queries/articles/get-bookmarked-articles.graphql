@@ -1,0 +1,25 @@
+query getBookmarkedArticles($userId: Int!) {
+  user_bookmarks(where: { user_id: { _eq: $userId } }) {
+    bookmarked_article {
+      primary_taxonomy: taxonomy_items(
+        limit: 1
+        order_by: { taxonomy: { taxonomy_type: { order_index: asc } } }
+      ) {
+        taxonomy {
+          name
+          key
+        }
+      }
+      path
+      id
+      title
+      thumbnail
+      published_at
+      knowledge_type
+      createdBy {
+        first_name
+        last_name
+      }
+    }
+  }
+}

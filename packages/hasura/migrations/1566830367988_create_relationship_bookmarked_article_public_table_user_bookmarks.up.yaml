@@ -1,0 +1,13 @@
+- args:
+    name: bookmarked_article
+    table:
+      name: user_bookmarks
+      schema: public
+    using:
+      manual_configuration:
+        column_mapping:
+          article_id: id
+        remote_table:
+          name: article
+          schema: public
+  type: create_object_relationship
