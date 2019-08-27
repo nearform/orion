@@ -23,6 +23,7 @@ function EditorsPicks() {
         hideEmpty
         title="Editor's Picks"
         articles={get({ editors_picks: editorsPicks }, 'editors_picks', [])}
+        align="flex-start"
       />
     </Grid>
   )
