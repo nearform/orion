@@ -3,40 +3,29 @@ import classnames from 'classnames'
 import { withStyles, Button } from '@material-ui/core'
 import { fade } from '@material-ui/core/styles'
 
-const TaxonomyItem = ({ classes, item, filter, callback }) => {
-  let isActive = false
+const TaxonomyItem = ({ classes, item, active, activeClassName, callback }) => {
   const handleCallback = () => {
     if (typeof callback === 'function') {
-      callback(item.id, !isActive, item.key)
+      callback(item.id, !active, item.key)
     }
   }
-  if (filter.includes(item.id)) {
-    isActive = true
-    return (
-      <Button
-        key={'taxonomy_item_' + item.id}
-        className={classnames(
-          classes.inlinable,
-          classes.TaxonomyItem,
-          classes['TaxonomyC' + item.order_index]
-        )}
-        onClick={handleCallback}
-      >
-        {item.name}
-      </Button>
-    )
-  } else {
-    isActive = false
-    return (
-      <Button
-        key={'taxonomy_item_' + item.id}
-        className={classnames(classes.inlinable, classes.TaxonomyItem)}
-        onClick={handleCallback}
-      >
-        {item.name}
-      </Button>
-    )
-  }
+
+  return (
+    <Button
+      key={'taxonomy_item_' + item.id}
+      className={classnames(classes.inlinable, classes.TaxonomyItem, {
+        [classes[activeClassName]]: active,
+      })}
+      onClick={handleCallback}
+    >
+      {item.name}
+    </Button>
+  )
+}
+
+const commonSmallUpStyles = {
+  color: 'white',
+  letterSpacing: '1.8px',
 }
 
 export default withStyles(theme => ({
@@ -63,16 +52,13 @@ export default withStyles(theme => ({
     '&:first-of-type': {
       marginTop: '10px',
     },
-    [theme.breakpoints.up('sm')]: {
-      color: 'white',
-      letterSpacing: '1.8px',
-    },
   },
   TaxonomyC1: {
     [theme.breakpoints.down('xs')]: {
       color: theme.taxonomyColor.C1,
     },
     [theme.breakpoints.up('sm')]: {
+      ...commonSmallUpStyles,
       backgroundColor: theme.taxonomyColor.C1,
       '&:hover, &:focus': {
         backgroundColor: fade(theme.taxonomyColor.C1, 0.8),
@@ -84,6 +70,7 @@ export default withStyles(theme => ({
       color: theme.taxonomyColor.C2,
     },
     [theme.breakpoints.up('sm')]: {
+      ...commonSmallUpStyles,
       backgroundColor: theme.taxonomyColor.C2,
       '&:hover, &:focus': {
         backgroundColor: fade(theme.taxonomyColor.C2, 0.8),
@@ -95,6 +82,7 @@ export default withStyles(theme => ({
       color: theme.taxonomyColor.C3,
     },
     [theme.breakpoints.up('sm')]: {
+      ...commonSmallUpStyles,
       backgroundColor: theme.taxonomyColor.C3,
       '&:hover, &:focus': {
         backgroundColor: fade(theme.taxonomyColor.C3, 0.8),
@@ -106,6 +94,7 @@ export default withStyles(theme => ({
       color: theme.taxonomyColor.C4,
     },
     [theme.breakpoints.up('sm')]: {
+      ...commonSmallUpStyles,
       backgroundColor: theme.taxonomyColor.C4,
       '&:hover, &:focus': {
         backgroundColor: fade(theme.taxonomyColor.C4, 0.8),

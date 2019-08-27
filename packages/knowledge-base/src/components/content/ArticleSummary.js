@@ -7,7 +7,13 @@ import { formatDateAsMonthAndYear } from '../../utils/date'
 import { withStyles, Grid, Typography } from '@material-ui/core'
 import get from 'lodash/get'
 
-const ArticleSummary = ({ classes, article }) => {
+const ArticleSummary = ({
+  classes,
+  article,
+  bookmarked,
+  onBookmarkToggle,
+  bookmarkButtonDisabled,
+}) => {
   //TODO: Replace <img> on line 16 with gatsby-image
   return (
     <Grid container spacing={1} className={classes.summaryObj}>
@@ -51,7 +57,12 @@ const ArticleSummary = ({ classes, article }) => {
             </Link>
           </Grid>
           <Grid item>
-            <BookmarkButton articleId={article.id} />
+            <BookmarkButton
+              articleId={article.id}
+              bookmarked={bookmarked}
+              onToggle={onBookmarkToggle}
+              disabled={bookmarkButtonDisabled}
+            />
           </Grid>
         </Grid>
       </Grid>

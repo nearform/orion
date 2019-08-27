@@ -2,42 +2,28 @@ import { useStaticQuery, graphql } from 'gatsby'
 import get from 'lodash/get'
 
 const useTaxonomies = (taxonomyData = []) => {
-  const taxonomyQueryResult = useStaticQuery(
-    graphql`
-      query {
-        raw_salmon {
-          taxonomy_type {
-            taxonomy_items {
-              id
-              key
-              name
-            }
-            order_index
-            name
+  const taxonomyQueryResult = useStaticQuery(graphql`
+    query {
+      raw_salmon {
+        taxonomy_type(order_by: [{ order_index: asc }]) {
+          name
+          key
+          taxonomy_items {
+            id
             key
+            name
           }
         }
       }
-    `
-  )
-  const taxonomyTypes = get(
-    taxonomyQueryResult,
-    'raw_salmon.taxonomy_type',
-    []
-  ).sort((a, b) => a.order_index - b.order_index)
+    }
+  `)
+  const taxonomyTypes = get(taxonomyQueryResult, 'raw_salmon.taxonomy_type', [])
+  const taxonomyIds = taxonomyData.filter((val, i, a) => a.indexOf(val) === i) // removes duplicates
 
-  const taxonomyIds =
-    taxonomyData.length > 0
-      ? taxonomyData.filter((val, i, a) => a.indexOf(val) === i)
-      : []
-
-  let order = 0
   for (let type of taxonomyTypes) {
-    order++
     type.active = false
     for (let item of type.taxonomy_items) {
-      item.order_index = order
-      if (taxonomyIds.find(itemId => itemId === item.id)) {
+      if (taxonomyIds.includes(item.id)) {
         item.active = true
         type.active = true
       } else {
