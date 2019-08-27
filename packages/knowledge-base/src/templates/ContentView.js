@@ -11,6 +11,7 @@ import RichText from '../components/content//RichText'
 import ContentMetadata from '../components/content/ContentMetadata'
 import ContentOptions from '../components/content/ContentOptions'
 import FeatureArticles from '../components/FeatureArticles'
+import HowToAuthenticate from '../components/HowToAuthenticate'
 
 function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
   const { path } = articleSummary || { path: slug }
@@ -57,6 +58,7 @@ function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
             <Typography variant="h1">{articleData.title}</Typography>
             <Typography variant="h2">{articleData.subtitle}</Typography>
             {!articleFull && <RichText value={articleData.summary} />}
+            {!articleFull && <HowToAuthenticate />}
             {get(articleData, 'fields', [])
               .filter(({ value }) => !!value)
               .map(getFieldType)}
