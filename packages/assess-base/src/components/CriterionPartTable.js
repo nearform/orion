@@ -14,7 +14,7 @@ import {
 } from '../queries'
 
 import CriterionPartInput from '../components/CriterionPartInput'
-import ContextualHelp from '../components/ContextualHelp'
+import CriterionPartHeader from '../components/CriterionPartHeader'
 
 function getEmptyTableRow(tableDef) {
   return tableDef.columns.reduce(
@@ -148,22 +148,12 @@ function CriterionPartTable({
 
   return (
     <div>
-      <Grid container spacing={2}>
-        <Grid item>
-          <Typography variant="h2" color="primary" gutterBottom>
-            {tableDef.name}
-          </Typography>
-        </Grid>
-        {tableDef.guidance && (
-          <Grid item>
-            <ContextualHelp helpContent={tableDef.guidance}>
-              <Button color="secondary">guidance</Button>
-            </ContextualHelp>
-          </Grid>
-        )}
-        <Grid item xs />
-        {paginationNode && <Grid item>{paginationNode}</Grid>}
-      </Grid>
+      <CriterionPartHeader
+        helpContent={tableDef.guidance}
+        title={tableDef.name}
+        paginationNode={paginationNode}
+        buttonLabel="guidance"
+      />
       {tables.map((initialValues, rowIndex, { length: totalRows }) => {
         const tableKey = `${tableDef.key}-${rowIndex}`
         return (

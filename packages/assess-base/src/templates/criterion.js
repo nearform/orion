@@ -124,8 +124,8 @@ function CriterionTemplate({
             <Grid item xs>
               <Typography component="div">
                 <ReactMarkdown
+                  className={classes.description}
                   source={t(criterion.description)}
-                  renderers={{ paragraph: 'div' }}
                 />
               </Typography>
               <Button
@@ -198,6 +198,11 @@ const styles = theme => ({
   },
   section: {
     marginTop: theme.spacing(3),
+  },
+  description: {
+    '& p': {
+      marginTop: 0,
+    },
   },
 })
 
