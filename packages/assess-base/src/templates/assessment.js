@@ -88,13 +88,7 @@ function AssessmentTemplate({
   }, [assessmentId])
 
   async function handleCreateAssessment({ name, internal }) {
-    const {
-      data: {
-        insert_assessment: {
-          returning: [{ id }],
-        },
-      },
-    } = await createAssessment({
+    const { data } = await createAssessment({
       variables: {
         key: assessment.key,
         name,
@@ -102,13 +96,14 @@ function AssessmentTemplate({
         owner_id: getUserIdSync(),
       },
     })
+    const id = get(data, 'insert_assessment.returning.0.id')
 
     navigate(`${location.pathname}#${id}`)
   }
 
   async function loadAssessment(id) {
     const {
-      data: { assessment_by_pk: assessmentData },
+      data: { assessment_by_pk: assessmentData } = {},
     } = await getAssessment({ variables: { id } })
 
     setAssessmentData(assessmentData)
