@@ -15,28 +15,26 @@ import {
 
 const SLIDER_STEP = 5
 
-function getScoringData(assessmentData, pillar) {
-  if (assessmentData.scoring[0]) {
-    const { id, scoring_values } = assessmentData.scoring[0]
+function getScoringData(assessmentData, scoringDef) {
+  const { id, scoring_values: values } = assessmentData.scoring[0] || {}
 
-    return {
-      scoringId: id,
-      scoringValues: scoring_values,
-    }
-  }
-
-  const scoringValues = pillar.scoring.reduce(
+  // Get any previously saved data that is in latest def, ignore data dropped from def, set new def keys to 0
+  const scoringValues = scoringDef.reduce(
     (acc, scoringGroup) => ({
       ...acc,
       [scoringGroup.key]: scoringGroup.scores.reduce(
-        (acc, score) => ({ ...acc, [score.key]: 0 }),
+        (acc, score) => ({
+          ...acc,
+          [score.key]: get(values, `[${scoringGroup.key}][${score.key}]`, 0),
+        }),
         {}
       ),
     }),
     {}
   )
+
   return {
-    scoringId: null,
+    scoringId: id,
     scoringValues,
   }
 }
@@ -46,11 +44,15 @@ function AssessmentPillarScoring({
   assessmentId,
   assessmentData,
   pillar,
+  scoringDef,
   criterion,
   partNumber,
   canEdit,
 }) {
-  const { scoringId, scoringValues } = getScoringData(assessmentData, pillar)
+  const { scoringId, scoringValues } = getScoringData(
+    assessmentData,
+    scoringDef
+  )
 
   const [currentScoringId, setCurrentScoringId] = useState(scoringId)
   const [insertScoringData] = useMutation(insertAssessmentScoringDataMutation)
@@ -113,11 +115,15 @@ function AssessmentPillarScoring({
         return (
           <Form>
             <Grid container direction="column" spacing={2}>
-              {pillar.scoring.map(scoringGroup => {
-                const groupOverall =
-                  round(
-                    mean(Object.values(values[scoringGroup.key])) / SLIDER_STEP
-                  ) * SLIDER_STEP
+              {scoringDef.map(scoringGroup => {
+                const existingScores = values[scoringGroup.key]
+
+                const groupOverall = !existingScores
+                  ? 0
+                  : round(
+                      mean(Object.values(values[scoringGroup.key])) /
+                        SLIDER_STEP
+                    ) * SLIDER_STEP
 
                 return (
                   <Grid key={scoringGroup.key} item container spacing={4}>
@@ -171,6 +177,7 @@ AssessmentPillarScoring.propTypes = {
   assessmentId: T.number.isRequired,
   assessmentData: T.object.isRequired,
   pillar: T.object.isRequired,
+  scoringDef: T.array.isRequired,
   criterion: T.object.isRequired,
   partNumber: T.number.isRequired,
   canEdit: T.bool.isRequired,
