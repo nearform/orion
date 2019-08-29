@@ -3,6 +3,7 @@ import T from 'prop-types'
 import classnames from 'classnames'
 import { Select, MenuItem, withStyles } from '@material-ui/core'
 import MoreVert from '@material-ui/icons/MoreVert'
+import { Helmet } from 'react-helmet'
 
 const languageOptions = {
   en: {
@@ -27,37 +28,45 @@ function getLanguageSwitcher(useTranslation) {
     const l = i18n.language || 'en'
 
     return (
-      <Select
-        className={classes.input}
-        value={l}
-        onChange={(_, item) => i18n.changeLanguage(item.props.value)}
-        autoWidth={true}
-        IconComponent={MoreVert}
-        displayEmpty={true}
-        renderValue={() => (
-          <MenuItem className={classes.item} key={'val_' + l} value={l}>
-            <i
-              className={classnames(
-                classes.icon,
-                'em',
-                languageOptions[l].flag
-              )}
-            ></i>
-            {l.toUpperCase()}
-          </MenuItem>
-        )}
-      >
-        {Object.values(languageOptions).map(lang => (
-          <MenuItem
-            className={classes.item}
-            key={'val_' + lang.abb}
-            value={lang.abb}
-          >
-            <i className={classnames(classes.icon, 'em', lang.flag)}></i>
-            {lang.name}
-          </MenuItem>
-        ))}
-      </Select>
+      <>
+        <Helmet>
+          <link
+            href="https://afeld.github.io/emoji-css/emoji.css"
+            rel="stylesheet"
+          ></link>
+        </Helmet>
+        <Select
+          className={classes.input}
+          value={l}
+          onChange={(_, item) => i18n.changeLanguage(item.props.value)}
+          autoWidth={true}
+          IconComponent={MoreVert}
+          displayEmpty={true}
+          renderValue={() => (
+            <MenuItem className={classes.item} key={'val_' + l} value={l}>
+              <i
+                className={classnames(
+                  classes.icon,
+                  'em',
+                  languageOptions[l].flag
+                )}
+              ></i>
+              {l.toUpperCase()}
+            </MenuItem>
+          )}
+        >
+          {Object.values(languageOptions).map(lang => (
+            <MenuItem
+              className={classes.item}
+              key={'val_' + lang.abb}
+              value={lang.abb}
+            >
+              <i className={classnames(classes.icon, 'em', lang.flag)}></i>
+              {lang.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </>
     )
   }
 
