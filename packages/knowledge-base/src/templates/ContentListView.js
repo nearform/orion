@@ -21,6 +21,7 @@ const defaultAggregate = { aggregate: { count: 0 } }
 const ListContent = ({
   classes,
   term,
+  taxonomy,
   pageContext: { results: resultsFromContext, page: pageFromContext } = {},
 }) => {
   const userId = useUserId()
@@ -53,12 +54,14 @@ const ListContent = ({
       get(results, 'article_aggregate') ||
       get(results, 'search_article_aggregate') ||
       defaultAggregate,
-    taxonomy: get(resultsFromContext, 'taxonomy', {}),
+    taxonomy:
+      get(resultsFromContext, 'taxonomy') || taxonomy ? { key: taxonomy } : {},
   }
 
   const taxonomyTypes = useTaxonomies()
   const [taxonomyIds, setTaxonomyIds] = useState([])
-  const [touched, setTouched] = useState(false)
+  // TODO: uncomment below when SSR is enabled
+  // const [touched, setTouched] = useState(false)
 
   const [page, setPage] = useState(pageFromContext || 1)
   const offset = (page - 1) * PAGE_SIZE
@@ -69,7 +72,10 @@ const ListContent = ({
       ? Math.min(offset + PAGE_SIZE, totalResults)
       : totalResults
 
-  const isPreRendered = !touched && !term
+  // TODO: uncomment below when SSR is enabled
+  // const isPreRendered = !touched && !term
+  // TODO: delete below when SSR is enabled
+  const isPreRendered = false
 
   const fetchArticles = term ? fetchArticlesByTitle : fetchArticlesByTaxonomy
   const vars = useMemo(
@@ -108,7 +114,8 @@ const ListContent = ({
   }, [isAuthInitialized, userId, fetchUserBookmarks])
 
   const handleTaxonomyFilter = (id, active) => {
-    setTouched(true)
+    // TODO: uncomment below when SSR is enabled
+    // setTouched(true)
     setPage(1)
     setTaxonomyIds(taxonomyIds =>
       active ? [...taxonomyIds, id] : taxonomyIds.filter(item => item !== id)
