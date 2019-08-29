@@ -38,11 +38,40 @@ exports.createPages = async ({ graphql, actions }) => {
     './src/templates/contributors-assessors.js'
   )
 
+  const columnsFragment = `
+            columns {
+              key
+              name
+              type
+            }
+  `
+  const feedbackFragment = `
+    feedbackTables {
+      key
+      columns {
+        key
+        name
+      }
+    }
+  `
+  const scoringFragment = `
+    scoring {
+      key
+      name
+      scores {
+        key
+        name
+        description
+      }
+    }
+  `
+
   const assessmentsQueryResults = await graphql(`
     {
       allAssessments {
         totalCount
         nodes {
+          orderIndex
           key
           name
           logoAsset
@@ -55,41 +84,30 @@ exports.createPages = async ({ graphql, actions }) => {
               name
             }
           }
+          ${columnsFragment}
+          ${feedbackFragment}
+          ${scoringFragment}
           pillars {
             key
             name
+            ${columnsFragment}
+            ${feedbackFragment}
+            ${scoringFragment}
             criteria {
               key
               name
               description
+              ${columnsFragment}
+              ${feedbackFragment}
               parts {
                 guidance
                 tables {
                   key
                   name
                   guidance
-                  columns {
-                    key
-                    name
-                    type
-                  }
+                  ${columnsFragment}
                 }
-                feedbackTables {
-                  key
-                  columns {
-                    key
-                    name
-                  }
-                }
-              }
-            }
-            scoring {
-              key
-              name
-              scores {
-                key
-                name
-                description
+                ${feedbackFragment}
               }
             }
           }
@@ -102,7 +120,9 @@ exports.createPages = async ({ graphql, actions }) => {
     throw assessmentsQueryResults.errors
   }
 
-  const { nodes: assessments } = assessmentsQueryResults.data.allAssessments
+  const { nodes } = assessmentsQueryResults.data.allAssessments
+  const assessments = nodes.filter(assessment => assessment.orderIndex > 0)
+
   const homepageAssets = assessments.map(({ logoAsset }) => logoAsset)
 
   createPage({

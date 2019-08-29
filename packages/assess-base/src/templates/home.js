@@ -30,6 +30,7 @@ function AssessmentsHome({ theme, classes, data }) {
       ...type,
       logo: assets.find(asset => asset.name === type.logoAsset),
     }))
+    .filter(type => type.orderIndex > 0 && type.logo)
     .sort((a, b) => a.orderIndex - b.orderIndex)
 
   return (

@@ -76,8 +76,7 @@
       },
       "required": [
         "name",
-        "key",
-        "columns"
+        "key"
       ]
     },
     "feedbackTable": {
@@ -126,8 +125,7 @@
         }
       },
       "required": [
-        "tables",
-        "feedbackTables"
+        "tables"
       ]
     },
     "pillarScore": {
@@ -237,8 +235,7 @@
       "required": [
         "name",
         "key",
-        "criteria",
-        "scoring"
+        "criteria"
       ]
     },
     "keyInfoItem": {

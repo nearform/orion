@@ -16,8 +16,8 @@ import {
 import CriterionPartInput from '../components/CriterionPartInput'
 import CriterionPartHeader from '../components/CriterionPartHeader'
 
-function getEmptyTableRow(tableDef) {
-  return tableDef.columns.reduce(
+function getEmptyTableRow(columnsDef) {
+  return columnsDef.reduce(
     (initialValues, { key, type }) => ({
       ...initialValues,
       [key]: type === 'link' ? [] : '',
@@ -58,6 +58,7 @@ function CriterionPartTable({
   theme,
   classes,
   tableDef,
+  columnsDef,
   assessmentTables,
   assessmentId,
   partNumber,
@@ -143,7 +144,7 @@ function CriterionPartTable({
   let tables = [...tableRows]
 
   if (canEdit) {
-    tables.push(getEmptyTableRow(tableDef))
+    tables.push(getEmptyTableRow(columnsDef))
   }
 
   return (
@@ -218,7 +219,7 @@ function CriterionPartTable({
                     </Grid>
                     <Grid item xs>
                       <Grid container spacing={2}>
-                        {tableDef.columns.map(column => {
+                        {columnsDef.map(column => {
                           const inputKey = `${tableKey}-${column.key}`
                           return (
                             <CriterionPartInput

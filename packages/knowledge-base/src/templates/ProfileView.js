@@ -33,7 +33,10 @@ const Profile = ({ pageContext: { user: userContext } = {}, classes }) => {
   const [updateUser] = useMutation(updateUserMutation)
 
   useEffect(() => {
-    if (isAuthInitialized && userId === userContext.id) {
+    // TODO: uncomment below when SSR is enabled
+    // if (isAuthInitialized && userId === userContext.id) {
+    // TODO: remove below when SSR is enabled
+    if (isAuthInitialized && userId) {
       fetchUser()
     }
   }, [isAuthInitialized, userId, userContext, fetchUser])

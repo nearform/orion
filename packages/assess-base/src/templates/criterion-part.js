@@ -46,6 +46,15 @@ function CriterionPartTemplate({
     return <Redirect to="/auth" noThrow />
   }
 
+  // Get most specific available definition or default from loaded JSON
+  const columnsDef = criterion.columns || pillar.columns || assessment.columns
+  const feedbackTablesDef =
+    part.feedbackTables ||
+    criterion.feedbackTables ||
+    pillar.feedbackTables ||
+    assessment.feedbackTables
+  const scoringDef = pillar.scoring || assessment.scoring
+
   const assessmentId = getAssessmentId(location)
   const userId = getUserIdSync()
   const isAdmin = isAdminSync()
@@ -122,6 +131,7 @@ function CriterionPartTemplate({
         {part.tables.map((table, tableIndex) => (
           <CriterionPartTable
             tableDef={table}
+            columnsDef={table.columns || columnsDef}
             key={table.key}
             assessmentTables={assessmentData.tables}
             assessmentId={assessmentId}
@@ -160,7 +170,7 @@ function CriterionPartTemplate({
             </Typography>
           </Grid>
         </Grid>
-        {part.feedbackTables.map(tableDef => (
+        {feedbackTablesDef.map(tableDef => (
           <CriterionPartFeedbackTable
             tableDef={tableDef}
             key={tableDef.key}
@@ -169,7 +179,7 @@ function CriterionPartTemplate({
             criterionKey={criterion.key}
             pillarKey={pillar.key}
             partNumber={partNumber}
-            canEdit={canEditTablesAndUpload}
+            canEdit={canEditFeedbackAndScoring}
           />
         ))}
         <div className={classes.section}>
@@ -193,6 +203,7 @@ function CriterionPartTemplate({
             assessment={assessment}
             assessmentData={assessmentData}
             pillar={pillar}
+            scoringDef={scoringDef}
             criterion={criterion}
             partNumber={partNumber}
             canEdit={canEditFeedbackAndScoring}
