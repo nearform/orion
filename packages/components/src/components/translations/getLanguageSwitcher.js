@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import classnames from 'classnames'
 import { Select, MenuItem, withStyles } from '@material-ui/core'
-import { MoreVert } from '@material-ui/icons'
+import MoreVert from '@material-ui/icons/MoreVert'
 
 const languageOptions = {
   en: {
