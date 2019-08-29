@@ -1,0 +1,23 @@
+- args:
+    permission:
+      columns:
+      - assessment_id
+      - id
+      - part_number
+      - scoring_values
+      - criterion_key
+      - pillar_key
+      filter:
+        assessment:
+          assessors:
+            assessor_id:
+              _eq: X-Hasura-User-Id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: user
+    table:
+      name: assessment_scoring
+      schema: public
+  type: create_update_permission

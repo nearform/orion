@@ -1,0 +1,27 @@
+- args:
+    permission:
+      columns:
+      - assessment_id
+      - id
+      - part_number
+      - user_id
+      - file_size
+      - criterion_key
+      - file_name
+      - pillar_key
+      - s3_key
+      - created_at
+      filter:
+        assessment:
+          contributors:
+            contributor_id:
+              _eq: X-Hasura-User-Id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: partner-admin
+    table:
+      name: assessment_file
+      schema: public
+  type: create_update_permission

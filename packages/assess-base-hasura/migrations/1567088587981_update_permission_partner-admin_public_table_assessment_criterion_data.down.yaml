@@ -1,0 +1,6 @@
+- args:
+    role: partner-admin
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: drop_delete_permission

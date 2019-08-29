@@ -1,0 +1,30 @@
+- args:
+    permission:
+      columns:
+      - internal
+      - id
+      - owner_id
+      - key_information
+      - advice
+      - exec_summary
+      - key
+      - name
+      - status
+      - created_at
+      filter:
+        _or:
+        - contributors:
+            contributor_id:
+              _eq: X-Hasura-User-Id
+        - assessors:
+            assessor_id:
+              _eq: X-Hasura-User-Id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: partner-admin
+    table:
+      name: assessment
+      schema: public
+  type: create_update_permission

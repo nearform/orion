@@ -1,0 +1,28 @@
+- args:
+    permission:
+      allow_upsert: true
+      check:
+        assessment:
+          contributors:
+            contributor_id:
+              _eq: X-Hasura-User-Id
+      columns:
+      - assessment_id
+      - id
+      - part_number
+      - user_id
+      - file_size
+      - criterion_key
+      - file_name
+      - pillar_key
+      - s3_key
+      - created_at
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: partner-admin
+    table:
+      name: assessment_file
+      schema: public
+  type: create_insert_permission
