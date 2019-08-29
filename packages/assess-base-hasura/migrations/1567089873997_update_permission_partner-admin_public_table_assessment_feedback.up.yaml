@@ -1,0 +1,12 @@
+- args:
+    permission:
+      filter:
+        assessment:
+          assessors:
+            assessor_id:
+              _eq: X-Hasura-User-Id
+    role: partner-admin
+    table:
+      name: assessment_feedback
+      schema: public
+  type: create_delete_permission

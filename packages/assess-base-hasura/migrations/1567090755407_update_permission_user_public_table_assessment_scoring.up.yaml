@@ -1,0 +1,12 @@
+- args:
+    permission:
+      filter:
+        assessment:
+          assessors:
+            assessor_id:
+              _eq: X-Hasura-User-Id
+    role: user
+    table:
+      name: assessment_scoring
+      schema: public
+  type: create_delete_permission

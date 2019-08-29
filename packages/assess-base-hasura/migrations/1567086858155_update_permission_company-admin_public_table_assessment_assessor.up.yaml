@@ -1,0 +1,13 @@
+- args:
+    permission:
+      filter:
+        assessment:
+          owner:
+            user_groups:
+              group_id:
+                _eq: X-Hasura-Group-Id
+    role: company-admin
+    table:
+      name: assessment_assessor
+      schema: public
+  type: create_delete_permission

@@ -1,0 +1,25 @@
+- args:
+    permission:
+      allow_upsert: true
+      check:
+        assessment:
+          assessors:
+            assessor_id:
+              _eq: X-Hasura-User-Id
+      columns:
+      - assessment_id
+      - id
+      - part_number
+      - feedback_values
+      - criterion_key
+      - pillar_key
+      - table_key
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: user
+    table:
+      name: assessment_feedback
+      schema: public
+  type: create_insert_permission

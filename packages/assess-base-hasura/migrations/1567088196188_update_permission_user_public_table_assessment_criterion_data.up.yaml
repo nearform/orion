@@ -1,0 +1,28 @@
+- args:
+    role: user
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: drop_update_permission
+- args:
+    permission:
+      columns:
+      - assessment_id
+      - data
+      - criterion_key
+      - pillar_key
+      - created_at
+      filter:
+        assessment:
+          contributors:
+            contributor_id:
+              _eq: X-Hasura-User-Id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: user
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: create_update_permission

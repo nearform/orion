@@ -1,0 +1,23 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - assessment_id
+      - id
+      - part_number
+      - table_values
+      - criterion_key
+      - pillar_key
+      - table_key
+      filter:
+        assessment:
+          owner:
+            user_groups:
+              group_id:
+                _eq: X-Hasura-Group-Id
+      limit: null
+    role: company-admin
+    table:
+      name: assessment_table
+      schema: public
+  type: create_select_permission

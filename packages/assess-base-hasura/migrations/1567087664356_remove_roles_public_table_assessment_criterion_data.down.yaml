@@ -1,0 +1,19 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - assessment_id
+      - pillar_key
+      - criterion_key
+      - data
+      - created_at
+      filter:
+        assessment:
+          contributors:
+            contributor_id:
+              _eq: X-Hasura-User-Id
+    role: public
+    table:
+      name: assessment_criterion_data
+      schema: public
+  type: create_select_permission

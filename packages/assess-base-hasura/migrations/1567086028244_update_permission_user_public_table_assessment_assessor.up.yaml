@@ -1,0 +1,13 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - assessment_id
+      - assessor_id
+      filter: {}
+      limit: null
+    role: user
+    table:
+      name: assessment_assessor
+      schema: public
+  type: create_select_permission

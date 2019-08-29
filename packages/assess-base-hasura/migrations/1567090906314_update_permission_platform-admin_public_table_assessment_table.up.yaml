@@ -1,0 +1,20 @@
+- args:
+    permission:
+      columns:
+      - assessment_id
+      - id
+      - part_number
+      - table_values
+      - criterion_key
+      - pillar_key
+      - table_key
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_table
+      schema: public
+  type: create_update_permission

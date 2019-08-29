@@ -1,0 +1,6 @@
+- args:
+    role: company-admin
+    table:
+      name: assessment_scoring
+      schema: public
+  type: drop_update_permission

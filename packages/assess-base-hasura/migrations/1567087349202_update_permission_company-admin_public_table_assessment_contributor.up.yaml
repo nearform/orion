@@ -1,0 +1,26 @@
+- args:
+    role: company-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check:
+        assessment:
+          owner:
+            user_groups:
+              group_id:
+                _eq: X-Hasura-Group-Id
+      columns:
+      - assessment_id
+      - contributor_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: company-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: create_insert_permission
