@@ -24,28 +24,26 @@ function getLanguageSwitcher(useTranslation) {
   const LanguageSwitcher = ({ classes }) => {
     const { i18n } = useTranslation()
 
+    const l = i18n.language || 'en'
+
     return (
       <Select
         className={classes.input}
-        value={i18n.language}
+        value={l}
         onChange={(_, item) => i18n.changeLanguage(item.props.value)}
         autoWidth={true}
         IconComponent={MoreVert}
         displayEmpty={true}
         renderValue={() => (
-          <MenuItem
-            className={classes.item}
-            key={'val_' + i18n.language}
-            value={i18n.language}
-          >
+          <MenuItem className={classes.item} key={'val_' + l} value={location}>
             <i
               className={classnames(
                 classes.icon,
                 'em',
-                languageOptions[i18n.language].flag
+                languageOptions[l].flag
               )}
             ></i>
-            {i18n.language.toUpperCase()}
+            {l.toUpperCase()}
           </MenuItem>
         )}
       >
