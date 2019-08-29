@@ -125,8 +125,8 @@ function SelectArticleRecommendations({
                     <TableCell>{article.title}</TableCell>
                     <TableCell>
                       <Typography>
-                        {article.createdBy.first_name}{' '}
-                        {article.createdBy.last_name}
+                        {get(article, 'createdBy.first_name')}{' '}
+                        {get(article, 'createdBy.last_name')}
                       </Typography>
                     </TableCell>
                     <TableCell>

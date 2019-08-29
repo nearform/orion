@@ -22,7 +22,9 @@ query getUserArticles(
     knowledge_type
     path
   }
-  field_aggregate: article_aggregate {
+  field_aggregate: article_aggregate(
+    where: { created_by_id: { _eq: $createdById } }
+  ) {
     aggregate {
       count
     }

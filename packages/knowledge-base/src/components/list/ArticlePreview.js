@@ -26,7 +26,8 @@ const ArticlePreview = ({ article, classes }) => {
             {formatDateAsMonthAndYear(article.published_at)}
           </div>
           <div className={classes.articleAuthor}>
-            {article.createdBy.first_name} {article.createdBy.last_name}
+            {get(article, 'createdBy.first_name')}{' '}
+            {get(article, 'createdBy.last_name')}
           </div>
         </div>
       </div>
