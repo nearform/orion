@@ -4,6 +4,7 @@ import { TableRow, TableCell, IconButton, withStyles } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 import { Link } from 'gatsby'
+import get from 'lodash/get'
 
 import { ArticleStatusChip } from 'components'
 import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
@@ -19,11 +20,13 @@ import SEO from '../SEO'
 const ArticleList = ({ classes, path }) => {
   const [statusFilter, setStatusFilter] = useState()
   const [pageTitle, setPageTitle] = useState()
+
   useEffect(() => {
     const inReview = path === '/needs-review'
     setStatusFilter(inReview ? 'in-review' : undefined)
     setPageTitle(inReview ? 'Needs Review' : 'All Stories')
   }, [path])
+
   const isPlatformGroup = useIsPlatformGroup()
   const userId = useUserId()
   const knowledgeTypes = useKnowledgeTypes()
@@ -69,7 +72,8 @@ const ArticleList = ({ classes, path }) => {
               <TableCell>{article.title}</TableCell>
               {isPlatformGroup && (
                 <TableCell>
-                  {article.createdBy.first_name} {article.createdBy.last_name}
+                  {get(article, 'createdBy.first_name')}{' '}
+                  {get(article, 'createdBy.last_name')}
                 </TableCell>
               )}
               <TableCell>{formatDateTime(article.updated_at)}</TableCell>

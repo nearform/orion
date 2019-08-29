@@ -17,7 +17,7 @@ const HASURA_USER_ID = 'x-hasura-user-id'
 const HASURA_GROUP_ID = 'x-hasura-group-id'
 const ADMIN_ROLES_REGEX = /admin$/i
 const PUBLIC_ROLE_REGEX = /^public$/i
-const PLATFORM_GROUP_REGEX = /^platform/i
+const PLATFORM_GROUP_REGEX = /^platform|^admin$/i
 
 export const AuthInitContext = createContext()
 

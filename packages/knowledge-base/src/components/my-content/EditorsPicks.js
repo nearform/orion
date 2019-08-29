@@ -95,7 +95,8 @@ const EditorsPicks = ({ classes }) => {
             <TableRow hover key={article.id} size="small">
               <TableCell>{article.title}</TableCell>
               <TableCell>
-                {article.createdBy.first_name} {article.createdBy.last_name}
+                {get(article, 'createdBy.first_name')}{' '}
+                {get(article, 'createdBy.last_name')}
               </TableCell>
               <TableCell>{formatDateTime(article.updated_at)}</TableCell>
               <TableCell>{knowledgeTypes[article.knowledge_type]}</TableCell>

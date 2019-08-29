@@ -40,7 +40,13 @@ query getArticles(
     path
     editors_pick
   }
-  field_aggregate: article_aggregate {
+  field_aggregate: article_aggregate(
+    where: {
+      status: { _eq: $status }
+      editors_pick: { _eq: $editorsPick }
+      title: { _ilike: $titleLike }
+    }
+  ) {
     aggregate {
       count
     }
