@@ -169,7 +169,7 @@ function CriterionPartTemplate({
             criterionKey={criterion.key}
             pillarKey={pillar.key}
             partNumber={partNumber}
-            canEdit={canEditTablesAndUpload}
+            canEdit={canEditFeedbackAndScoring}
           />
         ))}
         <div className={classes.section}>
