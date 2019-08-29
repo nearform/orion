@@ -35,7 +35,7 @@ function getLanguageSwitcher(useTranslation) {
         IconComponent={MoreVert}
         displayEmpty={true}
         renderValue={() => (
-          <MenuItem className={classes.item} key={'val_' + l} value={location}>
+          <MenuItem className={classes.item} key={'val_' + l} value={l}>
             <i
               className={classnames(
                 classes.icon,
