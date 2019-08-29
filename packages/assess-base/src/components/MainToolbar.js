@@ -1,11 +1,13 @@
 import React from 'react'
 import { useStaticQuery, graphql, navigate, Link } from 'gatsby'
+import { useTranslation } from 'react-i18next'
 import Img from 'gatsby-image'
 import { Typography, Button, withStyles } from '@material-ui/core'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
 import { PaddedContainer } from 'components'
+import { getLanguageSwitcher } from 'components'
 
 import { useIsAdmin, useIsAuthenticated } from '../utils/auth'
 import NavLink from './NavLink'
@@ -50,6 +52,8 @@ function MainToolbar({ classes, dark }) {
   })
 
   const navButtonClass = classnames(classes.navButton, darkClass)
+
+  const LanguageSwitcher = getLanguageSwitcher(useTranslation)
 
   // darkClass is needed on both outer container and inner padded container
   // to avoid hairline gap between toolbar and main element in mobile WebKit
@@ -116,6 +120,7 @@ function MainToolbar({ classes, dark }) {
                 LOGOUT
               </Button>
             )}
+            <LanguageSwitcher />
           </div>
         </div>
       </PaddedContainer>

@@ -1,38 +1,100 @@
 import React from 'react'
 import T from 'prop-types'
-import { withStyles } from '@material-ui/core'
-import ToggleButton from '@material-ui/lab/ToggleButton'
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
+import classnames from 'classnames'
+import { Select, MenuItem, withStyles } from '@material-ui/core'
+import { MoreVert } from '@material-ui/icons'
 
-const styles = () => ({
-  root: {
-    alignSelf: 'center',
+const languageOptions = {
+  en: {
+    abb: 'en',
+    name: 'English',
+    flag: 'em-gb',
   },
-})
+  de: {
+    abb: 'de',
+    name: 'Deutsch',
+    flag: 'em-de',
+  },
+}
 
 function getLanguageSwitcher(useTranslation) {
   // Must use app's import of useTranslation, can't import it here
+  // Flag icons are twitter-style emojis from github source here: https://afeld.github.io/emoji-css/
 
-  function LanguageSwitcher({ classes }) {
+  const LanguageSwitcher = ({ classes }) => {
     const { i18n } = useTranslation()
 
     return (
-      <ToggleButtonGroup
+      <Select
+        className={classes.input}
         value={i18n.language}
-        exclusive
-        onChange={(_, language) => i18n.changeLanguage(language)}
-        className={classes.root}
+        onChange={(_, item) => i18n.changeLanguage(item.props.value)}
+        autoWidth={true}
+        IconComponent={MoreVert}
+        displayEmpty={true}
+        renderValue={() => (
+          <MenuItem
+            className={classes.item}
+            key={'val_' + i18n.language}
+            value={i18n.language}
+          >
+            <i
+              className={classnames(
+                classes.icon,
+                'em',
+                languageOptions[i18n.language].flag
+              )}
+            ></i>
+            {i18n.language.toUpperCase()}
+          </MenuItem>
+        )}
       >
-        <ToggleButton value="en">EN</ToggleButton>
-        <ToggleButton value="de">DE</ToggleButton>
-      </ToggleButtonGroup>
+        {Object.values(languageOptions).map(lang => (
+          <MenuItem
+            className={classes.item}
+            key={'val_' + lang.abb}
+            value={lang.abb}
+          >
+            <i className={classnames(classes.icon, 'em', lang.flag)}></i>
+            {lang.name}
+          </MenuItem>
+        ))}
+      </Select>
     )
   }
+
   LanguageSwitcher.propTypes = {
     classes: T.object.isRequired,
   }
 
-  return withStyles(styles)(LanguageSwitcher)
+  return withStyles(theme => ({
+    input: {
+      backgroundColor: theme.palette.background.paper,
+      boxShadow:
+        '0 0 5px 0 rgba(0, 0, 0, 0.1), 0 2px 10px 0 rgba(0, 0, 0, 0.1)',
+      height: 32,
+      borderRadius: '4px',
+      transition: theme.transitions.create(['border-color', 'box-shadow']),
+      '& svg': {
+        fill: theme.palette.secondary.main,
+        padding: 0,
+      },
+      '& :focus': {
+        backgroundColor: 'none',
+      },
+      '& *': {
+        padding: '2px 16px 2px 4px',
+      },
+    },
+    item: {
+      color: theme.palette.primary.dark,
+      fontSize: 12,
+      minHeight: 0,
+    },
+    icon: {
+      marginRight: theme.spacing(1),
+    },
+  }))(LanguageSwitcher)
 }
 
 export default getLanguageSwitcher
