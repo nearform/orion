@@ -4,7 +4,7 @@
   "tableName": "Business Matrix",
   "orderIndex": 2,
   "logoAsset": "assess-2-img",
-  "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum sapien et ipsum pellentesque, ut fringilla eros scelerisque. Mauris ex ex, viverra pharetra cursus gravida, vulputate ac velit.",
+  "shortDescription": "This tool allows organisation to complete an assessment against the criteria of the EFQM Model and score based on the RADAR elements.  The information captured for each criterion generate a first Enablers Maps.",
   "guidance": "We are here to guide you how the business matrix works",
   "keyInformation": {
     "guidance": "We are here to help you fill out the key information",
