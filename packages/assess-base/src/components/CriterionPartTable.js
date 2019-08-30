@@ -246,7 +246,7 @@ function CriterionPartTable({
                           disabled={!dirty || isSubmitting}
                         >
                           {rowIndex === tableRows.length
-                            ? 'Save new row'
+                            ? 'Save & add row'
                             : 'Save Updates'}
                         </Button>
                       </Grid>
