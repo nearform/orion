@@ -1,4 +1,5 @@
 import React from 'react'
+import { navigate } from '@reach/router'
 import {
   withStyles,
   Grid,
@@ -13,6 +14,7 @@ import {
   IconButton,
 } from '@material-ui/core'
 import {
+  ASSESSMENT_STATUS,
   getChartData,
   BarChartTable,
   ConfirmDialog,
@@ -21,7 +23,7 @@ import {
 } from 'components'
 import { Link } from 'gatsby'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
-import { useQuery } from 'graphql-hooks'
+import { useMutation, useQuery } from 'graphql-hooks'
 import get from 'lodash/get'
 
 import SEO from '../components/SEO'
@@ -32,6 +34,7 @@ import {
   getAssessmentFeedbackReportData,
   updateAssessmentExecSummaryMutation,
   updateAssessmentAdviceMutation,
+  updateAssessmentStatusMutation,
 } from '../queries'
 
 function sortByPart(obj, key) {
@@ -52,6 +55,7 @@ function FeedbackReport({
   location,
 }) {
   const assessmentId = getAssessmentId(location)
+  const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
   const {
     data: { assessment_by_pk: assessmentData } = { assessment_by_pk: null },
@@ -63,6 +67,17 @@ function FeedbackReport({
 
   const isAdmin = isAdminSync()
   const isAssessor = isAssessorSync()
+
+  const handleSubmitFeedbackReport = async () => {
+    await updateAssessmentStatus({
+      variables: {
+        id: assessmentId,
+        status: ASSESSMENT_STATUS.closed,
+      },
+    })
+
+    navigate('/')
+  }
 
   // TODO: Check that this is correct
   const canEditSummaryAndAdvice = isAdmin || isAssessor
@@ -97,9 +112,7 @@ function FeedbackReport({
             <Grid item>
               <ConfirmDialog
                 disabled={!assessmentData}
-                onConfirm={() => {
-                  /* TODO */
-                }}
+                onConfirm={handleSubmitFeedbackReport}
                 title={`Submit report for “${assessmentName}”?`}
                 text={`The feedback report for this assessment will be finalised.
                   No more edits or scoring will be possible. This cannot be undone.`}
