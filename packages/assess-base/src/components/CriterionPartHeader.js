@@ -55,7 +55,7 @@ const CriterionPartHeader = ({
 }
 
 CriterionPartHeader.propTypes = {
-  title: T.string.required,
+  title: T.string.isRequired,
   helpContent: T.string,
   buttonLabel: T.string,
   paginationNode: T.node,

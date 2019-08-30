@@ -27,7 +27,12 @@ import {
   updateAssessmentKeyInfoMutation,
   updateAssessmentStatusMutation,
 } from '../queries'
-import { getUserIdSync, isAdminSync, getGroupIdSync } from '../utils/auth'
+import {
+  getUserIdSync,
+  isAdminSync,
+  getGroupIdSync,
+  useIsAuthInitialized,
+} from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'
@@ -81,11 +86,12 @@ function AssessmentTemplate({
   const [createFileUpload] = useMutation(createFileUploadMutation)
   const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
+  const isAuthInitialized = useIsAuthInitialized()
   useEffect(() => {
-    if (assessmentId) {
+    if (assessmentId && !assessmentData) {
       loadAssessment(assessmentId)
     }
-  }, [assessmentId])
+  }, [assessmentId, isAuthInitialized, assessmentData])
 
   async function handleCreateAssessment({ name, internal }) {
     const { data } = await createAssessment({
