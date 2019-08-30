@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { navigate } from '@reach/router'
 import {
   withStyles,
@@ -23,13 +23,18 @@ import {
 } from 'components'
 import { Link } from 'gatsby'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
-import { useMutation, useQuery } from 'graphql-hooks'
+import { useMutation, useManualQuery } from 'graphql-hooks'
 import get from 'lodash/get'
 
 import SEO from '../components/SEO'
 import FeedbackReportInput from '../components/FeedbackReportInput'
 import { getAssessmentId } from '../utils/url'
-import { isAdminSync, isAssessorSync } from '../utils/auth'
+import {
+  isAdminSync,
+  isAssessorSync,
+  useIsAuthInitialized,
+} from '../utils/auth'
+
 import {
   getAssessmentFeedbackReportData,
   updateAssessmentExecSummaryMutation,
@@ -57,13 +62,24 @@ function FeedbackReport({
   const assessmentId = getAssessmentId(location)
   const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
-  const {
-    data: { assessment_by_pk: assessmentData } = { assessment_by_pk: null },
-  } = useQuery(getAssessmentFeedbackReportData, {
-    variables: {
-      assessmentId,
-    },
-  })
+  const isAuthInitialized = useIsAuthInitialized()
+
+  const [fetchAssessmentFeedbackReportData, { data }] = useManualQuery(
+    getAssessmentFeedbackReportData,
+    {
+      variables: {
+        assessmentId,
+      },
+    }
+  )
+
+  const assessmentData = get(data, 'assessment_by_pk')
+
+  useEffect(() => {
+    if (isAuthInitialized && !assessmentData) {
+      fetchAssessmentFeedbackReportData()
+    }
+  }, [isAuthInitialized, fetchAssessmentFeedbackReportData, assessmentData])
 
   const isAdmin = isAdminSync()
   const isAssessor = isAssessorSync()
