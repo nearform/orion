@@ -37,11 +37,9 @@ function getChartData(assessmentDef, assessmentData, pillarColors) {
 
   const chartData = assessmentDef.pillars.reduce(
     (chartData, pillarDef, pillarIndex) => {
-      const {
-        key: pillarKey,
-        scoring: scoringDef,
-        criteria: criteriaDef,
-      } = pillarDef
+      const { key: pillarKey, criteria: criteriaDef } = pillarDef
+
+      const scoringDef = pillarDef.scoring || assessmentDef.scoring
 
       if (!scoringDef || !assessmentData.scoring) return chartData
 
