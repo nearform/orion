@@ -37,12 +37,14 @@ function ChartTicks({ classes, children, variant, height }) {
 const styles = theme => {
   const chartTickStyles = {
     root: {
-      margin: theme.spacing(0, 2),
       display: 'flex',
       justifyContent: 'space-between',
     },
     across: {
       position: 'relative',
+    },
+    below: {
+      width: '98%',
     },
     tick: {
       position: 'relative',
@@ -68,7 +70,7 @@ const styles = theme => {
       },
     },
     belowTick: {
-      margin: theme.spacing(-0.5, 0, 3),
+      margin: theme.spacing(5, 0, 3, 0),
       '&::before': {
         height: 6,
         width: 1,

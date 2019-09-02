@@ -3,10 +3,12 @@ import mean from 'lodash/mean'
 import round from 'lodash/round'
 import get from 'lodash/get'
 import { useMutation } from 'graphql-hooks'
-import { withTheme, Grid } from '@material-ui/core'
+import { withStyles, Grid, Typography } from '@material-ui/core'
+import HelpIcon from '@material-ui/icons/Help'
 import { Formik, Form, Field } from 'formik'
 import { ScoringSlider } from 'components'
 import T from 'prop-types'
+import ContextualHelp from './ContextualHelp'
 
 import {
   insertAssessmentScoringDataMutation,
@@ -40,7 +42,7 @@ function getScoringData(assessmentData, scoringDef) {
 }
 
 function AssessmentPillarScoring({
-  theme,
+  classes,
   assessmentId,
   assessmentData,
   pillar,
@@ -89,6 +91,12 @@ function AssessmentPillarScoring({
     }
   }
 
+  let maxCols = 2
+  for (let arr of scoringDef) {
+    maxCols = arr.scores.length > maxCols ? arr.scores.length : maxCols
+  }
+  const colWidth = 12 / maxCols
+
   return (
     <Formik
       onSubmit={handleScoreChange}
@@ -112,26 +120,48 @@ function AssessmentPillarScoring({
           }
         }
 
+        const groupOverall = []
         return (
           <Form>
             <Grid container direction="column" spacing={2}>
               {scoringDef.map(scoringGroup => {
                 const existingScores = values[scoringGroup.key]
 
-                const groupOverall = !existingScores
+                const groupScore = !existingScores
                   ? 0
                   : round(
                       mean(Object.values(values[scoringGroup.key])) /
                         SLIDER_STEP
                     ) * SLIDER_STEP
-
+                groupOverall.push(groupScore)
                 return (
-                  <Grid key={scoringGroup.key} item container spacing={4}>
+                  <Grid
+                    key={scoringGroup.key}
+                    item
+                    container
+                    spacing={2}
+                    xs={12}
+                    alignItems="flex-end"
+                  >
+                    <Grid item xs={12}>
+                      <Typography
+                        variant="h3"
+                        className={classes.scoringHeader}
+                      >
+                        {scoringGroup.name}
+                      </Typography>
+                    </Grid>
                     {scoringGroup.scores.map(score => {
                       const fieldName = `${scoringGroup.key}.${score.key}`
 
                       return (
-                        <Grid item key={score.key} xs>
+                        <Grid item key={score.key} xs={colWidth}>
+                          <ContextualHelp
+                            helpContent={score.description}
+                            className={classes.helpIcon}
+                          >
+                            <HelpIcon color="secondary" />
+                          </ContextualHelp>
                           <Field name={fieldName}>
                             {({ field }) => (
                               <ScoringSlider
@@ -153,17 +183,23 @@ function AssessmentPillarScoring({
                         </Grid>
                       )
                     })}
-                    <Grid item xs>
-                      <ScoringSlider
-                        disabled={!canEdit}
-                        color={groupOverall ? 'primary' : null}
-                        label="Overall"
-                        value={groupOverall}
-                      />
-                    </Grid>
                   </Grid>
                 )
               })}
+              <Grid item xs={12}>
+                <Typography variant="h3">Overall</Typography>
+              </Grid>
+              <Grid item xs={colWidth}>
+                <ScoringSlider
+                  disabled={!canEdit}
+                  color={'primary'}
+                  value={
+                    groupOverall.length < 1
+                      ? 0
+                      : round(mean(groupOverall) / SLIDER_STEP) * SLIDER_STEP
+                  }
+                />
+              </Grid>
             </Grid>
           </Form>
         )
@@ -183,4 +219,12 @@ AssessmentPillarScoring.propTypes = {
   canEdit: T.bool.isRequired,
 }
 
-export default withTheme(AssessmentPillarScoring)
+export default withStyles(theme => ({
+  helpIcon: {
+    float: 'right',
+    marginTop: -15,
+  },
+  scoringHeader: {
+    height: theme.spacing(2.5),
+  },
+}))(AssessmentPillarScoring)
