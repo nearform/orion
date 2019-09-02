@@ -221,8 +221,10 @@ AssessmentPillarScoring.propTypes = {
 
 export default withStyles(theme => ({
   helpIcon: {
-    float: 'right',
-    marginTop: -15,
+    position: 'relative',
+    left: '85%',
+    top: 5,
+    zIndex: 10,
   },
   scoringHeader: {
     height: theme.spacing(2.5),

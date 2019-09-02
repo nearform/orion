@@ -12,6 +12,7 @@ function getOverallScore(chartData) {
 }
 
 function calculateWeightedMean(scores) {
+  if (!scores.length) return 0
   return (
     scores.reduce((sum, scoreItem) => {
       const weighting = scoreItem.weighting || 1
