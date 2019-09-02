@@ -145,6 +145,7 @@ exports.createPages = async ({ graphql, actions }) => {
             pillarKey: pillar.key,
             criterionKey: criterion.key,
           }),
+          subcats: criterion.parts.map(part => part.tables[0].name),
           name: criterion.name,
           path: createCriterionPagePath(pillar, criterion),
         }))

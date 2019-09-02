@@ -47,7 +47,7 @@ function CriterionPartInput({
       )
     : {}
 
-  const ArrowIcon = isOpen ? KeyboardArrowDown : KeyboardArrowUp
+  const ArrowIcon = isOpen ? KeyboardArrowUp : KeyboardArrowDown
 
   return (
     <Grid item xs={4}>
