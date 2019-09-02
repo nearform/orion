@@ -1,6 +1,7 @@
 query getAssessmentFeedbackReportData($assessmentId: Int!) {
   assessment_by_pk(id: $assessmentId) {
     name
+    key
     status
     exec_summary
     advice

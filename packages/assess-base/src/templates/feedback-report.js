@@ -48,7 +48,13 @@ function sortByPart(obj, key) {
   return obj[key]
     .sort((a, b) => a.part_number - b.part_number)
     .reduce(
-      (acc, item) => [...acc, ...item.feedback_values.map(value => value[key])],
+      (acc, item) => [
+        ...acc,
+        ...item.feedback_values.map(value => ({
+          value: value[key],
+          link: `${item.pillar_key}/${item.criterion_key}/${item.part_number}`,
+        })),
+      ],
       []
     )
 }
@@ -235,13 +241,19 @@ function FeedbackReport({
                                   </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                  {feedbackItems.map((feedbackValue, i) => (
+                                  {feedbackItems.map((feedbackItem, i) => (
                                     <TableRow key={`${key}-${i}`}>
-                                      <TableCell>{feedbackValue}</TableCell>
+                                      <TableCell>
+                                        {feedbackItem.value}
+                                      </TableCell>
                                       <TableCell align="right">
-                                        <IconButton>
-                                          <ChevronRightIcon />
-                                        </IconButton>
+                                        <Link
+                                          to={`/assessment/${assessmentData.key}/${feedbackItem.link}/#${assessmentId}`}
+                                        >
+                                          <IconButton>
+                                            <ChevronRightIcon />
+                                          </IconButton>
+                                        </Link>
                                       </TableCell>
                                     </TableRow>
                                   ))}

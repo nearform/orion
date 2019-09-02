@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
 import { PaddedContainer, SectionTitle } from 'components'
 import { Link } from 'gatsby'
-import { useQuery } from 'graphql-hooks'
+import { useManualQuery } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 
 import SEO from '../components/SEO'
@@ -13,6 +13,7 @@ import {
   isAdminSync,
   isContributorSync,
   isAssessorSync,
+  useIsAuthInitialized,
 } from '../utils/auth'
 import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
 import { getAssessmentId } from '../utils/url'
@@ -61,12 +62,14 @@ function CriterionPartTemplate({
   const isContributor = isContributorSync()
   const isAssessor = isAssessorSync()
 
-  const {
-    loading,
-    error,
-    data: { assessment_by_pk: assessmentData } = { assessment_by_pk: null },
-    refetch,
-  } = useQuery(getAssessmentPartData, {
+  const [
+    fetchAssessmentPartData,
+    {
+      loading,
+      error,
+      data: { assessment_by_pk: assessmentData } = { assessment_by_pk: null },
+    },
+  ] = useManualQuery(getAssessmentPartData, {
     variables: {
       id: assessmentId,
       pillarKey: pillar.key,
@@ -75,12 +78,19 @@ function CriterionPartTemplate({
     },
   })
 
-  if (loading) {
-    return 'Loading...'
-  }
+  const isAuthInitialized = useIsAuthInitialized()
+  useEffect(() => {
+    if (isAuthInitialized && !assessmentData) {
+      fetchAssessmentPartData()
+    }
+  }, [isAuthInitialized, fetchAssessmentPartData, assessmentData])
 
   if (error) {
     return 'Error'
+  }
+
+  if (loading || !assessmentData) {
+    return 'Loading...'
   }
 
   const canEditTablesAndUpload =
@@ -114,7 +124,7 @@ function CriterionPartTemplate({
               partNumber={partNumber}
               files={assessmentData.files}
               canUpload={canEditTablesAndUpload}
-              onUploadComplete={refetch}
+              onUploadComplete={fetchAssessmentPartData}
             />
           </Grid>
         </Grid>

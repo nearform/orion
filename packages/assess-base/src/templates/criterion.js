@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
 import { PaddedContainer, SectionTitle } from 'components'
 import { Link } from 'gatsby'
@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
 import { Field, Formik, Form } from 'formik'
 import { TextField } from 'formik-material-ui'
-import { useQuery, useMutation } from 'graphql-hooks'
+import { useManualQuery, useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 
 import SEO from '../components/SEO'
@@ -16,7 +16,7 @@ import {
   upsertAssessmentCriterionDataMutation,
 } from '../queries'
 import FileList from '../components/FileList'
-import { getUserIdSync, isAdminSync } from '../utils/auth'
+import { getUserIdSync, isAdminSync, useIsAuthInitialized } from '../utils/auth'
 import { assessmentInProgress } from '../utils/assessment-status'
 
 function createFormInitialValues(assessmentCriterionData) {
@@ -44,16 +44,22 @@ function CriterionTemplate({
 
   const { t } = useTranslation()
 
-  const { data: assessmentCriterionData, refetch } = useQuery(
-    getAssessmentCriterionData,
-    {
-      variables: {
-        assessmentId,
-        pillarKey: pillar.key,
-        criterionKey: criterion.key,
-      },
+  const [
+    fetchAssessmentCriterionData,
+    { data: assessmentCriterionData },
+  ] = useManualQuery(getAssessmentCriterionData, {
+    variables: {
+      assessmentId,
+      pillarKey: pillar.key,
+      criterionKey: criterion.key,
+    },
+  })
+  const isAuthInitialized = useIsAuthInitialized()
+  useEffect(() => {
+    if (isAuthInitialized && !assessmentCriterionData) {
+      fetchAssessmentCriterionData()
     }
-  )
+  }, [isAuthInitialized, fetchAssessmentCriterionData, assessmentCriterionData])
 
   const [upsertAssessmentData] = useMutation(
     upsertAssessmentCriterionDataMutation
@@ -109,7 +115,7 @@ function CriterionTemplate({
               criterion={criterion}
               files={get(assessmentCriterionData, 'assessment_file', [])}
               canUpload={canEditAndUpload}
-              onUploadComplete={refetch}
+              onUploadComplete={fetchAssessmentCriterionData}
             />
           </Grid>
         </Grid>

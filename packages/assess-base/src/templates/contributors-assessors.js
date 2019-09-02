@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Typography,
   withStyles,
@@ -16,7 +16,11 @@ import { Redirect } from '@reach/router'
 import { TypedChip, PaddedContainer, SectionTitle } from 'components'
 
 import SEO from '../components/SEO'
-import { isAdminSync, getGroupIdSync } from '../utils/auth'
+import {
+  isAdminSync,
+  getGroupIdSync,
+  useIsAuthInitialized,
+} from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
 import ContextualHelp from '../components/ContextualHelp'
 import {
@@ -28,7 +32,7 @@ import {
   upsertAssessmentAssessorMutation,
   deleteAssessmentAssessorMutation,
 } from '../queries'
-import { useQuery } from 'graphql-hooks'
+import { useManualQuery } from 'graphql-hooks'
 import useAdminTable from '../hooks/useAdminTable'
 import { useMutation } from 'graphql-hooks'
 import FilterListIcon from '@material-ui/icons/FilterList'
@@ -57,19 +61,40 @@ function ContributorsAssessorsTemplate({
     return <Redirect to="/auth" noThrow />
   }
 
-  const { data: assessmentByPk } = useQuery(getShallowAssessmentData, {
-    variables: {
-      id: assessmentId,
-    },
-  })
-  const assessmentData = get(assessmentByPk, 'assessment_by_pk')
+  const [fetchShallowAssessmentData, { data: assessmentByPk }] = useManualQuery(
+    getShallowAssessmentData,
+    {
+      variables: {
+        id: assessmentId,
+      },
+    }
+  )
 
-  const { data, refetch: refetchParticipants } = useQuery(
+  const [fetchAssessmentContributorsAssessorsData, { data }] = useManualQuery(
     getAssessmentContributorsAssessorsData,
     {
       variables: { assessmentId },
     }
   )
+
+  const isAuthInitialized = useIsAuthInitialized()
+  useEffect(() => {
+    if (!isAuthInitialized) return
+    if (!assessmentByPk) {
+      fetchShallowAssessmentData()
+    }
+    if (!data) {
+      fetchAssessmentContributorsAssessorsData()
+    }
+  }, [
+    isAuthInitialized,
+    fetchShallowAssessmentData,
+    assessmentByPk,
+    fetchAssessmentContributorsAssessorsData,
+    data,
+  ])
+
+  const assessmentData = get(assessmentByPk, 'assessment_by_pk')
   const assessors = get(data, 'assessors', [])
   const contributors = get(data, 'contributors', [])
 
@@ -95,7 +120,7 @@ function ContributorsAssessorsTemplate({
     const variables = { assessmentId, contributorId: user.id }
     await upsertAssessmentContributor({ variables })
     refetchUnassigned()
-    refetchParticipants()
+    fetchAssessmentContributorsAssessorsData()
   }
 
   const [deleteAssessmentContributor] = useMutation(
@@ -105,7 +130,7 @@ function ContributorsAssessorsTemplate({
     const variables = { assessmentId, contributorId: user.id }
     await deleteAssessmentContributor({ variables })
     refetchUnassigned()
-    refetchParticipants()
+    fetchAssessmentContributorsAssessorsData()
   }
 
   const [upsertAssessmentAssessor] = useMutation(
@@ -115,7 +140,7 @@ function ContributorsAssessorsTemplate({
     const variables = { assessmentId, assessorId: user.id }
     await upsertAssessmentAssessor({ variables })
     refetchUnassigned()
-    refetchParticipants()
+    fetchAssessmentContributorsAssessorsData()
   }
 
   const [deleteAssessmentAssessor] = useMutation(
@@ -125,7 +150,7 @@ function ContributorsAssessorsTemplate({
     const variables = { assessmentId, assessorId: user.id }
     await deleteAssessmentAssessor({ variables })
     refetchUnassigned()
-    refetchParticipants()
+    fetchAssessmentContributorsAssessorsData()
   }
 
   const { table, refetch: refetchUnassigned } = useAdminTable({
