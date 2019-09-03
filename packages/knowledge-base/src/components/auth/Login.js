@@ -56,27 +56,21 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
               </Button>
             </Grid>
           </Grid>
-          <Grid
-            item
-            container
-            alignItems="baseline"
-            spacing={1}
-            xs={10}
-            wrap="nowrap"
-          >
-            <Grid item>
+          <Grid item container alignItems="baseline" xs={12} wrap="nowrap">
+            <Grid item justify="flex-start">
               <Typography variant="h4" color="textSecondary" noWrap>
                 No account?
               </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              &nbsp;
             </Grid>
             <Grid item>
               <Button color="secondary" onClick={goToSignUp} size="small">
                 Create account
               </Button>
             </Grid>
-            <Grid item xs={2}>
-              &nbsp;
-            </Grid>
+
             <Grid item>
               <Button
                 name="submit"
