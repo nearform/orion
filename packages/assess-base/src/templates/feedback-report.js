@@ -222,7 +222,11 @@ function FeedbackReport({
                     >
                       <Grid item xs={4}>
                         <SectionTitle barColor={pillarColors[pillarIndex]}>
-                          {criterionDef.name}
+                          <Link
+                            to={`/assessment/${assessmentData.key}/${pillarDef.key}/${criterionDef.key}/1/#${assessmentId}`}
+                          >
+                            {criterionDef.name}
+                          </Link>
                         </SectionTitle>
                       </Grid>
                       {feedbackAreas.map(area => {

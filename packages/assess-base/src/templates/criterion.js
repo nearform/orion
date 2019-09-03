@@ -123,7 +123,10 @@ function CriterionTemplate({
           <Grid container spacing={4}>
             <Grid item xs={3}>
               <SectionTitle barColor={pillarColor}>
-                {pillar.name} <span style={{ color: pillarColor }}>▶</span>{' '}
+                <Link to={`/assessment/${assessment.key}#${assessmentId}`}>
+                  {pillar.name}
+                </Link>{' '}
+                <span style={{ color: pillarColor }}>▶</span>{' '}
                 {t(criterion.name)}
               </SectionTitle>
             </Grid>
