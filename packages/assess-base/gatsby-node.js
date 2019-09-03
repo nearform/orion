@@ -143,14 +143,18 @@ exports.createPages = async ({ graphql, actions }) => {
 
     const criteriaList = assessment.pillars.reduce(
       (acc, pillar, pillarIndex) => {
-        const pillarCriteria = pillar.criteria.map(criterion => ({
-          key: JSON.stringify({
-            pillarKey: pillar.key,
-            criterionKey: criterion.key,
-          }),
-          name: criterion.name,
-          path: createCriterionPagePath(pillar, criterion),
-        }))
+        const pillarCriteria = pillar.criteria.map(criterion => {
+          let subCatNum = 0
+          return criterion.parts.map(part => ({
+            key: JSON.stringify({
+              pillarKey: pillar.key,
+              criterionKey: part.tables[0].key,
+            }),
+            name: part.tables[0].name,
+            path:
+              createCriterionPagePath(pillar, criterion) + '/' + ++subCatNum,
+          }))
+        })
         return [...acc, ...pillarCriteria]
       },
       []

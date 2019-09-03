@@ -33,6 +33,8 @@ function CriterionPartInput({
   assessmentId,
   setFieldValue,
 }) {
+  criteriaList = criteriaList.flat()
+
   const inputId = `${inputKey}-${column.key}`
   const isLink = column.type === 'link'
   const isImage = column.type === 'image'
@@ -107,7 +109,7 @@ function CriterionPartInput({
     }) ||
     {}
 
-  const ArrowIcon = isOpen ? KeyboardArrowDown : KeyboardArrowUp
+  const ArrowIcon = isOpen ? KeyboardArrowUp : KeyboardArrowDown
 
   return (
     <Grid item xs={4}>
