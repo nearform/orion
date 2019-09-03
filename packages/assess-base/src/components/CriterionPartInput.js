@@ -23,6 +23,7 @@ function CriterionPartInput({
   criteriaList,
   assessmentId,
 }) {
+  criteriaList = criteriaList.flat()
   const [isOpen, setIsOpen] = useState(false)
   const toggleOpen = useCallback(() => setIsOpen(!isOpen), [isOpen, setIsOpen])
 
