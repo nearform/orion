@@ -390,6 +390,35 @@
     {
       "key": "results",
       "name": "results",
+      "columns": [
+        {
+          "key": "title",
+          "name": "indicator title"
+        },
+        {
+          "key": "description",
+          "name": "indicator description"
+        },
+        {
+          "key": "image",
+          "name": "add image",
+          "type": "image"
+        },
+        {
+          "key": "gap",
+          "name": "",
+          "type": "gap"
+        },
+        {
+          "key": "owner",
+          "name": "owner"
+        },
+        {
+          "key": "links",
+          "name": "efqm links",
+          "type": "link"
+        }
+      ],
       "criteria": [
         {
           "key": "stakeholder-perceptions",

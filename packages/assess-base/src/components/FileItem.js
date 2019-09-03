@@ -17,9 +17,9 @@ function formatFileSize(bytes) {
   return (bytes / Math.pow(k, i)).toFixed(1) + ' ' + sizes[i]
 }
 
-function FileItem({ classes, file }) {
+function FileItem({ classes, className, file }) {
   return (
-    <Button onClick={_ => downloadFile(file)}>
+    <Button onClick={_ => downloadFile(file)} className={className}>
       <AttachmentIcon className={classes.attachmentIcon} />
       <div className={classes.attachment}>
         <Typography variant="h4">{file.file_name}</Typography>

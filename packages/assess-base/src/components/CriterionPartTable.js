@@ -166,7 +166,7 @@ function CriterionPartTable({
             }
             key={tableKey}
           >
-            {({ isSubmitting, dirty, values }) => (
+            {({ isSubmitting, dirty, values, setFieldValue }) => (
               <Form className={classes.section}>
                 <Grid container direction="column" spacing={2}>
                   <Grid item container spacing={1} wrap="nowrap">
@@ -230,6 +230,7 @@ function CriterionPartTable({
                               canEdit={canEdit}
                               criteriaList={criteriaList}
                               assessmentId={assessmentId}
+                              setFieldValue={setFieldValue}
                             />
                           )
                         })}

@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react'
 import T from 'prop-types'
 import {
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Typography,
@@ -10,9 +11,17 @@ import {
 import { Link } from 'gatsby'
 import classnames from 'classnames'
 import { Field } from 'formik'
+import { InputBase, TextField } from 'formik-material-ui'
+import {
+  Check,
+  Clear,
+  KeyboardArrowUp,
+  KeyboardArrowDown,
+} from '@material-ui/icons'
+import { uploadFile } from '../utils/storage'
 
-import { TextField } from 'formik-material-ui'
-import { Check, KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
+import UploadButton from './UploadButton'
+import FileItem from './FileItem'
 
 function CriterionPartInput({
   classes,
@@ -22,13 +31,37 @@ function CriterionPartInput({
   canEdit,
   criteriaList,
   assessmentId,
+  setFieldValue,
 }) {
+  const inputId = `${inputKey}-${column.key}`
+  const isLink = column.type === 'link'
+  const isImage = column.type === 'image'
+  const isGap = column.type === 'gap'
+  const fieldName = column.key
+
   const [isOpen, setIsOpen] = useState(false)
   const toggleOpen = useCallback(() => setIsOpen(!isOpen), [isOpen, setIsOpen])
 
-  const inputId = `${inputKey}-${column.key}`
-  const isLink = column.type === 'link'
-  const fieldName = column.key
+  if (isGap)
+    return (
+      <Grid item xs={4}>
+        {column.name && (
+          <Typography variant="h4" className={classes.inputLabel}>
+            {column.name}
+          </Typography>
+        )}
+      </Grid>
+    )
+
+  const handleFileUpload = async file => {
+    const { key } = await uploadFile(file, assessmentId)
+    const fieldValue = {
+      file_name: file.name,
+      file_size: file.size,
+      s3_key: key,
+    }
+    setFieldValue(fieldName, fieldValue)
+  }
 
   // Legacy support for previously-saved assessments where it is a string
   // Data is stored as an array of objects and Hasura can't change each in a migration
@@ -36,16 +69,43 @@ function CriterionPartInput({
     values[fieldName] = []
   }
 
-  const selectFieldProps = isLink
-    ? getSelectFieldProps(
+  const fieldTypeProps =
+    (isLink &&
+      getSelectFieldProps(
         classes,
         isOpen,
         toggleOpen,
         criteriaList,
         values[fieldName],
         assessmentId
-      )
-    : {}
+      )) ||
+    (isImage && {
+      startAdornment: values[fieldName] ? (
+        <FileItem file={values[fieldName]} className={classes.fileItem} />
+      ) : (
+        <UploadButton
+          onFileSelected={handleFileUpload}
+          id={`image-upload-${inputKey}-field`}
+          className={classes.uploadFieldButton}
+          grow={true}
+        >
+          {
+            // Button must have children
+            ' '
+          }
+        </UploadButton>
+      ),
+      endAdornment: values[fieldName] && (
+        <IconButton
+          onClick={() => setFieldValue(fieldName, null)}
+          className={classes.uploadRemoveButton}
+        >
+          <Clear />
+        </IconButton>
+      ),
+      type: 'hidden',
+    }) ||
+    {}
 
   const ArrowIcon = isOpen ? KeyboardArrowDown : KeyboardArrowUp
 
@@ -62,9 +122,25 @@ function CriterionPartInput({
         >
           {column.name}
           {isLink && canEdit && (
-            <span className={classes.selectItemActive}>
-              <ArrowIcon className={classes.middle} />
+            <span
+              className={classnames(
+                classes.selectItemActive,
+                classes.arrowIconOuter,
+                classes.middle
+              )}
+            >
+              <ArrowIcon className={classes.arrowIcon} />
             </span>
+          )}
+          {isImage && canEdit && (
+            <UploadButton
+              onFileSelected={handleFileUpload}
+              id={`image-upload-${inputKey}`}
+              className={classes.uploadButton}
+              color="secondary"
+            >
+              Upload
+            </UploadButton>
           )}
         </Typography>
       </InputLabel>
@@ -72,10 +148,10 @@ function CriterionPartInput({
       <Field
         id={inputId}
         disabled={!canEdit}
-        component={TextField}
+        component={isImage ? InputBase : TextField}
         name={fieldName}
         fullWidth
-        {...selectFieldProps}
+        {...fieldTypeProps}
       />
     </Grid>
   )
@@ -184,11 +260,35 @@ const styles = theme => ({
     width: theme.spacing(5),
     display: 'inline-block',
   },
+  arrowIcon: {
+    marginTop: theme.spacing(-1),
+  },
+  arrowIconOuter: {
+    height: theme.spacing(1.5),
+    display: 'inline-block',
+  },
   middle: {
     verticalAlign: 'middle',
   },
   clickable: {
     cursor: 'pointer',
+  },
+  fileItem: {
+    flexGrow: 1,
+    justifyContent: 'flex-start',
+    overflowX: 'hidden',
+  },
+  uploadButton: {
+    margin: theme.spacing(-1, 1),
+    verticalAlign: 'baseline',
+    ...theme.typography.h4,
+  },
+  uploadFieldButton: {
+    width: '100%',
+    height: theme.spacing(4),
+  },
+  uploadRemoveButton: {
+    padding: theme.spacing(0.5),
   },
 })
 

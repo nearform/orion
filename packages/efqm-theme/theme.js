@@ -376,6 +376,17 @@ const shadows = [
   ),
 ]
 
+const inputClasses = {
+  root: {
+    ...typography.body1,
+    borderRadius: 3,
+    backgroundColor: colorDefinitions.paleGrey,
+  },
+  input: {
+    padding: '7.5px 12px 8.5px',
+  },
+}
+
 exports.muiTheme = {
   overrides: {
     MuiButton: {
@@ -415,16 +426,8 @@ exports.muiTheme = {
         fontSize: 11,
       },
     },
-    MuiInput: {
-      root: {
-        ...typography.body1,
-        borderRadius: 3,
-        backgroundColor: colorDefinitions.paleGrey,
-      },
-      input: {
-        padding: '7.5px 12px 8.5px',
-      },
-    },
+    MuiInput: inputClasses,
+    MuiInputBase: inputClasses,
     MuiOutlinedInput: {
       root: {
         ...typography.body1,
