@@ -1,6 +1,27 @@
-# Raw Salmon
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 ![icon]
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+# Raw Salmon
 
 For all your fish of knowledge needs.
 
@@ -71,5 +92,5 @@ All the above considered, the objective is to make it possible to implemented ei
 [Terraform]: https://www.terraform.io/
 
 <!-- Images -->
-[icon]: images/favicon.png
+[icon]: images/Accel_Logo_Orion.svg
 [architecture-overview]: images/architecture.png
