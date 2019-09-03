@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import classnames from 'classnames'
 import mean from 'lodash/mean'
 import round from 'lodash/round'
 import get from 'lodash/get'
@@ -16,6 +17,12 @@ import {
 } from '../queries'
 
 const SLIDER_STEP = 5
+
+function getOverallValue(groupOverall, cap) {
+  return groupOverall.length
+    ? round(mean(groupOverall) / SLIDER_STEP) * SLIDER_STEP
+    : 0
+}
 
 function getScoringData(assessmentData, scoringDef) {
   const { id, scoring_values: values } = assessmentData.scoring[0] || {}
@@ -41,12 +48,26 @@ function getScoringData(assessmentData, scoringDef) {
   }
 }
 
+function getCapDescription(capRule, scoringDef) {
+  const fallback = `“${capRule[0]}: ${capRule[1]}”`
+  const scoringGroup = scoringDef.find(group => group.key === capRule[0])
+  if (!scoringGroup) return fallback
+
+  const scoringSlider = scoringGroup.scores.find(
+    group => group.key === capRule[1]
+  )
+  return `“${scoringGroup.name}: ${
+    scoringSlider ? scoringSlider.name : capRule[1]
+  }”`
+}
+
 function AssessmentPillarScoring({
   classes,
   assessmentId,
   assessmentData,
   pillar,
   scoringDef,
+  scoringRules,
   criterion,
   partNumber,
   canEdit,
@@ -97,6 +118,8 @@ function AssessmentPillarScoring({
   }
   const colWidth = 12 / maxCols
 
+  const hasCap = !!scoringRules.capBy
+
   return (
     <Formik
       onSubmit={handleScoreChange}
@@ -121,6 +144,8 @@ function AssessmentPillarScoring({
         }
 
         const groupOverall = []
+        const cap = get(values, scoringRules.capBy, 100)
+
         return (
           <Form>
             <Grid container direction="column" spacing={2}>
@@ -189,15 +214,27 @@ function AssessmentPillarScoring({
               <Grid item xs={12}>
                 <Typography variant="h3">Overall</Typography>
               </Grid>
-              <Grid item xs={colWidth}>
+              <Grid item xs={colWidth} className={classes.overall}>
+                {hasCap && getOverallValue(groupOverall, cap) > cap && (
+                  <ContextualHelp
+                    helpContent={`
+                      The overall score has been capped by the score for
+                      ${getCapDescription(scoringRules.capBy, scoringDef)},
+                      reducing it from ${getOverallValue(groupOverall, cap)}
+                      to ${cap}.
+                    `}
+                    className={classnames(
+                      classes.helpIcon,
+                      classes.overallHelpIcon
+                    )}
+                  >
+                    <HelpIcon color="primary" />
+                  </ContextualHelp>
+                )}
                 <ScoringSlider
                   disabled={!canEdit}
                   color={'primary'}
-                  value={
-                    groupOverall.length < 1
-                      ? 0
-                      : round(mean(groupOverall) / SLIDER_STEP) * SLIDER_STEP
-                  }
+                  value={Math.min(getOverallValue(groupOverall, cap), cap)}
                 />
               </Grid>
             </Grid>
@@ -209,7 +246,6 @@ function AssessmentPillarScoring({
 }
 
 AssessmentPillarScoring.propTypes = {
-  theme: T.object.isRequired,
   assessmentId: T.number.isRequired,
   assessmentData: T.object.isRequired,
   pillar: T.object.isRequired,
@@ -222,9 +258,18 @@ AssessmentPillarScoring.propTypes = {
 export default withStyles(theme => ({
   helpIcon: {
     position: 'relative',
-    left: '85%',
-    top: 5,
+    left: `calc(100% - ${theme.spacing(4)}px)`,
+    top: theme.spacing(0.5),
     zIndex: 10,
+  },
+  overallHelpIcon: {
+    position: 'absolute',
+    top: theme.spacing(-2.5),
+    left: 'auto',
+    right: theme.spacing(2.5),
+  },
+  overall: {
+    position: 'relative',
   },
   scoringHeader: {
     height: theme.spacing(2.5),

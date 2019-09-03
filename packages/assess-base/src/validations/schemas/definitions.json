@@ -193,16 +193,12 @@
               "$ref": "definitions.json#/definitions/pillarScore"
             }
           ]
-        },
-        "rules": {
-          "type": "array"
         }
       },
       "required": [
         "name",
         "key",
-        "scores",
-        "rules"
+        "scores"
       ]
     },
     "pillar": {

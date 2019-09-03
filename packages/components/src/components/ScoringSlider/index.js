@@ -31,7 +31,7 @@ function ScoringSlider({ color, classes, label, ...props }) {
 
 ScoringSlider.propTypes = {
   classes: T.object.isRequired,
-  label: T.string.isRequired,
+  label: T.string,
   ...StyledSlider.propTypes,
 }
 

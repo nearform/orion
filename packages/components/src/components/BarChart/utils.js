@@ -1,4 +1,7 @@
 import T from 'prop-types'
+import get from 'lodash/get'
+
+const SLIDER_STEP = 5
 
 function getWeightedScore(dataItem) {
   return dataItem.score * (dataItem.weighting || 1)
@@ -13,7 +16,7 @@ function getOverallScore(chartData) {
 
 function calculateWeightedMean(scores) {
   if (!scores.length) return 0
-  return (
+  return Math.min(
     scores.reduce((sum, scoreItem) => {
       const weighting = scoreItem.weighting || 1
       const scoreValue = scoreItem.score
@@ -41,6 +44,8 @@ function getChartData(assessmentDef, assessmentData, pillarColors) {
       const { key: pillarKey, criteria: criteriaDef } = pillarDef
 
       const scoringDef = pillarDef.scoring || assessmentDef.scoring
+      const scoringRules =
+        pillarDef.scoringRules || assessmentDef.scoringRules || {}
 
       if (!scoringDef || !assessmentData.scoring) return chartData
 
@@ -63,6 +68,7 @@ function getChartData(assessmentDef, assessmentData, pillarColors) {
             pillarScores,
             pillarKey,
             scoringDef,
+            scoringRules,
             pillarColor,
             assessmentDef.key
           )
@@ -82,6 +88,7 @@ function getScoresByCritera(
   pillarScores,
   pillarKey,
   scoringDef,
+  scoringRules,
   pillarColor,
   assessmentKey
 ) {
@@ -98,16 +105,18 @@ function getScoresByCritera(
   const compositeKey = `${pillarKey}_${criterionKey}`
   const criterionPath = `assessment/${assessmentKey}/${pillarKey}/${criterionKey}/`
 
-  const chartDataByCriterionParts = scoreValuesByCriterion.map(
-    scoreValuesByCriterionPart =>
+  const chartDataByCriterionParts = scoreValuesByCriterion
+    .map(scoreValuesByCriterionPart =>
       getScoresbyCriterionPart(
         scoreValuesByCriterionPart,
         criterionPartsDefs,
         scoringDef,
+        scoringRules,
         compositeKey,
         criterionPath
       )
-  )
+    )
+    .sort((a, b) => (a.label > b.label && 1) || (a.label < b.label && -1) || 0)
 
   return {
     key: compositeKey,
@@ -122,6 +131,7 @@ function getScoresbyCriterionPart(
   scoreValuesByCriterionPart,
   criterionPartsDefs,
   scoringDef,
+  scoringRules,
   previousKey,
   criterionPath
 ) {
@@ -131,14 +141,19 @@ function getScoresbyCriterionPart(
   } = scoreValuesByCriterionPart
   const { tables: partTablesDef } = criterionPartsDefs[partNumber - 1]
 
+  const cap = roundBySliderStep(get(scoringValues, scoringRules.capBy, 100))
+
   const scoresByScoringItems = scoringDef.reduce(
-    (scoringData, scoringGroupDef) => [
-      ...scoringData,
-      ...getScoresFromScoringGroups(
-        scoringValues[scoringGroupDef.key],
-        scoringGroupDef.scores
-      ),
-    ],
+    (scoringData, scoringGroupDef) =>
+      scoringValues[scoringGroupDef.key]
+        ? [
+            ...scoringData,
+            ...getScoresFromScoringGroups(
+              scoringValues[scoringGroupDef.key],
+              scoringGroupDef.scores
+            ),
+          ]
+        : scoringData,
     []
   )
 
@@ -146,9 +161,16 @@ function getScoresbyCriterionPart(
     key: `${previousKey}_${partNumber}`,
     label: partTablesDef.map(table => table.name).join(', '),
     scores: scoresByScoringItems,
-    score: calculateWeightedMean(scoresByScoringItems),
+    score: Math.min(
+      roundBySliderStep(calculateWeightedMean(scoresByScoringItems)),
+      cap
+    ),
     path: `${criterionPath}/${partNumber}`,
   }
+}
+
+function roundBySliderStep(num) {
+  return Math.round(num / SLIDER_STEP) * SLIDER_STEP
 }
 
 function getScoresFromScoringGroups(scoringValues, def) {
@@ -158,7 +180,7 @@ function getScoresFromScoringGroups(scoringValues, def) {
     )
 
     return {
-      score,
+      score: roundBySliderStep(score),
       weighting,
       key,
       label,

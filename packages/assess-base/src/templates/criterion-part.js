@@ -15,6 +15,7 @@ import {
   isAssessorSync,
   useIsAuthInitialized,
 } from '../utils/auth'
+import AssessmentScoringHeader from '../components/AssessmentScoringHeader'
 import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
 import { getAssessmentId } from '../utils/url'
 import FileList from '../components/FileList'
@@ -55,6 +56,7 @@ function CriterionPartTemplate({
     pillar.feedbackTables ||
     assessment.feedbackTables
   const scoringDef = pillar.scoring || assessment.scoring
+  const scoringRules = pillar.scoringRules || assessment.scoringRules || {}
 
   const assessmentId = getAssessmentId(location)
   const userId = getUserIdSync()
@@ -205,15 +207,14 @@ function CriterionPartTemplate({
       </PaddedContainer>
       <div className={classes.scoringSection}>
         <PaddedContainer>
-          <Typography variant="h2" color="primary" gutterBottom>
-            Scoring Section
-          </Typography>
+          <AssessmentScoringHeader />
           <AssessmentPillarScoring
             assessmentId={assessmentId}
             assessment={assessment}
             assessmentData={assessmentData}
             pillar={pillar}
             scoringDef={scoringDef}
+            scoringRules={scoringRules}
             criterion={criterion}
             partNumber={partNumber}
             canEdit={canEditFeedbackAndScoring}

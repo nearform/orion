@@ -55,6 +55,9 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `
   const scoringFragment = `
+    scoringRules {
+      capBy
+    }
     scoring {
       key
       name
