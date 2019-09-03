@@ -177,7 +177,7 @@ function CriterionPartTemplate({
           <Grid container spacing={4}>
             <Grid item xs={3}>
               <SectionTitle barColor={pillarColor}>
-                Criteria Assessment
+                To be completed by assessors
               </SectionTitle>
             </Grid>
           </Grid>

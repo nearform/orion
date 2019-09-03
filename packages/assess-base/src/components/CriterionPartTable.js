@@ -142,10 +142,10 @@ function CriterionPartTable({
   }
 
   let tables = [...tableRows]
-
-  if (canEdit) {
+  if (canEdit || !tables.length) {
     tables.push(getEmptyTableRow(columnsDef))
   }
+  const isDisabledAndEmpty = !canEdit && !tableRows.length
 
   return (
     <div>
@@ -178,13 +178,20 @@ function CriterionPartTable({
                             gutterBottom
                             className={classnames({
                               invisible: rowIndex > 0,
+                              [classes.disbledAndEmpty]: isDisabledAndEmpty,
                             })}
                           >
                             ITEM
                           </Typography>
                         </Grid>
                         <Grid item>
-                          <Typography variant="h3" color="primary">
+                          <Typography
+                            variant="h3"
+                            color="primary"
+                            className={classnames({
+                              [classes.disbledAndEmpty]: isDisabledAndEmpty,
+                            })}
+                          >
                             {rowIndex + 1}
                           </Typography>
                         </Grid>
@@ -211,6 +218,7 @@ function CriterionPartTable({
                           className={classnames(classes.itemBorder, {
                             [classes.itemBorderActive]:
                               rowIndex === totalRows - 1,
+                            [classes.itemBorderDisabled]: isDisabledAndEmpty,
                           })}
                         >
                           &nbsp;
@@ -231,6 +239,7 @@ function CriterionPartTable({
                               criteriaList={criteriaList}
                               assessmentId={assessmentId}
                               setFieldValue={setFieldValue}
+                              isDisabledAndEmpty={isDisabledAndEmpty}
                             />
                           )
                         })}
@@ -242,9 +251,9 @@ function CriterionPartTable({
                       <Grid item>
                         <Button
                           type="submit"
-                          variant="contained"
+                          variant={canEdit ? 'contained' : 'outlined'}
                           color="secondary"
-                          disabled={!dirty || isSubmitting}
+                          disabled={!canEdit || !dirty || isSubmitting}
                         >
                           {rowIndex === tableRows.length
                             ? 'Save & add row'
@@ -257,6 +266,7 @@ function CriterionPartTable({
                             onClick={() => handleDeleteTableRow(rowIndex)}
                             variant="outlined"
                             color="secondary"
+                            disabled={!canEdit}
                           >
                             Remove
                           </Button>
@@ -303,6 +313,12 @@ const styles = theme => ({
   },
   itemBorderActive: {
     backgroundColor: theme.palette.secondary.main,
+  },
+  itemBorderDisabled: {
+    backgroundColor: theme.palette.background.light,
+  },
+  disbledAndEmpty: {
+    color: theme.palette.background.dark,
   },
 })
 

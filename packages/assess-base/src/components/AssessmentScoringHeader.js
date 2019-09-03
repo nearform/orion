@@ -5,6 +5,7 @@ import {
   withStyles,
   Button,
   Table,
+  TableBody,
   TableCell,
   TableRow,
   Typography,
@@ -31,26 +32,28 @@ const AssessmentScoringHeader = ({ classes }) => {
         </Button>
       </Typography>
       <Table className={classnames(classes.table, { [classes.hide]: !isOpen })}>
-        <TableRow>
-          <TableCell className={classes.keyColumn}>0-10</TableCell>
-          <TableCell>Unable to demonstrate</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell className={classes.keyColumn}>15-35</TableCell>
-          <TableCell>Limited ability to demonstrate</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell className={classes.keyColumn}>40-60</TableCell>
-          <TableCell>Able to demonstrate</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell className={classes.keyColumn}>65-85</TableCell>
-          <TableCell>Fully able to demonstrate</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell className={classes.keyColumn}>90-100</TableCell>
-          <TableCell>Recognised as Global Role Model</TableCell>
-        </TableRow>
+        <TableBody>
+          <TableRow>
+            <TableCell className={classes.keyColumn}>0-10</TableCell>
+            <TableCell>Unable to demonstrate</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className={classes.keyColumn}>15-35</TableCell>
+            <TableCell>Limited ability to demonstrate</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className={classes.keyColumn}>40-60</TableCell>
+            <TableCell>Able to demonstrate</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className={classes.keyColumn}>65-85</TableCell>
+            <TableCell>Fully able to demonstrate</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className={classes.keyColumn}>90-100</TableCell>
+            <TableCell>Recognised as Global Role Model</TableCell>
+          </TableRow>
+        </TableBody>
       </Table>
     </>
   )

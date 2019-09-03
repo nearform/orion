@@ -135,10 +135,10 @@ function CriterionPartFeedbackTable({
   }
 
   let tables = [...tableRows]
-
-  if (canEdit) {
+  if (canEdit || !tables.length) {
     tables.push(getEmptyTableRow(tableDef))
   }
+  const isDisabledAndEmpty = !canEdit && !tableRows.length
 
   return (
     <div>
@@ -178,13 +178,20 @@ function CriterionPartFeedbackTable({
                           gutterBottom
                           className={classnames({
                             [classes.invisible]: rowIndex > 0,
+                            [classes.disbledAndEmpty]: isDisabledAndEmpty,
                           })}
                         >
                           ITEM
                         </Typography>
                       </Grid>
                       <Grid item>
-                        <Typography variant="h3" color="primary">
+                        <Typography
+                          variant="h3"
+                          color="primary"
+                          className={classnames({
+                            [classes.disbledAndEmpty]: isDisabledAndEmpty,
+                          })}
+                        >
                           {rowIndex + 1}
                         </Typography>
                       </Grid>
@@ -200,6 +207,7 @@ function CriterionPartFeedbackTable({
                               gutterBottom
                               className={classnames({
                                 [classes.invisible]: rowIndex > 0,
+                                [classes.disbledAndEmpty]: isDisabledAndEmpty,
                               })}
                             >
                               {column.name}
@@ -213,6 +221,7 @@ function CriterionPartFeedbackTable({
                                 rowIndex === totalRows - 1,
                               [classes.itemBorderExisting]:
                                 rowIndex < totalRows - 1,
+                              [classes.itemBorderDisabled]: isDisabledAndEmpty,
                             })}
                           >
                             <Grid container spacing={2} wrap="nowrap">
@@ -224,42 +233,45 @@ function CriterionPartFeedbackTable({
                                   fullWidth
                                 />
                               </Grid>
-                              {canEdit && (
-                                <Grid item xs={3}>
-                                  <Grid
-                                    container
-                                    spacing={2}
-                                    justify="flex-end"
-                                    wrap="nowrap"
-                                  >
+                              <Grid item xs={3}>
+                                <Grid
+                                  container
+                                  spacing={2}
+                                  justify="flex-end"
+                                  wrap="nowrap"
+                                >
+                                  <Grid item>
+                                    <Button
+                                      type="submit"
+                                      variant={
+                                        canEdit ? 'contained' : 'outlined'
+                                      }
+                                      color="secondary"
+                                      disabled={
+                                        !canEdit || !dirty || isSubmitting
+                                      }
+                                    >
+                                      {rowIndex === tableRows.length
+                                        ? 'Save & add row'
+                                        : 'Save Updates'}
+                                    </Button>
+                                  </Grid>
+                                  {rowIndex !== tableRows.length && (
                                     <Grid item>
                                       <Button
-                                        type="submit"
-                                        variant="contained"
+                                        onClick={() =>
+                                          handleDeleteTableRow(rowIndex)
+                                        }
+                                        variant="outlined"
                                         color="secondary"
-                                        disabled={!dirty || isSubmitting}
+                                        disabled={!canEdit}
                                       >
-                                        {rowIndex === tableRows.length
-                                          ? 'Save & add row'
-                                          : 'Save Updates'}
+                                        Remove
                                       </Button>
                                     </Grid>
-                                    {rowIndex !== tableRows.length && (
-                                      <Grid item>
-                                        <Button
-                                          onClick={() =>
-                                            handleDeleteTableRow(rowIndex)
-                                          }
-                                          variant="outlined"
-                                          color="secondary"
-                                        >
-                                          Remove
-                                        </Button>
-                                      </Grid>
-                                    )}
-                                  </Grid>
+                                  )}
                                 </Grid>
-                              )}
+                              </Grid>
                             </Grid>
                           </Grid>
                         </div>
@@ -293,8 +305,16 @@ const styles = theme => ({
       theme.palette.background.dark
     }`,
   },
+  itemBorderDisabled: {
+    borderLeft: `${theme.spacing(0.5)}px solid ${
+      theme.palette.background.light
+    }`,
+  },
   itemBorder: {
     paddingLeft: theme.spacing(1),
+  },
+  disbledAndEmpty: {
+    color: theme.palette.background.dark,
   },
 })
 

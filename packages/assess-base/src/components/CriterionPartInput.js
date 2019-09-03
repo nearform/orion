@@ -32,6 +32,7 @@ function CriterionPartInput({
   criteriaList,
   assessmentId,
   setFieldValue,
+  isDisabledAndEmpty,
 }) {
   criteriaList = criteriaList.flat()
 
@@ -46,9 +47,14 @@ function CriterionPartInput({
 
   if (isGap)
     return (
-      <Grid item xs={4}>
+      <Grid item xs={4} key={inputKey}>
         {column.name && (
-          <Typography variant="h4" className={classes.inputLabel}>
+          <Typography
+            variant="h4"
+            className={classnames(classes.inputLabel, {
+              [classes.disabledAndEmpty]: isDisabledAndEmpty,
+            })}
+          >
             {column.name}
           </Typography>
         )}
@@ -79,7 +85,8 @@ function CriterionPartInput({
         toggleOpen,
         criteriaList,
         values[fieldName],
-        assessmentId
+        assessmentId,
+        inputKey
       )) ||
     (isImage && {
       startAdornment: values[fieldName] ? (
@@ -112,7 +119,7 @@ function CriterionPartInput({
   const ArrowIcon = isOpen ? KeyboardArrowUp : KeyboardArrowDown
 
   return (
-    <Grid item xs={4}>
+    <Grid item xs={4} key={inputKey}>
       <InputLabel htmlFor={inputId}>
         <Typography
           variant="h4"
@@ -120,6 +127,7 @@ function CriterionPartInput({
           onClick={isLink && canEdit ? toggleOpen : null}
           className={classnames(classes.inputLabel, {
             [classes.clickable]: isLink,
+            [classes.disabledAndEmpty]: isDisabledAndEmpty,
           })}
         >
           {column.name}
@@ -152,6 +160,7 @@ function CriterionPartInput({
         disabled={!canEdit}
         component={isImage ? InputBase : TextField}
         name={fieldName}
+        className={classes.field}
         fullWidth
         {...fieldTypeProps}
       />
@@ -165,7 +174,8 @@ function getSelectFieldProps(
   toggleOpen,
   criteriaList,
   value,
-  assessmentId
+  assessmentId,
+  inputKey
 ) {
   const renderValue = selected =>
     selected.map(selectedKey => {
@@ -173,18 +183,20 @@ function getSelectFieldProps(
         item => item.key === selectedKey
       )
       return (
-        <Typography
-          variant="h3"
-          className={classes.selectedItemInput}
-          key={selectedKey}
-        >
-          <Link
-            to={`/${selectedCriterion.path}#${assessmentId}`}
-            className={classes.selectItemActive}
+        selectedCriterion && (
+          <Typography
+            variant="h3"
+            className={classes.selectedItemInput}
+            key={selectedKey}
           >
-            {selectedCriterion.name}
-          </Link>
-        </Typography>
+            <Link
+              to={`/${selectedCriterion.path}#${assessmentId}`}
+              className={classes.selectItemActive}
+            >
+              {selectedCriterion.name}
+            </Link>
+          </Typography>
+        )
       )
     })
 
@@ -192,7 +204,7 @@ function getSelectFieldProps(
     const isChecked = value.includes(option.key)
     return (
       <MenuItem
-        key={option.key}
+        key={`${inputKey}-${option.key}`}
         value={option.key}
         className={classnames(classes.selectItem, {
           [classes.selectItemActive]: isChecked,
@@ -218,6 +230,9 @@ function getSelectFieldProps(
           paper: classes.selectMenu,
         },
       },
+      classes: {
+        select: classes.selectField,
+      },
       open: isOpen,
       onOpen: toggleOpen,
       onClose: toggleOpen,
@@ -238,6 +253,9 @@ CriterionPartInput.propTypes = {
 }
 
 const styles = theme => ({
+  selectField: {
+    minHeight: theme.spacing(2.5),
+  },
   inputLabel: {
     color: theme.palette.primary.dark,
     fontWeight: 700,
@@ -291,6 +309,9 @@ const styles = theme => ({
   },
   uploadRemoveButton: {
     padding: theme.spacing(0.5),
+  },
+  disabledAndEmpty: {
+    color: theme.palette.background.dark,
   },
 })
 

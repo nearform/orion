@@ -1,5 +1,6 @@
 import React from 'react'
 import { withStyles, Typography } from '@material-ui/core'
+import classnames from 'classnames'
 import T from 'prop-types'
 
 function SectionTitle({ classes, barColor, className, ...props }) {
@@ -8,7 +9,7 @@ function SectionTitle({ classes, barColor, className, ...props }) {
       <div className={classes.bar} style={{ backgroundColor: barColor }} />
       <Typography
         variant="h3"
-        className={[classes.title, className]}
+        className={classnames([classes.title, className])}
         {...props}
       />
     </div>
