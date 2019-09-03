@@ -132,6 +132,7 @@ const styles = {
   },
   form: {
     margin: 'auto',
+    maxWidth: 510,
   },
 }
 
