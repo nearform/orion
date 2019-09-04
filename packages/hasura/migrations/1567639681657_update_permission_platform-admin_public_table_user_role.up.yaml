@@ -1,0 +1,16 @@
+- args:
+    permission:
+      columns:
+      - id
+      - user_id
+      - role_id
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: user_role
+      schema: public
+  type: create_update_permission
