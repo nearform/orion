@@ -202,8 +202,7 @@
               "name": "segmentation",
               "description": "..."
             }
-          ],
-          "rules": []
+          ]
         },
         {
           "key": "performance",
@@ -225,8 +224,7 @@
               "key": "confidence",
               "name": "confidence"
             }
-          ],
-          "rules": []
+          ]
         }
       ]
     },

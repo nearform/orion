@@ -39,6 +39,7 @@ function Footer({ classes, theme, content, Img }) {
                   href="mailto:info@efqm.org"
                   target="_blank"
                   rel="noopener noreferrer"
+                  style={{ color: 'inherit' }}
                 >
                   info@efqm.org
                 </a>
