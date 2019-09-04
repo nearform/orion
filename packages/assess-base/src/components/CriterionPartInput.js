@@ -77,17 +77,16 @@ function CriterionPartInput({
     values[fieldName] = []
   }
 
-  const fieldTypeProps =
-    (isLink &&
-      getSelectFieldProps(
-        classes,
-        isOpen,
-        toggleOpen,
-        criteriaList,
-        values[fieldName],
-        assessmentId,
-        inputKey
-      )) ||
+  const fieldTypeProps = (isLink &&
+    getSelectFieldProps(
+      classes,
+      isOpen,
+      toggleOpen,
+      criteriaList,
+      values[fieldName],
+      assessmentId,
+      inputKey
+    )) ||
     (isImage && {
       startAdornment: values[fieldName] ? (
         <FileItem file={values[fieldName]} className={classes.fileItem} />
@@ -113,8 +112,16 @@ function CriterionPartInput({
         </IconButton>
       ),
       type: 'hidden',
-    }) ||
-    {}
+    }) || {
+      multiline: true,
+      rowsMax: 6,
+      InputProps: {
+        classes: {
+          multiline: classes.multiline,
+          inputMultiline: classes.inputMultiline,
+        },
+      },
+    }
 
   const ArrowIcon = isOpen ? KeyboardArrowUp : KeyboardArrowDown
 
@@ -289,6 +296,13 @@ const styles = theme => ({
   },
   middle: {
     verticalAlign: 'middle',
+  },
+  multiline: {
+    padding: 0,
+    alignItems: 'flex-start',
+  },
+  inputMultiline: {
+    ...theme.typography.body2,
   },
   clickable: {
     cursor: 'pointer',
