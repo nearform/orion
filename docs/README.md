@@ -1,9 +1,5 @@
 ![icon]
 
-# Raw Salmon
-
-For all your fish of knowledge needs.
-
 ## What is this?
 
 This is the home to a knowledgebase and self assessment business tool. It is being created to be a generic reusable solution that can be self hosted and customised to individual needs. The project architecture follows a JAMStack, Serverless application model. This tool is built using [Gatsby] on top of the following technologies using [AWS Cognito](Cognito) for auth, [AWS S3](S3) for asset storage, hosted [PostgreSQL] on [AWS RDS](RDS) for data storage, [Hasura] to create a [GraphQL] api over postgres, and [AWS Lambda](Lambda) functions to tie it all together.
