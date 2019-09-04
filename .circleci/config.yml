@@ -125,11 +125,6 @@ jobs:
       - *load_envars
       - *install_awscli
       - run:
-          name: Install awscli
-          command: |
-            sudo apt-get install python-pip python
-            sudo pip install awscli
-      - run:
           name: Deploy assess-base bundle to S3
           command: aws s3 sync packages/assess-base/public ${ASSESSBASE_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
       - run:
