@@ -17,11 +17,34 @@ import {
   Clear,
   KeyboardArrowUp,
   KeyboardArrowDown,
+  Launch,
 } from '@material-ui/icons'
 import { uploadFile } from '../utils/storage'
 
+import ContentModal from './ContentModal'
 import UploadButton from './UploadButton'
 import FileItem from './FileItem'
+
+function CriterionPartInputField({
+  classes,
+  fieldName,
+  inputId,
+  canEdit,
+  component,
+  fieldTypeProps,
+}) {
+  return (
+    <Field
+      id={inputId}
+      disabled={!canEdit}
+      component={component}
+      name={fieldName}
+      className={classes.field}
+      fullWidth
+      {...fieldTypeProps}
+    />
+  )
+}
 
 function CriterionPartInput({
   classes,
@@ -37,10 +60,12 @@ function CriterionPartInput({
   criteriaList = criteriaList.flat()
 
   const inputId = `${inputKey}-${column.key}`
+  const fieldName = column.key
+
+  const isText = !column.type || column.type === 'text'
   const isLink = column.type === 'link'
   const isImage = column.type === 'image'
   const isGap = column.type === 'gap'
-  const fieldName = column.key
 
   const [isOpen, setIsOpen] = useState(false)
   const toggleOpen = useCallback(() => setIsOpen(!isOpen), [isOpen, setIsOpen])
@@ -131,17 +156,26 @@ function CriterionPartInput({
         <Typography
           variant="h4"
           gutterBottom
-          onClick={isLink && canEdit ? toggleOpen : null}
+          onClick={(isLink && canEdit) || isText ? toggleOpen : null}
           className={classnames(classes.inputLabel, {
-            [classes.clickable]: isLink,
+            [classes.clickable]: isLink || isText,
             [classes.disabledAndEmpty]: isDisabledAndEmpty,
           })}
         >
           {column.name}
+          {isText && (
+            <Launch
+              className={classnames(
+                classes.active,
+                classes.middle,
+                classes.modalIcon
+              )}
+            />
+          )}
           {isLink && canEdit && (
             <span
               className={classnames(
-                classes.selectItemActive,
+                classes.active,
                 classes.arrowIconOuter,
                 classes.middle
               )}
@@ -162,15 +196,29 @@ function CriterionPartInput({
         </Typography>
       </InputLabel>
 
-      <Field
-        id={inputId}
-        disabled={!canEdit}
+      <CriterionPartInputField
+        classes={classes}
+        fieldName={fieldName}
+        canEdit={canEdit}
+        inputId={inputId}
         component={isImage ? InputBase : TextField}
-        name={fieldName}
-        className={classes.field}
-        fullWidth
-        {...fieldTypeProps}
+        fieldTypeProps={fieldTypeProps}
       />
+
+      {isText && isOpen && (
+        <ContentModal title={column.name} onClose={toggleOpen}>
+          <CriterionPartInputField
+            classes={classes}
+            fieldName={fieldName}
+            canEdit={canEdit}
+            inputId={inputId}
+            component={isImage ? InputBase : TextField}
+            fieldTypeProps={Object.assign({}, fieldTypeProps, {
+              rowsMax: null,
+            })}
+          />
+        </ContentModal>
+      )}
     </Grid>
   )
 }
@@ -198,7 +246,7 @@ function getSelectFieldProps(
           >
             <Link
               to={`/${selectedCriterion.path}#${assessmentId}`}
-              className={classes.selectItemActive}
+              className={classes.active}
             >
               {selectedCriterion.name}
             </Link>
@@ -214,7 +262,7 @@ function getSelectFieldProps(
         key={`${inputKey}-${option.key}`}
         value={option.key}
         className={classnames(classes.selectItem, {
-          [classes.selectItemActive]: isChecked,
+          [classes.active]: isChecked,
         })}
       >
         <Typography variant="h3">
@@ -270,11 +318,11 @@ const styles = theme => ({
   selectItem: {
     color: theme.palette.text.secondary,
     minHeight: theme.spacing(5),
-    '&$selectItemActive': {
+    '&$active': {
       background: 'inherit',
     },
   },
-  selectItemActive: {
+  active: {
     color: theme.palette.secondary.main,
   },
   selectedItemInput: {
@@ -294,6 +342,10 @@ const styles = theme => ({
     height: theme.spacing(1.5),
     display: 'inline-block',
   },
+  modalIcon: {
+    height: theme.spacing(2),
+    display: 'inline-block',
+  },
   middle: {
     verticalAlign: 'middle',
   },
@@ -303,6 +355,7 @@ const styles = theme => ({
   },
   inputMultiline: {
     ...theme.typography.body2,
+    width: '100%',
   },
   clickable: {
     cursor: 'pointer',
