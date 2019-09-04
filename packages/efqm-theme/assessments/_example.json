@@ -29,11 +29,13 @@
       ]
     }
   ],
+  "scoringRules": {
+    "capBy": ["default-scoring-row", "default-score-slider"]
+  },
   "scoring": [
     {
       "key": "default-scoring-row",
-      "name": "Default scoring row, including calculated average and optional custom rules",
-      "rules": [],
+      "name": "Default scoring row, including calculated average",
       "scores": [
         {
           "key": "default-score-slider",
@@ -68,11 +70,13 @@
           ]
         }
       ],
+      "scoringRules": {
+        "capBy": ["pillar-scoring-row", "pillar-score-slider"]
+      },
       "scoring": [
         {
           "key": "pillar-scoring-row",
           "name": "Scoring row for criteria under this pillar, including calculated average and optional custom rules",
-          "rules": [],
           "scores": [
             {
               "key": "pillar-score-slider",

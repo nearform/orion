@@ -1,12 +1,17 @@
 import React from 'react'
 import { withStyles, Typography } from '@material-ui/core'
+import classnames from 'classnames'
 import T from 'prop-types'
 
-function SectionTitle({ classes, barColor, ...props }) {
+function SectionTitle({ classes, barColor, className, ...props }) {
   return (
     <div>
       <div className={classes.bar} style={{ backgroundColor: barColor }} />
-      <Typography variant="h3" {...props} />
+      <Typography
+        variant="h3"
+        className={classnames([classes.title, className])}
+        {...props}
+      />
     </div>
   )
 }
@@ -21,6 +26,11 @@ const styles = theme => ({
     height: theme.spacing(1),
     width: '100%',
     marginBottom: theme.spacing(0.5),
+  },
+  title: {
+    '& > a': {
+      color: 'inherit',
+    },
   },
 })
 

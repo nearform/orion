@@ -8,7 +8,7 @@ import Thumb from './Thumb'
 
 function ScoringSlider({ color, classes, label, ...props }) {
   return (
-    <div>
+    <div className={classes.container}>
       <Typography
         id="label"
         className={classes.label}
@@ -19,6 +19,7 @@ function ScoringSlider({ color, classes, label, ...props }) {
       </Typography>
       <StyledSlider
         color={color}
+        className={classes.slider}
         aria-labelledby="label"
         thumb={<Thumb value={props.value} />}
         {...props}
@@ -30,13 +31,26 @@ function ScoringSlider({ color, classes, label, ...props }) {
 
 ScoringSlider.propTypes = {
   classes: T.object.isRequired,
-  label: T.string.isRequired,
+  label: T.string,
   ...StyledSlider.propTypes,
 }
 
 const styles = theme => ({
+  container: {
+    position: 'relative',
+  },
   label: {
     color: theme.palette.primary.dark,
+    position: 'absolute',
+    left: 0,
+    top: -35,
+    width: '85%',
+    marginTop: theme.spacing(2),
+  },
+  slider: {
+    position: 'absolute',
+    top: 10,
+    left: 0,
   },
 })
 
