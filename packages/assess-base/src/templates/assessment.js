@@ -14,8 +14,6 @@ import * as Yup from 'yup'
 import {
   PaddedContainer,
   ASSESSMENT_STATUS,
-  BarChart,
-  getChartData,
   ConfirmDialog,
   SectionTitle,
 } from 'components'
@@ -38,6 +36,7 @@ import { uploadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'
 import UploadButton from '../components/UploadButton'
 import FileItem from '../components/FileItem'
+import AssessmentPillars from '../components/AssessmentPillars'
 import { Redirect } from '@reach/router'
 import {
   assessmentInProgress,
@@ -170,8 +169,6 @@ function AssessmentTemplate({
 
   // TODO: change this with correct rule based on assessment state
   const canViewFeedbackReport = assessmentSubmitted(assessmentData)
-
-  const chartData = getChartData(assessment, assessmentData, pillarColors)
 
   const groupId = getGroupIdSync()
 
@@ -461,80 +458,11 @@ function AssessmentTemplate({
             </Grid>
           </Grid>
         </div>
-        <div className={classes.section} data-testid="assessment__model-areas">
-          <Grid container spacing={3}>
-            <Grid item>
-              <Typography variant="h4" gutterBottom>
-                to enter the assessment please click on an area of the model
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid container spacing={2}>
-            {assessment.pillars.map((pillar, pillarIndex) => {
-              const pillarColor = pillarColors[pillarIndex]
-              return (
-                <Grid
-                  key={pillar.name}
-                  item
-                  xs
-                  container
-                  spacing={3}
-                  direction="column"
-                >
-                  <Grid item>
-                    <SectionTitle barColor={pillarColor}>
-                      {pillar.name}
-                    </SectionTitle>
-                  </Grid>
-                  {pillar.criteria.map(criterion => (
-                    <Grid item key={criterion.name}>
-                      <Typography
-                        component={assessmentId ? Link : null}
-                        to={
-                          assessmentId
-                            ? `assessment/${assessment.key}/${pillar.key}/${criterion.key}#${assessmentId}`
-                            : null
-                        }
-                        variant="h3"
-                        display="block"
-                        gutterBottom
-                        style={{ color: pillarColor }}
-                      >
-                        {criterion.name}
-                      </Typography>
-                      <Typography
-                        variant="h4"
-                        className={classes.sectionProgress}
-                      >
-                        {criterion.parts.length} Subcriteria
-                      </Typography>
-                    </Grid>
-                  ))}{' '}
-                </Grid>
-              )
-            })}
-            {assessment.pillars.length > 0 && (
-              <Grid
-                key="scoring-summary"
-                item
-                xs
-                container
-                spacing={3}
-                direction="column"
-              >
-                <Grid item xs>
-                  <SectionTitle
-                    barColor={theme.palette.primary.dark}
-                    gutterBottom
-                  >
-                    Scoring Summary
-                  </SectionTitle>
-                  <BarChart chartData={chartData} />
-                </Grid>
-              </Grid>
-            )}
-          </Grid>
-        </div>
+        <AssessmentPillars
+          assessment={assessment}
+          assessmentData={assessmentData}
+          pillarColors={pillarColors}
+        />
       </PaddedContainer>
     </>
   )

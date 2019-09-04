@@ -21,6 +21,7 @@ import FileList from '../components/FileList'
 import CriterionPartTable from '../components/CriterionPartTable'
 import CriterionPartPagination from '../components/CriterionPartPagination'
 import CriterionPartFeedbackTable from '../components/CriterionPartFeedbackTable'
+import AssessmentPillars from '../components/AssessmentPillars'
 import {
   assessmentInProgress,
   assessmentSubmitted,
@@ -37,6 +38,7 @@ function CriterionPartTemplate({
     criterion,
     assessment,
     pillarColor,
+    pillarColors,
     previousLink,
     nextLink,
     totalParts,
@@ -202,6 +204,11 @@ function CriterionPartTemplate({
             totalParts={totalParts}
           />
         </div>
+        <AssessmentPillars
+          assessment={assessment}
+          assessmentData={assessmentData}
+          pillarColors={pillarColors}
+        />
       </PaddedContainer>
       <div className={classes.scoringSection}>
         <PaddedContainer>
