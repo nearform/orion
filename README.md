@@ -1,4 +1,4 @@
-# NearForm 🍣 raw-salmon
+[![Logo][logo-img]][docs]
 
 [![CircleCI](https://circleci.com/gh/nearform/raw-salmon.svg?style=svg&circle-token=0ce58bd80ab2db1fd16b1eca28dba58c62588a74)](https://circleci.com/gh/nearform/raw-salmon)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
@@ -9,7 +9,7 @@ This repository is a collection of packages that can be used as a foundation for
 
 To get started quickly, check out these useful links:
 
-- [Documentation](https://nearform.github.io/raw-salmon)
+- [Documentation][docs]
 - [Demo](https://raw-salmon.nearform.com)
 - [Storybook](https://raw-salmon-storybook.nearform.com)
 
@@ -72,3 +72,5 @@ End-to-end tests using TestCafe. Requires environment variables to run, see
 [the Quick Start Guide](/docs/quick-start#2-configure). For more details see [the Tests docs](/docs/tests#end-to-end-tests).
 
 
+[logo-img]: docs/images/Accel_Logo_Orion.svg
+[docs]: https://nearform.github.io/orion
