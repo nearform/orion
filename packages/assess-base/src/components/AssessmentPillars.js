@@ -17,7 +17,8 @@ const AssessmentPillars = ({
       <Grid container spacing={3}>
         <Grid item>
           <Typography variant="h4" gutterBottom>
-            to enter the assessment please click on an area of the model
+            To navigate within the assessment please click on an area of the
+            model
           </Typography>
         </Grid>
       </Grid>
