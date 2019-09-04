@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import T from 'prop-types'
 import {
   withStyles,
+  IconButton,
   Paper,
   Table,
   TableHead,
@@ -14,6 +15,7 @@ import {
 import classnames from 'classnames'
 import { Link as RouterLink } from '@reach/router'
 import { fade } from '@material-ui/core/styles/colorManipulator'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 
 import Bar from './Bar'
 import ChartTicks from '../ChartTicks'
@@ -37,6 +39,7 @@ function BarChartTableRow({
     { [classes.stepDown]: depth > 0 },
     { [classes.criterionPartRow]: depth === 1 },
     { [classes.scoringRow]: depth === 2 },
+    { [classes.linkRow]: !!chartDataItem.path },
     { [classes.opened]: isOpened },
     { [classes.clickable]: hasChildren },
     { [classes.lastRow]: isLast && !isOpened }
@@ -53,23 +56,31 @@ function BarChartTableRow({
         onClick={() => hasChildren && setIsOpened(!isOpened)}
         className={rowClasses}
       >
-        <TableCell className={classes.cell} size="medium">
+        <TableCell
+          className={classes.cell}
+          size="medium"
+          title={chartDataItem.label}
+        >
           <Typography
             style={{ color: chartDataItem.color }}
             variant="h3"
-            className={classes.scoreLabel}
+            className={classnames(classes.scoreLabel, {
+              [classes.scoreLabelLink]: !!chartDataItem.path,
+            })}
           >
-            {chartDataItem.path ? (
-              <RouterLink
-                to={`${chartDataItem.path}#${assessmentId}`}
-                title={chartDataItem.label}
-              >
-                {chartDataItem.label}
-              </RouterLink>
-            ) : (
-              chartDataItem.label
-            )}
+            {chartDataItem.label}
           </Typography>
+          {chartDataItem.path && (
+            <IconButton
+              component={RouterLink}
+              to={`${chartDataItem.path}#${assessmentId}`}
+              title={`Go to “${chartDataItem.label}”`}
+              className={classes.linkButton}
+              variant="contained"
+            >
+              <ChevronRightIcon />
+            </IconButton>
+          )}
         </TableCell>
         <TableCell className={classnames(classes.chartColumn, classes.cell)}>
           <ChartTicks
@@ -135,6 +146,10 @@ BarChartTableChildRows.propTypes = {
 
 const styles = theme => ({
   scoreLabel: {},
+  scoreLabelLink: {
+    display: 'inline-block',
+    width: `calc(100% - ${theme.spacing(3)}px)`,
+  },
   standardRow: {
     '&:hover': {
       backgroundColor: fade(theme.palette.background.dark, 0.15),
@@ -185,6 +200,16 @@ const styles = theme => ({
       },
     },
   },
+  linkRow: {
+    '& $cell': {
+      paddingTop: theme.spacing(0.5),
+      paddingBottom: theme.spacing(0.5),
+    },
+    '& $chartColumn': {
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
+  },
   criterionPartRow: {
     '& $scoreLabel': {
       color: theme.palette.primary.dark,
@@ -233,6 +258,10 @@ const styles = theme => ({
     fontSize: 11,
     fontWeight: 'bold',
     color: theme.palette.primary.main,
+  },
+  linkButton: {
+    padding: 0,
+    backgroundColor: theme.palette.background.paper,
   },
 })
 

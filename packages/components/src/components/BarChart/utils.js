@@ -103,7 +103,7 @@ function getScoresByCritera(
   )
 
   const compositeKey = `${pillarKey}_${criterionKey}`
-  const criterionPath = `assessment/${assessmentKey}/${pillarKey}/${criterionKey}/`
+  const criterionPath = `assessment/${assessmentKey}/${pillarKey}/${criterionKey}`
 
   const chartDataByCriterionParts = scoreValuesByCriterion
     .map(scoreValuesByCriterionPart =>
