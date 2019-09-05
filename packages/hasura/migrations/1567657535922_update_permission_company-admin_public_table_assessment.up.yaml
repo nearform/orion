@@ -1,0 +1,30 @@
+- args:
+    role: company-admin
+    table:
+      name: assessment
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - advice
+      - created_at
+      - exec_summary
+      - id
+      - internal
+      - key
+      - key_information
+      - name
+      - owner_id
+      - status
+      filter:
+        owner:
+          user_groups:
+            group_id:
+              _eq: X-Hasura-Group-Id
+    role: company-admin
+    table:
+      name: assessment
+      schema: public
+  type: create_select_permission
