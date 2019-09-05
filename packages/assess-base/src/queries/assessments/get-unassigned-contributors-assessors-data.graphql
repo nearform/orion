@@ -25,11 +25,7 @@ query getUnassignedContributorsAssessorsData(
             ]
           }
         }
-        {
-          assessments_owner: {
-            owner: { user_groups: { group_id: { _eq: $groupId } } }
-          }
-        }
+        { user_groups: { group_id: { _eq: $groupId } } }
       ]
     }
   ) {
@@ -59,11 +55,7 @@ query getUnassignedContributorsAssessorsData(
             ]
           }
         }
-        {
-          assessments_owner: {
-            owner: { user_groups: { group_id: { _eq: $groupId } } }
-          }
-        }
+        { user_groups: { group_id: { _eq: $groupId } } }
       ]
     }
   ) {
