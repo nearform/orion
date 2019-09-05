@@ -227,6 +227,7 @@ exports.createPages = async ({ graphql, actions }) => {
               pillar,
               criterion,
               pillarColor,
+              pillarColors,
               previousLink,
               nextLink,
               totalParts,
