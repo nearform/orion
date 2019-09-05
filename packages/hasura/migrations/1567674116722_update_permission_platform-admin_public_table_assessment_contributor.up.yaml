@@ -1,0 +1,15 @@
+- args:
+    permission:
+      columns:
+      - assessment_id
+      - contributor_id
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: create_update_permission
