@@ -341,11 +341,11 @@ const styles = theme => ({
   participants: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     marginRight: -theme.spacing(1),
     '& > *': {
-      margin: theme.spacing(1),
-      marginTop: 0,
+      marginRight: theme.spacing(1),
+      marginBottom: theme.spacing(1),
     },
   },
 })
