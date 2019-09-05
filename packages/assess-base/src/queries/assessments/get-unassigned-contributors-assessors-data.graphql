@@ -1,9 +1,10 @@
 query getUnassignedContributorsAssessorsData(
   $assessmentId: Int!
+  $groupId: Int!
+  $filter: String!
   $limit: Int!
   $offset: Int!
   $orderBy: user_order_by!
-  $groupId: Int!
 ) {
   user(
     limit: $limit
@@ -26,6 +27,12 @@ query getUnassignedContributorsAssessorsData(
           }
         }
         { user_groups: { group_id: { _eq: $groupId } } }
+        {
+          _or: [
+            { email: { _ilike: $filter } }
+            { user_groups: { group: { name: { _ilike: $filter } } } }
+          ]
+        }
       ]
     }
   ) {
@@ -56,6 +63,12 @@ query getUnassignedContributorsAssessorsData(
           }
         }
         { user_groups: { group_id: { _eq: $groupId } } }
+        {
+          _or: [
+            { email: { _ilike: $filter } }
+            { user_groups: { group: { name: { _ilike: $filter } } } }
+          ]
+        }
       ]
     }
   ) {
