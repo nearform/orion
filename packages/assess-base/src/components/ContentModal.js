@@ -10,7 +10,7 @@ import {
   IconButton,
   Typography,
 } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/clear'
+import { Clear } from '@material-ui/icons'
 
 function ContentModal({
   classes,
@@ -34,7 +34,7 @@ function ContentModal({
           {title}
         </Typography>
         <IconButton onClick={onClose} className={classes.closeX}>
-          <CloseIcon />
+          <Clear />
         </IconButton>
       </DialogTitle>
       <DialogContent
