@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Typography,
   withStyles,
@@ -55,6 +55,8 @@ function ContributorsAssessorsTemplate({
   classes,
   pageContext: { assessment },
 }) {
+  const [filterText, setFilterText] = useState('')
+
   const assessmentId = getAssessmentId(location)
   const isAdmin = isAdminSync()
   if (!assessmentId && !isAdmin) {
@@ -158,6 +160,7 @@ function ContributorsAssessorsTemplate({
     variables: {
       assessmentId,
       groupId,
+      filter: `%${filterText}%`,
     },
     headers,
     renderTableBody: data => {
@@ -278,6 +281,7 @@ function ContributorsAssessorsTemplate({
               <Input
                 fullWidth
                 endAdornment={<FilterListIcon color="secondary" />}
+                onChange={event => setFilterText(event.target.value)}
               />
             </Grid>
           </Grid>
