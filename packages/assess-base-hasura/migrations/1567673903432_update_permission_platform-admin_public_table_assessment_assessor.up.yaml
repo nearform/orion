@@ -1,0 +1,15 @@
+- args:
+    permission:
+      columns:
+      - assessment_id
+      - assessor_id
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: platform-admin
+    table:
+      name: assessment_assessor
+      schema: public
+  type: create_update_permission

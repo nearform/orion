@@ -1,0 +1,27 @@
+- args:
+    permission:
+      columns:
+      - assessment_id
+      - contributor_id
+      filter:
+        _or:
+        - assessment:
+            owner:
+              user_groups:
+                group_id:
+                  _eq: X-Hasura-Group-Id
+        - assessment:
+            owner:
+              user_groups:
+                group:
+                  parent_id:
+                    _eq: X-Hasura-Group-Id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: partner-admin
+    table:
+      name: assessment_contributor
+      schema: public
+  type: create_update_permission
