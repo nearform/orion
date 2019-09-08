@@ -17,9 +17,10 @@ import UserSelectPicker from './UserSelectPicker'
 
 import {
   getPendingUsers,
-  getGroups,
+  getEdittableUserFields,
   addUserGroupMutation,
   assignUserGroupMutation,
+  addUserRoleMutation,
 } from '../queries'
 
 const styles = theme => ({
@@ -94,14 +95,11 @@ function PendingUsers({ classes }) {
     },
   })
 
-  const { data: modalData } = useQuery(getGroups, {
-    variables: {
-      orderBy: { id: 'asc' },
-    },
-  })
+  const { data: modalData } = useQuery(getEdittableUserFields)
 
   const [doAddUserGroup] = useMutation(addUserGroupMutation)
   const [doAssignUserGroup] = useMutation(assignUserGroupMutation)
+  const [doAddUserRole] = useMutation(addUserRoleMutation)
 
   const modalContents = [
     {
@@ -117,17 +115,48 @@ function PendingUsers({ classes }) {
     groupIsAssigned: Yup.boolean(),
   })
 
-  const onModalSave = async values => {
+  const onModalSave = async (values, user) => {
+    const mutationPromises = []
+
     const groupMutation = values.groupIsAssigned
       ? doAssignUserGroup
       : doAddUserGroup
-    await groupMutation({
-      variables: {
-        userId: values.userId,
-        groupId: values.groupId,
-      },
-    })
+
+    mutationPromises.push(
+      groupMutation({
+        variables: {
+          userId: values.userId,
+          groupId: values.groupId,
+        },
+      })
+    )
+
+    if (!user.user_roles.length) {
+      const memberRole = modalData.role.find(
+        role => role.name.toLowerCase() === 'member'
+      )
+
+      if (memberRole) {
+        mutationPromises.push(
+          doAddUserRole({
+            variables: {
+              userId: values.userId,
+              roleId: memberRole.id,
+            },
+          })
+        )
+      } else {
+        // No stable ref to "member" role on db. Warn if someone changed role's name or didn't create one
+        // eslint-disable-next-line no-console
+        console.warn(
+          `No "member" role found. Approved user ${values.userId} will have no role`
+        )
+      }
+    }
+
+    await Promise.all(mutationPromises)
     setSelected(null)
+
     refetch()
   }
 
@@ -147,7 +176,7 @@ function PendingUsers({ classes }) {
         data={modalData}
         contents={modalContents}
         getTitleParts={user => ['Assign group to', user.email]}
-        onSave={values => onModalSave(values)}
+        onSave={onModalSave}
         onClose={() => setSelected(null)}
         schema={modalSchema}
         getInitialValues={getModalInitialValues}
