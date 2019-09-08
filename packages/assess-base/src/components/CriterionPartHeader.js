@@ -33,7 +33,9 @@ const CriterionPartHeader = ({
           <Button color="secondary" onClick={toggleOpen}>
             {buttonLabel}
             <KeyboardArrowUp
-              className={classnames(classes.icon, { [classes.open]: isOpen })}
+              className={classnames(classes.icon, {
+                [classes.invert]: !isOpen,
+              })}
             />
           </Button>
         </Grid>
@@ -69,7 +71,7 @@ const styles = theme => ({
     color: theme.palette.secondary.main,
     transition: 'transform 0.4s',
   },
-  open: {
+  invert: {
     transform: 'rotate(180deg)',
   },
   text: {},
