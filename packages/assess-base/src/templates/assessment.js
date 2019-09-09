@@ -28,6 +28,7 @@ import {
 import {
   getUserIdSync,
   isAdminSync,
+  isContributorSync,
   getGroupIdSync,
   useIsAuthInitialized,
 } from '../utils/auth'
@@ -73,6 +74,7 @@ function AssessmentTemplate({
 }) {
   const assessmentId = getAssessmentId(location)
   const isAdmin = isAdminSync()
+  const isContributor = isContributorSync()
 
   if (!assessmentId && !isAdmin) {
     return <Redirect to="/auth" noThrow />
@@ -162,8 +164,10 @@ function AssessmentTemplate({
     loadAssessment(assessmentId)
   }
 
-  const canEditKeyInformationAndUploadAndSubmit =
-    isAdmin && assessmentInProgress(assessmentData)
+  const canEditKeyInformationAndUpload =
+    (isAdmin || isContributor) && assessmentInProgress(assessmentData)
+
+  const canSubmit = isAdmin && assessmentInProgress(assessmentData)
 
   const canCreateAssessment = isAdmin
 
@@ -218,7 +222,7 @@ function AssessmentTemplate({
                 </Grid>
                 <Grid item xs />
                 <Grid item>
-                  {canEditKeyInformationAndUploadAndSubmit && (
+                  {canSubmit && (
                     <ConfirmDialog
                       disabled={!assessmentData}
                       onConfirm={handleSubmitAssessment}
@@ -392,7 +396,7 @@ function AssessmentTemplate({
                                     rows={5}
                                     disabled={
                                       !assessmentId ||
-                                      !canEditKeyInformationAndUploadAndSubmit
+                                      !canEditKeyInformationAndUpload
                                     }
                                   />
                                 </Grid>
@@ -401,7 +405,7 @@ function AssessmentTemplate({
                             )
                           )}
                         </Grid>
-                        {canEditKeyInformationAndUploadAndSubmit && (
+                        {canEditKeyInformationAndUpload && (
                           <Grid item container spacing={2} justify="flex-end">
                             <Grid item>
                               <UploadButton
