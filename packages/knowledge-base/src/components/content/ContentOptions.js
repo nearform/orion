@@ -2,9 +2,9 @@ import React from 'react'
 import T from 'prop-types'
 import { withStyles, Button, Grid } from '@material-ui/core'
 import { useIsAdmin, useIsPlatformGroup } from '../../utils/auth'
-import PlaceholderIcon from '@material-ui/icons/MoreHoriz'
 import RateArticle from './RateArticle'
 import HideButton from './HideButton'
+import { Share, Print, Edit, PictureAsPdf } from '@material-ui/icons'
 
 // TODO: delete this placeholder component when each button is implemented
 const PlaceholderButton = withStyles(theme => ({
@@ -20,12 +20,7 @@ const PlaceholderButton = withStyles(theme => ({
     color: theme.palette.text.secondary,
   },
 }))(({ classes, children }) => {
-  return (
-    <Button className={classes.root}>
-      <PlaceholderIcon className={classes.icon} />
-      {children}
-    </Button>
-  )
+  return <Button className={classes.root}>{children}</Button>
 })
 
 const ContentOptions = ({ classes, articleData, refetchArticle }) => {
@@ -41,13 +36,28 @@ const ContentOptions = ({ classes, articleData, refetchArticle }) => {
   return (
     <Grid container spacing={2} className={classes.wrapper}>
       <Grid item xs={12} sm={6} lg={12}>
-        <PlaceholderButton>Download PDF</PlaceholderButton>
+        <PlaceholderButton>
+          <i className={classes.icons}>
+            <PictureAsPdf />
+          </i>
+          Download PDF
+        </PlaceholderButton>
       </Grid>
       <Grid item xs={12} sm={6} lg={12}>
-        <PlaceholderButton>Print this page</PlaceholderButton>
+        <PlaceholderButton>
+          <i className={classes.icons}>
+            <Print />
+          </i>
+          Print this page
+        </PlaceholderButton>
       </Grid>
       <Grid item xs={12} sm={6} lg={12}>
-        <PlaceholderButton>Share this article</PlaceholderButton>
+        <PlaceholderButton>
+          <i className={classes.icons}>
+            <Share />
+          </i>
+          Share this article
+        </PlaceholderButton>
       </Grid>
       <Grid item xs={12} sm={6} lg={12}>
         <RateArticle id={articleData.id} content={articleData}></RateArticle>
@@ -63,7 +73,12 @@ const ContentOptions = ({ classes, articleData, refetchArticle }) => {
       )}
       {canEditArticles && (
         <Grid item xs={12} sm={6} lg={12}>
-          <PlaceholderButton>Edit mode</PlaceholderButton>
+          <PlaceholderButton>
+            <i className={classes.icons}>
+              <Edit />
+            </i>
+            Edit mode
+          </PlaceholderButton>
         </Grid>
       )}
     </Grid>
@@ -91,5 +106,9 @@ export default withStyles(theme => ({
       borderTopStyle: 'solid',
       borderBottomStyle: 'solid',
     },
+  },
+  icons: {
+    paddingRight: '15px',
+    color: 'rgb(156,175,195)',
   },
 }))(ContentOptions)
