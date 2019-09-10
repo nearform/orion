@@ -16,7 +16,12 @@ import {
   upsertAssessmentCriterionDataMutation,
 } from '../queries'
 import FileList from '../components/FileList'
-import { getUserIdSync, isAdminSync, useIsAuthInitialized } from '../utils/auth'
+import {
+  getUserIdSync,
+  isAdminSync,
+  useIsAuthInitialized,
+  isContributorSync,
+} from '../utils/auth'
 import { assessmentInProgress } from '../utils/assessment-status'
 
 function createFormInitialValues(assessmentCriterionData) {
@@ -40,6 +45,7 @@ function CriterionTemplate({
 }) {
   const assessmentId = getAssessmentId(location)
   const isAdmin = isAdminSync()
+  const isContributor = isContributorSync()
   const userId = getUserIdSync()
 
   const { t } = useTranslation()
@@ -88,7 +94,7 @@ function CriterionTemplate({
   }
 
   const canEditAndUpload =
-    isAdmin &&
+    (isAdmin || isContributor) &&
     assessmentInProgress(get(assessmentCriterionData, 'assessment_by_pk'))
 
   return (
