@@ -68,7 +68,7 @@ function AdminModal({
                   Cancel
                 </Button>
                 <Button
-                  onClick={() => onSave(values)}
+                  onClick={() => onSave(values, selected)}
                   color="secondary"
                   variant="outlined"
                   disabled={!isValid || isSubmitting || !dirty}

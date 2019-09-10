@@ -210,7 +210,7 @@ function AllUsers({ classes, query, variables }) {
       userId: user ? user.id : null,
       groupId: groupId || 0,
       groupIsAssigned: !!groupId,
-      roleId: roleId || null,
+      roleId: roleId || 0,
       roleIsAssigned: !!roleId,
     }
   }
