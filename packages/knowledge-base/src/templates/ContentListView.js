@@ -14,6 +14,7 @@ import {
 } from '../queries'
 import { useIsAuthInitialized, useUserId } from '../utils/auth'
 import { getTaxonomyItemByKey, buildWhereClause } from '../utils/taxonomy'
+import { PaddedContainer } from 'components'
 
 const PAGE_SIZE = 10
 const defaultAggregate = { aggregate: { count: 0 } }
@@ -136,13 +137,13 @@ const ListContent = ({
   const section = getTaxonomyItemByKey(taxonomyTypes, data.taxonomy.key)
 
   return (
-    <>
+    <PaddedContainer>
       <SEO
         title={term ? `Search Results - ${term}` : `${section.name} Section`}
       />
       <Grid container spacing={3}>
         <Grid item xs={12} className={classes.pageHeader}>
-          <Grid container spacing={3} alignItems="flex-end">
+          <Grid container spacing={3} alignItems="center">
             <Grid item xs={9}>
               <Typography variant="h4" color="secondary">
                 {term ? 'SEARCH RESULTS FOR' : section.type}
@@ -152,30 +153,36 @@ const ListContent = ({
               </Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography>
+              <Typography style={{ textAlign: 'right' }}>
                 Showing {rangeMin} - {rangeMax} of {totalResults} results
               </Typography>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={3} className={classes.taxonomyWrapper}>
-          <Taxonomies
-            taxonomyIds={taxonomyIds}
-            showAll={true}
-            callback={handleTaxonomyFilter}
-          />
+
+        <Grid item xs={12}>
+          <Grid container spacing={3}>
+            <Grid item xs={3}>
+              <Taxonomies
+                taxonomyIds={taxonomyIds}
+                showAll={true}
+                callback={handleTaxonomyFilter}
+              />
+            </Grid>
+            <Grid item xs={9}>
+              {data.articles.map(article => (
+                <ArticleSummary
+                  article={article}
+                  bookmarked={userBookmarks.includes(article.id)}
+                  bookmarkButtonDisabled={fetchingBookmarks}
+                  onBookmarkToggle={fetchUserBookmarks}
+                  key={`article-${article.id}`}
+                />
+              ))}
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={8}>
-          {data.articles.map(article => (
-            <ArticleSummary
-              article={article}
-              bookmarked={userBookmarks.includes(article.id)}
-              bookmarkButtonDisabled={fetchingBookmarks}
-              onBookmarkToggle={fetchUserBookmarks}
-              key={`article-${article.id}`}
-            />
-          ))}
-        </Grid>
+
         <Grid item xs={12}>
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={7}></Grid>
@@ -202,14 +209,13 @@ const ListContent = ({
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </PaddedContainer>
   )
 }
 
 export default withStyles(theme => ({
   pageHeader: {
     borderBottom: `1px solid ${theme.palette.tertiary.light}`,
-    margin: theme.spacing(3),
     '& h1': {
       fontSize: '28px',
       fontWeight: '900',
@@ -224,9 +230,6 @@ export default withStyles(theme => ({
       letterSpacing: '-0.13px',
       color: theme.palette.primary.main,
     },
-  },
-  taxonomyWrapper: {
-    marginLeft: theme.spacing(3),
   },
   PrevButton: {
     backgroundColor: 'theme.palette.background.paper',
