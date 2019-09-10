@@ -1,0 +1,83 @@
+- args:
+    permission:
+      check:
+        user:
+          user_groups:
+            group:
+              parent_id:
+                _eq: X-Hasura-Group-Id
+      columns:
+      - id
+      - user_id
+      - role_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: partner-admin
+    table:
+      name: user_role
+      schema: public
+  type: create_insert_permission
+- args:
+    role: partner-admin
+    table:
+      name: user_role
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      columns:
+      - id
+      - user_id
+      - role_id
+      filter:
+        user:
+          user_groups:
+            group:
+              parent_id:
+                _eq: X-Hasura-Group-Id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: partner-admin
+    table:
+      name: user_role
+      schema: public
+  type: create_update_permission
+- args:
+    role: partner-admin
+    table:
+      name: user_role
+      schema: public
+  type: drop_update_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - user_id
+      - role_id
+      filter:
+        _or:
+        - user:
+            user_groups:
+              group_id:
+                _eq: X-Hasura-Group-Id
+        - user:
+            user_groups:
+              group:
+                parent_id:
+                  _eq: X-Hasura-Group-Id
+    role: partner-admin
+    table:
+      name: user_role
+      schema: public
+  type: create_select_permission
+- args:
+    role: partner-admin
+    table:
+      name: user_role
+      schema: public
+  type: drop_select_permission
