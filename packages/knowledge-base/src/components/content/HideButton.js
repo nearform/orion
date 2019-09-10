@@ -72,7 +72,7 @@ export default withStyles(theme => ({
   },
   icon: {
     marginRight: theme.spacing(),
-    color: theme.palette.text.secondary,
+    color: 'rgb(156,175,195)',
   },
   secondary: {
     color: theme.palette.secondary.main,
