@@ -42,13 +42,13 @@ Ensure you have a local `.env.development` file available.
 
 ```
 # Starts knowledge-base via `gatsby develop`
-npm start:kb
+npm run start:kb
 
 # Starts assess-base via `gatsby develop`
-npm start:ab
+npm run start:ab
 
 # Runs both the above in parallel
-npm start:apps
+npm run start:apps
 ```
 
 ## Storybook
