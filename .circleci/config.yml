@@ -201,7 +201,7 @@ workflows:
           filters:
             branches:
               ignore:
-                - master
+                - staging
                 - production
       - build:
           requires:
@@ -222,7 +222,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - staging
                 - production
       - apply-hasura-migrations:
           requires:
