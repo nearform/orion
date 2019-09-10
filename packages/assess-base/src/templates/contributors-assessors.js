@@ -280,9 +280,18 @@ function ContributorsAssessorsTemplate({
             <Grid item xs={12} className={classes.filterContainer}>
               <Input
                 fullWidth
+                className={classes.filterInput}
                 endAdornment={<FilterListIcon color="secondary" />}
                 onChange={event => setFilterText(event.target.value)}
               />
+              <Button
+                component={Link}
+                to={`assessment/${assessment.key}/#${assessmentId}`}
+                color="secondary"
+                variant="contained"
+              >
+                Close
+              </Button>
             </Grid>
           </Grid>
           {table}
@@ -332,20 +341,23 @@ const styles = theme => ({
     height: theme.spacing(4),
   },
   filterContainer: {
-    maxWidth: 318,
     margin: theme.spacing(1),
     marginLeft: 0,
     display: 'flex',
     alignItems: 'flex-end',
   },
+  filterInput: {
+    maxWidth: 318,
+    margin: '0 auto 0 0',
+  },
   participants: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     marginRight: -theme.spacing(1),
     '& > *': {
-      margin: theme.spacing(1),
-      marginTop: 0,
+      marginRight: theme.spacing(1),
+      marginBottom: theme.spacing(1),
     },
   },
 })
