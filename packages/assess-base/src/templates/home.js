@@ -41,7 +41,7 @@ function AssessmentsHome({ theme, classes, data }) {
   const userRoles = isAuthInitializided && getUserRolesSync()
   const canViewAssessments =
     isAuthenticated &&
-    (Array.isArray(userRoles) ? userRoles.join('') : '') !== 'public'
+    (Array.isArray(userRoles) ? userRoles.join('') : 'public') !== 'public'
 
   return (
     <BackgroundImage
