@@ -21,11 +21,17 @@ function FeedbackReportInput({
   pillarColor,
 }) {
   // If the value is null or '' from DB, uncontrolled TextArea prefers `undefined`
-  const [currentValue, setCurrentValue] = useState(initialValue || undefined)
+  const part = typeof initialValue === 'object' ? true : false
+  const [currentValue, setCurrentValue] = useState(
+    part ? initialValue[label] : initialValue || undefined
+  )
   const [updateMutation] = useMutation(mutation)
 
   const handleSaveInput = async (values, { setSubmitting }) => {
-    const value = values[name]
+    if (part) {
+      initialValue[label] = values[name]
+    }
+    const value = part ? initialValue : values[name]
 
     const variables = {
       id: assessmentId,
@@ -38,7 +44,7 @@ function FeedbackReportInput({
       result,
       `data.update_assessment.returning[0].${name}`
     )
-    setCurrentValue(savedValue)
+    setCurrentValue(part ? savedValue[label] : savedValue)
     setSubmitting(false)
   }
 
@@ -53,6 +59,7 @@ function FeedbackReportInput({
           <Grid container spacing={5}>
             <Grid item xs={3}>
               <SectionTitle
+                key={label}
                 className={classes.sectionTitle}
                 barColor={pillarColor || theme.palette.secondary.main}
                 gutterBottom
@@ -62,6 +69,7 @@ function FeedbackReportInput({
             </Grid>
             <Grid item xs>
               <Field
+                key={label}
                 disabled={!canEdit}
                 component={FormikTextField}
                 name={name}
@@ -100,7 +108,6 @@ FeedbackReportInput.propTypes = {
   classes: T.object.isRequired,
   label: T.string.isRequired,
   name: T.string.isRequired,
-  initialValue: T.string,
   assessmentId: T.number.isRequired,
   mutation: T.string.isRequired,
   rows: T.number.isRequired,

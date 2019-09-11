@@ -37,7 +37,7 @@ import {
 
 import {
   getAssessmentFeedbackReportData,
-  updateAssessmentExecSummaryMutation,
+  updateAssessmentPillarSummaryMutation,
   updateAssessmentAdviceMutation,
   updateAssessmentStatusMutation,
 } from '../queries'
@@ -176,11 +176,16 @@ function FeedbackReport({
                     <Grid item xs={12}>
                       {assessmentData && (
                         <FeedbackReportInput
-                          label="Pillar Summary"
-                          name={pillarDef.key + '_summary'}
+                          label={pillarDef.name}
+                          name="pillar_summary"
+                          key={pillarDef.key}
                           assessmentId={assessmentId}
-                          initialValue={assessmentData.exec_summary}
-                          mutation={updateAssessmentExecSummaryMutation}
+                          initialValue={
+                            assessmentData.pillar_summary !== null
+                              ? assessmentData.pillar_summary
+                              : {}
+                          }
+                          mutation={updateAssessmentPillarSummaryMutation}
                           canEdit={canEditSummaryAndAdvice}
                           pillarColor={pillarColors[pillarIndex]}
                           rows={7}
@@ -290,7 +295,7 @@ function FeedbackReport({
               label="Advice for Company"
               name="advice"
               assessmentId={assessmentId}
-              initialValue={assessmentData.advice}
+              initialValue={assessmentData.advice || ''}
               mutation={updateAssessmentAdviceMutation}
               canEdit={canEditSummaryAndAdvice}
               rows={6}
