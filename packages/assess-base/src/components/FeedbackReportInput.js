@@ -18,6 +18,7 @@ function FeedbackReportInput({
   mutation,
   canEdit,
   rows,
+  pillarColor,
 }) {
   // If the value is null or '' from DB, uncontrolled TextArea prefers `undefined`
   const [currentValue, setCurrentValue] = useState(initialValue || undefined)
@@ -53,7 +54,7 @@ function FeedbackReportInput({
             <Grid item xs={3}>
               <SectionTitle
                 className={classes.sectionTitle}
-                barColor={theme.palette.secondary.main}
+                barColor={pillarColor || theme.palette.secondary.main}
                 gutterBottom
               >
                 {label}
