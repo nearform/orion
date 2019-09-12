@@ -21,7 +21,7 @@ function FeedbackReportInput({
   pillarColor,
 }) {
   // If the value is null or '' from DB, uncontrolled TextArea prefers `undefined`
-  const part = typeof initialValue === 'object' ? true : false
+  const part = typeof initialValue === 'object'
   const [currentValue, setCurrentValue] = useState(
     part ? initialValue[label] : initialValue || undefined
   )
