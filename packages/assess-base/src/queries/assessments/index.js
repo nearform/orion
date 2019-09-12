@@ -15,8 +15,8 @@ export {
   default as updateAssessmentKeyInfoMutation,
 } from './update-assessment-key-info.graphql'
 export {
-  default as updateAssessmentExecSummaryMutation,
-} from './update-assessment-exec-summary.graphql'
+  default as updateAssessmentPillarSummaryMutation,
+} from './update-assessment-pillar-summary.graphql'
 export {
   default as updateAssessmentAdviceMutation,
 } from './update-assessment-advice.graphql'

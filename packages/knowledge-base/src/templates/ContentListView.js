@@ -149,11 +149,11 @@ const ListContent = ({
                 {term ? 'SEARCH RESULTS FOR' : section.type}
               </Typography>
               <Typography variant="h1">
-                &lsquo;{term ? term : section.name}&rsquo;
+                {term ? <span>&lsquo;{term}&rsquo;</span> : section.name}
               </Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography style={{ textAlign: 'right' }}>
+              <Typography className={classes.resultCount}>
                 Showing {rangeMin} - {rangeMax} of {totalResults} results
               </Typography>
             </Grid>
@@ -237,6 +237,10 @@ export default withStyles(theme => ({
     '&:hover': {
       backgroundColor: 'white',
     },
+  },
+  resultCount: {
+    paddingRight: '1px', // Due to the font this was looking mis-aligned
+    textAlign: 'right',
   },
   link: {
     '&:hover': {

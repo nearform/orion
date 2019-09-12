@@ -3,7 +3,7 @@ query getAssessmentFeedbackReportData($assessmentId: Int!) {
     name
     key
     status
-    exec_summary
+    pillar_summary
     advice
     feedbackTables {
       feedback_values

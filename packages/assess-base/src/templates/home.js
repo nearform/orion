@@ -39,7 +39,9 @@ function AssessmentsHome({ theme, classes, data }) {
 
   // Authenticated pending users and approved non-member users only have role ['public']
   const userRoles = isAuthInitializided && getUserRolesSync()
-  const canViewAssessments = isAuthenticated && userRoles.join('') !== 'public'
+  const canViewAssessments =
+    isAuthenticated &&
+    (Array.isArray(userRoles) ? userRoles.join('') : 'public') !== 'public'
 
   return (
     <BackgroundImage
