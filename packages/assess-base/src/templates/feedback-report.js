@@ -37,7 +37,7 @@ import {
 
 import {
   getAssessmentFeedbackReportData,
-  updateAssessmentExecSummaryMutation,
+  updateAssessmentPillarSummaryMutation,
   updateAssessmentAdviceMutation,
   updateAssessmentStatusMutation,
 } from '../queries'
@@ -147,19 +147,6 @@ function FeedbackReport({
           </Grid>
         </div>
         <div className={classes.section}>
-          {assessmentData && (
-            <FeedbackReportInput
-              label="Executive summary"
-              name="exec_summary"
-              assessmentId={assessmentId}
-              initialValue={assessmentData.exec_summary}
-              mutation={updateAssessmentExecSummaryMutation}
-              canEdit={canEditSummaryAndAdvice}
-              rows={10}
-            />
-          )}
-        </div>
-        <div className={classes.section}>
           <Grid container spacing={5}>
             <Grid item xs={3}>
               <SectionTitle barColor={theme.palette.primary.dark} gutterBottom>
@@ -183,94 +170,123 @@ function FeedbackReport({
         <div className={classes.section}>
           <Grid container spacing={4} direction="column">
             {assessmentData &&
-              assessment.pillars.map((pillarDef, pillarIndex) =>
-                pillarDef.criteria.map(criterionDef => {
-                  const feedbackByTableKey = assessmentData.feedbackTables.reduce(
-                    (acc, table) => {
-                      if (
-                        table.criterion_key === criterionDef.key &&
-                        table.pillar_key === pillarDef.key
-                      ) {
-                        acc[table.table_key] = (
-                          acc[table.table_key] || []
-                        ).concat(table)
-                      }
-                      return acc
-                    },
-                    {}
-                  )
-
-                  const feedbackAreas = [
-                    ['Strength', sortByPart(feedbackByTableKey, 'strengths')],
-                    [
-                      'Areas of improvement',
-                      sortByPart(feedbackByTableKey, 'areas-of-improvement'),
-                    ],
-                    [
-                      'Good practice',
-                      sortByPart(feedbackByTableKey, 'good-practice'),
-                    ],
-                  ]
-
-                  return (
-                    <Grid
-                      key={criterionDef.key}
-                      item
-                      container
-                      spacing={2}
-                      direction="column"
-                    >
-                      <Grid item xs={4}>
-                        <SectionTitle barColor={pillarColors[pillarIndex]}>
-                          <Link
-                            to={`/assessment/${assessmentData.key}/${pillarDef.key}/${criterionDef.key}/1/#${assessmentId}`}
-                          >
-                            {criterionDef.name}
-                          </Link>
-                        </SectionTitle>
-                      </Grid>
-                      {feedbackAreas.map(area => {
-                        const [label, feedbackItems] = area
-                        if (!feedbackItems) return null
-
-                        const key = `${pillarDef.key}-${criterionDef.key}-${label}`
-                        return (
-                          <Grid item xs key={key}>
-                            <Paper>
-                              <Table size="small">
-                                <TableHead>
-                                  <TableRow>
-                                    <TableCell>{label}</TableCell>
-                                    <TableCell align="right" />
-                                  </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                  {feedbackItems.map((feedbackItem, i) => (
-                                    <TableRow key={`${key}-${i}`}>
-                                      <TableCell>
-                                        {feedbackItem.value}
-                                      </TableCell>
-                                      <TableCell align="right">
-                                        <Link
-                                          to={`/assessment/${assessmentData.key}/${feedbackItem.link}/#${assessmentId}`}
-                                        >
-                                          <IconButton>
-                                            <ChevronRightIcon />
-                                          </IconButton>
-                                        </Link>
-                                      </TableCell>
-                                    </TableRow>
-                                  ))}
-                                </TableBody>
-                              </Table>
-                            </Paper>
-                          </Grid>
-                        )
-                      })}
+              assessment.pillars.map((pillarDef, pillarIndex) => {
+                return (
+                  <>
+                    <Grid item xs={12}>
+                      {assessmentData && (
+                        <FeedbackReportInput
+                          label={pillarDef.name}
+                          name="pillar_summary"
+                          key={pillarDef.key}
+                          assessmentId={assessmentId}
+                          initialValue={
+                            assessmentData.pillar_summary !== null
+                              ? assessmentData.pillar_summary
+                              : {}
+                          }
+                          mutation={updateAssessmentPillarSummaryMutation}
+                          canEdit={canEditSummaryAndAdvice}
+                          pillarColor={pillarColors[pillarIndex]}
+                          rows={7}
+                        />
+                      )}
                     </Grid>
-                  )
-                })
-              )}
+                    {pillarDef.criteria.map(criterionDef => {
+                      const feedbackByTableKey = assessmentData.feedbackTables.reduce(
+                        (acc, table) => {
+                          if (
+                            table.criterion_key === criterionDef.key &&
+                            table.pillar_key === pillarDef.key
+                          ) {
+                            acc[table.table_key] = (
+                              acc[table.table_key] || []
+                            ).concat(table)
+                          }
+                          return acc
+                        },
+                        {}
+                      )
+
+                      const feedbackAreas = [
+                        [
+                          'Strength',
+                          sortByPart(feedbackByTableKey, 'strengths'),
+                        ],
+                        [
+                          'Areas of improvement',
+                          sortByPart(
+                            feedbackByTableKey,
+                            'areas-of-improvement'
+                          ),
+                        ],
+                        [
+                          'Good practice',
+                          sortByPart(feedbackByTableKey, 'good-practice'),
+                        ],
+                      ]
+
+                      return (
+                        <Grid
+                          key={criterionDef.key}
+                          item
+                          container
+                          spacing={2}
+                          direction="column"
+                        >
+                          <Grid item xs={4}>
+                            <SectionTitle barColor={pillarColors[pillarIndex]}>
+                              <Link
+                                to={`/assessment/${assessmentData.key}/${pillarDef.key}/${criterionDef.key}/1/#${assessmentId}`}
+                              >
+                                {criterionDef.name}
+                              </Link>
+                            </SectionTitle>
+                          </Grid>
+                          {feedbackAreas.map(area => {
+                            const [label, feedbackItems] = area
+                            if (!feedbackItems) return null
+
+                            const key = `${pillarDef.key}-${criterionDef.key}-${label}`
+                            return (
+                              <Grid item xs key={key}>
+                                <Paper>
+                                  <Table size="small">
+                                    <TableHead>
+                                      <TableRow>
+                                        <TableCell>{label}</TableCell>
+                                        <TableCell align="right" />
+                                      </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                      {feedbackItems.map((feedbackItem, i) => (
+                                        <TableRow key={`${key}-${i}`}>
+                                          <TableCell>
+                                            {feedbackItem.value}
+                                          </TableCell>
+                                          <TableCell align="right">
+                                            <Link
+                                              to={`/assessment/${assessmentData.key}/${feedbackItem.link}/#${assessmentId}`}
+                                            >
+                                              <IconButton>
+                                                <ChevronRightIcon />
+                                              </IconButton>
+                                            </Link>
+                                          </TableCell>
+                                        </TableRow>
+                                      ))}
+                                    </TableBody>
+                                  </Table>
+                                </Paper>
+                              </Grid>
+                            )
+                          })}
+                        </Grid>
+                      )
+                    })}
+                  </>
+                )
+              })}
           </Grid>
         </div>
         <div className={classes.section}>
@@ -279,7 +295,7 @@ function FeedbackReport({
               label="Advice for Company"
               name="advice"
               assessmentId={assessmentId}
-              initialValue={assessmentData.advice}
+              initialValue={assessmentData.advice || ''}
               mutation={updateAssessmentAdviceMutation}
               canEdit={canEditSummaryAndAdvice}
               rows={6}
