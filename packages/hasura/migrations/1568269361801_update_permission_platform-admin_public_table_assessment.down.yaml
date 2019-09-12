@@ -1,0 +1,26 @@
+- args:
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - advice
+      - created_at
+      - exec_summary
+      - id
+      - internal
+      - key
+      - key_information
+      - name
+      - owner_id
+      - status
+      filter: {}
+    role: platform-admin
+    table:
+      name: assessment
+      schema: public
+  type: create_select_permission
