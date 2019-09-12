@@ -139,8 +139,7 @@ const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
+    paddingTop: theme.spacing(1),
   },
   logoHomeLink: {
     display: 'flex',
@@ -157,7 +156,6 @@ const styles = theme => ({
   },
   toolbarLightContrast: {
     color: theme.palette.primary.dark,
-    marginBottom: theme.spacing(2),
   },
   toolbarContrast: {
     color: theme.palette.background.paper,
@@ -170,11 +168,13 @@ const styles = theme => ({
     textTransform: 'none',
   },
   icon: {
-    marginRight: theme.spacing(1),
     color: 'inherit',
+    marginRight: theme.spacing(1),
+    opacity: 0.6,
   },
   linksContainer: {
     display: 'flex',
+    marginRight: `-${theme.spacing(1)}px`,
     '& > * + *': {
       marginLeft: theme.spacing(2),
     },

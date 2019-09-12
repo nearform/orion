@@ -171,6 +171,7 @@ const styles = theme => ({
   },
   linksContainer: {
     display: 'flex',
+    marginRight: `-${theme.spacing(1.5)}px`,
     '& > * + *': {
       marginLeft: theme.spacing(4),
     },

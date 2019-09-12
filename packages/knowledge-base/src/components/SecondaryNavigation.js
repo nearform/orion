@@ -3,14 +3,12 @@ import { navigate } from '@reach/router'
 import Close from '@material-ui/icons/Close'
 import {
   Grid,
-  Button,
   withStyles,
   Input,
   InputAdornment,
   IconButton,
   ClickAwayListener,
 } from '@material-ui/core'
-import NavLink from './NavLink'
 import Icon from '@material-ui/core/Icon'
 import SearchIcon from '@material-ui/icons/Search'
 import QuickLinksMenu, {
@@ -20,27 +18,6 @@ import QuickLinksMenu, {
 import { useIsAuthenticated } from '../utils/auth'
 import useTaxonomies from '../hooks/useTaxonomies'
 import usePrevious from '../hooks/usePrevious'
-
-const MyContentButton = withStyles(theme => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    marginTop: '2px', //for alignment purposes to avoid flexboxing, depending on the difference between regular button and the quicklink menu button
-    marginLeft: theme.spacing(1),
-    '&:hover': {
-      backgroundColor: theme.palette.background.paper,
-    },
-    '&::after': {
-      content: 'none',
-    },
-  },
-}))(Button)
-MyContentButton.defaultProps = {
-  variant: 'outlined',
-  color: 'secondary',
-  component: NavLink,
-  to: '/my-content',
-  children: 'My Content',
-}
 
 const ENTER_KEY = 13
 const WAIT_INTERVAL = 1000
@@ -78,6 +55,13 @@ function SecondaryNavigation({ classes, dark, theme }) {
     setSearchText('')
   }
 
+  const searchButtonClasses = [classes.searchButton]
+  if (!isAuthenticated) {
+    // We have to be a bit fiddly with the positioning of the last button
+    // which could be 'search' or 'my content'
+    searchButtonClasses.push(classes.lastButton)
+  }
+
   return !search ? (
     <Grid container justify="flex-end" spacing={3}>
       {taxonomyTypes.map((type, index) => (
@@ -95,13 +79,19 @@ function SecondaryNavigation({ classes, dark, theme }) {
           </QuickLinksMenu>
         </Grid>
       ))}
-      <Grid item>
+      <Grid item className={searchButtonClasses}>
         <QuickLinkButton dark={dark} onClick={() => setSearch(!search)}>
           <Icon component={SearchIcon} color="secondary" />
           Search
         </QuickLinkButton>
       </Grid>
-      <Grid item>{isAuthenticated && <MyContentButton />}</Grid>
+      {isAuthenticated && (
+        <Grid item className={[classes.myContentButton, classes.lastButton]}>
+          <QuickLinkButton dark={dark} onClick={() => navigate('/my-content')}>
+            My Content
+          </QuickLinkButton>
+        </Grid>
+      )}
     </Grid>
   ) : (
     <>
@@ -155,6 +145,19 @@ const styles = theme => ({
       '&::-moz-placeholder': { ...theme.typography.h3, lineHeight: '20px' },
       '&:-ms-input-placeholder': { ...theme.typography.h3, lineHeight: '20px' },
     },
+  },
+  // Fixes the last button looking misaligned because it's transparent and padded with
+  // a hover colour
+  lastButton: {
+    '& button': {
+      marginRight: `-${theme.spacing(1)}px`,
+    },
+  },
+  myContentButton: {
+    display: 'flex',
+  },
+  searchButton: {
+    display: 'flex',
   },
 })
 

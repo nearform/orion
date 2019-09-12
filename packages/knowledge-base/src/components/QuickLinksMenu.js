@@ -84,7 +84,11 @@ function QuickLinkMenu({ dark, label, children }) {
         ref={menuButtonRef}
       >
         {label}
-        <Icon component={KeyboardArrowDown} color="secondary" />
+        <Icon
+          color="secondary"
+          component={KeyboardArrowDown}
+          fontSize="large"
+        />
       </QuickLinkButton>
       <QuickLinksMenu
         anchorEl={menuButtonRef.current}
