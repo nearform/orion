@@ -30,7 +30,7 @@ import SEO from '../components/SEO'
 import FeedbackReportInput from '../components/FeedbackReportInput'
 import { getAssessmentId } from '../utils/url'
 import {
-  isAdminSync,
+  hasPermissions,
   isAssessorSync,
   useIsAuthInitialized,
 } from '../utils/auth'
@@ -87,7 +87,7 @@ function FeedbackReport({
     }
   }, [isAuthInitialized, fetchAssessmentFeedbackReportData, assessmentData])
 
-  const isAdmin = isAdminSync()
+  const isAdmin = hasPermissions('company-admin')
   const isAssessor = isAssessorSync()
 
   const handleSubmitFeedbackReport = async () => {

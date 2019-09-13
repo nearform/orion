@@ -17,7 +17,7 @@ import { TypedChip, PaddedContainer, SectionTitle } from 'components'
 
 import SEO from '../components/SEO'
 import {
-  isAdminSync,
+  hasPermissions,
   getGroupIdSync,
   useIsAuthInitialized,
 } from '../utils/auth'
@@ -58,7 +58,7 @@ function ContributorsAssessorsTemplate({
   const [filterText, setFilterText] = useState('')
 
   const assessmentId = getAssessmentId(location)
-  const isAdmin = isAdminSync()
+  const isAdmin = hasPermissions('company-admin')
   if (!assessmentId && !isAdmin) {
     return <Redirect to="/auth" noThrow />
   }

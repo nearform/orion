@@ -10,9 +10,9 @@ import { getAssessmentPartData } from '../queries'
 import {
   isAuthenticatedSync,
   getUserIdSync,
-  isAdminSync,
   isContributorSync,
   isAssessorSync,
+  hasPermissions,
   useIsAuthInitialized,
 } from '../utils/auth'
 import AssessmentScoringHeader from '../components/AssessmentScoringHeader'
@@ -62,7 +62,7 @@ function CriterionPartTemplate({
 
   const assessmentId = getAssessmentId(location)
   const userId = getUserIdSync()
-  const isAdmin = isAdminSync()
+  const isAdmin = hasPermissions('company-admin')
   const isContributor = isContributorSync()
   const isAssessor = isAssessorSync()
 

@@ -18,7 +18,7 @@ import {
 import FileList from '../components/FileList'
 import {
   getUserIdSync,
-  isAdminSync,
+  hasPermissions,
   useIsAuthInitialized,
   isContributorSync,
 } from '../utils/auth'
@@ -44,7 +44,7 @@ function CriterionTemplate({
   location,
 }) {
   const assessmentId = getAssessmentId(location)
-  const isAdmin = isAdminSync()
+  const isAdmin = hasPermissions('company-admin')
   const isContributor = isContributorSync()
   const userId = getUserIdSync()
 

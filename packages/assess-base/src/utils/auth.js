@@ -7,8 +7,17 @@ const CUSTOM_CLAIMS_NAMESPACE = 'x-raw-salmon-claims'
 const CUSTOM_CLAIMS_CONTRIBUTOR_KEY = 'x-assess-base-contributor'
 const CUSTOM_CLAIMS_ASSESSOR_KEY = 'x-assess-base-assessor'
 const HASURA_ALLOWED_ROLES_KEY = 'x-hasura-allowed-roles'
+const HASURA_DEFAULT_ROLE_KEY = 'x-hasura-default-role'
 const HASURA_USER_ID = 'x-hasura-user-id'
 const HASURA_GROUP_ID = 'x-hasura-group-id'
+const ROLES_PERMISSIONS = {
+  public: 0,
+  user: 1,
+  'company-admin': 3,
+  'partner-admin': 7,
+  'platform-admin': 15,
+  admin: 31,
+}
 const ADMIN_ROLES_REGEX = /admin$/i
 
 export const AuthInitContext = createContext(false)
@@ -44,6 +53,11 @@ export const isContributorSync = () =>
 export const isAssessorSync = () =>
   !!getCustomClaimsSync()[CUSTOM_CLAIMS_ASSESSOR_KEY]
 
+export const hasPermissions = async reqRole => {
+  const role = await getUserDefaultRole()
+  return ROLES_PERMISSIONS[reqRole] & ROLES_PERMISSIONS[role]
+}
+
 export const getUserRolesSync = () => {
   if (!isAuthenticatedSync()) return []
 
@@ -51,6 +65,16 @@ export const getUserRolesSync = () => {
     return extractUserRolesFromTokenPayload()
   } catch (err) {
     return []
+  }
+}
+
+export const getUserDefaultRole = async () => {
+  if (!isAuthenticated()) return 'public'
+
+  try {
+    return extractUserDefaultRoleFromTokenPayload()
+  } catch (err) {
+    return 'public'
   }
 }
 
@@ -83,6 +107,11 @@ export const getGroupIdSync = () => {
 function extractUserRolesFromTokenPayload() {
   const hasuraClaims = extractHasuraClaimsFromTokenPayload()
   return hasuraClaims[HASURA_ALLOWED_ROLES_KEY]
+}
+
+function extractUserDefaultRoleFromTokenPayload() {
+  const hasuraClaims = extractHasuraClaimsFromTokenPayload()
+  return hasuraClaims[HASURA_DEFAULT_ROLE_KEY]
 }
 
 function extractUserIdFromTokenPayload() {

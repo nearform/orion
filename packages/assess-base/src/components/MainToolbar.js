@@ -9,7 +9,7 @@ import { Auth } from 'aws-amplify'
 import { PaddedContainer } from 'components'
 import { getLanguageSwitcher } from 'components'
 
-import { useIsAdmin, useIsAuthenticated } from '../utils/auth'
+import { useIsAuthenticated, hasPermissions } from '../utils/auth'
 import NavLink from './NavLink'
 
 function MainToolbar({ classes, dark }) {
@@ -42,8 +42,8 @@ function MainToolbar({ classes, dark }) {
     navigate('/auth')
   }
 
-  const isAdmin = useIsAdmin()
   const isAuthenticated = useIsAuthenticated()
+  const isAdmin = hasPermissions('company-admin')
 
   const darkClass = classnames({
     [classes.toolbarDark]: dark,

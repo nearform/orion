@@ -27,10 +27,10 @@ import {
 } from '../queries'
 import {
   getUserIdSync,
-  isAdminSync,
   isContributorSync,
   getGroupIdSync,
   useIsAuthInitialized,
+  hasPermissions,
 } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
@@ -73,7 +73,7 @@ function AssessmentTemplate({
   pageContext: { assessment, pillarColors },
 }) {
   const assessmentId = getAssessmentId(location)
-  const isAdmin = isAdminSync()
+  const isAdmin = hasPermissions('company-admin')
   const isContributor = isContributorSync()
 
   if (!assessmentId && !isAdmin) {
