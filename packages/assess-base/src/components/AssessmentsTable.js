@@ -1,6 +1,5 @@
 import React from 'react'
 import { withStyles, TableRow, TableCell, IconButton } from '@material-ui/core'
-import { AssignmentTurnedIn } from '@material-ui/icons'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useTranslation } from 'react-i18next'
@@ -11,6 +10,7 @@ import { AssessmentStatusChip } from 'components'
 import { getAssessmentsData } from '../queries'
 import { formatDate } from '../utils/date'
 import QueryTable from './QueryTable'
+import { FeedbackReportLink, ManagementReportLink } from './report-links'
 
 function AssessmentsTable({ classes }) {
   const { t } = useTranslation()
@@ -34,6 +34,15 @@ function AssessmentsTable({ classes }) {
     { id: 'assessmentType', label: 'Assessment Type' },
     { id: 'company', label: 'Company' },
     { id: 'status', label: 'Status', sortable: true },
+    {
+      id: 'management',
+      label: 'Management Report',
+      cellProps: {
+        style: {
+          width: '80px',
+        },
+      },
+    },
     { id: 'feedback', label: 'Feedback' },
     { id: 'link', label: '' },
   ]
@@ -62,15 +71,19 @@ function AssessmentsTable({ classes }) {
               <AssessmentStatusChip status={assessment.status} />
             </TableCell>
             <TableCell>
-              {assessment.status === 'submitted' && (
-                <Link
-                  to={`/assessment/${assessment.key}/feedback-report/#${assessment.id}`}
-                  className={classes.feedbackLink}
-                >
-                  <AssignmentTurnedIn className={classes.feedbackIcon} />
-                  <span>View</span>
-                </Link>
-              )}
+              <ManagementReportLink
+                assessment={assessment}
+                spacing={1}
+                text="View"
+              />
+            </TableCell>
+            <TableCell>
+              <FeedbackReportLink
+                assessment={assessment}
+                visible={assessment.status === 'submitted'}
+                spacing={1}
+                text="View"
+              />
             </TableCell>
             <TableCell padding="none">
               <IconButton

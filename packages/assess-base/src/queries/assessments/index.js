@@ -9,6 +9,9 @@ export {
   default as getShallowAssessmentData,
 } from './get-shallow-assessment-data.graphql'
 export {
+  default as getManagementReportData,
+} from './get-management-report-data.graphql'
+export {
   default as createAssessmentMutation,
 } from './create-assessment.graphql'
 export {

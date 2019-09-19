@@ -93,6 +93,7 @@ module.exports = {
           '/search/*',
           '/submit/*',
           '/content-preview/*',
+          '/management-report/*',
         ],
       },
     },

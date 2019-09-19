@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Typography, withStyles, Grid, Button } from '@material-ui/core'
+import { Typography, withStyles, Grid, Button, Box } from '@material-ui/core'
 import { Link, navigate } from 'gatsby'
 import { Formik, Form, Field } from 'formik'
 import {
@@ -36,8 +36,9 @@ import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'
 import UploadButton from '../components/UploadButton'
-import FileItem from '../components/FileItem'
 import AssessmentPillars from '../components/AssessmentPillars'
+import KeyInfoDocsList from '../components/key-info-docs-list'
+import { ReportLinks } from '../components/report-links'
 import { Redirect } from '@reach/router'
 import {
   assessmentInProgress,
@@ -244,16 +245,6 @@ function AssessmentTemplate({
                       </Button>
                     </ConfirmDialog>
                   )}
-                  {canViewFeedbackReport && (
-                    <Button
-                      component={Link}
-                      to={`assessment/${assessment.key}/feedback-report/#${assessmentId}`}
-                      color="secondary"
-                      variant="contained"
-                    >
-                      View Feedback Report
-                    </Button>
-                  )}
                 </Grid>
               </Grid>
               <Grid item xs>
@@ -441,24 +432,13 @@ function AssessmentTemplate({
               className={classes.filesSeparator}
               direction="column"
             >
-              <Grid item>
-                <Typography variant="h3" gutterBottom>
-                  Assessment Documents
-                </Typography>
-              </Grid>
-              {(!assessmentData ||
-                (assessmentData && assessmentData.files.length === 0)) && (
-                <Typography>
-                  You'll find an index of uploaded documents for your assessment
-                  in this area
-                </Typography>
-              )}
-              {assessmentData &&
-                assessmentData.files.map(file => (
-                  <Grid item key={file.s3_key}>
-                    <FileItem file={file} />
-                  </Grid>
-                ))}
+              <Box className={classes.sideBar}>
+                <ReportLinks
+                  assessment={assessment}
+                  canViewFeedbackReport={canViewFeedbackReport}
+                />
+                <KeyInfoDocsList assessmentData={assessmentData} />
+              </Box>
             </Grid>
           </Grid>
         </div>
@@ -488,6 +468,17 @@ const styles = theme => ({
   },
   sectionProgress: {
     color: theme.palette.primary.dark,
+  },
+  sideBar: {
+    display: 'flex',
+    flexDirection: 'column',
+    '& > *': {
+      marginBottom: theme.spacing(3),
+    },
+    '& > *:last-child': {
+      marginBottom: 0,
+    },
+    width: '100%',
   },
   filesSeparator: {
     borderLeft: `solid 1px ${theme.palette.background.light}`,

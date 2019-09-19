@@ -1,1 +1,4 @@
-module.exports = [require('./business-matrix.json')]
+module.exports = [
+  require('./business-matrix.json'),
+  require('./business-matrix-advanced.json'),
+]

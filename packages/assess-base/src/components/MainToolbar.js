@@ -148,6 +148,7 @@ const styles = theme => ({
   },
   logotype: {
     fontWeight: 900,
+    marginTop: `-${theme.spacing(0.5)}px`,
   },
   toolbarDark: {
     backgroundColor: theme.palette.primary.dark,
@@ -170,8 +171,8 @@ const styles = theme => ({
     color: 'inherit',
   },
   linksContainer: {
+    alignItems: 'center',
     display: 'flex',
-    marginRight: `-${theme.spacing(1.5)}px`,
     '& > * + *': {
       marginLeft: theme.spacing(4),
     },
