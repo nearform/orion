@@ -3,34 +3,35 @@ import { Box, Typography, withStyles } from '@material-ui/core'
 import T from 'prop-types'
 
 import FileItem from '../FileItem'
+import HeadedAsidePanel from '../headed-aside-panel'
 
-const KeyInfoDocsList = ({ assessmentData, classes }) => {
+const KeyInfoDocsList = ({ assessment, classes }) => {
   return (
-    <Box className={classes.list} component="aside">
-      <Typography className={classes.heading} variant="h3">
-        Assessment Reports
-      </Typography>
-      <Box className={classes.list} component="ul">
-        {assessmentData &&
-          assessmentData.files.map(file => (
+    <HeadedAsidePanel title="Assessment Documents">
+      {assessment && assessment.files.length ? (
+        <Box className={classes.list} component="ul">
+          {assessment.files.map(file => (
             <Box className={classes.listItem} component="li" key={file.s3_key}>
               <FileItem file={file} />
             </Box>
           ))}
-      </Box>
-    </Box>
+        </Box>
+      ) : (
+        <Typography>
+          You'll find an index of uploaded documents for your assessment in this
+          area
+        </Typography>
+      )}
+    </HeadedAsidePanel>
   )
 }
 
 KeyInfoDocsList.propTypes = {
-  assessmentData: T.array.isRequired,
+  assessment: T.object,
   classes: T.object.isRequired,
 }
 
 const styles = theme => ({
-  heading: {
-    marginBottom: theme.spacing(2),
-  },
   list: {
     display: 'flex',
     flexDirection: 'column',
