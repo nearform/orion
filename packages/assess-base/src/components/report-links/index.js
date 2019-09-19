@@ -99,24 +99,29 @@ const useReportLinksStyles = makeStyles(theme => ({
 
 const ReportLinks = ({ assessment, canViewFeedbackReport }) => {
   const classes = useReportLinksStyles()
-  return (
-    <Box className={classes.wrapper} component="nav">
-      <Typography className={classes.heading} variant="h3">
-        Assessment Reports
-      </Typography>
-      <FeedbackReportLink
-        assessment={assessment}
-        text="View Feedback Report"
-        uppercase
-        visible={canViewFeedbackReport}
-      />
-      <ManagementReportLink
-        assessment={assessment}
-        text="View Management Report"
-        uppercase
-      />
-    </Box>
-  )
+
+  if (assessment && assessment.id) {
+    return (
+      <Box className={classes.wrapper} component="nav">
+        <Typography className={classes.heading} variant="h3">
+          Assessment Reports
+        </Typography>
+        <FeedbackReportLink
+          assessment={assessment}
+          text="View Feedback Report"
+          uppercase
+          visible={canViewFeedbackReport}
+        />
+        <ManagementReportLink
+          assessment={assessment}
+          text="View Management Report"
+          uppercase
+        />
+      </Box>
+    )
+  }
+
+  return null
 }
 
 ReportLinks.propTypes = {

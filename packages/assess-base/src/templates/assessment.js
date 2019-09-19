@@ -434,7 +434,7 @@ function AssessmentTemplate({
             >
               <Box className={classes.sideBar}>
                 <ReportLinks
-                  assessment={assessment}
+                  assessment={assessmentData}
                   canViewFeedbackReport={canViewFeedbackReport}
                 />
                 <KeyInfoDocsList assessmentData={assessmentData} />
