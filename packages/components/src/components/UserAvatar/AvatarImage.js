@@ -21,10 +21,10 @@ const AvatarImage = ({ theme, classes, user, fullName, className, src }) => {
     <Avatar
       className={classnames(classes.root, className)}
       style={{
-        backgroundColor: color,
+        boxShadow: theme.shadows[1],
         color: theme.palette.getContrastText(color),
       }}
-      {...(imgSrc && { src: imgSrc })}
+      src={imgSrc}
     >
       {getInitials(fullName || getFullName(firstName, lastName, email))}
     </Avatar>

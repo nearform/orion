@@ -14,7 +14,7 @@ const styles = theme => {
     height: theme.spacing(4),
     width: theme.spacing(4),
     backgroundColor: theme.palette.background.default,
-    boxShadow: theme.shadows[1],
+    boxShadow: theme.shadows[2],
   }
 
   // Fill MUI Slider's hard-coded 6px gap between disabled tracks and thumb

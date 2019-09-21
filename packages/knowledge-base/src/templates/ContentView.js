@@ -13,6 +13,7 @@ import ContentMetadata from '../components/content/ContentMetadata'
 import ContentOptions from '../components/content/ContentOptions'
 import FeatureArticles from '../components/list/FeatureArticles'
 import HowToAuthenticate from '../components/HowToAuthenticate'
+import SEO from '../components/SEO'
 
 function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
   const { path } = articleSummary || { path: slug }
@@ -47,6 +48,7 @@ function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
 
   return (
     <PaddedContainer>
+      <SEO title={articleData.title} />
       <Grid
         container
         spacing={2}
@@ -147,5 +149,12 @@ export default withStyles(theme => ({
     '& strong': theme.articleTypography.bold,
     '& i': theme.articleTypography.italic,
     '& a': theme.articleTypography.link,
+    '& figure': {
+      marginLeft: 0,
+      marginRight: 0,
+      '& img': {
+        maxWidth: '100%',
+      },
+    },
   },
 }))(ContentView)

@@ -340,7 +340,6 @@ export default withStyles(theme => ({
     height: 120,
     fontWeight: 'bold',
     fontSize: 32,
-    backgroundColor: theme.palette.primary.light,
     transition: 'width .2s ease-out, height .2s ease-out',
   },
   avatarSmall: {

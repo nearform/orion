@@ -5,6 +5,7 @@ import { useIsAdmin, useIsPlatformGroup } from '../../utils/auth'
 import RateArticle from './RateArticle'
 import HideButton from './HideButton'
 import { Share, Print, Edit, PictureAsPdf } from '@material-ui/icons'
+import { navigate } from '@reach/router'
 
 // TODO: delete this placeholder component when each button is implemented
 const PlaceholderButton = withStyles(theme => ({
@@ -19,8 +20,12 @@ const PlaceholderButton = withStyles(theme => ({
     marginRight: theme.spacing(),
     color: theme.palette.text.secondary,
   },
-}))(({ classes, children }) => {
-  return <Button className={classes.root}>{children}</Button>
+}))(({ classes, children, ...rest }) => {
+  return (
+    <Button className={classes.root} {...rest}>
+      {children}
+    </Button>
+  )
 })
 
 const ContentOptions = ({ classes, articleData, refetchArticle }) => {
@@ -73,7 +78,11 @@ const ContentOptions = ({ classes, articleData, refetchArticle }) => {
       )}
       {canEditArticles && (
         <Grid item xs={12} sm={6} lg={12}>
-          <PlaceholderButton>
+          <PlaceholderButton
+            onClick={() => {
+              navigate(`/my-content/edit/${id}`)
+            }}
+          >
             <i className={classes.icons}>
               <Edit />
             </i>
