@@ -1,41 +1,31 @@
 import React from 'react'
 import T from 'prop-types'
-import {
-  Typography,
-  withStyles,
-  Grid,
-  Button,
-  TextField,
-} from '@material-ui/core'
+import { Typography, withStyles, Grid, Button } from '@material-ui/core'
 
-import { SectionTitle } from 'components'
+import { SectionTitleField, InputField } from './FormFields'
 
 function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
   return (
     <div className={classes.root}>
       <div>
-        <Grid container spacing={3} xs={5} className={classes.form}>
+        <Grid container spacing={3} className={classes.form}>
           <Grid item xs={8}>
-            <SectionTitle gutterBottom barColor={theme.palette.secondary.main}>
+            <SectionTitleField
+              barColor={theme.palette.secondary.main}
+              category="general"
+            >
               Sign in to your account
-            </SectionTitle>
+            </SectionTitleField>
           </Grid>
           <Grid item xs={10}>
-            <Typography variant="h4" gutterBottom>
+            <InputField name="username" onChange={handleInput}>
               please enter your username
-            </Typography>
-            <TextField name="username" onChange={handleInput} fullWidth />
+            </InputField>
           </Grid>
           <Grid item xs={10}>
-            <Typography variant="h4" gutterBottom>
+            <InputField name="password" type="password" onChange={handleInput}>
               please enter your password
-            </Typography>
-            <TextField
-              name="password"
-              type="password"
-              onChange={handleInput}
-              fullWidth
-            />
+            </InputField>
           </Grid>
           <Grid
             item

@@ -1,8 +1,10 @@
 import React from 'react'
 import { SignUp } from 'aws-amplify-react'
-import Register from './Register'
 
-export default class CustomSignUp extends SignUp {
+import Register from './Register'
+import authEventMixin from './AuthEventMixin'
+
+export default class CustomSignUp extends authEventMixin(SignUp) {
   constructor(props) {
     super(props)
     //required by the amplify SignUp component

@@ -1,8 +1,10 @@
 import React from 'react'
 import { ConfirmSignUp } from 'aws-amplify-react'
-import RegisterConfirm from './RegisterConfirm'
 
-export default class CustomConfirmSignUp extends ConfirmSignUp {
+import RegisterConfirm from './RegisterConfirm'
+import authEventMixin from './AuthEventMixin'
+
+export default class CustomConfirmSignUp extends authEventMixin(ConfirmSignUp) {
   constructor(props) {
     super(props)
     this._validAuthStates = ['confirmSignUp']

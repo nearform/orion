@@ -3,20 +3,28 @@ import { ForgotPassword } from 'aws-amplify-react'
 
 import PasswordResetSend from './PasswordResetSend'
 import PasswordResetConfirm from './PasswordResetConfirm'
-export default class CustomForgotPassword extends ForgotPassword {
+import authEventMixin from './AuthEventMixin'
+
+export default class CustomForgotPassword extends authEventMixin(
+  ForgotPassword
+) {
   constructor(props) {
     super(props)
     this._validAuthStates = ['forgotPassword']
   }
 
   showComponent() {
-    const { authData = {} } = this.props
-    if (this.state.delivery || authData.username) {
+    const {
+      state: { delivery },
+      props: { authData = {} },
+      handleInputChange,
+    } = this
+    if (delivery || authData.username) {
       return (
         <PasswordResetConfirm
           resendCode={() => super.send(event)}
           submit={event => super.submit(event)}
-          handleInput={this.handleInputChange}
+          handleInput={handleInputChange}
         />
       )
     } else {
@@ -24,7 +32,7 @@ export default class CustomForgotPassword extends ForgotPassword {
         <PasswordResetSend
           goToSignIn={() => super.changeState('signIn')}
           send={event => super.send(event)}
-          handleInput={this.handleInputChange}
+          handleInput={handleInputChange}
         />
       )
     }
