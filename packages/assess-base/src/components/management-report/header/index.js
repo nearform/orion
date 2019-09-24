@@ -22,9 +22,6 @@ const Header = ({ assessment, classes }) => {
           {assessment.name}
         </Typography>
       </Box>
-      <Button color="secondary" variant="contained">
-        Download as PDF
-      </Button>
     </Box>
   )
 }

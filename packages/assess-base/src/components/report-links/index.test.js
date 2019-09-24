@@ -113,4 +113,20 @@ describe('<ReportLinks />', () => {
       ).toEqual(0)
     })
   })
+
+  describe('when theres no data yet', () => {
+    let defaultReportLinks
+
+    beforeAll(() => {
+      defaultReportLinks = TestRenderer.create(
+        <ReportLinks assessment={undefined} />
+      ).root
+    })
+
+    test('theres just a bit of text (as well as the heading)', () => {
+      expect(defaultReportLinks.findAll(el => el.type === 'p').length).toEqual(
+        1
+      )
+    })
+  })
 })

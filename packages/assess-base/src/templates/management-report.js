@@ -73,13 +73,15 @@ function ManagementReport({ assessmentId, classes }) {
         <Header assessment={assessment} />
         <HeadedSection pillar="default" title="Key Information">
           {// Output the key info summary section (page intro)
-          keyInfoItemsMeta.map(({ key, name }) => (
-            <HeadedSubSection
-              body={assessmentKeyInfo[key]}
-              key={key}
-              title={name}
-            />
-          ))}
+          keyInfoItemsMeta.map(({ key, name }) => {
+            const keyInfoBody =
+              assessmentKeyInfo && assessmentKeyInfo[key]
+                ? assessmentKeyInfo[key]
+                : 'not provided for this assessment'
+            return (
+              <HeadedSubSection body={keyInfoBody} key={key} title={name} />
+            )
+          })}
         </HeadedSection>
 
         {// Loop over three pillars
