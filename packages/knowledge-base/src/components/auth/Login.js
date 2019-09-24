@@ -24,13 +24,19 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
             <Typography variant="h4" gutterBottom>
               please enter your username
             </Typography>
-            <TextField name="username" onChange={handleInput} fullWidth />
+            <TextField
+              data-testid="login-username"
+              name="username"
+              onChange={handleInput}
+              fullWidth
+            />
           </Grid>
           <Grid item xs={10}>
             <Typography variant="h4" gutterBottom>
               please enter your password
             </Typography>
             <TextField
+              data-testid="login-password"
               name="password"
               type="password"
               onChange={handleInput}
@@ -73,6 +79,7 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
 
             <Grid item>
               <Button
+                data-testid="login-submit"
                 name="submit"
                 color="secondary"
                 variant="contained"
