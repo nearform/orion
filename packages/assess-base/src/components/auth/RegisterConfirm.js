@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import { withStyles, Grid, Button } from '@material-ui/core'
 
-import { SectionTitleField, InputField, Submit } from './FormFields'
+import { SectionTitleField, InputField, SubmitButton } from './FormFields'
 
 function RegisterConfirm({
   theme,
@@ -53,7 +53,7 @@ function RegisterConfirm({
               &nbsp;
             </Grid>
             <Grid item>
-              <Submit onClick={confirm}>Confirm</Submit>
+              <SubmitButton onClick={confirm}>Confirm</SubmitButton>
             </Grid>
           </Grid>
         </Grid>

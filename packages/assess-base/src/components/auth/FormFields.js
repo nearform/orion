@@ -183,7 +183,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function Submit({ onClick, children }) {
+function SubmitButton({ onClick, children }) {
   const classes = useStyles()
   const { submitting } = useContext(AuthStateContext)
   return (
@@ -204,8 +204,8 @@ function Submit({ onClick, children }) {
   )
 }
 
-Submit.propTypes = {
+SubmitButton.propTypes = {
   onClick: T.func.isRequired,
 }
 
-export { SectionTitleField, InputField, Submit }
+export { SectionTitleField, InputField, SubmitButton }

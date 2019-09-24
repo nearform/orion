@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
 
-import { SectionTitleField, InputField } from './FormFields'
+import { SectionTitleField, InputField, SubmitButton } from './FormFields'
 
 function Register({
   theme,
@@ -62,15 +62,7 @@ function Register({
               &nbsp;
             </Grid>
             <Grid item>
-              <Button
-                name="submit"
-                color="secondary"
-                variant="contained"
-                fullWidth
-                onClick={signUp}
-              >
-                Create Account
-              </Button>
+              <SubmitButton onClick={signUp}>Create Account</SubmitButton>
             </Grid>
           </Grid>
         </Grid>

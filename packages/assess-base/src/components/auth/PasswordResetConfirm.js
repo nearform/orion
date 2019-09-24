@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import { withStyles, Grid, Button } from '@material-ui/core'
 
-import { SectionTitleField, InputField, Submit } from './FormFields'
+import { SectionTitleField, InputField, SubmitButton } from './FormFields'
 
 function PasswordReset({ theme, classes, submit, resendCode, handleInput }) {
   return (
@@ -44,7 +44,7 @@ function PasswordReset({ theme, classes, submit, resendCode, handleInput }) {
               &nbsp;
             </Grid>
             <Grid item>
-              <Submit onClick={submit}>Submit</Submit>
+              <SubmitButton onClick={submit}>Submit</SubmitButton>
             </Grid>
           </Grid>
         </Grid>
