@@ -1,57 +1,75 @@
 import React from 'react'
 
-const ErrorContext = React.createContext(null)
-
-// Rules for assigning a category to an error based on the error message.
-const ErrorCategories = {
-  username: error => /user/i.test(error),
-  password: error => /password/i.test(error),
-}
+const AuthStateContext = React.createContext({ errors: {} })
 
 /**
- * Read an error from a component's state.
- * Tries to assign an error category based on the error message and
- * the rules defined in the ErrorCategories array.
- * Returns null if no error found.
+ * Read the current authentication state from a component's state.
+ * The auth state is composed of the following:
+ * - submitting: A flag indicating whether an auth request is being submitted
+ *   or not;
+ * - errors: An object describing any current errors in the auth process.
+ *   The object is a collection of error categories mapped to error messages,
+ *   e.g.:
+ *      {
+ *          "username": "Username is required",
+ *          "password": "Password is required"
+ *      }
+ *   The function uses the component's authErrorCategories property to derive
+ *   error category and messages from the error message reported by aws-amplify.
  */
-function readError({ state }) {
+function readAuthState({ state, authErrorCategories = {} }) {
   if (!state) {
-    return null
+    return { errors: {} }
   }
-  const { error } = state
+  // Read auth state.
+  const { error, submitting } = state
   if (!error) {
-    return null
+    return { errors: {}, submitting }
   }
-  // Attempt to assign a category; default to 'general' if no match found.
-  const category =
-    Object.keys(ErrorCategories).find(category =>
-      ErrorCategories[category](error)
-    ) || 'general'
-  return { category, message: error }
+  // Generate error categories from the error message.
+  const errors = Object.keys(authErrorCategories).reduce((errors, category) => {
+    // Test if current category applies to this error message.
+    const result = authErrorCategories[category](error)
+    if (result) {
+      // If result is a string then use as new error message, else use original message.
+      errors[category] = typeof result === 'string' ? result : error
+    }
+    return errors
+  }, {})
+  // If no error categories returned then report error in general category.
+  if (Object.keys(errors).length === 0) {
+    errors.general = error
+  }
+  return { errors, submitting }
 }
 
 const authEventMixin = Base =>
   class extends Base {
     triggerAuthEvent(event) {
       const { type, data } = event
+      const submitting = false
       // Intercept error events and handle separately to other event types.
       if (type === 'error') {
-        this.setState({ error: data })
+        this.setState({ error: data, submitting })
       } else {
-        this.setState({ error: null })
+        this.setState({ error: null, submitting })
         super.triggerAuthEvent(event)
       }
     }
 
+    setSubmitting(submitting) {
+      this.setState({ submitting })
+    }
+
     render() {
-      const error = readError(this)
+      const authState = readAuthState(this)
       return (
-        <ErrorContext.Provider value={error}>
+        <AuthStateContext.Provider value={authState}>
           {super.render()}
-        </ErrorContext.Provider>
+        </AuthStateContext.Provider>
       )
     }
   }
 
 export default authEventMixin
-export { ErrorContext }
+export { AuthStateContext }

@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
 
-import { SectionTitleField, InputField } from './FormFields'
+import { SectionTitleField, InputField, Submit } from './FormFields'
 
 function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
   return (
@@ -68,15 +68,7 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
               &nbsp;
             </Grid>
             <Grid item>
-              <Button
-                name="submit"
-                color="secondary"
-                variant="contained"
-                fullWidth
-                onClick={signIn}
-              >
-                Sign In
-              </Button>
+              <Submit onClick={signIn}>Sign In</Submit>
             </Grid>
           </Grid>
         </Grid>

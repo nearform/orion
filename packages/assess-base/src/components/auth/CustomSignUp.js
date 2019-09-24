@@ -3,8 +3,11 @@ import { SignUp } from 'aws-amplify-react'
 
 import Register from './Register'
 import authEventMixin from './AuthEventMixin'
+import authErrors from './AuthErrors'
 
 export default class CustomSignUp extends authEventMixin(SignUp) {
+  authErrorCategories = authErrors.signUp
+
   constructor(props) {
     super(props)
     //required by the amplify SignUp component
@@ -70,7 +73,10 @@ export default class CustomSignUp extends authEventMixin(SignUp) {
     return (
       <Register
         goToSignIn={() => super.changeState('signIn')}
-        signUp={event => super.signUp(event)}
+        signUp={event => {
+          this.setSubmitting(true)
+          super.signUp(event)
+        }}
         handleInput={this.handleInputChange}
         signUpFields={this.signUpFields}
       />

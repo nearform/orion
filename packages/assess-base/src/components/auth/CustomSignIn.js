@@ -3,8 +3,11 @@ import { SignIn } from 'aws-amplify-react'
 
 import Login from './Login'
 import authEventMixin from './AuthEventMixin'
+import authErrors from './AuthErrors'
 
 export default class CustomSignIn extends authEventMixin(SignIn) {
+  authErrorCategories = authErrors.signIn
+
   constructor(props) {
     super(props)
     this._validAuthStates = ['signIn']
@@ -15,7 +18,10 @@ export default class CustomSignIn extends authEventMixin(SignIn) {
       <Login
         goToSignUp={() => super.changeState('signUp')}
         goToReset={() => super.changeState('forgotPassword')}
-        signIn={event => super.signIn(event)}
+        signIn={event => {
+          this.setSubmitting(true)
+          super.signIn(event)
+        }}
         handleInput={this.handleInputChange}
       />
     )

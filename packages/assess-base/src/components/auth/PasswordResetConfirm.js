@@ -1,14 +1,8 @@
 import React from 'react'
 import T from 'prop-types'
-import {
-  Typography,
-  withStyles,
-  Grid,
-  Button,
-  TextField,
-} from '@material-ui/core'
+import { withStyles, Grid, Button } from '@material-ui/core'
 
-import { SectionTitle } from 'components'
+import { SectionTitleField, InputField, Submit } from './FormFields'
 
 function PasswordReset({ theme, classes, submit, resendCode, handleInput }) {
   return (
@@ -16,27 +10,27 @@ function PasswordReset({ theme, classes, submit, resendCode, handleInput }) {
       <div>
         <Grid container direction="column" spacing={3}>
           <Grid item xs={9}>
-            <SectionTitle gutterBottom barColor={theme.palette.secondary.main}>
+            <SectionTitleField
+              barColor={theme.palette.secondary.main}
+              category="general"
+            >
               Reset your password
-            </SectionTitle>
+            </SectionTitleField>
           </Grid>
           <Grid item>
-            <Typography variant="h4" gutterBottom>
-              Code *
-            </Typography>
-            <TextField required name="code" onChange={handleInput} fullWidth />
+            <InputField name="code" required onChange={handleInput}>
+              Code
+            </InputField>
           </Grid>
           <Grid item>
-            <Typography variant="h4" gutterBottom>
-              New Password *
-            </Typography>
-            <TextField
-              required
+            <InputField
               name="password"
               type="password"
+              required
               onChange={handleInput}
-              fullWidth
-            />
+            >
+              New Password
+            </InputField>
           </Grid>
 
           <Grid item container alignItems="baseline" spacing={3} wrap="nowrap">
@@ -50,15 +44,7 @@ function PasswordReset({ theme, classes, submit, resendCode, handleInput }) {
               &nbsp;
             </Grid>
             <Grid item>
-              <Button
-                name="submit"
-                color="secondary"
-                variant="contained"
-                fullWidth
-                onClick={submit}
-              >
-                Submit
-              </Button>
+              <Submit onClick={submit}>Submit</Submit>
             </Grid>
           </Grid>
         </Grid>

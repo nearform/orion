@@ -1,9 +1,18 @@
 import React, { useContext, useState } from 'react'
 import T from 'prop-types'
-import { Typography, TextField, Select, MenuItem } from '@material-ui/core'
+import {
+  Button,
+  CircularProgress,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+  makeStyles,
+} from '@material-ui/core'
+import { teal } from '@material-ui/core/colors'
 import { SectionTitle } from 'components'
 
-import { ErrorContext } from './AuthEventMixin'
+import { AuthStateContext } from './AuthEventMixin'
 
 function FieldLabel({ required, hasError, children }) {
   return (
@@ -37,14 +46,14 @@ function ErrorMessage({ children }) {
 }
 
 function SectionTitleField({ barColor, category, children }) {
-  const error = useContext(ErrorContext)
-  const showError = error && error.category === category
+  const { errors } = useContext(AuthStateContext)
+  const error = errors[category]
   return (
     <React.Fragment>
       <SectionTitle gutterBottom barColor={barColor}>
         {children}
       </SectionTitle>
-      {showError && <ErrorMessage>{error.message}</ErrorMessage>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </React.Fragment>
   )
 }
@@ -54,23 +63,31 @@ SectionTitleField.propTypes = {
   category: T.string,
 }
 
-function InputTextField({ name, type, required, onChange, children }) {
-  const error = useContext(ErrorContext)
-  const showError = error && error.category === name
+function InputTextField({
+  name,
+  type,
+  required,
+  disabled,
+  onChange,
+  children,
+}) {
+  const { submitting, errors } = useContext(AuthStateContext)
+  const error = errors[name]
   return (
     <React.Fragment>
-      <FieldLabel required={required} hasError={showError}>
+      <FieldLabel required={required} hasError={!!error}>
         {children}
       </FieldLabel>
       <TextField
         name={name}
         type={type}
         required={required}
+        disabled={disabled || submitting}
         onChange={onChange}
         fullWidth
-        style={{ border: showError ? '1.5pt solid red' : 'none' }}
+        style={{ border: error ? '1.5pt solid red' : 'none' }}
       />
-      {showError && <ErrorMessage>{error.message}</ErrorMessage>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </React.Fragment>
   )
 }
@@ -98,20 +115,28 @@ function InputSelectField({
       onChange(evt)
     }
   }
-  const error = useContext(ErrorContext)
-  const showError = error && error.category === name
+  const { submitting, errors } = useContext(AuthStateContext)
+  const error = errors[name]
   return (
     <React.Fragment>
-      <FieldLabel required={required} hasError={showError}>
+      <FieldLabel required={required} hasError={!!error}>
         {children}
       </FieldLabel>
-      <Select {...props} onChange={handleChange} value={selectValue}>
+      <Select
+        name={name}
+        disabled={submitting}
+        onChange={handleChange}
+        value={selectValue}
+        style={{ border: error ? '1.5pt solid red' : 'none' }}
+        {...props}
+      >
         {options.map(opt => (
           <MenuItem key={opt} value={opt}>
             {opt.charAt(0).toUpperCase() + opt.slice(1)}
           </MenuItem>
         ))}
       </Select>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </React.Fragment>
   )
 }
@@ -128,11 +153,59 @@ function InputField({ type, children, ...props }) {
   if (type === 'select') {
     return <InputSelectField {...props}>{children}</InputSelectField>
   }
-  return <InputTextField {...props}>{children}</InputTextField>
+  return (
+    <InputTextField type={type} {...props}>
+      {children}
+    </InputTextField>
+  )
 }
 
 InputField.propTypes = {
   type: T.string,
 }
 
-export { SectionTitleField, InputField }
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonProgress: {
+    color: teal[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
+}))
+
+function Submit({ onClick, children }) {
+  const classes = useStyles()
+  const { submitting } = useContext(AuthStateContext)
+  return (
+    <div className={classes.wrapper}>
+      <Button
+        name="submit"
+        color="secondary"
+        variant="contained"
+        fullWidth
+        onClick={onClick}
+      >
+        {children}
+      </Button>
+      {submitting && (
+        <CircularProgress size={24} className={classes.buttonProgress} />
+      )}
+    </div>
+  )
+}
+
+Submit.propTypes = {
+  onClick: T.func.isRequired,
+}
+
+export { SectionTitleField, InputField, Submit }
