@@ -1,25 +1,18 @@
 import React from 'react'
 import T from 'prop-types'
-import { withStyles } from '@material-ui/core'
+import { Box, withStyles } from '@material-ui/core'
 import get from 'lodash/get'
-import useAmplifyImage from '../../hooks/useAmplifyImage'
 import { formatDateAsMonthAndYear } from '../../utils/date'
-import { navigate } from '@reach/router'
-import { ButtonBase } from '@material-ui/core'
+import ArticleVisualSummary from '../content/article-visual-summary'
 const ArticlePreview = ({ article, classes }) => {
-  const thumbnail = useAmplifyImage(article.thumbnail)
   return (
-    <ButtonBase onClick={() => navigate(`/content/${article.path}`)}>
+    <Box>
       <div key={article.id} className={classes.article}>
-        <div
-          className={classes.articleImage}
-          style={{
-            backgroundImage: thumbnail ? `url(${thumbnail})` : undefined,
-          }}
+        <ArticleVisualSummary
+          article={article}
+          className={classes.visualSummary}
+          text={get(article, 'primary_taxonomy[0].taxonomy.name')}
         />
-        <div className={classes.taxonomyLabel}>
-          {get(article, 'primary_taxonomy[0].taxonomy.name')}
-        </div>
         <div className={classes.articleTitle}>{article.title}</div>
         <div className={classes.articleMeta}>
           <div className={classes.articleDate}>
@@ -31,34 +24,15 @@ const ArticlePreview = ({ article, classes }) => {
           </div>
         </div>
       </div>
-    </ButtonBase>
+    </Box>
   )
 }
 
 const styles = theme => ({
   article: {
-    marginLeft: theme.spacing(3),
-    '&:first-child': {
-      marginLeft: theme.spacing(2),
-    },
     cursor: 'pointer',
   },
-  articleImage: {
-    width: '320px',
-    height: '160px',
-    backgroundColor: theme.palette.background.light,
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-  },
-  taxonomyLabel: {
-    ...theme.editorsPicks.caption,
-    paddingLeft: theme.spacing(2),
-    width: '255px',
-    height: '40px',
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: theme.palette.primary.main,
-    marginTop: `-26px`,
+  visualSummary: {
     marginBottom: theme.spacing(1),
   },
   articleTitle: theme.editorsPicks.title,

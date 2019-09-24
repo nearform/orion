@@ -4,7 +4,6 @@ import { useQuery } from 'graphql-hooks'
 import { getRandomRows } from '../../utils/array'
 import FeatureArticles from './FeatureArticles'
 import { getEditorsPicks } from '../../queries'
-import { Grid } from '@material-ui/core'
 
 function EditorsPicks() {
   const { data: editorsPicksData } = useQuery(getEditorsPicks)
@@ -18,14 +17,12 @@ function EditorsPicks() {
       : editorsPicksData.editors_picks
 
   return (
-    <Grid item container spacing={3} direction="row">
-      <FeatureArticles
-        hideEmpty
-        title="Editor's Picks"
-        articles={get({ editors_picks: editorsPicks }, 'editors_picks', [])}
-        align="flex-start"
-      />
-    </Grid>
+    <FeatureArticles
+      hideEmpty
+      title="Editor's Picks"
+      articles={get({ editors_picks: editorsPicks }, 'editors_picks', [])}
+      align="flex-start"
+    />
   )
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import { Button, Grid, Typography, withStyles } from '@material-ui/core'
+import { Button, Grid, Typography, withStyles, Box } from '@material-ui/core'
 import { PaddedContainer } from 'components'
 import EditorsPicks from '../components/list/EditorsPicks'
 import PersonalizedLists from '../components/list/PersonalizedLists'
@@ -54,15 +54,10 @@ function KnowledgeHome({ theme, classes, data }) {
         </PaddedContainer>
       </div>
       <PaddedContainer>
-        <Grid
-          container
-          spacing={3}
-          direction="column"
-          className={classes.mainBody}
-        >
+        <Box className={classes.mainBody}>
           <EditorsPicks />
           <PersonalizedLists />
-        </Grid>
+        </Box>
       </PaddedContainer>
     </BackgroundImage>
   )
@@ -87,7 +82,15 @@ const styles = theme => ({
     marginBottom: theme.spacing(4),
   },
   mainBody: {
+    display: 'flex',
+    flexDirection: 'column',
     marginTop: theme.spacing(20),
+    '& > *': {
+      marginBottom: theme.spacing(6),
+    },
+    '& > *:last-child': {
+      marginBottom: 0,
+    },
   },
 })
 

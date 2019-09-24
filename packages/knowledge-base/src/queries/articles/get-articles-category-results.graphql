@@ -2,6 +2,7 @@ query getCategoryArticles(
   $whereClause: article_bool_exp
   $limit: Int!
   $offset: Int!
+  $taxonomyKey: String
 ) {
   article(where: $whereClause, limit: $limit, offset: $offset) {
     id
@@ -36,5 +37,11 @@ query getCategoryArticles(
     aggregate {
       count
     }
+  }
+  taxonomy(where: { key: { _eq: $taxonomyKey } }) {
+    taxonomy_type {
+      name
+    }
+    key
   }
 }

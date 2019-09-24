@@ -16,21 +16,13 @@ beforeEach(() => {
 
 describe('ProtectedRoute', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(<ProtectedRoute component={SecretComponent} />)
-
-    expect(tree).toBeDefined()
-  })
-
-  it('renders a component that redirects to /auth when user is not authenticated', () => {
-    const wrapper = mount(
+    const tree = renderer.create(
       <AuthInitContext.Provider value={true}>
         <ProtectedRoute component={SecretComponent} />
       </AuthInitContext.Provider>
     )
-    const redirect = wrapper.find(Redirect)
 
-    expect(redirect.length).toBe(1)
-    expect(redirect.props().to).toBe('/auth')
+    expect(tree).toBeDefined()
   })
 
   it('renders protected component when user is authenticated and no role specified', () => {

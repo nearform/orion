@@ -55,8 +55,7 @@ const ListContent = ({
       get(results, 'article_aggregate') ||
       get(results, 'search_article_aggregate') ||
       defaultAggregate,
-    taxonomy:
-      get(resultsFromContext, 'taxonomy') || taxonomy ? { key: taxonomy } : {},
+    taxonomy: get(results, 'taxonomy'),
   }
 
   const taxonomyTypes = useTaxonomies()
@@ -81,16 +80,13 @@ const ListContent = ({
   const fetchArticles = term ? fetchArticlesByTitle : fetchArticlesByTaxonomy
   const vars = useMemo(
     () => ({
-      whereClause: buildWhereClause(
-        data.taxonomy.key,
-        taxonomyIds,
-        taxonomyTypes
-      ),
+      whereClause: buildWhereClause(taxonomy, taxonomyIds, taxonomyTypes),
       limit: PAGE_SIZE,
       offset,
+      taxonomyKey: taxonomy,
       ...(term && { titleLike: term }),
     }),
-    [data.taxonomy.key, taxonomyIds, taxonomyTypes, offset, term]
+    [taxonomy, taxonomyIds, taxonomyTypes, offset, term]
   )
 
   useEffect(() => {
@@ -126,15 +122,13 @@ const ListContent = ({
   const handlePagination = dir => {
     if (isPreRendered) {
       navigate(
-        `/section/${data.taxonomy.key}${
-          page + dir !== 1 ? `/page/${page + dir}` : ''
-        }`
+        `/section/${taxonomy}${page + dir !== 1 ? `/page/${page + dir}` : ''}`
       )
     } else {
       setPage(page => page + dir)
     }
   }
-  const section = getTaxonomyItemByKey(taxonomyTypes, data.taxonomy.key)
+  const section = getTaxonomyItemByKey(taxonomyTypes, taxonomy)
 
   return (
     <PaddedContainer>
@@ -146,7 +140,9 @@ const ListContent = ({
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={9}>
               <Typography variant="h4" color="secondary">
-                {term ? 'SEARCH RESULTS FOR' : section.type}
+                {term
+                  ? 'SEARCH RESULTS FOR'
+                  : data.taxonomy && data.taxonomy[0].taxonomy_type.name}
               </Typography>
               <Typography variant="h1">
                 {term ? <span>&lsquo;{term}&rsquo;</span> : section.name}

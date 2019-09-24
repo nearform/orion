@@ -1,5 +1,5 @@
 import React from 'react'
-import { withStyles, Grid } from '@material-ui/core'
+import { withStyles } from '@material-ui/core'
 
 /*
  * Placeholder function for promo-spots
@@ -8,14 +8,12 @@ import { withStyles, Grid } from '@material-ui/core'
 
 function PromoSpot({ classes }) {
   return (
-    <Grid item xs={12} md={3} sm={4}>
-      <div
-        className={classes.promoImage}
-        style={{
-          backgroundImage: undefined,
-        }}
-      />
-    </Grid>
+    <div
+      className={classes.promoImage}
+      style={{
+        backgroundImage: undefined,
+      }}
+    />
   )
 }
 
