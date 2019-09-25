@@ -429,7 +429,7 @@ function AssessmentTemplate({
                   assessment={assessmentData}
                   canViewFeedbackReport={canViewFeedbackReport}
                 />
-                <KeyInfoDocsList assessmentData={assessmentData} />
+                <KeyInfoDocsList assessment={assessmentData} />
               </Box>
             </Grid>
           </Grid>

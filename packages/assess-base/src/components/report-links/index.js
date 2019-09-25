@@ -3,6 +3,7 @@ import T from 'prop-types'
 import { Assignment, AssignmentTurnedIn } from '@material-ui/icons'
 import { Box, makeStyles, Typography } from '@material-ui/core'
 import { Link } from 'gatsby'
+import HeadedAsidePanel from '../headed-aside-panel'
 
 // Common link styles for Report Links, including spacing and text formatting options
 const useLinkStyles = makeStyles(theme => ({
@@ -98,34 +99,36 @@ const useReportLinksStyles = makeStyles(theme => ({
 }))
 
 const ReportLinks = ({ assessment, canViewFeedbackReport }) => {
-  const classes = useReportLinksStyles()
+  const { wrapper } = useReportLinksStyles()
 
-  if (assessment && assessment.id) {
-    return (
-      <Box className={classes.wrapper} component="nav">
-        <Typography className={classes.heading} variant="h3">
-          Assessment Reports
+  return (
+    <HeadedAsidePanel title="Assessment Reports">
+      {assessment && assessment.id ? (
+        <Box component="nav" className={wrapper}>
+          <FeedbackReportLink
+            assessment={assessment}
+            text="View Feedback Report"
+            uppercase
+            visible={canViewFeedbackReport}
+          />
+          <ManagementReportLink
+            assessment={assessment}
+            text="View Management Report"
+            uppercase
+          />
+        </Box>
+      ) : (
+        <Typography>
+          When available the Assessment feedback and management report will
+          appear here.
         </Typography>
-        <FeedbackReportLink
-          assessment={assessment}
-          text="View Feedback Report"
-          uppercase
-          visible={canViewFeedbackReport}
-        />
-        <ManagementReportLink
-          assessment={assessment}
-          text="View Management Report"
-          uppercase
-        />
-      </Box>
-    )
-  }
-
-  return null
+      )}
+    </HeadedAsidePanel>
+  )
 }
 
 ReportLinks.propTypes = {
-  assessment: T.object.isRequired,
+  assessment: T.object,
   canViewFeedbackReport: T.bool,
 }
 

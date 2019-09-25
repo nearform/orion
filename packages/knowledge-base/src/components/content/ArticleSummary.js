@@ -2,10 +2,11 @@ import React from 'react'
 import { Link } from 'gatsby'
 import BookmarkButton from '../BookmarkButton'
 import RichText from './RichText'
-import { constructImageUrl } from '../../utils/image'
 import { formatDateAsMonthAndYear } from '../../utils/date'
 import { withStyles, Typography, Box } from '@material-ui/core'
 import get from 'lodash/get'
+
+import ArticleVisualSummary from './article-visual-summary'
 
 const ArticleSummary = ({
   classes,
@@ -17,21 +18,12 @@ const ArticleSummary = ({
   //TODO: Replace <img> on line 16 with gatsby-image
   return (
     <Box className={classes.summaryObj}>
-      <Link
-        className={classes.articleImageLink}
-        to={`/content/${article.path}`}
-      >
-        <img
-          src={constructImageUrl(article.thumbnail)}
-          width="100%"
-          height="auto"
+      <Box className={classes.articleImageLink}>
+        <ArticleVisualSummary
+          article={article}
+          text={get(article, 'primary_taxonomy[0].taxonomy.name') || 'No Topic'}
         />
-        <div className={classes.topicBox}>
-          <Typography variant="h3">
-            {get(article, 'primary_taxonomy[0].taxonomy.name') || 'No Topic'}
-          </Typography>
-        </div>
-      </Link>
+      </Box>
       <Box className={classes.articleSummary}>
         <Link to={`/content/${article.path}`}>
           <Typography className={classes.articleTitle} variant="h2">
@@ -107,23 +99,6 @@ export default withStyles(theme => ({
     letterSpacing: '1.23px',
     color: theme.palette.secondary.main,
     marginRight: theme.spacing(1),
-  },
-  topicBox: {
-    width: '73%',
-    backgroundColor: theme.palette.primary.main,
-    position: 'relative',
-    marginTop: '-33px',
-    '& h3': {
-      fontSize: '12px',
-      fontWeight: '900',
-      letterSpacing: '2.45px',
-      color: 'white',
-      textTransform: 'uppercase',
-      padding: theme.spacing(2),
-    },
-    '&:hover': {
-      textDecoration: 'none',
-    },
   },
   articleSummary: {
     marginLeft: theme.spacing(2.5),
