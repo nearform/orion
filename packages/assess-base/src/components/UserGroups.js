@@ -24,10 +24,11 @@ import { ConfirmDialog, GroupTypeChip, GROUP_TYPES } from 'components'
 
 import useAdminTable from '../hooks/useAdminTable'
 
-import { getGroupIdSync } from '../utils/auth'
+import { getUserTokenData } from '../utils/auth'
 
 const groupTypeKeys = Object.keys(GROUP_TYPES)
 const groupTypes = groupTypeKeys.map(key => ({ key, value: GROUP_TYPES[key] }))
+const userTokenData = getUserTokenData()
 
 const GroupSchema = Yup.object().shape({
   name: Yup.string().required(),
@@ -101,7 +102,7 @@ function UserGroups({ classes }) {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             await createGroup({
-              variables: { ...values, parentId: getGroupIdSync() },
+              variables: { ...values, parentId: userTokenData.groupId },
             })
             refetchGroups()
           } finally {

@@ -8,7 +8,7 @@ import SEO from '../components/SEO'
 import LoggedOutAssessmentInfo from '../components/LoggedOutAssessmentInfo'
 import AssessmentTool from '../components/AssessmentTool'
 import AssessmentsTable from '../components/AssessmentsTable'
-import { useIsAuthenticated, hasPermissions } from '../utils/auth'
+import { getUserTokenData } from '../utils/auth'
 
 const assessmentColors = [
   theme => theme.palette.primary.light,
@@ -23,8 +23,7 @@ function AssessmentsHome({ theme, classes, data }) {
     assessmentTypes: { nodes: assessmentTypes },
   } = data
 
-  const isAuthenticated = useIsAuthenticated()
-  const canViewAssessments = hasPermissions('user')
+  const userTokenData = getUserTokenData()
   const assessmentItems = assessmentTypes
     .map(type => ({
       ...type,
@@ -63,7 +62,7 @@ function AssessmentsHome({ theme, classes, data }) {
       </div>
       <PaddedContainer>
         <div className={classes.sectionTop}>
-          {canViewAssessments ? (
+          {userTokenData.loggedIn ? (
             <Paper>
               <AssessmentsTable />
             </Paper>
@@ -85,7 +84,7 @@ function AssessmentsHome({ theme, classes, data }) {
                 barColor={assessmentColors[index % assessmentColors.length](
                   theme
                 )}
-                isAuthenticated={isAuthenticated}
+                isAuthenticated={userTokenData.loggedIn}
               />
             ))}
           </Grid>

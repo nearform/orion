@@ -16,12 +16,7 @@ import {
   upsertAssessmentCriterionDataMutation,
 } from '../queries'
 import FileList from '../components/FileList'
-import {
-  getUserIdSync,
-  hasPermissions,
-  useIsAuthInitialized,
-  isContributorSync,
-} from '../utils/auth'
+import { getUserTokenData } from '../utils/auth'
 import { assessmentInProgress } from '../utils/assessment-status'
 
 function createFormInitialValues(assessmentCriterionData) {
@@ -44,9 +39,7 @@ function CriterionTemplate({
   location,
 }) {
   const assessmentId = getAssessmentId(location)
-  const isAdmin = hasPermissions('company-admin')
-  const isContributor = isContributorSync()
-  const userId = getUserIdSync()
+  const userTokenData = getUserTokenData()
 
   const { t } = useTranslation()
 
@@ -60,12 +53,11 @@ function CriterionTemplate({
       criterionKey: criterion.key,
     },
   })
-  const isAuthInitialized = useIsAuthInitialized()
   useEffect(() => {
-    if (isAuthInitialized && !assessmentCriterionData) {
+    if (!assessmentCriterionData) {
       fetchAssessmentCriterionData()
     }
-  }, [isAuthInitialized, fetchAssessmentCriterionData, assessmentCriterionData])
+  }, [fetchAssessmentCriterionData, assessmentCriterionData])
 
   const [upsertAssessmentData] = useMutation(
     upsertAssessmentCriterionDataMutation
@@ -94,7 +86,7 @@ function CriterionTemplate({
   }
 
   const canEditAndUpload =
-    (isAdmin || isContributor) &&
+    (userTokenData.isAdmin || userTokenData.isContributor) &&
     assessmentInProgress(get(assessmentCriterionData, 'assessment_by_pk'))
 
   return (
@@ -116,7 +108,7 @@ function CriterionTemplate({
           <Grid item>
             <FileList
               assessmentId={assessmentId}
-              userId={userId}
+              userId={userTokenData.userId}
               pillar={pillar}
               criterion={criterion}
               files={get(assessmentCriterionData, 'assessment_file', [])}

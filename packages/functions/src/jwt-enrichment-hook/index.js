@@ -33,7 +33,7 @@ export const handler = async event => {
         claimsToAddOrOverride: {
           'https://hasura.io/jwt/claims': JSON.stringify({
             'x-hasura-allowed-roles': [defaultRoleName],
-            'x-hasura-default-role': defaultRoleName,
+            'x-hasura-default-role': 'defaultRoleName',
             'x-hasura-user-id': user.id.toString(),
             'x-hasura-group-id': userGroup.id.toString(),
           }),

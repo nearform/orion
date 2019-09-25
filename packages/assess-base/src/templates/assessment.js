@@ -25,13 +25,7 @@ import {
   updateAssessmentKeyInfoMutation,
   updateAssessmentStatusMutation,
 } from '../queries'
-import {
-  getUserIdSync,
-  isContributorSync,
-  getGroupIdSync,
-  useIsAuthInitialized,
-  hasPermissions,
-} from '../utils/auth'
+import { getUserTokenData } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'
@@ -73,10 +67,9 @@ function AssessmentTemplate({
   pageContext: { assessment, pillarColors },
 }) {
   const assessmentId = getAssessmentId(location)
-  const isAdmin = hasPermissions('company-admin')
-  const isContributor = isContributorSync()
+  const userTokenData = getUserTokenData()
 
-  if (!assessmentId && !isAdmin) {
+  if (!assessmentId && !userTokenData.isAdmin) {
     return <Redirect to="/auth" noThrow />
   }
 
@@ -87,12 +80,11 @@ function AssessmentTemplate({
   const [createFileUpload] = useMutation(createFileUploadMutation)
   const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
-  const isAuthInitialized = useIsAuthInitialized()
   useEffect(() => {
     if (assessmentId && !assessmentData) {
       loadAssessment(assessmentId)
     }
-  }, [assessmentId, isAuthInitialized, assessmentData])
+  }, [assessmentId, assessmentData])
 
   async function handleCreateAssessment({ name, internal }) {
     const { data } = await createAssessment({
@@ -100,7 +92,7 @@ function AssessmentTemplate({
         key: assessment.key,
         name,
         internal,
-        owner_id: getUserIdSync(),
+        owner_id: userTokenData.userId,
       },
     })
     const id = get(data, 'insert_assessment.returning.0.id')
@@ -129,11 +121,10 @@ function AssessmentTemplate({
   }
 
   async function createNewFileUpload(assessmentId, file, s3Key) {
-    const userId = getUserIdSync()
     const { data, error } = await createFileUpload({
       variables: {
         fileUploadData: {
-          user_id: userId,
+          user_id: userTokenData.userId,
           assessment_id: assessmentId,
           file_name: file.name,
           file_size: file.size,
@@ -165,20 +156,21 @@ function AssessmentTemplate({
   }
 
   const canEditKeyInformationAndUpload =
-    (isAdmin || isContributor) && assessmentInProgress(assessmentData)
+    (userTokenData.isAdmin || userTokenData.isContributor) &&
+    assessmentInProgress(assessmentData)
 
-  const canSubmit = isAdmin && assessmentInProgress(assessmentData)
+  const canSubmit =
+    userTokenData.isAdmin && assessmentInProgress(assessmentData)
 
-  const canCreateAssessment = isAdmin
+  const canCreateAssessment = userTokenData.isAdmin
 
   // TODO: change this with correct rule based on assessment state
   const canViewFeedbackReport = assessmentSubmitted(assessmentData)
 
-  const groupId = getGroupIdSync()
-
   const canAssignContributorsAndAssessors =
-    (isAdmin && getCanEditAssesors(groupId, assessmentData)) ||
-    getCanEditContributors(groupId, assessmentData)
+    (userTokenData.isAdmin &&
+      getCanEditAssesors(userTokenData.groupId, assessmentData)) ||
+    getCanEditContributors(userTokenData.groupId, assessmentData)
 
   const assessmentName = get(assessmentData, 'name', 'Loading...')
 

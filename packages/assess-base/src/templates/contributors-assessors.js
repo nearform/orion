@@ -16,11 +16,7 @@ import { Redirect } from '@reach/router'
 import { TypedChip, PaddedContainer, SectionTitle } from 'components'
 
 import SEO from '../components/SEO'
-import {
-  hasPermissions,
-  getGroupIdSync,
-  useIsAuthInitialized,
-} from '../utils/auth'
+import { getUserTokenData } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
 import ContextualHelp from '../components/ContextualHelp'
 import {
@@ -58,8 +54,8 @@ function ContributorsAssessorsTemplate({
   const [filterText, setFilterText] = useState('')
 
   const assessmentId = getAssessmentId(location)
-  const isAdmin = hasPermissions('company-admin')
-  if (!assessmentId && !isAdmin) {
+  const userTokenData = getUserTokenData()
+  if (!assessmentId && !userTokenData.isAdmin) {
     return <Redirect to="/auth" noThrow />
   }
 
@@ -78,10 +74,7 @@ function ContributorsAssessorsTemplate({
       variables: { assessmentId },
     }
   )
-
-  const isAuthInitialized = useIsAuthInitialized()
   useEffect(() => {
-    if (!isAuthInitialized) return
     if (!assessmentByPk) {
       fetchShallowAssessmentData()
     }
@@ -89,7 +82,6 @@ function ContributorsAssessorsTemplate({
       fetchAssessmentContributorsAssessorsData()
     }
   }, [
-    isAuthInitialized,
     fetchShallowAssessmentData,
     assessmentByPk,
     fetchAssessmentContributorsAssessorsData,
@@ -100,7 +92,7 @@ function ContributorsAssessorsTemplate({
   const assessors = get(data, 'assessors', [])
   const contributors = get(data, 'contributors', [])
 
-  const groupId = getGroupIdSync()
+  const groupId = userTokenData.groupId
   const canEditAssesors = getCanEditAssesors(groupId, assessmentData)
   const canEditContributors = getCanEditContributors(groupId, assessmentData)
 

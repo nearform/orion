@@ -3,7 +3,7 @@ import T from 'prop-types'
 import { Router, Redirect } from '@reach/router'
 import { PaddedContainer } from 'components'
 
-import { hasPermissions } from '../utils/auth'
+import { getUserAuth } from '../utils/auth'
 import SEO from './SEO'
 import PendingUsers from './PendingUsers'
 import AllUsers from './AllUsers'
@@ -14,7 +14,7 @@ import GroupUsers from './GroupUsers'
 function AdminRoute() {
   const [pageTitle, setPageTitle] = useState('')
 
-  const canAdministerGroups = hasPermissions('platform-admin')
+  const canAdministerGroups = getUserAuth('platform-admin')
 
   const userCanAccess = {
     pendingUsers: canAdministerGroups,

@@ -29,11 +29,7 @@ import get from 'lodash/get'
 import SEO from '../components/SEO'
 import FeedbackReportInput from '../components/FeedbackReportInput'
 import { getAssessmentId } from '../utils/url'
-import {
-  hasPermissions,
-  isAssessorSync,
-  useIsAuthInitialized,
-} from '../utils/auth'
+import { getUserTokenData } from '../utils/auth'
 
 import {
   getAssessmentFeedbackReportData,
@@ -68,7 +64,7 @@ function FeedbackReport({
   const assessmentId = getAssessmentId(location)
   const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
-  const isAuthInitialized = useIsAuthInitialized()
+  const userTokenData = getUserTokenData()
 
   const [fetchAssessmentFeedbackReportData, { data }] = useManualQuery(
     getAssessmentFeedbackReportData,
@@ -82,13 +78,10 @@ function FeedbackReport({
   const assessmentData = get(data, 'assessment_by_pk')
 
   useEffect(() => {
-    if (isAuthInitialized && !assessmentData) {
+    if (!assessmentData) {
       fetchAssessmentFeedbackReportData()
     }
-  }, [isAuthInitialized, fetchAssessmentFeedbackReportData, assessmentData])
-
-  const isAdmin = hasPermissions('company-admin')
-  const isAssessor = isAssessorSync()
+  }, [fetchAssessmentFeedbackReportData, assessmentData])
 
   const handleSubmitFeedbackReport = async () => {
     await updateAssessmentStatus({
@@ -102,7 +95,8 @@ function FeedbackReport({
   }
 
   // TODO: Check that this is correct
-  const canEditSummaryAndAdvice = isAdmin || isAssessor
+  const canEditSummaryAndAdvice =
+    userTokenData.isAdmin || userTokenData.isAssessor
 
   const chartData = getChartData(assessment, assessmentData, pillarColors)
 
