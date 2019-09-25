@@ -7,14 +7,7 @@ import { Redirect } from '@reach/router'
 
 import SEO from '../components/SEO'
 import { getAssessmentPartData } from '../queries'
-import {
-  isAuthenticatedSync,
-  getUserIdSync,
-  isAdminSync,
-  isContributorSync,
-  isAssessorSync,
-  useIsAuthInitialized,
-} from '../utils/auth'
+import { getUserTokenData } from '../utils/auth'
 import AssessmentScoringHeader from '../components/AssessmentScoringHeader'
 import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
 import { getAssessmentId } from '../utils/url'
@@ -46,7 +39,7 @@ function CriterionPartTemplate({
     criteriaList,
   },
 }) {
-  if (!isAuthenticatedSync()) {
+  if (!getUserTokenData().loggedIn) {
     return <Redirect to="/auth" noThrow />
   }
 
@@ -61,10 +54,7 @@ function CriterionPartTemplate({
   const scoringRules = pillar.scoringRules || assessment.scoringRules || {}
 
   const assessmentId = getAssessmentId(location)
-  const userId = getUserIdSync()
-  const isAdmin = isAdminSync()
-  const isContributor = isContributorSync()
-  const isAssessor = isAssessorSync()
+  const userTokenData = getUserTokenData()
 
   const [
     fetchAssessmentPartData,
@@ -82,12 +72,11 @@ function CriterionPartTemplate({
     },
   })
 
-  const isAuthInitialized = useIsAuthInitialized()
   useEffect(() => {
-    if (isAuthInitialized && !assessmentData) {
+    if (!assessmentData) {
       fetchAssessmentPartData()
     }
-  }, [isAuthInitialized, fetchAssessmentPartData, assessmentData])
+  }, [fetchAssessmentPartData, assessmentData])
 
   if (error) {
     return 'Error'
@@ -98,9 +87,10 @@ function CriterionPartTemplate({
   }
 
   const canEditTablesAndUpload =
-    (isAdmin || isContributor) && assessmentInProgress(assessmentData)
+    (userTokenData.isAdmin || userTokenData.isContributor) &&
+    assessmentInProgress(assessmentData)
   const canEditFeedbackAndScoring =
-    isAssessor && assessmentSubmitted(assessmentData)
+    userTokenData.isAssessor && assessmentSubmitted(assessmentData)
 
   return (
     <div className={classes.root} data-testid="criterion-part">
@@ -122,7 +112,7 @@ function CriterionPartTemplate({
           <Grid item>
             <FileList
               assessmentId={assessmentId}
-              userId={userId}
+              userId={userTokenData.userId}
               pillar={pillar}
               criterion={criterion}
               partNumber={partNumber}

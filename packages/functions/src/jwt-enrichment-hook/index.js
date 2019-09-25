@@ -25,24 +25,15 @@ export const handler = async event => {
   const userGroup = getUserGroup(user)
 
   if (userGroup) {
-    console.log(
-      `user ${cognitoId} belongs to group ${JSON.stringify(userGroup)}`
-    )
-
     const userRoles = getUserRoles(user)
-
-    console.log(`user ${cognitoId} has roles ${JSON.stringify(userRoles)}`)
-
     const defaultRoleName = selectDefaultRoleName(userRoles, userGroup)
-
-    console.log('selected default role', defaultRoleName)
 
     event.response = {
       claimsOverrideDetails: {
         claimsToAddOrOverride: {
           'https://hasura.io/jwt/claims': JSON.stringify({
             'x-hasura-allowed-roles': [defaultRoleName],
-            'x-hasura-default-role': defaultRoleName,
+            'x-hasura-default-role': 'defaultRoleName',
             'x-hasura-user-id': user.id.toString(),
             'x-hasura-group-id': userGroup.id.toString(),
           }),
