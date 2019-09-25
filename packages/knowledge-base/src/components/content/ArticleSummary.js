@@ -15,7 +15,6 @@ const ArticleSummary = ({
   onBookmarkToggle,
   bookmarkButtonDisabled,
 }) => {
-  //TODO: Replace <img> on line 16 with gatsby-image
   return (
     <Box className={classes.summaryObj}>
       <Box className={classes.articleImageLink}>

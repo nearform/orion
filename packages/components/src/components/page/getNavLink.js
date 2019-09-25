@@ -57,7 +57,7 @@ const styles = theme => ({
       position: 'absolute',
       left: 0,
       right: 0,
-      bottom: -8,
+      bottom: 0,
       height: 8,
       backgroundColor: theme.palette.secondary.main,
     },

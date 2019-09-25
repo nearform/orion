@@ -4,6 +4,7 @@ import { Box, makeStyles } from '@material-ui/core'
 import { Link } from 'gatsby'
 
 import { constructImageUrl } from '../../../utils/image'
+import ThumbnailImage from '../thumbnail-image'
 
 const useLinkStyles = makeStyles(theme => ({
   wrapper: {
@@ -13,9 +14,6 @@ const useLinkStyles = makeStyles(theme => ({
     '&:hover': {
       textDecoration: 'none',
     },
-  },
-  image: {
-    height: '140px',
   },
   textBox: Object.assign({}, theme.typography.h3, {
     backgroundColor: theme.palette.primary.main,
@@ -35,20 +33,24 @@ const ArticleVisualSummary = ({
   link = true,
   text,
 }) => {
-  const { image, textBox, wrapper } = useLinkStyles()
+  const { textBox, wrapper } = useLinkStyles()
 
   const WrapperComponent = link ? Link : Box
+
+  // Build up some dynamic props, with an optional classname prop and `to`
+  // if it's a link
   const props = { className: [className, wrapper].join(' ') }
   if (link) {
     props.to = `/content/${article.path}`
   }
 
+  const { thumbnail } = article
+
   return (
     <WrapperComponent {...props}>
-      <img
-        className={image}
-        height="auto"
-        src={constructImageUrl(article.thumbnail)}
+      <ThumbnailImage
+        height={140}
+        path={constructImageUrl(thumbnail)}
         width="100%"
       />
       {text && (

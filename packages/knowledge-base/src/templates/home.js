@@ -35,11 +35,6 @@ function KnowledgeHome({ theme, classes, data }) {
 
             <Grid item container spacing={3} direction="row">
               <Grid item>
-                <Button color="secondary" variant="contained">
-                  Explore the knowledge base
-                </Button>
-              </Grid>
-              <Grid item>
                 <Button
                   color="secondary"
                   variant="outlined"
