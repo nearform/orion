@@ -12,7 +12,7 @@ import {
 import { teal } from '@material-ui/core/colors'
 import { SectionTitle } from 'components'
 
-import { AuthStateContext } from './AuthEventMixin'
+import { AuthFormStateContext } from './AuthEventMixin'
 
 function FieldLabel({ required, hasError, children }) {
   return (
@@ -46,7 +46,7 @@ function ErrorMessage({ children }) {
 }
 
 function SectionTitleField({ barColor, category, children }) {
-  const { errors } = useContext(AuthStateContext)
+  const { errors } = useContext(AuthFormStateContext)
   const error = errors[category]
   return (
     <React.Fragment>
@@ -66,12 +66,13 @@ SectionTitleField.propTypes = {
 function InputTextField({
   name,
   type,
+  value,
   required,
   disabled,
   onChange,
   children,
 }) {
-  const { submitting, errors } = useContext(AuthStateContext)
+  const { submitting, errors } = useContext(AuthFormStateContext)
   const error = errors[name]
   return (
     <React.Fragment>
@@ -81,6 +82,7 @@ function InputTextField({
       <TextField
         name={name}
         type={type}
+        value={value}
         required={required}
         disabled={disabled || submitting}
         onChange={onChange}
@@ -95,6 +97,7 @@ function InputTextField({
 InputTextField.propTypes = {
   name: T.string.isRequired,
   type: T.string,
+  value: T.string,
   required: T.bool,
   onChange: T.func,
 }
@@ -115,7 +118,7 @@ function InputSelectField({
       onChange(evt)
     }
   }
-  const { submitting, errors } = useContext(AuthStateContext)
+  const { submitting, errors } = useContext(AuthFormStateContext)
   const error = errors[name]
   return (
     <React.Fragment>
@@ -185,7 +188,7 @@ const useStyles = makeStyles(theme => ({
 
 function SubmitButton({ onClick, children }) {
   const classes = useStyles()
-  const { submitting } = useContext(AuthStateContext)
+  const { submitting } = useContext(AuthFormStateContext)
   return (
     <div className={classes.wrapper}>
       <Button

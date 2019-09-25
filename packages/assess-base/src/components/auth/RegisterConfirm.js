@@ -29,7 +29,7 @@ function RegisterConfirm({
               name="username"
               type="email"
               required
-              disabled={!!username}
+              disabled={!username}
               value={username !== null ? username : undefined}
               onChange={handleInput}
             >

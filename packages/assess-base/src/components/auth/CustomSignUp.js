@@ -69,13 +69,24 @@ export default class CustomSignUp extends authEventMixin(SignUp) {
     this._validAuthStates = ['signUp']
   }
 
+  changeState(state, data) {
+    // Rewrite auth data to include username & password prior to signup confirmation.
+    if (state === 'confirmSignUp') {
+      const {
+        inputs: { password },
+      } = this
+      data = { username: data, password }
+    }
+    super.changeState(state, data)
+  }
+
   showComponent() {
     return (
       <Register
-        goToSignIn={() => super.changeState('signIn')}
+        goToSignIn={() => this.changeState('signIn')}
         signUp={event => {
           this.setSubmitting(true)
-          super.signUp(event)
+          this.signUp(event)
         }}
         handleInput={this.handleInputChange}
         signUpFields={this.signUpFields}
