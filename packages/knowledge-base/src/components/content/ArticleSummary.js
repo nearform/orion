@@ -10,13 +10,14 @@ import ArticleVisualSummary from './article-visual-summary'
 
 const ArticleSummary = ({
   classes,
+  component = 'li',
   article,
   bookmarked,
   onBookmarkToggle,
   bookmarkButtonDisabled,
 }) => {
   return (
-    <Box className={classes.summaryObj}>
+    <Box className={classes.summaryObj} component={component}>
       <Box className={classes.articleImageLink}>
         <ArticleVisualSummary
           article={article}
@@ -64,10 +65,11 @@ export default withStyles(theme => ({
     flexDirection: 'row',
     overflow: 'hidden',
     color: theme.palette.primary.dark,
-    borderBottom: `2px solid ${theme.palette.tertiary.light}`,
+    borderBottom: `2px solid ${theme.palette.grey[200]}`,
     padding: `${theme.spacing(2.5)}px 0 ${theme.spacing(1.5)}px`,
     marginBottom: theme.spacing(1.5),
     '&:last-of-type': {
+      borderBottom: 'none',
       marginBottom: 0,
     },
   },
