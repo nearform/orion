@@ -12,6 +12,8 @@ import SEO from '../components/SEO'
 import column from '../components/layout/flex-with-gap/column'
 import GainKnowledgeLinks from '../components/list/gain-knowledge-links'
 import MostRecentArticles from '../components/list/most-recent-articles'
+import EventList from '../components/list/event-list'
+import row from '../components/layout/flex-with-gap/row'
 
 function KnowledgeHome({ classes, data }) {
   const { heroBanner } = data
@@ -59,8 +61,12 @@ function KnowledgeHome({ classes, data }) {
           <PersonalizedLists />
         </Box>
       </PageSection>
-      <PageSection paletteColor={['background', 'light']}>
+      <PageSection
+        className={classes.mostRecentAndEvents}
+        paletteColor={['background', 'light']}
+      >
         <MostRecentArticles />
+        <EventList className={classes.eventList} />
       </PageSection>
       <PageSection>
         <GainKnowledgeLinks />
@@ -82,6 +88,11 @@ const styles = theme => ({
     marginTop: theme.spacing(13),
   },
   primaryArticleLists: column(theme)(6),
+  mostRecentAndEvents: row(theme)(5),
+  eventList: {
+    flexBasis: '35%',
+    flexShrink: 0,
+  },
 })
 
 export const query = graphql`

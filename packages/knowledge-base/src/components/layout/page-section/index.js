@@ -19,12 +19,12 @@ const usePageSectionStyles = makeStyles(theme => ({
   Basic page section expands across screen and restricts content children
   Allows background color to be confiugured
 */
-const PageSection = ({ children, paletteColor }) => {
+const PageSection = ({ children, className, paletteColor }) => {
   const { wrapper } = usePageSectionStyles({ paletteColor })
 
   return (
     <Box className={wrapper} component="section" data-test-id="page-section">
-      <PaddedContainer>{children}</PaddedContainer>
+      <PaddedContainer className={className}>{children}</PaddedContainer>
     </Box>
   )
 }
