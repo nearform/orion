@@ -10,6 +10,7 @@ import PageSection from '../components/layout/page-section'
 import PersonalizedLists from '../components/list/PersonalizedLists'
 import SEO from '../components/SEO'
 import column from '../components/layout/flex-with-gap/column'
+import GainKnowledgeLinks from '../components/list/gain-knowledge-links'
 
 function KnowledgeHome({ classes, data }) {
   const { heroBanner } = data
@@ -60,7 +61,9 @@ function KnowledgeHome({ classes, data }) {
       <PageSection paletteColor={['background', 'light']}>
         Articles / events here
       </PageSection>
-      <PageSection>Logos here</PageSection>
+      <PageSection>
+        <GainKnowledgeLinks />
+      </PageSection>
     </BackgroundImage>
   )
 }
