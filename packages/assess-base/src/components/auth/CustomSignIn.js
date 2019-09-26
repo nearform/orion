@@ -1,6 +1,8 @@
 import React from 'react'
 import { Redirect } from '@reach/router'
 import { SignIn } from 'aws-amplify-react'
+import { SectionTitle } from 'components'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Login from './Login'
 import authEventMixin from './AuthEventMixin'
@@ -16,14 +18,27 @@ export default class CustomSignIn extends authEventMixin(SignIn) {
     this._validAuthStates = ['signIn', 'signedUp', 'signedIn']
   }
 
+  componentDidMount() {
+    this.autoLoginCheck()
+  }
+
+  componentDidUpdate() {
+    this.autoLoginCheck()
+  }
+
+  autoLoginCheck() {
+    if (this.doAutoLogin) {
+      this.doAutoLogin = false
+      // The signIn function expects a DOM event argument.
+      super.signIn(new Event('dummy-event'))
+    }
+  }
+
   showComponent() {
     const {
       props: { authState },
+      state: { loading },
     } = this
-    /*
-    console.log('CustomSignIn authState=', authState)
-    console.log('CustomSignIn context=', this.context)
-    */
 
     // If user is signed in then redirect to home page.
     if (authState === 'signedIn') {
@@ -38,8 +53,20 @@ export default class CustomSignIn extends authEventMixin(SignIn) {
       if (username && password) {
         this.inputs.username = username
         this.inputs.password = password
-        this.setSubmitting(true)
-        super.signIn()
+        // Schedule automatic login if not already loading (=> signing in)
+        this.doAutoLogin = !loading
+        // Return a placeholder message.
+        return (
+          <React.Fragment>
+            <SectionTitle
+              gutterBottom
+              barColor="green" // TODO: Read colour from theme
+            >
+              You are being signed in...
+            </SectionTitle>
+            <CircularProgress />
+          </React.Fragment>
+        )
       }
     }
 

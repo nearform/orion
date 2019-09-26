@@ -28,7 +28,9 @@ const authErrors = {
       if (/need to be filled.*email/i.test(err)) {
         return 'Email is required'
       }
-      return /username/i.test(err)
+      return /username|an account with the given email already exists/i.test(
+        err
+      )
     },
     password: passwordValidationErrors,
     orgType: err =>
