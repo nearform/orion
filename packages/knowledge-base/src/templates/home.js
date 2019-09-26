@@ -1,14 +1,17 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import { Button, Grid, Typography, withStyles, Box } from '@material-ui/core'
-import { PaddedContainer } from 'components'
-import EditorsPicks from '../components/list/EditorsPicks'
-import PersonalizedLists from '../components/list/PersonalizedLists'
 import BackgroundImage from 'gatsby-background-image'
+import React from 'react'
+import { Button, Grid, Typography, withStyles, Box } from '@material-ui/core'
 import { Link as RouterLink } from '@reach/router'
-import SEO from '../components/SEO'
+import { PaddedContainer } from 'components'
+import { graphql } from 'gatsby'
 
-function KnowledgeHome({ theme, classes, data }) {
+import EditorsPicks from '../components/list/EditorsPicks'
+import PageSection from '../components/layout/page-section'
+import PersonalizedLists from '../components/list/PersonalizedLists'
+import SEO from '../components/SEO'
+import column from '../components/layout/flex-with-gap/column'
+
+function KnowledgeHome({ classes, data }) {
   const { heroBanner } = data
 
   return (
@@ -48,18 +51,23 @@ function KnowledgeHome({ theme, classes, data }) {
           </Grid>
         </PaddedContainer>
       </div>
-      <PaddedContainer>
-        <Box className={classes.mainBody}>
+      <PageSection>
+        <Box className={classes.primaryArticleLists}>
           <EditorsPicks />
           <PersonalizedLists />
         </Box>
-      </PaddedContainer>
+      </PageSection>
+      <PageSection paletteColor={['background', 'light']}>
+        Articles / events here
+      </PageSection>
+      <PageSection>Logos here</PageSection>
     </BackgroundImage>
   )
 }
 
 const styles = theme => ({
   header: {
+    paddingBottom: '140px',
     position: 'relative',
   },
   heroContainer: {
@@ -69,24 +77,7 @@ const styles = theme => ({
   heroDescription: {
     marginTop: theme.spacing(13),
   },
-  sectionTop: {
-    marginTop: theme.spacing(2),
-  },
-  sectionBottom: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(4),
-  },
-  mainBody: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: theme.spacing(20),
-    '& > *': {
-      marginBottom: theme.spacing(6),
-    },
-    '& > *:last-child': {
-      marginBottom: 0,
-    },
-  },
+  primaryArticleLists: column(theme)(6),
 })
 
 export const query = graphql`
