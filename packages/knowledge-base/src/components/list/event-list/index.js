@@ -10,7 +10,7 @@ import events from './events.js'
 const useEventListStyles = makeStyles(theme => ({
   wrapper: {
     ...column(theme)(3),
-    margin: 0,
+    margin: theme.spacing(2, 0, 0, 0),
     padding: 0,
   },
 }))
@@ -22,9 +22,11 @@ const EventList = ({ className, component = 'ul' }) => {
     <Box className={className}>
       <ListTitle color={['secondary', 'dark']} title="Upcoming Events" />
       <Box className={wrapper} component={component} data-test-id="event-list">
-        {events.map(event => (
-          <EventItem event={event} key={event.uid} />
-        ))}
+        {events
+          .filter(e => Date.parse(e.startTime) > Date.parse(new Date()))
+          .map(event => (
+            <EventItem event={event} key={event.uid} />
+          ))}
       </Box>
     </Box>
   )
