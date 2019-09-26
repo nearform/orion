@@ -3,19 +3,12 @@ import PropTypes from 'prop-types'
 import { Box, makeStyles } from '@material-ui/core'
 import SmallPreview from './SmallPreview'
 import ListTitle from './ListTitle'
+import column from '../layout/flex-with-gap/column'
 
 const useThemedListStyles = makeStyles(theme => ({
   listLayout: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: `${theme.spacing(2)}px 0 0 0`,
-    padding: '0',
-    '& > *': {
-      marginBottom: theme.spacing(4),
-    },
-    '& > *:last-child': {
-      marginBottom: 0,
-    },
+    ...column(theme)(4),
+    padding: `${theme.spacing(2)}px 0 0 0`,
     '& li': {
       listStyle: 'none',
     },
