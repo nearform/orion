@@ -16,14 +16,16 @@ const useEventItemStyles = makeStyles(theme => ({
   location: {
     display: 'flex',
     alignItems: 'center',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
   },
   locationIcon: {
     color: theme.palette.tertiary.main,
     marginRight: '0.1em',
     width: '0.7em',
+  },
+  locationText: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   text: {
     ...column(theme)(0.5),
@@ -47,6 +49,7 @@ const EventItem = ({ component = 'li', event }) => {
     dateAndTime,
     location: locationStyles,
     locationIcon,
+    locationText,
     name: nameStyles,
     text,
     wrapper,
@@ -68,7 +71,7 @@ const EventItem = ({ component = 'li', event }) => {
         </Typography>
         <a className={locationStyles} href={location.link}>
           <RoomIcon className={locationIcon} />
-          {location.text}
+          <Typography className={locationText}>{location.text}</Typography>
         </a>
       </Box>
       <Button
