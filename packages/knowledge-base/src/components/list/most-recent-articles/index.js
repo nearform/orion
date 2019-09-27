@@ -15,7 +15,7 @@ const useMostRecentArticlesStyles = makeStyles(theme => ({
   },
 }))
 
-const MostRecentArticles = () => {
+const MostRecentArticles = ({ className }) => {
   const [
     fetchMostRecentArticles,
     { data: mostRecentArticles },
@@ -38,7 +38,11 @@ const MostRecentArticles = () => {
   }
 
   return (
-    <Box className={wrapper} component="ul" data-test-id="most-recent-articles">
+    <Box
+      className={[className, wrapper].join(' ')}
+      component="ul"
+      data-test-id="most-recent-articles"
+    >
       <ListTitle paletteColor={['grey', '800']} title="Most recent articless" />
       {mostRecentArticles.article.map(article => (
         <ArticleSummary article={article} key={`article-${article.id}`} />
