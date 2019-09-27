@@ -5,15 +5,16 @@ import { useManualQuery } from 'graphql-hooks'
 import classnames from 'classnames'
 import { withStyles, Grid, Typography, LinearProgress } from '@material-ui/core'
 
-import { getArticleDetails } from '../queries'
-import { useIsValidUser } from '../utils/auth'
-import { PaddedContainer } from 'components'
-import RichText from '../components/content//RichText'
 import ContentMetadata from '../components/content/ContentMetadata'
 import ContentOptions from '../components/content/ContentOptions'
 import FeatureArticles from '../components/list/FeatureArticles'
 import HowToAuthenticate from '../components/HowToAuthenticate'
+import RichText from '../components/content//RichText'
 import SEO from '../components/SEO'
+import { PaddedContainer } from 'components'
+import { constructImageUrl } from '../utils/image'
+import { getArticleDetails } from '../queries'
+import { useIsValidUser } from '../utils/auth'
 
 function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
   const { path } = articleSummary || { path: slug }
@@ -70,6 +71,13 @@ function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
             />
             <Typography variant="h1">{articleData.title}</Typography>
             <Typography variant="h2">{articleData.subtitle}</Typography>
+            {articleData.banner && (
+              <img
+                className={classes.bannerImage}
+                src={constructImageUrl(articleData.banner)}
+                alt=""
+              />
+            )}
             {!articleFull && <RichText value={articleData.summary} />}
             {!articleFull && <HowToAuthenticate />}
             {get(articleData, 'fields', [])
@@ -133,6 +141,10 @@ export default withStyles(theme => ({
     [theme.breakpoints.up('lg')]: {
       paddingRight: '16.5%',
     },
+  },
+  bannerImage: {
+    marginTop: theme.spacing(2),
+    width: '100%',
   },
   article: {
     '& h1': theme.articleTypography.heading1,
