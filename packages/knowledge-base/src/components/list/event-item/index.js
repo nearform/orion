@@ -2,6 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import moment from 'moment'
 import { Box, Button, makeStyles, Typography } from '@material-ui/core'
+import RoomIcon from '@material-ui/icons/Room'
 
 import column from '../../layout/flex-with-gap/column'
 import row from '../../layout/flex-with-gap/row'
@@ -13,9 +14,16 @@ const useEventItemStyles = makeStyles(theme => ({
     color: theme.palette.secondary.main,
   },
   location: {
+    display: 'flex',
+    alignItems: 'center',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
+  },
+  locationIcon: {
+    color: theme.palette.tertiary.main,
+    marginRight: '0.1em',
+    width: '0.7em',
   },
   text: {
     ...column(theme)(0.5),
@@ -38,6 +46,7 @@ const EventItem = ({ component = 'li', event }) => {
   const {
     dateAndTime,
     location: locationStyles,
+    locationIcon,
     name: nameStyles,
     text,
     wrapper,
@@ -58,6 +67,7 @@ const EventItem = ({ component = 'li', event }) => {
           {moment(endTime).format(dateFormat)}
         </Typography>
         <a className={locationStyles} href={location.link}>
+          <RoomIcon className={locationIcon} />
           {location.text}
         </a>
       </Box>
