@@ -1,35 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import T from 'prop-types'
-import {
-  Typography,
-  withStyles,
-  Grid,
-  Button,
-  TextField,
-  Select,
-  MenuItem,
-} from '@material-ui/core'
+import { Typography, withStyles, Grid, Button } from '@material-ui/core'
 
-import { SectionTitle } from 'components'
-
-function CustomSelect({ options = [], onChange, value = '', ...props }) {
-  const [selectValue, setValue] = useState(value)
-  const handleChange = evt => {
-    setValue(evt.target.value)
-    if (onChange) {
-      onChange(evt)
-    }
-  }
-  return (
-    <Select {...props} onChange={handleChange} value={selectValue}>
-      {options.map(opt => (
-        <MenuItem key={opt} value={opt}>
-          {opt.charAt(0).toUpperCase() + opt.slice(1)}
-        </MenuItem>
-      ))}
-    </Select>
-  )
-}
+import { SectionTitleField, InputField, SubmitButton } from './FormFields'
 
 function Register({
   theme,
@@ -42,36 +15,28 @@ function Register({
   return (
     <div className={classes.root}>
       <div>
-        <Grid container spacing={3} xs={5} className={classes.form}>
+        <Grid container spacing={3} className={classes.form}>
           <Grid item xs={8}>
-            <SectionTitle gutterBottom barColor={theme.palette.secondary.main}>
+            <SectionTitleField
+              barColor={theme.palette.secondary.main}
+              category="general"
+            >
               Create a new account
-            </SectionTitle>
+            </SectionTitleField>
           </Grid>
           {signUpFields.map(params => {
             return (
               <Grid key={params.key} item xs={params.xs}>
-                <Typography variant="h4" gutterBottom>
+                <InputField
+                  name={params.key}
+                  type={params.type}
+                  required={params.required}
+                  options={params.options}
+                  onChange={handleInput}
+                  fullWidth
+                >
                   {params.label}
-                  {params.required && ' *'}
-                </Typography>
-                {params.type === 'select' ? (
-                  <CustomSelect
-                    required={params.required}
-                    name={params.key}
-                    options={params.options}
-                    onChange={handleInput}
-                    fullWidth
-                  />
-                ) : (
-                  <TextField
-                    name={params.key}
-                    type={params.type}
-                    required={params.required}
-                    onChange={handleInput}
-                    fullWidth
-                  />
-                )}
+                </InputField>
               </Grid>
             )
           })}
@@ -97,15 +62,7 @@ function Register({
               &nbsp;
             </Grid>
             <Grid item>
-              <Button
-                name="submit"
-                color="secondary"
-                variant="contained"
-                fullWidth
-                onClick={signUp}
-              >
-                Create Account
-              </Button>
+              <SubmitButton onClick={signUp}>Create Account</SubmitButton>
             </Grid>
           </Grid>
         </Grid>

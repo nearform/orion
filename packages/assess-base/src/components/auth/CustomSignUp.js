@@ -1,8 +1,13 @@
 import React from 'react'
 import { SignUp } from 'aws-amplify-react'
-import Register from './Register'
 
-export default class CustomSignUp extends SignUp {
+import Register from './Register'
+import authEventMixin from './AuthEventMixin'
+import authErrors from './AuthErrors'
+
+export default class CustomSignUp extends authEventMixin(SignUp) {
+  authErrorCategories = authErrors.signUp
+
   constructor(props) {
     super(props)
     //required by the amplify SignUp component
@@ -64,11 +69,27 @@ export default class CustomSignUp extends SignUp {
     this._validAuthStates = ['signUp']
   }
 
+  changeState(state, data) {
+    // Rewrite auth data to include username & password prior to signup confirmation.
+    // This is needed by the CustomSignIn component so that it can do an automatic
+    // signin after signup has completed.
+    if (state === 'confirmSignUp') {
+      const {
+        inputs: { password },
+      } = this
+      data = { username: data, password }
+    }
+    super.changeState(state, data)
+  }
+
   showComponent() {
     return (
       <Register
-        goToSignIn={() => super.changeState('signIn')}
-        signUp={event => super.signUp(event)}
+        goToSignIn={() => this.changeState('signIn')}
+        signUp={event => {
+          this.setSubmitting(true)
+          this.signUp(event)
+        }}
         handleInput={this.handleInputChange}
         signUpFields={this.signUpFields}
       />
