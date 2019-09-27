@@ -14,6 +14,35 @@ import { SectionTitle } from 'components'
 
 import { AuthFormStateContext } from './AuthEventMixin'
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  submitWrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonProgress: {
+    color: teal[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
+  errorMessage: {
+    textTransform: 'none',
+    marginTop: '0.5em',
+  },
+  fieldOK: {
+    border: 'none',
+  },
+  fieldError: {
+    border: `1.5pt solid ${theme.palette.error.main}`,
+  },
+}))
+
 function FieldLabel({ required, hasError, children }) {
   return (
     <Typography
@@ -33,12 +62,13 @@ FieldLabel.propTypes = {
 }
 
 function ErrorMessage({ children }) {
+  const classes = useStyles()
   return (
     <Typography
       variant="h4"
       gutterBottom
       color="error"
-      style={{ textTransform: 'none', marginTop: '0.5em' }}
+      className={classes.errorMessage}
     >
       {children}
     </Typography>
@@ -72,6 +102,7 @@ function InputTextField({
   onChange,
   children,
 }) {
+  const classes = useStyles()
   const { submitting, errors } = useContext(AuthFormStateContext)
   const error = errors[name]
   return (
@@ -87,7 +118,7 @@ function InputTextField({
         disabled={disabled || submitting}
         onChange={onChange}
         fullWidth
-        style={{ border: error ? '1.5pt solid red' : 'none' }}
+        className={error ? classes.fieldError : classes.fieldOK}
       />
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </React.Fragment>
@@ -111,6 +142,7 @@ function InputSelectField({
   children,
   ...props
 }) {
+  const classes = useStyles()
   const [selectValue, setValue] = useState(value)
   const handleChange = evt => {
     setValue(evt.target.value)
@@ -130,7 +162,7 @@ function InputSelectField({
         disabled={submitting}
         onChange={handleChange}
         value={selectValue}
-        style={{ border: error ? '1.5pt solid red' : 'none' }}
+        className={error ? classes.fieldError : classes.fieldOK}
         {...props}
       >
         {options.map(opt => (
@@ -167,30 +199,11 @@ InputField.propTypes = {
   type: T.string,
 }
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  wrapper: {
-    margin: theme.spacing(1),
-    position: 'relative',
-  },
-  buttonProgress: {
-    color: teal[500],
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12,
-  },
-}))
-
 function SubmitButton({ onClick, children }) {
   const classes = useStyles()
   const { submitting } = useContext(AuthFormStateContext)
   return (
-    <div className={classes.wrapper}>
+    <div className={classes.submitWrapper}>
       <Button
         name="submit"
         color="secondary"

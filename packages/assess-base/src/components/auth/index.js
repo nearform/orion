@@ -17,11 +17,8 @@ import CustomForgotPassword from './CustomForgotPassword'
 export default function CustomAuthenticator() {
   const [authData, _setAuthData] = useState({})
   const setAuthData = (state, data) => {
-    if (typeof data === 'object') {
+    if (state == 'confirmSignUp') {
       _setAuthData(data)
-    } else if (state === 'signedIn') {
-      // Delete auth data after sign in.
-      _setAuthData(null)
     }
   }
   return (

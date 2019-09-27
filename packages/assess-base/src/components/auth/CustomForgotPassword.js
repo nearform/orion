@@ -37,9 +37,7 @@ export default class CustomForgotPassword extends authEventMixin(
       return (
         <PasswordResetSend
           goToSignIn={() => super.changeState('signIn')}
-          send={event => {
-            super.send(event)
-          }}
+          send={event => super.send(event)}
           handleInput={handleInputChange}
         />
       )

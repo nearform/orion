@@ -2,6 +2,7 @@ import React from 'react'
 import { Redirect } from '@reach/router'
 import { SignIn } from 'aws-amplify-react'
 import { SectionTitle } from 'components'
+import { Grid, withStyles } from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Login from './Login'
@@ -18,7 +19,17 @@ export default class CustomSignIn extends authEventMixin(SignIn) {
     this._validAuthStates = ['signIn', 'signedUp', 'signedIn']
   }
 
+  setState(state) {
+    // aws-amplify sometimes sends a state update after the component has unmounted
+    // (e.g. after a signin following a signup); check if still mounted before
+    // handling to avoid warnings in console.
+    if (this.mounted) {
+      super.setState(state)
+    }
+  }
+
   componentDidMount() {
+    this.mounted = true
     this.autoLoginCheck()
   }
 
@@ -26,10 +37,14 @@ export default class CustomSignIn extends authEventMixin(SignIn) {
     this.autoLoginCheck()
   }
 
+  componentWillUnmount() {
+    this.mounted = false
+  }
+
   autoLoginCheck() {
     if (this.doAutoLogin) {
       this.doAutoLogin = false
-      // The signIn function expects a DOM event argument.
+      // The signIn() function expects a DOM event argument.
       super.signIn(new Event('dummy-event'))
     }
   }
@@ -56,17 +71,7 @@ export default class CustomSignIn extends authEventMixin(SignIn) {
         // Schedule automatic login if not already loading (=> signing in)
         this.doAutoLogin = !loading
         // Return a placeholder message.
-        return (
-          <React.Fragment>
-            <SectionTitle
-              gutterBottom
-              barColor="green" // TODO: Read colour from theme
-            >
-              You are being signed in...
-            </SectionTitle>
-            <CircularProgress />
-          </React.Fragment>
-        )
+        return <AutoSignInMessage />
       }
     }
 
@@ -83,3 +88,45 @@ export default class CustomSignIn extends authEventMixin(SignIn) {
     )
   }
 }
+
+const styles = {
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  form: {
+    margin: 'auto',
+    maxWidth: 463,
+  },
+}
+
+const AutoSignInMessage = withStyles(styles, { withTheme: true })(
+  ({ theme, classes }) => {
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={3} className={classes.form}>
+          <Grid item xs={8}>
+            <SectionTitle gutterBottom barColor={theme.palette.secondary.main}>
+              Almost there
+            </SectionTitle>
+          </Grid>
+          <Grid
+            item
+            container
+            alignItems="center"
+            spacing={4}
+            xs={10}
+            wrap="nowrap"
+          >
+            <Grid item>
+              <CircularProgress color="secondary" />
+            </Grid>
+            <Grid item>You are being signed in</Grid>
+          </Grid>
+        </Grid>
+      </div>
+    )
+  }
+)

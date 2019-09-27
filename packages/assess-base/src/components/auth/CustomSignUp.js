@@ -71,6 +71,8 @@ export default class CustomSignUp extends authEventMixin(SignUp) {
 
   changeState(state, data) {
     // Rewrite auth data to include username & password prior to signup confirmation.
+    // This is needed by the CustomSignIn component so that it can do an automatic
+    // signin after signup has completed.
     if (state === 'confirmSignUp') {
       const {
         inputs: { password },

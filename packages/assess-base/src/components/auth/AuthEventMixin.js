@@ -29,19 +29,19 @@ const authEventMixin = Base =>
     }
 
     /**
-     * Read the current form state from a component's state.
+     * Read the current form state from the component's state.
      * The form state is composed of the following:
-     * - submitting: A flag indicating whether an auth request is being submitted
-     *   or not;
-     * - errors: An object describing any current errors in the auth process.
-     *   The object is a collection of error categories mapped to error messages,
-     *   e.g.:
+     * - submitting: A flag indicating whether a form is being submitted or not;
+     * - errors: An object describing any current errors on the form. The error
+     *   is a collection of error category keys mapped to error messages, e.g.:
+     *
      *      {
      *          "username": "Username is required",
      *          "password": "Password is required"
      *      }
+     *
      *   The function uses the component's authErrorCategories property to derive
-     *   error category and messages from the error message reported by aws-amplify.
+     *   error categories and messages from the error message reported by aws-amplify.
      */
     readFormState() {
       const { state, authErrorCategories = {} } = this
