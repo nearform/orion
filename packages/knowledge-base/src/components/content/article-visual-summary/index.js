@@ -18,6 +18,7 @@ const useLinkStyles = makeStyles(theme => ({
   textBox: Object.assign({}, theme.typography.h3, {
     backgroundColor: theme.palette.primary.main,
     color: 'white',
+    marginBottom: '0',
     marginTop: '-33px',
     padding: theme.spacing(2),
     width: '85%',

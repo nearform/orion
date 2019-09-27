@@ -8,17 +8,12 @@ import { formatDateAsMonthAndYear } from '../../utils/date'
 import noThumbnailFallback from 'efqm-theme/assets/logo-1x'
 import ThumbnailImage from '../content/thumbnail-image'
 import { Link } from 'gatsby'
+import row from '../layout/flex-with-gap/row'
 
 const smallPreviewStyles = makeStyles(theme => ({
   article: {
+    ...row(theme)(1),
     cursor: 'pointer',
-    display: 'flex',
-    '& > *': {
-      marginRight: theme.spacing(1),
-    },
-    '& > *:last-child': {
-      marginRight: 0,
-    },
   },
   taxonomyLabel: {
     color: theme.palette.secondary.main,
