@@ -20,7 +20,7 @@ const useEventItemStyles = makeStyles(theme => ({
   text: {
     ...column(theme)(0.5),
     flexBasis: '70%',
-    flexGrow: 1,
+    minWidth: 0,
   },
   wrapper: {
     ...row(theme)(2),

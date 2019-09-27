@@ -65,7 +65,7 @@ function KnowledgeHome({ classes, data }) {
         className={classes.mostRecentAndEvents}
         paletteColor={['background', 'light']}
       >
-        <MostRecentArticles />
+        <MostRecentArticles className={classes.eventList} />
         <EventList className={classes.eventList} />
       </PageSection>
       <PageSection>
@@ -92,6 +92,7 @@ const styles = theme => ({
   eventList: {
     flexBasis: '35%',
     flexShrink: 0,
+    minWidth: 0,
   },
 })
 
