@@ -78,7 +78,6 @@ export const getUserAuth = reqRole => {
  */
 export const getUserRole = () => {
   if (!isAuthenticatedSync()) return 'public'
-
   const baseRole = getUserBaseRole()
   const group = getUserGroup()
   return group !== undefined && baseRole === 'admin'
@@ -121,7 +120,7 @@ const getUserGroup = () => {
     const groupId = extractTokenPayload(HASURA_GROUP_ID)
     return find(taxonomyQueryResult.raw_salmon.group, { id: groupId })
   } catch (err) {
-    return null
+    return undefined
   }
 }
 
