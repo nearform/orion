@@ -10,6 +10,7 @@ import { useMutation, useManualQuery } from 'graphql-hooks'
 import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
 import * as Yup from 'yup'
+import matrixData from 'efqm-theme/assessments'
 
 import {
   PaddedContainer,
@@ -35,6 +36,7 @@ import {
 import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'
+import ContentModal from '../components/ContentModal'
 import UploadButton from '../components/UploadButton'
 import AssessmentPillars from '../components/AssessmentPillars'
 import KeyInfoDocsList from '../components/key-info-docs-list'
@@ -73,6 +75,13 @@ function AssessmentTemplate({
   classes,
   pageContext: { assessment, pillarColors },
 }) {
+  const [modalProps, setModalProps] = useState({
+    mdContent: '',
+    open: false,
+    subTitle: '',
+    title: '',
+    width: '',
+  })
   const assessmentId = getAssessmentId(location)
   const isAdmin = isAdminSync()
   const isContributor = isContributorSync()
@@ -185,6 +194,12 @@ function AssessmentTemplate({
 
   return (
     <>
+      <ContentModal
+        onClose={() => {
+          setModalProps({ ...modalProps, open: false })
+        }}
+        {...modalProps}
+      />
       <SEO title={get(assessmentData, 'name', 'Assessment')} />
       <PaddedContainer data-testid="assessment">
         <Button component={Link} to="/" variant="text" color="secondary">
@@ -376,9 +391,37 @@ function AssessmentTemplate({
                             (keyInfo, index) => (
                               <Fragment key={keyInfo.key}>
                                 <Grid item xs={6}>
-                                  <Typography variant="h4" gutterBottom>
-                                    {keyInfo.name}
-                                  </Typography>
+                                  <Box
+                                    className={
+                                      classes.keyInformationSectionHeadingWrapper
+                                    }
+                                  >
+                                    <Typography
+                                      className={
+                                        classes.keyInformationSectionHeading
+                                      }
+                                      variant="h4"
+                                      gutterBottom
+                                    >
+                                      {keyInfo.name}
+                                    </Typography>
+                                    <Typography
+                                      className={
+                                        classes.keyInformationSectionHeadingMoreInfo
+                                      }
+                                      onClick={() => {
+                                        setModalProps({
+                                          mdContent: matrixData[2][keyInfo.key],
+                                          open: true,
+                                          subTitle: keyInfo.name,
+                                          title: 'Key Information',
+                                          width: '500px',
+                                        })
+                                      }}
+                                    >
+                                      More Info
+                                    </Typography>
+                                  </Box>
                                   <Field
                                     name={keyInfo.key}
                                     component={FormikTextField}
@@ -487,6 +530,20 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     marginBottom: theme.spacing(2),
+  },
+  keyInformationSectionHeadingWrapper: {
+    alignItems: 'flex-start',
+    display: 'flex',
+  },
+  keyInformationSectionHeading: {
+    flexGrow: '1',
+  },
+  keyInformationSectionHeadingMoreInfo: {
+    ...theme.typography.h3,
+    color: theme.palette.secondary.main,
+    cursor: 'pointer',
+    marginLeft: theme.spacing(2),
+    whiteSpace: 'nowrap',
   },
   buttonBar: {
     marginTop: theme.spacing(2),
