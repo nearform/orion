@@ -7,11 +7,11 @@
   "shortDescription": "This tool allows organisation to complete an assessment against the criteria of the EFQM Model and score based on the RADAR elements.  The information captured for each criterion generate a first Enablers Maps.",
   "guidance": "We are here to guide you how the business matrix works",
   "keyInformation": {
-    "guidance": "We are here to help you fill out the key information",
+    "guidance": "Key Information is those key facts about your organisation which help Assessorsto gain an overall view of your organisation and its strategic context.",
     "keyInformationItems": [
       {
         "key": "overview",
-        "name": "overview"
+        "name": "facts & figures"
       },
       {
         "key": "challenges-and-strategy",
