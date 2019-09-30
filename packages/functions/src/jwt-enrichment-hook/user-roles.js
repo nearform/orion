@@ -19,7 +19,7 @@ function mapRole(role) {
 function prefixRole(role, group) {
   return !group.type
     ? mapRole(role)
-    : role.name === DEFAULT_MEMBER_ROLE_NAME
+    : role.name === ADMIN_ROLE_NAME
     ? `${group.type}-${role.name}`
     : mapRole(role)
 }
