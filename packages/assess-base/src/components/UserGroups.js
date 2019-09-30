@@ -24,7 +24,7 @@ import { ConfirmDialog, GroupTypeChip, GROUP_TYPES } from 'components'
 
 import useAdminTable from '../hooks/useAdminTable'
 
-import { getGroupIdSync } from '../utils/auth'
+import { getUserTokenData } from '../utils/auth'
 
 const groupTypeKeys = Object.keys(GROUP_TYPES)
 const groupTypes = groupTypeKeys.map(key => ({ key, value: GROUP_TYPES[key] }))
@@ -48,6 +48,7 @@ const headers = [
 ]
 
 function UserGroups({ classes }) {
+  const userTokenData = getUserTokenData()
   const [createGroup] = useMutation(createGroupMutation)
   const [deleteGroup] = useMutation(deleteGroupMutation)
   const { refetch: refetchGroups, table } = useAdminTable({
@@ -101,7 +102,7 @@ function UserGroups({ classes }) {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             await createGroup({
-              variables: { ...values, parentId: getGroupIdSync() },
+              variables: { ...values, parentId: userTokenData.groupId },
             })
             refetchGroups()
           } finally {

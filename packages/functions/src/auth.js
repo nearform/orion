@@ -29,15 +29,25 @@ const ROLES_PERMISSIONS = {
  */
 export const getUserTokenData = () => {
   const data = {
-    loggedIn: isAuthenticatedSync() ? true : false,
-    user: hasPermissions('user'),
-    admin: hasPermissions('company-admin'),
-    contributor: extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY) || false,
-    assessor: extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY) || false,
-    userId: extractTokenPayload(HASURA_USER_ID),
-    groupId: extractTokenPayload(HASURA_GROUP_ID),
-    role: getUserRole(),
+    loggedIn: false,
+    user: false,
+    admin: false,
+    contributor: false,
+    assessor: false,
+    userId: null,
+    groupId: null,
+    role: 'public',
   }
+
+  data.loggedIn = isAuthenticatedSync() ? true : false
+  data.isUser = hasPermissions('user')
+  data.isAdmin = hasPermissions('company-admin')
+  data.isContributor =
+    extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY) || false
+  data.isAssessor = extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY) || false
+  data.userId = extractTokenPayload(HASURA_USER_ID)
+  data.groupId = extractTokenPayload(HASURA_GROUP_ID)
+  data.role = getUserRole()
 
   return data
 }
@@ -50,7 +60,6 @@ export const getUserTokenData = () => {
  */
 export const getUserAuth = reqRole => {
   if (!isAuthenticatedSync()) return false
-  if (!reqRole || reqRole === undefined) return true
 
   switch (reqRole.toLowerCase()) {
     case 'contributor':
@@ -69,6 +78,7 @@ export const getUserAuth = reqRole => {
  */
 export const getUserRole = () => {
   if (!isAuthenticatedSync()) return 'public'
+
   const baseRole = getUserBaseRole()
   const group = getUserGroup()
   return group !== undefined && baseRole === 'admin'
@@ -111,7 +121,7 @@ const getUserGroup = () => {
     const groupId = extractTokenPayload(HASURA_GROUP_ID)
     return find(taxonomyQueryResult.raw_salmon.group, { id: groupId })
   } catch (err) {
-    return undefined
+    return null
   }
 }
 
@@ -123,10 +133,10 @@ const getUserGroup = () => {
  */
 const hasPermissions = reqRole => {
   const role = getUserRole()
-  return (
-    (ROLES_PERMISSIONS[role] & ROLES_PERMISSIONS[reqRole]) ===
+  return (ROLES_PERMISSIONS[role] & ROLES_PERMISSIONS[reqRole]) ===
     ROLES_PERMISSIONS[reqRole]
-  )
+    ? true
+    : false
 }
 
 export const AuthInitContext = createContext(false)

@@ -2,11 +2,11 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import { Redirect } from '@reach/router'
 
-import { isAuthenticatedSync, getUserRolesSync } from '../utils/auth'
+import { isAuthenticatedSync, getUserAuth } from '../utils/auth'
 import { AuthInitContext } from '../utils/auth'
 
 export default function ProtectedRoute({
-  allowedRoles,
+  allowedRole,
   component: Component,
   ...props
 }) {
@@ -18,14 +18,8 @@ export default function ProtectedRoute({
     return null
   }
 
-  if (!isAuthenticatedSync()) {
+  if (!isAuthenticatedSync() || !getUserAuth(allowedRole)) {
     return <Redirect to="/auth" noThrow />
-  }
-
-  if (allowedRoles) {
-    if (!allowedRoles.some(role => getUserRolesSync().includes(role))) {
-      return <Redirect to="/auth" noThrow />
-    }
   }
 
   return <Component {...props} />

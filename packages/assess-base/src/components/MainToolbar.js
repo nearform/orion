@@ -9,7 +9,7 @@ import { Auth } from 'aws-amplify'
 import { PaddedContainer } from 'components'
 import { getLanguageSwitcher } from 'components'
 
-import { useIsAdmin, useIsAuthenticated } from '../utils/auth'
+import { getUserTokenData } from '../utils/auth'
 import NavLink from './NavLink'
 
 function MainToolbar({ classes, dark }) {
@@ -42,8 +42,7 @@ function MainToolbar({ classes, dark }) {
     navigate('/auth')
   }
 
-  const isAdmin = useIsAdmin()
-  const isAuthenticated = useIsAuthenticated()
+  const userTokenData = getUserTokenData()
 
   const darkClass = classnames({
     [classes.toolbarDark]: dark,
@@ -92,7 +91,7 @@ function MainToolbar({ classes, dark }) {
             >
               EFQM.ORG
             </Button>
-            {isAuthenticated && (
+            {userTokenData.loggedIn && (
               <Button className={navButtonClass} component={NavLink} to="#">
                 <AccountCircleOutlinedIcon
                   className={classes.icon}
@@ -101,12 +100,12 @@ function MainToolbar({ classes, dark }) {
                 MyEFQM
               </Button>
             )}
-            {!isAuthenticated && (
+            {!userTokenData.loggedIn && (
               <Button className={navButtonClass} component={NavLink} to="/auth">
                 LOGIN
               </Button>
             )}
-            {isAdmin && (
+            {userTokenData.isAdmin && (
               <Button
                 className={navButtonClass}
                 component={NavLink}
@@ -115,7 +114,7 @@ function MainToolbar({ classes, dark }) {
                 ADMIN
               </Button>
             )}
-            {isAuthenticated && (
+            {userTokenData.loggedIn && (
               <Button className={navButtonClass} onClick={doLogout}>
                 LOGOUT
               </Button>

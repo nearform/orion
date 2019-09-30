@@ -1,0 +1,37 @@
+- args:
+    role: partner-admin
+    table:
+      name: assessment
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - advice
+      - created_at
+      - exec_summary
+      - id
+      - internal
+      - key
+      - key_information
+      - name
+      - owner_id
+      - pillar_summary
+      - status
+      filter:
+        _or:
+        - owner:
+            user_groups:
+              group:
+                parent_id:
+                  _eq: X-Hasura-Group-Id
+        - owner:
+            user_groups:
+              group_id:
+                _eq: X-Hasura-Group-Id
+    role: partner-admin
+    table:
+      name: assessment
+      schema: public
+  type: create_select_permission

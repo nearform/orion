@@ -1,0 +1,30 @@
+- args:
+    role: company-admin
+    table:
+      name: assessment
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check: {}
+      columns:
+      - advice
+      - created_at
+      - exec_summary
+      - id
+      - internal
+      - key
+      - key_information
+      - name
+      - owner_id
+      - pillar_summary
+      - status
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: company-admin
+    table:
+      name: assessment
+      schema: public
+  type: create_insert_permission

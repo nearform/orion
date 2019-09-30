@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { graphql } from 'gatsby'
 import { Button, Grid, Paper, Typography, withStyles } from '@material-ui/core'
 import { PaddedContainer, SectionTitle } from 'components'
@@ -8,11 +8,7 @@ import SEO from '../components/SEO'
 import LoggedOutAssessmentInfo from '../components/LoggedOutAssessmentInfo'
 import AssessmentTool from '../components/AssessmentTool'
 import AssessmentsTable from '../components/AssessmentsTable'
-import {
-  useIsAuthenticated,
-  AuthInitContext,
-  getUserRolesSync,
-} from '../utils/auth'
+import { getUserTokenData } from '../utils/auth'
 
 const assessmentColors = [
   theme => theme.palette.primary.light,
@@ -27,8 +23,7 @@ function AssessmentsHome({ theme, classes, data }) {
     assessmentTypes: { nodes: assessmentTypes },
   } = data
 
-  const isAuthenticated = useIsAuthenticated()
-  const isAuthInitializided = useContext(AuthInitContext)
+  const userTokenData = getUserTokenData()
   const assessmentItems = assessmentTypes
     .map(type => ({
       ...type,
@@ -36,12 +31,6 @@ function AssessmentsHome({ theme, classes, data }) {
     }))
     .filter(type => type.orderIndex > 0 && type.logo)
     .sort((a, b) => a.orderIndex - b.orderIndex)
-
-  // Authenticated pending users and approved non-member users only have role ['public']
-  const userRoles = isAuthInitializided && getUserRolesSync()
-  const canViewAssessments =
-    isAuthenticated &&
-    (Array.isArray(userRoles) ? userRoles.join('') : 'public') !== 'public'
 
   return (
     <BackgroundImage
@@ -73,7 +62,7 @@ function AssessmentsHome({ theme, classes, data }) {
       </div>
       <PaddedContainer>
         <div className={classes.sectionTop}>
-          {canViewAssessments ? (
+          {userTokenData.loggedIn ? (
             <Paper>
               <AssessmentsTable />
             </Paper>
@@ -95,7 +84,7 @@ function AssessmentsHome({ theme, classes, data }) {
                 barColor={assessmentColors[index % assessmentColors.length](
                   theme
                 )}
-                isAuthenticated={isAuthenticated}
+                isAuthenticated={userTokenData.loggedIn}
               />
             ))}
           </Grid>
