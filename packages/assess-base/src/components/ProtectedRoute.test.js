@@ -54,6 +54,7 @@ describe('ProtectedRoute', () => {
           payload: {
             'https://hasura.io/jwt/claims': JSON.stringify({
               'x-hasura-allowed-roles': ['user'],
+              'x-hasura-default-role': 'user',
             }),
           },
         },
@@ -62,7 +63,7 @@ describe('ProtectedRoute', () => {
 
     const wrapper = mount(
       <AuthInitContext.Provider value={true}>
-        <ProtectedRoute component={SecretComponent} allowedRoles={['admin']} />
+        <ProtectedRoute component={SecretComponent} allowedRole={'admin'} />
       </AuthInitContext.Provider>
     )
 
@@ -79,6 +80,7 @@ describe('ProtectedRoute', () => {
           payload: {
             'https://hasura.io/jwt/claims': JSON.stringify({
               'x-hasura-allowed-roles': ['admin'],
+              'x-hasura-default-role': 'admin',
             }),
           },
         },
@@ -87,7 +89,7 @@ describe('ProtectedRoute', () => {
 
     const wrapper = mount(
       <AuthInitContext.Provider value={true}>
-        <ProtectedRoute component={SecretComponent} allowedRoles={['admin']} />
+        <ProtectedRoute component={SecretComponent} allowedRole={'admin'} />
       </AuthInitContext.Provider>
     )
 
