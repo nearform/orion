@@ -1,8 +1,13 @@
 import React from 'react'
 import { ConfirmSignUp } from 'aws-amplify-react'
-import RegisterConfirm from './RegisterConfirm'
 
-export default class CustomConfirmSignUp extends ConfirmSignUp {
+import RegisterConfirm from './RegisterConfirm'
+import authEventMixin from './AuthEventMixin'
+import authErrors from './AuthErrors'
+
+export default class CustomConfirmSignUp extends authEventMixin(ConfirmSignUp) {
+  authErrorCategories = authErrors.confirmSignUp
+
   constructor(props) {
     super(props)
     this._validAuthStates = ['confirmSignUp']
@@ -12,7 +17,10 @@ export default class CustomConfirmSignUp extends ConfirmSignUp {
     return (
       <RegisterConfirm
         goToSignIn={() => super.changeState('signIn')}
-        confirm={event => super.confirm(event)}
+        confirm={event => {
+          this.setSubmitting(true)
+          super.confirm(event)
+        }}
         resend={event => super.resend(event)}
         handleInput={this.handleInputChange}
         username={this.usernameFromAuthData()}

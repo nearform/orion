@@ -1,14 +1,21 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import { Button, Grid, Typography, withStyles, Box } from '@material-ui/core'
-import { PaddedContainer } from 'components'
-import EditorsPicks from '../components/list/EditorsPicks'
-import PersonalizedLists from '../components/list/PersonalizedLists'
 import BackgroundImage from 'gatsby-background-image'
+import React from 'react'
+import { Button, Grid, Typography, withStyles, Box } from '@material-ui/core'
 import { Link as RouterLink } from '@reach/router'
-import SEO from '../components/SEO'
+import { PaddedContainer } from 'components'
+import { graphql } from 'gatsby'
 
-function KnowledgeHome({ theme, classes, data }) {
+import EditorsPicks from '../components/list/EditorsPicks'
+import PageSection from '../components/layout/page-section'
+import PersonalizedLists from '../components/list/PersonalizedLists'
+import SEO from '../components/SEO'
+import column from '../components/layout/flex-with-gap/column'
+import GainKnowledgeLinks from '../components/list/gain-knowledge-links'
+import MostRecentArticles from '../components/list/most-recent-articles'
+import EventList from '../components/list/event-list'
+import row from '../components/layout/flex-with-gap/row'
+
+function KnowledgeHome({ classes, data }) {
   const { heroBanner } = data
 
   return (
@@ -35,11 +42,6 @@ function KnowledgeHome({ theme, classes, data }) {
 
             <Grid item container spacing={3} direction="row">
               <Grid item>
-                <Button color="secondary" variant="contained">
-                  Explore the knowledge base
-                </Button>
-              </Grid>
-              <Grid item>
                 <Button
                   color="secondary"
                   variant="outlined"
@@ -53,18 +55,29 @@ function KnowledgeHome({ theme, classes, data }) {
           </Grid>
         </PaddedContainer>
       </div>
-      <PaddedContainer>
-        <Box className={classes.mainBody}>
+      <PageSection>
+        <Box className={classes.primaryArticleLists}>
           <EditorsPicks />
           <PersonalizedLists />
         </Box>
-      </PaddedContainer>
+      </PageSection>
+      <PageSection
+        className={classes.mostRecentAndEvents}
+        paletteColor={['background', 'light']}
+      >
+        <MostRecentArticles className={classes.mostRecent} />
+        <EventList className={classes.eventList} />
+      </PageSection>
+      <PageSection>
+        <GainKnowledgeLinks />
+      </PageSection>
     </BackgroundImage>
   )
 }
 
 const styles = theme => ({
   header: {
+    paddingBottom: '140px',
     position: 'relative',
   },
   heroContainer: {
@@ -74,23 +87,15 @@ const styles = theme => ({
   heroDescription: {
     marginTop: theme.spacing(13),
   },
-  sectionTop: {
-    marginTop: theme.spacing(2),
+  primaryArticleLists: column(theme)(6),
+  mostRecentAndEvents: row(theme)(5),
+  eventList: {
+    flexBasis: '35%',
+    minWidth: 0,
   },
-  sectionBottom: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(4),
-  },
-  mainBody: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: theme.spacing(20),
-    '& > *': {
-      marginBottom: theme.spacing(6),
-    },
-    '& > *:last-child': {
-      marginBottom: 0,
-    },
+  mostRecent: {
+    flexBasis: '65%',
+    minWidth: 0,
   },
 })
 

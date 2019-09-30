@@ -6,11 +6,11 @@
   "logoAsset": "assess-3-img",
   "shortDescription": "This tool provides a complete assessment against all criterion-part of the EFQM Model and score on the full RADAR attributes.  Through this tool, organisation can generate a detailed enabler maps and results report.",
   "keyInformation": {
-    "guidance": "We are here to help you fill out the key information",
+    "guidance": "Key Information is those key facts about your organisation which help Assessorsto gain an overall view of your organisation and its strategic context.",
     "keyInformationItems": [
       {
         "key": "overview",
-        "name": "overview"
+        "name": "facts & figures"
       },
       {
         "key": "challenges-and-strategy",

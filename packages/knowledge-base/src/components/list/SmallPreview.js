@@ -1,65 +1,19 @@
 import React from 'react'
 import T from 'prop-types'
-import { withStyles } from '@material-ui/core'
+import { makeStyles, Box } from '@material-ui/core'
 import get from 'lodash/get'
 import useAmplifyImage from '../../hooks/useAmplifyImage'
 import { formatDateAsMonthAndYear } from '../../utils/date'
-import { navigate } from '@reach/router'
-import { ButtonBase, Grid } from '@material-ui/core'
 
-const SmallPreview = ({ article, classes }) => {
-  const thumbnail = useAmplifyImage(article.thumbnail)
-  return (
-    <ButtonBase onClick={() => navigate(`/content/${article.path}`)}>
-      <div key={article.id} className={classes.article}>
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <div
-              className={classes.articleImage}
-              style={{
-                backgroundImage: thumbnail ? `url(${thumbnail})` : undefined,
-              }}
-            />
-          </Grid>
-          <Grid item xs={8} className={classes.textBlock}>
-            <div className={classes.taxonomyLabel}>
-              {get(article, 'primary_taxonomy[0].taxonomy.name')}
-            </div>
-            <div className={classes.articleTitle}>{article.title}</div>
-            <div className={classes.articleMeta}>
-              <div className={classes.articleDate}>
-                {formatDateAsMonthAndYear(article.published_at)}
-              </div>
-              <div className={classes.articleAuthor}>
-                {get(article, 'createdBy.first_name')}{' '}
-                {get(article, 'createdBy.last_name')}
-              </div>
-            </div>
-          </Grid>
-        </Grid>
-      </div>
-    </ButtonBase>
-  )
-}
+import noThumbnailFallback from 'efqm-theme/assets/logo-1x'
+import ThumbnailImage from '../content/thumbnail-image'
+import { Link } from 'gatsby'
+import row from '../layout/flex-with-gap/row'
 
-const styles = theme => ({
+const smallPreviewStyles = makeStyles(theme => ({
   article: {
+    ...row(theme)(1),
     cursor: 'pointer',
-    textAlign: 'left',
-    marginTop: theme.spacing(4),
-  },
-  articleImage: {
-    width: '56px',
-    height: '65px',
-    backgroundColor: theme.palette.background.light,
-    backgroundPosition: 'left',
-    backgroundSize: 'cover',
-  },
-  textBlock: {
-    marginLeft: theme.spacing(1),
-    '& *': {
-      marginBottom: theme.spacing(0.5),
-    },
   },
   taxonomyLabel: {
     color: theme.palette.secondary.main,
@@ -80,7 +34,44 @@ const styles = theme => ({
     ...theme.editorsPicks.author,
     display: 'inline-block',
   },
-})
+}))
+
+const SmallPreview = ({ article, component = 'li' }) => {
+  const thumbnail = useAmplifyImage(article.thumbnail)
+  const classes = smallPreviewStyles({
+    thumbnail,
+    fallback: noThumbnailFallback,
+  })
+
+  return (
+    <Box component={component}>
+      <Link to={`/content/${article.path}`}>
+        <div className={classes.article}>
+          <ThumbnailImage
+            width={56}
+            path={useAmplifyImage(article.thumbnail)}
+            height={65}
+          />
+          <Box className={classes.articleDetails}>
+            <div className={classes.taxonomyLabel}>
+              {get(article, 'primary_taxonomy[0].taxonomy.name')}
+            </div>
+            <div className={classes.articleTitle}>{article.title}</div>
+            <div className={classes.articleMeta}>
+              <div className={classes.articleDate}>
+                {formatDateAsMonthAndYear(article.published_at)}
+              </div>
+              <div className={classes.articleAuthor}>
+                {get(article, 'createdBy.first_name')}{' '}
+                {get(article, 'createdBy.last_name')}
+              </div>
+            </div>
+          </Box>
+        </div>
+      </Link>
+    </Box>
+  )
+}
 
 SmallPreview.propTypes = {
   article: T.shape({
@@ -100,4 +91,5 @@ SmallPreview.propTypes = {
     }),
   }),
 }
-export default withStyles(styles)(SmallPreview)
+
+export default SmallPreview

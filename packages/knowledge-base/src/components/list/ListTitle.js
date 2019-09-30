@@ -1,26 +1,29 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { withStyles, Typography } from '@material-ui/core'
+import T from 'prop-types'
+import get from 'lodash/get'
+import { makeStyles, Typography } from '@material-ui/core'
 
-const ListTitle = ({ classes, title = '' }) => {
+const useListTitleStyles = makeStyles(theme => ({
+  title: ({ paletteColor }) => ({
+    borderTopWidth: '8px',
+    borderTopColor: get(theme.palette, paletteColor),
+    borderTopStyle: 'solid',
+    paddingTop: theme.spacing(0.5),
+  }),
+}))
+
+const ListTitle = ({ paletteColor = ['primary', 'light'], title = '' }) => {
+  const { title: titleStyle } = useListTitleStyles({ paletteColor })
   return (
-    <Typography variant="h3" className={classes.title}>
+    <Typography variant="h3" className={titleStyle}>
       {title}
     </Typography>
   )
 }
 
 ListTitle.propTypes = {
-  title: PropTypes.string,
+  paletteColor: T.array,
+  title: T.string,
 }
 
-const styles = theme => ({
-  title: {
-    borderTopWidth: '8px',
-    borderTopColor: theme.palette.primary.light,
-    borderTopStyle: 'solid',
-    paddingTop: theme.spacing(0.5),
-  },
-})
-
-export default withStyles(styles)(ListTitle)
+export default ListTitle

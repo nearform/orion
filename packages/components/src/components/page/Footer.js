@@ -64,24 +64,23 @@ function Footer({ classes, theme, content, Img }) {
                 subscribe
               </Button>
             </div>
-            <div className={classes.horizontalContainer}>
-              {social.map(([name, url]) => {
-                const icon = socialIcons.edges.find(
-                  item => item.node.name.toLowerCase() === name.toLowerCase()
-                )
-                return (
-                  icon && (
-                    <a key={name} href={url} title={`${author} on ${name}`}>
-                      <Img fixed={icon.node.childImageSharp.fixed} />
-                    </a>
-                  )
-                )
-              })}
-              <div className={classes.grow} />
-              <Img fixed={logoFixed} />
-            </div>
           </Grid>
         </Grid>
+        <div className={classes.socialAndLogo}>
+          {social.map(([name, url]) => {
+            const icon = socialIcons.edges.find(
+              item => item.node.name.toLowerCase() === name.toLowerCase()
+            )
+            return (
+              icon && (
+                <a key={name} href={url} title={`${author} on ${name}`}>
+                  <Img fixed={icon.node.childImageSharp.fixed} />
+                </a>
+              )
+            )
+          })}
+          <Img fixed={logoFixed} />
+        </div>
         <Grid container spacing={1} justify="center">
           <Grid item>
             <Typography display="inline" variant="body2">
@@ -123,8 +122,14 @@ const styles = theme => ({
     },
     alignItems: 'flex-end',
   },
-  grow: {
-    flexGrow: 1,
+  socialAndLogo: {
+    alignItems: 'flex-end',
+    display: 'flex',
+    margin: theme.spacing(0, 0, 2),
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+    justifyContent: 'flex-end',
   },
 })
 

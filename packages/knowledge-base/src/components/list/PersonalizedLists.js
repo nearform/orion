@@ -76,7 +76,11 @@ function PersonalizedLists() {
           []
         )}
       />
-      <PromoSpot />
+      <PromoSpot
+        title="EFQM Forum 2019"
+        strapline="23rd October 2019 in Helsinki"
+        link="http://efqmforum.org/"
+      />
     </ContentSignpostGrid>
   )
 }

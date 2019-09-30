@@ -1,14 +1,8 @@
 import React from 'react'
 import T from 'prop-types'
-import {
-  Typography,
-  withStyles,
-  Grid,
-  Button,
-  TextField,
-} from '@material-ui/core'
+import { withStyles, Grid, Button } from '@material-ui/core'
 
-import { SectionTitle } from 'components'
+import { SectionTitleField, InputField, SubmitButton } from './FormFields'
 
 function RegisterConfirm({
   theme,
@@ -23,29 +17,29 @@ function RegisterConfirm({
       <div>
         <Grid container direction="column" spacing={3}>
           <Grid item xs={9}>
-            <SectionTitle gutterBottom barColor={theme.palette.secondary.main}>
+            <SectionTitleField
+              barColor={theme.palette.secondary.main}
+              category="general"
+            >
               Confirm new Account
-            </SectionTitle>
+            </SectionTitleField>
           </Grid>
           <Grid item>
-            <Typography variant="h4" gutterBottom>
-              Email *
-            </Typography>
-            <TextField
-              required
+            <InputField
               name="username"
               type="email"
-              disabled={!!username}
+              required
+              disabled={!username}
               value={username !== null ? username : undefined}
               onChange={handleInput}
-              fullWidth
-            />
+            >
+              Email
+            </InputField>
           </Grid>
           <Grid item>
-            <Typography variant="h4" gutterBottom>
-              Enter your code *
-            </Typography>
-            <TextField required name="code" onChange={handleInput} fullWidth />
+            <InputField name="code" required onChange={handleInput}>
+              Enter your code
+            </InputField>
           </Grid>
 
           <Grid item container alignItems="baseline" spacing={3} wrap="nowrap">
@@ -59,15 +53,7 @@ function RegisterConfirm({
               &nbsp;
             </Grid>
             <Grid item>
-              <Button
-                name="submit"
-                color="secondary"
-                variant="contained"
-                fullWidth
-                onClick={confirm}
-              >
-                Confirm
-              </Button>
+              <SubmitButton onClick={confirm}>Confirm</SubmitButton>
             </Grid>
           </Grid>
         </Grid>

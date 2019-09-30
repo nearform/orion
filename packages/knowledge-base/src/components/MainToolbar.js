@@ -165,6 +165,7 @@ const styles = theme => ({
   },
   navButton: {
     fontWeight: 'normal',
+    minHeight: '48px',
     textTransform: 'none',
   },
   icon: {
