@@ -81,7 +81,7 @@ export const getUserRole = () => {
 
   const baseRole = getUserBaseRole()
   const group = getUserGroup()
-  return group.type !== null && baseRole === 'admin'
+  return group !== undefined && baseRole === 'admin'
     ? `${group.type}-${baseRole}`
     : baseRole
 }
