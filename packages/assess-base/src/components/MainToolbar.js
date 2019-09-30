@@ -43,7 +43,6 @@ function MainToolbar({ classes, dark }) {
   }
 
   const userTokenData = getUserTokenData()
-  //console.log(userTokenData)
 
   const darkClass = classnames({
     [classes.toolbarDark]: dark,
