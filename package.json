@@ -81,6 +81,7 @@
     ]
   },
   "dependencies": {
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "react-markdown": "^4.2.2"
   }
 }

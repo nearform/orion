@@ -3,7 +3,8 @@ import T from 'prop-types'
 import classnames from 'classnames'
 import ReactMarkdown from 'react-markdown'
 import {
-  withStyles,
+  makeStyles,
+  Box,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -12,27 +13,72 @@ import {
 } from '@material-ui/core'
 import { Clear } from '@material-ui/icons'
 
+const useContentModalStyles = makeStyles(theme => ({
+  paper: ({ width }) => ({
+    width,
+    maxWidth: theme.spacing(120),
+  }),
+  titleSection: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(2, 4, 1),
+  },
+  contentSection: {
+    margin: theme.spacing(0, 4),
+    padding: theme.spacing(2, 0),
+    borderTopWidth: theme.spacing(0.5),
+    borderTopStyle: 'solid',
+    borderTopColor: theme.palette.background.dark,
+  },
+  subTitle: {
+    color: theme.palette.primary.dark,
+    marginTop: theme.spacing(1.5),
+  },
+  title: {
+    fontWeight: 700,
+    width: `calc(100% - ${theme.spacing(3)})`,
+  },
+  titleText: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+  },
+  closeX: {
+    padding: 0,
+  },
+}))
+
 function ContentModal({
-  classes,
   children,
   className,
-  title,
-  onClose,
-  mdContent,
   color,
+  mdContent,
+  onClose,
+  open = true,
+  subTitle,
+  title,
+  width = '85%',
 }) {
+  const classes = useContentModalStyles({ width })
   return (
     <Dialog
-      open={true}
+      open={open}
       onClose={onClose}
       classes={{
         paper: classnames(className, classes.paper),
       }}
     >
       <DialogTitle disableTypography className={classes.titleSection}>
-        <Typography variant="h4" className={classes.title}>
-          {title}
-        </Typography>
+        <Box className={classes.titleText}>
+          <Typography variant="h4" className={classes.title}>
+            {title}
+          </Typography>
+          {subTitle && (
+            <Typography variant="h4" className={classes.subTitle}>
+              {subTitle}
+            </Typography>
+          )}
+        </Box>
         <IconButton onClick={onClose} className={classes.closeX}>
           <Clear />
         </IconButton>
@@ -52,36 +98,7 @@ function ContentModal({
   )
 }
 
-const styles = theme => ({
-  paper: {
-    width: '85%',
-    maxWidth: theme.spacing(120),
-  },
-  titleSection: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(2, 4, 1),
-  },
-  contentSection: {
-    margin: theme.spacing(0, 4),
-    padding: theme.spacing(2, 0),
-    borderTopWidth: theme.spacing(0.5),
-    borderTopStyle: 'solid',
-    borderTopColor: theme.palette.background.dark,
-  },
-  title: {
-    color: theme.palette.primary.dark,
-    fontWeight: 700,
-    width: `calc(100% - ${theme.spacing(3)})`,
-    flexGrow: 1,
-  },
-  closeX: {
-    padding: 0,
-  },
-})
-
 ContentModal.propTypes = {
-  classes: T.object.isRequired,
   children: T.node,
   className: T.any,
   onClose: T.func.isRequired,
@@ -89,4 +106,4 @@ ContentModal.propTypes = {
   mdContent: T.string,
 }
 
-export default withStyles(styles)(ContentModal)
+export default ContentModal
