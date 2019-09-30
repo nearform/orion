@@ -18,14 +18,8 @@ export default function ProtectedRoute({
     return null
   }
 
-  if (!isAuthenticatedSync()) {
+  if (!isAuthenticatedSync() || !getUserAuth(allowedRole)) {
     return <Redirect to="/auth" noThrow />
-  }
-
-  if (allowedRole) {
-    if (!getUserAuth(allowedRole)) {
-      return <Redirect to="/auth" noThrow />
-    }
   }
 
   return <Component {...props} />

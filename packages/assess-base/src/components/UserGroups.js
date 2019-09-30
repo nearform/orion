@@ -28,7 +28,6 @@ import { getUserTokenData } from '../utils/auth'
 
 const groupTypeKeys = Object.keys(GROUP_TYPES)
 const groupTypes = groupTypeKeys.map(key => ({ key, value: GROUP_TYPES[key] }))
-const userTokenData = getUserTokenData()
 
 const GroupSchema = Yup.object().shape({
   name: Yup.string().required(),
@@ -49,6 +48,7 @@ const headers = [
 ]
 
 function UserGroups({ classes }) {
+  const userTokenData = getUserTokenData()
   const [createGroup] = useMutation(createGroupMutation)
   const [deleteGroup] = useMutation(deleteGroupMutation)
   const { refetch: refetchGroups, table } = useAdminTable({
