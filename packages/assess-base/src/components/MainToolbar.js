@@ -105,7 +105,7 @@ function MainToolbar({ classes, dark }) {
                 LOGIN
               </Button>
             )}
-            {userTokenData.isAdmin && (
+            {userTokenData.admin && (
               <Button
                 className={navButtonClass}
                 component={NavLink}
