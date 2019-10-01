@@ -95,8 +95,7 @@ function FeedbackReport({
   }
 
   // TODO: Check that this is correct
-  const canEditSummaryAndAdvice =
-    userTokenData.isAdmin || userTokenData.isAssessor
+  const canEditSummaryAndAdvice = userTokenData.admin || userTokenData.assessor
 
   const chartData = getChartData(assessment, assessmentData, pillarColors)
 

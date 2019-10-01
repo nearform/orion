@@ -87,10 +87,10 @@ function CriterionPartTemplate({
   }
 
   const canEditTablesAndUpload =
-    (userTokenData.isAdmin || userTokenData.isContributor) &&
+    (userTokenData.admin || userTokenData.contributor) &&
     assessmentInProgress(assessmentData)
   const canEditFeedbackAndScoring =
-    userTokenData.isAssessor && assessmentSubmitted(assessmentData)
+    userTokenData.assessor && assessmentSubmitted(assessmentData)
 
   return (
     <div className={classes.root} data-testid="criterion-part">

@@ -79,7 +79,7 @@ function AssessmentTemplate({
   const assessmentId = getAssessmentId(location)
   const userTokenData = getUserTokenData()
 
-  if (!assessmentId && !userTokenData.isAdmin) {
+  if (!assessmentId && !userTokenData.admin) {
     return <Redirect to="/auth" noThrow />
   }
 
@@ -166,19 +166,18 @@ function AssessmentTemplate({
   }
 
   const canEditKeyInformationAndUpload =
-    (userTokenData.isAdmin || userTokenData.isContributor) &&
+    (userTokenData.admin || userTokenData.contributor) &&
     assessmentInProgress(assessmentData)
 
-  const canSubmit =
-    userTokenData.isAdmin && assessmentInProgress(assessmentData)
+  const canSubmit = userTokenData.admin && assessmentInProgress(assessmentData)
 
-  const canCreateAssessment = userTokenData.isAdmin
+  const canCreateAssessment = userTokenData.admin
 
   // TODO: change this with correct rule based on assessment state
   const canViewFeedbackReport = assessmentSubmitted(assessmentData)
 
   const canAssignContributorsAndAssessors =
-    (userTokenData.isAdmin &&
+    (userTokenData.admin &&
       getCanEditAssesors(userTokenData.groupId, assessmentData)) ||
     getCanEditContributors(userTokenData.groupId, assessmentData)
 

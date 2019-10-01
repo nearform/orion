@@ -55,7 +55,7 @@ function ContributorsAssessorsTemplate({
 
   const assessmentId = getAssessmentId(location)
   const userTokenData = getUserTokenData()
-  if (!assessmentId && !userTokenData.isAdmin) {
+  if (!assessmentId && !userTokenData.admin) {
     return <Redirect to="/auth" noThrow />
   }
 
