@@ -86,7 +86,7 @@ function CriterionTemplate({
   }
 
   const canEditAndUpload =
-    (userTokenData.isAdmin || userTokenData.isContributor) &&
+    (userTokenData.admin || userTokenData.contributor) &&
     assessmentInProgress(get(assessmentCriterionData, 'assessment_by_pk'))
 
   return (
