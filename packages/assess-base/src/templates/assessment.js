@@ -26,7 +26,7 @@ import {
   updateAssessmentKeyInfoMutation,
   updateAssessmentStatusMutation,
 } from '../queries'
-import { getUserTokenData } from '../utils/auth'
+import { getUserTokenData, getUserAuth } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'
@@ -176,10 +176,11 @@ function AssessmentTemplate({
   // TODO: change this with correct rule based on assessment state
   const canViewFeedbackReport = assessmentSubmitted(assessmentData)
 
-  const canAssignContributorsAndAssessors =
-    (userTokenData.admin &&
-      getCanEditAssesors(userTokenData.groupId, assessmentData)) ||
-    getCanEditContributors(userTokenData.groupId, assessmentData)
+  const canAssignContributorsAndAssessors = getUserAuth('platform-admin')
+    ? true
+    : (userTokenData.admin &&
+        getCanEditAssesors(userTokenData.groupId, assessmentData)) ||
+      getCanEditContributors(userTokenData.groupId, assessmentData)
 
   const assessmentName = get(assessmentData, 'name', 'Loading...')
 
