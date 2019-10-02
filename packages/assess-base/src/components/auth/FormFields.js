@@ -9,7 +9,6 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core'
-import { teal } from '@material-ui/core/colors'
 import { SectionTitle } from 'components'
 
 import { AuthFormStateContext } from './AuthEventMixin'
@@ -24,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
   },
   buttonProgress: {
-    color: teal[500],
+    color: theme.palette.primary.dark,
     position: 'absolute',
     top: '50%',
     left: '50%',
