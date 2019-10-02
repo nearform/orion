@@ -4,13 +4,13 @@ import getRoleByName from './graphql/get-role-by-name.graphql'
 import createUser from './graphql/create-user.graphql'
 import createUserRole from './graphql/create-user-role.graphql'
 
-export const NON_MEMBER_ROLE_NAME = 'non-member'
+export const NEW_MEMBER_ROLE_NAME = 'member'
 
 export const handler = async event => {
   console.log('creating user', event)
   if (event.triggerSource === 'PostConfirmation_ConfirmSignUp') {
     const roleData = await graphql(getRoleByName, {
-      name: NON_MEMBER_ROLE_NAME,
+      name: NEW_MEMBER_ROLE_NAME,
     })
     const role = get(roleData, 'role.0')
 

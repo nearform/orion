@@ -298,12 +298,12 @@ describe('jwt-enrichment-hook', () => {
           })
         })
 
-        describe(`when the user belongs to a group of type ${groupType} with a role "non-member"`, () => {
+        describe(`when the user belongs to a group of type ${groupType} with a role "member"`, () => {
           let event
           let query
 
           beforeEach(async () => {
-            query = oneUserWithGroupAndRoleFromDb(groupType, 'non-member')
+            query = oneUserWithGroupAndRoleFromDb(groupType, 'member')
             graphql.mockReturnValue(query)
 
             event = await handler(originalEvent)

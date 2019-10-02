@@ -16,7 +16,7 @@ import { Redirect } from '@reach/router'
 import { TypedChip, PaddedContainer, SectionTitle } from 'components'
 
 import SEO from '../components/SEO'
-import { getUserTokenData } from '../utils/auth'
+import { getUserTokenData, getUserAuth } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
 import ContextualHelp from '../components/ContextualHelp'
 import {
@@ -93,8 +93,12 @@ function ContributorsAssessorsTemplate({
   const contributors = get(data, 'contributors', [])
 
   const groupId = userTokenData.groupId
-  const canEditAssesors = getCanEditAssesors(groupId, assessmentData)
-  const canEditContributors = getCanEditContributors(groupId, assessmentData)
+  const canEditAssesors = getUserAuth('platform-admin')
+    ? true
+    : getCanEditAssesors(groupId, assessmentData)
+  const canEditContributors = getUserAuth('platform-admin')
+    ? true
+    : getCanEditContributors(groupId, assessmentData)
 
   const headers = [
     { id: 'id', label: 'ID' },
@@ -244,30 +248,34 @@ function ContributorsAssessorsTemplate({
         <div className={classes.section}>
           <Grid container>
             <Grid item xs={12} className={classes.participants}>
-              {assessors.map(({ assessor }) => (
-                <TypedChip
-                  key={assessor.id}
-                  name={_placeholderEtoN(assessor.email)}
-                  onDelete={
-                    canEditAssesors ? () => unassignAssessor(assessor) : null
-                  }
-                  type="Assessor"
-                  color="primary"
-                />
-              ))}
-              {contributors.map(({ contributor }) => (
-                <TypedChip
-                  key={contributor.id}
-                  name={_placeholderEtoN(contributor.email)}
-                  onDelete={
-                    canEditContributors
-                      ? () => unassignContributor(contributor)
-                      : null
-                  }
-                  type="Contributor"
-                  color="secondary"
-                />
-              ))}
+              {assessors.map(({ assessor }) =>
+                assessor ? (
+                  <TypedChip
+                    key={assessor.id}
+                    name={_placeholderEtoN(assessor.email)}
+                    onDelete={
+                      canEditAssesors ? () => unassignAssessor(assessor) : null
+                    }
+                    type="Assessor"
+                    color="primary"
+                  />
+                ) : null
+              )}
+              {contributors.map(({ contributor }) =>
+                contributor ? (
+                  <TypedChip
+                    key={contributor.id}
+                    name={_placeholderEtoN(contributor.email)}
+                    onDelete={
+                      canEditContributors
+                        ? () => unassignContributor(contributor)
+                        : null
+                    }
+                    type="Contributor"
+                    color="secondary"
+                  />
+                ) : null
+              )}
             </Grid>
             <Grid item xs={12} className={classes.filterContainer}>
               <Input
