@@ -146,10 +146,15 @@ export const isAuthenticatedSync = () => isBrowser && !!Auth.user
 const extractTokenPayload = dataKey => {
   if (Auth.user) {
     const tokenPayload = Auth.user.signInUserSession.idToken.payload
-    const claims = {
-      ...JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE]),
-      ...JSON.parse(tokenPayload[CUSTOM_CLAIMS_NAMESPACE]),
-    }
+    const claims =
+      CUSTOM_CLAIMS_NAMESPACE in tokenPayload
+        ? {
+            ...JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE]),
+            ...JSON.parse(tokenPayload[CUSTOM_CLAIMS_NAMESPACE]),
+          }
+        : {
+            ...JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE]),
+          }
     return claims[dataKey] || null
   } else {
     return null

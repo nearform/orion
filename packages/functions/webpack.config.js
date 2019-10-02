@@ -31,4 +31,7 @@ module.exports = {
   optimization: {
     minimize: false,
   },
+  externals: {
+    'pino-pretty': 'pino-pretty',
+  },
 }

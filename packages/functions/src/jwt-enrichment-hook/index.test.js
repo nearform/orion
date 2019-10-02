@@ -298,12 +298,12 @@ describe('jwt-enrichment-hook', () => {
           })
         })
 
-        describe(`when the user belongs to a group of type ${groupType} with a role "non-member"`, () => {
+        describe(`when the user belongs to a group of type ${groupType} with a role "member"`, () => {
           let event
           let query
 
           beforeEach(async () => {
-            query = oneUserWithGroupAndRoleFromDb(groupType, 'non-member')
+            query = oneUserWithGroupAndRoleFromDb(groupType, 'member')
             graphql.mockReturnValue(query)
 
             event = await handler(originalEvent)
@@ -318,10 +318,10 @@ describe('jwt-enrichment-hook', () => {
 
             await query
 
-            expect(allowedRoles).toEqual(['public'])
+            expect(allowedRoles).toEqual(['user'])
           })
 
-          it('it should have default role "public" in claims', async () => {
+          it('it should have default role "user" in claims', async () => {
             const defaultRole = JSON.parse(
               event.response.claimsOverrideDetails.claimsToAddOrOverride[
                 'https://hasura.io/jwt/claims'
@@ -330,7 +330,7 @@ describe('jwt-enrichment-hook', () => {
 
             await query
 
-            expect(defaultRole).toEqual('public')
+            expect(defaultRole).toEqual('user')
           })
 
           it('it should have group id in claims', async () => {

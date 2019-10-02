@@ -1,4 +1,4 @@
-import { handler, NON_MEMBER_ROLE_NAME } from './'
+import { handler, NEW_MEMBER_ROLE_NAME } from './'
 import graphql from '../graphql'
 
 import getRoleByName from './graphql/get-role-by-name.graphql'
@@ -33,7 +33,7 @@ const originalEvent = {
 
 describe('signup-hook', () => {
   it('it should create the user with the attributes coming from the request and assign him a non-member role', async () => {
-    const role = { id: 156, name: NON_MEMBER_ROLE_NAME }
+    const role = { id: 156, name: NEW_MEMBER_ROLE_NAME }
     const createdUser = { id: 'some-user-id' }
     graphql.mockResolvedValueOnce({ role: [role] })
     graphql.mockResolvedValueOnce({
@@ -45,7 +45,7 @@ describe('signup-hook', () => {
     await handler(originalEvent)
 
     expect(graphql).toHaveBeenNthCalledWith(1, getRoleByName, {
-      name: NON_MEMBER_ROLE_NAME,
+      name: NEW_MEMBER_ROLE_NAME,
     })
 
     expect(graphql).toHaveBeenNthCalledWith(2, createUser, {
