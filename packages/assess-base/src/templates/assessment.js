@@ -664,7 +664,7 @@ const styles = theme => ({
     marginRight: -theme.spacing(1),
     '& > *': {
       marginRight: theme.spacing(1),
-      marginBottom: theme.spacing(1),
+      marginBottom: theme.spacing(2),
     },
   },
 })
