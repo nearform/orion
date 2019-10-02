@@ -17,6 +17,7 @@ import {
   ASSESSMENT_STATUS,
   ConfirmDialog,
   SectionTitle,
+  TypedChip,
 } from 'components'
 import SEO from '../components/SEO'
 import {
@@ -25,6 +26,9 @@ import {
   createFileUploadMutation,
   updateAssessmentKeyInfoMutation,
   updateAssessmentStatusMutation,
+  getAssessmentContributorsAssessorsData,
+  deleteAssessmentContributorMutation,
+  deleteAssessmentAssessorMutation,
 } from '../queries'
 import { getUserTokenData } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
@@ -183,6 +187,74 @@ function AssessmentTemplate({
 
   const assessmentName = get(assessmentData, 'name', 'Loading...')
 
+  function _placeholderEtoN(email) {
+    return email
+      .split('@')[0]
+      .split('.')
+      .map(n => n.charAt(0).toUpperCase() + n.slice(1))
+      .join(' ')
+  }
+
+  const [fetchShallowAssessmentData, { data: assessmentByPk }] = useManualQuery(
+    getShallowAssessmentData,
+    {
+      variables: {
+        id: assessmentId,
+      },
+    }
+  )
+
+  const [fetchAssessmentContributorsAssessorsData, { data }] = useManualQuery(
+    getAssessmentContributorsAssessorsData,
+    {
+      variables: { assessmentId },
+    }
+  )
+  useEffect(() => {
+    if (!assessmentByPk) {
+      fetchShallowAssessmentData()
+    }
+    if (!data) {
+      fetchAssessmentContributorsAssessorsData()
+    }
+  }, [
+    fetchShallowAssessmentData,
+    assessmentByPk,
+    fetchAssessmentContributorsAssessorsData,
+    data,
+  ])
+
+  const assessors = get(data, 'assessors', [])
+  const contributors = get(data, 'contributors', [])
+
+  const headers = [
+    { id: 'id', label: 'ID' },
+    { id: 'email', label: 'Email' },
+    { id: 'group', label: 'Group' },
+  ]
+  if (canAssignContributorsAndAssessors) {
+    headers.push({ id: 'contributor', label: 'Contributor' })
+    headers.push({ id: 'assessor', label: 'Assessor' })
+  }
+
+  const [deleteAssessmentContributor] = useMutation(
+    deleteAssessmentContributorMutation
+  )
+  async function unassignContributor(user) {
+    const variables = { assessmentId, contributorId: user.id }
+    await deleteAssessmentContributor({ variables })
+    fetchAssessmentContributorsAssessorsData()
+  }
+
+  const [deleteAssessmentAssessor] = useMutation(
+    deleteAssessmentAssessorMutation
+  )
+  async function unassignAssessor(user) {
+    const variables = { assessmentId, assessorId: user.id }
+    await deleteAssessmentAssessor({ variables })
+    fetchAssessmentContributorsAssessorsData()
+  }
+
   return (
     <>
       <ContentModal
@@ -338,15 +410,49 @@ function AssessmentTemplate({
                 )}
               </Grid>
               {canAssignContributorsAndAssessors && (
-                <Grid item xs>
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    component={Link}
-                    to={`assessment/${assessment.key}/contributors-assessors#${assessmentId}`}
-                  >
-                    Assign Contributors and Assessors
-                  </Button>
+                <Grid container>
+                  <Grid item xs={12} className={classes.participants}>
+                    {assessors.map(({ assessor }) =>
+                      assessor ? (
+                        <TypedChip
+                          key={assessor.id}
+                          name={_placeholderEtoN(assessor.email)}
+                          onDelete={
+                            canAssignContributorsAndAssessors
+                              ? () => unassignAssessor(assessor)
+                              : null
+                          }
+                          type="Assessor"
+                          color="primary"
+                        />
+                      ) : null
+                    )}
+                    {contributors.map(({ contributor }) =>
+                      contributor ? (
+                        <TypedChip
+                          key={contributor.id}
+                          name={_placeholderEtoN(contributor.email)}
+                          onDelete={
+                            canAssignContributorsAndAssessors
+                              ? () => unassignContributor(contributor)
+                              : null
+                          }
+                          type="Contributor"
+                          color="secondary"
+                        />
+                      ) : null
+                    )}
+                  </Grid>
+                  <Grid item xs>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      component={Link}
+                      to={`assessment/${assessment.key}/contributors-assessors#${assessmentId}`}
+                    >
+                      Assign Contributors and Assessors
+                    </Button>
+                  </Grid>
                 </Grid>
               )}
               <Grid item xs>
@@ -550,6 +656,16 @@ const styles = theme => ({
   switch: {
     // Align switch with adjacent button
     marginTop: theme.spacing(0.75),
+  },
+  participants: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    marginRight: -theme.spacing(1),
+    '& > *': {
+      marginRight: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
   },
 })
 
