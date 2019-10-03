@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "The goto knowledge base",
   "scripts": {
-    "bootstrap": "lerna bootstrap --concurrency=2",
+    "bootstrap": "lerna bootstrap --concurrency=2 --hoist aws-amplify*",
     "build": "lerna run build",
     "artifact:create": "lerna run artifact:create",
     "test": "lerna run test",
