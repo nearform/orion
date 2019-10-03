@@ -170,8 +170,7 @@ function AssessmentTemplate({
   }
 
   const canEditKeyInformationAndUpload =
-    (userTokenData.admin || userTokenData.contributor) &&
-    assessmentInProgress(assessmentData)
+    userTokenData.contributor && assessmentInProgress(assessmentData)
 
   const canSubmit = userTokenData.admin && assessmentInProgress(assessmentData)
 
