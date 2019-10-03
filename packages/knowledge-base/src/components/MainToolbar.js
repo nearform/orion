@@ -105,7 +105,12 @@ function MainToolbar({ classes, dark }) {
               </Button>
             )}
             {!isAuthenticated && (
-              <Button className={navButtonClass} component={NavLink} to="/auth">
+              <Button
+                className={navButtonClass}
+                component={NavLink}
+                data-testid="login-button"
+                to="/auth"
+              >
                 LOGIN
               </Button>
             )}

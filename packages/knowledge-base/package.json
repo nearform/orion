@@ -55,6 +55,7 @@
     "@babel/preset-env": "^7.4.4",
     "babel-jest": "^24.8.0",
     "babel-preset-gatsby": "^0.1.11",
+    "cypress": "^3.4.1",
     "dotenv": "^7.0.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
@@ -84,6 +85,7 @@
     "serve": "gatsby serve",
     "test": "jest",
     "artifact:create": "tar -zcf $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz public",
-    "artifact:name": "echo $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz"
+    "artifact:name": "echo $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz",
+    "e2e": "cypress open"
   }
 }
