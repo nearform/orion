@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { GraphQLClient, ClientContext } from 'graphql-hooks'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
@@ -14,9 +14,9 @@ import {
 import * as auth from './utils/auth'
 import { AuthInitContext } from './src/utils/auth'
 import * as i18n from './utils/i18n'
-import { useState, useEffect } from 'react'
 import AppFooter from './src/components/AppFooter'
 import MainToolbar from './src/components/MainToolbar'
+import './src/styles/global.css'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
 
