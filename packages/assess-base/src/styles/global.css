@@ -1,0 +1,15 @@
+/* Media queries for print */
+@media print {
+    /* Hide links in top-level nav bar */
+    div[data-testid="main-toolbar__links-container"] {
+        display: none;
+    }
+    /* Hide page level nav links */
+    nav.MuiBox-root {
+        display: none;
+    }
+    /* Hide page footer */
+    footer {
+        display: none;
+    }
+}

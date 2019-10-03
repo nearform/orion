@@ -15,6 +15,13 @@ const Header = ({ assessment, classes }) => {
         >
           ◀ Asessment Summary
         </Button>
+        <Button
+          color="secondary"
+          variant="contained"
+          onClick={() => window.print()}
+        >
+          Print Report
+        </Button>
       </Box>
       <Box>
         <Typography className={classes.prefix}>Management Report</Typography>
@@ -45,6 +52,8 @@ const styles = theme => ({
     fontWeight: 700,
   },
   nav: {
+    display: 'flex',
+    justifyContent: 'space-between',
     flexBasis: '100%',
     marginBottom: theme.spacing(3),
   },
