@@ -1,22 +1,24 @@
 import React from 'react'
 import T from 'prop-types'
 import { withStyles, Grid, Button } from '@material-ui/core'
+import { useTheme } from '@material-ui/styles'
+import EmailIcon from '@material-ui/icons/Email'
 
 import { SectionTitleField, InputField, SubmitButton } from './FormFields'
 
 function RegisterConfirm({
-  theme,
   classes,
   confirm,
   goToSignIn,
   handleInput,
   username,
 }) {
+  const theme = useTheme()
   return (
     <div className={classes.root}>
       <div>
         <Grid container direction="column" spacing={3}>
-          <Grid item xs={9}>
+          <Grid item xs={8}>
             <SectionTitleField
               barColor={theme.palette.secondary.main}
               category="general"
@@ -24,7 +26,25 @@ function RegisterConfirm({
               Confirm new Account
             </SectionTitleField>
           </Grid>
-          <Grid item>
+          <Grid item xs={10}>
+            <div className={classes.message}>
+              <div>
+                <p>
+                  <EmailIcon color="secondary" />
+                </p>
+              </div>
+              <div>
+                <p>
+                  An email has been sent to you{username && ` at ${username}`}.
+                </p>
+                <p>
+                  In the email you will find a code that will activate your
+                  account.
+                </p>
+              </div>
+            </div>
+          </Grid>
+          <Grid item xs={10}>
             <InputField
               name="username"
               type="email"
@@ -36,7 +56,7 @@ function RegisterConfirm({
               Email
             </InputField>
           </Grid>
-          <Grid item>
+          <Grid item xs={5}>
             <InputField name="code" required onChange={handleInput}>
               Enter your code
             </InputField>
@@ -71,13 +91,26 @@ RegisterConfirm.propTypes = {
   username: T.string,
 }
 
-const styles = {
+const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
   },
-}
+  message: {
+    borderRadius: '4px',
+    color: theme.palette.primary.dark,
+    backgroundColor: theme.palette.background.light,
+    fontSize: '14px',
+    fontWeight: 'bold',
+    padding: '7px',
+    display: 'flex',
+    flexDirection: 'row',
+    '& div': {
+      padding: '0 7px',
+    },
+  },
+})
 
 export default withStyles(styles, { withTheme: true })(RegisterConfirm)
