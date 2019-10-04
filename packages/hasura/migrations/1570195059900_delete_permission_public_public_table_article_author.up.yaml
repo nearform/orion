@@ -1,0 +1,6 @@
+- args:
+    role: public
+    table:
+      name: article_author
+      schema: public
+  type: drop_insert_permission
