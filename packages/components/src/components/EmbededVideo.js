@@ -12,7 +12,7 @@ const videoUrlValidators = [
   },
   {
     type: 'YouTube',
-    regex: /^.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)(?<id>[^#&?]{11}).*/,
+    regex: /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)(?<id>[^#&?]{11}).*/,
     getEmbedUrl: (match, regex) =>
       match.input.replace(
         regex,
