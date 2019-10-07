@@ -1,0 +1,15 @@
+- args:
+    permission:
+      check: {}
+      columns:
+      - article_id
+      - recommended_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: public
+    table:
+      name: recommended_articles
+      schema: public
+  type: create_insert_permission
