@@ -12,7 +12,13 @@
           "**/gatsby*",
           "**/gatsby*/**",
           "**/@material-ui",
-          "**/@material-ui/**"
+          "**/@material-ui/**",
+          "**/react-dom",
+          "**/react-dom/**",
+          "**/react-test-renderer",
+          "**/react-test-renderer/**",
+          "**/enzyme*",
+          "**/enzyme*/**"
       ]
   },
   "scripts": {
