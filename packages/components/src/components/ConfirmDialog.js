@@ -16,6 +16,7 @@ function ConfirmDialog({
   classes,
   children,
   onConfirm,
+  onCancel,
   title,
   type,
   okayLabel,
@@ -30,11 +31,12 @@ function ConfirmDialog({
     if (!disabled) setIsOpen(true)
   }
   function handleClose() {
+    onCancel()
     setIsOpen(false)
   }
   function handleConfirm() {
     onConfirm()
-    handleClose()
+    setIsOpen(false)
   }
 
   return (
@@ -90,6 +92,7 @@ ConfirmDialog.propTypes = {
   classes: T.object.isRequired,
   children: T.node.isRequired,
   onConfirm: T.func.isRequired,
+  onCancel: T.func,
   title: T.string.isRequired,
   okayLabel: T.string,
   cancelLabel: T.string,

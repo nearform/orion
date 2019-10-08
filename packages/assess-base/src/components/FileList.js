@@ -11,6 +11,7 @@ import { fileType } from '../prop-types'
 
 function FileList({
   theme,
+  classes,
   assessmentId,
   pillar,
   criterion,
@@ -48,22 +49,62 @@ function FileList({
     onUploadComplete()
   }
 
-  return (
-    <Grid container alignItems="center" spacing={2} wrap="nowrap">
-      <Grid item>
-        <Typography variant="h4" color="textSecondary">
-          Supporting documentation
-        </Typography>
-      </Grid>
-      <Grid item>
-        <Grid container spacing={1}>
-          {files.map(file => (
-            <Grid item key={file.s3_key}>
-              <FileItem file={file} />
-            </Grid>
-          ))}
+  const listFiles = files => {
+    const list = []
+
+    for (let i = 0; i < files.length; i += 2) {
+      list.push(
+        <Grid item>
+          <div className={classes.fileItemWrapper}>
+            {i + 1 < files.length && (
+              <FileItem
+                file={files[i + 1]}
+                canDelete={canUpload}
+                onDeleteComplete={onUploadComplete}
+              />
+            )}
+            <FileItem
+              file={files[i]}
+              canDelete={canUpload}
+              onDeleteComplete={onUploadComplete}
+            />
+          </div>
         </Grid>
+      )
+    }
+
+    return list
+  }
+
+  return (
+    <Grid
+      container
+      xs={6}
+      alignItems="flex-end"
+      direction="column"
+      spacing={2}
+      wrap="nowrap"
+      className={classes.fileList}
+    >
+      <Grid item>
+        <div className={classes.fileItemWrapper}>
+          <Typography
+            variant="h4"
+            color="textSecondary"
+            className={classes.text}
+          >
+            Supporting
+          </Typography>
+          <Typography
+            variant="h4"
+            color="textSecondary"
+            className={classes.text}
+          >
+            documentation
+          </Typography>
+        </div>
       </Grid>
+      {listFiles(files)}
       {canUpload && (
         <Grid item>
           <UploadButton
@@ -91,6 +132,16 @@ FileList.propTypes = {
   onUploadComplete: T.func.isRequired,
 }
 
-const styles = {}
+const styles = theme => ({
+  fileList: {
+    float: 'right',
+  },
+  fileItemWrapper: {
+    display: 'flex',
+  },
+  text: {
+    paddingLeft: theme.spacing(1),
+  },
+})
 
 export default withStyles(styles, { withTheme: true })(FileList)
