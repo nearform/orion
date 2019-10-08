@@ -2,6 +2,8 @@
   "name": "raw-salmon",
   "version": "1.0.0",
   "description": "The goto knowledge base",
+  "private": true,
+  "workspaces": [ "packages/*", "hasura" ],
   "scripts": {
     "bootstrap": "lerna bootstrap --concurrency=2",
     "build": "lerna run build",

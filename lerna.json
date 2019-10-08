@@ -1,6 +1,7 @@
 {
   "npmClient": "yarn",
-  "packages": [
+  "useWorkspaces": true,
+  "x-packages": [
     "packages/*",
     "hasura"
   ],
