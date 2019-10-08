@@ -3,7 +3,18 @@
   "version": "1.0.0",
   "description": "The goto knowledge base",
   "private": true,
-  "workspaces": [ "packages/*", "hasura" ],
+  "workspaces": {
+      "packages": [
+          "packages/*",
+          "hasura"
+      ],
+      "nohoist": [
+          "**/gatsby*",
+          "**/gatsby*/**",
+          "**/@material-ui",
+          "**/@material-ui/**"
+      ]
+  },
   "scripts": {
     "bootstrap": "lerna bootstrap --concurrency=2",
     "build": "lerna run build",
