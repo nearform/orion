@@ -21,7 +21,7 @@ function formatFileSize(bytes) {
   return (bytes / Math.pow(k, i)).toFixed(1) + ' ' + sizes[i]
 }
 
-function FileItem({ classes, className, file, canDelete, onDeleteComplete }) {
+function FileItem({ classes, file, canDelete, onDeleteComplete }) {
   const [show, setShow] = useState(false)
 
   const [deleteFileUpload] = useMutation(deleteFileUploadMutation)
