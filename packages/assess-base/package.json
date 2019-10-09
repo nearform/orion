@@ -14,7 +14,7 @@
     "aws-amplify": "1.1.28",
     "aws-amplify-react": "2.3.8",
     "classnames": "^2.2.6",
-    "components": "^1.0.0",
+    "components": "^1.1.0",
     "core-js": "^2.6.5",
     "efqm-theme": "^1.0.0",
     "file-saver": "^2.0.2",

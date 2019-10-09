@@ -9,8 +9,8 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core'
-import { SectionTitle } from 'components'
 
+import SectionTitle from '../page/SectionTitle'
 import { AuthFormStateContext } from './AuthEventMixin'
 
 const useStyles = makeStyles(theme => ({
@@ -58,6 +58,7 @@ function FieldLabel({ required, hasError, children }) {
 FieldLabel.propTypes = {
   required: T.bool,
   hasError: T.bool,
+  children: T.node.isRequired,
 }
 
 function ErrorMessage({ children }) {
@@ -72,6 +73,10 @@ function ErrorMessage({ children }) {
       {children}
     </Typography>
   )
+}
+
+ErrorMessage.propTypes = {
+  children: T.node.isRequired,
 }
 
 function SectionTitleField({ barColor, category, children }) {
@@ -90,6 +95,7 @@ function SectionTitleField({ barColor, category, children }) {
 SectionTitleField.propTypes = {
   barColor: T.string,
   category: T.string,
+  children: T.node.isRequired,
 }
 
 function InputTextField({
@@ -129,7 +135,9 @@ InputTextField.propTypes = {
   type: T.string,
   value: T.string,
   required: T.bool,
+  disabled: T.bool,
   onChange: T.func,
+  children: T.node.isRequired,
 }
 
 function InputSelectField({
@@ -181,6 +189,7 @@ InputSelectField.propTypes = {
   value: T.string,
   required: T.bool,
   onChange: T.func,
+  children: T.node.isRequired,
 }
 
 function InputField({ type, children, ...props }) {
@@ -196,6 +205,7 @@ function InputField({ type, children, ...props }) {
 
 InputField.propTypes = {
   type: T.string,
+  children: T.node.isRequired,
 }
 
 function SubmitButton({ onClick, children }) {
@@ -221,6 +231,7 @@ function SubmitButton({ onClick, children }) {
 
 SubmitButton.propTypes = {
   onClick: T.func.isRequired,
+  children: T.node.isRequired,
 }
 
 export { SectionTitleField, InputField, SubmitButton }
