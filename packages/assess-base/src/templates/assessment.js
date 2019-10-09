@@ -27,8 +27,6 @@ import {
   updateAssessmentKeyInfoMutation,
   updateAssessmentStatusMutation,
   getAssessmentContributorsAssessorsData,
-  deleteAssessmentContributorMutation,
-  deleteAssessmentAssessorMutation,
 } from '../queries'
 import { getUserTokenData } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
@@ -237,24 +235,6 @@ function AssessmentTemplate({
     headers.push({ id: 'assessor', label: 'Assessor' })
   }
 
-  const [deleteAssessmentContributor] = useMutation(
-    deleteAssessmentContributorMutation
-  )
-  async function unassignContributor(user) {
-    const variables = { assessmentId, contributorId: user.id }
-    await deleteAssessmentContributor({ variables })
-    fetchAssessmentContributorsAssessorsData()
-  }
-
-  const [deleteAssessmentAssessor] = useMutation(
-    deleteAssessmentAssessorMutation
-  )
-  async function unassignAssessor(user) {
-    const variables = { assessmentId, assessorId: user.id }
-    await deleteAssessmentAssessor({ variables })
-    fetchAssessmentContributorsAssessorsData()
-  }
-
   return (
     <>
       <ContentModal
@@ -417,11 +397,6 @@ function AssessmentTemplate({
                         <TypedChip
                           key={assessor.id}
                           name={_placeholderEtoN(assessor.email)}
-                          onDelete={
-                            canAssignContributorsAndAssessors
-                              ? () => unassignAssessor(assessor)
-                              : null
-                          }
                           type="Assessor"
                           color="primary"
                         />
@@ -432,11 +407,6 @@ function AssessmentTemplate({
                         <TypedChip
                           key={contributor.id}
                           name={_placeholderEtoN(contributor.email)}
-                          onDelete={
-                            canAssignContributorsAndAssessors
-                              ? () => unassignContributor(contributor)
-                              : null
-                          }
                           type="Contributor"
                           color="secondary"
                         />

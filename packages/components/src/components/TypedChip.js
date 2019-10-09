@@ -12,8 +12,8 @@ export const PARTICIPANT_TYPE = {
 function TypedChip({ type, color, name, onDelete, classes }) {
   return (
     <Chip
-      onDelete={onDelete}
-      deleteIcon={<ClearIcon fontSize="small" />}
+      onDelete={onDelete ? onDelete : false}
+      deleteIcon={onDelete ? <ClearIcon fontSize="small" /> : false}
       classes={classes}
       clickable={false}
       label={
