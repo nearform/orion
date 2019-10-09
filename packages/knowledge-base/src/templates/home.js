@@ -1,9 +1,7 @@
-import BackgroundImage from 'gatsby-background-image'
 import React from 'react'
 import { Button, Grid, Typography, withStyles, Box } from '@material-ui/core'
 import { Link as RouterLink } from '@reach/router'
 import { PaddedContainer } from 'components'
-import { graphql } from 'gatsby'
 
 import EditorsPicks from '../components/list/EditorsPicks'
 import PageSection from '../components/layout/page-section'
@@ -14,15 +12,11 @@ import GainKnowledgeLinks from '../components/list/gain-knowledge-links'
 import MostRecentArticles from '../components/list/most-recent-articles'
 import EventList from '../components/list/event-list'
 import row from '../components/layout/flex-with-gap/row'
+import HeroImageWrapper from '../components/layout/hero-image-wrapper'
 
-function KnowledgeHome({ classes, data }) {
-  const { heroBanner } = data
-
+function KnowledgeHome({ classes }) {
   return (
-    <BackgroundImage
-      className={classes.heroContainer}
-      fluid={heroBanner.childImageSharp.fluid}
-    >
+    <HeroImageWrapper>
       <SEO title="Knowledge Base Home Page" />
       <div className={classes.header}>
         <PaddedContainer className={classes.heroDescription}>
@@ -71,7 +65,7 @@ function KnowledgeHome({ classes, data }) {
       <PageSection>
         <GainKnowledgeLinks />
       </PageSection>
-    </BackgroundImage>
+    </HeroImageWrapper>
   )
 }
 
@@ -79,10 +73,6 @@ const styles = theme => ({
   header: {
     paddingBottom: '140px',
     position: 'relative',
-  },
-  heroContainer: {
-    backgroundSize: '100%',
-    backgroundPosition: 'top left',
   },
   heroDescription: {
     marginTop: theme.spacing(13),
@@ -98,22 +88,5 @@ const styles = theme => ({
     minWidth: 0,
   },
 })
-
-export const query = graphql`
-  query HomeTemplateQuery($heroImageName: String!) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    heroBanner: file(name: { eq: $heroImageName }) {
-      childImageSharp {
-        fluid(quality: 100) {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-  }
-`
 
 export default withStyles(styles, { withTheme: true })(KnowledgeHome)

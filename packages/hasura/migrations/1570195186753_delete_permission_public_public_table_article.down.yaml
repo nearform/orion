@@ -1,0 +1,28 @@
+- args:
+    permission:
+      columns:
+      - banner
+      - created_at
+      - created_by_id
+      - editors_pick
+      - fields
+      - id
+      - knowledge_type
+      - path
+      - published_at
+      - status
+      - subtitle
+      - summary
+      - thumbnail
+      - title
+      - updated_at
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: public
+    table:
+      name: article
+      schema: public
+  type: create_update_permission
