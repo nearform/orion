@@ -5,14 +5,18 @@ import T from 'prop-types'
 import FileItem from '../FileItem'
 import HeadedAsidePanel from '../headed-aside-panel'
 
-const KeyInfoDocsList = ({ assessment, classes }) => {
+const KeyInfoDocsList = ({ assessment, classes, onFileDelete }) => {
   return (
     <HeadedAsidePanel title="Assessment Documents">
       {assessment && assessment.files.length ? (
         <Box className={classes.list} component="ul">
           {assessment.files.map(file => (
             <Box className={classes.listItem} component="li" key={file.s3_key}>
-              <FileItem file={file} canDelete={false} />
+              <FileItem
+                file={file}
+                canDelete={true}
+                onDeleteComplete={onFileDelete}
+              />
             </Box>
           ))}
         </Box>
@@ -29,6 +33,7 @@ const KeyInfoDocsList = ({ assessment, classes }) => {
 KeyInfoDocsList.propTypes = {
   assessment: T.object,
   classes: T.object.isRequired,
+  onFileDelete: T.func.isRequired,
 }
 
 const styles = theme => ({
