@@ -84,6 +84,10 @@ UserSelectPicker.propTypes = {
     id: T.number,
     name: T.string,
   }),
+  selected: T.shape({
+    id: T.number,
+    name: T.string,
+  }),
   data: T.object,
   label: T.string,
   entityKey: T.string,
