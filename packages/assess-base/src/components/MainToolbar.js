@@ -6,11 +6,9 @@ import { Typography, Button, withStyles } from '@material-ui/core'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
-import { PaddedContainer } from 'components'
-import { getLanguageSwitcher } from 'components'
+import { PaddedContainer, NavLink, getLanguageSwitcher  } from 'components'
 
 import { getUserTokenData } from '../utils/auth'
-import NavLink from './NavLink'
 
 function MainToolbar({ classes, dark }) {
   const {

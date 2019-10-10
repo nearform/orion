@@ -4,8 +4,7 @@ import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
 import UploadImageWidget from '../../UploadImageWidget'
 import { useIsPlatformGroup, useUserId } from '../../../utils/auth'
-import SEO from '../../SEO'
-import { UserAvatar, EmbededVideo } from 'components'
+import { UserAvatar, EmbededVideo, SEO } from 'components'
 import { constructImageUrl } from '../../../utils/image'
 
 import {

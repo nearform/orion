@@ -43,10 +43,12 @@ export {
 } from './components/page/DisplayIfSignedIn'
 export { default as Footer } from './components/page/Footer'
 export { default as getNavLink } from './components/page/getNavLink'
+export { default as NavLink } from './components/page/NavLink'
 export { default as ImagePlaceholder } from './components/page/ImagePlaceholder'
 export { default as Layout } from './components/page/Layout'
 export { default as RootWrapper } from './components/page/RootWrapper'
 export { default as SectionTitle } from './components/page/SectionTitle'
+export { default as SEO } from './components/page/SEO'
 export { default as SEOHeaders } from './components/page/SEOHeaders'
 export { default as UserAvatar } from './components/UserAvatar/UserAvatar'
 export { default as AvatarImage } from './components/UserAvatar/AvatarImage'
@@ -56,3 +58,8 @@ export {
 export { default as EmbededVideo } from './components/EmbededVideo'
 
 export { default as CustomAuthenticator } from './components/auth'
+
+export { default as useAdminTable } from './hooks/useAdminTable'
+
+import * as queries from './queries'
+export { queries }

@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
 import { Router, Redirect } from '@reach/router'
-import { PaddedContainer } from 'components'
+import { PaddedContainer, SEO } from 'components'
 
 import PendingUsers from './PendingUsers'
 import AllUsers from './AllUsers'
 import AdminToolbar from './AdminToolbar'
 import UserGroups from './UserGroups'
 import GroupUsers from './GroupUsers'
-import SEO from '../SEO'
 
 function AdminRoute() {
   const [pageTitle, setPageTitle] = useState('')

@@ -3,7 +3,6 @@ import { navigate } from 'gatsby'
 import { withStyles, Grid, Typography, Button } from '@material-ui/core'
 import { useManualQuery } from 'graphql-hooks'
 import get from 'lodash/get'
-import SEO from '../components/SEO'
 import Taxonomies from '../components/content/Taxonomies'
 import ArticleSummary from '../components/content/ArticleSummary'
 import useTaxonomies from '../hooks/useTaxonomies'
@@ -14,7 +13,7 @@ import {
 } from '../queries'
 import { useIsAuthInitialized, useUserId } from '../utils/auth'
 import { getTaxonomyItemByKey, buildWhereClause } from '../utils/taxonomy'
-import { PaddedContainer } from 'components'
+import { PaddedContainer, SEO } from 'components'
 
 const PAGE_SIZE = 10
 const defaultAggregate = { aggregate: { count: 0 } }

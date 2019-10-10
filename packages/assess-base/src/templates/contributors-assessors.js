@@ -13,9 +13,14 @@ import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
 import { Redirect } from '@reach/router'
 
-import { TypedChip, PaddedContainer, SectionTitle } from 'components'
+import {
+  TypedChip,
+  PaddedContainer,
+  SectionTitle,
+  SEO,
+  useAdminTable,
+} from 'components'
 
-import SEO from '../components/SEO'
 import { getUserTokenData, getUserAuth } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
 import ContextualHelp from '../components/ContextualHelp'
@@ -29,7 +34,6 @@ import {
   deleteAssessmentAssessorMutation,
 } from '../queries'
 import { useManualQuery } from 'graphql-hooks'
-import useAdminTable from '../hooks/useAdminTable'
 import { useMutation } from 'graphql-hooks'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import {

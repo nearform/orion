@@ -5,12 +5,10 @@ import { Typography, Button, withStyles } from '@material-ui/core'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
-import { PaddedContainer } from 'components'
+import { PaddedContainer, NavLink } from 'components'
 
 import { useIsAdmin, useUserId, useIsAuthenticated } from '../utils/auth'
-import NavLink from './NavLink'
 import SecondaryNavigation from './SecondaryNavigation'
-// TODO: dedupe this from AssessBase
 
 function MainToolbar({ classes, dark }) {
   const {

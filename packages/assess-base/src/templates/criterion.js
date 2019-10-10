@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
-import { PaddedContainer, SectionTitle } from 'components'
+import { PaddedContainer, SectionTitle, SEO } from 'components'
 import { Link } from 'gatsby'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
@@ -9,7 +9,6 @@ import { TextField } from 'formik-material-ui'
 import { useManualQuery, useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 
-import SEO from '../components/SEO'
 import { getAssessmentId } from '../utils/url'
 import {
   getAssessmentCriterionData,

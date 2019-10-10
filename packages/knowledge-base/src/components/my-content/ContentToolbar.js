@@ -8,7 +8,7 @@ import {
   withStyles,
 } from '@material-ui/core'
 
-import NavLink from '../NavLink'
+import { NavLink } from 'components'
 import { useIsPlatformGroup } from '../../utils/auth'
 
 function ContentToolbar({ classes, pageTitle }) {

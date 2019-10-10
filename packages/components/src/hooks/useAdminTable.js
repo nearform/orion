@@ -1,16 +1,21 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
 
-import AdminTable from '../components/AdminTable'
+import AdminTable from '../components/admin/AdminTable'
 import { useQuery } from 'graphql-hooks'
+
+const defaultOptions = {
+  pageSizes: [10, 20, 50],
+}
 
 export default function useAdminTable({
   query,
   headers,
   variables,
   renderTableBody,
+  options,
 }) {
-  const pageSizes = [10, 20, 50]
+  const { pageSizes } = options || defaultOptions
 
   function setPage(pageNumber) {
     setOffset(Math.max(0, pageSize * (pageNumber - 1)))
@@ -32,6 +37,7 @@ export default function useAdminTable({
       orderBy,
     },
   })
+
   //TODO: better loading indicator for refetching, paginating
   //example: https://codesandbox.io/s/material-demo-be724
   const loadingMsg = loading && !data && 'Loading table...'
@@ -62,12 +68,11 @@ export default function useAdminTable({
   }
 }
 
-useAdminTable.defaultProps = {
-  variables: {},
-}
-
 useAdminTable.propTypes = {
   headers: T.array,
   query: T.string,
   variables: T.object,
+  options: T.shape({
+    pageSizes: T.arrayOf(T.number),
+  }),
 }

@@ -6,7 +6,7 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 import { Link } from 'gatsby'
 import get from 'lodash/get'
 
-import { ArticleStatusChip } from 'components'
+import { ArticleStatusChip, SEO } from 'components'
 import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
 
 import QueryTable from '../QueryTable'
@@ -15,7 +15,6 @@ import { getArticlesData, getUserArticlesData } from '../../queries'
 import { useUserId, useIsPlatformGroup } from '../../utils/auth'
 import { formatDateTime } from '../../utils/date'
 import ContentToolbar from './ContentToolbar'
-import SEO from '../SEO'
 
 const ArticleList = ({ classes, path }) => {
   const [statusFilter, setStatusFilter] = useState()

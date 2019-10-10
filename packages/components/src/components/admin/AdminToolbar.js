@@ -8,7 +8,7 @@ import {
   withStyles,
 } from '@material-ui/core'
 
-import { NavLink } from 'components'
+import NavLink from '../page/NavLink'
 
 function AdminToolbar({ classes, pageTitle, userCanAccess, ...props }) {
   return (

@@ -17,9 +17,9 @@ import {
   ASSESSMENT_STATUS,
   ConfirmDialog,
   SectionTitle,
+  SEO,
   TypedChip,
 } from 'components'
-import SEO from '../components/SEO'
 import {
   createAssessmentMutation,
   getShallowAssessmentData,

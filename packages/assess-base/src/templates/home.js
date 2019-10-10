@@ -1,10 +1,9 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import { Button, Grid, Paper, Typography, withStyles } from '@material-ui/core'
-import { PaddedContainer, SectionTitle } from 'components'
+import { PaddedContainer, SectionTitle, SEO } from 'components'
 import BackgroundImage from 'gatsby-background-image'
 
-import SEO from '../components/SEO'
 import LoggedOutAssessmentInfo from '../components/LoggedOutAssessmentInfo'
 import AssessmentTool from '../components/AssessmentTool'
 import AssessmentsTable from '../components/AssessmentsTable'
