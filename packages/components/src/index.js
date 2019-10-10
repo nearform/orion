@@ -54,3 +54,5 @@ export {
   default as CollapsedAvatars,
 } from './components/UserAvatar/CollapsedAvatars'
 export { default as EmbededVideo } from './components/EmbededVideo'
+
+export { default as CustomAuthenticator } from './components/auth'

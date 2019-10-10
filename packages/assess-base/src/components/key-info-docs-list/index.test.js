@@ -11,7 +11,12 @@ describe('<KeyInfoDocsList />', () => {
 
   beforeAll(() => {
     keyInfoDocsList = TestRenderer.create(
-      <KeyInfoDocsList assessment={assessment} text="Testing" visible />
+      <KeyInfoDocsList
+        assessment={assessment}
+        text="Testing"
+        visible
+        onFileDelete={() => {}}
+      />
     ).root
 
     list = keyInfoDocsList.find(el => el.type === 'ul')
@@ -34,7 +39,7 @@ describe('<KeyInfoDocsList />', () => {
 
     beforeAll(() => {
       defaultKeyInfoDocsList = TestRenderer.create(
-        <KeyInfoDocsList assessment={undefined} />
+        <KeyInfoDocsList assessment={undefined} onFileDelete={() => {}} />
       ).root
     })
 

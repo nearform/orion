@@ -24,22 +24,20 @@ function Register({
               Create a new account
             </SectionTitleField>
           </Grid>
-          {signUpFields.map(params => {
-            return (
-              <Grid key={params.key} item xs={params.xs}>
-                <InputField
-                  name={params.key}
-                  type={params.type}
-                  required={params.required}
-                  options={params.options}
-                  onChange={handleInput}
-                  fullWidth
-                >
-                  {params.label}
-                </InputField>
-              </Grid>
-            )
-          })}
+          {signUpFields.map(params => (
+            <Grid key={params.key} item xs={params.xs}>
+              <InputField
+                name={params.key}
+                type={params.type}
+                required={params.required}
+                options={params.options}
+                onChange={handleInput}
+                fullWidth
+              >
+                {params.label}
+              </InputField>
+            </Grid>
+          ))}
           <Grid
             item
             container

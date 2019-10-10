@@ -156,6 +156,10 @@ function AssessmentTemplate({
     await loadAssessment(assessmentId)
   }
 
+  async function handleFileDelete(file) {
+    await loadAssessment(assessmentId)
+  }
+
   async function handleSubmitAssessment() {
     await updateAssessmentStatus({
       variables: {
@@ -547,7 +551,10 @@ function AssessmentTemplate({
                   assessment={assessmentData}
                   canViewFeedbackReport={canViewFeedbackReport}
                 />
-                <KeyInfoDocsList assessment={assessmentData} />
+                <KeyInfoDocsList
+                  assessment={assessmentData}
+                  onFileDelete={handleFileDelete}
+                />
               </Box>
             </Grid>
           </Grid>
