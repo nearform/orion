@@ -106,8 +106,8 @@ function AllUsers({ classes, query, variables }) {
     query,
     headers,
     variables,
-    renderTableBody: data => {
-      return data.user.map(user => (
+    renderTableBody: data =>
+      data.user.map(user => (
         <TableRow key={user.id.toString()} data-testid="all-users" size="small">
           <TableCell>
             <Typography variant="body2">{user.id}</Typography>
@@ -132,8 +132,7 @@ function AllUsers({ classes, query, variables }) {
             </IconButton>
           </TableCell>
         </TableRow>
-      ))
-    },
+      )),
   })
 
   const { data: modalData } = useQuery(getEdittableUserFields)
@@ -199,7 +198,9 @@ function AllUsers({ classes, query, variables }) {
     setSelected(null)
 
     // Only refetch if something changed
-    mutationPromises.length && refetch()
+    if (mutationPromises.length) {
+      refetch()
+    }
   }
 
   const getModalInitialValues = user => {

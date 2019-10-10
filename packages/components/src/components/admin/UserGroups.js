@@ -1,4 +1,5 @@
 import React from 'react'
+import T from 'prop-types'
 import slugify from 'slugify'
 import { Link as RouterLink } from '@reach/router'
 import { useMutation } from 'graphql-hooks'
@@ -18,11 +19,16 @@ import { TextField } from 'formik-material-ui'
 import { DeleteForever, KeyboardArrowUp } from '@material-ui/icons'
 import * as Yup from 'yup'
 
-import { createGroupMutation, getGroups, deleteGroupMutation } from '../queries'
+import {
+  createGroupMutation,
+  createGroupNoParentMutation,
+  getGroups,
+  deleteGroupMutation,
+} from '../../queries'
 
 import { ConfirmDialog, GroupTypeChip, GROUP_TYPES } from 'components'
 
-import useAdminTable from '../hooks/useAdminTable'
+import useAdminTable from '../../hooks/useAdminTable'
 
 import { getUserTokenData } from '../utils/auth'
 
@@ -49,7 +55,17 @@ const headers = [
 
 function UserGroups({ classes }) {
   const userTokenData = getUserTokenData()
+  // =======================================================================================
+  // TODO: This component currently uses two forms of the create group mutation; one
+  // that requires a parent group ID, and one that doesn't. This is because at the time of
+  // merging the auth code from assess-base (AB) and knowledge-base (KB) into the components
+  // package, AB had a well-defined concept of parent group whilst KB didn't. Once a proper
+  // parent group concept has been worked out for KB, the no-parent version of the mutation
+  // can be removed from here and from components/queries/groups and just one createGroup
+  // mutation be used in all cases.
+  // =======================================================================================
   const [createGroup] = useMutation(createGroupMutation)
+  const [createGroupNoParent] = useMutation(createGroupNoParentMutation)
   const [deleteGroup] = useMutation(deleteGroupMutation)
   const { refetch: refetchGroups, table } = useAdminTable({
     query: getGroups,
@@ -101,9 +117,15 @@ function UserGroups({ classes }) {
         }}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            await createGroup({
-              variables: { ...values, parentId: userTokenData.groupId },
-            })
+            // TODO: See comment above on createGroupMutation.
+            const { groupId: parentId } = userTokenData
+            if (parentId) {
+              await createGroup({
+                variables: { ...values, parentId },
+              })
+            } else {
+              await createGroupNoParent({ variables: values })
+            }
             refetchGroups()
           } finally {
             setSubmitting(false)
@@ -185,6 +207,9 @@ function UserGroups({ classes }) {
       {table}
     </>
   )
+}
+UserGroups.propTypes = {
+  classes: T.object.isRequired,
 }
 
 const styles = theme => ({

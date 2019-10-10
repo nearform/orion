@@ -1,4 +1,5 @@
 import React from 'react'
+import T from 'prop-types'
 import { useQuery, useMutation } from 'graphql-hooks'
 import {
   withStyles,
@@ -21,7 +22,7 @@ import {
   addUserGroupMutation,
   assignUserGroupMutation,
   addUserRoleMutation,
-} from '../queries'
+} from '../../queries'
 
 const styles = theme => ({
   middle: {
@@ -66,33 +67,30 @@ function PendingUsers({ classes }) {
   const { selected, setSelected, refetch, table } = useAdminTable({
     query: getPendingUsers,
     headers,
-    renderTableBody: (data, { setSelected }) => {
-      return data.user.map(user => {
-        return (
-          <TableRow key={user.id} data-testid="pending-users" size="small">
-            <TableCell>
-              <Typography variant="body2">{user.id}</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="body2">{user.email}</Typography>
-            </TableCell>
-            <TableCell>{getStyledSignupAttr(user, 'custom:orgName')}</TableCell>
-            <TableCell>{getStyledSignupAttr(user, 'custom:orgType')}</TableCell>
-            <TableCell>{getStyledSignupAttr(user, 'custom:country')}</TableCell>
-            <TableCell align="right" padding="none">
-              <Tooltip title={`Assign group to ${user.email}`} aria-label="Add">
-                <IconButton
-                  onClick={() => setSelected(user)}
-                  className={classes.actionButton}
-                >
-                  <HowToReg color="secondary" />
-                </IconButton>
-              </Tooltip>
-            </TableCell>
-          </TableRow>
-        )
-      })
-    },
+    renderTableBody: (data, { setSelected }) =>
+      data.user.map(user => (
+        <TableRow key={user.id} data-testid="pending-users" size="small">
+          <TableCell>
+            <Typography variant="body2">{user.id}</Typography>
+          </TableCell>
+          <TableCell>
+            <Typography variant="body2">{user.email}</Typography>
+          </TableCell>
+          <TableCell>{getStyledSignupAttr(user, 'custom:orgName')}</TableCell>
+          <TableCell>{getStyledSignupAttr(user, 'custom:orgType')}</TableCell>
+          <TableCell>{getStyledSignupAttr(user, 'custom:country')}</TableCell>
+          <TableCell align="right" padding="none">
+            <Tooltip title={`Assign group to ${user.email}`} aria-label="Add">
+              <IconButton
+                onClick={() => setSelected(user)}
+                className={classes.actionButton}
+              >
+                <HowToReg color="secondary" />
+              </IconButton>
+            </Tooltip>
+          </TableCell>
+        </TableRow>
+      )),
   })
 
   const { data: modalData } = useQuery(getEdittableUserFields)
@@ -115,56 +113,49 @@ function PendingUsers({ classes }) {
     groupIsAssigned: Yup.boolean(),
   })
 
-  const onModalSave = async (values, user) => {
-    const mutationPromises = []
+  async function onModalSave(values, user) {
+    const setupUserGroup = () => {
+      const { groupIsAssigned, userId, groupId } = values
+      const args = { variables: { userId, groupId } }
+      return groupIsAssigned ? doAssignUserGroup(args) : doAddUserGroup(args)
+    }
 
-    const groupMutation = values.groupIsAssigned
-      ? doAssignUserGroup
-      : doAddUserGroup
+    const setupUserRole = () => {
+      if (!user.user_roles.length) {
+        const memberRole = modalData.role.find(
+          ({ name }) => name.toLowerCase() === 'member'
+        )
 
-    mutationPromises.push(
-      groupMutation({
-        variables: {
-          userId: values.userId,
-          groupId: values.groupId,
-        },
-      })
-    )
-
-    if (!user.user_roles.length) {
-      const memberRole = modalData.role.find(
-        role => role.name.toLowerCase() === 'member'
-      )
-
-      if (memberRole) {
-        mutationPromises.push(
-          doAddUserRole({
+        if (memberRole) {
+          return doAddUserRole({
             variables: {
               userId: values.userId,
               roleId: memberRole.id,
             },
           })
-        )
-      } else {
+        }
         // No stable ref to "member" role on db. Warn if someone changed role's name or didn't create one
         // eslint-disable-next-line no-console
         console.warn(
           `No "member" role found. Approved user ${values.userId} will have no role`
         )
       }
+      return Promise.resolve()
     }
 
-    await Promise.all(mutationPromises)
+    await Promise.all([setupUserGroup(), setupUserRole()])
+
     setSelected(null)
 
     refetch()
   }
 
   const getModalInitialValues = user => {
-    const groupId = user.user_groups.length && user.user_groups[0].group.id
+    const { id: userId = 0, user_groups } = user
+    const groupId = user_groups.length && user_groups[0].group.id
     return {
-      userId: user ? user.id : 0,
-      groupId: groupId,
+      userId,
+      groupId,
       groupIsAssigned: !!groupId,
     }
   }
@@ -184,6 +175,9 @@ function PendingUsers({ classes }) {
       {table}
     </>
   )
+}
+PendingUsers.propTypes = {
+  classes: T.object.isRequired,
 }
 
 export default withStyles(styles)(PendingUsers)

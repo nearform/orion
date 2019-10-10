@@ -40,45 +40,43 @@ function AdminModal({
         validationSchema={schema}
         onSubmit={onSave}
       >
-        {({ isSubmitting, values, handleChange, isValid, dirty }) => {
-          return (
-            <Form>
-              <DialogContent>
-                {contents.map(({ FieldComponent, entityKey, label }, index) => {
-                  const key = `${FieldComponent.name}_${index}`
-                  return (
-                    <FieldComponent
-                      key={key}
-                      values={values}
-                      handleChange={handleChange}
-                      selected={selected}
-                      data={data}
-                      label={label}
-                      entityKey={entityKey}
-                    />
-                  )
-                })}
-              </DialogContent>
-              <DialogActions className={classes.modalButtons}>
-                <Button
-                  onClick={() => onClose()}
-                  color="secondary"
-                  variant="outlined"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={() => onSave(values, selected)}
-                  color="secondary"
-                  variant="outlined"
-                  disabled={!isValid || isSubmitting || !dirty}
-                >
-                  Apply
-                </Button>
-              </DialogActions>
-            </Form>
-          )
-        }}
+        {({ isSubmitting, values, handleChange, isValid, dirty }) => (
+          <Form>
+            <DialogContent>
+              {contents.map(({ FieldComponent, entityKey, label }, index) => {
+                const key = `${FieldComponent.name}_${index}`
+                return (
+                  <FieldComponent
+                    key={key}
+                    values={values}
+                    handleChange={handleChange}
+                    selected={selected}
+                    data={data}
+                    label={label}
+                    entityKey={entityKey}
+                  />
+                )
+              })}
+            </DialogContent>
+            <DialogActions className={classes.modalButtons}>
+              <Button
+                onClick={() => onClose()}
+                color="secondary"
+                variant="outlined"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => onSave(values, selected)}
+                color="secondary"
+                variant="outlined"
+                disabled={!isValid || isSubmitting || !dirty}
+              >
+                Apply
+              </Button>
+            </DialogActions>
+          </Form>
+        )}
       </Formik>
     </Dialog>
   )
@@ -100,6 +98,7 @@ const styles = theme => ({
 })
 
 AdminModal.propTypes = {
+  classes: T.object.isRequired,
   selected: T.any,
   data: T.object,
   contents: T.array.isRequired,
@@ -107,6 +106,7 @@ AdminModal.propTypes = {
   onSave: T.func.isRequired,
   onClose: T.func.isRequired,
   schema: T.object,
+  getTitleParts: T.func.isRequired,
   getInitialValues: T.func.isRequired,
 }
 
