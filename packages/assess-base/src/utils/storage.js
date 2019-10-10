@@ -13,6 +13,7 @@ export const uploadFile = (file, assessmentId) => {
     file
   )
 }
+export const deleteFile = key => Storage.remove(key)
 
 export const downloadFile = async file => {
   const fileUrl = await getFileUri(file.s3_key)

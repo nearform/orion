@@ -12,7 +12,7 @@ const KeyInfoDocsList = ({ assessment, classes }) => {
         <Box className={classes.list} component="ul">
           {assessment.files.map(file => (
             <Box className={classes.listItem} component="li" key={file.s3_key}>
-              <FileItem file={file} />
+              <FileItem file={file} canDelete={false} />
             </Box>
           ))}
         </Box>

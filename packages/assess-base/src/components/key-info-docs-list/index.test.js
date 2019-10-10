@@ -4,6 +4,8 @@ import TestRenderer from 'react-test-renderer'
 import assessment from '../../../__mocks__/assessment.mock'
 import KeyInfoDocsList from './'
 
+jest.mock('../../queries', () => ({}))
+
 describe('<KeyInfoDocsList />', () => {
   let keyInfoDocsList, list, listItems
 

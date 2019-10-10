@@ -1,0 +1,5 @@
+mutation deleteFileUpload($s3Key: String!) {
+  delete_assessment_file(where: { s3_key: { _eq: $s3Key } }) {
+    affected_rows
+  }
+}
