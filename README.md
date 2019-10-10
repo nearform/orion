@@ -5,6 +5,16 @@
 
 This repository is a collection of packages that can be used as a foundation for a statically built, GraphQL-driven knowledge platform.
 
+## Installation
+
+The project is structured as a monorepo and uses [Yarn](https://yarnpkg.com/lang/en/) and [Yarn workspaces](https://yarnpkg.com/en/docs/workspaces) for dependency management.
+
+For initial setup use `yarn install`.
+
+To install the project's package dependencies use `yarn run bootstrap`.
+
+To clean the project's package dependencies use `yarn run clean`.
+
 ## Quick Start
 
 To get started quickly, check out these useful links:

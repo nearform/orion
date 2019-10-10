@@ -1,10 +1,10 @@
 import React from 'react'
 import { Redirect } from '@reach/router'
 import { SignIn } from 'aws-amplify-react'
-import { SectionTitle } from 'components'
 import { Grid, withStyles } from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
+import SectionTitle from '../page/SectionTitle'
 import Login from './Login'
 import authEventMixin from './AuthEventMixin'
 import authErrors from './AuthErrors'
@@ -103,30 +103,28 @@ const styles = {
 }
 
 const AutoSignInMessage = withStyles(styles, { withTheme: true })(
-  ({ theme, classes }) => {
-    return (
-      <div className={classes.root}>
-        <Grid container spacing={3} className={classes.form}>
-          <Grid item xs={8}>
-            <SectionTitle gutterBottom barColor={theme.palette.secondary.main}>
-              Almost there
-            </SectionTitle>
-          </Grid>
-          <Grid
-            item
-            container
-            alignItems="center"
-            spacing={4}
-            xs={10}
-            wrap="nowrap"
-          >
-            <Grid item>
-              <CircularProgress color="secondary" />
-            </Grid>
-            <Grid item>You are being signed in</Grid>
-          </Grid>
+  ({ theme, classes }) => (
+    <div className={classes.root}>
+      <Grid container spacing={3} className={classes.form}>
+        <Grid item xs={8}>
+          <SectionTitle gutterBottom barColor={theme.palette.secondary.main}>
+            Almost there
+          </SectionTitle>
         </Grid>
-      </div>
-    )
-  }
+        <Grid
+          item
+          container
+          alignItems="center"
+          spacing={4}
+          xs={10}
+          wrap="nowrap"
+        >
+          <Grid item>
+            <CircularProgress color="secondary" />
+          </Grid>
+          <Grid item>You are being signed in</Grid>
+        </Grid>
+      </Grid>
+    </div>
+  )
 )

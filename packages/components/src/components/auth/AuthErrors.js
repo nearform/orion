@@ -12,6 +12,7 @@ function passwordValidationErrors(err) {
   if (r) {
     return r[1]
   }
+  return false
 }
 
 const authErrors = {

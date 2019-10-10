@@ -18,12 +18,21 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
             </SectionTitleField>
           </Grid>
           <Grid item xs={10}>
-            <InputField name="username" onChange={handleInput}>
+            <InputField
+              name="username"
+              data-testid="login-username"
+              onChange={handleInput}
+            >
               please enter your username
             </InputField>
           </Grid>
           <Grid item xs={10}>
-            <InputField name="password" type="password" onChange={handleInput}>
+            <InputField
+              name="password"
+              data-testid="login-password"
+              type="password"
+              onChange={handleInput}
+            >
               please enter your password
             </InputField>
           </Grid>
@@ -41,7 +50,12 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
               </Typography>
             </Grid>
             <Grid item>
-              <Button color="secondary" onClick={goToReset} size="small">
+              <Button
+                data-testid="login-submit"
+                color="secondary"
+                onClick={goToReset}
+                size="small"
+              >
                 Reset password
               </Button>
             </Grid>
