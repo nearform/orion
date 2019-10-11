@@ -8,7 +8,7 @@
           "packages/*",
           "hasura"
       ],
-      "nohoist": [
+      "x-nohoist": [
           "**/gatsby*",
           "**/gatsby*/**",
           "**/@material-ui",

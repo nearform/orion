@@ -146,9 +146,15 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
       },
     ],
   })
+  /*
   Object.assign(config.resolve.alias, {
     react: path.resolve('./node_modules/react'),
     '@material-ui/core': path.resolve('./node_modules/@material-ui/core'),
+  })
+  */
+  Object.assign(config.resolve.alias, {
+    react: path.resolve('../../node_modules/react'),
+    '@material-ui/core': path.resolve('../../node_modules/@material-ui/core'),
   })
   actions.replaceWebpackConfig(config)
 }
