@@ -40,6 +40,9 @@ const useStyles = makeStyles(theme => ({
   fieldError: {
     border: `1.5pt solid ${theme.palette.error.main}`,
   },
+  inputHelperText: {
+    'font-size': '9px',
+  },
 }))
 
 function FieldLabel({ required, hasError, children }) {
@@ -79,6 +82,25 @@ ErrorMessage.propTypes = {
   children: T.node.isRequired,
 }
 
+function InputHelperText({ children, hasError }) {
+  const classes = useStyles()
+  return (
+    <Typography
+      variant="h4"
+      gutterBottom
+      color={hasError ? 'error' : 'initial'}
+      className={classes.inputHelperText}
+    >
+      {children}
+    </Typography>
+  )
+}
+
+InputHelperText.propTypes = {
+  children: T.node.isRequired,
+  hasError: T.bool,
+}
+
 function SectionTitleField({ barColor, category, children }) {
   const { errors } = useContext(AuthFormStateContext)
   const error = errors[category]
@@ -102,6 +124,7 @@ function InputTextField({
   name,
   type,
   value,
+  helperText,
   required,
   disabled,
   onChange,
@@ -115,6 +138,9 @@ function InputTextField({
       <FieldLabel required={required} hasError={!!error}>
         {children}
       </FieldLabel>
+      {helperText && (
+        <InputHelperText hasError={!!error}>{helperText}</InputHelperText>
+      )}
       <TextField
         name={name}
         type={type}
@@ -134,6 +160,7 @@ InputTextField.propTypes = {
   name: T.string.isRequired,
   type: T.string,
   value: T.string,
+  helperText: T.string,
   required: T.bool,
   disabled: T.bool,
   onChange: T.func,

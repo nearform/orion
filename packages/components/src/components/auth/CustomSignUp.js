@@ -39,6 +39,8 @@ export default class CustomSignUp extends authEventMixin(SignUp) {
         required: true,
         type: 'password',
         xs: 10,
+        helperText:
+          'Must include an uppercase character, a number and a symbol',
       },
       {
         label: 'Type Of Organisation',
