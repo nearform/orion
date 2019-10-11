@@ -584,6 +584,7 @@ function AssessmentTemplate({
                 <KeyInfoDocsList
                   assessment={assessmentData}
                   onFileDelete={handleFileDelete}
+                  canDeleteFile={canEditKeyInformationAndUpload}
                 />
               </Box>
             </Grid>

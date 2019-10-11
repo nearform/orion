@@ -5,7 +5,12 @@ import T from 'prop-types'
 import FileItem from '../FileItem'
 import HeadedAsidePanel from '../headed-aside-panel'
 
-const KeyInfoDocsList = ({ assessment, classes, onFileDelete }) => {
+const KeyInfoDocsList = ({
+  assessment,
+  classes,
+  onFileDelete,
+  canDeleteFile,
+}) => {
   return (
     <HeadedAsidePanel title="Assessment Documents">
       {assessment && assessment.files.length ? (
@@ -14,7 +19,7 @@ const KeyInfoDocsList = ({ assessment, classes, onFileDelete }) => {
             <Box className={classes.listItem} component="li" key={file.s3_key}>
               <FileItem
                 file={file}
-                canDelete={true}
+                canDelete={canDeleteFile}
                 onDeleteComplete={onFileDelete}
               />
             </Box>
