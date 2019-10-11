@@ -22,7 +22,7 @@ import {
   addUserGroupMutation,
   assignUserGroupMutation,
   addUserRoleMutation,
-} from '../../queries'
+} from '../../../queries'
 
 const styles = theme => ({
   middle: {

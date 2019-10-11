@@ -22,7 +22,7 @@ function AssessmentsHome({ theme, classes, data }) {
     assessmentTypes: { nodes: assessmentTypes },
   } = data
 
-  const userTokenData = getUserTokenData()
+  const { isLoggedIn } = getUserTokenData()
   const assessmentItems = assessmentTypes
     .map(type => ({
       ...type,
@@ -61,7 +61,7 @@ function AssessmentsHome({ theme, classes, data }) {
       </div>
       <PaddedContainer>
         <div className={classes.sectionTop}>
-          {userTokenData.loggedIn ? (
+          {isLoggedIn ? (
             <Paper>
               <AssessmentsTable />
             </Paper>
@@ -83,7 +83,7 @@ function AssessmentsHome({ theme, classes, data }) {
                 barColor={assessmentColors[index % assessmentColors.length](
                   theme
                 )}
-                isAuthenticated={userTokenData.loggedIn}
+                isAuthenticated={isLoggedIn}
               />
             ))}
           </Grid>

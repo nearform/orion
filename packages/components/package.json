@@ -21,6 +21,7 @@
     "aws-amplify-react": "2.3.8",
     "classnames": "^2.2.6",
     "efqm-theme": "^1.0.0",
+    "formik-material-ui": "^0.0.22",
     "nearform-theme": "^1.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

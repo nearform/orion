@@ -58,8 +58,8 @@ function ContributorsAssessorsTemplate({
   const [filterText, setFilterText] = useState('')
 
   const assessmentId = getAssessmentId(location)
-  const userTokenData = getUserTokenData()
-  if (!assessmentId && !userTokenData.admin) {
+  const { isAdmin, groupId } = getUserTokenData()
+  if (!assessmentId && !isAdmin) {
     return <Redirect to="/auth" noThrow />
   }
 
@@ -96,7 +96,6 @@ function ContributorsAssessorsTemplate({
   const assessors = get(data, 'assessors', [])
   const contributors = get(data, 'contributors', [])
 
-  const groupId = userTokenData.groupId
   const canEditAssesors = getUserAuth('platform-admin')
     ? true
     : getCanEditAssesors(groupId, assessmentData)

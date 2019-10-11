@@ -81,9 +81,9 @@ function AssessmentTemplate({
     width: '',
   })
   const assessmentId = getAssessmentId(location)
-  const userTokenData = getUserTokenData()
+  const { isAdmin, isContributor, userId, groupId } = getUserTokenData()
 
-  if (!assessmentId && !userTokenData.admin) {
+  if (!assessmentId && !isAdmin) {
     return <Redirect to="/auth" noThrow />
   }
 
@@ -106,7 +106,7 @@ function AssessmentTemplate({
         key: assessment.key,
         name,
         internal,
-        owner_id: userTokenData.userId,
+        owner_id: userId,
       },
     })
     const id = get(data, 'insert_assessment.returning.0.id')
@@ -138,7 +138,7 @@ function AssessmentTemplate({
     const { data, error } = await createFileUpload({
       variables: {
         fileUploadData: {
-          user_id: userTokenData.userId,
+          user_id: userId,
           assessment_id: assessmentId,
           file_name: file.name,
           file_size: file.size,
@@ -170,21 +170,19 @@ function AssessmentTemplate({
   }
 
   const canEditKeyInformationAndUpload =
-    (userTokenData.admin || userTokenData.contributor) &&
-    assessmentInProgress(assessmentData)
+    (isAdmin || isContributor) && assessmentInProgress(assessmentData)
 
-  const canSubmit = userTokenData.admin && assessmentInProgress(assessmentData)
+  const canSubmit = isAdmin && assessmentInProgress(assessmentData)
 
-  const canCreateAssessment = userTokenData.admin
+  const canCreateAssessment = isAdmin
 
   // TODO: change this with correct rule based on assessment state
   const canViewFeedbackReport = assessmentSubmitted(assessmentData)
 
   const canAssignContributorsAndAssessors = getUserAuth('platform-admin')
     ? true
-    : (userTokenData.admin &&
-        getCanEditAssesors(userTokenData.groupId, assessmentData)) ||
-      getCanEditContributors(userTokenData.groupId, assessmentData)
+    : (isAdmin && getCanEditAssesors(groupId, assessmentData)) ||
+      getCanEditContributors(groupId, assessmentData)
 
   const assessmentName = get(assessmentData, 'name', 'Loading...')
 

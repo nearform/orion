@@ -38,7 +38,8 @@ function CriterionPartTemplate({
     criteriaList,
   },
 }) {
-  if (!getUserTokenData().loggedIn) {
+  const { isAuthenticated } = getUserTokenData()
+  if (!isAuthenticated) {
     return <Redirect to="/auth" noThrow />
   }
 
@@ -53,7 +54,7 @@ function CriterionPartTemplate({
   const scoringRules = pillar.scoringRules || assessment.scoringRules || {}
 
   const assessmentId = getAssessmentId(location)
-  const userTokenData = getUserTokenData()
+  const { isAdmin, isContributor, isAssessor, userId } = getUserTokenData()
 
   const [
     fetchAssessmentPartData,
@@ -86,10 +87,9 @@ function CriterionPartTemplate({
   }
 
   const canEditTablesAndUpload =
-    (userTokenData.admin || userTokenData.contributor) &&
-    assessmentInProgress(assessmentData)
+    (isAdmin || isContributor) && assessmentInProgress(assessmentData)
   const canEditFeedbackAndScoring =
-    userTokenData.assessor && assessmentSubmitted(assessmentData)
+    isAssessor && assessmentSubmitted(assessmentData)
 
   return (
     <div className={classes.root} data-testid="criterion-part">
@@ -111,7 +111,7 @@ function CriterionPartTemplate({
           <Grid item>
             <FileList
               assessmentId={assessmentId}
-              userId={userTokenData.userId}
+              userId={userId}
               pillar={pillar}
               criterion={criterion}
               partNumber={partNumber}

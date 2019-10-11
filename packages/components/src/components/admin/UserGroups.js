@@ -24,13 +24,13 @@ import {
   unsafe__createGroupNoParentMutation,
   getGroups,
   deleteGroupMutation,
-} from '../../queries'
+} from '../../../queries'
 
 import { ConfirmDialog, GroupTypeChip, GROUP_TYPES } from 'components'
 
 import useAdminTable from '../../hooks/useAdminTable'
 
-import { getUserTokenData } from '../utils/auth'
+import { getUserTokenData } from '../../../auth'
 
 const groupTypeKeys = Object.keys(GROUP_TYPES)
 const groupTypes = groupTypeKeys.map(key => ({ key, value: GROUP_TYPES[key] }))

@@ -12,7 +12,7 @@ import {
   theme,
 } from 'components'
 import * as auth from './utils/auth'
-import { AuthInitContext } from './src/utils/auth'
+import { AuthInitContext } from 'components/auth'
 import * as i18n from './utils/i18n'
 import AppFooter from './src/components/AppFooter'
 import MainToolbar from './src/components/MainToolbar'

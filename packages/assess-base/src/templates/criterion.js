@@ -38,7 +38,7 @@ function CriterionTemplate({
   location,
 }) {
   const assessmentId = getAssessmentId(location)
-  const userTokenData = getUserTokenData()
+  const { isAdmin, isContributor, userId } = getUserTokenData()
 
   const { t } = useTranslation()
 
@@ -85,7 +85,7 @@ function CriterionTemplate({
   }
 
   const canEditAndUpload =
-    (userTokenData.admin || userTokenData.contributor) &&
+    (isAdmin || isContributor) &&
     assessmentInProgress(get(assessmentCriterionData, 'assessment_by_pk'))
 
   return (
@@ -107,7 +107,7 @@ function CriterionTemplate({
           <Grid item>
             <FileList
               assessmentId={assessmentId}
-              userId={userTokenData.userId}
+              userId={userId}
               pillar={pillar}
               criterion={criterion}
               files={get(assessmentCriterionData, 'assessment_file', [])}

@@ -29,23 +29,12 @@ const ROLES_PERMISSIONS = {
  */
 export const getUserTokenData = () => {
   const data = {
-    loggedIn: isAuthenticatedSync() ? true : false,
     isAuthenticated: isAuthenticatedSync() ? true : false,
-
-    user: hasPermissions('user'),
     isUser: hasPermissions('user'),
-
-    admin: hasPermissions('company-admin'),
     isAdmin: hasPermissions('company-admin'),
-
     isPlatformGroup: hasPermissions('platform-admin'),
-
-    contributor: extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY) || false,
     isContributor: extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY) || false,
-
-    assessor: extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY) || false,
     isAssessor: extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY) || false,
-
     userId: extractTokenPayload(HASURA_USER_ID),
     groupId: extractTokenPayload(HASURA_GROUP_ID),
     role: getUserRole(),

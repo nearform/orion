@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 
 import AllUsers from './AllUsers.js'
-import { getUsersInGroup } from '../../queries'
+import { getUsersInGroup } from '../../../queries'
 
 export default function GroupUsers({ groupIdString }) {
   const groupId = Number.parseInt(groupIdString)

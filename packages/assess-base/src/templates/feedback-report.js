@@ -64,7 +64,7 @@ function FeedbackReport({
   const assessmentId = getAssessmentId(location)
   const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
-  const userTokenData = getUserTokenData()
+  const { isAdmin, isAssessor } = getUserTokenData()
 
   const [fetchAssessmentFeedbackReportData, { data }] = useManualQuery(
     getAssessmentFeedbackReportData,
@@ -95,7 +95,7 @@ function FeedbackReport({
   }
 
   // TODO: Check that this is correct
-  const canEditSummaryAndAdvice = userTokenData.admin || userTokenData.assessor
+  const canEditSummaryAndAdvice = isAdmin || isAssessor
 
   const chartData = getChartData(assessment, assessmentData, pillarColors)
 

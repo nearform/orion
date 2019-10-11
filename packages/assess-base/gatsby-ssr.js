@@ -6,9 +6,9 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import { RootWrapper, Layout, ThemeWrapper, theme } from 'components'
+import { AuthInitContext } from 'components/auth'
 import MainToolbar from './src/components/MainToolbar'
 import AppFooter from './src/components/AppFooter'
-import { AuthInitContext } from './src/utils/auth'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
 

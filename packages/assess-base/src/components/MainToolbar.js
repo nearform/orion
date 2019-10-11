@@ -40,7 +40,7 @@ function MainToolbar({ classes, dark }) {
     navigate('/auth')
   }
 
-  const userTokenData = getUserTokenData()
+  const { isAdmin, isLoggedIn } = getUserTokenData()
 
   const darkClass = classnames({
     [classes.toolbarDark]: dark,
@@ -89,7 +89,7 @@ function MainToolbar({ classes, dark }) {
             >
               EFQM.ORG
             </Button>
-            {userTokenData.loggedIn && (
+            {isLoggedIn && (
               <Button className={navButtonClass} component={NavLink} to="#">
                 <AccountCircleOutlinedIcon
                   className={classes.icon}
@@ -98,12 +98,12 @@ function MainToolbar({ classes, dark }) {
                 MyEFQM
               </Button>
             )}
-            {!userTokenData.loggedIn && (
+            {!isLoggedIn && (
               <Button className={navButtonClass} component={NavLink} to="/auth">
                 LOGIN
               </Button>
             )}
-            {userTokenData.admin && (
+            {isAdmin && (
               <Button
                 className={navButtonClass}
                 component={NavLink}
@@ -112,7 +112,7 @@ function MainToolbar({ classes, dark }) {
                 ADMIN
               </Button>
             )}
-            {userTokenData.loggedIn && (
+            {isLoggedIn && (
               <Button className={navButtonClass} onClick={doLogout}>
                 LOGOUT
               </Button>

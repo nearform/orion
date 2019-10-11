@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import { Redirect } from '@reach/router'
 
-import { getUserTokenData, getUserAuth, AuthInitContext } from './utils/auth'
+import { getUserTokenData, getUserAuth, AuthInitContext } from '../../auth'
 
 export default function ProtectedRoute({
   allowedRole,
