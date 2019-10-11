@@ -15,7 +15,7 @@ import {
   upsertAssessmentCriterionDataMutation,
 } from '../queries'
 import FileList from '../components/FileList'
-import { getUserTokenData } from '../utils/auth'
+import { getUserTokenData } from 'components/auth'
 import { assessmentInProgress } from '../utils/assessment-status'
 
 function createFormInitialValues(assessmentCriterionData) {

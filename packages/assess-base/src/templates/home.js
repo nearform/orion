@@ -7,7 +7,7 @@ import BackgroundImage from 'gatsby-background-image'
 import LoggedOutAssessmentInfo from '../components/LoggedOutAssessmentInfo'
 import AssessmentTool from '../components/AssessmentTool'
 import AssessmentsTable from '../components/AssessmentsTable'
-import { getUserTokenData } from '../utils/auth'
+import { getUserTokenData } from 'components/auth'
 
 const assessmentColors = [
   theme => theme.palette.primary.light,

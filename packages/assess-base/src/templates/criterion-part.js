@@ -6,7 +6,7 @@ import { useManualQuery } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 
 import { getAssessmentPartData } from '../queries'
-import { getUserTokenData } from '../utils/auth'
+import { getUserTokenData } from 'components/auth'
 import AssessmentScoringHeader from '../components/AssessmentScoringHeader'
 import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
 import { getAssessmentId } from '../utils/url'

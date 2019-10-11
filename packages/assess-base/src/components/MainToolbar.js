@@ -8,7 +8,7 @@ import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
 import { PaddedContainer, NavLink, getLanguageSwitcher } from 'components'
 
-import { getUserTokenData } from '../utils/auth'
+import { getUserTokenData } from 'components/auth'
 
 function MainToolbar({ classes, dark }) {
   const {

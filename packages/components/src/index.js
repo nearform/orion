@@ -59,9 +59,13 @@ export { default as EmbededVideo } from './components/EmbededVideo'
 
 export { default as CustomAuthenticator } from './components/auth'
 
+export { default as ProtectedRoute } from './components/ProtectedRoute'
 export { default as AdminRoute } from './components/admin/AdminRoute'
 
 export { default as useAdminTable } from './hooks/useAdminTable'
 
 import * as queries from './queries'
 export { queries }
+
+import * as auth from './components/utils/auth'
+export { auth }

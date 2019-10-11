@@ -30,7 +30,7 @@ import {
   deleteAssessmentContributorMutation,
   deleteAssessmentAssessorMutation,
 } from '../queries'
-import { getUserTokenData, getUserAuth } from '../utils/auth'
+import { getUserTokenData, getUserAuth } from 'components/auth'
 import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'

@@ -29,7 +29,7 @@ import get from 'lodash/get'
 
 import FeedbackReportInput from '../components/FeedbackReportInput'
 import { getAssessmentId } from '../utils/url'
-import { getUserTokenData } from '../utils/auth'
+import { getUserTokenData } from 'components/auth'
 
 import {
   getAssessmentFeedbackReportData,

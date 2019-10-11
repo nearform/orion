@@ -2,8 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import { Redirect } from '@reach/router'
 
-import { isAuthenticatedSync, getUserAuth } from '../utils/auth'
-import { AuthInitContext } from '../utils/auth'
+import { isAuthenticatedSync, getUserAuth, AuthInitContext } from './utils/auth'
 
 export default function ProtectedRoute({
   allowedRole,

@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer'
 import { mount } from 'enzyme'
 import { Auth } from 'aws-amplify'
 import { Redirect } from '@reach/router'
-import { AuthInitContext } from '../utils/auth'
+import { AuthInitContext } from 'components/auth'
 import ProtectedRoute from './ProtectedRoute'
 
 function SecretComponent() {

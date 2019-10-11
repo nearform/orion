@@ -21,7 +21,7 @@ import {
   useAdminTable,
 } from 'components'
 
-import { getUserTokenData, getUserAuth } from '../utils/auth'
+import { getUserTokenData, getUserAuth } from 'components/auth'
 import { getAssessmentId } from '../utils/url'
 import ContextualHelp from '../components/ContextualHelp'
 import {

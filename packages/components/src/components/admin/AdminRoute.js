@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import T from 'prop-types'
 import { Router, Redirect } from '@reach/router'
 
-import { getUserAuth } from '../utils/auth'
+import { getUserAuth } from '../../utils/auth'
 import SEO from '../page/SEO'
 import PaddedContainer from '../PaddedContainer'
 import PendingUsers from './PendingUsers'

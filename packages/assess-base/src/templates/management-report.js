@@ -11,7 +11,7 @@ import HeadedSubSection from '../components/management-report/headed-sub-section
 import Header from '../components/management-report/header'
 import Question from '../components/management-report/question'
 import { getManagementReportData } from '../queries'
-import { useIsAuthInitialized } from '../utils/auth'
+import { useIsAuthInitialized } from 'components/auth'
 
 function ManagementReport({ assessmentId, classes }) {
   const isAuthInitialized = useIsAuthInitialized()
