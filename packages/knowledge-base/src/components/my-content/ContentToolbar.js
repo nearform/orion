@@ -9,10 +9,10 @@ import {
 } from '@material-ui/core'
 
 import { NavLink } from 'components'
-import { useIsPlatformGroup } from '../../utils/auth'
+import { getUserTokenData } from 'components/auth'
 
 function ContentToolbar({ classes, pageTitle }) {
-  const isPlatformGroup = useIsPlatformGroup()
+  const { isPlatformGroup } = getUserTokenData()
   return (
     <AppBar
       position="relative"

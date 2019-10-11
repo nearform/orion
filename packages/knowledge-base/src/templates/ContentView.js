@@ -11,13 +11,15 @@ import FeatureArticles from '../components/list/FeatureArticles'
 import HowToAuthenticate from '../components/HowToAuthenticate'
 import RichText from '../components/content//RichText'
 import { PaddedContainer, SEO } from 'components'
+import { useIsAuthInitialized, getUserTokenData } from 'components/auth'
 import { constructImageUrl } from '../utils/image'
 import { getArticleDetails } from '../queries'
-import { useIsValidUser } from '../utils/auth'
 
 function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
   const { path } = articleSummary || { path: slug }
-  const isValidUser = useIsValidUser()
+  const { isAuthenticated } = getUserTokenData()
+  const isAuthInitialized = useIsAuthInitialized()
+  const isValidUser = isAuthenticated && isAuthInitialized
   const [getArticleDetailsQuery, { loading, data }] = useManualQuery(
     getArticleDetails
   )

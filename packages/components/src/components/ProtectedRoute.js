@@ -2,23 +2,32 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import { Redirect } from '@reach/router'
 
-import { isAuthenticatedSync, getUserAuth, AuthInitContext } from './utils/auth'
+import { getUserTokenData, getUserAuth, AuthInitContext } from './utils/auth'
 
 export default function ProtectedRoute({
   allowedRole,
+  requiresGroup,
   component: Component,
   ...props
 }) {
-  // TODO: dedupe all this from KnowledgeBase
-
   const isAuthInitialized = useContext(AuthInitContext)
   //skip rendering if auth is not yet initialized
   if (!isAuthInitialized) {
     return null
   }
 
-  if (!isAuthenticatedSync() || !getUserAuth(allowedRole)) {
-    return <Redirect to="/auth" noThrow />
+  const { isAuthenticated, groupId } = getUserTokenData()
+
+  if (requiresGroup) {
+    if (!groupId) {
+      return <Redirect to="/auth" noThrow />
+    }
+  }
+
+  if (allowedRole) {
+    if (!isAuthenticated || !getUserAuth(allowedRole)) {
+      return <Redirect to="/auth" noThrow />
+    }
   }
 
   return <Component {...props} />
@@ -26,5 +35,6 @@ export default function ProtectedRoute({
 
 ProtectedRoute.propTypes = {
   allowedRole: T.string,
+  requiresGroup: T.bool,
   component: T.elementType.isRequired,
 }

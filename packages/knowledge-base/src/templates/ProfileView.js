@@ -16,15 +16,15 @@ import omit from 'lodash/omit'
 import { Formik, Form, Field } from 'formik'
 import { fieldToCheckbox } from 'formik-material-ui'
 import { AvatarImage, PaddedContainer, SEO } from 'components'
+import { getUserTokenData, useIsAuthInitialized } from 'components/auth'
 import { updateUserMutation, getUser } from '../queries'
 import { UserInfo, formFields, validationSchema } from '../components/profile'
 import UploadImageWidget from '../components/UploadImageWidget'
-import { useUserId, useIsAuthInitialized } from '../utils/auth'
 import { constructImageUrl } from '../utils/image'
 
 const Profile = ({ pageContext: { user: userContext } = {}, classes }) => {
   const isAuthInitialized = useIsAuthInitialized()
-  const userId = useUserId()
+  const { userId } = getUserTokenData()
   const [editMode, setEditMode] = useState(false)
   const [fetchUser, { data }] = useManualQuery(getUser, {
     variables: { id: userId },

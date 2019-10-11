@@ -1,6 +1,6 @@
 import React from 'react'
 import { PaddedContainer, SEO } from 'components'
-import { getUserIdSync } from '../../utils/auth'
+import { getUserTokenData } from 'components/auth'
 import { useMutation } from 'graphql-hooks'
 import { createArticleMutation } from '../../queries'
 import { navigate } from '@reach/router'
@@ -49,7 +49,7 @@ function CreateArticle({ classes }) {
   const [createArticle] = useMutation(createArticleMutation)
 
   const handleSelectType = async ({ knowledgeType }, actions) => {
-    const creatorId = getUserIdSync()
+    const { userId: creatorId } = getUserTokenData()
     const knowledgeTypeDefinition = get(
       knowledgeTypeMap,
       `${knowledgeType}.input_fields`

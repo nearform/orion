@@ -15,7 +15,7 @@ import QuickLinksMenu, {
   QuickLinksMenuItem,
   QuickLinkButton,
 } from './QuickLinksMenu'
-import { useIsAuthenticated } from '../utils/auth'
+import { getUserTokenData } from 'components/auth'
 import useTaxonomies from '../hooks/useTaxonomies'
 import usePrevious from '../hooks/usePrevious'
 
@@ -26,7 +26,7 @@ function SecondaryNavigation({ classes, dark, theme }) {
   const [search, setSearch] = useState(false)
   const [searchText, setSearchText] = useState('')
   const prevSearchText = usePrevious(searchText)
-  const isAuthenticated = useIsAuthenticated()
+  const { isAuthenticated } = getUserTokenData()
   const taxonomyTypes = useTaxonomies()
   let typingTimeout = null
 

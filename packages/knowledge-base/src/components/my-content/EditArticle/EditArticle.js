@@ -3,8 +3,8 @@ import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
 import UploadImageWidget from '../../UploadImageWidget'
-import { useIsPlatformGroup, useUserId } from '../../../utils/auth'
 import { UserAvatar, EmbededVideo, SEO } from 'components'
+import { getUserTokenData } from 'components/auth'
 import { constructImageUrl } from '../../../utils/image'
 
 import {
@@ -49,8 +49,7 @@ const diff = (previous, current) => [
 ]
 
 function EditArticle({ classes, articleId }) {
-  const isPlatformGroup = useIsPlatformGroup()
-  const userId = useUserId()
+  const { userId, isPlatformGroup } = getUserTokenData()
   const [updateArticle] = useMutation(updateArticleMutation)
   const [addArticleTaxonomies] = useMutation(addArticleTaxonomiesMutation)
   const [deleteArticleTaxonomies] = useMutation(deleteArticleTaxonomiesMutation)

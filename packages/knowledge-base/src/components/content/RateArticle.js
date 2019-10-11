@@ -3,11 +3,11 @@ import { useManualQuery, useMutation } from 'graphql-hooks'
 import T from 'prop-types'
 import get from 'lodash/get'
 import { RatingWidget } from 'components'
+import { getUserTokenData, useIsAuthInitialized } from 'components/auth'
 import { getArticleRating, addArticleRatingMutation } from '../../queries'
-import { useUserId, useIsAuthInitialized } from '../../utils/auth'
 
 const RateArticle = ({ id: articleId, content }) => {
-  const userId = useUserId()
+  const { userId } = getUserTokenData()
   const isAuthInitialized = useIsAuthInitialized()
   const [fetchRatingData, { data, loading: fetching }] = useManualQuery(
     getArticleRating,

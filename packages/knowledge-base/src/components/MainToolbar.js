@@ -7,7 +7,7 @@ import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
 import { PaddedContainer, NavLink } from 'components'
 
-import { useIsAdmin, useUserId, useIsAuthenticated } from '../utils/auth'
+import { getUserTokenData } from 'components/auth'
 import SecondaryNavigation from './SecondaryNavigation'
 
 function MainToolbar({ classes, dark }) {
@@ -40,9 +40,7 @@ function MainToolbar({ classes, dark }) {
     navigate('/auth')
   }
 
-  const userId = useUserId()
-  const isAdmin = useIsAdmin()
-  const isAuthenticated = useIsAuthenticated()
+  const { userId, isAdmin, isAuthenticated } = getUserTokenData()
 
   const darkClass = classnames({
     [classes.toolbarDark]: dark,

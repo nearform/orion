@@ -11,9 +11,9 @@ import {
   getArticlesCategoryResults,
   getUserBookmarks,
 } from '../queries'
-import { useIsAuthInitialized, useUserId } from '../utils/auth'
 import { getTaxonomyItemByKey, buildWhereClause } from '../utils/taxonomy'
 import { PaddedContainer, SEO } from 'components'
+import { useIsAuthInitialized, getUserTokenData } from 'components/auth'
 
 const PAGE_SIZE = 10
 const defaultAggregate = { aggregate: { count: 0 } }
@@ -24,7 +24,7 @@ const ListContent = ({
   taxonomy,
   pageContext: { results: resultsFromContext, page: pageFromContext } = {},
 }) => {
-  const userId = useUserId()
+  const { userId } = getUserTokenData()
   const isAuthInitialized = useIsAuthInitialized()
 
   const [

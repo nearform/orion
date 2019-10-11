@@ -7,12 +7,12 @@ import { Link } from 'gatsby'
 import get from 'lodash/get'
 
 import { ArticleStatusChip, SEO } from 'components'
+import { getUserTokenData } from 'components/auth'
 import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
 
 import QueryTable from '../QueryTable'
 import { getArticlesData, getUserArticlesData } from '../../queries'
 
-import { useUserId, useIsPlatformGroup } from '../../utils/auth'
 import { formatDateTime } from '../../utils/date'
 import ContentToolbar from './ContentToolbar'
 
@@ -26,8 +26,7 @@ const ArticleList = ({ classes, path }) => {
     setPageTitle(inReview ? 'Needs Review' : 'All Stories')
   }, [path])
 
-  const isPlatformGroup = useIsPlatformGroup()
-  const userId = useUserId()
+  const { userId, isPlatformGroup } = getUserTokenData()
   const knowledgeTypes = useKnowledgeTypes()
 
   let query

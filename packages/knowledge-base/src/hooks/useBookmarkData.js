@@ -1,10 +1,10 @@
 import { useManualQuery } from 'graphql-hooks'
 import { getArticleBookmarked } from '../queries'
-import { useUserId } from '../utils/auth'
+import { getUserTokenData } from 'components/auth'
 import get from 'lodash/get'
 
 const useBookmarkData = articleId => {
-  const userId = useUserId()
+  const { userId } = getUserTokenData()
 
   const [
     fetchArticleBookmarked,
