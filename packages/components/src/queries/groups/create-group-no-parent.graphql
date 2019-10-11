@@ -1,4 +1,5 @@
-mutation createGroupNoParent($name: String!, $type: String!) {
+# See comment in components/admin/UserGroups
+mutation unsafe__createGroupNoParent($name: String!, $type: String!) {
   insert_group(objects: { name: $name, type: $type }) {
     returning {
       id

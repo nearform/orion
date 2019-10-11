@@ -21,7 +21,7 @@ import * as Yup from 'yup'
 
 import {
   createGroupMutation,
-  createGroupNoParentMutation,
+  unsafe__createGroupNoParentMutation,
   getGroups,
   deleteGroupMutation,
 } from '../../queries'
@@ -65,7 +65,9 @@ function UserGroups({ classes }) {
   // mutation be used in all cases.
   // =======================================================================================
   const [createGroup] = useMutation(createGroupMutation)
-  const [createGroupNoParent] = useMutation(createGroupNoParentMutation)
+  const [unsafe__createGroupNoParent] = useMutation(
+    unsafe__createGroupNoParentMutation
+  )
   const [deleteGroup] = useMutation(deleteGroupMutation)
   const { refetch: refetchGroups, table } = useAdminTable({
     query: getGroups,
@@ -124,7 +126,7 @@ function UserGroups({ classes }) {
                 variables: { ...values, parentId },
               })
             } else {
-              await createGroupNoParent({ variables: values })
+              await unsafe__createGroupNoParent({ variables: values })
             }
             refetchGroups()
           } finally {
