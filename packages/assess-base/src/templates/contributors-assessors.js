@@ -18,11 +18,11 @@ import {
   TypedChip,
   PaddedContainer,
   SectionTitle,
+  SEO,
   useAdminTable,
 } from 'components'
 
 import { getAssessmentId } from '../utils/url'
-import SEO from '../components/SEO'
 import ContextualHelp from '../components/ContextualHelp'
 import {
   getUnassignedContributorsAssessorsData,

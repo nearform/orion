@@ -1,5 +1,5 @@
 //import { useContext, createContext } from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
+//import { useStaticQuery, graphql } from 'gatsby'
 /*
 import { Auth } from 'aws-amplify'
 import find from 'lodash/find'
@@ -24,6 +24,7 @@ const ROLES_PERMISSIONS = {
 }
 */
 
+/*
 export const queryUserGroup = () => {
   const queryResult = useStaticQuery(graphql`
     query {
@@ -38,6 +39,7 @@ export const queryUserGroup = () => {
   `)
   return queryResult
 }
+*/
 
 /**
  * Returns an object detailing a user's permissions

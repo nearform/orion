@@ -4,6 +4,7 @@ import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
+import StaticQueryWrapper from './src/components/StaticQueryWrapper'
 import {
   addTranslations,
   AuthWrapper,
@@ -13,7 +14,6 @@ import {
   theme,
 } from 'components'
 import * as auth from './utils/auth'
-import { queryUserGroup } from './src/utils/auth'
 import * as i18n from './utils/i18n'
 import AppFooter from './src/components/AppFooter'
 import MainToolbar from './src/components/MainToolbar'
@@ -34,18 +34,20 @@ const InitializedWrapper = ({ element }) => {
   const authInit = () => auth.init(client)
 
   return (
-    <AuthWrapper authInit={authInit} queryUserGroup={queryUserGroup}>
-      <RootWrapper
-        client={client}
-        ClientContext={ClientContext}
-        muiTheme={muiTheme}
-        ThemeProvider={ThemeProvider}
-        ThemeWrapper={ThemeWrapper}
-        CssBaseline={CssBaseline}
-      >
-        {element}
-      </RootWrapper>
-    </AuthWrapper>
+    <StaticQueryWrapper>
+      <AuthWrapper authInit={authInit}>
+        <RootWrapper
+          client={client}
+          ClientContext={ClientContext}
+          muiTheme={muiTheme}
+          ThemeProvider={ThemeProvider}
+          ThemeWrapper={ThemeWrapper}
+          CssBaseline={CssBaseline}
+        >
+          {element}
+        </RootWrapper>
+      </AuthWrapper>
+    </StaticQueryWrapper>
   )
 }
 export const wrapRootElement = ({ element }) => {

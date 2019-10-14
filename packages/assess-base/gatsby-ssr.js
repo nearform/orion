@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
+import StaticQueryWrapper from './src/components/StaticQueryWrapper'
 import {
   AuthWrapper,
   RootWrapper,
@@ -14,7 +15,6 @@ import {
 } from 'components'
 import MainToolbar from './src/components/MainToolbar'
 import AppFooter from './src/components/AppFooter'
-import { queryUserGroup } from './src/utils/auth'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
 
@@ -24,18 +24,20 @@ const client = new GraphQLClient({
 })
 
 export const wrapRootElement = ({ element }) => (
-  <AuthWrapper queryUserGroup={queryUserGroup}>
-    <RootWrapper
-      client={client}
-      ClientContext={ClientContext}
-      muiTheme={muiTheme}
-      ThemeProvider={ThemeProvider}
-      ThemeWrapper={ThemeWrapper}
-      CssBaseline={CssBaseline}
-    >
-      {element}
-    </RootWrapper>
-  </AuthWrapper>
+  <StaticQueryWrapper>
+    <AuthWrapper>
+      <RootWrapper
+        client={client}
+        ClientContext={ClientContext}
+        muiTheme={muiTheme}
+        ThemeProvider={ThemeProvider}
+        ThemeWrapper={ThemeWrapper}
+        CssBaseline={CssBaseline}
+      >
+        {element}
+      </RootWrapper>
+    </AuthWrapper>
+  </StaticQueryWrapper>
 )
 
 export const wrapPageElement = ({ element, props }) => (

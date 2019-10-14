@@ -1,7 +1,9 @@
-import { useContext, createContext, useState } from 'react'
+import React, { useContext, createContext, useEffect, useState } from 'react'
 import { useStaticQuery, graphql } from 'gatsby'
 import { Auth } from 'aws-amplify'
 import find from 'lodash/find'
+
+import StaticQueryContext from './StaticQueryContext'
 
 const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
@@ -22,7 +24,7 @@ const ROLES_PERMISSIONS = {
   admin: 31,
 }
 
-const AuthContext = createContext({ isAuthInitialized: false })
+export const AuthContext = createContext({ isAuthInitialized: false })
 
 const isAuthenticatedSync = () => isBrowser && !!Auth.user
 
@@ -44,13 +46,21 @@ const extractTokenPayload = dataKey => {
   }
 }
 
-export function AuthWrapper({ authInit, queryUserGroup, children }) {
+export function AuthWrapper({ authInit, children }) {
+  const { queryUserGroup } = useContext(StaticQueryContext)
+  if (!queryUserGroup) {
+    throw new Error('No queryUserGroup available in StaticQueryContext')
+  }
+
   const [isAuthInitialized, setIsAuthInitialized] = useState(false)
 
   if (authInit) {
-    useEffect(async () => {
-      await authInit()
-      setIsAuthInitialized(true)
+    useEffect(() => {
+      async function init() {
+        await authInit()
+        setIsAuthInitialized(true)
+      }
+      init()
     })
   }
 
@@ -132,7 +142,10 @@ export function AuthWrapper({ authInit, queryUserGroup, children }) {
     try {
       const taxonomyQueryResult = queryUserGroup()
       const groupId = extractTokenPayload(HASURA_GROUP_ID)
-      return find(taxonomyQueryResult.raw_salmon.group, { id: groupId })
+      //return find(taxonomyQueryResult.raw_salmon.group, { id: groupId })
+      const result = find(taxonomyQueryResult.raw_salmon.group, { id: groupId })
+      console.log('getUserGroup', groupId, taxonomyQueryResult, result)
+      return result
     } catch (err) {
       return undefined
     }

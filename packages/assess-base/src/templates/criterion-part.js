@@ -1,12 +1,11 @@
 import React, { useContext, useEffect } from 'react'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
-import { AuthContext, PaddedContainer, SectionTitle } from 'components'
+import { AuthContext, PaddedContainer, SectionTitle, SEO } from 'components'
 import { Link } from 'gatsby'
 import { useManualQuery } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 
 import { getAssessmentPartData } from '../queries'
-import SEO from '../components/SEO'
 import AssessmentScoringHeader from '../components/AssessmentScoringHeader'
 import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
 import { getAssessmentId } from '../utils/url'
