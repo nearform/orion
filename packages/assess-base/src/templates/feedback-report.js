@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { navigate } from '@reach/router'
 import {
   withStyles,
@@ -15,21 +15,21 @@ import {
 } from '@material-ui/core'
 import {
   ASSESSMENT_STATUS,
+  AuthContext,
   getChartData,
   BarChartTable,
   ConfirmDialog,
   PaddedContainer,
   SectionTitle,
-  SEO,
 } from 'components'
 import { Link } from 'gatsby'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useMutation, useManualQuery } from 'graphql-hooks'
 import get from 'lodash/get'
 
+import SEO from '../components/SEO'
 import FeedbackReportInput from '../components/FeedbackReportInput'
 import { getAssessmentId } from '../utils/url'
-import { getUserTokenData } from 'components/auth'
 
 import {
   getAssessmentFeedbackReportData,
@@ -64,6 +64,7 @@ function FeedbackReport({
   const assessmentId = getAssessmentId(location)
   const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
+  const { getUserTokenData } = useContext(AuthContext)
   const { isAdmin, isAssessor } = getUserTokenData()
 
   const [fetchAssessmentFeedbackReportData, { data }] = useManualQuery(

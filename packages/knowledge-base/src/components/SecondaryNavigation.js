@@ -15,7 +15,7 @@ import QuickLinksMenu, {
   QuickLinksMenuItem,
   QuickLinkButton,
 } from './QuickLinksMenu'
-import { getUserTokenData } from 'components/auth'
+import { getUserTokenData } from '../auth'
 import useTaxonomies from '../hooks/useTaxonomies'
 import usePrevious from '../hooks/usePrevious'
 

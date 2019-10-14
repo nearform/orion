@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SEO } from 'components'
+import SEO from '../components/SEO'
 
 // TODO: Replace this with a basically-styled 404
 // and move it to components package

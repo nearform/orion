@@ -11,8 +11,8 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 import { useMutation, useQuery } from 'graphql-hooks'
 
-import { SEO } from 'components'
 import ContentToolbar from './ContentToolbar'
+import SEO from '../SEO'
 
 import { updateArticleMutation } from '../../queries'
 

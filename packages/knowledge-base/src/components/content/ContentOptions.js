@@ -1,7 +1,7 @@
 import React from 'react'
 import T from 'prop-types'
 import { withStyles, Button, Grid } from '@material-ui/core'
-import { getUserTokenData } from 'components/auth'
+import { getUserTokenData } from '../../auth'
 import RateArticle from './RateArticle'
 import HideButton from './HideButton'
 import { Share, Print, Edit, PictureAsPdf } from '@material-ui/icons'

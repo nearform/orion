@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   Typography,
   withStyles,
@@ -14,15 +14,15 @@ import get from 'lodash/get'
 import { Redirect } from '@reach/router'
 
 import {
+  AuthContext,
   TypedChip,
   PaddedContainer,
   SectionTitle,
-  SEO,
   useAdminTable,
 } from 'components'
 
-import { getUserTokenData, getUserAuth } from 'components/auth'
 import { getAssessmentId } from '../utils/url'
+import SEO from '../components/SEO'
 import ContextualHelp from '../components/ContextualHelp'
 import {
   getUnassignedContributorsAssessorsData,
@@ -58,6 +58,7 @@ function ContributorsAssessorsTemplate({
   const [filterText, setFilterText] = useState('')
 
   const assessmentId = getAssessmentId(location)
+  const { getUserTokenData, getUserAuth } = useContext(AuthContext)
   const { isAdmin, groupId } = getUserTokenData()
   if (!assessmentId && !isAdmin) {
     return <Redirect to="/auth" noThrow />

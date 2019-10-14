@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useStaticQuery, graphql, navigate, Link } from 'gatsby'
 import { useTranslation } from 'react-i18next'
 import Img from 'gatsby-image'
@@ -6,9 +6,12 @@ import { Typography, Button, withStyles } from '@material-ui/core'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
-import { PaddedContainer, NavLink, getLanguageSwitcher } from 'components'
-
-import { getUserTokenData } from 'components/auth'
+import {
+  AuthContext,
+  PaddedContainer,
+  NavLink,
+  getLanguageSwitcher,
+} from 'components'
 
 function MainToolbar({ classes, dark }) {
   const {
@@ -40,6 +43,7 @@ function MainToolbar({ classes, dark }) {
     navigate('/auth')
   }
 
+  const { getUserTokenData } = useContext(AuthContext)
   const { isAdmin, isLoggedIn } = getUserTokenData()
 
   const darkClass = classnames({

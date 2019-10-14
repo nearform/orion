@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { graphql } from 'gatsby'
 import { Button, Grid, Paper, Typography, withStyles } from '@material-ui/core'
-import { PaddedContainer, SectionTitle, SEO } from 'components'
+import { AuthContext, PaddedContainer, SectionTitle } from 'components'
 import BackgroundImage from 'gatsby-background-image'
 
+import SEO from '../components/SEO'
 import LoggedOutAssessmentInfo from '../components/LoggedOutAssessmentInfo'
 import AssessmentTool from '../components/AssessmentTool'
 import AssessmentsTable from '../components/AssessmentsTable'
-import { getUserTokenData } from 'components/auth'
 
 const assessmentColors = [
   theme => theme.palette.primary.light,
@@ -22,6 +22,7 @@ function AssessmentsHome({ theme, classes, data }) {
     assessmentTypes: { nodes: assessmentTypes },
   } = data
 
+  const { getUserTokenData } = useContext(AuthContext)
   const { isLoggedIn } = getUserTokenData()
   const assessmentItems = assessmentTypes
     .map(type => ({

@@ -6,13 +6,14 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 import {
   addTranslations,
+  AuthWrapper,
   RootWrapper,
   Layout,
   ThemeWrapper,
   theme,
 } from 'components'
 import * as auth from './utils/auth'
-import { AuthInitContext } from 'components/auth'
+import { queryUserGroup } from './src/utils/auth'
 import * as i18n from './utils/i18n'
 import AppFooter from './src/components/AppFooter'
 import MainToolbar from './src/components/MainToolbar'
@@ -30,17 +31,10 @@ export async function onClientEntry() {
 }
 
 const InitializedWrapper = ({ element }) => {
-  const [isInitialised, setIsInitialised] = useState(false)
-  useEffect(() => {
-    const init = async () => {
-      await auth.init(client)
-      setIsInitialised(true)
-    }
-    init()
-  }, [])
+  const authInit = () => auth.init(client)
 
   return (
-    <AuthInitContext.Provider value={isInitialised}>
+    <AuthWrapper authInit={authInit} queryUserGroup={queryUserGroup}>
       <RootWrapper
         client={client}
         ClientContext={ClientContext}
@@ -51,7 +45,7 @@ const InitializedWrapper = ({ element }) => {
       >
         {element}
       </RootWrapper>
-    </AuthInitContext.Provider>
+    </AuthWrapper>
   )
 }
 export const wrapRootElement = ({ element }) => {

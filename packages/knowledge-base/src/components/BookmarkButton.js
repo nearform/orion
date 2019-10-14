@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import { BookmarkOutlined, BookmarkBorderOutlined } from '@material-ui/icons'
 import { withStyles, Button, CircularProgress, Hidden } from '@material-ui/core'
 import { addUserBookmarkMutation, deleteUserBookmarkMutation } from '../queries'
-import { getUserTokenData, useIsAuthInitialized } from 'components/auth'
+import { getUserTokenData, useIsAuthInitialized } from '../auth'
 import useBookmarkData from '../hooks/useBookmarkData'
 
 const BookmarkButton = ({

@@ -1,8 +1,9 @@
 import React from 'react'
 import { Button, Grid, Typography, withStyles, Box } from '@material-ui/core'
 import { Link as RouterLink } from '@reach/router'
-import { PaddedContainer, SEO } from 'components'
+import { PaddedContainer } from 'components'
 
+import SEO from '../components/SEO'
 import EditorsPicks from '../components/list/EditorsPicks'
 import PageSection from '../components/layout/page-section'
 import PersonalizedLists from '../components/list/PersonalizedLists'

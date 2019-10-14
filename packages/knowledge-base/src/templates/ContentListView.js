@@ -12,8 +12,9 @@ import {
   getUserBookmarks,
 } from '../queries'
 import { getTaxonomyItemByKey, buildWhereClause } from '../utils/taxonomy'
-import { PaddedContainer, SEO } from 'components'
-import { useIsAuthInitialized, getUserTokenData } from 'components/auth'
+import { PaddedContainer } from 'components'
+import SEO from '../components/SEO'
+import { useIsAuthInitialized, getUserTokenData } from '../auth'
 
 const PAGE_SIZE = 10
 const defaultAggregate = { aggregate: { count: 0 } }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import T from 'prop-types'
 import slugify from 'slugify'
 import { Link as RouterLink } from '@reach/router'
@@ -30,7 +30,7 @@ import { ConfirmDialog, GroupTypeChip, GROUP_TYPES } from 'components'
 
 import useAdminTable from '../../hooks/useAdminTable'
 
-import { getUserTokenData } from '../../../auth'
+import { AuthContext } from '../AuthWrapper'
 
 const groupTypeKeys = Object.keys(GROUP_TYPES)
 const groupTypes = groupTypeKeys.map(key => ({ key, value: GROUP_TYPES[key] }))
@@ -54,6 +54,7 @@ const headers = [
 ]
 
 function UserGroups({ classes }) {
+  const { getUserTokenData } = useContext(AuthContext)
   const userTokenData = getUserTokenData()
   // =======================================================================================
   // TODO: This component currently uses two forms of the create group mutation; one

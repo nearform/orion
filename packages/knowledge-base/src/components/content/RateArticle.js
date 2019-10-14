@@ -3,7 +3,7 @@ import { useManualQuery, useMutation } from 'graphql-hooks'
 import T from 'prop-types'
 import get from 'lodash/get'
 import { RatingWidget } from 'components'
-import { getUserTokenData, useIsAuthInitialized } from 'components/auth'
+import { getUserTokenData, useIsAuthInitialized } from '../../auth'
 import { getArticleRating, addArticleRatingMutation } from '../../queries'
 
 const RateArticle = ({ id: articleId, content }) => {

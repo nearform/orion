@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import { Router, Redirect } from '@reach/router'
 
-import { getUserAuth } from '../../../auth'
+import { AuthContext } from '../AuthWrapper'
 import SEO from '../page/SEO'
 import PaddedContainer from '../PaddedContainer'
 import PendingUsers from './PendingUsers'
@@ -12,6 +12,7 @@ import UserGroups from './UserGroups'
 import GroupUsers from './GroupUsers'
 
 function AdminRoute() {
+  const { getUserAuth } = useContext(AuthContext)
   const [pageTitle, setPageTitle] = useState('')
 
   const canAdministerGroups = getUserAuth('platform-admin')

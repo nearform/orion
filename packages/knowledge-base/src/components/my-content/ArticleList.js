@@ -6,8 +6,9 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 import { Link } from 'gatsby'
 import get from 'lodash/get'
 
-import { ArticleStatusChip, SEO } from 'components'
-import { getUserTokenData } from 'components/auth'
+import { ArticleStatusChip } from 'components'
+import SEO from '../SEO'
+import { getUserTokenData } from '../../auth'
 import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
 
 import QueryTable from '../QueryTable'

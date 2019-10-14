@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { Typography, withStyles, Grid, Button, Box } from '@material-ui/core'
 import { Link, navigate } from 'gatsby'
 import { Formik, Form, Field } from 'formik'
@@ -13,11 +13,11 @@ import * as Yup from 'yup'
 import matrixData from 'efqm-theme/assessments'
 
 import {
+  AuthContext,
   PaddedContainer,
   ASSESSMENT_STATUS,
   ConfirmDialog,
   SectionTitle,
-  SEO,
   TypedChip,
 } from 'components'
 import {
@@ -30,9 +30,9 @@ import {
   deleteAssessmentContributorMutation,
   deleteAssessmentAssessorMutation,
 } from '../queries'
-import { getUserTokenData, getUserAuth } from 'components/auth'
 import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
+import SEO from '../components/SEO'
 import ContextualHelp from '../components/ContextualHelp'
 import ContentModal from '../components/ContentModal'
 import UploadButton from '../components/UploadButton'
@@ -81,6 +81,7 @@ function AssessmentTemplate({
     width: '',
   })
   const assessmentId = getAssessmentId(location)
+  const { getUserTokenData, getUserAuth } = useContext(AuthContext)
   const { isAdmin, isContributor, userId, groupId } = getUserTokenData()
 
   if (!assessmentId && !isAdmin) {

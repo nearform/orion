@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
-import { PaddedContainer, SectionTitle, SEO } from 'components'
+import { AuthContext, PaddedContainer, SectionTitle } from 'components'
 import { Link } from 'gatsby'
 import { useManualQuery } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 
 import { getAssessmentPartData } from '../queries'
-import { getUserTokenData } from 'components/auth'
+import SEO from '../components/SEO'
 import AssessmentScoringHeader from '../components/AssessmentScoringHeader'
 import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
 import { getAssessmentId } from '../utils/url'
@@ -38,6 +38,7 @@ function CriterionPartTemplate({
     criteriaList,
   },
 }) {
+  const { getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
   if (!isAuthenticated) {
     return <Redirect to="/auth" noThrow />

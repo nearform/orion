@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core'
 
 import { NavLink } from 'components'
-import { getUserTokenData } from 'components/auth'
+import { getUserTokenData } from '../../auth'
 
 function ContentToolbar({ classes, pageTitle }) {
   const { isPlatformGroup } = getUserTokenData()
