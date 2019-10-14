@@ -1,6 +1,6 @@
 import get from 'lodash/get'
 import graphql from '../graphql'
-import getRoleByName from './graphql/get-role-by-name.graphql'
+import getDefaultRole from './graphql/get-default-role.graphql'
 import createUser from './graphql/create-user.graphql'
 import createUserRole from './graphql/create-user-role.graphql'
 import pino from 'pino'
@@ -12,9 +12,7 @@ export const handler = async event => {
   try {
     logger.info({ event }, 'creating user')
     if (event.triggerSource === 'PostConfirmation_ConfirmSignUp') {
-      const roleData = await graphql(getRoleByName, {
-        name: NEW_MEMBER_ROLE_NAME,
-      })
+      const roleData = await graphql(getDefaultRole)
       const role = get(roleData, 'role.0')
 
       const user = await graphql(createUser, {
