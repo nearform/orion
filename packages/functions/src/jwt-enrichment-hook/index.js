@@ -2,7 +2,7 @@ import graphql from '../graphql'
 import {
   getUserRoles,
   selectDefaultRoleName,
-  DEFAULT_ROLE_NAME,
+  PUBLIC_ROLE_NAME,
 } from './user-roles'
 import { getUserGroup } from './user-groups'
 import getUserByCognitoId from './graphql/get-user-by-cognito-id.graphql'
@@ -51,8 +51,8 @@ export const handler = async event => {
         claimsOverrideDetails: {
           claimsToAddOrOverride: {
             'https://hasura.io/jwt/claims': JSON.stringify({
-              'x-hasura-allowed-roles': [DEFAULT_ROLE_NAME],
-              'x-hasura-default-role': DEFAULT_ROLE_NAME,
+              'x-hasura-allowed-roles': [PUBLIC_ROLE_NAME],
+              'x-hasura-default-role': PUBLIC_ROLE_NAME,
               'x-hasura-user-id': user.id.toString(),
             }),
           },

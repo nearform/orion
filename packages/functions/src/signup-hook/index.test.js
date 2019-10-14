@@ -32,7 +32,7 @@ const originalEvent = {
 }
 
 describe('signup-hook', () => {
-  it('it should create the user with the attributes coming from the request and assign him a non-member role', async () => {
+  it('it should create the user with the attributes coming from the request and assign him a member role', async () => {
     const role = { id: 156, name: NEW_MEMBER_ROLE_NAME }
     const createdUser = { id: 'some-user-id' }
     graphql.mockResolvedValueOnce({ role: [role] })
