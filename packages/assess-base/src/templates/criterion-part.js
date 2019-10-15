@@ -87,8 +87,7 @@ function CriterionPartTemplate({
   }
 
   const canEditTablesAndUpload =
-    (userTokenData.admin || userTokenData.contributor) &&
-    assessmentInProgress(assessmentData)
+    userTokenData.contributor && assessmentInProgress(assessmentData)
   const canEditFeedbackAndScoring =
     userTokenData.assessor && assessmentSubmitted(assessmentData)
 

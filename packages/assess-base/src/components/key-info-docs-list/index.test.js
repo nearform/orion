@@ -4,12 +4,19 @@ import TestRenderer from 'react-test-renderer'
 import assessment from '../../../__mocks__/assessment.mock'
 import KeyInfoDocsList from './'
 
+jest.mock('../../queries', () => ({}))
+
 describe('<KeyInfoDocsList />', () => {
   let keyInfoDocsList, list, listItems
 
   beforeAll(() => {
     keyInfoDocsList = TestRenderer.create(
-      <KeyInfoDocsList assessment={assessment} text="Testing" visible />
+      <KeyInfoDocsList
+        assessment={assessment}
+        text="Testing"
+        visible
+        onFileDelete={() => {}}
+      />
     ).root
 
     list = keyInfoDocsList.find(el => el.type === 'ul')
@@ -32,7 +39,7 @@ describe('<KeyInfoDocsList />', () => {
 
     beforeAll(() => {
       defaultKeyInfoDocsList = TestRenderer.create(
-        <KeyInfoDocsList assessment={undefined} />
+        <KeyInfoDocsList assessment={undefined} onFileDelete={() => {}} />
       ).root
     })
 
