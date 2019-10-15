@@ -3,7 +3,6 @@ import T from 'prop-types'
 import { Router, Redirect } from '@reach/router'
 
 import { AuthContext } from '../AuthWrapper'
-import SEO from '../page/SEO'
 import PaddedContainer from '../PaddedContainer'
 import PendingUsers from './PendingUsers'
 import AllUsers from './AllUsers'
@@ -11,7 +10,7 @@ import AdminToolbar from './AdminToolbar'
 import UserGroups from './UserGroups'
 import GroupUsers from './GroupUsers'
 
-function AdminRoute() {
+function AdminRoute({ SEO }) {
   const { getUserAuth } = useContext(AuthContext)
   const [pageTitle, setPageTitle] = useState('')
 
@@ -26,7 +25,7 @@ function AdminRoute() {
 
   return (
     <PaddedContainer>
-      <SEO title={`${pageTitle} | Admin`} />
+      {SEO && <SEO title={`${pageTitle} | Admin`} />}
       <AdminToolbar pageTitle={pageTitle} userCanAccess={userCanAccess} />
       <Router>
         {userCanAccess.pendingUsers && (

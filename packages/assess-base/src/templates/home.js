@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import { graphql } from 'gatsby'
 import { Button, Grid, Paper, Typography, withStyles } from '@material-ui/core'
-import { AuthContext, PaddedContainer, SectionTitle, SEO } from 'components'
+import { AuthContext, PaddedContainer, SectionTitle } from 'components'
 import BackgroundImage from 'gatsby-background-image'
 
 import LoggedOutAssessmentInfo from '../components/LoggedOutAssessmentInfo'
 import AssessmentTool from '../components/AssessmentTool'
 import AssessmentsTable from '../components/AssessmentsTable'
+import SEO from '../components/SEO'
 
 const assessmentColors = [
   theme => theme.palette.primary.light,
@@ -22,7 +23,7 @@ function AssessmentsHome({ theme, classes, data }) {
   } = data
 
   const { getUserTokenData } = useContext(AuthContext)
-  const { isLoggedIn } = getUserTokenData()
+  const { isAuthenticated } = getUserTokenData()
   const assessmentItems = assessmentTypes
     .map(type => ({
       ...type,
@@ -61,7 +62,7 @@ function AssessmentsHome({ theme, classes, data }) {
       </div>
       <PaddedContainer>
         <div className={classes.sectionTop}>
-          {isLoggedIn ? (
+          {isAuthenticated ? (
             <Paper>
               <AssessmentsTable />
             </Paper>
@@ -83,7 +84,7 @@ function AssessmentsHome({ theme, classes, data }) {
                 barColor={assessmentColors[index % assessmentColors.length](
                   theme
                 )}
-                isAuthenticated={isLoggedIn}
+                isAuthenticated={isAuthenticated}
               />
             ))}
           </Grid>

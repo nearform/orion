@@ -21,7 +21,6 @@ import {
   ConfirmDialog,
   PaddedContainer,
   SectionTitle,
-  SEO,
 } from 'components'
 import { Link } from 'gatsby'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
@@ -29,6 +28,7 @@ import { useMutation, useManualQuery } from 'graphql-hooks'
 import get from 'lodash/get'
 
 import FeedbackReportInput from '../components/FeedbackReportInput'
+import SEO from '../components/SEO'
 import { getAssessmentId } from '../utils/url'
 
 import {

@@ -1,9 +1,7 @@
 import React, { useContext, createContext, useEffect, useState } from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
+import { useQuery } from 'graphql-hooks'
 import { Auth } from 'aws-amplify'
 import find from 'lodash/find'
-
-import StaticQueryContext from './StaticQueryContext'
 
 const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
@@ -46,24 +44,20 @@ const extractTokenPayload = dataKey => {
   }
 }
 
-export function AuthWrapper({ authInit, children }) {
-  const { queryUserGroup } = useContext(StaticQueryContext)
-  if (!queryUserGroup) {
-    throw new Error('No queryUserGroup available in StaticQueryContext')
-  }
-
-  const [isAuthInitialized, setIsAuthInitialized] = useState(false)
-
-  if (authInit) {
-    useEffect(() => {
-      async function init() {
-        await authInit()
-        setIsAuthInitialized(true)
+export function AuthWrapper({ isAuthInitialized, children }) {
+  const userGroups = useQuery(`
+    query {
+      raw_salmon {
+        group {
+          id
+          type
+          name
+        }
       }
-      init()
-    })
-  }
-
+    }
+  `)
+  console.log('authInitialized', isAuthInitialized)
+  console.log('USER_GROUPS', userGroups)
   /**
    * Returns an object detailing a user's permissions
    *
@@ -140,12 +134,9 @@ export function AuthWrapper({ authInit, children }) {
    */
   const getUserGroup = () => {
     try {
-      const taxonomyQueryResult = queryUserGroup()
+      const taxonomyQueryResult = userGroups
       const groupId = extractTokenPayload(HASURA_GROUP_ID)
-      //return find(taxonomyQueryResult.raw_salmon.group, { id: groupId })
-      const result = find(taxonomyQueryResult.raw_salmon.group, { id: groupId })
-      console.log('getUserGroup', groupId, taxonomyQueryResult, result)
-      return result
+      return find(taxonomyQueryResult.raw_salmon.group, { id: groupId })
     } catch (err) {
       return undefined
     }

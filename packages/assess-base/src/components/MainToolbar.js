@@ -14,6 +14,9 @@ import {
 } from 'components'
 
 function MainToolbar({ classes, dark }) {
+  const { getUserTokenData } = useContext(AuthContext)
+  const { isAdmin, isAuthenticated } = getUserTokenData()
+
   const {
     site: {
       siteMetadata: { title },
@@ -42,9 +45,6 @@ function MainToolbar({ classes, dark }) {
     Auth.signOut()
     navigate('/auth')
   }
-
-  const { getUserTokenData } = useContext(AuthContext)
-  const { isAdmin, isLoggedIn } = getUserTokenData()
 
   const darkClass = classnames({
     [classes.toolbarDark]: dark,
@@ -93,7 +93,7 @@ function MainToolbar({ classes, dark }) {
             >
               EFQM.ORG
             </Button>
-            {isLoggedIn && (
+            {isAuthenticated && (
               <Button className={navButtonClass} component={NavLink} to="#">
                 <AccountCircleOutlinedIcon
                   className={classes.icon}
@@ -102,7 +102,7 @@ function MainToolbar({ classes, dark }) {
                 MyEFQM
               </Button>
             )}
-            {!isLoggedIn && (
+            {!isAuthenticated && (
               <Button className={navButtonClass} component={NavLink} to="/auth">
                 LOGIN
               </Button>
@@ -116,7 +116,7 @@ function MainToolbar({ classes, dark }) {
                 ADMIN
               </Button>
             )}
-            {isLoggedIn && (
+            {isAuthenticated && (
               <Button className={navButtonClass} onClick={doLogout}>
                 LOGOUT
               </Button>

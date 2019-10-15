@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
-import { AuthContext, PaddedContainer, SectionTitle, SEO } from 'components'
+import { AuthContext, PaddedContainer, SectionTitle } from 'components'
 import { Link } from 'gatsby'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
@@ -15,6 +15,7 @@ import {
   upsertAssessmentCriterionDataMutation,
 } from '../queries'
 import FileList from '../components/FileList'
+import SEO from '../components/SEO'
 import { assessmentInProgress } from '../utils/assessment-status'
 
 function createFormInitialValues(assessmentCriterionData) {

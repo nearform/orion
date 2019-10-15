@@ -4,7 +4,6 @@ import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import StaticQueryWrapper from './src/components/StaticQueryWrapper'
 import {
   addTranslations,
   AuthWrapper,
@@ -31,23 +30,26 @@ export async function onClientEntry() {
 }
 
 const InitializedWrapper = ({ element }) => {
-  const authInit = () => auth.init(client)
+  const [isAuthInitialized, setIsAuthInitialized] = useState(false)
+  useEffect(() => {
+    const init = async () => {
+      await auth.init(client)
+      setIsAuthInitialized(true)
+    }
+    init()
+  }, [])
 
   return (
-    <StaticQueryWrapper>
-      <AuthWrapper authInit={authInit}>
-        <RootWrapper
-          client={client}
-          ClientContext={ClientContext}
-          muiTheme={muiTheme}
-          ThemeProvider={ThemeProvider}
-          ThemeWrapper={ThemeWrapper}
-          CssBaseline={CssBaseline}
-        >
-          {element}
-        </RootWrapper>
-      </AuthWrapper>
-    </StaticQueryWrapper>
+    <RootWrapper
+      client={client}
+      ClientContext={ClientContext}
+      muiTheme={muiTheme}
+      ThemeProvider={ThemeProvider}
+      ThemeWrapper={ThemeWrapper}
+      CssBaseline={CssBaseline}
+    >
+      <AuthWrapper isAuthInitialized={isAuthInitialized}>{element}</AuthWrapper>
+    </RootWrapper>
   )
 }
 export const wrapRootElement = ({ element }) => {

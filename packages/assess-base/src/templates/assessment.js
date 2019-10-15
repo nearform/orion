@@ -18,7 +18,6 @@ import {
   ASSESSMENT_STATUS,
   ConfirmDialog,
   SectionTitle,
-  SEO,
   TypedChip,
 } from 'components'
 import {
@@ -35,6 +34,7 @@ import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'
 import ContentModal from '../components/ContentModal'
+import SEO from '../components/SEO'
 import UploadButton from '../components/UploadButton'
 import AssessmentPillars from '../components/AssessmentPillars'
 import KeyInfoDocsList from '../components/key-info-docs-list'
