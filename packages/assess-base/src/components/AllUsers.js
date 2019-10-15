@@ -122,7 +122,7 @@ function AllUsers({ classes, query, variables }) {
           <TableCell>
             <UserRoleChip
               status={
-                getRelationalName(user, 'user_roles', 'role') || 'non-member'
+                getRelationalName(user, 'user_roles', 'role') || 'Not Assigned'
               }
             />
           </TableCell>

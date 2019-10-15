@@ -3,13 +3,13 @@ import sortBy from 'lodash/sortBy'
 import first from 'lodash/first'
 
 const ADMIN_ROLE_NAME = 'admin'
-const DEFAULT_MEMBER_ROLE_NAME = 'user'
-export const DEFAULT_ROLE_NAME = 'public'
+export const DEFAULT_MEMBER_ROLE_NAME = 'user'
+export const PUBLIC_ROLE_NAME = 'public'
 
 const roleMap = {
   admin: ADMIN_ROLE_NAME,
   member: DEFAULT_MEMBER_ROLE_NAME,
-  'non-member': DEFAULT_ROLE_NAME,
+  'non-member': PUBLIC_ROLE_NAME,
 }
 
 function mapRole(role) {
