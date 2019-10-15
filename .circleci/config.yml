@@ -64,8 +64,8 @@ jobs:
     - *install_awscli
     - *get_envars
     - run:
-        name: Install npm deps
-        command: npm install --no-save
+        name: Install yarn deps
+        command: yarn install --no-save
     - persist_to_workspace:
         root: .
         paths:
@@ -78,18 +78,18 @@ jobs:
       - *load_envars
       - run:
           name: Lint code
-          command: npm run lint
+          command: yarn run lint
       - run:
           name: Build bundles
           command: |
             set -e
-            npm run build
+            yarn run build
       - run:
           name: Build storybook bundle
           command: |
             set -e
             cd packages/components
-            npm run build-storybook -- --quiet
+            yarn run build-storybook -- --quiet
       - persist_to_workspace:
           root: .
           paths:
@@ -105,7 +105,7 @@ jobs:
           name: Test
           command: |
             set -e
-            npm test
+            yarn test
   e2e:
     <<: *deploy_environment
     steps:
@@ -116,7 +116,7 @@ jobs:
           name: Test e2e
           command: |
             set -e
-            npm run 'ci:e2e-test'
+            yarn run 'ci:e2e-test'
   deploy:
     <<: *deploy_environment
     steps:
@@ -152,16 +152,16 @@ jobs:
       - run:
           name: Create artifacts
           command: |
-            npm run artifact:create
+            yarn run artifact:create
       - run:
           name: Set artifact name envars
           command: |
-            echo 'export ENRICHMENT_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-enrichment-hook --silent`"' >> $BASH_ENV
-            echo 'export SIGNUP_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-signup-hook --silent`"' >> $BASH_ENV
-            echo 'export HASURA_ARTIFACT="packages/`cd packages/hasura && npm run artifact:name --silent`"' >> $BASH_ENV
-            echo 'export ASSESS_BASE_ARTIFACT="packages/assess-base/`cd packages/assess-base && npm run artifact:name --silent`"' >> $BASH_ENV
-            echo 'export KNOWLEDGE_BASE_ARTIFACT="packages/knowledge-base/`cd packages/knowledge-base && npm run artifact:name --silent`"' >> $BASH_ENV
-            echo 'export ASSESS_BASE_HASURA_ARTIFACT="packages/`cd packages/assess-base-hasura && npm run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export ENRICHMENT_ARTIFACT="packages/functions/`cd packages/functions && yarn run artifact:name-enrichment-hook --silent`"' >> $BASH_ENV
+            echo 'export SIGNUP_ARTIFACT="packages/functions/`cd packages/functions && yarn run artifact:name-signup-hook --silent`"' >> $BASH_ENV
+            echo 'export HASURA_ARTIFACT="packages/`cd packages/hasura && yarn run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export ASSESS_BASE_ARTIFACT="packages/assess-base/`cd packages/assess-base && yarn run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export KNOWLEDGE_BASE_ARTIFACT="packages/knowledge-base/`cd packages/knowledge-base && yarn run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export ASSESS_BASE_HASURA_ARTIFACT="packages/`cd packages/assess-base-hasura && yarn run artifact:name --silent`"' >> $BASH_ENV
       - *install_awscli
       - run:
           name: Copy artifacts to S3 bucket
@@ -192,7 +192,7 @@ jobs:
           command: |
             export HASURA_GRAPHQL_API=${GATSBY_GRAPHQL_API}
             cd packages/hasura
-            npm run seed
+            yarn run seed
 workflows:
   version: 2
   build-only:
