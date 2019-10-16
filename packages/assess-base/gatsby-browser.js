@@ -16,6 +16,7 @@ import * as auth from './utils/auth'
 import * as i18n from './utils/i18n'
 import AppFooter from './src/components/AppFooter'
 import MainToolbar from './src/components/MainToolbar'
+import loadUserGroups from './src/hooks/loadUserGroups'
 import './src/styles/global.css'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
@@ -29,7 +30,7 @@ export async function onClientEntry() {
   addTranslations('assessments', i18next)
 }
 
-const InitializedWrapper = ({ element }) => {
+const InitAuthWrapper = ({ element }) => {
   const [isAuthInitialized, setIsAuthInitialized] = useState(false)
   useEffect(() => {
     const init = async () => {
@@ -53,15 +54,24 @@ const InitializedWrapper = ({ element }) => {
   )
 }
 export const wrapRootElement = ({ element }) => {
-  return <InitializedWrapper element={element} />
+  return <InitAuthWrapper element={element} />
+}
+
+const PageWrapper = ({ darkToolbar, children }) => {
+  loadUserGroups()
+  return (
+    <Layout
+      darkToolbar={darkToolbar}
+      AppFooter={AppFooter}
+      MainToolbar={MainToolbar}
+    >
+      {children}
+    </Layout>
+  )
 }
 
 export const wrapPageElement = ({ element, props }) => (
-  <Layout
-    darkToolbar={props.location.pathname === '/'}
-    AppFooter={AppFooter}
-    MainToolbar={MainToolbar}
-  >
+  <PageWrapper darkToolbar={props.location.pathname === '/'}>
     {element}
-  </Layout>
+  </PageWrapper>
 )

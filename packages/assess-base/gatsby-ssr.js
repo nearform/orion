@@ -5,10 +5,16 @@ import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import { AuthWrapper, RootWrapper, Layout, ThemeWrapper, theme } from 'components'
-import AuthGroupWrapper from './src/components/AuthGroupWrapper'
-import MainToolbar from './src/components/MainToolbar'
+import {
+  AuthWrapper,
+  RootWrapper,
+  Layout,
+  ThemeWrapper,
+  theme,
+} from 'components'
 import AppFooter from './src/components/AppFooter'
+import MainToolbar from './src/components/MainToolbar'
+import loadUserGroups from './src/hooks/loadUserGroups'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
 
@@ -30,12 +36,21 @@ export const wrapRootElement = ({ element }) => (
   </RootWrapper>
 )
 
+const PageWrapper = ({ darkToolbar, children }) => {
+  loadUserGroups()
+  return (
+    <Layout
+      darkToolbar={darkToolbar}
+      AppFooter={AppFooter}
+      MainToolbar={MainToolbar}
+    >
+      {children}
+    </Layout>
+  )
+}
+
 export const wrapPageElement = ({ element, props }) => (
-  <Layout
-    darkToolbar={props.location.pathname === '/'}
-    MainToolbar={MainToolbar}
-    AppFooter={AppFooter}
-  >
+  <PageWrapper darkToolbar={props.location.pathname === '/'}>
     {element}
-  </Layout>
+  </PageWrapper>
 )

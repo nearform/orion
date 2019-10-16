@@ -1,4 +1,5 @@
 import React, { useContext, createContext, useEffect, useState } from 'react'
+import T from 'prop-types'
 import { useQuery } from 'graphql-hooks'
 import { Auth } from 'aws-amplify'
 import find from 'lodash/find'
@@ -45,25 +46,15 @@ const extractTokenPayload = dataKey => {
 }
 
 export function AuthWrapper({ isAuthInitialized, children }) {
-  const userGroups = useQuery(`
-    query {
-      raw_salmon {
-        group {
-          id
-          type
-          name
-        }
-      }
-    }
-  `)
-  console.log('authInitialized', isAuthInitialized)
-  console.log('USER_GROUPS', userGroups)
+  const [userGroups, setUserGroups] = useState([])
+
   /**
    * Returns an object detailing a user's permissions
    *
    * @return {object} The current user's permissions
    */
   const getUserTokenData = () => {
+    console.log('userGroups=', userGroups)
     const data = {
       isAuthenticated: isAuthenticatedSync() ? true : false,
       isUser: hasPermissions('user'),
@@ -162,7 +153,12 @@ export function AuthWrapper({ isAuthInitialized, children }) {
     getUserAuth,
     getUserRole,
     isAuthenticatedSync,
+    setUserGroups,
   }
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
+}
+AuthWrapper.propTypes = {
+  isAuthInitialized: T.bool,
+  children: T.node,
 }
