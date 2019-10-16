@@ -39,7 +39,7 @@ function CriterionTemplate({
 }) {
   const assessmentId = getAssessmentId(location)
   const { getUserTokenData } = useContext(AuthContext)
-  const { isAdmin, isContributor, userId } = getUserTokenData()
+  const { isContributor, userId } = getUserTokenData()
 
   const { t } = useTranslation()
 
@@ -86,7 +86,7 @@ function CriterionTemplate({
   }
 
   const canEditAndUpload =
-    (isAdmin || isContributor) &&
+    isContributor &&
     assessmentInProgress(get(assessmentCriterionData, 'assessment_by_pk'))
 
   return (

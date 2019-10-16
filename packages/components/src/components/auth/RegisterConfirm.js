@@ -7,13 +7,13 @@ import EmailIcon from '@material-ui/icons/Email'
 import { SectionTitleField, InputField, SubmitButton } from './FormFields'
 
 function RegisterConfirm({
+  theme,
   classes,
   confirm,
   goToSignIn,
   handleInput,
   username,
 }) {
-  const theme = useTheme()
   return (
     <div className={classes.root}>
       <div>

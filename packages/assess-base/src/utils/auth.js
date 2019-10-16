@@ -76,9 +76,15 @@ export const getUserAuth = reqRole => {
 
   switch (reqRole.toLowerCase()) {
     case 'contributor':
-      return extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY)
+      return (
+        hasPermissions('company-admin') ||
+        extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY)
+      )
     case 'assessor':
-      return extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY)
+      return (
+        hasPermissions('company-admin') ||
+        extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY)
+      )
     default:
       return hasPermissions(reqRole.toLowerCase())
   }

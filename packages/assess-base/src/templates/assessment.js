@@ -27,8 +27,6 @@ import {
   updateAssessmentKeyInfoMutation,
   updateAssessmentStatusMutation,
   getAssessmentContributorsAssessorsData,
-  deleteAssessmentContributorMutation,
-  deleteAssessmentAssessorMutation,
 } from '../queries'
 import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
@@ -159,6 +157,10 @@ function AssessmentTemplate({
     await loadAssessment(assessmentId)
   }
 
+  async function handleFileDelete(file) {
+    await loadAssessment(assessmentId)
+  }
+
   async function handleSubmitAssessment() {
     await updateAssessmentStatus({
       variables: {
@@ -171,7 +173,7 @@ function AssessmentTemplate({
   }
 
   const canEditKeyInformationAndUpload =
-    (isAdmin || isContributor) && assessmentInProgress(assessmentData)
+    isContributor && assessmentInProgress(assessmentData)
 
   const canSubmit = isAdmin && assessmentInProgress(assessmentData)
 
@@ -235,24 +237,6 @@ function AssessmentTemplate({
   if (canAssignContributorsAndAssessors) {
     headers.push({ id: 'contributor', label: 'Contributor' })
     headers.push({ id: 'assessor', label: 'Assessor' })
-  }
-
-  const [deleteAssessmentContributor] = useMutation(
-    deleteAssessmentContributorMutation
-  )
-  async function unassignContributor(user) {
-    const variables = { assessmentId, contributorId: user.id }
-    await deleteAssessmentContributor({ variables })
-    fetchAssessmentContributorsAssessorsData()
-  }
-
-  const [deleteAssessmentAssessor] = useMutation(
-    deleteAssessmentAssessorMutation
-  )
-  async function unassignAssessor(user) {
-    const variables = { assessmentId, assessorId: user.id }
-    await deleteAssessmentAssessor({ variables })
-    fetchAssessmentContributorsAssessorsData()
   }
 
   return (
@@ -417,11 +401,6 @@ function AssessmentTemplate({
                         <TypedChip
                           key={assessor.id}
                           name={_placeholderEtoN(assessor.email)}
-                          onDelete={
-                            canAssignContributorsAndAssessors
-                              ? () => unassignAssessor(assessor)
-                              : null
-                          }
                           type="Assessor"
                           color="primary"
                         />
@@ -432,11 +411,6 @@ function AssessmentTemplate({
                         <TypedChip
                           key={contributor.id}
                           name={_placeholderEtoN(contributor.email)}
-                          onDelete={
-                            canAssignContributorsAndAssessors
-                              ? () => unassignContributor(contributor)
-                              : null
-                          }
                           type="Contributor"
                           color="secondary"
                         />
@@ -577,7 +551,11 @@ function AssessmentTemplate({
                   assessment={assessmentData}
                   canViewFeedbackReport={canViewFeedbackReport}
                 />
-                <KeyInfoDocsList assessment={assessmentData} />
+                <KeyInfoDocsList
+                  assessment={assessmentData}
+                  onFileDelete={handleFileDelete}
+                  canDeleteFile={canEditKeyInformationAndUpload}
+                />
               </Box>
             </Grid>
           </Grid>

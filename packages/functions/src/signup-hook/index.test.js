@@ -1,7 +1,7 @@
 import { handler, NEW_MEMBER_ROLE_NAME } from './'
 import graphql from '../graphql'
 
-import getRoleByName from './graphql/get-role-by-name.graphql'
+import getDefaultRole from './graphql/get-default-role.graphql'
 import createUser from './graphql/create-user.graphql'
 import createUserRole from './graphql/create-user-role.graphql'
 jest.mock('../graphql')
@@ -44,9 +44,7 @@ describe('signup-hook', () => {
 
     await handler(originalEvent)
 
-    expect(graphql).toHaveBeenNthCalledWith(1, getRoleByName, {
-      name: NEW_MEMBER_ROLE_NAME,
-    })
+    expect(graphql).toHaveBeenNthCalledWith(1, getDefaultRole)
 
     expect(graphql).toHaveBeenNthCalledWith(2, createUser, {
       cognitoId: originalEvent.request.userAttributes.sub,

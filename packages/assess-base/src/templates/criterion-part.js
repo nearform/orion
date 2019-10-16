@@ -55,7 +55,7 @@ function CriterionPartTemplate({
   const scoringRules = pillar.scoringRules || assessment.scoringRules || {}
 
   const assessmentId = getAssessmentId(location)
-  const { isAdmin, isContributor, isAssessor, userId } = getUserTokenData()
+  const { isContributor, isAssessor, userId } = getUserTokenData()
 
   const [
     fetchAssessmentPartData,
@@ -88,7 +88,8 @@ function CriterionPartTemplate({
   }
 
   const canEditTablesAndUpload =
-    (isAdmin || isContributor) && assessmentInProgress(assessmentData)
+    isContributor && assessmentInProgress(assessmentData)
+
   const canEditFeedbackAndScoring =
     isAssessor && assessmentSubmitted(assessmentData)
 

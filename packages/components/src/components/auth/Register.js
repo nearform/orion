@@ -31,6 +31,7 @@ function Register({
                 type={params.type}
                 required={params.required}
                 options={params.options}
+                helperText={params.helperText}
                 onChange={handleInput}
                 fullWidth
               >
