@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer'
 import { mount } from 'enzyme'
 import { Auth } from 'aws-amplify'
 import { Redirect } from '@reach/router'
-import { AuthInitContext } from '../auth'
+import AuthWrapper from './AuthWrapper'
 import ProtectedRoute from './ProtectedRoute'
 
 function SecretComponent() {
@@ -23,9 +23,9 @@ describe('ProtectedRoute', () => {
 
   it('renders a component that redirects to /auth when user is not authenticated', () => {
     const wrapper = mount(
-      <AuthInitContext.Provider value={true}>
+      <AuthWrapper>
         <ProtectedRoute component={SecretComponent} />
-      </AuthInitContext.Provider>
+      </AuthWrapper>
     )
     const redirect = wrapper.find(Redirect)
 
@@ -39,9 +39,9 @@ describe('ProtectedRoute', () => {
     }
 
     const wrapper = mount(
-      <AuthInitContext.Provider value={true}>
+      <AuthWrapper isAuthInitialized>
         <ProtectedRoute component={SecretComponent} />
-      </AuthInitContext.Provider>
+      </AuthWrapper>
     )
 
     expect(wrapper.find(SecretComponent).length).toBe(1)
@@ -62,9 +62,9 @@ describe('ProtectedRoute', () => {
     }
 
     const wrapper = mount(
-      <AuthInitContext.Provider value={true}>
+      <AuthWrapper isAuthInitialized>
         <ProtectedRoute component={SecretComponent} allowedRole={'admin'} />
-      </AuthInitContext.Provider>
+      </AuthWrapper>
     )
 
     const redirect = wrapper.find(Redirect)
@@ -93,9 +93,9 @@ describe('ProtectedRoute', () => {
     }
 
     const wrapper = mount(
-      <AuthInitContext.Provider value={true}>
+      <AuthWrapper isAuthInitialized>
         <ProtectedRoute component={SecretComponent} allowedRole={'admin'} />
-      </AuthInitContext.Provider>
+      </AuthWrapper>
     )
 
     expect(wrapper.find(SecretComponent).length).toBe(1)
