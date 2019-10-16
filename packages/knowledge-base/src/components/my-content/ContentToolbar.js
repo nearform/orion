@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import T from 'prop-types'
 import {
   AppBar,
@@ -8,10 +8,10 @@ import {
   withStyles,
 } from '@material-ui/core'
 
-import { NavLink } from 'components'
-import { getUserTokenData } from '../../auth'
+import { AuthContext, NavLink } from 'components'
 
 function ContentToolbar({ classes, pageTitle }) {
+  const { getUserTokenData } = useContext(AuthContext)
   const { isPlatformGroup } = getUserTokenData()
   return (
     <AppBar

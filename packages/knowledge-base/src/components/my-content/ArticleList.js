@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { TableRow, TableCell, IconButton, withStyles } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
@@ -6,9 +6,8 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 import { Link } from 'gatsby'
 import get from 'lodash/get'
 
-import { ArticleStatusChip } from 'components'
+import { ArticleStatusChip, AuthContext } from 'components'
 import SEO from '../SEO'
-import { getUserTokenData } from '../../auth'
 import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
 
 import QueryTable from '../QueryTable'
@@ -18,6 +17,8 @@ import { formatDateTime } from '../../utils/date'
 import ContentToolbar from './ContentToolbar'
 
 const ArticleList = ({ classes, path }) => {
+  const { getUserTokenData } = useContext(AuthContext)
+  const { userId, isPlatformGroup } = getUserTokenData()
   const [statusFilter, setStatusFilter] = useState()
   const [pageTitle, setPageTitle] = useState()
 
@@ -27,7 +28,6 @@ const ArticleList = ({ classes, path }) => {
     setPageTitle(inReview ? 'Needs Review' : 'All Stories')
   }, [path])
 
-  const { userId, isPlatformGroup } = getUserTokenData()
   const knowledgeTypes = useKnowledgeTypes()
 
   let query

@@ -69,6 +69,10 @@ function AdminRoute({ SEO }) {
   )
 }
 
+AdminRoute.propTypes = {
+  SEO: T.elementType,
+}
+
 function AdminSection({ component: AdminComponent, applyPageTitle, ...props }) {
   applyPageTitle(props)
   return <AdminComponent {...props} />

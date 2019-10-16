@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import T from 'prop-types'
 import { useMutation } from 'graphql-hooks'
 import classnames from 'classnames'
+import { AuthContext } from 'components'
 import { BookmarkOutlined, BookmarkBorderOutlined } from '@material-ui/icons'
 import { withStyles, Button, CircularProgress, Hidden } from '@material-ui/core'
 import { addUserBookmarkMutation, deleteUserBookmarkMutation } from '../queries'
-import { getUserTokenData, useIsAuthInitialized } from '../auth'
 import useBookmarkData from '../hooks/useBookmarkData'
 
 const BookmarkButton = ({
@@ -16,8 +16,8 @@ const BookmarkButton = ({
   className,
   classes,
 }) => {
+  const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { userId } = getUserTokenData()
-  const isAuthInitialized = useIsAuthInitialized()
 
   const {
     fetchArticleBookmarked,

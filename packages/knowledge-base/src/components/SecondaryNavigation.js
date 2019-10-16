@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { navigate } from '@reach/router'
 import Close from '@material-ui/icons/Close'
 import {
@@ -11,11 +11,11 @@ import {
 } from '@material-ui/core'
 import Icon from '@material-ui/core/Icon'
 import SearchIcon from '@material-ui/icons/Search'
+import { AuthContext } from 'components'
 import QuickLinksMenu, {
   QuickLinksMenuItem,
   QuickLinkButton,
 } from './QuickLinksMenu'
-import { getUserTokenData } from '../auth'
 import useTaxonomies from '../hooks/useTaxonomies'
 import usePrevious from '../hooks/usePrevious'
 
@@ -23,10 +23,11 @@ const ENTER_KEY = 13
 const WAIT_INTERVAL = 1000
 
 function SecondaryNavigation({ classes, dark, theme }) {
+  const { getUserTokenData } = useContext(AuthContext)
+  const { isAuthenticated } = getUserTokenData()
   const [search, setSearch] = useState(false)
   const [searchText, setSearchText] = useState('')
   const prevSearchText = usePrevious(searchText)
-  const { isAuthenticated } = getUserTokenData()
   const taxonomyTypes = useTaxonomies()
   let typingTimeout = null
 

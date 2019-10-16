@@ -16,7 +16,7 @@ import * as auth from './utils/auth'
 import * as i18n from './utils/i18n'
 import AppFooter from './src/components/AppFooter'
 import MainToolbar from './src/components/MainToolbar'
-import loadUserGroups from './src/hooks/loadUserGroups'
+import useUserGroups from './src/hooks/useUserGroups'
 import './src/styles/global.css'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
@@ -30,7 +30,7 @@ export async function onClientEntry() {
   addTranslations('assessments', i18next)
 }
 
-const InitAuthWrapper = ({ element }) => {
+const AuthInitializationWrapper = ({ element }) => {
   const [isAuthInitialized, setIsAuthInitialized] = useState(false)
   useEffect(() => {
     const init = async () => {
@@ -54,11 +54,11 @@ const InitAuthWrapper = ({ element }) => {
   )
 }
 export const wrapRootElement = ({ element }) => {
-  return <InitAuthWrapper element={element} />
+  return <AuthInitializationWrapper element={element} />
 }
 
 const PageWrapper = ({ darkToolbar, children }) => {
-  loadUserGroups()
+  useUserGroups()
   return (
     <Layout
       darkToolbar={darkToolbar}

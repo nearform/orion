@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useStaticQuery, graphql, navigate, Link } from 'gatsby'
 import Img from 'gatsby-image'
 import { Typography, Button, withStyles } from '@material-ui/core'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
-import { PaddedContainer, NavLink } from 'components'
+import { AuthContext, NavLink, PaddedContainer } from 'components'
 
-import { getUserTokenData } from '../auth'
 import SecondaryNavigation from './SecondaryNavigation'
 
 function MainToolbar({ classes, dark }) {
+  const { getUserTokenData } = useContext(AuthContext)
+
   const {
     site: {
       siteMetadata: { title },

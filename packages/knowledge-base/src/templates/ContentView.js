@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Cache } from 'aws-amplify'
 import get from 'lodash/get'
 import { useManualQuery } from 'graphql-hooks'
@@ -10,16 +10,16 @@ import ContentOptions from '../components/content/ContentOptions'
 import FeatureArticles from '../components/list/FeatureArticles'
 import HowToAuthenticate from '../components/HowToAuthenticate'
 import RichText from '../components/content//RichText'
-import { PaddedContainer } from 'components'
+import { AuthContext, PaddedContainer } from 'components'
 import SEO from '../components/SEO'
-import { useIsAuthInitialized, getUserTokenData } from '../auth'
 import { constructImageUrl } from '../utils/image'
 import { getArticleDetails } from '../queries'
 
 function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
-  const { path } = articleSummary || { path: slug }
+  const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
-  const isAuthInitialized = useIsAuthInitialized()
+
+  const { path } = articleSummary || { path: slug }
   const isValidUser = isAuthenticated && isAuthInitialized
   const [getArticleDetailsQuery, { loading, data }] = useManualQuery(
     getArticleDetails

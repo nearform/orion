@@ -54,7 +54,6 @@ export function AuthWrapper({ isAuthInitialized, children }) {
    * @return {object} The current user's permissions
    */
   const getUserTokenData = () => {
-    console.log('userGroups=', userGroups)
     const data = {
       isAuthenticated: isAuthenticatedSync() ? true : false,
       isUser: hasPermissions('user'),

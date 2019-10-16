@@ -1,6 +1,5 @@
-import React from 'react'
-import { PaddedContainer } from 'components'
-import { getUserTokenData } from '../../auth'
+import React, { useContext } from 'react'
+import { AuthContext, PaddedContainer } from 'components'
 import { useMutation } from 'graphql-hooks'
 import { createArticleMutation } from '../../queries'
 import { navigate } from '@reach/router'
@@ -29,6 +28,7 @@ const CustomRadioGroup = withStyles(theme => ({
 }))(RadioGroup)
 
 function CreateArticle({ classes }) {
+  const { getUserTokenData } = useContext(AuthContext)
   const staticResult = useStaticQuery(graphql`
     {
       allKnowledgeTypes {

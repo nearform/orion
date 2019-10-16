@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
 import UploadImageWidget from '../../UploadImageWidget'
-import { UserAvatar, EmbededVideo } from 'components'
-import { getUserTokenData } from '../../../auth'
+import { UserAvatar, AuthContext, EmbededVideo } from 'components'
 import { constructImageUrl } from '../../../utils/image'
 
 import {
@@ -50,6 +49,7 @@ const diff = (previous, current) => [
 ]
 
 function EditArticle({ classes, articleId }) {
+  const { getUserTokenData } = useContext(AuthContext)
   const { userId, isPlatformGroup } = getUserTokenData()
   const [updateArticle] = useMutation(updateArticleMutation)
   const [addArticleTaxonomies] = useMutation(addArticleTaxonomiesMutation)

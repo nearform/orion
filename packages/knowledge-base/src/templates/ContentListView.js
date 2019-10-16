@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { navigate } from 'gatsby'
 import { withStyles, Grid, Typography, Button } from '@material-ui/core'
 import { useManualQuery } from 'graphql-hooks'
@@ -12,9 +12,8 @@ import {
   getUserBookmarks,
 } from '../queries'
 import { getTaxonomyItemByKey, buildWhereClause } from '../utils/taxonomy'
-import { PaddedContainer } from 'components'
+import { AuthContext, PaddedContainer } from 'components'
 import SEO from '../components/SEO'
-import { useIsAuthInitialized, getUserTokenData } from '../auth'
 
 const PAGE_SIZE = 10
 const defaultAggregate = { aggregate: { count: 0 } }
@@ -25,8 +24,8 @@ const ListContent = ({
   taxonomy,
   pageContext: { results: resultsFromContext, page: pageFromContext } = {},
 }) => {
+  const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { userId } = getUserTokenData()
-  const isAuthInitialized = useIsAuthInitialized()
 
   const [
     fetchUserBookmarks,

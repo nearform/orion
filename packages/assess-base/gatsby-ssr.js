@@ -14,7 +14,7 @@ import {
 } from 'components'
 import AppFooter from './src/components/AppFooter'
 import MainToolbar from './src/components/MainToolbar'
-import loadUserGroups from './src/hooks/loadUserGroups'
+import useUserGroups from './src/hooks/useUserGroups'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
 
@@ -37,7 +37,7 @@ export const wrapRootElement = ({ element }) => (
 )
 
 const PageWrapper = ({ darkToolbar, children }) => {
-  loadUserGroups()
+  useUserGroups()
   return (
     <Layout
       darkToolbar={darkToolbar}
