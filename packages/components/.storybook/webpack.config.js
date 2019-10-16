@@ -6,5 +6,11 @@ module.exports = async ({ config }) => {
     fs: path.resolve(__dirname, 'fsMock.js'),
   }
 
+  config.module.rules.push({
+    test: /\.graphql?$/,
+    exclude: /node_modules/,
+    loader: 'webpack-graphql-loader',
+  })
+
   return config
 }
