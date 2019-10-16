@@ -152,7 +152,7 @@ jobs:
       - run:
           name: Create artifacts
           command: |
-            yarn run artifact:create
+            npm run artifact:create
       - run:
           name: Set artifact name envars
           command: |
