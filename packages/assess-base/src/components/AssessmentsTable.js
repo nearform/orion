@@ -30,20 +30,20 @@ function AssessmentsTable({ classes }) {
 
   const headers = [
     { id: 'id', label: t('Your assessments'), sortable: true },
-    { id: 'created_at', label: 'Created At', sortable: true },
-    { id: 'assessmentType', label: 'Assessment Type' },
-    { id: 'company', label: 'Company' },
-    { id: 'status', label: 'Status', sortable: true },
+    { id: 'created_at', label: t('Created At'), sortable: true },
+    { id: 'assessmentType', label: t('Assessment Type') },
+    { id: 'company', label: t('Company') },
+    { id: 'status', label: t('Status'), sortable: true },
     {
       id: 'management',
-      label: 'Management Report',
+      label: t('Management Report'),
       cellProps: {
         style: {
           width: '80px',
         },
       },
     },
-    { id: 'feedback', label: 'Feedback' },
+    { id: 'feedback', label: t('Feedback') },
     { id: 'link', label: '' },
   ]
 
@@ -62,7 +62,7 @@ function AssessmentsTable({ classes }) {
             <TableCell>{assessment.name}</TableCell>
             <TableCell>{formatDate(assessment.created_at)}</TableCell>
             <TableCell>
-              {assessmentKeyToName[assessment.key].tableName}
+              {t(assessmentKeyToName[assessment.key].tableName)}
             </TableCell>
             <TableCell>
               {get(assessment, 'owner.user_groups[0].group.name')}
@@ -74,7 +74,7 @@ function AssessmentsTable({ classes }) {
               <ManagementReportLink
                 assessment={assessment}
                 spacing={1}
-                text="View"
+                text={t('View')}
               />
             </TableCell>
             <TableCell>
@@ -82,7 +82,7 @@ function AssessmentsTable({ classes }) {
                 assessment={assessment}
                 visible={assessment.status === 'submitted'}
                 spacing={1}
-                text="View"
+                text={t('View')}
               />
             </TableCell>
             <TableCell padding="none">

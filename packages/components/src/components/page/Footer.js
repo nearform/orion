@@ -7,6 +7,7 @@ import {
   Button,
   TextField,
 } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
 import PaddedContainer from '../PaddedContainer'
 
 function Footer({ classes, theme, content, Img }) {
@@ -19,6 +20,7 @@ function Footer({ classes, theme, content, Img }) {
       childImageSharp: { fixed: logoFixed },
     },
   } = content
+  const { t } = useTranslation()
 
   return (
     <div className={classes.root}>
@@ -26,7 +28,7 @@ function Footer({ classes, theme, content, Img }) {
         <Grid container spacing={3}>
           <Grid item xs>
             <Typography variant="h4" gutterBottom>
-              Get in touch
+              {t('Get in touch')}
             </Typography>
             <Typography component="div" variant="body2">
               <div>Avenue des Olympiades 2</div>
@@ -48,11 +50,12 @@ function Footer({ classes, theme, content, Img }) {
           </Grid>
           <Grid item xs={4}>
             <Typography variant="h4" gutterBottom>
-              subscribe to our newsletter
+              {t('subscribe to our newsletter')}
             </Typography>
             <Typography gutterBottom variant="body2">
-              The latest EFQM news, articles, and resources, sent straight to
-              your inbox every month.
+              {t(
+                'The latest EFQM news, articles, and resources, sent straight to your inbox every month.'
+              )}
             </Typography>
             <div className={classes.horizontalContainer}>
               <TextField
@@ -89,12 +92,12 @@ function Footer({ classes, theme, content, Img }) {
           </Grid>
           <Grid item>
             <Typography display="inline" variant="body2">
-              Terms of Use
+              {t('Terms of Use')}
             </Typography>
           </Grid>
           <Grid item>
             <Typography display="inline" variant="body2">
-              Privacy Statement
+              {t('Privacy Statement')}
             </Typography>
           </Grid>
           <Grid item>

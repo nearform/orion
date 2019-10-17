@@ -6,6 +6,7 @@ import {
   TextField as FormikTextField,
   Switch as FormikSwitch,
 } from 'formik-material-ui'
+import { useTranslation } from 'react-i18next'
 import { useMutation, useManualQuery } from 'graphql-hooks'
 import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
@@ -188,6 +189,7 @@ function AssessmentTemplate({
       getCanEditContributors(userTokenData.groupId, assessmentData)
 
   const assessmentName = get(assessmentData, 'name', 'Loading...')
+  const { t } = useTranslation()
 
   function _placeholderEtoN(email) {
     return email
@@ -250,7 +252,7 @@ function AssessmentTemplate({
       <SEO title={get(assessmentData, 'name', 'Assessment')} />
       <PaddedContainer data-testid="assessment">
         <Button component={Link} to="/" variant="text" color="secondary">
-          ◀ Assess base home
+          ◀ {t('Assess base home')}
         </Button>
         <div
           className={classes.section}
@@ -272,7 +274,7 @@ function AssessmentTemplate({
                     className={classes.sectionTitle}
                     gutterBottom
                   >
-                    {assessment.name}
+                    {t(assessment.name)}
                     {assessment.guidance && (
                       <ContextualHelp helpContent={assessment.guidance}>
                         <HelpIcon
@@ -314,8 +316,9 @@ function AssessmentTemplate({
                   <Grid container direction="column" spacing={1}>
                     <Grid item>
                       <Typography variant="h4">
-                        {get(assessmentData, 'internal') ? 'internal' : ''}{' '}
-                        assessment name
+                        {get(assessmentData, 'internal')
+                          ? t('internal assessment name')
+                          : t('external assessment name')}
                       </Typography>
                     </Grid>
                     <Grid item xs>
@@ -424,7 +427,7 @@ function AssessmentTemplate({
                       component={Link}
                       to={`assessment/${assessment.key}/contributors-assessors#${assessmentId}`}
                     >
-                      Assign Contributors and Assessors
+                      {t('Assign Contributors and Assessors')}
                     </Button>
                   </Grid>
                 </Grid>

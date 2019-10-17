@@ -11,6 +11,7 @@ import {
   CardActions,
   withStyles,
 } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
 
 const AssessmentTool = ({
   theme,
@@ -18,36 +19,39 @@ const AssessmentTool = ({
   assessmentToolMeta,
   barColor,
   isAuthenticated,
-}) => (
-  <Grid item xs data-testid="assessment-tool">
-    <Card className={classes.card} style={{ borderTopColor: barColor }}>
-      <CardContent className={classes.cardContent}>
-        <Typography variant="h3" className={classes.cardElement}>
-          {assessmentToolMeta.name}
-        </Typography>
-        <Img
-          fixed={assessmentToolMeta.logo.childImageSharp.fixed}
-          className={classes.cardElement}
-        />
-        <Typography className={classes.cardElement}>
-          {assessmentToolMeta.shortDescription}
-        </Typography>
-      </CardContent>
-      {isAuthenticated && (
-        <CardActions className={classes.bottom}>
-          <Button
-            component={Link}
-            to={`/assessment/${assessmentToolMeta.key}`}
-            color="secondary"
-            fullWidth
-          >
-            {`Enter ${assessmentToolMeta.name}`}
-          </Button>
-        </CardActions>
-      )}
-    </Card>
-  </Grid>
-)
+}) => {
+  const { t } = useTranslation()
+  return (
+    <Grid item xs data-testid="assessment-tool">
+      <Card className={classes.card} style={{ borderTopColor: barColor }}>
+        <CardContent className={classes.cardContent}>
+          <Typography variant="h3" className={classes.cardElement}>
+            {t(assessmentToolMeta.name)}
+          </Typography>
+          <Img
+            fixed={assessmentToolMeta.logo.childImageSharp.fixed}
+            className={classes.cardElement}
+          />
+          <Typography className={classes.cardElement}>
+            {t(assessmentToolMeta.shortDescription)}
+          </Typography>
+        </CardContent>
+        {isAuthenticated && (
+          <CardActions className={classes.bottom}>
+            <Button
+              component={Link}
+              to={`/assessment/${assessmentToolMeta.key}`}
+              color="secondary"
+              fullWidth
+            >
+              {t(`Enter ${assessmentToolMeta.name}`)}
+            </Button>
+          </CardActions>
+        )}
+      </Card>
+    </Grid>
+  )
+}
 
 const styles = theme => ({
   card: {

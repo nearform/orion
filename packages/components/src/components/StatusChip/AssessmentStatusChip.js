@@ -1,6 +1,7 @@
 import React from 'react'
 import { withStyles, Typography } from '@material-ui/core'
 import T from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import StatusChip from './StatusChip'
 import TuneIcon from '@material-ui/icons/Tune'
@@ -39,6 +40,7 @@ function getIconDetails(status) {
 
 function AssessmentStatusChip({ status, classes }) {
   const [Icon, color] = getIconDetails(status)
+  const { t } = useTranslation()
 
   return (
     <StatusChip
@@ -47,7 +49,7 @@ function AssessmentStatusChip({ status, classes }) {
       chipColor={getChipColor(status)}
     >
       <Typography variant="h4" className={classes.status}>
-        {status}
+        {t(status)}
       </Typography>
     </StatusChip>
   )

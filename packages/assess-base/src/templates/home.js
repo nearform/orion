@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 import { Button, Grid, Paper, Typography, withStyles } from '@material-ui/core'
 import { PaddedContainer, SectionTitle } from 'components'
 import BackgroundImage from 'gatsby-background-image'
+import { useTranslation } from 'react-i18next'
 
 import SEO from '../components/SEO'
 import LoggedOutAssessmentInfo from '../components/LoggedOutAssessmentInfo'
@@ -23,6 +24,7 @@ function AssessmentsHome({ theme, classes, data }) {
     assessmentTypes: { nodes: assessmentTypes },
   } = data
 
+  const { t } = useTranslation()
   const userTokenData = getUserTokenData()
   const assessmentItems = assessmentTypes
     .map(type => ({
@@ -43,19 +45,18 @@ function AssessmentsHome({ theme, classes, data }) {
           <Grid container spacing={3} direction="column">
             <Grid item xs={4}>
               <Typography variant="h1">
-                Welcome to the DigitalEFQM Assess Base
+                {t('Welcome to the DigitalEFQM Assess Base')}
               </Typography>
             </Grid>
             <Grid item xs={5}>
               <Typography>
-                Welcome to the new home for Digital EFQM assessments. Here you
-                will be able to find the tools to perform a self assessment. We
-                offer three types of assessments which you can learn about
-                below.
+                {t(
+                  'Welcome to the new home for Digital EFQM assessments. Here you will be able to find the tools to perform a self assessment. We offer three types of assessments which you can learn about below.'
+                )}
               </Typography>
             </Grid>
             <Grid item>
-              <Button color="secondary">Find out more</Button>
+              <Button color="secondary">{t('Find out more')}</Button>
             </Grid>
           </Grid>
         </PaddedContainer>
@@ -74,7 +75,7 @@ function AssessmentsHome({ theme, classes, data }) {
           <Grid container spacing={2} wrap="nowrap">
             <Grid item xs={3}>
               <SectionTitle barColor={theme.palette.primary.dark} noWrap>
-                Assessment Tools
+                {t('Assessment Tools')}
               </SectionTitle>
             </Grid>
             {assessmentItems.map((item, index) => (

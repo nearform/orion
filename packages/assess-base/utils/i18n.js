@@ -1,12 +1,11 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+import espanol from './translations/espanol.json'
+import deutsch from './translations/deutsch.json'
 
 const resources = {
-  de: {
-    translation: {
-      'Your assessments': 'Ihre Einschätzungen',
-    },
-  },
+  de: deutsch,
+  es: espanol,
 }
 
 export async function init() {
