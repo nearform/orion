@@ -8,6 +8,11 @@
       "type": "embed-video-link",
       "name": "embed video link",
       "providers": [ "youtube", "vimeo" ]
+    },
+    {
+      "key": "description",
+      "type": "rich-text",
+      "name": "video description"
     }
   ]
 }
