@@ -1,4 +1,4 @@
-query getReadArticles($ids: [Int]!) {
+query getReadArticles($ids: [Int!]) {
   read_articles: article(where: { id: { _in: $ids } }) {
     primary_taxonomy: taxonomy_items(
       limit: 1

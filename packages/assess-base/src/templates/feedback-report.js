@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { navigate } from '@reach/router'
 import {
   withStyles,
@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core'
 import {
   ASSESSMENT_STATUS,
+  AuthContext,
   getChartData,
   BarChartTable,
   ConfirmDialog,
@@ -26,10 +27,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useMutation, useManualQuery } from 'graphql-hooks'
 import get from 'lodash/get'
 
-import SEO from '../components/SEO'
 import FeedbackReportInput from '../components/FeedbackReportInput'
+import SEO from '../components/SEO'
 import { getAssessmentId } from '../utils/url'
-import { getUserTokenData } from '../utils/auth'
 
 import {
   getAssessmentFeedbackReportData,
@@ -64,7 +64,8 @@ function FeedbackReport({
   const assessmentId = getAssessmentId(location)
   const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
-  const userTokenData = getUserTokenData()
+  const { getUserTokenData } = useContext(AuthContext)
+  const { isAdmin, isAssessor } = getUserTokenData()
 
   const [fetchAssessmentFeedbackReportData, { data }] = useManualQuery(
     getAssessmentFeedbackReportData,
@@ -95,7 +96,7 @@ function FeedbackReport({
   }
 
   // TODO: Check that this is correct
-  const canEditSummaryAndAdvice = userTokenData.admin || userTokenData.assessor
+  const canEditSummaryAndAdvice = isAdmin || isAssessor
 
   const chartData = getChartData(assessment, assessmentData, pillarColors)
 

@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Cache } from 'aws-amplify'
 import get from 'lodash/get'
 import { useQuery } from 'graphql-hooks'
-import { useUserId } from '../../utils/auth'
+import { AuthContext } from 'components'
 import { getRandomRows } from '../../utils/array'
 import ThemedList from './ThemedList'
 import ListTitle from './ListTitle'
@@ -15,7 +15,8 @@ import {
 import ContentSignpostGrid from '../layout/content-signpost-grid'
 
 function PersonalizedLists() {
-  const userId = useUserId()
+  const { getUserTokenData } = useContext(AuthContext)
+  const { userId } = getUserTokenData()
   const readArticleIds = Cache.getItem('readArticles') || []
   const { data: recentArticlesData } = useQuery(getRecentArticles)
   const { data: bookmarkedArticlesData } = useQuery(getBookmarkedArticles, {

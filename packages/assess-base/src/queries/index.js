@@ -1,4 +1,2 @@
-export * from './groups'
-export * from './roles'
-export * from './users'
+export * from 'components/queries'
 export * from './assessments'

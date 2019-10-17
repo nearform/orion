@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   Typography,
   withStyles,
@@ -13,12 +13,17 @@ import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
 import { Redirect } from '@reach/router'
 
-import { TypedChip, PaddedContainer, SectionTitle } from 'components'
+import {
+  AuthContext,
+  TypedChip,
+  PaddedContainer,
+  SectionTitle,
+  useAdminTable,
+} from 'components'
 
-import SEO from '../components/SEO'
-import { getUserTokenData, getUserAuth } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
 import ContextualHelp from '../components/ContextualHelp'
+import SEO from '../components/SEO'
 import {
   getUnassignedContributorsAssessorsData,
   getAssessmentContributorsAssessorsData,
@@ -29,7 +34,6 @@ import {
   deleteAssessmentAssessorMutation,
 } from '../queries'
 import { useManualQuery } from 'graphql-hooks'
-import useAdminTable from '../hooks/useAdminTable'
 import { useMutation } from 'graphql-hooks'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import {
@@ -54,8 +58,9 @@ function ContributorsAssessorsTemplate({
   const [filterText, setFilterText] = useState('')
 
   const assessmentId = getAssessmentId(location)
-  const userTokenData = getUserTokenData()
-  if (!assessmentId && !userTokenData.admin) {
+  const { getUserTokenData, getUserAuth } = useContext(AuthContext)
+  const { isAdmin, groupId } = getUserTokenData()
+  if (!assessmentId && !isAdmin) {
     return <Redirect to="/auth" noThrow />
   }
 
@@ -92,7 +97,6 @@ function ContributorsAssessorsTemplate({
   const assessors = get(data, 'assessors', [])
   const contributors = get(data, 'contributors', [])
 
-  const groupId = userTokenData.groupId
   const canEditAssesors = getUserAuth('platform-admin')
     ? true
     : getCanEditAssesors(groupId, assessmentData)

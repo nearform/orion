@@ -1,10 +1,12 @@
+import { useContext } from 'react'
 import { useManualQuery } from 'graphql-hooks'
 import { getArticleBookmarked } from '../queries'
-import { useUserId } from '../utils/auth'
+import { AuthContext } from 'components'
 import get from 'lodash/get'
 
 const useBookmarkData = articleId => {
-  const userId = useUserId()
+  const { getUserTokenData } = useContext(AuthContext)
+  const { userId } = getUserTokenData()
 
   const [
     fetchArticleBookmarked,

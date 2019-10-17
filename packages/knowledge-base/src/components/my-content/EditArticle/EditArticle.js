@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
 import UploadImageWidget from '../../UploadImageWidget'
-import { useIsPlatformGroup, useUserId } from '../../../utils/auth'
-import SEO from '../../SEO'
-import { UserAvatar, EmbededVideo } from 'components'
+import { UserAvatar, AuthContext, EmbededVideo } from 'components'
 import { constructImageUrl } from '../../../utils/image'
 
 import {
@@ -35,6 +33,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import get from 'lodash/get'
 import difference from 'lodash/difference'
 import BoxControlLabel from '../../BoxControlLabel'
+import SEO from '../../SEO'
 import SelectAuthor from './SelectAuthor'
 import EditArticleButtons from './EditArticleButtons'
 import ReviewArticleButtons from './ReviewArticleButtons'
@@ -50,8 +49,8 @@ const diff = (previous, current) => [
 ]
 
 function EditArticle({ classes, articleId }) {
-  const isPlatformGroup = useIsPlatformGroup()
-  const userId = useUserId()
+  const { getUserTokenData } = useContext(AuthContext)
+  const { userId, isPlatformGroup } = getUserTokenData()
   const [updateArticle] = useMutation(updateArticleMutation)
   const [addArticleTaxonomies] = useMutation(addArticleTaxonomiesMutation)
   const [deleteArticleTaxonomies] = useMutation(deleteArticleTaxonomiesMutation)
