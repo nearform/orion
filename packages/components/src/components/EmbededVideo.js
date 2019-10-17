@@ -59,6 +59,7 @@ export default withStyles(theme => ({
     width: '100%',
     height: 0,
     paddingBottom: '56.25%',
+    marginTop: '20px',
     '&>iframe': {
       position: 'absolute',
       top: 0,

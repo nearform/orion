@@ -10,7 +10,7 @@ import ContentOptions from '../components/content/ContentOptions'
 import FeatureArticles from '../components/list/FeatureArticles'
 import HowToAuthenticate from '../components/HowToAuthenticate'
 import RichText from '../components/content//RichText'
-import { AuthContext, PaddedContainer } from 'components'
+import { AuthContext, PaddedContainer, EmbededVideo } from 'components'
 import SEO from '../components/SEO'
 import { constructImageUrl } from '../utils/image'
 import { getArticleDetails } from '../queries'
@@ -111,6 +111,8 @@ const getFieldType = field => {
       return <RichText {...field} />
     case 'image':
       return <div {...field} />
+    case 'embed-video-link':
+      return <EmbededVideo url={field.value} {...field} />
   }
 }
 
