@@ -1,7 +1,7 @@
 {
-  "key": "questionaire",
-  "name": "questionaire",
-  "tableName": "Questionaire",
+  "key": "questionnaire",
+  "name": "questionnaire",
+  "tableName": "Questionnaire",
   "orderIndex": 1,
   "logoAsset": "assess-1-img",
   "shortDescription": "A simple assessment tool with about 5 questions per criteria of the EFQM Model.  The best tool to conduct a first assessment, helping identify the current position and determine future directions and priorities.",
