@@ -1,6 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core'
-import Slider from '@material-ui/core/Slider'
+import Slider from '@material-ui/lab/Slider'
 import T from 'prop-types'
 
 const styles = theme => {

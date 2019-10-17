@@ -4,22 +4,22 @@
   "description": "The goto knowledge base",
   "private": true,
   "workspaces": {
-      "packages": [
-          "packages/*",
-          "hasura"
-      ],
-      "nohoist": [
-          "**/gatsby*",
-          "**/gatsby*/**",
-          "**/@material-ui",
-          "**/@material-ui/**",
-          "**/react-dom",
-          "**/react-dom/**",
-          "**/react-test-renderer",
-          "**/react-test-renderer/**",
-          "**/enzyme*",
-          "**/enzyme*/**"
-      ]
+    "packages": [
+      "packages/*",
+      "hasura"
+    ],
+    "nohoist": [
+      "**/gatsby*",
+      "**/gatsby*/**",
+      "**/@material-ui",
+      "**/@material-ui/**",
+      "**/react-dom",
+      "**/react-dom/**",
+      "**/react-test-renderer",
+      "**/react-test-renderer/**",
+      "**/enzyme*",
+      "**/enzyme*/**"
+    ]
   },
   "scripts": {
     "bootstrap": "lerna bootstrap --concurrency=2",
