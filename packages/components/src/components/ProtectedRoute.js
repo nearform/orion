@@ -10,7 +10,7 @@ export default function ProtectedRoute({
   component: Component,
   ...props
 }) {
-  const { isAuthInitialized, getUserTokenData, getUserAuth } = useContext(
+  const { isAuthInitialized, getUserTokenData, hasPermissions } = useContext(
     AuthContext
   )
 
@@ -21,16 +21,17 @@ export default function ProtectedRoute({
 
   const { isAuthenticated, groupId } = getUserTokenData()
 
-  if (requiresGroup) {
-    if (!groupId) {
-      return <Redirect to="/auth" noThrow />
-    }
-  }
+  // Redirect if any of following true:
+  // - User not authenticated;
+  // - Group required but no group ID;
+  // - Role specified but no role permissions.
+  const redirect =
+    !isAuthenticated ||
+    (requiresGroup && !groupId) ||
+    (allowedRole && !hasPermissions(allowedRole))
 
-  if (allowedRole) {
-    if (!isAuthenticated || !getUserAuth(allowedRole)) {
-      return <Redirect to="/auth" noThrow />
-    }
+  if (redirect) {
+    return <Redirect to="/auth" noThrow />
   }
 
   return <Component {...props} />

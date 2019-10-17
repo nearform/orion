@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer'
 import { mount } from 'enzyme'
 import { Auth } from 'aws-amplify'
 import { Redirect } from '@reach/router'
-import AuthWrapper from './AuthWrapper'
+import { AuthWrapper } from './AuthWrapper'
 import ProtectedRoute from './ProtectedRoute'
 
 function SecretComponent() {
@@ -23,7 +23,7 @@ describe('ProtectedRoute', () => {
 
   it('renders a component that redirects to /auth when user is not authenticated', () => {
     const wrapper = mount(
-      <AuthWrapper>
+      <AuthWrapper isAuthInitialized>
         <ProtectedRoute component={SecretComponent} />
       </AuthWrapper>
     )

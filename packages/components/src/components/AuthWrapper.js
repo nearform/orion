@@ -2,7 +2,7 @@ import React, { useContext, createContext, useEffect, useState } from 'react'
 import T from 'prop-types'
 import { useQuery } from 'graphql-hooks'
 import { Auth } from 'aws-amplify'
-import find from 'lodash/find'
+import { find, get } from 'lodash'
 
 const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
@@ -28,21 +28,23 @@ export const AuthContext = createContext({ isAuthInitialized: false })
 const isAuthenticatedSync = () => isBrowser && !!Auth.user
 
 const extractTokenPayload = dataKey => {
-  if (Auth.user) {
-    const tokenPayload = Auth.user.signInUserSession.idToken.payload
-    const claims =
-      CUSTOM_CLAIMS_NAMESPACE in tokenPayload
-        ? {
-            ...JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE]),
-            ...JSON.parse(tokenPayload[CUSTOM_CLAIMS_NAMESPACE]),
-          }
-        : {
-            ...JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE]),
-          }
-    return claims[dataKey] || null
-  } else {
+  if (!Auth.user) {
     return null
   }
+  const tokenPayload = get(Auth, 'user.signInUserSession.idToken.payload')
+  if (!tokenPayload) {
+    return null
+  }
+  const claims =
+    CUSTOM_CLAIMS_NAMESPACE in tokenPayload
+      ? {
+          ...JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE]),
+          ...JSON.parse(tokenPayload[CUSTOM_CLAIMS_NAMESPACE]),
+        }
+      : {
+          ...JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE]),
+        }
+  return claims[dataKey] || null
 }
 
 export function AuthWrapper({ isAuthInitialized, children }) {
@@ -151,6 +153,7 @@ export function AuthWrapper({ isAuthInitialized, children }) {
     getUserTokenData,
     getUserAuth,
     getUserRole,
+    hasPermissions,
     isAuthenticatedSync,
     setUserGroups,
   }
