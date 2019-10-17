@@ -1,8 +1,0 @@
-mutation assignUserRole($userId: Int!, $roleId: Int!) {
-  update_user_role(
-    where: { user_id: { _eq: $userId } }
-    _set: { role_id: $roleId }
-  ) {
-    affected_rows
-  }
-}

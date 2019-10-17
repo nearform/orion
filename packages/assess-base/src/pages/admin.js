@@ -1,15 +1,19 @@
 import React from 'react'
 import { Router } from '@reach/router'
 
-import ProtectedRoute from '../components/ProtectedRoute'
-import AdminRoute from '../components/AdminRoute'
+import { AdminRoute, ProtectedRoute } from 'components'
+import SEO from '../components/SEO'
+
+function AdminRouteWithSEO() {
+  return <AdminRoute SEO={SEO} />
+}
 
 export default function Admin() {
   return (
     <Router basepath="/admin">
       <ProtectedRoute
         allowedRole={'company-admin'}
-        component={AdminRoute}
+        component={AdminRouteWithSEO}
         path="*"
       />
     </Router>

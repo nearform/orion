@@ -146,9 +146,10 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
       },
     ],
   })
+  // Load react and material-ui from hoisted location under repo root.
   Object.assign(config.resolve.alias, {
-    react: path.resolve('./node_modules/react'),
-    '@material-ui/core': path.resolve('./node_modules/@material-ui/core'),
+    react: path.resolve('../../node_modules/react'),
+    '@material-ui/core': path.resolve('../../node_modules/@material-ui/core'),
   })
   actions.replaceWebpackConfig(config)
 }

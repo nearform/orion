@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useContext, useEffect } from 'react'
 import T from 'prop-types'
 import matrixData from 'efqm-theme/assessments'
 import { Box, withStyles } from '@material-ui/core'
 
-import { PaddedContainer } from 'components'
+import { AuthContext, PaddedContainer } from 'components'
 import { useManualQuery } from 'graphql-hooks'
 
 import HeadedSection from '../components/management-report/headed-section'
@@ -11,10 +11,9 @@ import HeadedSubSection from '../components/management-report/headed-sub-section
 import Header from '../components/management-report/header'
 import Question from '../components/management-report/question'
 import { getManagementReportData } from '../queries'
-import { useIsAuthInitialized } from '../utils/auth'
 
 function ManagementReport({ assessmentId, classes }) {
-  const isAuthInitialized = useIsAuthInitialized()
+  const { isAuthInitialized } = useContext(AuthContext)
 
   const [fetchManagementReportData, { data }] = useManualQuery(
     getManagementReportData,

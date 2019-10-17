@@ -43,6 +43,7 @@ export {
 } from './components/page/DisplayIfSignedIn'
 export { default as Footer } from './components/page/Footer'
 export { default as getNavLink } from './components/page/getNavLink'
+export { default as NavLink } from './components/page/NavLink'
 export { default as ImagePlaceholder } from './components/page/ImagePlaceholder'
 export { default as Layout } from './components/page/Layout'
 export { default as RootWrapper } from './components/page/RootWrapper'
@@ -55,4 +56,9 @@ export {
 } from './components/UserAvatar/CollapsedAvatars'
 export { default as EmbededVideo } from './components/EmbededVideo'
 
+export * from './components/AuthWrapper'
+export { default as ProtectedRoute } from './components/ProtectedRoute'
+export { default as AdminRoute } from './components/admin/AdminRoute'
 export { default as CustomAuthenticator } from './components/auth'
+
+export { default as useAdminTable } from './hooks/useAdminTable'

@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
-import { PaddedContainer, SectionTitle } from 'components'
+import { AuthContext, PaddedContainer, SectionTitle } from 'components'
 import { Link } from 'gatsby'
 import { useManualQuery } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 
-import SEO from '../components/SEO'
 import { getAssessmentPartData } from '../queries'
-import { getUserTokenData } from '../utils/auth'
 import AssessmentScoringHeader from '../components/AssessmentScoringHeader'
 import AssessmentPillarScoring from '../components/AssessmentPillarScoring'
 import { getAssessmentId } from '../utils/url'
@@ -16,6 +14,7 @@ import CriterionPartTable from '../components/CriterionPartTable'
 import CriterionPartPagination from '../components/CriterionPartPagination'
 import CriterionPartFeedbackTable from '../components/CriterionPartFeedbackTable'
 import AssessmentPillars from '../components/AssessmentPillars'
+import SEO from '../components/SEO'
 import {
   assessmentInProgress,
   assessmentSubmitted,
@@ -39,7 +38,9 @@ function CriterionPartTemplate({
     criteriaList,
   },
 }) {
-  if (!getUserTokenData().loggedIn) {
+  const { getUserTokenData } = useContext(AuthContext)
+  const { isAuthenticated } = getUserTokenData()
+  if (!isAuthenticated) {
     return <Redirect to="/auth" noThrow />
   }
 
@@ -54,7 +55,7 @@ function CriterionPartTemplate({
   const scoringRules = pillar.scoringRules || assessment.scoringRules || {}
 
   const assessmentId = getAssessmentId(location)
-  const userTokenData = getUserTokenData()
+  const { isContributor, isAssessor, userId } = getUserTokenData()
 
   const [
     fetchAssessmentPartData,
@@ -87,9 +88,10 @@ function CriterionPartTemplate({
   }
 
   const canEditTablesAndUpload =
-    userTokenData.contributor && assessmentInProgress(assessmentData)
+    isContributor && assessmentInProgress(assessmentData)
+
   const canEditFeedbackAndScoring =
-    userTokenData.assessor && assessmentSubmitted(assessmentData)
+    isAssessor && assessmentSubmitted(assessmentData)
 
   return (
     <div className={classes.root} data-testid="criterion-part">
@@ -111,7 +113,7 @@ function CriterionPartTemplate({
           <Grid item>
             <FileList
               assessmentId={assessmentId}
-              userId={userTokenData.userId}
+              userId={userId}
               pillar={pillar}
               criterion={criterion}
               partNumber={partNumber}

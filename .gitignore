@@ -74,6 +74,10 @@ dumpfile
 
 .cache
 packages/app
+
+# vim
+.*.swp
+
 packages/assess-base/src/assets/social/Twitter.png
 packages/assess-base/src/assets/social/YouTube.png
 packages/efqm-theme/assets/social/LinkedIn.png

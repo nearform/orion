@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import T from 'prop-types'
 import {
   AppBar,
@@ -8,11 +8,11 @@ import {
   withStyles,
 } from '@material-ui/core'
 
-import NavLink from '../NavLink'
-import { useIsPlatformGroup } from '../../utils/auth'
+import { AuthContext, NavLink } from 'components'
 
 function ContentToolbar({ classes, pageTitle }) {
-  const isPlatformGroup = useIsPlatformGroup()
+  const { getUserTokenData } = useContext(AuthContext)
+  const { isPlatformGroup } = getUserTokenData()
   return (
     <AppBar
       position="relative"
