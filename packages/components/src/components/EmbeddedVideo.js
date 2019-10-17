@@ -37,7 +37,7 @@ export function getVideoObject(url) {
   return null
 }
 
-const EmbededVideo = ({ url, classes, className }) => {
+const EmbeddedVideo = ({ url, classes, className }) => {
   const videoObj = getVideoObject(url)
   if (!videoObj) return null //todo do something better, like no-video orsmth?
   return (
@@ -47,7 +47,7 @@ const EmbededVideo = ({ url, classes, className }) => {
   )
 }
 
-EmbededVideo.propTypes = {
+EmbeddedVideo.propTypes = {
   url: T.string,
   classes: T.object.isRequired,
   className: T.string,
@@ -68,4 +68,4 @@ export default withStyles(theme => ({
       height: '100%',
     },
   },
-}))(EmbededVideo)
+}))(EmbeddedVideo)
