@@ -23,9 +23,11 @@ query getArticles(
     published_at
     updated_at
     status
-    createdBy {
-      first_name
-      last_name
+    authors {
+      author {
+        first_name
+        last_name
+      }
     }
     primary_taxonomy: taxonomy_items(
       limit: 1

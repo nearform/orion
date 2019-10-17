@@ -1,7 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
+import { Typography } from '@material-ui/core'
 import { Cache } from 'aws-amplify'
 import get from 'lodash/get'
-import { useQuery } from 'graphql-hooks'
+import { useQuery, useManualQuery } from 'graphql-hooks'
 import { AuthContext } from 'components'
 import { getRandomRows } from '../../utils/array'
 import ThemedList from './ThemedList'
@@ -18,46 +19,53 @@ function PersonalizedLists() {
   const { getUserTokenData } = useContext(AuthContext)
   const { userId } = getUserTokenData()
   const readArticleIds = Cache.getItem('readArticles') || []
-  const { data: recentArticlesData } = useQuery(getRecentArticles)
-  const { data: bookmarkedArticlesData } = useQuery(getBookmarkedArticles, {
+
+  const { recentLoading, recentData = {} } = useQuery(getRecentArticles)
+  const [
+    fetchBookmarked,
+    { bookmarkedLoading, bookmarkedData = {} },
+  ] = useManualQuery(getBookmarkedArticles, {
     variables: {
-      userId: userId,
+      userId,
     },
   })
-  const { data: readArticlesData } = useQuery(getReadArticles, {
+  const { readLoading, readData = {} } = useQuery(getReadArticles, {
     variables: {
       ids: readArticleIds,
     },
   })
 
-  //TODO: nicer loading indication
-  if (!recentArticlesData || !bookmarkedArticlesData || !readArticlesData)
-    return null
+  useEffect(() => {
+    // Only load bookmarked articles if a userId is present.
+    if (userId) {
+      fetchBookmarked()
+    }
+  }, [fetchBookmarked, userId])
+
+  if (recentLoading || bookmarkedLoading || readLoading) {
+    return <Typography>Loading...</Typography>
+  }
+
+  const { recent_articles = [] } = recentData
+  const { user_bookmarks = [] } = bookmarkedData
+  const { read_articles = [] } = readData
 
   const readArticles =
-    readArticlesData.read_articles.length > 0
-      ? readArticlesData.read_articles
-      : recentArticlesData.recent_articles
+    read_articles.length > 0 ? read_articles : recent_articles
 
   const bookmarkedArticles =
-    bookmarkedArticlesData.user_bookmarks.length > 0
+    user_bookmarks.length > 0
       ? getRandomRows(
-          bookmarkedArticlesData.user_bookmarks.map(
-            article => article.bookmarked_article
-          ),
+          user_bookmarks.map(article => article.bookmarked_article),
           3
         )
-      : recentArticlesData.recent_articles
+      : recent_articles
 
   return (
     <ContentSignpostGrid title={<ListTitle title="Just for you" />}>
       <ThemedList
         hideEmpty
-        title={
-          readArticlesData.read_articles.length > 0
-            ? 'Last Read'
-            : 'Recent Articles'
-        }
+        title={read_articles.length > 0 ? 'Last Read' : 'Recent Articles'}
         articles={get(
           { read_articles: readArticles.splice(0, 3) },
           'read_articles',
@@ -67,9 +75,7 @@ function PersonalizedLists() {
       <ThemedList
         hideEmpty
         title={
-          bookmarkedArticlesData.user_bookmarks.length > 0
-            ? 'Bookmarked Articles'
-            : 'Recent Articles'
+          user_bookmarks.length > 0 ? 'Bookmarked Articles' : 'Recent Articles'
         }
         articles={get(
           { bookmarked_articles: bookmarkedArticles.splice(0, 3) },
