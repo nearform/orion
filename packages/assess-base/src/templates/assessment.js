@@ -437,10 +437,10 @@ function AssessmentTemplate({
                   variant="h3"
                   className={classes.keyInformationHeader}
                 >
-                  key information
+                  {t('key information')}
                   {assessment.keyInformation.guidance && (
                     <ContextualHelp
-                      helpContent={assessment.keyInformation.guidance}
+                      helpContent={t(assessment.keyInformation.guidance)}
                     >
                       <HelpIcon
                         color="secondary"
@@ -477,7 +477,7 @@ function AssessmentTemplate({
                                       variant="h4"
                                       gutterBottom
                                     >
-                                      {keyInfo.name}
+                                      {t(keyInfo.name)}
                                     </Typography>
                                     <Typography
                                       className={
@@ -487,13 +487,13 @@ function AssessmentTemplate({
                                         setModalProps({
                                           mdContent: matrixData[2][keyInfo.key],
                                           open: true,
-                                          subTitle: keyInfo.name,
+                                          subTitle: t(keyInfo.name),
                                           title: 'Key Information',
                                           width: '500px',
                                         })
                                       }}
                                     >
-                                      More Info
+                                      {t('More Info')}
                                     </Typography>
                                   </Box>
                                   <Field

@@ -61,10 +61,10 @@ function Footer({ classes, theme, content, Img }) {
               <TextField
                 fullWidth
                 variant="outlined"
-                placeholder="Your email address"
+                placeholder={t('Your email address')}
               />
               <Button color="secondary" variant="contained">
-                subscribe
+                {t('subscribe')}
               </Button>
             </div>
           </Grid>
