@@ -29,7 +29,7 @@ const ROLES_PERMISSIONS = {
  */
 export const getUserTokenData = () => {
   const data = {
-    loggedIn: false,
+    authenticated: false,
     user: false,
     admin: false,
     contributor: false,
@@ -39,7 +39,7 @@ export const getUserTokenData = () => {
     role: 'public',
   }
 
-  data.loggedIn = isAuthenticatedSync() ? true : false
+  data.isAuthenticated = isAuthenticatedSync() ? true : false
   data.isUser = hasPermissions('user')
   data.isAdmin = hasPermissions('company-admin')
   data.isContributor =

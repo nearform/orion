@@ -5,10 +5,16 @@ import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import { RootWrapper, Layout, ThemeWrapper, theme } from 'components'
-import MainToolbar from './src/components/MainToolbar'
+import {
+  AuthWrapper,
+  RootWrapper,
+  Layout,
+  ThemeWrapper,
+  theme,
+} from 'components'
 import AppFooter from './src/components/AppFooter'
-import { AuthInitContext } from './src/utils/auth'
+import MainToolbar from './src/components/MainToolbar'
+import useUserGroups from './src/hooks/useUserGroups'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
 
@@ -18,26 +24,33 @@ const client = new GraphQLClient({
 })
 
 export const wrapRootElement = ({ element }) => (
-  <AuthInitContext.Provider value={false}>
-    <RootWrapper
-      client={client}
-      ClientContext={ClientContext}
-      muiTheme={muiTheme}
-      ThemeProvider={ThemeProvider}
-      ThemeWrapper={ThemeWrapper}
-      CssBaseline={CssBaseline}
-    >
-      {element}
-    </RootWrapper>
-  </AuthInitContext.Provider>
+  <RootWrapper
+    client={client}
+    ClientContext={ClientContext}
+    muiTheme={muiTheme}
+    ThemeProvider={ThemeProvider}
+    ThemeWrapper={ThemeWrapper}
+    CssBaseline={CssBaseline}
+  >
+    <AuthWrapper>{element}</AuthWrapper>
+  </RootWrapper>
 )
 
+const PageWrapper = ({ darkToolbar, children }) => {
+  useUserGroups()
+  return (
+    <Layout
+      darkToolbar={darkToolbar}
+      AppFooter={AppFooter}
+      MainToolbar={MainToolbar}
+    >
+      {children}
+    </Layout>
+  )
+}
+
 export const wrapPageElement = ({ element, props }) => (
-  <Layout
-    darkToolbar={props.location.pathname === '/'}
-    MainToolbar={MainToolbar}
-    AppFooter={AppFooter}
-  >
+  <PageWrapper darkToolbar={props.location.pathname === '/'}>
     {element}
-  </Layout>
+  </PageWrapper>
 )

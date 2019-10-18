@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { Typography, withStyles, Grid, Button, Box } from '@material-ui/core'
 import { Link, navigate } from 'gatsby'
 import { Formik, Form, Field } from 'formik'
@@ -14,13 +14,13 @@ import * as Yup from 'yup'
 import matrixData from 'efqm-theme/assessments'
 
 import {
+  AuthContext,
   PaddedContainer,
   ASSESSMENT_STATUS,
   ConfirmDialog,
   SectionTitle,
   TypedChip,
 } from 'components'
-import SEO from '../components/SEO'
 import {
   createAssessmentMutation,
   getShallowAssessmentData,
@@ -29,11 +29,11 @@ import {
   updateAssessmentStatusMutation,
   getAssessmentContributorsAssessorsData,
 } from '../queries'
-import { getUserTokenData, getUserAuth } from '../utils/auth'
 import { getAssessmentId } from '../utils/url'
 import { uploadFile } from '../utils/storage'
 import ContextualHelp from '../components/ContextualHelp'
 import ContentModal from '../components/ContentModal'
+import SEO from '../components/SEO'
 import UploadButton from '../components/UploadButton'
 import AssessmentPillars from '../components/AssessmentPillars'
 import KeyInfoDocsList from '../components/key-info-docs-list'
@@ -80,9 +80,10 @@ function AssessmentTemplate({
     width: '',
   })
   const assessmentId = getAssessmentId(location)
-  const userTokenData = getUserTokenData()
+  const { getUserTokenData, getUserAuth } = useContext(AuthContext)
+  const { isAdmin, isContributor, userId, groupId } = getUserTokenData()
 
-  if (!assessmentId && !userTokenData.admin) {
+  if (!assessmentId && !isAdmin) {
     return <Redirect to="/auth" noThrow />
   }
 
@@ -105,7 +106,7 @@ function AssessmentTemplate({
         key: assessment.key,
         name,
         internal,
-        owner_id: userTokenData.userId,
+        owner_id: userId,
       },
     })
     const id = get(data, 'insert_assessment.returning.0.id')
@@ -137,7 +138,7 @@ function AssessmentTemplate({
     const { data, error } = await createFileUpload({
       variables: {
         fileUploadData: {
-          user_id: userTokenData.userId,
+          user_id: userId,
           assessment_id: assessmentId,
           file_name: file.name,
           file_size: file.size,
@@ -173,20 +174,19 @@ function AssessmentTemplate({
   }
 
   const canEditKeyInformationAndUpload =
-    userTokenData.contributor && assessmentInProgress(assessmentData)
+    isContributor && assessmentInProgress(assessmentData)
 
-  const canSubmit = userTokenData.admin && assessmentInProgress(assessmentData)
+  const canSubmit = isAdmin && assessmentInProgress(assessmentData)
 
-  const canCreateAssessment = userTokenData.admin
+  const canCreateAssessment = isAdmin
 
   // TODO: change this with correct rule based on assessment state
   const canViewFeedbackReport = assessmentSubmitted(assessmentData)
 
   const canAssignContributorsAndAssessors = getUserAuth('platform-admin')
     ? true
-    : (userTokenData.admin &&
-        getCanEditAssesors(userTokenData.groupId, assessmentData)) ||
-      getCanEditContributors(userTokenData.groupId, assessmentData)
+    : (isAdmin && getCanEditAssesors(groupId, assessmentData)) ||
+      getCanEditContributors(groupId, assessmentData)
 
   const assessmentName = get(assessmentData, 'name', 'Loading...')
   const { t } = useTranslation()

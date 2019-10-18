@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import T from 'prop-types'
 import { withStyles, Button, Grid } from '@material-ui/core'
-import { useIsAdmin, useIsPlatformGroup } from '../../utils/auth'
+import { AuthContext } from 'components'
 import RateArticle from './RateArticle'
 import HideButton from './HideButton'
 import { Share, Print, Edit, PictureAsPdf } from '@material-ui/icons'
@@ -29,8 +29,8 @@ const PlaceholderButton = withStyles(theme => ({
 })
 
 const ContentOptions = ({ classes, articleData, refetchArticle }) => {
-  const isAdmin = useIsAdmin()
-  const isPlatformGroup = useIsPlatformGroup()
+  const { getUserTokenData } = useContext(AuthContext)
+  const { isAdmin, isPlatformGroup } = getUserTokenData()
 
   const { id, status } = articleData
 

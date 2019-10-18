@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   withStyles,
   Grid,
@@ -15,17 +15,16 @@ import get from 'lodash/get'
 import omit from 'lodash/omit'
 import { Formik, Form, Field } from 'formik'
 import { fieldToCheckbox } from 'formik-material-ui'
-import { AvatarImage, PaddedContainer } from 'components'
+import { AvatarImage, AuthContext, PaddedContainer } from 'components'
+import SEO from '../components/SEO'
 import { updateUserMutation, getUser } from '../queries'
 import { UserInfo, formFields, validationSchema } from '../components/profile'
 import UploadImageWidget from '../components/UploadImageWidget'
-import SEO from '../components/SEO'
-import { useUserId, useIsAuthInitialized } from '../utils/auth'
 import { constructImageUrl } from '../utils/image'
 
 const Profile = ({ pageContext: { user: userContext } = {}, classes }) => {
-  const isAuthInitialized = useIsAuthInitialized()
-  const userId = useUserId()
+  const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
+  const { userId } = getUserTokenData()
   const [editMode, setEditMode] = useState(false)
   const [fetchUser, { data }] = useManualQuery(getUser, {
     variables: { id: userId },

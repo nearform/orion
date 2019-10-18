@@ -1,19 +1,13 @@
 import React from 'react'
 import { Router } from '@reach/router'
 
-import ProtectedRoute from '../components/ProtectedRoute'
-import AdminRoute from '../components/admin/AdminRoute'
+import { AdminRoute, ProtectedRoute } from 'components'
 
 export default function Admin() {
   return (
     <Router basepath="/admin">
       <ProtectedRoute
-        allowedRoles={[
-          'admin',
-          'platform-admin',
-          'company-admin',
-          'partner-admin',
-        ]}
+        allowedRole="company-admin"
         component={AdminRoute}
         path="*"
       />

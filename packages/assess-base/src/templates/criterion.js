@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
-import { PaddedContainer, SectionTitle } from 'components'
+import { AuthContext, PaddedContainer, SectionTitle } from 'components'
 import { Link } from 'gatsby'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
@@ -9,14 +9,13 @@ import { TextField } from 'formik-material-ui'
 import { useManualQuery, useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 
-import SEO from '../components/SEO'
 import { getAssessmentId } from '../utils/url'
 import {
   getAssessmentCriterionData,
   upsertAssessmentCriterionDataMutation,
 } from '../queries'
 import FileList from '../components/FileList'
-import { getUserTokenData } from '../utils/auth'
+import SEO from '../components/SEO'
 import { assessmentInProgress } from '../utils/assessment-status'
 
 function createFormInitialValues(assessmentCriterionData) {
@@ -39,7 +38,8 @@ function CriterionTemplate({
   location,
 }) {
   const assessmentId = getAssessmentId(location)
-  const userTokenData = getUserTokenData()
+  const { getUserTokenData } = useContext(AuthContext)
+  const { isContributor, userId } = getUserTokenData()
 
   const { t } = useTranslation()
 
@@ -86,7 +86,7 @@ function CriterionTemplate({
   }
 
   const canEditAndUpload =
-    userTokenData.contributor &&
+    isContributor &&
     assessmentInProgress(get(assessmentCriterionData, 'assessment_by_pk'))
 
   return (
@@ -108,7 +108,7 @@ function CriterionTemplate({
           <Grid item>
             <FileList
               assessmentId={assessmentId}
-              userId={userTokenData.userId}
+              userId={userId}
               pillar={pillar}
               criterion={criterion}
               files={get(assessmentCriterionData, 'assessment_file', [])}

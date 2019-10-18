@@ -1,11 +1,10 @@
-import React from 'react'
-import { PaddedContainer } from 'components'
-import { getUserIdSync } from '../../utils/auth'
+import React, { useContext } from 'react'
+import { AuthContext, PaddedContainer } from 'components'
 import { useMutation } from 'graphql-hooks'
 import { createArticleMutation } from '../../queries'
 import { navigate } from '@reach/router'
-import SEO from '../SEO'
 import BoxControlLabel from '../BoxControlLabel'
+import SEO from '../SEO'
 import * as Yup from 'yup'
 import { Formik, Form, Field } from 'formik'
 import { RadioGroup } from 'formik-material-ui'
@@ -29,6 +28,7 @@ const CustomRadioGroup = withStyles(theme => ({
 }))(RadioGroup)
 
 function CreateArticle({ classes }) {
+  const { getUserTokenData } = useContext(AuthContext)
   const staticResult = useStaticQuery(graphql`
     {
       allKnowledgeTypes {
@@ -50,7 +50,7 @@ function CreateArticle({ classes }) {
   const [createArticle] = useMutation(createArticleMutation)
 
   const handleSelectType = async ({ knowledgeType }, actions) => {
-    const creatorId = getUserIdSync()
+    const { userId: creatorId } = getUserTokenData()
     const knowledgeTypeDefinition = get(
       knowledgeTypeMap,
       `${knowledgeType}.input_fields`

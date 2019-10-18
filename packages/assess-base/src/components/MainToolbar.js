@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useStaticQuery, graphql, navigate, Link } from 'gatsby'
 import { useTranslation } from 'react-i18next'
 import Img from 'gatsby-image'
@@ -6,13 +6,17 @@ import { Typography, Button, withStyles } from '@material-ui/core'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
-import { PaddedContainer } from 'components'
-import { getLanguageSwitcher } from 'components'
-
-import { getUserTokenData } from '../utils/auth'
-import NavLink from './NavLink'
+import {
+  AuthContext,
+  PaddedContainer,
+  NavLink,
+  getLanguageSwitcher,
+} from 'components'
 
 function MainToolbar({ classes, dark }) {
+  const { getUserTokenData } = useContext(AuthContext)
+  const { isAdmin, isAuthenticated } = getUserTokenData()
+
   const {
     site: {
       siteMetadata: { title },
@@ -41,8 +45,6 @@ function MainToolbar({ classes, dark }) {
     Auth.signOut()
     navigate('/auth')
   }
-
-  const userTokenData = getUserTokenData()
 
   const darkClass = classnames({
     [classes.toolbarDark]: dark,
@@ -91,7 +93,7 @@ function MainToolbar({ classes, dark }) {
             >
               EFQM.ORG
             </Button>
-            {userTokenData.loggedIn && (
+            {isAuthenticated && (
               <Button className={navButtonClass} component={NavLink} to="#">
                 <AccountCircleOutlinedIcon
                   className={classes.icon}
@@ -100,12 +102,12 @@ function MainToolbar({ classes, dark }) {
                 MyEFQM
               </Button>
             )}
-            {!userTokenData.loggedIn && (
+            {!isAuthenticated && (
               <Button className={navButtonClass} component={NavLink} to="/auth">
                 LOGIN
               </Button>
             )}
-            {userTokenData.admin && (
+            {isAdmin && (
               <Button
                 className={navButtonClass}
                 component={NavLink}
@@ -114,7 +116,7 @@ function MainToolbar({ classes, dark }) {
                 ADMIN
               </Button>
             )}
-            {userTokenData.loggedIn && (
+            {isAuthenticated && (
               <Button className={navButtonClass} onClick={doLogout}>
                 LOGOUT
               </Button>

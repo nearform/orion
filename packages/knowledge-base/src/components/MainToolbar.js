@@ -1,18 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useStaticQuery, graphql, navigate, Link } from 'gatsby'
 import Img from 'gatsby-image'
 import { Typography, Button, withStyles } from '@material-ui/core'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
-import { PaddedContainer } from 'components'
+import { AuthContext, NavLink, PaddedContainer } from 'components'
 
-import { useIsAdmin, useUserId, useIsAuthenticated } from '../utils/auth'
-import NavLink from './NavLink'
 import SecondaryNavigation from './SecondaryNavigation'
-// TODO: dedupe this from AssessBase
 
 function MainToolbar({ classes, dark }) {
+  const { getUserTokenData } = useContext(AuthContext)
+
   const {
     site: {
       siteMetadata: { title },
@@ -42,9 +41,7 @@ function MainToolbar({ classes, dark }) {
     navigate('/auth')
   }
 
-  const userId = useUserId()
-  const isAdmin = useIsAdmin()
-  const isAuthenticated = useIsAuthenticated()
+  const { userId, isAdmin, isAuthenticated } = getUserTokenData()
 
   const darkClass = classnames({
     [classes.toolbarDark]: dark,

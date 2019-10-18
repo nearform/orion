@@ -6,16 +6,17 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 import {
   addTranslations,
+  AuthWrapper,
   RootWrapper,
   Layout,
   ThemeWrapper,
   theme,
 } from 'components'
 import * as auth from './utils/auth'
-import { AuthInitContext } from './src/utils/auth'
 import * as i18n from './utils/i18n'
 import AppFooter from './src/components/AppFooter'
 import MainToolbar from './src/components/MainToolbar'
+import useUserGroups from './src/hooks/useUserGroups'
 import './src/styles/global.css'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
@@ -29,41 +30,48 @@ export async function onClientEntry() {
   addTranslations('assessments', i18next)
 }
 
-const InitializedWrapper = ({ element }) => {
-  const [isInitialised, setIsInitialised] = useState(false)
+const AuthInitializationWrapper = ({ element }) => {
+  const [isAuthInitialized, setIsAuthInitialized] = useState(false)
   useEffect(() => {
     const init = async () => {
       await auth.init(client)
-      setIsInitialised(true)
+      setIsAuthInitialized(true)
     }
     init()
   }, [])
 
   return (
-    <AuthInitContext.Provider value={isInitialised}>
-      <RootWrapper
-        client={client}
-        ClientContext={ClientContext}
-        muiTheme={muiTheme}
-        ThemeProvider={ThemeProvider}
-        ThemeWrapper={ThemeWrapper}
-        CssBaseline={CssBaseline}
-      >
-        {element}
-      </RootWrapper>
-    </AuthInitContext.Provider>
+    <RootWrapper
+      client={client}
+      ClientContext={ClientContext}
+      muiTheme={muiTheme}
+      ThemeProvider={ThemeProvider}
+      ThemeWrapper={ThemeWrapper}
+      CssBaseline={CssBaseline}
+    >
+      <AuthWrapper isAuthInitialized={isAuthInitialized}>{element}</AuthWrapper>
+    </RootWrapper>
   )
 }
 export const wrapRootElement = ({ element }) => {
-  return <InitializedWrapper element={element} />
+  return <AuthInitializationWrapper element={element} />
+}
+
+const PageWrapper = ({ darkToolbar, children }) => {
+  useUserGroups()
+  return (
+    <Layout
+      darkToolbar={darkToolbar}
+      AppFooter={AppFooter}
+      MainToolbar={MainToolbar}
+    >
+      {children}
+    </Layout>
+  )
 }
 
 export const wrapPageElement = ({ element, props }) => (
-  <Layout
-    darkToolbar={props.location.pathname === '/'}
-    AppFooter={AppFooter}
-    MainToolbar={MainToolbar}
-  >
+  <PageWrapper darkToolbar={props.location.pathname === '/'}>
     {element}
-  </Layout>
+  </PageWrapper>
 )
