@@ -19,9 +19,11 @@ query getRecentArticles {
     thumbnail
     published_at
     knowledge_type
-    createdBy {
-      first_name
-      last_name
+    authors {
+      author {
+        first_name
+        last_name
+      }
     }
   }
 }

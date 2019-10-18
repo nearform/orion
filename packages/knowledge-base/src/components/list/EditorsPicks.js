@@ -1,26 +1,24 @@
 import React from 'react'
-import get from 'lodash/get'
+import { Typography } from '@material-ui/core'
 import { useQuery } from 'graphql-hooks'
 import { getRandomRows } from '../../utils/array'
 import FeatureArticles from './FeatureArticles'
 import { getEditorsPicks } from '../../queries'
 
 function EditorsPicks() {
-  const { data: editorsPicksData } = useQuery(getEditorsPicks)
+  const { loading, data = {} } = useQuery(getEditorsPicks)
 
-  //TODO: nicer loading indication
-  if (!editorsPicksData) return null
+  if (loading) return <Typography>Loading...</Typography>
 
+  const { editors_picks = [] } = data
   const editorsPicks =
-    editorsPicksData.editors_picks.length > 3
-      ? getRandomRows(editorsPicksData.editors_picks, 3)
-      : editorsPicksData.editors_picks
+    editors_picks.length > 3 ? getRandomRows(editors_picks, 3) : editors_picks
 
   return (
     <FeatureArticles
       hideEmpty
       title="Editor's Picks"
-      articles={get({ editors_picks: editorsPicks }, 'editors_picks', [])}
+      articles={editorsPicks}
       align="flex-start"
     />
   )
