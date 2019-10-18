@@ -6,7 +6,6 @@ import { useQuery, useManualQuery } from 'graphql-hooks'
 import { AuthContext } from 'components'
 import { getRandomRows } from '../../utils/array'
 import ThemedList from './ThemedList'
-import ListTitle from './ListTitle'
 import PromoSpot from '../PromoSpot'
 import {
   getRecentArticles,
@@ -62,7 +61,7 @@ function PersonalizedLists() {
       : recent_articles
 
   return (
-    <ContentSignpostGrid title={<ListTitle title="Just for you" />}>
+    <ContentSignpostGrid title="Just for you">
       <ThemedList
         hideEmpty
         title={read_articles.length > 0 ? 'Last Read' : 'Recent Articles'}
