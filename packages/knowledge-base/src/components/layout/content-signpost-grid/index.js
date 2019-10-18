@@ -46,7 +46,7 @@ const ContentSignpostGrid = ({ children = [], title }) => {
 
 ContentSignpostGrid.propTypes = {
   children: T.array,
-  title: T.string,
+  title: T.node,
 }
 
 export default ContentSignpostGrid
