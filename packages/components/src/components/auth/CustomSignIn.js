@@ -51,7 +51,7 @@ export default class CustomSignIn extends authEventMixin(SignIn) {
 
   showComponent() {
     const {
-      props: { authState },
+      props: { authState, message },
       state: { loading },
     } = this
 
@@ -84,6 +84,7 @@ export default class CustomSignIn extends authEventMixin(SignIn) {
           super.signIn(event)
         }}
         handleInput={this.handleInputChange}
+        message={message}
       />
     )
   }
