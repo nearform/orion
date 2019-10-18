@@ -1,0 +1,58 @@
+#import "./fragments.graphql"
+
+query getArticleSummary($id: Int!) {
+  articleSummary: article_by_pk(id: $id) {
+    authors {
+      author {
+        first_name
+        last_name
+        email
+        id
+        title
+        avatar
+      }
+    }
+    subtitle
+    taxonomy_items {
+      taxonomy_id
+    }
+    rating: article_ratings_aggregate {
+      ...rating
+    }
+    recommended_articles {
+      recommended_article {
+        primary_taxonomy: taxonomy_items(
+          limit: 1
+          order_by: { taxonomy: { taxonomy_type: { order_index: asc } } }
+        ) {
+          taxonomy {
+            name
+            key
+          }
+        }
+        path
+        id
+        title
+        thumbnail
+        published_at
+        knowledge_type
+        authors {
+          author {
+            first_name
+            last_name
+          }
+        }
+      }
+    }
+    title
+    path
+    knowledge_type
+    id
+    thumbnail
+    banner
+    status
+    summary
+    created_at
+    published_at
+  }
+}

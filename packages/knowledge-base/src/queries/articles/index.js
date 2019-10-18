@@ -1,5 +1,6 @@
 export { default as createArticleMutation } from './create-article.graphql'
 export { default as getArticleDetails } from './get-article-details.graphql'
+export { default as getArticleSummary } from './get-article-summary.graphql'
 export { default as updateArticleMutation } from './update-article.graphql'
 export {
   default as addArticleTaxonomiesMutation,
