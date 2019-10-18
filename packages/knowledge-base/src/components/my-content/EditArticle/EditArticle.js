@@ -3,7 +3,7 @@ import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
 import UploadImageWidget from '../../UploadImageWidget'
-import { UserAvatar, AuthContext, EmbededVideo } from 'components'
+import { UserAvatar, AuthContext, EmbeddedVideo } from 'components'
 import { constructImageUrl } from '../../../utils/image'
 
 import {
@@ -417,9 +417,9 @@ function EditArticle({ classes, articleId }) {
                           fullWidth
                           placeholder="Paste YouTube or Vimeo URL"
                         />
-                        <EmbededVideo
+                        <EmbeddedVideo
                           url={values.fields[key]}
-                          className={classes.embededVideo}
+                          className={classes.embeddedVideo}
                         />
                       </>
                     ) : null}
@@ -567,7 +567,7 @@ export default withStyles(theme => ({
       marginTop: theme.spacing(1),
     },
   },
-  embededVideo: {
+  embeddedVideo: {
     marginTop: theme.spacing(1),
   },
 }))(EditArticle)
