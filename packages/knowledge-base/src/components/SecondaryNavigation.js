@@ -56,12 +56,8 @@ function SecondaryNavigation({ classes, dark, theme }) {
     setSearchText('')
   }
 
-  const searchButtonClasses = [classes.searchButton]
-  if (!isAuthenticated) {
-    // We have to be a bit fiddly with the positioning of the last button
-    // which could be 'search' or 'my content'
-    searchButtonClasses.push(classes.lastButton)
-  }
+  const searchButtonClasses = `${classes.searchButton} ${!isAuthenticated &&
+    classes.lastButton}`
 
   return !search ? (
     <Grid container justify="flex-end" spacing={3}>
@@ -87,7 +83,10 @@ function SecondaryNavigation({ classes, dark, theme }) {
         </QuickLinkButton>
       </Grid>
       {isAuthenticated && (
-        <Grid item className={[classes.myContentButton, classes.lastButton]}>
+        <Grid
+          item
+          className={`${classes.myContentButton} ${classes.lastButton}`}
+        >
           <QuickLinkButton dark={dark} onClick={() => navigate('/my-content')}>
             My Content
           </QuickLinkButton>
