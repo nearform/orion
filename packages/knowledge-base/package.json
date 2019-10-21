@@ -86,6 +86,7 @@
     "test": "jest",
     "artifact:create": "tar -zcf $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz public",
     "artifact:name": "echo $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz",
-    "e2e": "cypress open"
+    "e2e": "cypress open",
+    "update-event-list": "tools/update-event-list.js"
   }
 }
