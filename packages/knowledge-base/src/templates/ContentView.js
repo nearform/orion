@@ -13,45 +13,52 @@ import RichText from '../components/content//RichText'
 import { AuthContext, PaddedContainer } from 'components'
 import SEO from '../components/SEO'
 import { constructImageUrl } from '../utils/image'
-import { getArticleDetails } from '../queries'
+import { getArticleDetails, getArticleSummary } from '../queries'
 
-function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
+function ContentView({ slug, classes }) {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
 
-  const { path } = articleSummary || { path: slug }
-  const isValidUser = isAuthenticated && isAuthInitialized
-  const [getArticleDetailsQuery, { loading, data }] = useManualQuery(
-    getArticleDetails
-  )
+  // Only show the full article if the user is logged in.
+  const showFullArticle = isAuthenticated && isAuthInitialized
+  const articleQuery = showFullArticle ? getArticleDetails : getArticleSummary
+  const [fetchArticle, { loading, data }] = useManualQuery(articleQuery)
 
   const [isChanged, setIsChanged] = useState(Symbol())
-  const contentId = path.split('-')[0]
+  const refetchArticle = () => setIsChanged(Symbol())
+
+  const contentId = slug.split('-')[0]
   useEffect(() => {
-    if (contentId && isValidUser) {
-      getArticleDetailsQuery({
+    if (contentId) {
+      fetchArticle({
         variables: { id: contentId },
       })
     }
-  }, [contentId, isValidUser, getArticleDetailsQuery, isChanged])
-  const refetchArticle = () => setIsChanged(Symbol())
+  }, [contentId, showFullArticle, fetchArticle, isChanged])
 
-  const articleFull = get(data, 'articleDetails')
-  const articleData = articleFull || articleSummary
-  if (!articleData) return null
+  const article = get(
+    data,
+    showFullArticle ? 'articleDetails' : 'articleSummary',
+    // Below is a minimal set of article properties to allow the page to render fully.
+    {
+      id: 0,
+      title: '',
+      subtitle: '',
+      authors: [],
+      taxonomy_items: [],
+      published_at: '',
+    }
+  )
 
   const readCache = Cache.getItem('readArticles') || []
-  const readIds = readCache.includes(articleData.id)
-    ? readCache
-    : [articleData.id, ...readCache]
-  Cache.setItem(
-    'readArticles',
-    readIds.length > 3 ? readIds.splice(0, 3) : readIds
-  )
+  if (article.id && readCache.includes(article.id)) {
+    const readIds = readCache.slice(0, 2).concat(article.id)
+    Cache.setItem('readArticles', readIds)
+  }
 
   return (
     <PaddedContainer>
-      <SEO title={articleData.title} />
+      <SEO title={article.title} />
       <Grid
         container
         spacing={2}
@@ -60,7 +67,7 @@ function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
       >
         <Grid item xs={12} sm={4} lg={3}>
           <div className={classes.spacingRight}>
-            <ContentMetadata content={articleData} />
+            <ContentMetadata content={article} />
           </div>
         </Grid>
         <Grid item xs={12} sm={8} lg={6} className={classes.article}>
@@ -71,25 +78,30 @@ function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
                 show: loading,
               })}
             />
-            <Typography variant="h1">{articleData.title}</Typography>
-            <Typography variant="h2">{articleData.subtitle}</Typography>
-            {articleData.banner && (
+            <Typography variant="h1">{article.title}</Typography>
+            <Typography variant="h2">{article.subtitle}</Typography>
+            {article.banner && (
               <img
                 className={classes.bannerImage}
-                src={constructImageUrl(articleData.banner)}
+                src={constructImageUrl(article.banner)}
                 alt=""
               />
             )}
-            {!articleFull && <RichText value={articleData.summary} />}
-            {!articleFull && <HowToAuthenticate />}
-            {get(articleData, 'fields', [])
+            {!showFullArticle && (
+              <>
+                <RichText value={article.summary} />
+                <HowToAuthenticate />
+              </>
+            )}
+
+            {get(article, 'fields', [])
               .filter(({ value }) => !!value)
               .map(getFieldType)}
           </div>
         </Grid>
         <Grid item xs={12} sm={8} lg={3}>
           <ContentOptions
-            articleData={articleData}
+            articleData={article}
             refetchArticle={refetchArticle}
           />
         </Grid>
@@ -97,7 +109,7 @@ function ContentView({ pageContext: { articleSummary } = {}, slug, classes }) {
       <FeatureArticles
         hideEmpty
         title="Further reading"
-        articles={get(articleData, 'recommended_articles', []).map(
+        articles={get(article, 'recommended_articles', []).map(
           ({ recommended_article }) => recommended_article
         )}
       />
