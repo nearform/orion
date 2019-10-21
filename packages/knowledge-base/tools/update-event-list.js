@@ -34,6 +34,7 @@ fetchPage(eventsURL)
 
 /**
  * Fetch a page of event data from the REST API.
+ * The function tail-recursively fetches any and all pages after the current one.
  * @param url       The URL to fetch.
  * @param results   An array of event data accumulated from previous page fetches.
  * @param page      The number of the previously fetched page.
