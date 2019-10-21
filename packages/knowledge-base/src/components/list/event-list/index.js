@@ -24,6 +24,7 @@ const EventList = ({ className, component = 'ul' }) => {
       <Box className={wrapper} component={component} data-test-id="event-list">
         {events
           .filter(e => Date.parse(e.startTime) > Date.parse(new Date()))
+          .slice(0, 4)
           .map(event => (
             <EventItem event={event} key={event.uid} />
           ))}
