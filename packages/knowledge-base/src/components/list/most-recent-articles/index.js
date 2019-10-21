@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
-import { Box, makeStyles } from '@material-ui/core'
+import React from 'react'
+import { Box, Typography, makeStyles } from '@material-ui/core'
 import { getArticlesData } from '../../../queries'
-import { useManualQuery } from 'graphql-hooks'
+import { useQuery } from 'graphql-hooks'
 import ArticleSummary from '../../content/ArticleSummary'
 import column from '../../layout/flex-with-gap/column'
 import ListTitle from '../ListTitle'
@@ -16,27 +16,22 @@ const useMostRecentArticlesStyles = makeStyles(theme => ({
 }))
 
 const MostRecentArticles = ({ className }) => {
-  const [
-    fetchMostRecentArticles,
-    { data: mostRecentArticles },
-  ] = useManualQuery(getArticlesData, {
+  const { loading, data = {} } = useQuery(getArticlesData, {
     variables: {
+      status: 'published',
       limit: 2,
       offset: 0,
       orderBy: { created_at: 'desc' },
     },
   })
 
-  useEffect(() => {
-    fetchMostRecentArticles()
-  }, [fetchMostRecentArticles])
-
   const { wrapper } = useMostRecentArticlesStyles()
 
-  if (!mostRecentArticles) {
-    return null
+  if (loading) {
+    return <Typography>Loading...</Typography>
   }
 
+  const { article: articles } = data
   return (
     <Box
       className={[className, wrapper].join(' ')}
@@ -44,7 +39,7 @@ const MostRecentArticles = ({ className }) => {
       data-test-id="most-recent-articles"
     >
       <ListTitle paletteColor={['grey', '800']} title="Most recent articless" />
-      {mostRecentArticles.article.map(article => (
+      {articles.map(article => (
         <ArticleSummary article={article} key={`article-${article.id}`} />
       ))}
     </Box>
