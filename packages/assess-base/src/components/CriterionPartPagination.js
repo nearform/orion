@@ -1,6 +1,7 @@
 import React from 'react'
 import T from 'prop-types'
 import { Grid, Typography, withTheme } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
 
 function CriterionPartPagination({
   theme,
@@ -11,6 +12,7 @@ function CriterionPartPagination({
   partNumber,
   totalParts,
 }) {
+  const { t } = useTranslation()
   return (
     <Grid container spacing={2} justify="flex-end" alignItems="center">
       <Grid item>
@@ -31,7 +33,7 @@ function CriterionPartPagination({
       </Grid>
       <Grid item>
         <Typography variant="h3" color="secondary">
-          PART {partNumber} OF {totalParts}
+          {t('PART')} {partNumber} {t('OF')} {totalParts}
         </Typography>
       </Grid>
       <Grid item>

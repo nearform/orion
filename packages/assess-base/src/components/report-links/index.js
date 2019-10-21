@@ -104,7 +104,7 @@ const ReportLinks = ({ assessment, canViewFeedbackReport }) => {
   const { t } = useTranslation()
 
   return (
-    <HeadedAsidePanel title="Assessment Reports">
+    <HeadedAsidePanel title={t('Assessment Reports')}>
       {assessment && assessment.id ? (
         <Box component="nav" className={wrapper}>
           <FeedbackReportLink
@@ -121,8 +121,9 @@ const ReportLinks = ({ assessment, canViewFeedbackReport }) => {
         </Box>
       ) : (
         <Typography>
-          When available the Assessment feedback and management report will
-          appear here.
+          {t(
+            'When available the Assessment feedback and management report will appear here.'
+          )}
         </Typography>
       )}
     </HeadedAsidePanel>

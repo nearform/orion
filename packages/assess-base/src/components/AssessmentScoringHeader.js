@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import classnames from 'classnames'
 import {
   withStyles,
@@ -15,17 +16,18 @@ import { KeyboardArrowUp } from '@material-ui/icons'
 const AssessmentScoringHeader = ({ classes }) => {
   const [isOpen, setIsOpen] = useState(false)
   const toggleOpen = () => setIsOpen(!isOpen)
+  const { t } = useTranslation()
 
   return (
     <>
       <Typography variant="h2" color="primary" gutterBottom>
-        Scoring section
+        {t('Scoring section')}
         <Button
           color="secondary"
           className={classes.expandButton}
           onClick={toggleOpen}
         >
-          Scoring guide
+          {t('Scoring guide')}
           <KeyboardArrowUp
             className={classnames(classes.icon, { [classes.open]: isOpen })}
           />
@@ -35,23 +37,23 @@ const AssessmentScoringHeader = ({ classes }) => {
         <TableBody>
           <TableRow>
             <TableCell className={classes.keyColumn}>0-20%</TableCell>
-            <TableCell>Inability to achieve</TableCell>
+            <TableCell>{t('Inability to achieve')}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell className={classes.keyColumn}>21-40%</TableCell>
-            <TableCell>Limited ability to achieve</TableCell>
+            <TableCell>{t('Limited ability to achieve')}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell className={classes.keyColumn}>41-60%</TableCell>
-            <TableCell>Ability to achieve</TableCell>
+            <TableCell>{t('Ability to achieve')}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell className={classes.keyColumn}>61-80%</TableCell>
-            <TableCell>Comprehensive ability to achieve</TableCell>
+            <TableCell>{t('Comprehensive ability to achieve')}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell className={classes.keyColumn}>81-100%</TableCell>
-            <TableCell>Outstanding ability to achieve</TableCell>
+            <TableCell>{t('Outstanding ability to achieve')}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

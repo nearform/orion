@@ -8,6 +8,7 @@ import {
   Typography,
   withStyles,
 } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'gatsby'
 import classnames from 'classnames'
 import { Field } from 'formik'
@@ -59,6 +60,7 @@ function CriterionPartInput({
 }) {
   criteriaList = criteriaList.flat()
 
+  const { t } = useTranslation()
   const inputId = `${inputKey}-${column.key}`
   const fieldName = column.key
 
@@ -80,7 +82,7 @@ function CriterionPartInput({
               [classes.disabledAndEmpty]: isDisabledAndEmpty,
             })}
           >
-            {column.name}
+            {t(column.name)}
           </Typography>
         )}
       </Grid>
@@ -162,7 +164,7 @@ function CriterionPartInput({
             [classes.disabledAndEmpty]: isDisabledAndEmpty,
           })}
         >
-          {column.name}
+          {t(column.name)}
           {isText && (
             <Launch
               className={classnames(
@@ -190,7 +192,7 @@ function CriterionPartInput({
               className={classes.uploadButton}
               color="secondary"
             >
-              Upload
+              {t('Upload')}
             </UploadButton>
           )}
         </Typography>
@@ -232,6 +234,7 @@ function getSelectFieldProps(
   assessmentId,
   inputKey
 ) {
+  const { t } = useTranslation()
   const renderValue = selected =>
     selected.map(selectedKey => {
       const selectedCriterion = criteriaList.find(
@@ -248,7 +251,7 @@ function getSelectFieldProps(
               to={`/${selectedCriterion.path}#${assessmentId}`}
               className={classes.active}
             >
-              {selectedCriterion.name}
+              {t(selectedCriterion.name)}
             </Link>
           </Typography>
         )
@@ -269,7 +272,7 @@ function getSelectFieldProps(
           <span className={classes.iconSpacer}>
             {isChecked && <Check className={classes.middle} />}
           </span>
-          {option.name}
+          {t(option.name)}
         </Typography>
       </MenuItem>
     )

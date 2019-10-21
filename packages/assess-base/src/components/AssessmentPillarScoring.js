@@ -6,6 +6,7 @@ import get from 'lodash/get'
 import { useMutation } from 'graphql-hooks'
 import { withStyles, Grid, Typography } from '@material-ui/core'
 import HelpIcon from '@material-ui/icons/Help'
+import { useTranslation } from 'react-i18next'
 import { Formik, Form, Field } from 'formik'
 import { ScoringSlider } from 'components'
 import T from 'prop-types'
@@ -72,6 +73,7 @@ function AssessmentPillarScoring({
   partNumber,
   canEdit,
 }) {
+  const { t } = useTranslation()
   const { scoringId, scoringValues } = getScoringData(
     assessmentData,
     scoringDef
@@ -173,7 +175,7 @@ function AssessmentPillarScoring({
                         variant="h3"
                         className={classes.scoringHeader}
                       >
-                        {scoringGroup.name}
+                        {t(scoringGroup.name)}
                       </Typography>
                     </Grid>
                     {scoringGroup.scores.map(score => {
@@ -212,7 +214,7 @@ function AssessmentPillarScoring({
                 )
               })}
               <Grid item xs={12}>
-                <Typography variant="h3">Overall</Typography>
+                <Typography variant="h3">{t('Overall')}</Typography>
               </Grid>
               <Grid item xs={colWidth} className={classes.overall}>
                 {hasCap && getOverallValue(groupOverall, cap) > cap && (

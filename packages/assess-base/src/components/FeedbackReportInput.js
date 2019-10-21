@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
 import { withStyles, Grid, Button } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
 import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 
@@ -20,6 +21,7 @@ function FeedbackReportInput({
   rows,
   pillarColor,
 }) {
+  const { t } = useTranslation()
   // If the value is null or '' from DB, uncontrolled TextArea prefers `undefined`
   const part = typeof initialValue === 'object'
   const [currentValue, setCurrentValue] = useState(
@@ -64,7 +66,7 @@ function FeedbackReportInput({
                 barColor={pillarColor || theme.palette.secondary.main}
                 gutterBottom
               >
-                {label}
+                {t(label)}
               </SectionTitle>
             </Grid>
             <Grid item xs>
@@ -87,7 +89,7 @@ function FeedbackReportInput({
                 variant="contained"
                 disabled={!dirty || isSubmitting}
               >
-                Save Updates
+                {t('Save Updates')}
               </Button>
             </Grid>
           </Grid>

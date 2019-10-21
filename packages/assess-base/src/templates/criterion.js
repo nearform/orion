@@ -91,7 +91,7 @@ function CriterionTemplate({
 
   return (
     <div className={classes.root} data-testid="criterion">
-      <SEO title={criterion.name} />
+      <SEO title={t(criterion.name)} />
       <PaddedContainer className={classes.paddedContainer}>
         <Grid container spacing={2} wrap="nowrap">
           <Grid item>
@@ -101,7 +101,7 @@ function CriterionTemplate({
               variant="text"
               color="secondary"
             >
-              ◀ Assessment overview
+              ◀ {t('Assessment overview')}
             </Button>
           </Grid>
           <Grid item xs />
@@ -122,7 +122,7 @@ function CriterionTemplate({
             <Grid item xs={3}>
               <SectionTitle barColor={pillarColor}>
                 <Link to={`/assessment/${assessment.key}#${assessmentId}`}>
-                  {pillar.name}
+                  {t(pillar.name)}
                 </Link>{' '}
                 <span style={{ color: pillarColor }}>▶</span>{' '}
                 {t(criterion.name)}
@@ -142,7 +142,7 @@ function CriterionTemplate({
                 color="secondary"
                 className={classes.section}
               >
-                Assess {criterion.name}
+                {t('Assess')} {t(criterion.name)}
               </Button>
               <Formik
                 initialValues={createFormInitialValues(assessmentCriterionData)}
@@ -159,7 +159,7 @@ function CriterionTemplate({
                     >
                       <Grid item xs={6}>
                         <Typography variant="h4" gutterBottom>
-                          {criterion.name} summary
+                          {t(criterion.name)} {t('summary')}
                         </Typography>
                         <Field
                           component={TextField}
@@ -178,7 +178,7 @@ function CriterionTemplate({
                             type="submit"
                             disabled={!dirty || isSubmitting}
                           >
-                            Save Updates
+                            {t('Save Updates')}
                           </Button>
                         </Grid>
                       )}

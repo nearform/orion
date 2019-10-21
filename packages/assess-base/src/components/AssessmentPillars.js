@@ -1,5 +1,6 @@
 import React from 'react'
 import { withStyles, Typography, Grid } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'gatsby'
 import { BarChart, SectionTitle, getChartData } from 'components'
 
@@ -11,14 +12,16 @@ const AssessmentPillars = ({
   pillarColors,
 }) => {
   if (!assessmentData) return null
+  const { t } = useTranslation()
   const chartData = getChartData(assessment, assessmentData, pillarColors)
   return (
     <div className={classes.section} data-testid="assessment__model-areas">
       <Grid container spacing={3}>
         <Grid item>
           <Typography variant="h4" gutterBottom>
-            To navigate within the assessment please click on an area of the
-            model
+            {t(
+              'To navigate within the assessment please click on an area of the model'
+            )}
           </Typography>
         </Grid>
       </Grid>
@@ -36,7 +39,7 @@ const AssessmentPillars = ({
             >
               <Grid item>
                 <SectionTitle barColor={pillarColor}>
-                  {pillar.name}
+                  {t(pillar.name)}
                 </SectionTitle>
               </Grid>
               {pillar.criteria.map(criterion => (
@@ -53,10 +56,10 @@ const AssessmentPillars = ({
                     gutterBottom
                     style={{ color: pillarColor }}
                   >
-                    {criterion.name}
+                    {t(criterion.name)}
                   </Typography>
                   <Typography variant="h4" className={classes.sectionProgress}>
-                    {criterion.parts.length} Subcriteria
+                    {criterion.parts.length} {t('Subcriteria')}
                   </Typography>
                 </Grid>
               ))}{' '}
@@ -74,7 +77,7 @@ const AssessmentPillars = ({
           >
             <Grid item xs>
               <SectionTitle barColor={theme.palette.primary.dark} gutterBottom>
-                Scoring Summary
+                {t('Scoring Summary')}
               </SectionTitle>
               <BarChart chartData={chartData} />
             </Grid>

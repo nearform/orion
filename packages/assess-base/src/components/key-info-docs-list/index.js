@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Typography, withStyles } from '@material-ui/core'
 import T from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import FileItem from '../FileItem'
 import HeadedAsidePanel from '../headed-aside-panel'
@@ -11,8 +12,9 @@ const KeyInfoDocsList = ({
   onFileDelete,
   canDeleteFile,
 }) => {
+  const { t } = useTranslation()
   return (
-    <HeadedAsidePanel title="Assessment Documents">
+    <HeadedAsidePanel title={t('Assessment Documents')}>
       {assessment && assessment.files.length ? (
         <Box className={classes.list} component="ul">
           {assessment.files.map(file => (
@@ -27,8 +29,8 @@ const KeyInfoDocsList = ({
         </Box>
       ) : (
         <Typography>
-          You'll find an index of uploaded documents for your assessment in this
-          area
+          {t(`You'll find an index of uploaded documents for your assessment in this
+          area`)}
         </Typography>
       )}
     </HeadedAsidePanel>

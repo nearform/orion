@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import classnames from 'classnames'
 import { withStyles, Button, Grid, Typography } from '@material-ui/core'
 import { KeyboardArrowUp } from '@material-ui/icons'
+import { useTranslation } from 'react-i18next'
 
 const CriterionPartHeader = ({
   classes,
@@ -15,6 +16,7 @@ const CriterionPartHeader = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const toggleOpen = () => setIsOpen(!isOpen)
+  const { t } = useTranslation()
 
   return (
     <Grid
@@ -25,13 +27,13 @@ const CriterionPartHeader = ({
     >
       <Grid item>
         <Typography variant="h2" color="primary" gutterBottom>
-          {title}
+          {t(title)}
         </Typography>
       </Grid>
       {helpContent && (
         <Grid item>
           <Button color="secondary" onClick={toggleOpen}>
-            {buttonLabel}
+            {t(buttonLabel)}
             <KeyboardArrowUp
               className={classnames(classes.icon, {
                 [classes.invert]: !isOpen,
@@ -49,7 +51,7 @@ const CriterionPartHeader = ({
           data-testid="expanding-help"
           className={classnames(classes.text, { [classes.hide]: !isOpen })}
         >
-          <ReactMarkdown>{helpContent}</ReactMarkdown>
+          <ReactMarkdown>{t(helpContent)}</ReactMarkdown>
         </Grid>
       )}
     </Grid>

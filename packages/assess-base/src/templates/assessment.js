@@ -344,7 +344,7 @@ function AssessmentTemplate({
                             <Grid container direction="column" spacing={1}>
                               <Grid item>
                                 <Typography variant="h4">
-                                  Enter your assessment name
+                                  {t('Enter your assessment name')}
                                 </Typography>
                               </Grid>
                               <Grid item>
@@ -362,7 +362,9 @@ function AssessmentTemplate({
                           <Grid item>
                             <Grid container direction="column" spacing={0}>
                               <Grid item>
-                                <Typography variant="h4">Internal</Typography>
+                                <Typography variant="h4">
+                                  {t('Internal')}
+                                </Typography>
                               </Grid>
                               <Grid item>
                                 <Field
@@ -385,7 +387,7 @@ function AssessmentTemplate({
                                   variant="contained"
                                   disabled={!isValid || !canCreateAssessment}
                                 >
-                                  Create Assessment
+                                  {t('Create Assessment')}
                                 </Button>
                               </Grid>
                             </Grid>
@@ -488,7 +490,7 @@ function AssessmentTemplate({
                                           mdContent: matrixData[2][keyInfo.key],
                                           open: true,
                                           subTitle: t(keyInfo.name),
-                                          title: 'Key Information',
+                                          title: t('Key Information'),
                                           width: '500px',
                                         })
                                       }}

@@ -4,6 +4,7 @@ import T from 'prop-types'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
 import classnames from 'classnames'
 import get from 'lodash/get'
+import { useTranslation } from 'react-i18next'
 
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
@@ -62,6 +63,7 @@ function CriterionPartFeedbackTable({
   partNumber,
   canEdit,
 }) {
+  const { t } = useTranslation()
   const tableData = getExistingTableData(assessmentFeedbackTables, tableDef)
   const [tableId, setTableId] = useState(tableData ? tableData.id : null)
   const [tableRows, setTableRows] = useState(
@@ -145,13 +147,13 @@ function CriterionPartFeedbackTable({
       <Grid container spacing={2}>
         <Grid item>
           <Typography variant="h2" color="primary" gutterBottom>
-            {tableDef.name}
+            {t(tableDef.name)}
           </Typography>
         </Grid>
         {tableDef.guidance && (
           <Grid item>
             <ContextualHelp helpContent={tableDef.guidance}>
-              <Button color="secondary">guidance</Button>
+              <Button color="secondary">{t('guidance')}</Button>
             </ContextualHelp>
           </Grid>
         )}
@@ -181,7 +183,7 @@ function CriterionPartFeedbackTable({
                             [classes.disbledAndEmpty]: isDisabledAndEmpty,
                           })}
                         >
-                          ITEM
+                          {t('ITEM')}
                         </Typography>
                       </Grid>
                       <Grid item>
@@ -210,7 +212,7 @@ function CriterionPartFeedbackTable({
                                 [classes.disbledAndEmpty]: isDisabledAndEmpty,
                               })}
                             >
-                              {column.name}
+                              {t(column.name)}
                             </Typography>
                           </Grid>
                           <Grid
@@ -252,8 +254,8 @@ function CriterionPartFeedbackTable({
                                       }
                                     >
                                       {rowIndex === tableRows.length
-                                        ? 'Save & add row'
-                                        : 'Save Updates'}
+                                        ? t('Save & add row')
+                                        : t('Save Updates')}
                                     </Button>
                                   </Grid>
                                   {rowIndex !== tableRows.length && (
@@ -266,7 +268,7 @@ function CriterionPartFeedbackTable({
                                         color="secondary"
                                         disabled={!canEdit}
                                       >
-                                        Remove
+                                        {t('Remove')}
                                       </Button>
                                     </Grid>
                                   )}
