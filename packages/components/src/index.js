@@ -54,7 +54,7 @@ export { default as AvatarImage } from './components/UserAvatar/AvatarImage'
 export {
   default as CollapsedAvatars,
 } from './components/UserAvatar/CollapsedAvatars'
-export { default as EmbededVideo } from './components/EmbededVideo'
+export { default as EmbeddedVideo } from './components/EmbeddedVideo'
 
 export * from './components/AuthWrapper'
 export { default as ProtectedRoute } from './components/ProtectedRoute'
