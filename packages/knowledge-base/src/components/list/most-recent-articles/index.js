@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Box, Typography, makeStyles } from '@material-ui/core'
+import { AuthContext } from 'components'
 import { getArticlesData } from '../../../queries'
+import useUserBookmarks from '../../../hooks/useUserBookmarks'
 import { useQuery } from 'graphql-hooks'
 import ArticleSummary from '../../content/ArticleSummary'
 import column from '../../layout/flex-with-gap/column'
@@ -16,6 +18,15 @@ const useMostRecentArticlesStyles = makeStyles(theme => ({
 }))
 
 const MostRecentArticles = ({ className }) => {
+  const { getUserTokenData } = useContext(AuthContext)
+  const { isAuthenticated } = getUserTokenData()
+
+  const {
+    fetchUserBookmarks,
+    userBookmarks,
+    loadingBookmarks,
+  } = useUserBookmarks()
+
   const { loading, data = {} } = useQuery(getArticlesData, {
     variables: {
       status: 'published',
@@ -40,7 +51,13 @@ const MostRecentArticles = ({ className }) => {
     >
       <ListTitle paletteColor={['grey', '800']} title="Most recent articles" />
       {articles.map(article => (
-        <ArticleSummary article={article} key={`article-${article.id}`} />
+        <ArticleSummary
+          article={article}
+          key={`article-${article.id}`}
+          bookmarked={userBookmarks.includes(article.id)}
+          bookmarkButtonDisabled={!isAuthenticated || loadingBookmarks}
+          onBookmarkToggle={fetchUserBookmarks}
+        />
       ))}
     </Box>
   )

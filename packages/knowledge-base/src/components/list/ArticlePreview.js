@@ -4,7 +4,15 @@ import { Box, withStyles } from '@material-ui/core'
 import get from 'lodash/get'
 import { formatDateAsMonthAndYear } from '../../utils/date'
 import ArticleVisualSummary from '../content/article-visual-summary'
-const ArticlePreview = ({ article, classes }) => {
+import BookmarkButton from '../BookmarkButton'
+
+const ArticlePreview = ({
+  article,
+  bookmarked,
+  bookmarkDisabled,
+  onBookmarkToggle,
+  classes,
+}) => {
   return (
     <Box>
       <div key={article.id} className={classes.article}>
@@ -19,9 +27,15 @@ const ArticlePreview = ({ article, classes }) => {
             {formatDateAsMonthAndYear(article.published_at)}
           </div>
           <div className={classes.articleAuthor}>
-            {get(article, 'createdBy.first_name')}{' '}
-            {get(article, 'createdBy.last_name')}
+            {get(article, 'authors[0].author.first_name')}{' '}
+            {get(article, 'authors[0].author.last_name')}
           </div>
+          <BookmarkButton
+            articleId={article.id}
+            bookmarked={bookmarked}
+            onToggle={onBookmarkToggle}
+            disabled={bookmarkDisabled}
+          />
         </div>
       </div>
     </Box>
@@ -63,5 +77,8 @@ ArticlePreview.propTypes = {
       last_name: T.string,
     }),
   }),
+  bookmarked: T.bool,
+  bookmarkDisabled: T.bool,
+  onBookmarkToggle: T.func,
 }
 export default withStyles(styles)(ArticlePreview)
