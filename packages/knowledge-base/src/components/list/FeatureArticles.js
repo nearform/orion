@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { AuthContext } from 'components'
 import ArticlePreview from './ArticlePreview'
+import ListTitle from './ListTitle'
 import ContentSignpostGrid from '../layout/content-signpost-grid'
 import useUserBookmarks from '../../hooks/useUserBookmarks'
 
@@ -18,7 +19,7 @@ const FeatureArticles = ({ title = '', articles = [], hideEmpty }) => {
   if (hideEmpty && !articles.length) return null
 
   return (
-    <ContentSignpostGrid title={title}>
+    <ContentSignpostGrid title={<ListTitle title={title} />}>
       {articles.map(article => (
         <ArticlePreview
           key={article.id}

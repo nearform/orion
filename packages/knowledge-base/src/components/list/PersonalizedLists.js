@@ -6,6 +6,7 @@ import { AuthContext } from 'components'
 import { getRandomRows } from '../../utils/array'
 import ThemedList from './ThemedList'
 import PromoSpot from '../PromoSpot'
+import ListTitle from './ListTitle'
 import {
   getRecentArticles,
   getBookmarkedArticles,
@@ -16,7 +17,7 @@ import ContentSignpostGrid from '../layout/content-signpost-grid'
 function PersonalizedLists() {
   const { getUserTokenData } = useContext(AuthContext)
   const { userId } = getUserTokenData()
-  const readArticleIds = Cache.getItem('x-readArticles') || []
+  const readArticleIds = Cache.getItem('readArticles') || []
 
   const { loading: recentLoading, data: recentData = {} } = useQuery(
     getRecentArticles
@@ -67,7 +68,7 @@ function PersonalizedLists() {
       : recent_articles.slice(hasReadArticles ? 0 : 3, hasReadArticles ? 3 : 6)
 
   return (
-    <ContentSignpostGrid title="Just for you">
+    <ContentSignpostGrid title={<ListTitle title="Just for you" />}>
       <ThemedList
         hideEmpty={false}
         title={read_articles.length > 0 ? 'Last Read' : 'Recent Articles'}
