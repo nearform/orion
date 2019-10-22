@@ -16,7 +16,7 @@ import ContentSignpostGrid from '../layout/content-signpost-grid'
 function PersonalizedLists() {
   const { getUserTokenData } = useContext(AuthContext)
   const { userId } = getUserTokenData()
-  const readArticleIds = Cache.getItem('readArticles') || []
+  const readArticleIds = Cache.getItem('x-readArticles') || []
 
   const { loading: recentLoading, data: recentData = {} } = useQuery(
     getRecentArticles
@@ -76,7 +76,11 @@ function PersonalizedLists() {
       <ThemedList
         hideEmpty={false}
         title={
-          user_bookmarks.length > 0 ? 'Bookmarked Articles' : 'Recent Articles'
+          user_bookmarks.length > 0
+            ? 'Bookmarked Articles'
+            : hasReadArticles
+            ? 'Recent Articles'
+            : ''
         }
         articles={bookmarkedArticles}
       />
