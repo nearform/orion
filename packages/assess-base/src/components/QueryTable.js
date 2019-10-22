@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import T from 'prop-types'
 import {
   Table,
@@ -27,11 +27,8 @@ function QueryTable({
   const [offset, setOffset] = useState(0)
   const [pageSize, setPageSize] = useState(pageSizes[0])
   const [orderBy, setOrderBy] = useState(orderByProp)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-  const [data, setData] = useState()
 
-  const response = useQuery(query, {
+  const { loading, error, data } = useQuery(query, {
     variables: {
       ...variables,
       offset,
@@ -40,17 +37,10 @@ function QueryTable({
     },
   })
 
-  useEffect(() => {
-    setLoading(response.loading)
-    setError(response.error)
-    if (!response.loading) {
-      setData(response.data)
-    }
-  }, [response])
-
   if (!headers.length) return <Typography>No table headers to show</Typography>
 
-  if (!data && loading) return <Typography>Loading...</Typography>
+  if (loading) return <Typography>Loading...</Typography>
+
   if (error) return <Typography>Error loading data.</Typography>
 
   return (
