@@ -37,16 +37,13 @@ describe('<ArticleVisualSummary />', () => {
     let image
 
     beforeAll(() => {
-      image = articleVisualSummary.findAll(el => el.type === 'img')
+      image = articleVisualSummary.findAll(
+        el => el.props['data-test-id'] === 'thumbnail-image'
+      )
     })
 
     test('exists', () => {
       expect(image.length).toEqual(1)
-    })
-
-    test('has the correct src attribute', () => {
-      const { src } = image[0].props
-      expect(src).toEqual(`mocked/${articleMock.thumbnail}`)
     })
   })
 
