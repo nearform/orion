@@ -47,12 +47,7 @@ function AssessmentsTable({ classes }) {
     { id: 'link', label: '' },
   ]
 
-  const assessmentKeyToName =
-    allAssessments.nodes === undefined
-      ? null
-      : keyBy(allAssessments.nodes, 'key')
-
-  if (assessmentKeyToName === null) return null
+  const assessmentKeyToName = keyBy(allAssessments.nodes, 'key')
 
   return (
     <QueryTable
@@ -67,7 +62,9 @@ function AssessmentsTable({ classes }) {
             <TableCell>{assessment.name}</TableCell>
             <TableCell>{formatDate(assessment.created_at)}</TableCell>
             <TableCell>
-              {assessmentKeyToName[assessment.key].tableName}
+              {assessmentKeyToName[assessment.key].tableName !== undefined
+                ? assessmentKeyToName[assessment.key].tableName
+                : ''}
             </TableCell>
             <TableCell>
               {get(assessment, 'owner.user_groups[0].group.name')}
