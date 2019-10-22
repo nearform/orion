@@ -242,6 +242,19 @@ function EditArticle({ classes, articleId }) {
     actions.setSubmitting(false)
   }
 
+  // code block below allows for old saved video articles to contain a video description field
+  if (
+    articleDetails.fields.some(({ key }) => key === 'video') &&
+    !articleDetails.fields.some(({ key }) => key === 'description')
+  ) {
+    articleDetails.fields.push({
+      key: 'description',
+      type: 'rich-text',
+      name: 'video description',
+      value: '',
+    })
+  }
+
   return (
     <>
       <SEO title={`Edit Article - ${articleDetails.title}`} />
