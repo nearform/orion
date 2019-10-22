@@ -38,7 +38,7 @@ const MostRecentArticles = ({ className }) => {
       component="ul"
       data-test-id="most-recent-articles"
     >
-      <ListTitle paletteColor={['grey', '800']} title="Most recent articless" />
+      <ListTitle paletteColor={['grey', '800']} title="Most recent articles" />
       {articles.map(article => (
         <ArticleSummary article={article} key={`article-${article.id}`} />
       ))}
