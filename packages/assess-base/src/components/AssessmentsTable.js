@@ -47,7 +47,12 @@ function AssessmentsTable({ classes }) {
     { id: 'link', label: '' },
   ]
 
-  const assessmentKeyToName = keyBy(allAssessments.nodes, 'key')
+  const assessmentKeyToName =
+    allAssessments.nodes === undefined
+      ? null
+      : keyBy(allAssessments.nodes, 'key')
+
+  if (assessmentKeyToName === null) return null
 
   return (
     <QueryTable
