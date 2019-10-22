@@ -62,7 +62,7 @@ function AssessmentsTable({ classes }) {
             <TableCell>{assessment.name}</TableCell>
             <TableCell>{formatDate(assessment.created_at)}</TableCell>
             <TableCell>
-              {assessmentKeyToName[assessment.key].tableName !== undefined
+              {assessmentKeyToName[assessment.key] !== undefined
                 ? assessmentKeyToName[assessment.key].tableName
                 : ''}
             </TableCell>
