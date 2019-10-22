@@ -31,7 +31,7 @@ const ContentSignpostGrid = ({ children = [], title }) => {
   return (
     <Box className={wrapper} component="section">
       {title && (
-        <Box className={titleBox} component="h2" data-test-id="title">
+        <Box className={titleBox} data-test-id="title">
           {title}
         </Box>
       )}
@@ -46,7 +46,7 @@ const ContentSignpostGrid = ({ children = [], title }) => {
 
 ContentSignpostGrid.propTypes = {
   children: T.array,
-  title: T.string,
+  title: T.node,
 }
 
 export default ContentSignpostGrid

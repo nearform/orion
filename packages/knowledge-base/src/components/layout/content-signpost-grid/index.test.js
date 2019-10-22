@@ -4,7 +4,7 @@ import ContentSignpostGrid from './'
 
 const predicates = {
   root: el => el.type === 'section',
-  title: el => el.type === 'h2' && el.props['data-test-id'] === 'title',
+  titleBox: el => el.type === 'div' && el.props['data-test-id'] === 'title',
   list: el => el.type === 'ul' && el.props['data-test-id'] === 'list',
   listItems: el => el.type === 'li',
 }
@@ -26,7 +26,7 @@ describe('<ContentSignpostGrid />', () => {
   })
 
   test('there is no title as no prop provided', () => {
-    expect(contentSignpostGrid.findAll(predicates.title).length).toEqual(0)
+    expect(contentSignpostGrid.findAll(predicates.titleBox).length).toEqual(0)
   })
 
   describe('listed children', () => {
@@ -51,7 +51,7 @@ describe('<ContentSignpostGrid />', () => {
     })
 
     test('will have a title element', () => {
-      expect(contentSignpostGrid.findAll(predicates.title).length).toEqual(1)
+      expect(contentSignpostGrid.findAll(predicates.titleBox).length).toEqual(1)
     })
   })
 })

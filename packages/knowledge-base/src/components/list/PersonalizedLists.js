@@ -6,6 +6,7 @@ import { AuthContext } from 'components'
 import { getRandomRows } from '../../utils/array'
 import ThemedList from './ThemedList'
 import PromoSpot from '../PromoSpot'
+import ListTitle from './ListTitle'
 import {
   getRecentArticles,
   getBookmarkedArticles,
@@ -53,8 +54,10 @@ function PersonalizedLists() {
   const { user_bookmarks = [] } = bookmarkedData
   const { read_articles = [] } = readData
 
-  const readArticles =
-    read_articles.length > 0 ? read_articles : recent_articles.slice(0, 3)
+  const hasReadArticles = read_articles.length > 0
+  const readArticles = hasReadArticles
+    ? read_articles
+    : recent_articles.slice(0, 3)
 
   const bookmarkedArticles =
     user_bookmarks.length > 0
@@ -62,10 +65,10 @@ function PersonalizedLists() {
           user_bookmarks.map(article => article.bookmarked_article),
           3
         )
-      : recent_articles.slice(read_articles.length > 0 ? 0 : 3, 3)
+      : recent_articles.slice(hasReadArticles ? 0 : 3, hasReadArticles ? 3 : 6)
 
   return (
-    <ContentSignpostGrid title="Just for you">
+    <ContentSignpostGrid title={<ListTitle title="Just for you" />}>
       <ThemedList
         hideEmpty={false}
         title={read_articles.length > 0 ? 'Last Read' : 'Recent Articles'}
@@ -74,7 +77,11 @@ function PersonalizedLists() {
       <ThemedList
         hideEmpty={false}
         title={
-          user_bookmarks.length > 0 ? 'Bookmarked Articles' : 'Recent Articles'
+          user_bookmarks.length > 0
+            ? 'Bookmarked Articles'
+            : hasReadArticles
+            ? 'Recent Articles'
+            : ''
         }
         articles={bookmarkedArticles}
       />
