@@ -133,6 +133,7 @@ exports.createPages = async ({ graphql, actions }) => {
     component: homeTemplate,
     context: {
       heroImageName: config.heroImageNameAB,
+      modelImageName: config.modelImageAB,
       assets: homepageAssets,
     },
   })
