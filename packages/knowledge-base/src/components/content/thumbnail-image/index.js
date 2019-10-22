@@ -13,6 +13,7 @@ const useThumbnailImageStyles = makeStyles(theme => ({
 
     width,
     height,
+    flexShrink: 0,
 
     backgroundColor: theme.palette.background.light,
     backgroundImage: `url(${src})`,
