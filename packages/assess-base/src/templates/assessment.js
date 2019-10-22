@@ -46,6 +46,7 @@ import {
   getCanEditAssesors,
   getCanEditContributors,
 } from '../utils/permission-checks'
+import { filterOldScores } from '../utils/filter-old-scores'
 
 function createFormInitialValues(assessmentKeyInfoDef, assessmentData) {
   return assessmentKeyInfoDef.reduce(
@@ -118,6 +119,7 @@ function AssessmentTemplate({
       data: { assessment_by_pk: assessmentData } = {},
     } = await getAssessment({ variables: { id } })
 
+    filterOldScores(assessment, assessmentData)
     setAssessmentData(assessmentData)
   }
 

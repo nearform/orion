@@ -30,6 +30,7 @@ import get from 'lodash/get'
 import FeedbackReportInput from '../components/FeedbackReportInput'
 import SEO from '../components/SEO'
 import { getAssessmentId } from '../utils/url'
+import { filterOldScores } from '../utils/filter-old-scores'
 
 import {
   getAssessmentFeedbackReportData,
@@ -77,6 +78,8 @@ function FeedbackReport({
   )
 
   const assessmentData = get(data, 'assessment_by_pk')
+
+  filterOldScores(assessment, assessmentData)
 
   useEffect(() => {
     if (!assessmentData) {
