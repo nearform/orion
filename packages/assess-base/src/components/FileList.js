@@ -107,7 +107,7 @@ function FileList({
             color="secondary"
             variant="outlined"
           >
-            Upload
+            {t('Upload')}
           </UploadButton>
         </Grid>
       )}

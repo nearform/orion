@@ -14,6 +14,7 @@ import {
   Paper,
 } from '@material-ui/core'
 import { useQuery } from 'graphql-hooks'
+import { useTranslation } from 'react-i18next'
 
 function QueryTable({
   headers,
@@ -27,6 +28,7 @@ function QueryTable({
   const [offset, setOffset] = useState(0)
   const [pageSize, setPageSize] = useState(pageSizes[0])
   const [orderBy, setOrderBy] = useState(orderByProp)
+  const { t } = useTranslation()
 
   const { loading, error, data } = useQuery(query, {
     variables: {
@@ -37,11 +39,12 @@ function QueryTable({
     },
   })
 
-  if (!headers.length) return <Typography>No table headers to show</Typography>
+  if (!headers.length)
+    return <Typography>{t('No table headers to show')}</Typography>
 
-  if (loading) return <Typography>Loading...</Typography>
+  if (loading) return <Typography>{t('Loading...')}</Typography>
 
-  if (error) return <Typography>Error loading data.</Typography>
+  if (error) return <Typography>{t('Error loading data')}</Typography>
 
   return (
     <Paper data-testid={testid}>

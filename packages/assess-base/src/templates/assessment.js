@@ -294,20 +294,20 @@ function AssessmentTemplate({
                       disabled={!assessmentData}
                       onConfirm={handleSubmitAssessment}
                       type="submit"
-                      title={`Submit assessment “${assessmentName}”?`}
+                      title={t('Submit assessment') + ` “${assessmentName}”?`}
                       text={
                         <>
                           <p>
-                            This assessment will be submitted to the assessors
-                            for scoring and evaluation. Contributors will no
-                            longer be able to edit the assessment content.
+                            {t(
+                              'This assessment will be submitted to the assessors for scoring and evaluation. Contributors will no longer be able to edit the assessment content.'
+                            )}
                           </p>
-                          <p>This cannot be undone.</p>
+                          <p>{t('This cannot be undone.')}</p>
                         </>
                       }
                     >
                       <Button color="secondary" variant="contained">
-                        Submit Assessment
+                        {t('Submit Assessment')}
                       </Button>
                     </ConfirmDialog>
                   )}
