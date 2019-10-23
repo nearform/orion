@@ -50,7 +50,7 @@ const ArticleVisualSummary = ({
   return (
     <WrapperComponent {...props}>
       <ThumbnailImage
-        width={280}
+        width={240}
         height={140}
         path={constructImageUrl(thumbnail)}
       />
