@@ -239,6 +239,46 @@
             }
           ]
         }
+      ],
+      "scoring": [
+        {
+          "key": "approach",
+          "name": "approach",
+          "scores": [
+            {
+              "key": "sound",
+              "name": "sound",
+              "description": "The approaches have a clear rationale, aim to fulfil and respond to relevant stakeholder needs, are described appropriately and are designed to be innovative and agile"
+            }
+          ]
+        },
+        {
+          "key": "deployment",
+          "name": "deployment",
+          "scores": [
+            {
+              "key": "executed",
+              "name": "executed",
+              "description": "The approaches are deployed in relevant areas in an effective and timely manner"
+            }
+          ]
+        },
+        {
+          "key": "assessment-refinement",
+          "name": "assessment and refinement",
+          "scores": [
+            {
+              "key": "measurement-learning",
+              "name": "measurement & learning",
+              "description": "Feedback on the effectiveness & efficiency of the approaches and their deployment are collected, lessons are learnt and shared"
+            },
+            {
+              "key": "improvement-creativity",
+              "name": "improvement through Creativity & Innovation",
+              "description": "Findings from emerging trends analysis, measurement, learning and benchmarking are used to inspire creativity and innovative solutions to improve performance in appropriate timescales"
+            }
+          ]
+        }
       ]
     },
     {

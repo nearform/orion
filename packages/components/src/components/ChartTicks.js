@@ -3,7 +3,7 @@ import { withStyles, Typography } from '@material-ui/core'
 import classnames from 'classnames'
 import T from 'prop-types'
 
-const TICKS_COUNT = 5
+const TICKS_COUNT = 6
 
 function ChartTicks({ classes, children, variant, height }) {
   const getTickContentClass = i => {

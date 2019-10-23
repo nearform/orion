@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react'
-import { Box, makeStyles } from '@material-ui/core'
+import React, { useContext } from 'react'
+import { Box, Typography, makeStyles } from '@material-ui/core'
+import { AuthContext } from 'components'
 import { getArticlesData } from '../../../queries'
-import { useManualQuery } from 'graphql-hooks'
+import useUserBookmarks from '../../../hooks/useUserBookmarks'
+import { useQuery } from 'graphql-hooks'
 import ArticleSummary from '../../content/ArticleSummary'
 import column from '../../layout/flex-with-gap/column'
 import ListTitle from '../ListTitle'
@@ -16,36 +18,46 @@ const useMostRecentArticlesStyles = makeStyles(theme => ({
 }))
 
 const MostRecentArticles = ({ className }) => {
-  const [
-    fetchMostRecentArticles,
-    { data: mostRecentArticles },
-  ] = useManualQuery(getArticlesData, {
+  const { getUserTokenData } = useContext(AuthContext)
+  const { isAuthenticated } = getUserTokenData()
+
+  const {
+    fetchUserBookmarks,
+    userBookmarks,
+    loadingBookmarks,
+  } = useUserBookmarks()
+
+  const { loading, data = {} } = useQuery(getArticlesData, {
     variables: {
+      status: 'published',
       limit: 2,
       offset: 0,
       orderBy: { created_at: 'desc' },
     },
   })
 
-  useEffect(() => {
-    fetchMostRecentArticles()
-  }, [fetchMostRecentArticles])
-
   const { wrapper } = useMostRecentArticlesStyles()
 
-  if (!mostRecentArticles) {
-    return null
+  if (loading) {
+    return <Typography>Loading...</Typography>
   }
 
+  const { article: articles } = data
   return (
     <Box
       className={[className, wrapper].join(' ')}
       component="ul"
       data-test-id="most-recent-articles"
     >
-      <ListTitle paletteColor={['grey', '800']} title="Most recent articless" />
-      {mostRecentArticles.article.map(article => (
-        <ArticleSummary article={article} key={`article-${article.id}`} />
+      <ListTitle paletteColor={['grey', '800']} title="Most recent articles" />
+      {articles.map(article => (
+        <ArticleSummary
+          article={article}
+          key={`article-${article.id}`}
+          bookmarked={userBookmarks.includes(article.id)}
+          bookmarkButtonDisabled={!isAuthenticated || loadingBookmarks}
+          onBookmarkToggle={fetchUserBookmarks}
+        />
       ))}
     </Box>
   )

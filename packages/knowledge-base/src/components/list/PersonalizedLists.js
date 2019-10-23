@@ -1,13 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 import { Typography } from '@material-ui/core'
 import { Cache } from 'aws-amplify'
-import get from 'lodash/get'
 import { useQuery, useManualQuery } from 'graphql-hooks'
 import { AuthContext } from 'components'
 import { getRandomRows } from '../../utils/array'
 import ThemedList from './ThemedList'
-import ListTitle from './ListTitle'
 import PromoSpot from '../PromoSpot'
+import ListTitle from './ListTitle'
 import {
   getRecentArticles,
   getBookmarkedArticles,
@@ -20,20 +19,25 @@ function PersonalizedLists() {
   const { userId } = getUserTokenData()
   const readArticleIds = Cache.getItem('readArticles') || []
 
-  const { recentLoading, recentData = {} } = useQuery(getRecentArticles)
+  const { loading: recentLoading, data: recentData = {} } = useQuery(
+    getRecentArticles
+  )
   const [
     fetchBookmarked,
-    { bookmarkedLoading, bookmarkedData = {} },
+    { loading: bookmarkedLoading, data: bookmarkedData = {} },
   ] = useManualQuery(getBookmarkedArticles, {
     variables: {
       userId,
     },
   })
-  const { readLoading, readData = {} } = useQuery(getReadArticles, {
-    variables: {
-      ids: readArticleIds,
-    },
-  })
+  const { loading: readLoading, data: readData = {} } = useQuery(
+    getReadArticles,
+    {
+      variables: {
+        ids: readArticleIds,
+      },
+    }
+  )
 
   useEffect(() => {
     // Only load bookmarked articles if a userId is present.
@@ -50,8 +54,10 @@ function PersonalizedLists() {
   const { user_bookmarks = [] } = bookmarkedData
   const { read_articles = [] } = readData
 
-  const readArticles =
-    read_articles.length > 0 ? read_articles : recent_articles
+  const hasReadArticles = read_articles.length > 0
+  const readArticles = hasReadArticles
+    ? read_articles
+    : recent_articles.slice(0, 3)
 
   const bookmarkedArticles =
     user_bookmarks.length > 0
@@ -59,29 +65,25 @@ function PersonalizedLists() {
           user_bookmarks.map(article => article.bookmarked_article),
           3
         )
-      : recent_articles
+      : recent_articles.slice(hasReadArticles ? 0 : 3, hasReadArticles ? 3 : 6)
 
   return (
     <ContentSignpostGrid title={<ListTitle title="Just for you" />}>
       <ThemedList
-        hideEmpty
+        hideEmpty={false}
         title={read_articles.length > 0 ? 'Last Read' : 'Recent Articles'}
-        articles={get(
-          { read_articles: readArticles.splice(0, 3) },
-          'read_articles',
-          []
-        )}
+        articles={readArticles}
       />
       <ThemedList
-        hideEmpty
+        hideEmpty={false}
         title={
-          user_bookmarks.length > 0 ? 'Bookmarked Articles' : 'Recent Articles'
+          user_bookmarks.length > 0
+            ? 'Bookmarked Articles'
+            : hasReadArticles
+            ? 'Recent Articles'
+            : ''
         }
-        articles={get(
-          { bookmarked_articles: bookmarkedArticles.splice(0, 3) },
-          'bookmarked_articles',
-          []
-        )}
+        articles={bookmarkedArticles}
       />
       <PromoSpot
         title="EFQM Forum 2019"

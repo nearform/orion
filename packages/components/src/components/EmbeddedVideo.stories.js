@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { text } from '@storybook/addon-knobs'
 
-import EmbededVideo from './EmbededVideo'
+import EmbeddedVideo from './EmbeddedVideo'
 import { Card, withStyles } from '@material-ui/core'
 
 const Section = withStyles(theme => ({
@@ -15,11 +15,11 @@ const Section = withStyles(theme => ({
   },
 }))(Card)
 
-storiesOf('EmbededVideo', module)
+storiesOf('EmbeddedVideo', module)
   .addDecorator(jsxDecorator)
   .add('Interactive', () => (
     <Section>
-      <EmbededVideo
+      <EmbeddedVideo
         url={text('Video URL', 'https://www.youtube.com/watch?v=NpEaa2P7qZI')}
       />
     </Section>

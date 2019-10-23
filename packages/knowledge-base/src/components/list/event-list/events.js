@@ -1,74 +1,126 @@
 export default [
   {
-    uid: 'abc123',
-    name: '[PAST] EFQM Certified Assessor Transformation Training',
-    startTime: '2019-09-24T08:00:00+00:00',
-    endTime: '2019-09-24T17:00:00+00:00',
-    location: {
-      link:
-        'https://www.google.com/maps/place/Avenue+des+Olympiades+2,+1140+Evere,+Belgium/@50.8702974,4.4041487,17z/data=!3m1!4b1!4m5!3m4!1s0x47c3c33668752421:0x3480fea574a7e07b!8m2!3d50.8702974!4d4.4063374?hl=en',
-      text: 'Avenue des Olympiades 2, Evere, 1140 Belgium',
-    },
-    bookingLink:
-      'http://www.shop.efqm.org/trainings/efqm-certified-assessor-transformation-training/',
-    detailsLink:
-      'https://www.efqm.org/index.php/single-event/efqm-certified-assessor-transformation-training-1/',
-  },
-  {
-    uid: 'def456',
-    name: 'EFQM Certified Assessor Transformation Training',
-    startTime: '2019-10-10T08:00:00+00:00',
-    endTime: '2019-10-11T17:00:00+00:00',
-    location: {
-      link:
-        'https://www.google.com/maps/place/Avenue+des+Olympiades+2,+1140+Evere,+Belgium/@50.8702974,4.4041487,17z/data=!3m1!4b1!4m5!3m4!1s0x47c3c33668752421:0x3480fea574a7e07b!8m2!3d50.8702974!4d4.4063374?hl=en',
-      text: 'Avenue des Olympiades 2, Evere, 1140 Belgium',
-    },
-    bookingLink:
-      'http://www.shop.efqm.org/trainings/efqm-certified-assessor-transformation-training/',
-    detailsLink:
-      'https://www.efqm.org/index.php/single-event/efqm-certified-assessor-transformation-training-2/',
-  },
-  {
-    uid: 'cba123',
-    name: 'EFQM Certified Assessor Transformation Training',
-    startTime: '2019-10-15T08:00:00+00:00',
-    endTime: '2019-10-16T17:00:00+00:00',
-    location: {
-      link:
-        'https://www.google.com/maps/place/Avenue+des+Olympiades+2,+1140+Evere,+Belgium/@50.8702974,4.4041487,17z/data=!3m1!4b1!4m5!3m4!1s0x47c3c33668752421:0x3480fea574a7e07b!8m2!3d50.8702974!4d4.4063374?hl=en',
-      text: 'Avenue des Olympiades 2, Evere, 1140 Belgium',
-    },
-    bookingLink:
-      'http://www.shop.efqm.org/trainings/efqm-certified-assessor-transformation-training/',
-    detailsLink:
-      'https://www.efqm.org/index.php/single-event/efqm-certified-assessor-transformation-training-3/',
-  },
-  {
-    uid: 'cba321',
-    name: 'Introductory Webinar – Get the Flavour!',
-    startTime: '2019-10-18T11:00:00+00:00',
-    endTime: '2019-10-18T12:00:00+00:00',
-    location: {
-      link: 'https://www.efqm.org/index.php/venue/gotowebinar/',
-      text: 'Online',
-    },
-    bookingLink:
-      'https://register.gotowebinar.com/register/5515966557203075853',
-    detailsLink:
-      'https://www.efqm.org/index.php/single-event/introductory-webinar-get-the-flavour-7/',
-  },
-  {
-    uid: 'fed654',
+    uid: 'event-2248',
     name: 'EFQM Forum 2019',
-    startTime: '2019-10-23T09:00:00+00:00',
-    endTime: '2019-10-24T17:00:00+00:00',
+    startTime: '2019-10-23 09:00:00',
+    endTime: '2019-10-24 17:00:00',
     location: {
-      link:
-        'https://www.google.com/maps/place/Tyynenmerenkatu+2,+00220+Helsinki,+Finland/@60.1598343,24.9198228,17z/data=!3m1!4b1!4m5!3m4!1s0x46920a4b5b6dd237:0xbeecedfca7d4a062!8m2!3d60.1598343!4d24.9220115?hl=en',
+      link: 'https://www.efqm.org/index.php/venue/clarion-hotel-helsinki/',
       text: 'Clarion Hotel Helsinki',
     },
-    bookingLink: '',
+    bookingLink: 'http://www.efqmforum.org/',
     detailsLink: 'https://www.efqm.org/index.php/single-event/efqm-forum-2019/',
+  },
+  {
+    uid: 'event-4590',
+    name: 'EFQM Certified Assessor Transformation Training',
+    startTime: '2019-10-30 08:00:00',
+    endTime: '2019-10-31 17:00:00',
+    location: {
+      link: 'https://www.efqm.org/index.php/venue/siemens-uk/',
+      text: 'Siemens UK',
+    },
+    bookingLink:
+      'http://www.shop.efqm.org/trainings/efqm-certified-assessor-transformation-training/',
+    detailsLink:
+      'https://www.efqm.org/index.php/single-event/efqm-certified-assessor-transformation-training-4/',
+  },
+  {
+    uid: 'event-4592',
+    name: 'EFQM Certified Assessor Transformation Training',
+    startTime: '2019-11-07 08:00:00',
+    endTime: '2019-11-08 17:00:00',
+    location: {
+      link: 'https://www.efqm.org/index.php/venue/efqm/',
+      text: 'EFQM',
+    },
+    bookingLink:
+      'http://www.shop.efqm.org/trainings/efqm-certified-assessor-transformation-training/',
+    detailsLink:
+      'https://www.efqm.org/index.php/single-event/efqm-certified-assessor-transformation-training-5/',
+  },
+  {
+    uid: 'event-4594',
+    name: 'EFQM Certified Assessor Transformation Training',
+    startTime: '2019-11-12 08:00:00',
+    endTime: '2019-11-13 17:00:00',
+    location: {
+      link: 'https://www.efqm.org/index.php/venue/efqm/',
+      text: 'EFQM',
+    },
+    bookingLink:
+      'http://www.shop.efqm.org/trainings/efqm-certified-assessor-transformation-training/',
+    detailsLink:
+      'https://www.efqm.org/index.php/single-event/efqm-certified-assessor-transformation-training-6/',
+  },
+  {
+    uid: 'event-4596',
+    name: 'EFQM Certified Assessor Transformation Training',
+    startTime: '2019-11-20 08:00:00',
+    endTime: '2019-11-21 17:00:00',
+    location: {
+      link: 'https://www.efqm.org/index.php/venue/efqm/',
+      text: 'EFQM',
+    },
+    bookingLink:
+      'http://www.shop.efqm.org/trainings/efqm-certified-assessor-transformation-training/',
+    detailsLink:
+      'https://www.efqm.org/index.php/single-event/efqm-certified-assessor-transformation-training-7/',
+  },
+  {
+    uid: 'event-4598',
+    name: 'EFQM Certified Assessor Transformation Training',
+    startTime: '2019-11-28 08:00:00',
+    endTime: '2019-11-29 17:00:00',
+    location: {
+      link: 'https://www.efqm.org/index.php/venue/siemens-uk/',
+      text: 'Siemens UK',
+    },
+    bookingLink:
+      'http://www.shop.efqm.org/trainings/efqm-certified-assessor-transformation-training/',
+    detailsLink:
+      'https://www.efqm.org/index.php/single-event/efqm-certified-assessor-transformation-training-8/',
+  },
+  {
+    uid: 'event-4600',
+    name: 'EFQM Certified Assessor Transformation Training',
+    startTime: '2019-12-03 08:00:00',
+    endTime: '2019-12-04 17:00:00',
+    location: {
+      link: 'https://www.efqm.org/index.php/venue/efqm/',
+      text: 'EFQM',
+    },
+    bookingLink:
+      'http://www.shop.efqm.org/trainings/efqm-certified-assessor-transformation-training/',
+    detailsLink:
+      'https://www.efqm.org/index.php/single-event/efqm-certified-assessor-transformation-training-9/',
+  },
+  {
+    uid: 'event-4602',
+    name: 'EFQM Certified Assessor Transformation Training',
+    startTime: '2019-12-11 08:00:00',
+    endTime: '2019-12-12 17:00:00',
+    location: {
+      link: 'https://www.efqm.org/index.php/venue/efqm/',
+      text: 'EFQM',
+    },
+    bookingLink:
+      'http://www.shop.efqm.org/trainings/efqm-certified-assessor-transformation-training/',
+    detailsLink:
+      'https://www.efqm.org/index.php/single-event/efqm-certified-assessor-transformation-training-10/',
+  },
+  {
+    uid: 'event-4604',
+    name: 'EFQM Certified Assessor Transformation Training',
+    startTime: '2019-12-17 08:00:00',
+    endTime: '2019-12-18 17:00:00',
+    location: {
+      link: 'https://www.efqm.org/index.php/venue/efqm/',
+      text: 'EFQM',
+    },
+    bookingLink:
+      'http://www.shop.efqm.org/trainings/efqm-certified-assessor-transformation-training/',
+    detailsLink:
+      'https://www.efqm.org/index.php/single-event/efqm-certified-assessor-transformation-training-11/',
   },
 ]

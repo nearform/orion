@@ -3,7 +3,7 @@ import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
 import UploadImageWidget from '../../UploadImageWidget'
-import { UserAvatar, AuthContext, EmbededVideo } from 'components'
+import { UserAvatar, AuthContext, EmbeddedVideo } from 'components'
 import { constructImageUrl } from '../../../utils/image'
 
 import {
@@ -242,6 +242,19 @@ function EditArticle({ classes, articleId }) {
     actions.setSubmitting(false)
   }
 
+  // code block below allows for old saved video articles to contain a video description field
+  if (
+    articleDetails.fields.some(({ key }) => key === 'video') &&
+    !articleDetails.fields.some(({ key }) => key === 'description')
+  ) {
+    articleDetails.fields.push({
+      key: 'description',
+      type: 'rich-text',
+      name: 'video description',
+      value: '',
+    })
+  }
+
   return (
     <>
       <SEO title={`Edit Article - ${articleDetails.title}`} />
@@ -417,9 +430,9 @@ function EditArticle({ classes, articleId }) {
                           fullWidth
                           placeholder="Paste YouTube or Vimeo URL"
                         />
-                        <EmbededVideo
+                        <EmbeddedVideo
                           url={values.fields[key]}
-                          className={classes.embededVideo}
+                          className={classes.embeddedVideo}
                         />
                       </>
                     ) : null}
@@ -567,7 +580,7 @@ export default withStyles(theme => ({
       marginTop: theme.spacing(1),
     },
   },
-  embededVideo: {
+  embeddedVideo: {
     marginTop: theme.spacing(1),
   },
 }))(EditArticle)

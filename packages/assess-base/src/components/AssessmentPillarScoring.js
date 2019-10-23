@@ -17,7 +17,7 @@ import {
   updateAssessmentScoringDataMutation,
 } from '../queries'
 
-const SLIDER_STEP = 5
+const SLIDER_STEP = 10
 
 function getOverallValue(groupOverall, cap) {
   return groupOverall.length

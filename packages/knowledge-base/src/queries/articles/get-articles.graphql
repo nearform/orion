@@ -41,6 +41,7 @@ query getArticles(
     knowledge_type
     path
     editors_pick
+    summary
   }
   field_aggregate: article_aggregate(
     where: {

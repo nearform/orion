@@ -20,6 +20,7 @@ import {
   assessmentInProgress,
   assessmentSubmitted,
 } from '../utils/assessment-status'
+import { filterOldScores } from '../utils/filter-old-scores'
 
 function CriterionPartTemplate({
   theme,
@@ -74,6 +75,8 @@ function CriterionPartTemplate({
       partNumber,
     },
   })
+
+  filterOldScores(assessment, assessmentData)
 
   useEffect(() => {
     if (!assessmentData) {

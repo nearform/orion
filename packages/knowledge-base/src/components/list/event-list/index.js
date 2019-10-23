@@ -18,12 +18,18 @@ const useEventListStyles = makeStyles(theme => ({
 const EventList = ({ className, component = 'ul' }) => {
   const { wrapper } = useEventListStyles()
 
+  // Don't display events before the cutoff date.
+  const eventCutoff = new Date()
+  // Set the cutoff date to three days before current date.
+  eventCutoff.setDate(eventCutoff.getDate() - 3)
+
   return (
     <Box className={className}>
       <ListTitle color={['secondary', 'dark']} title="Upcoming Events" />
       <Box className={wrapper} component={component} data-test-id="event-list">
         {events
-          .filter(e => Date.parse(e.startTime) > Date.parse(new Date()))
+          .filter(e => Date.parse(e.startTime) > eventCutoff)
+          .slice(0, 4)
           .map(event => (
             <EventItem event={event} key={event.uid} />
           ))}

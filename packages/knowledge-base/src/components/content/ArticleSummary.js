@@ -32,16 +32,21 @@ const ArticleSummary = ({
         </Link>
         <Box className={classes.articleMeta}>
           <Typography variant="h4">
-            {formatDateAsMonthAndYear(article.created_at)}
+            {formatDateAsMonthAndYear(article.updated_at)}
           </Typography>
           <Typography variant="h4" className={classes.authorTitle}>
-            {get(article, 'createdBy.first_name')}{' '}
-            {get(article, 'createdBy.last_name')}
+            {get(article, 'authors.author.first_name')}{' '}
+            {get(article, 'authors.author.last_name')}
           </Typography>
         </Box>
         <RichText
           className={classes.articleSummaryText}
-          {...{ value: article.summary || '<p>Summary not available</p>' }}
+          {...{
+            value:
+              article.summary ||
+              article.subtitle ||
+              '<p>Summary not available</p>',
+          }}
         />
         <Box alignItems="center" display="flex" flexDirection="row">
           <Link to={`/content/${article.path}`} className={classes.readMore}>

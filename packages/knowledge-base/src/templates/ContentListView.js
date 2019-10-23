@@ -6,10 +6,10 @@ import get from 'lodash/get'
 import Taxonomies from '../components/content/Taxonomies'
 import ArticleSummary from '../components/content/ArticleSummary'
 import useTaxonomies from '../hooks/useTaxonomies'
+import useUserBookmarks from '../hooks/useUserBookmarks'
 import {
   getArticlesSearchResults,
   getArticlesCategoryResults,
-  getUserBookmarks,
 } from '../queries'
 import { getTaxonomyItemByKey, buildWhereClause } from '../utils/taxonomy'
 import { AuthContext, PaddedContainer } from 'components'
@@ -27,13 +27,11 @@ const ListContent = ({
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { userId } = getUserTokenData()
 
-  const [
+  const {
     fetchUserBookmarks,
-    { data: bookmarksData, loading: fetchingBookmarks },
-  ] = useManualQuery(getUserBookmarks, { variables: { userId } })
-  const userBookmarks = get(bookmarksData, 'user_bookmarks', []).map(
-    bookmark => bookmark.article_id
-  )
+    userBookmarks,
+    loadingBookmarks,
+  } = useUserBookmarks()
 
   const [
     fetchArticlesByTaxonomy,
@@ -169,7 +167,7 @@ const ListContent = ({
                 <ArticleSummary
                   article={article}
                   bookmarked={userBookmarks.includes(article.id)}
-                  bookmarkButtonDisabled={fetchingBookmarks}
+                  bookmarkButtonDisabled={loadingBookmarks}
                   onBookmarkToggle={fetchUserBookmarks}
                   key={`article-${article.id}`}
                 />

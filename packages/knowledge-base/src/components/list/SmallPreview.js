@@ -49,8 +49,8 @@ const SmallPreview = ({ article, component = 'li' }) => {
         <div className={classes.article}>
           <ThumbnailImage
             width={56}
-            path={useAmplifyImage(article.thumbnail)}
             height={65}
+            path={useAmplifyImage(article.thumbnail)}
           />
           <Box className={classes.articleDetails}>
             <div className={classes.taxonomyLabel}>

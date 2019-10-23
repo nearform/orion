@@ -56,45 +56,43 @@ function AssessmentsTable({ classes }) {
       query={getAssessmentsData}
       orderBy={{ created_at: 'desc' }}
       renderTableBody={data =>
-        data &&
-        data.assessment.map((assessment, index) => (
-          <TableRow hover key={index} size="small">
-            <TableCell>{assessment.name}</TableCell>
-            <TableCell>{formatDate(assessment.created_at)}</TableCell>
-            <TableCell>
-              {t(assessmentKeyToName[assessment.key].tableName)}
-            </TableCell>
-            <TableCell>
-              {get(assessment, 'owner.user_groups[0].group.name')}
-            </TableCell>
-            <TableCell>
-              <AssessmentStatusChip status={assessment.status} />
-            </TableCell>
-            <TableCell>
-              <ManagementReportLink
-                assessment={assessment}
-                spacing={1}
-                text={t('View')}
-              />
-            </TableCell>
-            <TableCell>
-              <FeedbackReportLink
-                assessment={assessment}
-                visible={assessment.status === 'submitted'}
-                spacing={1}
-                text={t('View')}
-              />
-            </TableCell>
-            <TableCell padding="none">
-              <IconButton
-                component={Link}
-                to={`/assessment/${assessment.key}#${assessment.id}`}
-              >
-                <ChevronRightIcon />
-              </IconButton>
-            </TableCell>
-          </TableRow>
-        ))
+        data.assessment.map((assessment, index) => {
+          const { id, key, name, created_at, status } = assessment
+          const { [key]: { tableName = '' } = {} } = assessmentKeyToName
+          return (
+            <TableRow hover key={index} size="small">
+              <TableCell>{name}</TableCell>
+              <TableCell>{formatDate(created_at)}</TableCell>
+              <TableCell>{t(tableName)}</TableCell>
+              <TableCell>
+                {get(assessment, 'owner.user_groups[0].group.name')}
+              </TableCell>
+              <TableCell>
+                <AssessmentStatusChip status={status} />
+              </TableCell>
+              <TableCell>
+                <ManagementReportLink
+                  assessment={assessment}
+                  spacing={1}
+                  text={t('View')}
+                />
+              </TableCell>
+              <TableCell>
+                <FeedbackReportLink
+                  assessment={assessment}
+                  visible={status === 'submitted'}
+                  spacing={1}
+                  text={t('View')}
+                />
+              </TableCell>
+              <TableCell padding="none">
+                <IconButton component={Link} to={`/assessment/${key}#${id}`}>
+                  <ChevronRightIcon />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          )
+        })
       }
     />
   )
