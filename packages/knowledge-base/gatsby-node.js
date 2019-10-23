@@ -68,20 +68,6 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   )
 
-  /*
-  const articlesByTaxonomies = await Promise.all(articlesByTaxonomiesPromises)
-    .then(response => response.map(data => data.data.raw_salmon))
-    .then(data =>
-      zipWith(data, taxonomies, (data, taxonomy) => ({
-        ...data,
-        taxonomy,
-      }))
-    )
-    .catch(error => {
-      throw error
-    })
-    */
-
   articlesByTaxonomies.forEach(results =>
     chunk(results.article, PAGE_SIZE).forEach((articles, index) => {
       createPage({
