@@ -80,6 +80,7 @@ export default withStyles(theme => ({
   },
   articleImageLink: {
     flex: '0 0 280px',
+    maxWidth: '280px',
   },
   articleMeta: {
     display: 'flex',
