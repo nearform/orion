@@ -25,9 +25,11 @@ query getCategoryArticles(
     taxonomy_items {
       taxonomy_id
     }
-    createdBy {
-      first_name
-      last_name
+    authors {
+      author {
+        first_name
+        last_name
+      }
     }
     knowledge_type
     path
