@@ -4,7 +4,14 @@ import { withStyles, Grid, Button } from '@material-ui/core'
 
 import { SectionTitleField, InputField, SubmitButton } from './FormFields'
 
-function PasswordResetSend({ theme, classes, send, goToSignIn, handleInput }) {
+function PasswordResetSend({
+  theme,
+  classes,
+  send,
+  goToSignIn,
+  handleInput,
+  message,
+}) {
   return (
     <div className={classes.root}>
       <div>
@@ -17,6 +24,13 @@ function PasswordResetSend({ theme, classes, send, goToSignIn, handleInput }) {
               Reset your password
             </SectionTitleField>
           </Grid>
+          {message && (
+            <Grid item xs={params.xs}>
+              <div className={classes.message}>
+                <p>{message}</p>
+              </div>
+            </Grid>
+          )}
           <Grid item>
             <InputField
               name="username"
@@ -54,6 +68,7 @@ PasswordResetSend.propTypes = {
   send: T.func.isRequired,
   goToSignIn: T.func.isRequired,
   handleInput: T.func.isRequired,
+  message: T.string,
 }
 
 const styles = {
