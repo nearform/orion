@@ -278,7 +278,7 @@ function AssessmentTemplate({
                   >
                     {t(assessment.name)}
                     {assessment.guidance && (
-                      <ContextualHelp helpContent={assessment.guidance}>
+                      <ContextualHelp helpContent={t(assessment.guidance)}>
                         <HelpIcon
                           color="secondary"
                           className={classes.helpIcon}
@@ -525,7 +525,7 @@ function AssessmentTemplate({
                                 color="secondary"
                                 variant="outlined"
                               >
-                                upload key information
+                                {t('upload key information')}
                               </UploadButton>
                             </Grid>
                             <Grid item>
@@ -535,7 +535,7 @@ function AssessmentTemplate({
                                 variant="contained"
                                 disabled={!assessmentId || !dirty}
                               >
-                                Save Updates
+                                {t('Save Updates')}
                               </Button>
                             </Grid>
                           </Grid>

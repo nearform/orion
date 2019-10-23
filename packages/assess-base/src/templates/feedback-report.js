@@ -13,6 +13,7 @@ import {
   TableBody,
   IconButton,
 } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
 import {
   ASSESSMENT_STATUS,
   AuthContext,
@@ -67,6 +68,7 @@ function FeedbackReport({
 
   const { getUserTokenData } = useContext(AuthContext)
   const { isAdmin, isAssessor } = getUserTokenData()
+  const { t } = useTranslation()
 
   const [fetchAssessmentFeedbackReportData, { data }] = useManualQuery(
     getAssessmentFeedbackReportData,
@@ -103,7 +105,7 @@ function FeedbackReport({
 
   const chartData = getChartData(assessment, assessmentData, pillarColors)
 
-  const assessmentName = get(assessmentData, 'name', 'Loading...')
+  const assessmentName = get(assessmentData, 'name', t('Loading...'))
 
   return (
     <div className={classes.root}>
@@ -115,13 +117,13 @@ function FeedbackReport({
           variant="text"
           color="secondary"
         >
-          ◀ Assessment overview
+          ◀ {t('Assessment overview')}
         </Button>
         <div className={classes.section}>
           <Grid container>
             <Grid item>
               <Typography variant="h4" gutterBottom>
-                feedback report
+                {t('feedback report')}
               </Typography>
               <Typography variant="h2" color="primary">
                 {assessmentName}
@@ -132,12 +134,13 @@ function FeedbackReport({
               <ConfirmDialog
                 disabled={!assessmentData}
                 onConfirm={handleSubmitFeedbackReport}
-                title={`Submit report for “${assessmentName}”?`}
-                text={`The feedback report for this assessment will be finalised.
-                  No more edits or scoring will be possible. This cannot be undone.`}
+                title={t(`Submit report for`) + ` “${assessmentName}”?`}
+                text={t(
+                  `The feedback report for this assessment will be finalised. No more edits or scoring will be possible. This cannot be undone.`
+                )}
               >
                 <Button color="secondary" variant="contained">
-                  Submit Feedback Report
+                  {t('Submit Feedback Report')}
                 </Button>
               </ConfirmDialog>
             </Grid>
@@ -147,11 +150,12 @@ function FeedbackReport({
           <Grid container spacing={5}>
             <Grid item xs={3}>
               <SectionTitle barColor={theme.palette.primary.dark} gutterBottom>
-                Assessment scoring summary
+                {t(`Assessment scoring summary`)}
               </SectionTitle>
               <Typography>
-                Mouse over the criteria bar on the chart to see the sub-criteria
-                scoring.
+                {t(
+                  `Mouse over the criteria bar on the chart to see the sub-criteria scoring.`
+                )}
               </Typography>
             </Grid>
             <Grid item xs>
@@ -236,7 +240,7 @@ function FeedbackReport({
                               <Link
                                 to={`/assessment/${assessmentData.key}/${pillarDef.key}/${criterionDef.key}/1/#${assessmentId}`}
                               >
-                                {criterionDef.name}
+                                {t(criterionDef.name)}
                               </Link>
                             </SectionTitle>
                           </Grid>
@@ -251,7 +255,7 @@ function FeedbackReport({
                                   <Table size="small">
                                     <TableHead>
                                       <TableRow>
-                                        <TableCell>{label}</TableCell>
+                                        <TableCell>{t(label)}</TableCell>
                                         <TableCell align="right" />
                                       </TableRow>
                                     </TableHead>
@@ -289,7 +293,7 @@ function FeedbackReport({
         <div className={classes.section}>
           {assessmentData && (
             <FeedbackReportInput
-              label="Advice for Company"
+              label={t('Advice for Company')}
               name="advice"
               assessmentId={assessmentId}
               initialValue={assessmentData.advice || ''}
