@@ -13,6 +13,7 @@ const BookmarkButton = ({
   bookmarked: bookmarkedProp,
   disabled: disabledProp,
   onToggle: onToggleProp,
+  compact,
   className,
   classes,
 }) => {
@@ -70,17 +71,19 @@ const BookmarkButton = ({
         <CircularProgress
           color="secondary"
           size={24}
-          className={classes.sidebarButtonIcon}
+          className={!compact && classes.sidebarButtonIcon}
         />
       ) : (
         <BookmarkIcon
           className={classnames([
-            classes.sidebarButtonIcon,
+            !compact && classes.sidebarButtonIcon,
             classes.secondaryIcon,
           ])}
         />
       )}
-      <Hidden only="xs">{bookmarked ? 'Bookmarked' : 'Bookmark'}</Hidden>
+      {!compact && (
+        <Hidden only="xs">{bookmarked ? 'Bookmarked' : 'Bookmark'}</Hidden>
+      )}
     </Button>
   )
 }
@@ -91,12 +94,14 @@ BookmarkButton.propTypes = {
   classes: T.object.isRequired,
   disabled: T.bool,
   onToggle: T.func,
+  compact: T.bool,
 }
 
 export default withStyles(theme => ({
   iconButtonPrimary: {
     color: theme.articleWidgetColor,
     fontWeight: 'bold',
+    flexGrow: 0,
   },
   sidebarButtonIcon: {
     marginRight: theme.spacing(1),

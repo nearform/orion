@@ -35,6 +35,7 @@ const ArticlePreview = ({
             bookmarked={bookmarked}
             onToggle={onBookmarkToggle}
             disabled={bookmarkDisabled}
+            compact={true}
           />
         </div>
       </div>
@@ -52,6 +53,7 @@ const styles = theme => ({
   articleTitle: theme.editorsPicks.title,
   articleMeta: {
     display: 'flex',
+    justifyContent: 'space-between',
   },
   articleDate: {
     ...theme.editorsPicks.date,
