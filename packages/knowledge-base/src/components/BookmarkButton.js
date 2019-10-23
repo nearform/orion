@@ -4,7 +4,13 @@ import { useMutation } from 'graphql-hooks'
 import classnames from 'classnames'
 import { AuthContext } from 'components'
 import { BookmarkOutlined, BookmarkBorderOutlined } from '@material-ui/icons'
-import { withStyles, Button, CircularProgress, Hidden } from '@material-ui/core'
+import {
+  withStyles,
+  Button,
+  CircularProgress,
+  Hidden,
+  IconButton,
+} from '@material-ui/core'
 import { addUserBookmarkMutation, deleteUserBookmarkMutation } from '../queries'
 import useBookmarkData from '../hooks/useBookmarkData'
 
@@ -59,6 +65,24 @@ const BookmarkButton = ({
 
   const loading = bookmarking || unbookmarking
 
+  if (compact) {
+    return (
+      <IconButton
+        size="small"
+        color="primary"
+        className={classnames([classes.iconButtonPrimary, className])}
+        disabled={disabled || loading}
+        onClick={toggleBookmark}
+      >
+        {loading ? (
+          <CircularProgress color="secondary" size={24} />
+        ) : (
+          <BookmarkIcon className={classnames([classes.secondaryIcon])} />
+        )}
+      </IconButton>
+    )
+  }
+
   return (
     <Button
       size="small"
@@ -71,19 +95,17 @@ const BookmarkButton = ({
         <CircularProgress
           color="secondary"
           size={24}
-          className={!compact && classes.sidebarButtonIcon}
+          className={classes.sidebarButtonIcon}
         />
       ) : (
         <BookmarkIcon
           className={classnames([
-            !compact && classes.sidebarButtonIcon,
+            classes.sidebarButtonIcon,
             classes.secondaryIcon,
           ])}
         />
       )}
-      {!compact && (
-        <Hidden only="xs">{bookmarked ? 'Bookmarked' : 'Bookmark'}</Hidden>
-      )}
+      <Hidden only="xs">{bookmarked ? 'Bookmarked' : 'Bookmark'}</Hidden>
     </Button>
   )
 }
@@ -101,7 +123,6 @@ export default withStyles(theme => ({
   iconButtonPrimary: {
     color: theme.articleWidgetColor,
     fontWeight: 'bold',
-    flexGrow: 0,
   },
   sidebarButtonIcon: {
     marginRight: theme.spacing(1),
