@@ -4,4 +4,5 @@ module.exports = {
   knowledgeTypesPath: 'knowledgeTypes',
   heroImageNameAB: 'bannerHeroAB',
   heroImageNameKB: 'bannerHeroKB',
+  modelImageAB: 'modelImageAB',
 }
