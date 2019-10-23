@@ -57,7 +57,12 @@ function RegisterConfirm({
             </InputField>
           </Grid>
           <Grid item xs={5}>
-            <InputField name="code" required onChange={handleInput}>
+            <InputField
+              name="code"
+              required
+              onChange={handleInput}
+              onEnterKey={confirm}
+            >
               Enter your code
             </InputField>
           </Grid>

@@ -32,6 +32,7 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
               data-testid="login-password"
               type="password"
               onChange={handleInput}
+              onEnterKey={signIn}
             >
               please enter your password
             </InputField>
