@@ -4,7 +4,15 @@ import { Typography, withStyles, Grid, Button } from '@material-ui/core'
 
 import { SectionTitleField, InputField, SubmitButton } from './FormFields'
 
-function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
+function Login({
+  theme,
+  classes,
+  signIn,
+  goToSignUp,
+  goToReset,
+  handleInput,
+  message,
+}) {
   return (
     <div className={classes.root}>
       <div>
@@ -17,6 +25,13 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
               Sign in to your account
             </SectionTitleField>
           </Grid>
+          {message && (
+            <Grid item xs={10}>
+              <div className={classes.message}>
+                <p>{message}</p>
+              </div>
+            </Grid>
+          )}
           <Grid item xs={10}>
             <InputField
               name="username"
@@ -32,6 +47,7 @@ function Login({ theme, classes, signIn, goToSignUp, goToReset, handleInput }) {
               data-testid="login-password"
               type="password"
               onChange={handleInput}
+              onEnterKey={signIn}
             >
               please enter your password
             </InputField>
@@ -98,6 +114,7 @@ Login.propTypes = {
   goToSignUp: T.func.isRequired,
   goToReset: T.func.isRequired,
   handleInput: T.func.isRequired,
+  message: T.string,
 }
 
 const styles = {

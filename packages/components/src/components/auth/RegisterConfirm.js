@@ -13,6 +13,7 @@ function RegisterConfirm({
   goToSignIn,
   handleInput,
   username,
+  message,
 }) {
   return (
     <div className={classes.root}>
@@ -26,7 +27,14 @@ function RegisterConfirm({
               Confirm new Account
             </SectionTitleField>
           </Grid>
-          <Grid item xs={10}>
+          {message && (
+            <Grid item xs={8}>
+              <div className={classes.message}>
+                <p>{message}</p>
+              </div>
+            </Grid>
+          )}
+          <Grid item xs={8}>
             <div className={classes.message}>
               <div>
                 <p>
@@ -44,7 +52,7 @@ function RegisterConfirm({
               </div>
             </div>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={8}>
             <InputField
               name="username"
               type="email"
@@ -57,7 +65,12 @@ function RegisterConfirm({
             </InputField>
           </Grid>
           <Grid item xs={5}>
-            <InputField name="code" required onChange={handleInput}>
+            <InputField
+              name="code"
+              required
+              onChange={handleInput}
+              onEnterKey={confirm}
+            >
               Enter your code
             </InputField>
           </Grid>
@@ -89,6 +102,7 @@ RegisterConfirm.propTypes = {
   goToSignIn: T.func.isRequired,
   handleInput: T.func.isRequired,
   username: T.string,
+  message: T.string,
 }
 
 const styles = theme => ({

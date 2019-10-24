@@ -11,14 +11,12 @@ function EditorsPicks() {
   if (loading) return <Typography>Loading...</Typography>
 
   const { editors_picks = [] } = data
-  const editorsPicks =
-    editors_picks.length > 3 ? getRandomRows(editors_picks, 3) : editors_picks
 
   return (
     <FeatureArticles
       hideEmpty
       title="Editor's Picks"
-      articles={editorsPicks}
+      articles={getRandomRows(editors_picks, 3)}
       align="flex-start"
     />
   )

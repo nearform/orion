@@ -94,6 +94,7 @@ export default class CustomSignUp extends authEventMixin(SignUp) {
         }}
         handleInput={this.handleInputChange}
         signUpFields={this.signUpFields}
+        message={this.props.message}
       />
     )
   }

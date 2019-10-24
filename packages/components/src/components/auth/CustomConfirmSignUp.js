@@ -24,6 +24,7 @@ export default class CustomConfirmSignUp extends authEventMixin(ConfirmSignUp) {
         resend={event => super.resend(event)}
         handleInput={this.handleInputChange}
         username={this.usernameFromAuthData()}
+        message={this.props.message}
       />
     )
   }

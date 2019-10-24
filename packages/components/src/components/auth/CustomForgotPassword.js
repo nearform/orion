@@ -39,6 +39,7 @@ export default class CustomForgotPassword extends authEventMixin(
           goToSignIn={() => super.changeState('signIn')}
           send={event => super.send(event)}
           handleInput={handleInputChange}
+          message={this.props.message}
         />
       )
     }

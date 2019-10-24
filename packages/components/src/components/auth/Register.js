@@ -11,6 +11,7 @@ function Register({
   goToSignIn,
   handleInput,
   signUpFields,
+  message,
 }) {
   return (
     <div className={classes.root}>
@@ -24,6 +25,13 @@ function Register({
               Create a new account
             </SectionTitleField>
           </Grid>
+          {message && (
+            <Grid item xs={params.xs}>
+              <div className={classes.message}>
+                <p>{message}</p>
+              </div>
+            </Grid>
+          )}
           {signUpFields.map(params => (
             <Grid key={params.key} item xs={params.xs}>
               <InputField
@@ -77,6 +85,7 @@ Register.propTypes = {
   goToSignIn: T.func.isRequired,
   handleInput: T.func.isRequired,
   signUpFields: T.array.isRequired,
+  message: T.string,
 }
 
 const styles = {
