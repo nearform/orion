@@ -128,11 +128,19 @@ function InputTextField({
   required,
   disabled,
   onChange,
+  onEnterKey,
   children,
 }) {
   const classes = useStyles()
   const { submitting, errors } = useContext(AuthFormStateContext)
   const error = errors[name]
+
+  const onKeyPress = e => {
+    if (e.key === 'Enter' && onEnterKey) {
+      onEnterKey(e)
+    }
+  }
+
   return (
     <React.Fragment>
       <FieldLabel required={required} hasError={!!error}>
@@ -150,6 +158,7 @@ function InputTextField({
         onChange={onChange}
         fullWidth
         className={error ? classes.fieldError : classes.fieldOK}
+        inputProps={{ onKeyPress }}
       />
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </React.Fragment>
@@ -164,6 +173,7 @@ InputTextField.propTypes = {
   required: T.bool,
   disabled: T.bool,
   onChange: T.func,
+  onEnterKey: T.func,
   children: T.node.isRequired,
 }
 

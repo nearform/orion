@@ -47,6 +47,7 @@ function Login({
               data-testid="login-password"
               type="password"
               onChange={handleInput}
+              onEnterKey={signIn}
             >
               please enter your password
             </InputField>
