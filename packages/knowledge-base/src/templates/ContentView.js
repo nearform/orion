@@ -15,7 +15,21 @@ import SEO from '../components/SEO'
 import { constructImageUrl } from '../utils/image'
 import { getArticleDetails, getArticleSummary } from '../queries'
 
-function ContentView({ slug, classes }) {
+// A minimal set of article properties to allow the page to render fully.
+const EmptyArticle = {
+  id: 0,
+  title: '',
+  subtitle: '',
+  authors: [],
+  taxonomy_items: [],
+  published_at: '',
+}
+
+function ContentView({
+  slug,
+  classes,
+  pageContext: { articleSummary = EmptyArticle } = {},
+}) {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
 
@@ -27,7 +41,9 @@ function ContentView({ slug, classes }) {
   const [isChanged, setIsChanged] = useState(Symbol())
   const refetchArticle = () => setIsChanged(Symbol())
 
-  const contentId = slug.split('-')[0]
+  const articlePath = slug || get(articleSummary, 'path', '')
+  const contentId = articlePath.split('-')[0]
+
   useEffect(() => {
     if (contentId) {
       fetchArticle({
@@ -39,15 +55,7 @@ function ContentView({ slug, classes }) {
   const article = get(
     data,
     showFullArticle ? 'articleDetails' : 'articleSummary',
-    // Below is a minimal set of article properties to allow the page to render fully.
-    {
-      id: 0,
-      title: '',
-      subtitle: '',
-      authors: [],
-      taxonomy_items: [],
-      published_at: '',
-    }
+    articleSummary
   )
 
   const readCache = Cache.getItem('readArticles') || []
