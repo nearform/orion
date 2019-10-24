@@ -57,8 +57,7 @@ const ListContent = ({
 
   const taxonomyTypes = useTaxonomies()
   const [taxonomyIds, setTaxonomyIds] = useState([])
-  // TODO: uncomment below when SSR is enabled
-  // const [touched, setTouched] = useState(false)
+  const [touched, setTouched] = useState(false)
 
   const [page, setPage] = useState(pageFromContext || 1)
   const offset = (page - 1) * PAGE_SIZE
@@ -69,10 +68,7 @@ const ListContent = ({
       ? Math.min(offset + PAGE_SIZE, totalResults)
       : totalResults
 
-  // TODO: uncomment below when SSR is enabled
-  // const isPreRendered = !touched && !term
-  // TODO: delete below when SSR is enabled
-  const isPreRendered = false
+  const isPreRendered = !(touched || term || taxonomy)
 
   const fetchArticles = term ? fetchArticlesByTitle : fetchArticlesByTaxonomy
   const vars = useMemo(
@@ -108,29 +104,34 @@ const ListContent = ({
   }, [isAuthInitialized, userId, fetchUserBookmarks])
 
   const handleTaxonomyFilter = (id, active) => {
-    // TODO: uncomment below when SSR is enabled
-    // setTouched(true)
+    setTouched(true)
     setPage(1)
     setTaxonomyIds(taxonomyIds =>
       active ? [...taxonomyIds, id] : taxonomyIds.filter(item => item !== id)
     )
   }
 
+  const taxonomyKey = taxonomy || get(data, 'taxonomy.key')
+
   const handlePagination = dir => {
     if (isPreRendered) {
       navigate(
-        `/section/${taxonomy}${page + dir !== 1 ? `/page/${page + dir}` : ''}`
+        `/section/${taxonomyKey}${
+          page + dir !== 1 ? `/page/${page + dir}` : ''
+        }`
       )
     } else {
       setPage(page => page + dir)
     }
   }
-  const section = getTaxonomyItemByKey(taxonomyTypes, taxonomy)
+
+  const section = getTaxonomyItemByKey(taxonomyTypes, taxonomyKey)
+  const sectionName = get(section, 'name', '')
 
   return (
     <PaddedContainer>
       <SEO
-        title={term ? `Search Results - ${term}` : `${section.name} Section`}
+        title={term ? `Search Results - ${term}` : `${sectionName} Section`}
       />
       <Grid container spacing={3}>
         <Grid item xs={12} className={classes.pageHeader}>
@@ -139,10 +140,10 @@ const ListContent = ({
               <Typography variant="h4" color="secondary">
                 {term
                   ? 'SEARCH RESULTS FOR'
-                  : data.taxonomy && data.taxonomy[0].taxonomy_type.name}
+                  : get(data, 'taxonomy[0].taxonomy_type.name')}
               </Typography>
               <Typography variant="h1">
-                {term ? <span>&lsquo;{term}&rsquo;</span> : section.name}
+                {term ? <span>&lsquo;{term}&rsquo;</span> : sectionName}
               </Typography>
             </Grid>
             <Grid item xs={3}>
