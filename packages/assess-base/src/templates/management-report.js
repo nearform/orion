@@ -5,6 +5,7 @@ import { Box, withStyles } from '@material-ui/core'
 
 import { AuthContext, PaddedContainer } from 'components'
 import { useManualQuery } from 'graphql-hooks'
+import { useTranslation } from 'react-i18next'
 
 import HeadedSection from '../components/management-report/headed-section'
 import HeadedSubSection from '../components/management-report/headed-sub-section'
@@ -19,6 +20,8 @@ function ManagementReport({ assessmentId, classes }) {
     getManagementReportData,
     { variables: { assessmentId } }
   )
+
+  const { t } = useTranslation()
 
   useEffect(() => {
     fetchManagementReportData()
@@ -70,15 +73,15 @@ function ManagementReport({ assessmentId, classes }) {
     <Box className={classes.pageContainer} component="article">
       <PaddedContainer>
         <Header assessment={assessment} />
-        <HeadedSection pillar="default" title="Key Information">
+        <HeadedSection pillar="default" title={t('Key Information')}>
           {// Output the key info summary section (page intro)
           keyInfoItemsMeta.map(({ key, name }) => {
             const keyInfoBody =
               assessmentKeyInfo && assessmentKeyInfo[key]
-                ? assessmentKeyInfo[key]
-                : 'not provided for this assessment'
+                ? t(assessmentKeyInfo[key])
+                : t('not provided for this assessment')
             return (
-              <HeadedSubSection body={keyInfoBody} key={key} title={name} />
+              <HeadedSubSection body={keyInfoBody} key={key} title={t(name)} />
             )
           })}
         </HeadedSection>
@@ -99,9 +102,9 @@ function ManagementReport({ assessmentId, classes }) {
               // Create a section with header to hold all of this criterion's questions
               return (
                 <Fragment key={criterionKey}>
-                  <HeadedSection pillar={pillarKey} title={criterionName}>
+                  <HeadedSection pillar={pillarKey} title={t(criterionName)}>
                     {summary && (
-                      <HeadedSubSection title="Summary" body={summary} />
+                      <HeadedSubSection title="Summary" body={t(summary)} />
                     )}
                   </HeadedSection>
                   {// Loop over each part (question)
@@ -122,7 +125,7 @@ function ManagementReport({ assessmentId, classes }) {
                         key={key}
                         pillarKey={pillarKey}
                         questionTitles={questionTitles}
-                        title={name}
+                        title={t(name)}
                       />
                     )
                   })}
