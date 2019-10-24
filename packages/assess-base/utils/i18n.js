@@ -17,6 +17,7 @@ export async function init() {
     interpolation: {
       escapeValue: false,
     },
+    returnEmptyString: false,
   })
 
   return i18n
