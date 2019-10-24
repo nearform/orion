@@ -49,11 +49,7 @@ const ArticleVisualSummary = ({
 
   return (
     <WrapperComponent {...props}>
-      <ThumbnailImage
-        width={240}
-        height={140}
-        path={constructImageUrl(thumbnail)}
-      />
+      <ThumbnailImage height={140} path={constructImageUrl(thumbnail)} />
       {text && (
         <Box className={textBox} component="p">
           {text}
