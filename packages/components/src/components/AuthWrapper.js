@@ -47,7 +47,13 @@ const extractTokenPayload = dataKey => {
   return claims[dataKey] || null
 }
 
-export function AuthWrapper({ isAuthInitialized, children }) {
+export function AuthWrapper({
+  isAuthInitialized,
+  // See comment in UserGroups; this prop can be removed once issues
+  // around group parentage are resolved.
+  allowNoParentGroups = false,
+  children,
+}) {
   const [userGroups, setUserGroups] = useState([])
 
   /**
@@ -156,11 +162,13 @@ export function AuthWrapper({ isAuthInitialized, children }) {
     hasPermissions,
     isAuthenticatedSync,
     setUserGroups,
+    allowNoParentGroups,
   }
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
 }
 AuthWrapper.propTypes = {
   isAuthInitialized: T.bool,
+  allowNoParentGroups: T.bool,
   children: T.node,
 }

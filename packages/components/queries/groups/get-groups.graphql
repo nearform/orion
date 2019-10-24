@@ -1,5 +1,17 @@
-query getGroups($limit: Int, $offset: Int, $orderBy: group_order_by!) {
-  group(limit: $limit, offset: $offset, order_by: [$orderBy]) {
+query getGroups(
+  $parentId: Int
+  $limit: Int
+  $offset: Int
+  $orderBy: group_order_by!
+) {
+  group(
+    where: {
+      _or: [{ id: { _eq: $parentId } }, { parent_id: { _eq: $parentId } }]
+    }
+    limit: $limit
+    offset: $offset
+    order_by: [$orderBy]
+  ) {
     id
     name
     type

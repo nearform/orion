@@ -11,17 +11,18 @@ import UserGroups from './UserGroups'
 import GroupUsers from './GroupUsers'
 
 function AdminRoute({ SEO }) {
-  const { getUserAuth } = useContext(AuthContext)
+  const { getUserTokenData, getUserAuth } = useContext(AuthContext)
   const [pageTitle, setPageTitle] = useState('')
 
-  const canAdministerGroups = getUserAuth('platform-admin')
+  const canAccessPendingUsers = getUserAuth('platform-admin')
+  const canAccessGroups = getUserAuth('partner-admin')
 
   const userCanAccess = {
-    pendingUsers: canAdministerGroups,
+    pendingUsers: canAccessPendingUsers,
     allUsers: true,
-    groups: canAdministerGroups,
+    groups: canAccessGroups,
   }
-  const defaultSection = canAdministerGroups ? 'pending-users' : 'all-users'
+  const defaultSection = canAccessPendingUsers ? 'pending-users' : 'all-users'
 
   return (
     <PaddedContainer>
