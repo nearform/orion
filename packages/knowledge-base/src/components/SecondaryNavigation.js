@@ -60,7 +60,7 @@ function SecondaryNavigation({ classes, dark, theme }) {
     classes.lastButton}`
 
   return !search ? (
-    <Grid container justify="flex-end" spacing={3}>
+    <Grid id="secondary-navigation" container justify="flex-end" spacing={3}>
       {taxonomyTypes.map((type, index) => (
         <Grid item key={`tax_type_${type.key}`}>
           <QuickLinksMenu dark={dark} label={type.name}>
@@ -95,7 +95,7 @@ function SecondaryNavigation({ classes, dark, theme }) {
     </Grid>
   ) : (
     <>
-      <Grid container justify="flex-end" spacing={3}>
+      <Grid id="secondary-navigation" container justify="flex-end" spacing={3}>
         <ClickAwayListener onClickAway={() => setSearch(false)}>
           <Grid item>
             <Input

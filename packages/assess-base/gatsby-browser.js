@@ -3,6 +3,7 @@ import { GraphQLClient, ClientContext } from 'graphql-hooks'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import './src/styles/global.css'
 
 import {
   addTranslations,
@@ -17,7 +18,6 @@ import * as i18n from './utils/i18n'
 import AppFooter from './src/components/AppFooter'
 import MainToolbar from './src/components/MainToolbar'
 import useUserGroups from './src/hooks/useUserGroups'
-import './src/styles/global.css'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
 
