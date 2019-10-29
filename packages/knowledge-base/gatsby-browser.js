@@ -50,7 +50,12 @@ const AuthInitializationWrapper = ({ element }) => {
       ThemeWrapper={ThemeWrapper}
       CssBaseline={CssBaseline}
     >
-      <AuthWrapper isAuthInitialized={isAuthInitialized}>{element}</AuthWrapper>
+      <AuthWrapper
+        isAuthInitialized={isAuthInitialized}
+        allowNoParentGroups={true}
+      >
+        {element}
+      </AuthWrapper>
     </RootWrapper>
   )
 }
