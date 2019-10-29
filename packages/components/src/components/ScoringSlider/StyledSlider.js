@@ -1,6 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core'
-import Slider from '@material-ui/lab/Slider'
+import Slider from '@material-ui/core/Slider'
 import T from 'prop-types'
 
 const styles = theme => {
@@ -29,9 +29,10 @@ const styles = theme => {
     background: 'inherit',
   }
 
-  const trackBefore = {
+  const track = {
     borderTopLeftRadius: theme.spacing(1),
     borderBottomLeftRadius: theme.spacing(1),
+    height: theme.spacing(2),
     '&$disabled': {
       '&::after': {
         ...disabledTrackGapFiller,
@@ -39,10 +40,13 @@ const styles = theme => {
       },
     },
   }
-  const trackAfter = {
+  const rail = {
     borderTopRightRadius: theme.spacing(1),
     borderBottomRightRadius: theme.spacing(1),
+    height: theme.spacing(2),
     '&$disabled': {
+      ...disabledTrackGapFiller,
+      left: `-${MUI_DISABLED_SLIDER_GAP}`,
       '&::after': {
         ...disabledTrackGapFiller,
         left: `-${MUI_DISABLED_SLIDER_GAP}`,
@@ -57,13 +61,12 @@ const styles = theme => {
       padding: theme.spacing(4.5),
       width: `calc(100% + ${theme.spacing(5)}px)`,
     },
-    track: {
-      height: theme.spacing(2),
+    rail: {
       backgroundColor: theme.palette.background.default,
       opacity: 1,
+      ...rail,
     },
-    trackBefore,
-    trackAfter,
+    track,
     thumb: {
       ...thumbWrapper,
       '&$disabled': {
@@ -75,13 +78,13 @@ const styles = theme => {
       color: theme.palette.text.hint,
       ...thumbIcon,
     },
-    primaryTrackBefore: {
+    primaryTrack: {
       backgroundColor: theme.palette.primary.main,
-      ...trackBefore,
+      ...track,
     },
-    secondaryTrackBefore: {
+    secondaryTrack: {
       backgroundColor: theme.palette.secondary.main,
-      ...trackBefore,
+      ...track,
     },
     primaryThumbIcon: {
       color: theme.palette.primary.main,
@@ -98,35 +101,35 @@ const styles = theme => {
 const StyledSlider = function({
   color,
   classes: {
-    primaryTrackBefore,
-    secondaryTrackBefore,
+    primaryTrack,
+    secondaryTrack,
     primaryThumbIcon,
     secondaryThumbIcon,
+    thumb,
+    thumbIcon,
     ...defaultClasses
   },
   ...props
 }) {
   const customClasses = {
-    primaryTrackBefore,
-    secondaryTrackBefore,
+    primaryTrack,
+    secondaryTrack,
     primaryThumbIcon,
     secondaryThumbIcon,
   }
 
-  const trackBeforeClass = color
-    ? customClasses[`${color}TrackBefore`]
-    : defaultClasses.trackBefore
+  const trackClass = color
+    ? customClasses[`${color}Track`]
+    : defaultClasses.track
 
-  const thumbIconClass = color
-    ? customClasses[`${color}ThumbIcon`]
-    : defaultClasses.thumbIcon
+  const thumbIconClass = color ? customClasses[`${color}ThumbIcon`] : thumbIcon
 
   return (
     <Slider
       classes={{
         ...defaultClasses,
-        trackBefore: trackBeforeClass,
-        thumbIcon: thumbIconClass,
+        track: trackClass,
+        thumb: `${thumb} ${thumbIconClass}`,
       }}
       {...props}
     />
