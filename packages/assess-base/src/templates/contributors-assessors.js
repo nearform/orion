@@ -9,6 +9,7 @@ import {
   TableCell,
 } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
+import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 import { Link } from 'gatsby'
 import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
@@ -54,10 +55,12 @@ function ContributorsAssessorsTemplate({
   location,
   theme,
   classes,
-  pageContext: { assessment },
+  pageContext: { assessment: contextAssessment },
 }) {
   const [filterText, setFilterText] = useState('')
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const l = i18n.language || 'en'
+  const { assessment } = getAssessmentParts(contextAssessment.key, l)
 
   const assessmentId = getAssessmentId(location)
   const { getUserTokenData, getUserAuth } = useContext(AuthContext)
@@ -223,7 +226,7 @@ function ContributorsAssessorsTemplate({
               >
                 {assessment.name}
                 {assessment.guidance && (
-                  <ContextualHelp helpContent={t(assessment.guidance)}>
+                  <ContextualHelp helpContent={assessment.guidance}>
                     <HelpIcon color="secondary" className={classes.helpIcon} />
                   </ContextualHelp>
                 )}
