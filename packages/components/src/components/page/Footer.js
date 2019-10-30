@@ -21,7 +21,6 @@ function Footer({ classes, theme, content, Img }) {
     },
   } = content
   const { t } = useTranslation()
-
   return (
     <div className={classes.root}>
       <PaddedContainer>
@@ -71,9 +70,13 @@ function Footer({ classes, theme, content, Img }) {
         </Grid>
         <div className={classes.socialAndLogo}>
           {social.map(([name, url]) => {
-            const icon = socialIcons.edges.find(
-              item => item.node.name.toLowerCase() === name.toLowerCase()
-            )
+            const icon = socialIcons.edges.find(item => {
+              const { node } = item
+              return (
+                node.childImageSharp &&
+                node.name.toLowerCase() === name.toLowerCase()
+              )
+            })
             return (
               icon && (
                 <a key={name} href={url} title={`${author} on ${name}`}>

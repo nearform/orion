@@ -54,7 +54,9 @@ const headers = [
 ]
 
 function UserGroups({ classes }) {
-  const { getUserTokenData } = useContext(AuthContext)
+  const { getUserTokenData, hasPermissions, allowNoParentGroups } = useContext(
+    AuthContext
+  )
   const userTokenData = getUserTokenData()
   // =======================================================================================
   // TODO: This component currently uses two forms of the create group mutation; one
@@ -63,15 +65,22 @@ function UserGroups({ classes }) {
   // package, AB had a well-defined concept of parent group whilst KB didn't. Once a proper
   // parent group concept has been worked out for KB, the no-parent version of the mutation
   // can be removed from here and from components/queries/groups and just one createGroup
-  // mutation be used in all cases.
+  // mutation be used in all cases. Use of the no-parent group mutation must be enabled via
+  // the AuthWrapper.
   // =======================================================================================
   const [createGroup] = useMutation(createGroupMutation)
   const [unsafe__createGroupNoParent] = useMutation(
     unsafe__createGroupNoParentMutation
   )
   const [deleteGroup] = useMutation(deleteGroupMutation)
+
   const { refetch: refetchGroups, table } = useAdminTable({
     query: getGroups,
+    variables: {
+      // Allow platform-admin and above to see all groups;
+      // Limit parnter-admin and below to groups under the platform group.
+      parentId: hasPermissions('platform-admin') ? null : userTokenData.groupId,
+    },
     headers,
     renderTableBody: (data, { refetch: refetchGroups }) => {
       const doDeleteGroup = async id => {
@@ -126,8 +135,10 @@ function UserGroups({ classes }) {
               await createGroup({
                 variables: { ...values, parentId },
               })
-            } else {
+            } else if (allowNoParentGroups) {
               await unsafe__createGroupNoParent({ variables: values })
+            } else {
+              console.warn("Can't create group with no parent ID")
             }
             refetchGroups()
           } finally {

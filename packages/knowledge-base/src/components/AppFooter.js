@@ -16,7 +16,7 @@ function AppFooter() {
       }
       socialIcons: allFile(
         filter: {
-          extension: { in: ["png", "svg", "jpg", "gif"] }
+          extension: { in: ["png", "jpg", "gif"] }
           relativeDirectory: { eq: "social" }
           sourceInstanceName: { in: ["theme-assets", "app-assets"] }
         }
