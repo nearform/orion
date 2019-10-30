@@ -77,4 +77,22 @@ const getKeyInfo = (key, l = 'en') => {
   return require(`./${l}/key-information-details/${keyInfo[key]}`)
 }
 
-export { getAssessmentParts, getKeyInfo }
+const getAssessmentTypes = l => {
+  const types = []
+  for (let ak in assessmentKeys) {
+    let type = require(`./${l}/${assessmentKeys[ak]}`)
+    types.push({
+      key: type.key,
+      logoAsset: type.logoAsset,
+      name: type.name,
+      tableName: type.tableName,
+      orderIndex: type.orderIndex,
+      shortDescription: type.shortDescription,
+      startPhrase: type.startPhrase,
+    })
+  }
+
+  return types
+}
+
+export { getAssessmentParts, getKeyInfo, getAssessmentTypes }

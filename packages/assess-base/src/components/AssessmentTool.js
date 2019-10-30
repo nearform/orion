@@ -44,7 +44,7 @@ const AssessmentTool = ({
               color="secondary"
               fullWidth
             >
-              {t(`Enter ${assessmentToolMeta.name}`)}
+              {assessmentToolMeta.startPhrase}
             </Button>
           </CardActions>
         )}

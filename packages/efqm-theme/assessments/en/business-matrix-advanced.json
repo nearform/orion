@@ -1,10 +1,10 @@
 {
   "key": "efqm-2020-advanced",
-  "name": "business matrix advanced",
-  "tableName": "Business Matrix Advanced",
+  "name": "Business Matrix Advanced",
   "orderIndex": 3,
   "logoAsset": "assess-3-img",
   "shortDescription": "This tool provides a complete assessment against all criterion-part of the EFQM Model and score on the full RADAR attributes.  Through this tool, organisation can generate a detailed enabler maps and results report.",
+  "startPhrase": "Enter Business Matrix Advanced",
   "keyInformation": {
     "guidance": "Key Information is those key facts about your organisation which help Assessorsto gain an overall view of your organisation and its strategic context.",
     "keyInformationItems": [

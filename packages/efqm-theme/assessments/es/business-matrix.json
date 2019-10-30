@@ -1,10 +1,10 @@
 {
   "key": "efqm-2020",
-  "name": "business matrix",
-  "tableName": "Business Matrix",
+  "name": "Matriz de Evaluación por Criterios",
   "orderIndex": 2,
   "logoAsset": "assess-2-img",
-  "shortDescription": "This tool allows organisation to complete an assessment against the criteria of the EFQM Model and score based on the RADAR elements.  The information captured for each criterion generate a first Enablers Maps.",
+  "shortDescription": "Esta herramienta permite a la organización completar una evaluación usando los criterios del Modelo EFQM y obtener una puntuación basada en los elementos REDER. La información obtenida para cada criterio, genera un primer mapa de facilitadores.",
+  "startPhrase": "Empezar con la Matriz de Evaluación por Criterios",
   "guidance": "We are here to guide you how the business matrix works",
   "keyInformation": {
     "guidance": "Key Information is those key facts about your organisation which help Assessorsto gain an overall view of your organisation and its strategic context.",

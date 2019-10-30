@@ -1,6 +1,6 @@
 import React from 'react'
 import { withStyles, TableRow, TableCell, IconButton } from '@material-ui/core'
-import { Link, useStaticQuery, graphql } from 'gatsby'
+import { Link } from 'gatsby'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useTranslation } from 'react-i18next'
 import keyBy from 'lodash/keyBy'
@@ -11,22 +11,12 @@ import { getAssessmentsData } from '../queries'
 import { formatDate } from '../utils/date'
 import QueryTable from './QueryTable'
 import { FeedbackReportLink, ManagementReportLink } from './report-links'
+import { getAssessmentTypes } from 'efqm-theme/assessments/getAssessmentParts'
 
 function AssessmentsTable({ classes }) {
-  const { t } = useTranslation()
-
-  const { allAssessments } = useStaticQuery(
-    graphql`
-      query {
-        allAssessments {
-          nodes {
-            key
-            tableName
-          }
-        }
-      }
-    `
-  )
+  const { t, i18n } = useTranslation()
+  const l = i18n.language
+  const assessmentTypes = getAssessmentTypes(l)
 
   const headers = [
     { id: 'id', label: t('Your assessments'), sortable: true },
@@ -47,7 +37,7 @@ function AssessmentsTable({ classes }) {
     { id: 'link', label: '' },
   ]
 
-  const assessmentKeyToName = keyBy(allAssessments.nodes, 'key')
+  const assessmentKeyToName = keyBy(assessmentTypes, 'key')
 
   return (
     <QueryTable
@@ -57,13 +47,13 @@ function AssessmentsTable({ classes }) {
       orderBy={{ created_at: 'desc' }}
       renderTableBody={data =>
         data.assessment.map((assessment, index) => {
-          const { id, key, name, created_at, status } = assessment
-          const { [key]: { tableName = '' } = {} } = assessmentKeyToName
+          const { id, key, name: title, created_at, status } = assessment
+          const { [key]: { name = '' } = {} } = assessmentKeyToName
           return (
             <TableRow hover key={index} size="small">
-              <TableCell>{name}</TableCell>
+              <TableCell>{title}</TableCell>
               <TableCell>{formatDate(created_at)}</TableCell>
-              <TableCell>{t(tableName)}</TableCell>
+              <TableCell>{t(name)}</TableCell>
               <TableCell>
                 {get(assessment, 'owner.user_groups[0].group.name')}
               </TableCell>

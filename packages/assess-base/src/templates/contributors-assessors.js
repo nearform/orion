@@ -254,7 +254,7 @@ function ContributorsAssessorsTemplate({
         </div>
         <div className={classes.section}>
           <Typography variant="h1">
-            {t('Assign contributors and assessors')}
+            {t('Assign Contributors and Assessors')}
           </Typography>
         </div>
         <div className={classes.section}>

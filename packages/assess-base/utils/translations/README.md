@@ -10,4 +10,6 @@
 
 * If you add new keys to a file, please also add the key to the template.json file
 
+* Remember that there are additional translation files in packages/efqm-theme/assessments/{language_abbreviation} ... it is in this location where all translations for assessment content are located
+
 * If you add new keys to a file, you might need to import { useTranslation() } from 'react-i18next', inside of your function add const { t } = useTranslation() and then wrap your target text in the t() function -- Ex: t('Text to translate') -- An easy-to-reference example lies in assess-base/src/components/AssessmentsTable.js

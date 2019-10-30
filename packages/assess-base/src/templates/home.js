@@ -4,6 +4,7 @@ import { Grid, Paper, Typography, withStyles } from '@material-ui/core'
 import { AuthContext, PaddedContainer, SectionTitle } from 'components'
 import BackgroundImage from 'gatsby-background-image'
 import { useTranslation } from 'react-i18next'
+import { getAssessmentTypes } from 'efqm-theme/assessments/getAssessmentParts'
 import Img from 'gatsby-image'
 
 import AssessmentTool from '../components/AssessmentTool'
@@ -21,10 +22,11 @@ function AssessmentsHome({ theme, classes, data }) {
     heroBanner,
     modelImage,
     assets: { nodes: assets },
-    assessmentTypes: { nodes: assessmentTypes },
   } = data
 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const l = i18n.language
+  const assessmentTypes = getAssessmentTypes(l)
   const { getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
   const assessmentItems = assessmentTypes

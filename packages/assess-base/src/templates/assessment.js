@@ -299,7 +299,7 @@ function AssessmentTemplate({
                       disabled={!assessmentData}
                       onConfirm={handleSubmitAssessment}
                       type="submit"
-                      title={t('Submit assessment') + ` “${assessmentName}”?`}
+                      title={t('Submit Assessment') + ` “${assessmentName}”?`}
                       text={
                         <>
                           <p>
@@ -446,7 +446,7 @@ function AssessmentTemplate({
                   variant="h3"
                   className={classes.keyInformationHeader}
                 >
-                  {t('key information')}
+                  {t('Key Information')}
                   {assessment.keyInformation.guidance && (
                     <ContextualHelp
                       helpContent={assessment.keyInformation.guidance}

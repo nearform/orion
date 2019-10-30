@@ -100,7 +100,7 @@ function MainToolbar({ classes, dark }) {
                   className={classes.icon}
                   fontSize="large"
                 />
-                MyEFQM
+                {t('MyEFQM')}
               </Button>
             )}
             {!isAuthenticated && (

@@ -1,10 +1,11 @@
 {
   "key": "efqm-2020-advanced",
   "name": "Matriz de Evaluación por Subcriterios",
-  "tableName": "Business Matrix Advanced",
   "orderIndex": 3,
   "logoAsset": "assess-3-img",
   "shortDescription": "Esta herramienta proporciona una evaluación completa usando todos los subcriterios del Modelo EFQM y puntuando con todos los atributos del REDER. Gracias a esta herramienta, la organización puede generar un informe detallado del mapa de facilitadores y de resultados.",
+  "startPhrase": "Empezar con la Matriz de Evaluación por Subcriterios",
+  "guidance": "",
   "keyInformation": {
     "guidance": "Incluye todos aquellos aspectos clave sobre tu organización que ayudan a los Asesores a obtener una visión global de tu organización y su contexto estratégico.",
     "keyInformationItems": [
