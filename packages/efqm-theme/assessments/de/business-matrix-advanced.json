@@ -1,55 +1,55 @@
 {
   "key": "efqm-2020-advanced",
-  "name": "business matrix advanced",
+  "name": "Erweiterte Unternehmensmatrix (Business Matrix Advanced)",
   "tableName": "Business Matrix Advanced",
   "orderIndex": 3,
   "logoAsset": "assess-3-img",
-  "shortDescription": "This tool provides a complete assessment against all criterion-part of the EFQM Model and score on the full RADAR attributes.  Through this tool, organisation can generate a detailed enabler maps and results report.",
+  "shortDescription": "Dieses Bewertungstool ermöglicht eine vollständige Bewertung basierend auf allen (Teil)Kriterien des EFQM Modells. Die Punktevergabe erfolgt nach der RADAR Logik. Mit diesem Bewertungsinstrument kann Ihre Organisation eine detaillierte Enabler Map (Übersicht über die Maßnahmen) und einen Ergebnisbericht erstellen.",
   "keyInformation": {
-    "guidance": "Key Information is those key facts about your organisation which help Assessorsto gain an overall view of your organisation and its strategic context.",
+    "guidance": "Schlüsselinformationen sind jene Informationen, die den Assessor*innen helfen, einen Gesamtüberblick über Ihre Organisation und den strategischen Kontext zu erlangen.",
     "keyInformationItems": [
       {
         "key": "overview",
-        "name": "facts & figures"
+        "name": "Zahlen und Fakten"
       },
       {
         "key": "challenges-and-strategy",
-        "name": "challenges & strategy"
+        "name": "Herausforderungen  & Strategie"
       },
       {
         "key": "operations-partners-suppliers",
-        "name": "operations, partners & suppliers"
+        "name": "Tätigkeiten, Partner & Lieferanten"
       },
       {
         "key": "market-offerings-and-customers",
-        "name": "market, offerings and customers"
+        "name": "Markt, Angebote und Kunden"
       },
       {
         "key": "management-structure",
-        "name": "management structure and activities"
+        "name": "Management Struktur und Aktivitäten"
       }
     ]
   },
   "columns": [
     {
       "key": "approach",
-      "name": "what we do (approach)"
+      "name": "Was wir machen (Vorgehen)"
     },
     {
       "key": "deployment",
-      "name": "how we do it (deployment)"
+      "name": "Wie wir es machen (Umsetzung)"
     },
     {
       "key": "assessment-refinement",
-      "name": "how & when we review it (assessment & refinement)"
+      "name": "Wie & wann wir es überprüfen (Bewertung & Verbesserung)"
     },
     {
       "key": "evidence",
-      "name": "how we show this (evidence)"
+      "name": "Wie wir es zeigen (Nachweis)"
     },
     {
       "key": "owner",
-      "name": "owner"
+      "name": "Eigentümer*in"
     },
     {
       "key": "links",
@@ -63,7 +63,7 @@
       "columns": [
         {
           "key": "strengths",
-          "name": "strengths"
+          "name": "Stärken"
         }
       ]
     },
@@ -72,7 +72,7 @@
       "columns": [
         {
           "key": "areas-of-improvement",
-          "name": "areas of improvement"
+          "name": "Potenziale"
         }
       ]
     },
@@ -81,7 +81,7 @@
       "columns": [
         {
           "key": "good-practice",
-          "name": "good practice"
+          "name": "good practices"
         }
       ]
     }
@@ -421,15 +421,15 @@
       "columns": [
         {
           "key": "title",
-          "name": "indicator title"
+          "name": "Name der Kennzahl"
         },
         {
           "key": "description",
-          "name": "indicator description"
+          "name": "Beschreibung der Kennzahl"
         },
         {
           "key": "image",
-          "name": "add image",
+          "name": "Bild hinzufügen",
           "type": "image"
         },
         {
@@ -439,7 +439,7 @@
         },
         {
           "key": "owner",
-          "name": "owner"
+          "name": "Eigentümer*in"
         },
         {
           "key": "links",

@@ -11,7 +11,10 @@ import { useMutation, useManualQuery } from 'graphql-hooks'
 import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
 import * as Yup from 'yup'
-import matrixData from 'efqm-theme/assessments'
+import {
+  getAssessmentParts,
+  getKeyInfo,
+} from 'efqm-theme/assessments/getAssessmentParts'
 
 import {
   AuthContext,
@@ -71,7 +74,7 @@ function AssessmentTemplate({
   location,
   theme,
   classes,
-  pageContext: { assessment, pillarColors },
+  pageContext: { assessment: contextAssessment, pillarColors },
 }) {
   const [modalProps, setModalProps] = useState({
     mdContent: '',
@@ -80,6 +83,9 @@ function AssessmentTemplate({
     title: '',
     width: '',
   })
+  const { t, i18n } = useTranslation()
+  const l = i18n.language || 'en'
+  const { assessment } = getAssessmentParts(contextAssessment.key, l)
   const assessmentId = getAssessmentId(location)
   const { getUserTokenData, getUserAuth } = useContext(AuthContext)
   const { isAdmin, isContributor, userId, groupId } = getUserTokenData()
@@ -191,7 +197,6 @@ function AssessmentTemplate({
       getCanEditContributors(groupId, assessmentData)
 
   const assessmentName = get(assessmentData, 'name', 'Loading...')
-  const { t } = useTranslation()
 
   function _placeholderEtoN(email) {
     return email
@@ -276,9 +281,9 @@ function AssessmentTemplate({
                     className={classes.sectionTitle}
                     gutterBottom
                   >
-                    {t(assessment.name)}
+                    {assessment.name}
                     {assessment.guidance && (
-                      <ContextualHelp helpContent={t(assessment.guidance)}>
+                      <ContextualHelp helpContent={assessment.guidance}>
                         <HelpIcon
                           color="secondary"
                           className={classes.helpIcon}
@@ -444,7 +449,7 @@ function AssessmentTemplate({
                   {t('key information')}
                   {assessment.keyInformation.guidance && (
                     <ContextualHelp
-                      helpContent={t(assessment.keyInformation.guidance)}
+                      helpContent={assessment.keyInformation.guidance}
                     >
                       <HelpIcon
                         color="secondary"
@@ -481,7 +486,7 @@ function AssessmentTemplate({
                                       variant="h4"
                                       gutterBottom
                                     >
-                                      {t(keyInfo.name)}
+                                      {keyInfo.name}
                                     </Typography>
                                     <Typography
                                       className={
@@ -489,9 +494,9 @@ function AssessmentTemplate({
                                       }
                                       onClick={() => {
                                         setModalProps({
-                                          mdContent: matrixData[2][keyInfo.key],
+                                          mdContent: getKeyInfo(keyInfo.key, l),
                                           open: true,
-                                          subTitle: t(keyInfo.name),
+                                          subTitle: keyInfo.name,
                                           title: t('Key Information'),
                                           width: '500px',
                                         })

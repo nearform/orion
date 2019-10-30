@@ -1,7 +1,7 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import espanol from './translations/espanol.json'
-import deutsch from './translations/deutsch.json'
+import espanol from './translations/es_ES.json'
+import deutsch from './translations/de_DE.json'
 
 const resources = {
   de: deutsch,

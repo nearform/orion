@@ -1,59 +1,59 @@
 {
   "key": "efqm-2020-advanced",
-  "name": "business matrix advanced",
+  "name": "Matriz de Evaluación por Subcriterios",
   "tableName": "Business Matrix Advanced",
   "orderIndex": 3,
   "logoAsset": "assess-3-img",
-  "shortDescription": "This tool provides a complete assessment against all criterion-part of the EFQM Model and score on the full RADAR attributes.  Through this tool, organisation can generate a detailed enabler maps and results report.",
+  "shortDescription": "Esta herramienta proporciona una evaluación completa usando todos los subcriterios del Modelo EFQM y puntuando con todos los atributos del REDER. Gracias a esta herramienta, la organización puede generar un informe detallado del mapa de facilitadores y de resultados.",
   "keyInformation": {
-    "guidance": "Key Information is those key facts about your organisation which help Assessorsto gain an overall view of your organisation and its strategic context.",
+    "guidance": "Incluye todos aquellos aspectos clave sobre tu organización que ayudan a los Asesores a obtener una visión global de tu organización y su contexto estratégico.",
     "keyInformationItems": [
       {
         "key": "overview",
-        "name": "facts & figures"
+        "name": "Hechos y datos"
       },
       {
         "key": "challenges-and-strategy",
-        "name": "challenges & strategy"
+        "name": "Retos y estrategia"
       },
       {
         "key": "operations-partners-suppliers",
-        "name": "operations, partners & suppliers"
+        "name": "Operaciones, Partners y Proveedores"
       },
       {
         "key": "market-offerings-and-customers",
-        "name": "market, offerings and customers"
+        "name": "Mercado, Clientes y Productos, Servicios y Soluciones"
       },
       {
         "key": "management-structure",
-        "name": "management structure and activities"
+        "name": "Estructura y actividades de gestión"
       }
     ]
   },
   "columns": [
     {
       "key": "approach",
-      "name": "what we do (approach)"
+      "name": "Lo que hacemos (Enfoque)"
     },
     {
       "key": "deployment",
-      "name": "how we do it (deployment)"
+      "name": "Cómo lo hacemos (Despliegue)"
     },
     {
       "key": "assessment-refinement",
-      "name": "how & when we review it (assessment & refinement)"
+      "name": "Cómo y cuándo lo revisamos (Evaluación, Revisión y Mejora)"
     },
     {
       "key": "evidence",
-      "name": "how we show this (evidence)"
+      "name": "Cómo lo demostramos (Evidencias)"
     },
     {
       "key": "owner",
-      "name": "owner"
+      "name": "Propietario"
     },
     {
       "key": "links",
-      "name": "efqm links",
+      "name": "Links EFQM",
       "type": "link"
     }
   ],
@@ -63,7 +63,7 @@
       "columns": [
         {
           "key": "strengths",
-          "name": "strengths"
+          "name": "Puntos fuertes"
         }
       ]
     },
@@ -72,7 +72,7 @@
       "columns": [
         {
           "key": "areas-of-improvement",
-          "name": "areas of improvement"
+          "name": "Oportunidades de mejora"
         }
       ]
     },
@@ -81,7 +81,7 @@
       "columns": [
         {
           "key": "good-practice",
-          "name": "good practice"
+          "name": "Buenas Prácticas"
         }
       ]
     }
@@ -421,15 +421,15 @@
       "columns": [
         {
           "key": "title",
-          "name": "indicator title"
+          "name": "Título del indicador"
         },
         {
           "key": "description",
-          "name": "indicator description"
+          "name": "Descripción del indicador"
         },
         {
           "key": "image",
-          "name": "add image",
+          "name": "Añadir imagen",
           "type": "image"
         },
         {
@@ -439,11 +439,11 @@
         },
         {
           "key": "owner",
-          "name": "owner"
+          "name": "Propietario"
         },
         {
           "key": "links",
-          "name": "efqm links",
+          "name": "Links EFQM",
           "type": "link"
         }
       ],

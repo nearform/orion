@@ -21,6 +21,7 @@ import {
   assessmentSubmitted,
 } from '../utils/assessment-status'
 import { filterOldScores } from '../utils/filter-old-scores'
+import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 
 function CriterionPartTemplate({
   theme,
@@ -28,10 +29,10 @@ function CriterionPartTemplate({
   location,
   pageContext: {
     partNumber,
-    part,
-    pillar,
-    criterion,
-    assessment,
+    part: contextPart,
+    pillar: contextPillar,
+    criterion: contextCriterion,
+    assessment: contextAssessment,
     pillarColor,
     pillarColors,
     previousLink,
@@ -42,7 +43,16 @@ function CriterionPartTemplate({
 }) {
   const { getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const l = i18n.language || 'en'
+  const { assessment, pillar, criterion, part } = getAssessmentParts(
+    contextAssessment.key,
+    l,
+    contextPillar,
+    contextCriterion,
+    contextPart
+  )
+
   if (!isAuthenticated) {
     return <Redirect to="/auth" noThrow />
   }
@@ -133,13 +143,13 @@ function CriterionPartTemplate({
             <Grid item xs={3}>
               <SectionTitle barColor={pillarColor}>
                 <Link to={`/assessment/${assessment.key}#${assessmentId}`}>
-                  {t(pillar.name)}
+                  {pillar.name}
                 </Link>{' '}
                 <span style={{ color: pillarColor }}>▶</span>{' '}
                 <Link
                   to={`/assessment/${assessment.key}/${pillar.key}/${criterion.key}#${assessmentId}`}
                 >
-                  {t(criterion.name)}
+                  {criterion.name}
                 </Link>
               </SectionTitle>
             </Grid>

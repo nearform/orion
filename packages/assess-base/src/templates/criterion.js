@@ -8,7 +8,7 @@ import { Field, Formik, Form } from 'formik'
 import { TextField } from 'formik-material-ui'
 import { useManualQuery, useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
-
+import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 import { getAssessmentId } from '../utils/url'
 import {
   getAssessmentCriterionData,
@@ -34,14 +34,26 @@ function createFormInitialValues(assessmentCriterionData) {
 function CriterionTemplate({
   theme,
   classes,
-  pageContext: { assessment, pillar, criterion, pillarColor },
+  pageContext: {
+    assessment: contextAssessment,
+    pillar: contextPillar,
+    criterion: contextCriterion,
+    pillarColor,
+  },
   location,
 }) {
   const assessmentId = getAssessmentId(location)
   const { getUserTokenData } = useContext(AuthContext)
   const { isContributor, userId } = getUserTokenData()
 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const l = i18n.language || 'en'
+  const { assessment, pillar, criterion } = getAssessmentParts(
+    contextAssessment.key,
+    l,
+    contextPillar,
+    contextCriterion
+  )
 
   const [
     fetchAssessmentCriterionData,
@@ -91,7 +103,7 @@ function CriterionTemplate({
 
   return (
     <div className={classes.root} data-testid="criterion">
-      <SEO title={t(criterion.name)} />
+      <SEO title={criterion.name} />
       <PaddedContainer className={classes.paddedContainer}>
         <Grid container spacing={2} wrap="nowrap">
           <Grid item>
@@ -122,17 +134,16 @@ function CriterionTemplate({
             <Grid item xs={3}>
               <SectionTitle barColor={pillarColor}>
                 <Link to={`/assessment/${assessment.key}#${assessmentId}`}>
-                  {t(pillar.name)}
+                  {pillar.name}
                 </Link>{' '}
-                <span style={{ color: pillarColor }}>▶</span>{' '}
-                {t(criterion.name)}
+                <span style={{ color: pillarColor }}>▶</span> {criterion.name}
               </SectionTitle>
             </Grid>
             <Grid item xs>
               <Typography component="div">
                 <ReactMarkdown
                   className={classes.description}
-                  source={t(criterion.description)}
+                  source={criterion.description}
                 />
               </Typography>
               <Button
@@ -142,7 +153,7 @@ function CriterionTemplate({
                 color="secondary"
                 className={classes.section}
               >
-                {t('Assess')} {t(criterion.name)}
+                {t('Assess')} {criterion.name}
               </Button>
               <Formik
                 initialValues={createFormInitialValues(assessmentCriterionData)}
@@ -159,7 +170,7 @@ function CriterionTemplate({
                     >
                       <Grid item xs={6}>
                         <Typography variant="h4" gutterBottom>
-                          {t(criterion.name)} {t('summary')}
+                          {criterion.name} {t('summary')}
                         </Typography>
                         <Field
                           component={TextField}

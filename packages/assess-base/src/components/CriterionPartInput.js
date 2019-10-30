@@ -251,7 +251,7 @@ function getSelectFieldProps(
               to={`/${selectedCriterion.path}#${assessmentId}`}
               className={classes.active}
             >
-              {t(selectedCriterion.name)}
+              {selectedCriterion.name}
             </Link>
           </Typography>
         )

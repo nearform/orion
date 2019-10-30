@@ -12,7 +12,6 @@ import {
   Typography,
 } from '@material-ui/core'
 import { Clear } from '@material-ui/icons'
-import { useTranslation } from 'react-i18next'
 
 const useContentModalStyles = makeStyles(theme => ({
   paper: ({ width }) => ({
@@ -61,7 +60,6 @@ function ContentModal({
   width = '85%',
 }) {
   const classes = useContentModalStyles({ width })
-  const { t } = useTranslation()
   return (
     <Dialog
       open={open}
@@ -73,11 +71,11 @@ function ContentModal({
       <DialogTitle disableTypography className={classes.titleSection}>
         <Box className={classes.titleText}>
           <Typography variant="h4" className={classes.title}>
-            {t(title)}
+            {title}
           </Typography>
           {subTitle && (
             <Typography variant="h4" className={classes.subTitle}>
-              {t(subTitle)}
+              {subTitle}
             </Typography>
           )}
         </Box>

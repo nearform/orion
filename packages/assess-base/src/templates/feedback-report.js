@@ -14,6 +14,7 @@ import {
   IconButton,
 } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
+import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 import {
   ASSESSMENT_STATUS,
   AuthContext,
@@ -60,16 +61,17 @@ function sortByPart(obj, key) {
 function FeedbackReport({
   theme,
   classes,
-  pageContext: { assessment, pillarColors },
+  pageContext: { assessment: contextAssessment, pillarColors },
   location,
 }) {
+  const { t, i18n } = useTranslation()
+  const l = i18n.language
+  const { assessment } = getAssessmentParts(contextAssessment.key, l)
   const assessmentId = getAssessmentId(location)
   const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
   const { getUserTokenData } = useContext(AuthContext)
   const { isAdmin, isAssessor } = getUserTokenData()
-  const { t } = useTranslation()
-
   const [fetchAssessmentFeedbackReportData, { data }] = useManualQuery(
     getAssessmentFeedbackReportData,
     {
@@ -240,7 +242,7 @@ function FeedbackReport({
                               <Link
                                 to={`/assessment/${assessmentData.key}/${pillarDef.key}/${criterionDef.key}/1/#${assessmentId}`}
                               >
-                                {t(criterionDef.name)}
+                                {criterionDef.name}
                               </Link>
                             </SectionTitle>
                           </Grid>

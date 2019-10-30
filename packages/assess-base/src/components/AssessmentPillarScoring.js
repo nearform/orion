@@ -175,7 +175,7 @@ function AssessmentPillarScoring({
                         variant="h3"
                         className={classes.scoringHeader}
                       >
-                        {t(scoringGroup.name)}
+                        {scoringGroup.name}
                       </Typography>
                     </Grid>
                     {scoringGroup.scores.map(score => {

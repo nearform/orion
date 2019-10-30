@@ -39,7 +39,7 @@ const AssessmentPillars = ({
             >
               <Grid item>
                 <SectionTitle barColor={pillarColor}>
-                  {t(pillar.name)}
+                  {pillar.name}
                 </SectionTitle>
               </Grid>
               {pillar.criteria.map(criterion => (
@@ -56,7 +56,7 @@ const AssessmentPillars = ({
                     gutterBottom
                     style={{ color: pillarColor }}
                   >
-                    {t(criterion.name)}
+                    {criterion.name}
                   </Typography>
                   <Typography variant="h4" className={classes.sectionProgress}>
                     {criterion.parts.length} {t('Subcriteria')}
