@@ -48,11 +48,9 @@ function ContentView({ slug, classes, pageContext }) {
     }
   }, [contentId, showFullArticle, fetchArticle, isChanged])
 
-  const article = get(
-    data,
-    showFullArticle ? 'articleDetails' : 'articleSummary',
+  const article =
+    get(data, showFullArticle ? 'articleDetails' : 'articleSummary') ||
     get(pageContext, 'articleSummary', EmptyArticle)
-  )
 
   const readCache = Cache.getItem('readArticles') || []
   if (article.id && readCache.includes(article.id)) {
