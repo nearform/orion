@@ -77,7 +77,7 @@ const getKeyInfo = (key, l = 'en') => {
   return require(`./${l}/key-information-details/${keyInfo[key]}`)
 }
 
-const getAssessmentTypes = l => {
+const getAssessmentTypes = (l = 'en') => {
   const types = []
   for (let ak in assessmentKeys) {
     let type = require(`./${l}/${assessmentKeys[ak]}`)
