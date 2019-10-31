@@ -83,7 +83,7 @@ function AssessmentPillarScoring({
 
   const submitRef = useRef({
     onChange: false,
-    onDragEnd: false,
+    onChangeCommitted: false,
   })
 
   async function handleScoreChange(values) {
@@ -130,16 +130,19 @@ function AssessmentPillarScoring({
     >
       {({ setFieldValue, submitForm, values, validateForm }) => {
         const submitOnLastAction = async key => {
-          // MUI currently has inconsistent onChange / onDragEnd order between click and drag
+          // MUI currently has inconsistent onChange / onChangeCommitted order between click and drag
           // actions until release for https://github.com/mui-org/material-ui/pull/14475
           submitRef.current[key] = true
-          if (submitRef.current.onChange && submitRef.current.onDragEnd) {
+          if (
+            submitRef.current.onChange &&
+            submitRef.current.onChangeCommitted
+          ) {
             // Prevent timing bugs - by default, Formik validates in a promise on a setState callback
             // so without explicit validation here, submitForm() can fail if validation hasn't completed
             await validateForm()
             submitForm()
             submitRef.current.onChange = false
-            submitRef.current.onDragEnd = false
+            submitRef.current.onChangeCommitted = false
           }
         }
 
@@ -199,8 +202,8 @@ function AssessmentPillarScoring({
                                   setFieldValue(fieldName, value)
                                   submitOnLastAction('onChange')
                                 }}
-                                onDragEnd={() => {
-                                  submitOnLastAction('onDragEnd')
+                                onChangeCommitted={() => {
+                                  submitOnLastAction('onChangeCommitted')
                                 }}
                               />
                             )}
