@@ -15,8 +15,8 @@ import { getAssessmentTypes } from 'efqm-theme/assessments/getAssessmentParts'
 
 function AssessmentsTable({ classes }) {
   const { t, i18n } = useTranslation()
-  const l = i18n.language
-  const assessmentTypes = getAssessmentTypes(l)
+  const lang = i18n.language
+  const assessmentTypes = getAssessmentTypes(lang)
 
   const headers = [
     { id: 'id', label: t('Your assessments'), sortable: true },

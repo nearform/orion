@@ -22,7 +22,7 @@ function ManagementReport({ assessmentId, classes }) {
   )
 
   const { t, i18n } = useTranslation()
-  const l = i18n.language || 'en'
+  const lang = i18n.language || 'en'
 
   useEffect(() => {
     fetchManagementReportData()
@@ -33,7 +33,10 @@ function ManagementReport({ assessmentId, classes }) {
   }
 
   // Retrieve the assessment meta data
-  const [businessMatrixAdvanced] = getAssessmentParts('efqm-2020-advanced', l)
+  const [businessMatrixAdvanced] = getAssessmentParts(
+    'efqm-2020-advanced',
+    lang
+  )
 
   // Destructure the relevant from the assessment meta data
   const {

@@ -59,8 +59,8 @@ function ContributorsAssessorsTemplate({
 }) {
   const [filterText, setFilterText] = useState('')
   const { t, i18n } = useTranslation()
-  const l = i18n.language || 'en'
-  const { assessment } = getAssessmentParts(contextAssessment.key, l)
+  const lang = i18n.language || 'en'
+  const { assessment } = getAssessmentParts(contextAssessment.key, lang)
 
   const assessmentId = getAssessmentId(location)
   const { getUserTokenData, getUserAuth } = useContext(AuthContext)

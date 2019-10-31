@@ -84,8 +84,8 @@ function AssessmentTemplate({
     width: '',
   })
   const { t, i18n } = useTranslation()
-  const l = i18n.language || 'en'
-  const { assessment } = getAssessmentParts(contextAssessment.key, l)
+  const lang = i18n.language || 'en'
+  const { assessment } = getAssessmentParts(contextAssessment.key, lang)
   const assessmentId = getAssessmentId(location)
   const { getUserTokenData, getUserAuth } = useContext(AuthContext)
   const { isAdmin, isContributor, userId, groupId } = getUserTokenData()
@@ -496,7 +496,10 @@ function AssessmentTemplate({
                                       }
                                       onClick={() => {
                                         setModalProps({
-                                          mdContent: getKeyInfo(keyInfo.key, l),
+                                          mdContent: getKeyInfo(
+                                            keyInfo.key,
+                                            lang
+                                          ),
                                           open: true,
                                           subTitle: keyInfo.name,
                                           title: t('Key Information'),

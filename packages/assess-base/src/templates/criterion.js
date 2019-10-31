@@ -47,10 +47,10 @@ function CriterionTemplate({
   const { isContributor, userId } = getUserTokenData()
 
   const { t, i18n } = useTranslation()
-  const l = i18n.language || 'en'
+  const lang = i18n.language || 'en'
   const { assessment, pillar, criterion } = getAssessmentParts(
     contextAssessment.key,
-    l,
+    lang,
     contextPillar,
     contextCriterion
   )

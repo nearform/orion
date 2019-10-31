@@ -44,10 +44,10 @@ function CriterionPartTemplate({
   const { getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
   const { t, i18n } = useTranslation()
-  const l = i18n.language || 'en'
+  const lang = i18n.language || 'en'
   const { assessment, pillar, criterion, part } = getAssessmentParts(
     contextAssessment.key,
-    l,
+    lang,
     contextPillar,
     contextCriterion,
     contextPart

@@ -25,8 +25,8 @@ function AssessmentsHome({ theme, classes, data }) {
   } = data
 
   const { t, i18n } = useTranslation()
-  const l = i18n.language
-  const assessmentTypes = getAssessmentTypes(l)
+  const lang = i18n.language
+  const assessmentTypes = getAssessmentTypes(lang)
   const { getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
   const assessmentItems = assessmentTypes

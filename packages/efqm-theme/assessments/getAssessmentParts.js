@@ -25,7 +25,7 @@ const keyInfo = {
  */
 const getAssessmentParts = (
   key,
-  l = 'en',
+  lang = 'en',
   pillar = null,
   criterion = null,
   part = null
@@ -33,23 +33,23 @@ const getAssessmentParts = (
   if (!assessmentKeys.hasOwnProperty(key)) {
     return {}
   }
-  const assessment = require(`./${l}/${assessmentKeys[key]}`)
+  const assessment = require(`./${lang}/${assessmentKeys[key]}`)
   if (pillar) {
-    for (let p of assessment.pillars) {
+    for (const p of assessment.pillars) {
       if (p.key === pillar.key) {
         pillar = p
         break
       }
     }
     if (criterion) {
-      for (let c of pillar.criteria) {
+      for (const c of pillar.criteria) {
         if (c.key === criterion.key) {
           criterion = c
           break
         }
       }
       if (part) {
-        for (let pt of criterion.parts) {
+        for (const pt of criterion.parts) {
           if (pt.tables[0]['key'] === part.tables[0]['key']) {
             part = pt
             break
@@ -70,17 +70,20 @@ const getAssessmentParts = (
  *
  * @return {object} The markdown text of the desired language
  */
-const getKeyInfo = (key, l = 'en') => {
+const getKeyInfo = (key, lang = 'en') => {
   if (!keyInfo.hasOwnProperty(key)) {
     return {}
   }
-  return require(`./${l}/key-information-details/${keyInfo[key]}`)
+  return require(`./${lang}/key-information-details/${keyInfo[key]}`)
 }
 
-const getAssessmentTypes = (l = 'en') => {
+/*
+ * FUNCTION REFACTOR NEEDED
+ */
+const getAssessmentTypes = (lang = 'en') => {
   const types = []
-  for (let ak in assessmentKeys) {
-    let type = require(`./${l}/${assessmentKeys[ak]}`)
+  for (const ak in assessmentKeys) {
+    let type = require(`./${lang}/${assessmentKeys[ak]}`)
     types.push({
       key: type.key,
       logoAsset: type.logoAsset,
