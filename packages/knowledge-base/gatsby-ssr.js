@@ -4,6 +4,7 @@ import fetch from 'node-fetch'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import './src/styles/global.css'
 
 import {
   AuthWrapper,

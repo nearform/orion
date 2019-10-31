@@ -25,11 +25,7 @@ const EmptyArticle = {
   published_at: '',
 }
 
-function ContentView({
-  slug,
-  classes,
-  pageContext: { articleSummary = EmptyArticle } = {},
-}) {
+function ContentView({ slug, classes, pageContext }) {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
 
@@ -41,7 +37,7 @@ function ContentView({
   const [isChanged, setIsChanged] = useState(Symbol())
   const refetchArticle = () => setIsChanged(Symbol())
 
-  const articlePath = slug || get(articleSummary, 'path', '')
+  const articlePath = slug || get(pageContext, 'articleSummary.path', '')
   const contentId = articlePath.split('-')[0]
 
   useEffect(() => {
@@ -55,7 +51,7 @@ function ContentView({
   const article = get(
     data,
     showFullArticle ? 'articleDetails' : 'articleSummary',
-    articleSummary
+    get(pageContext, 'articleSummary', EmptyArticle)
   )
 
   const readCache = Cache.getItem('readArticles') || []
@@ -73,7 +69,7 @@ function ContentView({
         justify="flex-end"
         className={classes.mainWrapper}
       >
-        <Grid item xs={12} sm={4} lg={3}>
+        <Grid id="content-metadata" item xs={12} sm={4} lg={3}>
           <div className={classes.spacingRight}>
             <ContentMetadata content={article} />
           </div>
@@ -107,12 +103,14 @@ function ContentView({
               .map(getFieldType)}
           </div>
         </Grid>
-        <Grid item xs={12} sm={8} lg={3}>
-          <ContentOptions
-            articleData={article}
-            refetchArticle={refetchArticle}
-          />
-        </Grid>
+        {showFullArticle && (
+          <Grid item xs={12} sm={8} lg={3}>
+            <ContentOptions
+              articleData={article}
+              refetchArticle={refetchArticle}
+            />
+          </Grid>
+        )}
       </Grid>
       <FeatureArticles
         hideEmpty
