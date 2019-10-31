@@ -4,15 +4,15 @@ import Slider from '@material-ui/core/Slider'
 import T from 'prop-types'
 
 const styles = theme => {
-  const thumbIcon = {
+  const thumbWrapper = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  }
-  const thumbWrapper = {
     borderRadius: theme.spacing(0.5),
     height: theme.spacing(4),
     width: theme.spacing(4),
+    marginTop: '-8px',
+    marginLeft: '-16px',
     backgroundColor: theme.palette.background.default,
     boxShadow: theme.shadows[2],
   }
@@ -76,7 +76,6 @@ const styles = theme => {
     },
     thumbIcon: {
       color: theme.palette.text.hint,
-      ...thumbIcon,
     },
     primaryTrack: {
       backgroundColor: theme.palette.primary.main,
@@ -88,13 +87,15 @@ const styles = theme => {
     },
     primaryThumbIcon: {
       color: theme.palette.primary.main,
-      ...thumbIcon,
     },
     secondaryThumbIcon: {
       color: theme.palette.secondary.main,
-      ...thumbIcon,
     },
-    disabled: {},
+    disabled: {
+      '& .MuiSlider-thumb': {
+        ...thumbWrapper,
+      },
+    },
   }
 }
 
@@ -105,10 +106,11 @@ const StyledSlider = function({
     secondaryTrack,
     primaryThumbIcon,
     secondaryThumbIcon,
-    thumb,
     thumbIcon,
+    container,
     ...defaultClasses
   },
+  ThumbComponent,
   ...props
 }) {
   const customClasses = {
@@ -129,8 +131,8 @@ const StyledSlider = function({
       classes={{
         ...defaultClasses,
         track: trackClass,
-        thumb: `${thumb} ${thumbIconClass}`,
       }}
+      ThumbComponent={ThumbComponent(thumbIconClass)}
       {...props}
     />
   )

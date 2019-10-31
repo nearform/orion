@@ -22,7 +22,9 @@ function ScoringSlider({ color, classes, label, value, ...props }) {
         className={classes.slider}
         aria-labelledby="label"
         value={value}
-        ThumbComponent={props => <Thumb value={value} {...props} />}
+        ThumbComponent={thumbIconClass => props => (
+          <Thumb value={value} thumbIconClass={thumbIconClass} {...props} />
+        )}
         {...props}
       />
       <ChartTicks variant="below" />
