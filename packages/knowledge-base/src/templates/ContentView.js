@@ -15,16 +15,6 @@ import SEO from '../components/SEO'
 import { constructImageUrl } from '../utils/image'
 import { getArticleDetails, getArticleSummary } from '../queries'
 
-// A minimal set of article properties to allow the page to render fully.
-const EmptyArticle = {
-  id: 0,
-  title: '',
-  subtitle: '',
-  authors: [],
-  taxonomy_items: [],
-  published_at: '',
-}
-
 function ContentView({ slug, classes, pageContext }) {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
@@ -48,15 +38,43 @@ function ContentView({ slug, classes, pageContext }) {
     }
   }, [contentId, showFullArticle, fetchArticle, isChanged])
 
-  const article = get(
-    data,
-    showFullArticle ? 'articleDetails' : 'articleSummary',
-    get(pageContext, 'articleSummary', EmptyArticle)
-  )
+  // Resolve article data.
+  let article
+  if (data) {
+    // Read article data from query result.
+    article = showFullArticle ? data.articleDetails : data.articleSummary
+  } else if (pageContext) {
+    // Read article data from static page context data (SSR).
+    article = pageContext.articleSummary
+  }
+
+  if (!article && loading) {
+    // A minimal set of article properties to allow the page to render whilst
+    // article data is loading.
+    article = {
+      id: 0,
+      title: 'Loading...',
+      subtitle: '',
+      authors: [],
+      taxonomy_items: [],
+      published_at: '',
+    }
+  }
+
+  if (!article) {
+    return (
+      <PaddedContainer>
+        <SEO title="Article Not Found" />
+        <h1>Not Found</h1>
+        <p>Article not found</p>
+      </PaddedContainer>
+    )
+  }
 
   const readCache = Cache.getItem('readArticles') || []
-  if (article.id && readCache.includes(article.id)) {
-    const readIds = readCache.slice(0, 2).concat(article.id)
+  const articleId = get(article, 'id')
+  if (articleId && readCache.includes(articleId)) {
+    const readIds = readCache.slice(0, 2).concat(articleId)
     Cache.setItem('readArticles', readIds)
   }
 
