@@ -33,7 +33,7 @@ function CriterionPartPagination({
       </Grid>
       <Grid item>
         <Typography variant="h3" color="secondary">
-          {t('PART')} {partNumber} {t('OF')} {totalParts}
+          {t('PART OF', { part: partNumber, total: totalParts })}
         </Typography>
       </Grid>
       <Grid item>
