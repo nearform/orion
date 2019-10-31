@@ -1,0 +1,86 @@
+{
+  "key": "questionnaire",
+  "name": "Fragebogen",
+  "orderIndex": 1,
+  "logoAsset": "assess-1-img",
+  "shortDescription": "Ein einfaches Bewertungstool mit 5 Fragen pro Kriterium des EFQM Modells. Dieses Tool eignet sich, um ein erstes Assessment durchzuführen, einen Eindruck über den aktuellen Status der Organisation zu gewinnen und die zukünftige Ausrichtung und Prioritätensetzung zu bestimmen.",
+  "startPhrase": "Fragebogen starten",
+  "keyInformation": {
+    "guidance": "We are here to help you fill out the key information",
+    "keyInformationItems": []
+  },
+  "pillars": [
+    {
+      "key": "example-pillar",
+      "name": "example pillar",
+      "criteria": [
+        {
+          "key": "example-criterion",
+          "name": "example pillar",
+          "description": "This sample text describes the context and purpose of this particular criterion.",
+          "guidance": "This sample text provides further guidance to help users understand the expectations around working with this criterion.",
+          "parts": [
+            {
+              "guidance": "This sample text provides guidance for this part",
+              "tables": [
+                {
+                  "key": "example-table",
+                  "name": "example criterion part table",
+                  "guidance": "This sample text provides guidance for this table",
+                  "columns": [
+                    {
+                      "key": "example-column-1",
+                      "name": "example column 1"
+                    },
+                    {
+                      "key": "example-column-2",
+                      "name": "example column 2"
+                    }
+                  ]
+                }
+              ],
+              "feedbackTables": [
+                {
+                  "key": "example-feedback-table-1",
+                  "columns": [
+                    {
+                      "key": "example-feedback-1",
+                      "name": "Example feedback item 1"
+                    }
+                  ]
+                },
+                {
+                  "key": "example-feedback-table-2",
+                  "columns": [
+                    {
+                      "key": "example-feedback-2",
+                      "name": "Example feedback item 2"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scoring": [
+        {
+          "key": "example-scores",
+          "name": "example scores",
+          "scores": [
+            {
+              "key": "example-score-1",
+              "name": "example score 1",
+              "description": "This sample text describes this scoring item."
+            },
+            {
+              "key": "example-score-2",
+              "name": "example score 2",
+              "description": "This sample text describes this scoring item."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

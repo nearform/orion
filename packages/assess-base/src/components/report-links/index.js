@@ -2,6 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import { Assignment, AssignmentTurnedIn } from '@material-ui/icons'
 import { Box, makeStyles, Typography } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'gatsby'
 import HeadedAsidePanel from '../headed-aside-panel'
 
@@ -100,27 +101,29 @@ const useReportLinksStyles = makeStyles(theme => ({
 
 const ReportLinks = ({ assessment, canViewFeedbackReport }) => {
   const { wrapper } = useReportLinksStyles()
+  const { t } = useTranslation()
 
   return (
-    <HeadedAsidePanel title="Assessment Reports">
+    <HeadedAsidePanel title={t('Assessment Reports')}>
       {assessment && assessment.id ? (
         <Box component="nav" className={wrapper}>
           <FeedbackReportLink
             assessment={assessment}
-            text="View Feedback Report"
+            text={t('View Feedback Report')}
             uppercase
             visible={canViewFeedbackReport}
           />
           <ManagementReportLink
             assessment={assessment}
-            text="View Management Report"
+            text={t('View Management Report')}
             uppercase
           />
         </Box>
       ) : (
         <Typography>
-          When available the Assessment feedback and management report will
-          appear here.
+          {t(
+            'When available the Assessment feedback and management report will appear here.'
+          )}
         </Typography>
       )}
     </HeadedAsidePanel>

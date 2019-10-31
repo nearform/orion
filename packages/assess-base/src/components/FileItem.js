@@ -3,6 +3,7 @@ import { Button, withStyles, Typography } from '@material-ui/core'
 import AttachmentIcon from '@material-ui/icons/Attachment'
 import DeleteIcon from '@material-ui/icons/Delete'
 import T from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import isNumber from 'lodash/isNumber'
 import { useMutation } from 'graphql-hooks'
 
@@ -23,7 +24,7 @@ function formatFileSize(bytes) {
 
 function FileItem({ classes, file, canDelete, onDeleteComplete }) {
   const [show, setShow] = useState(false)
-
+  const { t } = useTranslation()
   const [deleteFileUpload] = useMutation(deleteFileUploadMutation)
 
   const doDeleteFile = async key => {
@@ -53,11 +54,13 @@ function FileItem({ classes, file, canDelete, onDeleteComplete }) {
           className={show ? classes.visible : classes.hidden}
         >
           <ConfirmDialog
-            title={`Delete File “${file.file_name}”?`}
-            text="This file will be permanently deleted. This cannot be undone."
+            title={t(`Delete File`, { fileName: file.file_name })}
+            text={t(
+              `This file will be permanently deleted. This cannot be undone.`
+            )}
             onConfirm={_ => doDeleteFile(file.s3_key)}
             onCancel={_ => setShow(false)}
-            okayLabel="Delete"
+            okayLabel={t('Delete')}
           >
             <DeleteIcon className={classes.actionButton} />
           </ConfirmDialog>

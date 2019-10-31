@@ -16,6 +16,11 @@ const languageOptions = {
     name: 'Deutsch',
     flag: 'em-de',
   },
+  es: {
+    abb: 'es',
+    name: 'Español',
+    flag: 'em-es',
+  },
 }
 
 function getLanguageSwitcher(useTranslation) {

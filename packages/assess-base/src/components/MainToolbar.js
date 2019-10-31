@@ -55,6 +55,7 @@ function MainToolbar({ classes, dark }) {
   const navButtonClass = classnames(classes.navButton, darkClass)
 
   const LanguageSwitcher = getLanguageSwitcher(useTranslation)
+  const { t } = useTranslation()
 
   // darkClass is needed on both outer container and inner padded container
   // to avoid hairline gap between toolbar and main element in mobile WebKit
@@ -84,7 +85,7 @@ function MainToolbar({ classes, dark }) {
               component={NavLink}
               to="/"
             >
-              ASSESS BASE
+              {t('ASSESS BASE')}
             </Button>
             <Button
               className={navButtonClass}
@@ -99,12 +100,12 @@ function MainToolbar({ classes, dark }) {
                   className={classes.icon}
                   fontSize="large"
                 />
-                MyEFQM
+                {t('MyEFQM')}
               </Button>
             )}
             {!isAuthenticated && (
               <Button className={navButtonClass} component={NavLink} to="/auth">
-                LOGIN
+                {t('LOGIN')}
               </Button>
             )}
             {isAdmin && (
@@ -113,12 +114,12 @@ function MainToolbar({ classes, dark }) {
                 component={NavLink}
                 to="/admin"
               >
-                ADMIN
+                {t('ADMIN')}
               </Button>
             )}
             {isAuthenticated && (
               <Button className={navButtonClass} onClick={doLogout}>
-                LOGOUT
+                {t('LOGOUT')}
               </Button>
             )}
             <LanguageSwitcher />

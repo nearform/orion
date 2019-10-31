@@ -6,11 +6,15 @@ import {
   TextField as FormikTextField,
   Switch as FormikSwitch,
 } from 'formik-material-ui'
+import { useTranslation } from 'react-i18next'
 import { useMutation, useManualQuery } from 'graphql-hooks'
 import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
 import * as Yup from 'yup'
-import matrixData from 'efqm-theme/assessments'
+import {
+  getAssessmentParts,
+  getKeyInfo,
+} from 'efqm-theme/assessments/getAssessmentParts'
 
 import {
   AuthContext,
@@ -70,7 +74,7 @@ function AssessmentTemplate({
   location,
   theme,
   classes,
-  pageContext: { assessment, pillarColors },
+  pageContext: { assessment: contextAssessment, pillarColors },
 }) {
   const [modalProps, setModalProps] = useState({
     mdContent: '',
@@ -79,6 +83,9 @@ function AssessmentTemplate({
     title: '',
     width: '',
   })
+  const { t, i18n } = useTranslation()
+  const l = i18n.language || 'en'
+  const { assessment } = getAssessmentParts(contextAssessment.key, l)
   const assessmentId = getAssessmentId(location)
   const { getUserTokenData, getUserAuth } = useContext(AuthContext)
   const { isAdmin, isContributor, userId, groupId } = getUserTokenData()
@@ -252,7 +259,7 @@ function AssessmentTemplate({
       <SEO title={get(assessmentData, 'name', 'Assessment')} />
       <PaddedContainer data-testid="assessment">
         <Button component={Link} to="/" variant="text" color="secondary">
-          ◀ Assess base home
+          ◀ {t('Assess base home')}
         </Button>
         <div
           className={classes.section}
@@ -292,20 +299,22 @@ function AssessmentTemplate({
                       disabled={!assessmentData}
                       onConfirm={handleSubmitAssessment}
                       type="submit"
-                      title={`Submit assessment “${assessmentName}”?`}
+                      title={t('Submit Assessment Filename', {
+                        fileName: assessmentName,
+                      })}
                       text={
                         <>
                           <p>
-                            This assessment will be submitted to the assessors
-                            for scoring and evaluation. Contributors will no
-                            longer be able to edit the assessment content.
+                            {t(
+                              'This assessment will be submitted to the assessors for scoring and evaluation. Contributors will no longer be able to edit the assessment content.'
+                            )}
                           </p>
-                          <p>This cannot be undone.</p>
+                          <p>{t('This cannot be undone.')}</p>
                         </>
                       }
                     >
                       <Button color="secondary" variant="contained">
-                        Submit Assessment
+                        {t('Submit Assessment')}
                       </Button>
                     </ConfirmDialog>
                   )}
@@ -316,8 +325,9 @@ function AssessmentTemplate({
                   <Grid container direction="column" spacing={1}>
                     <Grid item>
                       <Typography variant="h4">
-                        {get(assessmentData, 'internal') ? 'internal' : ''}{' '}
-                        assessment name
+                        {get(assessmentData, 'internal')
+                          ? t('internal assessment name')
+                          : t('external assessment name')}
                       </Typography>
                     </Grid>
                     <Grid item xs>
@@ -343,7 +353,7 @@ function AssessmentTemplate({
                             <Grid container direction="column" spacing={1}>
                               <Grid item>
                                 <Typography variant="h4">
-                                  Enter your assessment name
+                                  {t('Enter your assessment name')}
                                 </Typography>
                               </Grid>
                               <Grid item>
@@ -361,7 +371,9 @@ function AssessmentTemplate({
                           <Grid item>
                             <Grid container direction="column" spacing={0}>
                               <Grid item>
-                                <Typography variant="h4">Internal</Typography>
+                                <Typography variant="h4">
+                                  {t('Internal')}
+                                </Typography>
                               </Grid>
                               <Grid item>
                                 <Field
@@ -384,7 +396,7 @@ function AssessmentTemplate({
                                   variant="contained"
                                   disabled={!isValid || !canCreateAssessment}
                                 >
-                                  Create Assessment
+                                  {t('Create Assessment')}
                                 </Button>
                               </Grid>
                             </Grid>
@@ -426,7 +438,7 @@ function AssessmentTemplate({
                       component={Link}
                       to={`assessment/${assessment.key}/contributors-assessors#${assessmentId}`}
                     >
-                      Assign Contributors and Assessors
+                      {t('Assign Contributors and Assessors')}
                     </Button>
                   </Grid>
                 </Grid>
@@ -436,7 +448,7 @@ function AssessmentTemplate({
                   variant="h3"
                   className={classes.keyInformationHeader}
                 >
-                  key information
+                  {t('Key Information')}
                   {assessment.keyInformation.guidance && (
                     <ContextualHelp
                       helpContent={assessment.keyInformation.guidance}
@@ -484,15 +496,15 @@ function AssessmentTemplate({
                                       }
                                       onClick={() => {
                                         setModalProps({
-                                          mdContent: matrixData[2][keyInfo.key],
+                                          mdContent: getKeyInfo(keyInfo.key, l),
                                           open: true,
                                           subTitle: keyInfo.name,
-                                          title: 'Key Information',
+                                          title: t('Key Information'),
                                           width: '500px',
                                         })
                                       }}
                                     >
-                                      More Info
+                                      {t('More Info')}
                                     </Typography>
                                   </Box>
                                   <Field
@@ -520,7 +532,7 @@ function AssessmentTemplate({
                                 color="secondary"
                                 variant="outlined"
                               >
-                                upload key information
+                                {t('upload key information')}
                               </UploadButton>
                             </Grid>
                             <Grid item>
@@ -530,7 +542,7 @@ function AssessmentTemplate({
                                 variant="contained"
                                 disabled={!assessmentId || !dirty}
                               >
-                                Save Updates
+                                {t('Save Updates')}
                               </Button>
                             </Grid>
                           </Grid>

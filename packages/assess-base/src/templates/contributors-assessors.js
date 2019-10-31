@@ -8,6 +8,8 @@ import {
   TableRow,
   TableCell,
 } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
+import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 import { Link } from 'gatsby'
 import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
@@ -53,9 +55,12 @@ function ContributorsAssessorsTemplate({
   location,
   theme,
   classes,
-  pageContext: { assessment },
+  pageContext: { assessment: contextAssessment },
 }) {
   const [filterText, setFilterText] = useState('')
+  const { t, i18n } = useTranslation()
+  const l = i18n.language || 'en'
+  const { assessment } = getAssessmentParts(contextAssessment.key, l)
 
   const assessmentId = getAssessmentId(location)
   const { getUserTokenData, getUserAuth } = useContext(AuthContext)
@@ -179,7 +184,7 @@ function ContributorsAssessorsTemplate({
                   color="secondary"
                   variant="outlined"
                 >
-                  Select
+                  {t('Select')}
                 </Button>
               </TableCell>
             ) : null}
@@ -190,7 +195,7 @@ function ContributorsAssessorsTemplate({
                   color="secondary"
                   variant="outlined"
                 >
-                  Select
+                  {t('Select')}
                 </Button>
               </TableCell>
             ) : null}
@@ -209,7 +214,7 @@ function ContributorsAssessorsTemplate({
           to={`assessment/${assessment.key}/#${assessmentId}`}
           color="secondary"
         >
-          ◀ Assessment Home
+          ◀ {t('Assessment Home')}
         </Button>
         <div className={classes.section}>
           <Grid container spacing={4} direction="column">
@@ -231,13 +236,16 @@ function ContributorsAssessorsTemplate({
               <Grid container direction="column" spacing={1}>
                 <Grid item>
                   <Typography variant="h4">
-                    {get(assessmentData, 'internal') ? 'internal' : ''}{' '}
-                    assessment name
+                    {t(
+                      get(assessmentData, 'internal')
+                        ? 'internal assessment name'
+                        : 'external assessment name'
+                    )}
                   </Typography>
                 </Grid>
                 <Grid item xs>
                   <Typography variant="h2" color="primary">
-                    {get(assessmentData, 'name', 'Loading...')}
+                    {get(assessmentData, 'name', t('Loading...'))}
                   </Typography>
                 </Grid>
               </Grid>
@@ -246,7 +254,7 @@ function ContributorsAssessorsTemplate({
         </div>
         <div className={classes.section}>
           <Typography variant="h1">
-            Assign contributors and assessors
+            {t('Assign Contributors and Assessors')}
           </Typography>
         </div>
         <div className={classes.section}>
@@ -294,7 +302,7 @@ function ContributorsAssessorsTemplate({
                 color="secondary"
                 variant="contained"
               >
-                Close
+                {t('Close')}
               </Button>
             </Grid>
           </Grid>

@@ -14,7 +14,7 @@
       },
       {
         "key": "challenges-and-strategy",
-        "name": "challenges & strategy of the organization"
+        "name": "challenges & strategy"
       },
       {
         "key": "operations-partners-suppliers",
@@ -149,12 +149,6 @@
           "name": "purpose, vision & strategy",
           "description": "An outstanding organisation is defined by a Purpose that inspires, a Vision that is aspirational and a Strategy that delivers.\n\nThe Purpose of the organisation:\n\n- Explains why its work is important\n- Sets the scene for it to create and deliver sustained value for its stakeholders\n- Provides a framework in which it takes responsibility for its contribution to, and impact on, the ecosystem in which it operates.\n\nThe Vision of the organisation:\n- Describes what the organisation is attempting to achieve in the long-term\n- Is intended to serve as a clear guide for choosing current and future courses of action\n- Provides, along with the organisation’s Purpose, the basis for setting the Strategy.\n\nThe Strategy of the organisation:\n\n- Describes how it intends to fulfil its Purpose\n- Details its plans to achieve the strategic priorities and move closer to its Vision\n",
           "guidance": "We are here to guide you how the purpose strategy works",
-          "translations": {
-            "de": {
-              "name": "[DE] purpose & strategy",
-              "description": "# DE\nThe Organisation has clearly defined its Purpose, including the value it will create for its Stakeholders and the wider Ecosystem in which it operates\nThe Purpose of the Organisation governs the way it operates and constantly strives to improve.\nThe Strategy of the Organisation describes the way in which it intends to fulfil its Purpose, move ever closer to its Vision and, more specifically, plan to reach the Perception & Performance objectives that it has set for itself\n- 1a: Set & Communicate Purpose & Vision\n- 1b: Understand the External Environment, Key Challenges & Own Capabilities\n- 1c: Develop and Update Strategy\n- 1d: Unite Behind and Engage in Purpose & Strategy"
-            }
-          },
           "parts": [
             {
               "tables": [
@@ -290,12 +284,6 @@
           "name": "Engaging Stakeholders",
           "description": "Having decided which Stakeholders are the most important to the organisation, i.e. its Key Stakeholders, and independent of the specific groups identified, it is highly likely that there is a degree of similarity in applying the following principles when engaging with Key Stakeholders.\n\nAn outstanding organisation: -\n- Identifies the specific types and categories within each of its Key Stakeholder Groups\n- Uses its understanding of Key Stakeholders needs and expectations to achieve continued engagement\n- Involves Key Stakeholders in deploying its Strategy and Creating Sustainable Value and recognises the contributions they make \n- Builds, maintains and further develops the relationship with Key Stakeholders based on transparency, accountability, ethical behaviour and trust\n- Works with its Key Stakeholders to develop a common understanding and focus on how, through co-development, it can contribute to, and draw inspiration from, the United Nations Sustainable Development Goals and Global Compact ambitions\n- Actively gathers the perceptions of its Key Stakeholders rather than waiting for them to make contact \n- Evaluates its performance in relation to Key Stakeholders needs and decides on the appropriate actions to be taken to help secure its future, as perceived by these Key Stakeholders.\n\nIn practice, we find that an outstanding organisation will include the following groups in the classification of its Key Stakeholders: \n",
           "guidance": "We are here to guide you how Engaging Stakeholders works",
-          "translations": {
-            "de": {
-              "name": "[DE] Engaging Stakeholders",
-              "description": "# DE\nHaving decided which Stakeholders are the most important to the organisation, i.e. its Key Stakeholders, and independent of the specific groups identified, it is highly likely that there is a degree of similarity in applying the following principles when engaging with Key Stakeholders.\n\nAn outstanding organisation: -\n- Identifies the specific types and categories within each of its Key Stakeholder Groups\n- Uses its understanding of Key Stakeholders needs and expectations to achieve continued engagement\n- Involves Key Stakeholders in deploying its Strategy and Creating Sustainable Value and recognises the contributions they make \n- Builds, maintains and further develops the relationship with Key Stakeholders based on transparency, accountability, ethical behaviour and trust\n- Works with its Key Stakeholders to develop a common understanding and focus on how, through co-development, it can contribute to, and draw inspiration from, the United Nations Sustainable Development Goals and Global Compact ambitions\n- Actively gathers the perceptions of its Key Stakeholders rather than waiting for them to make contact \n- Evaluates its performance in relation to Key Stakeholders needs and decides on the appropriate actions to be taken to help secure its future, as perceived by these Key Stakeholders.\n\nIn practice, we find that an outstanding organisation will include the following groups in the classification of its Key Stakeholders: \n"
-            }
-          },
           "parts": [
             {
               "tables": [

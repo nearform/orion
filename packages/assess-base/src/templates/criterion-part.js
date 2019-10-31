@@ -4,6 +4,7 @@ import { AuthContext, PaddedContainer, SectionTitle } from 'components'
 import { Link } from 'gatsby'
 import { useManualQuery } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
+import { useTranslation } from 'react-i18next'
 
 import { getAssessmentPartData } from '../queries'
 import AssessmentScoringHeader from '../components/AssessmentScoringHeader'
@@ -20,6 +21,7 @@ import {
   assessmentSubmitted,
 } from '../utils/assessment-status'
 import { filterOldScores } from '../utils/filter-old-scores'
+import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 
 function CriterionPartTemplate({
   theme,
@@ -27,10 +29,10 @@ function CriterionPartTemplate({
   location,
   pageContext: {
     partNumber,
-    part,
-    pillar,
-    criterion,
-    assessment,
+    part: contextPart,
+    pillar: contextPillar,
+    criterion: contextCriterion,
+    assessment: contextAssessment,
     pillarColor,
     pillarColors,
     previousLink,
@@ -41,6 +43,16 @@ function CriterionPartTemplate({
 }) {
   const { getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
+  const { t, i18n } = useTranslation()
+  const l = i18n.language || 'en'
+  const { assessment, pillar, criterion, part } = getAssessmentParts(
+    contextAssessment.key,
+    l,
+    contextPillar,
+    contextCriterion,
+    contextPart
+  )
+
   if (!isAuthenticated) {
     return <Redirect to="/auth" noThrow />
   }
@@ -83,11 +95,11 @@ function CriterionPartTemplate({
   }, [fetchAssessmentPartData, assessmentData])
 
   if (error) {
-    return 'Error'
+    return t('Error')
   }
 
   if (loading || !assessmentData) {
-    return 'Loading...'
+    return t('Loading...')
   }
 
   const canEditTablesAndUpload =
@@ -109,7 +121,7 @@ function CriterionPartTemplate({
               variant="text"
               color="secondary"
             >
-              ◀ Assessment overview
+              ◀ {t('Assessment overview')}
             </Button>
           </Grid>
           <Grid item xs />
@@ -173,7 +185,7 @@ function CriterionPartTemplate({
           <Grid container spacing={4}>
             <Grid item xs={3}>
               <SectionTitle barColor={pillarColor}>
-                To be completed by assessors
+                {t('To be completed by assessors')}
               </SectionTitle>
             </Grid>
           </Grid>
@@ -181,7 +193,7 @@ function CriterionPartTemplate({
         <Grid container spacing={2}>
           <Grid item>
             <Typography variant="h2" color="primary" gutterBottom>
-              Capture Strength, Areas for Improvement and Good Practices
+              {t('Capture Strength, Areas for Improvement and Good Practices')}
             </Typography>
           </Grid>
         </Grid>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
 import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 import classnames from 'classnames'
@@ -68,6 +69,7 @@ function CriterionPartTable({
   paginationNode,
   criteriaList,
 }) {
+  const { t } = useTranslation()
   const tableData = getExistingTableData(assessmentTables, tableDef)
 
   const [tableId, setTableId] = useState(tableData ? tableData.id : null)
@@ -181,7 +183,7 @@ function CriterionPartTable({
                               [classes.disbledAndEmpty]: isDisabledAndEmpty,
                             })}
                           >
-                            ITEM
+                            {t('ITEM')}
                           </Typography>
                         </Grid>
                         <Grid item>
@@ -256,8 +258,8 @@ function CriterionPartTable({
                           disabled={!canEdit || !dirty || isSubmitting}
                         >
                           {rowIndex === tableRows.length
-                            ? 'Save & add row'
-                            : 'Save Updates'}
+                            ? t('Save & add row')
+                            : t('Save Updates')}
                         </Button>
                       </Grid>
                       {rowIndex !== tableRows.length && (
@@ -268,7 +270,7 @@ function CriterionPartTable({
                             color="secondary"
                             disabled={!canEdit}
                           >
-                            Remove
+                            {t('Remove')}
                           </Button>
                         </Grid>
                       )}

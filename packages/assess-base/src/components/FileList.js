@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid, Typography, withStyles } from '@material-ui/core'
 import { useMutation } from 'graphql-hooks'
 import T from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import { uploadFile } from '../utils/storage'
 import { createFileUploadMutation } from '../queries'
@@ -22,6 +23,7 @@ function FileList({
   onUploadComplete,
 }) {
   const [createFileUpload] = useMutation(createFileUploadMutation)
+  const { t } = useTranslation()
 
   async function createNewFileUpload(file, s3Key) {
     const { error } = await createFileUpload({
@@ -93,14 +95,7 @@ function FileList({
             color="textSecondary"
             className={classes.text}
           >
-            Supporting
-          </Typography>
-          <Typography
-            variant="h4"
-            color="textSecondary"
-            className={classes.text}
-          >
-            documentation
+            {t('Supporting documentation')}
           </Typography>
         </div>
       </Grid>
@@ -112,7 +107,7 @@ function FileList({
             color="secondary"
             variant="outlined"
           >
-            Upload
+            {t('Upload')}
           </UploadButton>
         </Grid>
       )}

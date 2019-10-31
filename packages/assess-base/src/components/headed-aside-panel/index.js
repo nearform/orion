@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Typography, makeStyles } from '@material-ui/core'
 import T from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 const useLinkStyles = makeStyles(theme => ({
   wrapper: {
@@ -14,6 +15,7 @@ const useLinkStyles = makeStyles(theme => ({
 
 const HeadedAsidePanel = ({ children, title }) => {
   const { heading, wrapper } = useLinkStyles()
+  const { t } = useTranslation()
 
   return (
     <Box
@@ -22,7 +24,7 @@ const HeadedAsidePanel = ({ children, title }) => {
       data-test-id="headed-aside-panel"
     >
       <Typography className={heading} variant="h3">
-        {title}
+        {t(title)}
       </Typography>
       {children}
     </Box>

@@ -1,12 +1,11 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+import espanol from './translations/es_ES.json'
+import deutsch from './translations/de_DE.json'
 
 const resources = {
-  de: {
-    translation: {
-      'Your assessments': 'Ihre Einschätzungen',
-    },
-  },
+  de: deutsch,
+  es: espanol,
 }
 
 export async function init() {
@@ -18,6 +17,7 @@ export async function init() {
     interpolation: {
       escapeValue: false,
     },
+    returnEmptyString: false,
   })
 
   return i18n

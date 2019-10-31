@@ -1,10 +1,11 @@
 import React, { Fragment, useContext, useEffect } from 'react'
 import T from 'prop-types'
-import matrixData from 'efqm-theme/assessments'
+import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 import { Box, withStyles } from '@material-ui/core'
 
 import { AuthContext, PaddedContainer } from 'components'
 import { useManualQuery } from 'graphql-hooks'
+import { useTranslation } from 'react-i18next'
 
 import HeadedSection from '../components/management-report/headed-section'
 import HeadedSubSection from '../components/management-report/headed-sub-section'
@@ -20,6 +21,9 @@ function ManagementReport({ assessmentId, classes }) {
     { variables: { assessmentId } }
   )
 
+  const { t, i18n } = useTranslation()
+  const l = i18n.language || 'en'
+
   useEffect(() => {
     fetchManagementReportData()
   }, [isAuthInitialized])
@@ -29,9 +33,7 @@ function ManagementReport({ assessmentId, classes }) {
   }
 
   // Retrieve the assessment meta data
-  const [businessMatrixAdvanced] = matrixData.filter(
-    ({ key }) => key === 'efqm-2020-advanced'
-  )
+  const [businessMatrixAdvanced] = getAssessmentParts('efqm-2020-advanced', l)
 
   // Destructure the relevant from the assessment meta data
   const {
@@ -70,13 +72,13 @@ function ManagementReport({ assessmentId, classes }) {
     <Box className={classes.pageContainer} component="article">
       <PaddedContainer>
         <Header assessment={assessment} />
-        <HeadedSection pillar="default" title="Key Information">
+        <HeadedSection pillar="default" title={t('Key Information')}>
           {// Output the key info summary section (page intro)
           keyInfoItemsMeta.map(({ key, name }) => {
             const keyInfoBody =
               assessmentKeyInfo && assessmentKeyInfo[key]
                 ? assessmentKeyInfo[key]
-                : 'not provided for this assessment'
+                : t('not provided for this assessment')
             return (
               <HeadedSubSection body={keyInfoBody} key={key} title={name} />
             )
