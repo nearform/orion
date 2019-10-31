@@ -299,7 +299,9 @@ function AssessmentTemplate({
                       disabled={!assessmentData}
                       onConfirm={handleSubmitAssessment}
                       type="submit"
-                      title={t('Submit Assessment') + ` “${assessmentName}”?`}
+                      title={t('Submit Assessment Filename', {
+                        fileName: assessmentName,
+                      })}
                       text={
                         <>
                           <p>

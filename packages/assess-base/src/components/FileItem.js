@@ -54,7 +54,7 @@ function FileItem({ classes, file, canDelete, onDeleteComplete }) {
           className={show ? classes.visible : classes.hidden}
         >
           <ConfirmDialog
-            title={t(`Delete File`) + ` “${file.file_name}”?`}
+            title={t(`Delete File`, { fileName: file.file_name })}
             text={t(
               `This file will be permanently deleted. This cannot be undone.`
             )}

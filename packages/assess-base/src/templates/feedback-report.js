@@ -136,7 +136,7 @@ function FeedbackReport({
               <ConfirmDialog
                 disabled={!assessmentData}
                 onConfirm={handleSubmitFeedbackReport}
-                title={t(`Submit report for`) + ` “${assessmentName}”?`}
+                title={t('Submit report for', { fileName: assessmentName })}
                 text={t(
                   `The feedback report for this assessment will be finalised. No more edits or scoring will be possible. This cannot be undone.`
                 )}
