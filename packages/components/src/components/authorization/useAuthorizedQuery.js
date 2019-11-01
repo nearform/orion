@@ -25,7 +25,6 @@ export default function useAuthorizedQuery(
 
   // Setup page effect.
   useEffect(() => {
-    // TODO: Will a reload happen when params change? (check useManualQuery)
     // Check whether to initiate a query fetch.
     if (isAuthInitialized && !(data || loading || error)) {
       fetchQuery()
@@ -35,6 +34,10 @@ export default function useAuthorizedQuery(
   // If data then generate result by calling onLoad handler.
   const result = data ? onLoad(data) : null
 
+  function reload(variables) {
+    fetchQuery(variables ? { variables } : undefined)
+  }
+
   // Return result.
-  return [result, loading, error]
+  return [result, loading, error, reload]
 }

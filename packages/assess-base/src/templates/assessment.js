@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import { Typography, withStyles, Grid, Button, Box } from '@material-ui/core'
 import { Link, navigate } from 'gatsby'
 import { Formik, Form, Field } from 'formik'
@@ -7,7 +7,7 @@ import {
   Switch as FormikSwitch,
 } from 'formik-material-ui'
 import { useTranslation } from 'react-i18next'
-import { useMutation, useManualQuery } from 'graphql-hooks'
+import { useMutation } from 'graphql-hooks'
 import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
 import * as Yup from 'yup'
@@ -18,6 +18,7 @@ import {
 
 import {
   AuthContext,
+  useAuthorizedQuery,
   PaddedContainer,
   ASSESSMENT_STATUS,
   ConfirmDialog,
@@ -92,49 +93,29 @@ function AssessmentTemplate({
   )
   const { isAdmin, isContributor, userId, groupId } = getUserTokenData()
 
-  const [assessmentData, setAssessmentData] = useState()
-
-  const [getAssessment] = useManualQuery(getShallowAssessmentData)
-  const [
-    fetchAssessmentContributorsAssessorsData,
-    { data: assessorsData },
-  ] = useManualQuery(getAssessmentContributorsAssessorsData, {
-    variables: { assessmentId },
-  })
+  const [assessmentData, , , reloadAssessmentData] = useAuthorizedQuery(
+    getShallowAssessmentData,
+    { id: assessmentId },
+    [assessmentId],
+    data => filterOldScores(assessment, data.assessment_by_pk)
+  )
+  const [assessorsData] = useAuthorizedQuery(
+    getAssessmentContributorsAssessorsData,
+    { assessmentId },
+    [assessmentId]
+  )
 
   const [createAssessment] = useMutation(createAssessmentMutation)
   const [updateAssessmentKeyInfo] = useMutation(updateAssessmentKeyInfoMutation)
   const [createFileUpload] = useMutation(createFileUploadMutation)
   const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
-  useEffect(() => {
-    if (isAuthInitialized) {
-      if (!assessmentData) {
-        loadAssessment(assessmentId)
-      }
-      if (!assessorsData) {
-        fetchAssessmentContributorsAssessorsData()
-      }
-    }
-  }, [
-    isAuthInitialized,
-    assessmentId,
-    assessmentData,
-    fetchAssessmentContributorsAssessorsData,
-    assessorsData,
-  ])
-
   if (!assessmentId || (isAuthInitialized && !isAdmin)) {
     return <Redirect to="/auth" noThrow />
   }
 
-  async function loadAssessment(id) {
-    const {
-      data: { assessment_by_pk: assessmentData } = {},
-    } = await getAssessment({ variables: { id } })
-
-    filterOldScores(assessment, assessmentData)
-    setAssessmentData(assessmentData)
+  function loadAssessment(id) {
+    reloadAssessmentData({ id })
   }
 
   async function handleCreateAssessment({ name, internal }) {
