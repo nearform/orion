@@ -9,23 +9,23 @@ const languageOptions = {
   en: {
     abb: 'en',
     name: 'English',
-    flag: 'em-gb',
+    flag: '🇬🇧',
   },
   de: {
     abb: 'de',
     name: 'Deutsch',
-    flag: 'em-de',
+    flag: '🇩🇪',
   },
   es: {
     abb: 'es',
     name: 'Español',
-    flag: 'em-es',
+    flag: '🇪🇸',
   },
 }
 
 function getLanguageSwitcher(useTranslation) {
   // Must use app's import of useTranslation, can't import it here
-  // Flag icons are twitter-style emojis from github source here: https://afeld.github.io/emoji-css/
+  // Flag icons are twitter-style emojis from github source here: https://twitter.github.io/twemoji/2/test/preview.html
 
   const LanguageSwitcher = ({ classes }) => {
     const { i18n } = useTranslation()
@@ -43,7 +43,9 @@ function getLanguageSwitcher(useTranslation) {
           displayEmpty={true}
           renderValue={() => (
             <MenuItem className={classes.item} key={'val_' + l} value={l}>
-              <Twemoji options={{ className: classes.icon }}>\u1f1e9</Twemoji>
+              <Twemoji options={{ className: classes.icon }}>
+                {languageOptions[l].flag}
+              </Twemoji>
               {l.toUpperCase()}
             </MenuItem>
           )}
@@ -54,7 +56,9 @@ function getLanguageSwitcher(useTranslation) {
               key={'val_' + lang.abb}
               value={lang.abb}
             >
-              <i className={classnames(classes.icon, 'em', lang.flag)}></i>
+              <Twemoji options={{ className: classes.icon }}>
+                {lang.flag}
+              </Twemoji>
               {lang.name}
             </MenuItem>
           ))}
@@ -92,7 +96,9 @@ function getLanguageSwitcher(useTranslation) {
       minHeight: 0,
     },
     icon: {
-      marginRight: theme.spacing(1),
+      margin: '4px 4px 0 0',
+      padding: 0,
+      height: '18px',
     },
   }))(LanguageSwitcher)
 }

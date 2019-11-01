@@ -66,7 +66,7 @@ const getAssessmentParts = (
  * Replace static pre-built pageContext key-information data with translated file of key-information data
  *
  * @param {string} key The string identifier of the key-information part
- * @param {string} l The string identifier of the language (2 character lower-case ISO code)
+ * @param {string} lang The string identifier of the language (2 character lower-case ISO code)
  *
  * @return {object} The markdown text of the desired language
  */
@@ -78,24 +78,13 @@ const getKeyInfo = (key, lang = 'en') => {
 }
 
 /*
- * FUNCTION REFACTOR NEEDED
+ * Return data for all assessment types (name, description, associated logo, etc)
+ *
+ * @param {string} lang The string identifier of the language (2 character lower-case ISO code)
+ *
+ * @return {array} Array of objects representing each available assessment type
  */
-const getAssessmentTypes = (lang = 'en') => {
-  const types = []
-  for (const ak in assessmentKeys) {
-    let type = require(`./${lang}/${assessmentKeys[ak]}`)
-    types.push({
-      key: type.key,
-      logoAsset: type.logoAsset,
-      name: type.name,
-      tableName: type.tableName,
-      orderIndex: type.orderIndex,
-      shortDescription: type.shortDescription,
-      startPhrase: type.startPhrase,
-    })
-  }
-
-  return types
-}
+const getAssessmentTypes = (lang = 'en') =>
+  Object.values(assessmentKeys).map(value => require(`./${lang}/${value}`))
 
 export { getAssessmentParts, getKeyInfo, getAssessmentTypes }
