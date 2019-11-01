@@ -25,7 +25,9 @@ function ManagementReport({ assessmentId, classes }) {
   const lang = i18n.language || 'en'
 
   useEffect(() => {
-    fetchManagementReportData()
+    if (isAuthInitialized) {
+      fetchManagementReportData()
+    }
   }, [isAuthInitialized])
 
   if (!data) {
@@ -33,7 +35,9 @@ function ManagementReport({ assessmentId, classes }) {
   }
 
   // Retrieve the assessment meta data
-  const [businessMatrixAdvanced] = getAssessmentParts(
+  // TODO: Confirm following change with Ken.
+  //const [businessMatrixAdvanced] = getAssessmentParts(
+  const { assessment: businessMatrixAdvanced } = getAssessmentParts(
     'efqm-2020-advanced',
     lang
   )
