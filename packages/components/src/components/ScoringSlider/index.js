@@ -6,7 +6,7 @@ import ChartTicks from '../ChartTicks'
 import StyledSlider from './StyledSlider'
 import Thumb from './Thumb'
 
-function ScoringSlider({ color, classes, label, ...props }) {
+function ScoringSlider({ color, classes, label, value, ...props }) {
   return (
     <div className={classes.container}>
       <Typography
@@ -21,7 +21,10 @@ function ScoringSlider({ color, classes, label, ...props }) {
         color={color}
         className={classes.slider}
         aria-labelledby="label"
-        thumb={<Thumb value={props.value} />}
+        value={value}
+        ThumbComponent={thumbIconClass => props => (
+          <Thumb value={value} thumbIconClass={thumbIconClass} {...props} />
+        )}
         {...props}
       />
       <ChartTicks variant="below" />

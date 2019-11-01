@@ -4,11 +4,10 @@ import { withStyles, Button, Grid } from '@material-ui/core'
 import { AuthContext } from 'components'
 import RateArticle from './RateArticle'
 import HideButton from './HideButton'
-import { Share, Print, Edit, PictureAsPdf } from '@material-ui/icons'
+import { Share, Print, Edit } from '@material-ui/icons'
 import { navigate } from '@reach/router'
 
-// TODO: delete this placeholder component when each button is implemented
-const PlaceholderButton = withStyles(theme => ({
+const OptionsButton = withStyles(theme => ({
   root: {
     cursor: 'default',
     display: 'flex',
@@ -39,30 +38,19 @@ const ContentOptions = ({ classes, articleData, refetchArticle }) => {
   const canEditArticles = isAdmin // TODO: check and implement this feature
 
   return (
-    <Grid container spacing={2} className={classes.wrapper}>
+    <Grid
+      id="content-options-footer"
+      container
+      spacing={2}
+      className={classes.wrapper}
+    >
       <Grid item xs={12} sm={6} lg={12}>
-        <PlaceholderButton>
-          <i className={classes.icons}>
-            <PictureAsPdf />
-          </i>
-          Download PDF
-        </PlaceholderButton>
-      </Grid>
-      <Grid item xs={12} sm={6} lg={12}>
-        <PlaceholderButton>
-          <i className={classes.icons}>
-            <Print />
-          </i>
-          Print this page
-        </PlaceholderButton>
-      </Grid>
-      <Grid item xs={12} sm={6} lg={12}>
-        <PlaceholderButton>
+        <OptionsButton>
           <i className={classes.icons}>
             <Share />
           </i>
           Share this article
-        </PlaceholderButton>
+        </OptionsButton>
       </Grid>
       <Grid item xs={12} sm={6} lg={12}>
         <RateArticle id={articleData.id} content={articleData}></RateArticle>
@@ -78,7 +66,7 @@ const ContentOptions = ({ classes, articleData, refetchArticle }) => {
       )}
       {canEditArticles && (
         <Grid item xs={12} sm={6} lg={12}>
-          <PlaceholderButton
+          <OptionsButton
             onClick={() => {
               navigate(`/my-content/edit/${id}`)
             }}
@@ -87,9 +75,17 @@ const ContentOptions = ({ classes, articleData, refetchArticle }) => {
               <Edit />
             </i>
             Edit mode
-          </PlaceholderButton>
+          </OptionsButton>
         </Grid>
       )}
+      <Grid item xs={12} sm={6} lg={12}>
+        <OptionsButton onClick={() => window.print()}>
+          <i className={classes.icons}>
+            <Print />
+          </i>
+          Print this page
+        </OptionsButton>
+      </Grid>
     </Grid>
   )
 }
