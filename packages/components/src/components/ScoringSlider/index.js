@@ -41,6 +41,7 @@ ScoringSlider.propTypes = {
 const styles = theme => ({
   container: {
     position: 'relative',
+    marginRight: theme.spacing(4),
   },
   label: {
     color: theme.palette.primary.dark,
