@@ -13680,6 +13680,15 @@ jsonfile@^4.0.0:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+jsonfile@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-5.0.0.tgz#e6b718f73da420d612823996fdf14a03f6ff6922"
+  integrity sha512-NQRZ5CRo74MhMMC3/3r5g2k4fjodJ/wh8MxjFbCViWKFjxrnudWSY5vomh+23ZaXzAS7J3fBZIR2dV6WbmfM0w==
+  dependencies:
+    universalify "^0.1.2"
+  optionalDependencies:
+    graceful-fs "^4.1.6"
+
 jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
@@ -18128,6 +18137,15 @@ react-transition-group@^4.0.0, react-transition-group@^4.3.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
+react-twemoji@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/react-twemoji/-/react-twemoji-0.2.3.tgz#025b59afebb9f5b8f2d8bf93e4b1412322d1cbd8"
+  integrity sha512-8yJ1bwsv7HGxBsjM3osGB0JimVcPAUiGLI5YhpFeKllSp6dMK/w2JNBuXRvqxbfN5Ih0XYYS8GQVzaOidYs89A==
+  dependencies:
+    lodash "^4.17.11"
+    prop-types "^15.7.2"
+    twemoji "^12.0.4"
+
 react-typography@^0.16.19:
   version "0.16.19"
   resolved "https://registry.yarnpkg.com/react-typography/-/react-typography-0.16.19.tgz#5736b47961dcf6b9605b6fa38d41980db2588e28"
@@ -21024,6 +21042,21 @@ tweezer.js@^1.4.0:
   resolved "https://registry.yarnpkg.com/tweezer.js/-/tweezer.js-1.5.0.tgz#ca50ac5215022203fd3be4d28617e8e2305f5c0c"
   integrity sha512-aSiJz7rGWNAQq7hjMK9ZYDuEawXupcCWgl3woQQSoDP2Oh8O4srWb/uO1PzzHIsrPEOqrjJ2sUb9FERfzuBabQ==
 
+twemoji-parser@12.1.0:
+  version "12.1.0"
+  resolved "https://registry.yarnpkg.com/twemoji-parser/-/twemoji-parser-12.1.0.tgz#018fb2a67f4747d9decfbf2bb4372995fc568997"
+  integrity sha512-jaHYltumP/E8nR+YzRrY753j9dEpL3zH8+pDXgf9h/10wHeW/9IIjs6mZ1Z/Syh8rIaOQObev1BAX/AinFmuOg==
+
+twemoji@^12.0.4:
+  version "12.1.3"
+  resolved "https://registry.yarnpkg.com/twemoji/-/twemoji-12.1.3.tgz#4bebee358c7c44c4278d2badf320bc9e1d057f1d"
+  integrity sha512-Y5mC7vVovHZvCzdXDepJaU6FHPd7PaW6ZTBMWy9sGYafLBn1x0h2T6aGA3cpnz3WgWWg2QI+3D+9Rn4Z/ViitQ==
+  dependencies:
+    fs-extra "^8.0.1"
+    jsonfile "^5.0.0"
+    twemoji-parser "12.1.0"
+    universalify "^0.1.2"
+
 type-check@~0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.3.2.tgz#5884cab512cf1d355e3fb784f30804b2b520db72"
@@ -21317,7 +21350,7 @@ universal-user-agent@^4.0.0:
   dependencies:
     os-name "^3.1.0"
 
-universalify@^0.1.0:
+universalify@^0.1.0, universalify@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==

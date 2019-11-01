@@ -3,7 +3,7 @@ import T from 'prop-types'
 import classnames from 'classnames'
 import { Select, MenuItem, withStyles } from '@material-ui/core'
 import MoreVert from '@material-ui/icons/MoreVert'
-import { Helmet } from 'react-helmet'
+import Twemoji from 'react-twemoji'
 
 const languageOptions = {
   en: {
@@ -34,12 +34,6 @@ function getLanguageSwitcher(useTranslation) {
 
     return (
       <>
-        <Helmet>
-          <link
-            href="https://afeld.github.io/emoji-css/emoji.css"
-            rel="stylesheet"
-          ></link>
-        </Helmet>
         <Select
           className={classes.input}
           value={l}
@@ -49,13 +43,7 @@ function getLanguageSwitcher(useTranslation) {
           displayEmpty={true}
           renderValue={() => (
             <MenuItem className={classes.item} key={'val_' + l} value={l}>
-              <i
-                className={classnames(
-                  classes.icon,
-                  'em',
-                  languageOptions[l].flag
-                )}
-              ></i>
+              <Twemoji options={{ className: classes.icon }}>\u1f1e9</Twemoji>
               {l.toUpperCase()}
             </MenuItem>
           )}
