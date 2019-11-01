@@ -59,6 +59,6 @@ export { default as EmbeddedVideo } from './components/EmbeddedVideo'
 export * from './components/AuthWrapper'
 export { default as ProtectedRoute } from './components/ProtectedRoute'
 export { default as AdminRoute } from './components/admin/AdminRoute'
-export { default as CustomAuthenticator } from './components/auth'
+export { default as CustomAuthenticator } from './components/authentication'
 
 export { default as useAdminTable } from './hooks/useAdminTable'
