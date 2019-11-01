@@ -99,14 +99,6 @@ function AssessmentTemplate({
   const [assessmentData, setAssessmentData] = useState()
 
   const [getAssessment] = useManualQuery(getShallowAssessmentData)
-  const [fetchShallowAssessmentData, { data: assessmentByPk }] = useManualQuery(
-    getShallowAssessmentData,
-    {
-      variables: {
-        id: assessmentId,
-      },
-    }
-  )
   const [
     fetchAssessmentContributorsAssessorsData,
     { data: assessorsData },
@@ -124,9 +116,6 @@ function AssessmentTemplate({
       if (assessmentId && !assessmentData) {
         loadAssessment(assessmentId)
       }
-      if (!assessmentByPk) {
-        fetchShallowAssessmentData()
-      }
       if (!assessorsData) {
         fetchAssessmentContributorsAssessorsData()
       }
@@ -135,8 +124,6 @@ function AssessmentTemplate({
     isAuthInitialized,
     assessmentId,
     assessmentData,
-    fetchShallowAssessmentData,
-    assessmentByPk,
     fetchAssessmentContributorsAssessorsData,
     assessorsData,
   ])
