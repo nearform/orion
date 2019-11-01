@@ -13,6 +13,32 @@ import {
 } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 
+const buttonText = text => {
+  const words = []
+
+  text.split` `.forEach(word => {
+    if (!words.length) {
+      words.push(word)
+    } else {
+      const phrase = `${words[words.length - 1]} ${word}`
+      // 30 is used to keep 'Enter business Matrix Advanced' on one line
+      if (phrase.length <= 30) {
+        words[words.length - 1] = phrase
+      } else {
+        words.push(word)
+      }
+    }
+  })
+
+  return (
+    <div>
+      {words.map((word, i) => (
+        <div key={i}>{word}</div>
+      ))}
+    </div>
+  )
+}
+
 const AssessmentTool = ({
   theme,
   classes,
@@ -44,7 +70,7 @@ const AssessmentTool = ({
               color="secondary"
               fullWidth
             >
-              {assessmentToolMeta.startPhrase}
+              {buttonText(assessmentToolMeta.startPhrase)}
             </Button>
           </CardActions>
         )}
