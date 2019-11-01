@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import { Redirect } from '@reach/router'
 
-import { AuthContext } from './AuthWrapper'
+import { AuthContext } from './authorization/AuthWrapper'
 
 export default function ProtectedRoute({
   allowedRole,
