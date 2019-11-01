@@ -87,25 +87,68 @@ function AssessmentTemplate({
   const lang = i18n.language || 'en'
   const { assessment } = getAssessmentParts(contextAssessment.key, lang)
   const assessmentId = getAssessmentId(location)
-  const { getUserTokenData, getUserAuth } = useContext(AuthContext)
+  const { isAuthInitialized, getUserTokenData, getUserAuth } = useContext(
+    AuthContext
+  )
   const { isAdmin, isContributor, userId, groupId } = getUserTokenData()
 
-  if (!assessmentId && !isAdmin) {
+  if (!assessmentId || (isAuthInitialized && !isAdmin)) {
     return <Redirect to="/auth" noThrow />
   }
 
   const [assessmentData, setAssessmentData] = useState()
+
+  const [getAssessment] = useManualQuery(getShallowAssessmentData)
+  const [fetchShallowAssessmentData, { data: assessmentByPk }] = useManualQuery(
+    getShallowAssessmentData,
+    {
+      variables: {
+        id: assessmentId,
+      },
+    }
+  )
+  const [
+    fetchAssessmentContributorsAssessorsData,
+    { data: assessorsData },
+  ] = useManualQuery(getAssessmentContributorsAssessorsData, {
+    variables: { assessmentId },
+  })
+
   const [createAssessment] = useMutation(createAssessmentMutation)
   const [updateAssessmentKeyInfo] = useMutation(updateAssessmentKeyInfoMutation)
-  const [getAssessment] = useManualQuery(getShallowAssessmentData)
   const [createFileUpload] = useMutation(createFileUploadMutation)
   const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
   useEffect(() => {
-    if (assessmentId && !assessmentData) {
-      loadAssessment(assessmentId)
+    if (isAuthInitialized) {
+      if (assessmentId && !assessmentData) {
+        loadAssessment(assessmentId)
+      }
+      if (!assessmentByPk) {
+        fetchShallowAssessmentData()
+      }
+      if (!assessorsData) {
+        fetchAssessmentContributorsAssessorsData()
+      }
     }
-  }, [assessmentId, assessmentData])
+  }, [
+    isAuthInitialized,
+    assessmentId,
+    assessmentData,
+    fetchShallowAssessmentData,
+    assessmentByPk,
+    fetchAssessmentContributorsAssessorsData,
+    assessorsData,
+  ])
+
+  async function loadAssessment(id) {
+    const {
+      data: { assessment_by_pk: assessmentData } = {},
+    } = await getAssessment({ variables: { id } })
+
+    filterOldScores(assessment, assessmentData)
+    setAssessmentData(assessmentData)
+  }
 
   async function handleCreateAssessment({ name, internal }) {
     const { data } = await createAssessment({
@@ -119,15 +162,6 @@ function AssessmentTemplate({
     const id = get(data, 'insert_assessment.returning.0.id')
 
     navigate(`${location.pathname}#${id}`)
-  }
-
-  async function loadAssessment(id) {
-    const {
-      data: { assessment_by_pk: assessmentData } = {},
-    } = await getAssessment({ variables: { id } })
-
-    filterOldScores(assessment, assessmentData)
-    setAssessmentData(assessmentData)
   }
 
   async function handleUpdateKeyInfo(values) {
@@ -206,37 +240,8 @@ function AssessmentTemplate({
       .join(' ')
   }
 
-  const [fetchShallowAssessmentData, { data: assessmentByPk }] = useManualQuery(
-    getShallowAssessmentData,
-    {
-      variables: {
-        id: assessmentId,
-      },
-    }
-  )
-
-  const [fetchAssessmentContributorsAssessorsData, { data }] = useManualQuery(
-    getAssessmentContributorsAssessorsData,
-    {
-      variables: { assessmentId },
-    }
-  )
-  useEffect(() => {
-    if (!assessmentByPk) {
-      fetchShallowAssessmentData()
-    }
-    if (!data) {
-      fetchAssessmentContributorsAssessorsData()
-    }
-  }, [
-    fetchShallowAssessmentData,
-    assessmentByPk,
-    fetchAssessmentContributorsAssessorsData,
-    data,
-  ])
-
-  const assessors = get(data, 'assessors', [])
-  const contributors = get(data, 'contributors', [])
+  const assessors = get(assessorsData, 'assessors', [])
+  const contributors = get(assessorsData, 'contributors', [])
 
   const headers = [
     { id: 'id', label: 'ID' },
