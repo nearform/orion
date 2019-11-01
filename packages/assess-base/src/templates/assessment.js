@@ -92,10 +92,6 @@ function AssessmentTemplate({
   )
   const { isAdmin, isContributor, userId, groupId } = getUserTokenData()
 
-  if (!assessmentId || (isAuthInitialized && !isAdmin)) {
-    return <Redirect to="/auth" noThrow />
-  }
-
   const [assessmentData, setAssessmentData] = useState()
 
   const [getAssessment] = useManualQuery(getShallowAssessmentData)
@@ -113,7 +109,7 @@ function AssessmentTemplate({
 
   useEffect(() => {
     if (isAuthInitialized) {
-      if (assessmentId && !assessmentData) {
+      if (!assessmentData) {
         loadAssessment(assessmentId)
       }
       if (!assessorsData) {
@@ -127,6 +123,10 @@ function AssessmentTemplate({
     fetchAssessmentContributorsAssessorsData,
     assessorsData,
   ])
+
+  if (!assessmentId || (isAuthInitialized && !isAdmin)) {
+    return <Redirect to="/auth" noThrow />
+  }
 
   async function loadAssessment(id) {
     const {
@@ -428,7 +428,7 @@ function AssessmentTemplate({
                       variant="outlined"
                       color="secondary"
                       component={Link}
-                      to={`assessment/${assessment.key}/contributors-assessors#${assessmentId}`}
+                      to={`/assessment/${assessment.key}/contributors-assessors#${assessmentId}`}
                     >
                       {t('Assign Contributors and Assessors')}
                     </Button>
