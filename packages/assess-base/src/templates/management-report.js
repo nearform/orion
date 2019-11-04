@@ -1,10 +1,9 @@
-import React, { Fragment, useContext, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import T from 'prop-types'
 import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
-import { Box, withStyles } from '@material-ui/core'
+import { Box, Typography, withStyles } from '@material-ui/core'
 
-import { AuthContext, PaddedContainer } from 'components'
-import { useManualQuery } from 'graphql-hooks'
+import { useAuthorizedQuery, PaddedContainer } from 'components'
 import { useTranslation } from 'react-i18next'
 
 import HeadedSection from '../components/management-report/headed-section'
@@ -14,40 +13,39 @@ import Question from '../components/management-report/question'
 import { getManagementReportData } from '../queries'
 
 function ManagementReport({ assessmentId, classes }) {
-  const { isAuthInitialized } = useContext(AuthContext)
-
-  const [fetchManagementReportData, { data }] = useManualQuery(
+  const { data, loading } = useAuthorizedQuery(
     getManagementReportData,
-    { variables: { assessmentId } }
+    { assessmentId },
+    {
+      onPreFetch: variables => !!variables.assessmentId,
+    }
   )
 
   const { t, i18n } = useTranslation()
   const lang = i18n.language || 'en'
 
-  useEffect(() => {
-    if (isAuthInitialized) {
-      fetchManagementReportData()
-    }
-  }, [isAuthInitialized])
+  if (loading) {
+    return (
+      <Box className={classes.pageContainer} component="article">
+        <PaddedContainer>
+          <Typography variant="h3">Loading...</Typography>
+        </PaddedContainer>
+      </Box>
+    )
+  }
 
   if (!data) {
     return null
   }
 
   // Retrieve the assessment meta data
-  // TODO: Confirm following change with Ken.
-  //const [businessMatrixAdvanced] = getAssessmentParts(
-  const { assessment: businessMatrixAdvanced } = getAssessmentParts(
-    'efqm-2020-advanced',
-    lang
-  )
-
-  // Destructure the relevant from the assessment meta data
   const {
-    keyInformation: { keyInformationItems: keyInfoItemsMeta },
-    pillars: pillarsMeta,
-    columns: answersMeta,
-  } = businessMatrixAdvanced
+    assessment: {
+      keyInformation: { keyInformationItems: keyInfoItemsMeta },
+      pillars: pillarsMeta,
+      columns: answersMeta,
+    },
+  } = getAssessmentParts('efqm-2020-advanced', lang)
 
   // avoid filtering for every answer
   const answerSectionTitles = {}

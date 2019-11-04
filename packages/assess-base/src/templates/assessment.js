@@ -93,16 +93,22 @@ function AssessmentTemplate({
   )
   const { isAdmin, isContributor, userId, groupId } = getUserTokenData()
 
-  const [assessmentData, , , reloadAssessmentData] = useAuthorizedQuery(
+  const {
+    data: assessmentData,
+    refetch: refetchAssessmentData,
+  } = useAuthorizedQuery(
     getShallowAssessmentData,
     { id: assessmentId },
-    [assessmentId],
-    data => filterOldScores(assessment, data.assessment_by_pk)
+    {
+      onPreFetch: variables => !!variables.id,
+      onFetch: data => filterOldScores(assessment, data.assessment_by_pk),
+    }
   )
-  const [assessorsData] = useAuthorizedQuery(
+
+  const { data: assessorsData } = useAuthorizedQuery(
     getAssessmentContributorsAssessorsData,
     { assessmentId },
-    [assessmentId]
+    { onPreFetch: variables => !!variables.assessmentId }
   )
 
   const [createAssessment] = useMutation(createAssessmentMutation)
@@ -115,7 +121,7 @@ function AssessmentTemplate({
   }
 
   function loadAssessment(id) {
-    reloadAssessmentData({ id })
+    refetchAssessmentData({ id })
   }
 
   async function handleCreateAssessment({ name, internal }) {
