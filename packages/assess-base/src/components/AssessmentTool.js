@@ -21,7 +21,7 @@ const buttonText = text => {
       words.push(word)
     } else {
       const phrase = `${words[words.length - 1]} ${word}`
-      // 30 is used to keep 'Enter business Matrix Advanced' on one line
+      // 30 is used to keep 'Enter Business Matrix Advanced' on one line
       if (phrase.length <= 30) {
         words[words.length - 1] = phrase
       } else {
