@@ -107,12 +107,16 @@ const ReportLinks = ({ assessment, canViewFeedbackReport }) => {
     <HeadedAsidePanel title={t('Assessment Reports')}>
       {assessment && assessment.id ? (
         <Box component="nav" className={wrapper}>
-          <FeedbackReportLink
-            assessment={assessment}
-            text={t('View Feedback Report')}
-            uppercase
-            visible={canViewFeedbackReport}
-          />
+          {assessment.status !== 'in-progress' ? (
+            <FeedbackReportLink
+              assessment={assessment}
+              text={t('View Feedback Report')}
+              uppercase
+              visible={canViewFeedbackReport}
+            />
+          ) : (
+            ''
+          )}
           <ManagementReportLink
             assessment={assessment}
             text={t('View Management Report')}
