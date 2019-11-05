@@ -10,8 +10,9 @@ import {
   Tooltip,
   IconButton,
 } from '@material-ui/core'
-import { HowToReg, ErrorOutline, Edit } from '@material-ui/icons'
+import { HowToReg, ErrorOutline, Edit, DeleteForever } from '@material-ui/icons'
 import * as Yup from 'yup'
+import { ConfirmDialog } from 'components'
 
 import UserRoleChip from '../StatusChip/UserRoleChip'
 import useAdminTable from '../../hooks/useAdminTable'
@@ -25,6 +26,7 @@ import {
   assignUserGroupMutation,
   addUserRoleMutation,
   assignUserRoleMutation,
+  deleteUserMutation,
 } from '../../../queries'
 
 const styles = theme => ({
@@ -106,8 +108,12 @@ function AllUsers({ classes, query, variables }) {
     query,
     headers,
     variables,
-    renderTableBody: data =>
-      data.user.map(user => (
+    renderTableBody: (data, { refetch: refetchUsers }) => {
+      const doDeleteUser = async id => {
+        await deleteUser({ variables: { id } })
+        refetchUsers()
+      }
+      return data.user.map(user => (
         <TableRow key={user.id.toString()} data-testid="all-users" size="small">
           <TableCell>
             <Typography variant="body2">{user.id}</Typography>
@@ -131,8 +137,21 @@ function AllUsers({ classes, query, variables }) {
               <Edit color="secondary" />
             </IconButton>
           </TableCell>
+          <TableCell align="right" padding="none">
+            <ConfirmDialog
+              title={`Delete user “${user.email}”?`}
+              text="This user will be permanently deleted. This cannot be undone."
+              onConfirm={() => doDeleteUser(user.id)}
+              okayLabel="Delete"
+            >
+              <IconButton className={classes.actionButton}>
+                <DeleteForever />
+              </IconButton>
+            </ConfirmDialog>
+          </TableCell>
         </TableRow>
-      )),
+      ))
+    },
   })
 
   const { data: modalData } = useQuery(getEdittableUserFields)
@@ -140,6 +159,7 @@ function AllUsers({ classes, query, variables }) {
   const [doAssignUserGroup] = useMutation(assignUserGroupMutation)
   const [doAddUserRole] = useMutation(addUserRoleMutation)
   const [doAssignUserRole] = useMutation(assignUserRoleMutation)
+  const [deleteUser] = useMutation(deleteUserMutation)
 
   const modalContents = [
     {

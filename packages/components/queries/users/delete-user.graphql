@@ -1,0 +1,20 @@
+mutation deleteUser($id: Int!) {
+  delete_user_role(where: { user_id: { _eq: $id } }) {
+    affected_rows
+  }
+  delete_user_group(where: { user_id: { _eq: $id } }) {
+    affected_rows
+  }
+  delete_user_bookmarks(where: { user_id: { _eq: $id } }) {
+    affected_rows
+  }
+  delete_assessment_assessor(where: { assessor_id: { _eq: $id } }) {
+    affected_rows
+  }
+  delete_assessment_contributor(where: { contributor_id: { _eq: $id } }) {
+    affected_rows
+  }
+  delete_user(where: { id: { _eq: $id } }) {
+    affected_rows
+  }
+}
