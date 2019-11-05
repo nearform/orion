@@ -12,23 +12,31 @@ import { AuthContext } from './AuthWrapper'
  *                  should be fetched.
  *                  onFetch: A function called after the query is fetched;
  *                  passed the query data, returns the query result.
+ *                  onNoFetch:
+ *                  useCache:
  */
 export default function useAuthorizedQuery(query, variables, opts = {}) {
-  const { onPreFetch = variables => true, onFetch = data => data } = opts
+  const {
+    onPreFetch = variables => true,
+    onFetch = data => data,
+    onNoFetch = variables => null,
+    useCache,
+  } = opts
 
-  // Check if authorization context is initialized.
-  const { isAuthInitialized } = useContext(AuthContext)
-
-  // Setup query.
+  // Setup query hook.
   const [_fetch, { data: _data, loading: _loading, error }] = useManualQuery(
     query,
     {
       variables,
+      useCache,
     }
   )
 
   // Check whether fetch has been called yet.
   const isPreFetch = !(_data || _loading || error)
+
+  // Check if authorization context is initialized.
+  const { isAuthInitialized } = useContext(AuthContext)
 
   // Do the initial fetch if (1) isPreFetch, (2) auth is initialized and (3)
   // onPreFetch says it's OK.
@@ -36,11 +44,11 @@ export default function useAuthorizedQuery(query, variables, opts = {}) {
     _fetch()
   }
 
-  // If data then generate result by calling onLoad handler.
-  const data = _data ? onFetch(_data) : null
-
   // Set loading flag if prefetch of loading.
   const loading = isPreFetch || _loading
+
+  // If data then generate result by calling onLoad handler.
+  const data = _data ? onFetch(_data) : onNoFetch(variables, loading, error)
 
   // Function for refetching the query with new variables.
   function refetch(variables) {
