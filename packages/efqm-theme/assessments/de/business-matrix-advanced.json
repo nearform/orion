@@ -92,49 +92,49 @@
   "scoring": [
     {
       "key": "approach",
-      "name": "approach",
+      "name": "Vorgehen",
       "scores": [
         {
           "key": "sound",
-          "name": "sound",
-          "description": "The approaches have a clear rationale, aim to fulfil and respond to relevant stakeholder needs, are described appropriately and are designed to be innovative and agile"
+          "name": "Fundiert",
+          "description": "Das Vorgehen ist klar begründet und zielt darauf ab, die Bedürfnisse der für Zweck, Vision und Strategie wichtigen Interessengruppen zu erfüllen. Es ist angemessen beschrieben und zukunftsfähig gestaltet"
         },
         {
           "key": "aligned",
-          "name": "aligned",
-          "description": "The approaches support an Organisation’s direction and fit strategically with other relevant approaches"
+          "name": "Abgestimmt",
+          "description": "Das Vorgehen unterstützt die Ausrichtung der Organisation und ist mit anderen relevanten Vorgehensweisen verknüpft und abgestimmt"
         }
       ]
     },
     {
       "key": "deployment",
-      "name": "deployment",
+      "name": "Umsetzung",
       "scores": [
         {
           "key": "executed",
-          "name": "executed",
-          "description": "The approaches are deployed in relevant areas in an effective and timely manner"
+          "name": "Eingeführt",
+          "description": "Das Vorgehen wird in den relevanten Bereichen in angemessenem Zeitraum und effektiver Weise umgesetzt"
         },
         {
           "key": "flexibility",
-          "name": "flexibility",
-          "description": "The execution enables flexibility and adaptation according to the circumstances"
+          "name": "Flexibel",
+          "description": "Die Art der Umsetzung ermöglicht Flexibilität und Anpassung"
         }
       ]
     },
     {
       "key": "assessment-refinement",
-      "name": "assessment and refinement",
+      "name": "Bewertung & Verbesserung",
       "scores": [
         {
           "key": "measurement-learning",
-          "name": "measurement & learning",
-          "description": "Feedback on the effectiveness & efficiency of the approaches and their deployment are collected, lessons are learnt and shared"
+          "name": "Analyse",
+          "description": "Rückmeldungen zu Effizienz und Effektivität des Vorgehens und sder Umsetzung werden eingeholt, verstanden und geteilt"
         },
         {
           "key": "improvement-creativity",
-          "name": "improvement through Creativity & Innovation",
-          "description": "Findings from emerging trends analysis, measurement, learning and benchmarking are used to inspire creativity and innovative solutions to improve performance in appropriate timescales"
+          "name": "Lernen & Verbessen",
+          "description": "Erkenntnisse aus Trendanalysen, Messungen, Lernen und Benchmarking werden genutzt, um Kreativität anzuregen und in angemessenen Zeitabschnitten innovative Lösungen für die Verbesserung der Leistungsfähigkeit zu entwickeln"
         }
       ]
     }
@@ -142,19 +142,19 @@
   "pillars": [
     {
       "key": "direction",
-      "name": "direction",
+      "name": "DIE AUSRICHTUNG",
       "criteria": [
         {
           "key": "purpose-strategy",
-          "name": "purpose, vision & strategy",
-          "description": "An outstanding organisation is defined by a Purpose that inspires, a Vision that is aspirational and a Strategy that delivers.\n\nThe Purpose of the organisation:\n\n- Explains why its work is important\n- Sets the scene for it to create and deliver sustained value for its stakeholders\n- Provides a framework in which it takes responsibility for its contribution to, and impact on, the ecosystem in which it operates.\n\nThe Vision of the organisation:\n- Describes what the organisation is attempting to achieve in the long-term\n- Is intended to serve as a clear guide for choosing current and future courses of action\n- Provides, along with the organisation’s Purpose, the basis for setting the Strategy.\n\nThe Strategy of the organisation:\n\n- Describes how it intends to fulfil its Purpose\n- Details its plans to achieve the strategic priorities and move closer to its Vision\n",
+          "name": "Zweck, Vision und Strategie",
+          "description": "Eine herausragende Organisation definiert sich über einen inspirierenden Zweck, eine erstrebenswerte Vision und eine wirksame Strategie.\n\nDer Zweck der Organisation:\n- beschreibt, weshalb ihre Tätigkeit wichtig ist\n- bezieht sich auf Schaffung und Lieferung eines nachhaltigen Nutzens für ihre Interessengruppen\n- erschafft den Handlungsrahmen, für den sie Verantwortung übernimmt in Bezug auf ihren Beitrag zum und ihre Auswirkung auf ihr Ecosystem\n\nDie Vision der Organisation:\n- beschreibt, was die Organisation langfristig erreichen möchte\n- ist klarer Wegweiser für Entscheidungen bei gegenwärtigen wie zukünftigen\nHandlungsoptionen\n- bildet, zusammen mit dem Zweck der Organisation, die Basis für die Strategieerstellung\n\nDie Strategie der Organisation:\n- beschreibt, wie die Organisation beabsichtigt, ihren Zweck zu erfüllen\n- konkretisiert die Pläne der Organisation, um strategische Schwerpunkte zu erfüllen und ihrer Vision näherzukommen\n",
           "guidance": "We are here to guide you how the purpose strategy works",
           "parts": [
             {
               "tables": [
                 {
                   "key": "purpose-vision",
-                  "name": "1.1. Define Purpose & Vision",
+                  "name": "1.1 Zweck und Vision definieren",
                   "guidance": "In practice, we find that an outstanding organisation:\n\n- Defines a Purpose that provides an inspirational motive for the importance and value of its work and is appealing to all its stakeholders\n- Uses its Purpose to create an aspirational Vision that resonates with its stakeholders\n- Involves its Stakeholders in defining, shaping and communicating its Purpose and Vision\n- Identifies areas in which outstanding and sustainable levels of performance must be achieved to fulfil the Vision\n"
                 }
               ]
@@ -450,14 +450,14 @@
       "criteria": [
         {
           "key": "stakeholder-perceptions",
-          "name": "Stakeholder Perceptions",
+          "name": "Wahrnehmungen der Interessengruppen",
           "description": "This criterion concentrates on results based on feedback from Key Stakeholders about their personal experiences of dealing with the organisation - their perceptions\n\nThese perceptions could relate to past as well as current Key Stakeholders and could be obtained from a number of sources, including surveys, focus groups, ratings, press or social media, external recognition, advocacy, structured review meetings, investor reports and compliments/complaints, including feedback compiled by customer relationship management teams\n\nIn addition to the perceptions that a Key Stakeholder may have of an organisation based on personal experiences, perceptions may also be shaped by the environmental and social impact reputation of the organisation. For instance, the degree to which the organisation is perceived by its Key Stakeholders as contributing successfully to one or more of the United Nations Sustainable Development Goals and Global Compact ambitions.\n\nIn practice, we find that an outstanding organisation: -\n\n- Knows how successful it is at executing its Strategy to meet the needs and expectations of its Key Stakeholders\n- Uses its analysis of past and current performance to predict future performance\n- Uses Key Stakeholder Perception Results to stay informed and influence its current Direction and the Execution of its Strategy.\n",
           "parts": [
             {
               "tables": [
                 {
                   "key": "customer-perception",
-                  "name": "Customer Perception Results",
+                  "name": "Wahrnehmung der Kunden",
                   "guidance": "What are the perceptions of the Customers in relation to, for instance:\n- The delivery of the overall customer experience\n- The culture of the organisation; the attitude and level of commitment to the customer by People\n- The branding and reputation of the organisation, including its social and environmental performance\n- The products, services and solutions offered by the organisation\n- The use of innovation to improve the organisation’s processes, products, services and solutions\n- The usage of technology by the organisation to help deliver sustainable value\n- The delivery and after-sales support for the different channels\n- The effectiveness and efficiency of the communication channels used\n"                }
               ]
             },
@@ -465,7 +465,7 @@
               "tables": [
                 {
                   "key": "people-perception",
-                  "name": "People Perception Results",
+                  "name": "Wahrnehmung der Mitarbeitenden",
                   "guidance": "What are the perceptions of the People in relation to, for instance: \n\n- The culture of the organisation\n- Their experience of working for the organisation, including how change is managed\n- The organisation’s commitment and achievements concerning gender balance, parity, diversity and inclusion \n- The way the organisation is adapting to future ways of working, for example, the co-existence of People working alongside robots, the use of artificial intelligence and augmented virtual reality\n- The organisation’s support for family and personal life\n- The organisation’s support, empowerment, recognition and development \n- The working environment, pay and benefits\n- The management and improvement of personal performance\n- The reputation of the organisation, including as a Leader in its ecosystem\n- Communication within the organisation\n- Talent attraction and engagement\n- The way in which strategy is executed, their contribution to it and their degree of confidence in the future direction of the organisation\n"                }
               ]
             },
@@ -473,7 +473,7 @@
               "tables": [
                 {
                   "key": "governing-perception",
-                  "name": "Business & Governing Stakeholder Perception Results",
+                  "name": "Wahrnehmung wirtschaftlicher und regulatorischer Interessengruppen",
                   "guidance": "What are the perceptions of the Business and Governing Stakeholders e.g. owners, shareholders,  investors, funding organisations, government departments, regional or local bodies (statutory & regulatory), public authorities or parastatal institutions in relation to, for instance:\n\n- The financial management, security and sustainability of the organisation\n- The governance structure, transparency, accountability and ethical behaviour of the organisation\n- The social and environmental responsibility of the organisation\n- The management of risk and compliance\n- The branding and reputation of the organisation\n- The products, services and solutions offered by the organisation and its approach to innovation in processes, products, services and solutions\n- The ability of the organisation to scan the horizon, spot megatrends and deal with them successfully \n- Their overall experience of dealing with the organisation\n"                }
               ]
             },
@@ -481,7 +481,7 @@
               "tables": [
                 {
                   "key": "society-perception",
-                  "name": "Society Perception Results",
+                  "name": "Wahrnehmung der Gesellschaft",
                   "guidance": "What are the perceptions of its Society, be it local, national or international, in relation to, for instance:\n\n- The organisation’s ability to meet the expectations of its Society\n- The impact the governance of the organisation, and the degree of transparency and ethical behaviour have on the community \n- The impact the operations of the organisation has on the community\n- The sustainability of the organisation’s contributions to the community in terms of its economic, social and environmental practices\n- The organisation’s commitment to move towards a Circular Economy \n- The organisation’s commitment to, and achievements in, reducing inequality, increasing diversity & inclusion and achieving a gender balance\n"                }
               ]
             },
@@ -489,7 +489,7 @@
               "tables": [
                 {
                   "key": "partner-perception",
-                  "name": "Partner & Supplier Perception Results",
+                  "name": "Wahrnehmungen der Partner und Lieferanten",
                   "guidance": "What are the perceptions of the Key Partners & Suppliers in relation to, for instance:\n\n- Their experience of dealing with the organisation\n- The commitment and achievement of the organisation to co-creation and working towards mutual benefit\n- The rate of implementation of new technologies and changes\n- The social commitment of the organisation\n- The organisation’s commitment and achievement to move towards a Circular Economy \n- The management and improvement of Key Partners & Suppliers performance\n- Communication and relationship management with the organisation\n- The governance structure, transparency and ethics of the organisation and its practices\n- The sustainability of the relationship between the organisation and the Key Partners and Suppliers\n"                }
               ]
             }
@@ -497,56 +497,56 @@
         },
         {
           "key": "strategic-performance",
-          "name": "Strategic & Operational Performance",
+          "name": "Strategie- und leistungsbezogene Ergebnisse",
           "description": "This criterion concentrates on results linked to the organisation’s performance in terms of:\n- The ability to fulfil its Purpose, deliver the Strategy and Create Sustainable Value\n- Its fitness for the future\n\nThese results are used by the organisation to monitor, understand and improve its overall performance and to forecast the impact this performance will have on both the perceptions of its Key Stakeholders as well as its future strategic ambitions.\n\nIn practice, we find that an outstanding organisation: -\n- Uses both financial and non-financial indicators to help it measure its strategic and operational performance. \n- Understands the linkages between Key Stakeholder perceptions and actual performance and is able to predict, with a high degree of certainty, how future performance will evolve.\n- Considers the current and future needs and expectations of its Key Stakeholders when deciding on the most appropriate performance indicators to match its strategic & operational objectives\n- Understands the cause and effect relationships that impact on performance and uses the results achieved to stay informed and influence its current Direction & Execution \n- Uses the results currently being achieved to forecast its future performance with an expected degree of certainty. \n",
           "parts": [
             {
               "tables": [
                 {
                   "key": "achievements-value",
-                  "name": "Achievements in delivering its Purpose and Creating Sustainable Value"                }
+                  "name": "Indikatoren bezogen auf nachhaltigen Nutzen im Sinne des Zwecks der Organisation"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "financial-performance",
-                  "name": "Financial Performance"                }
+                  "name": "Indikatoren zu den finanziellen Ergebnissen"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "fulfil-expectations",
-                  "name": "Fulfilment of Key Stakeholders Expectations"                }
+                  "name": "Indikatoren zur Erfüllung der Erwartungen wichtiger Interessengruppen"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "strategic-objectives",
-                  "name": "Achievement of Strategic Objectives"                }
+                  "name": "Indikatoren bezogen auf die Erreichung strategischer Ziele"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "achievements-driving",
-                  "name": "Achievements in Driving Performance"                }
+                  "name": "Indikatoren zur Messung und Verbesserung der Leistungsfähigkeit"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "achievements-transformation",
-                  "name": "Achievements in Driving Transformation"                }
+                  "name": "Indikatoren zum Fortschritt der Transformation"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "predictive-measures",
-                  "name": "Predictive Measures for the Future"                }
+                  "name": "Indikatoren zur Vorhersage der Zukunft"                }
               ]
             }
           ]
@@ -558,43 +558,43 @@
       "scoring": [
         {
           "key": "relevance-usability",
-          "name": "relevance & usability",
+          "name": "Relevant & Nutzen",
           "scores": [
             {
               "key": "scope-relevance",
-              "name": "scope & relevance",
-              "description": "A set of results that clearly link to the strategy of the organisation are identified and demonstrate the needs and expectations of the stakeholders. The selected set of results is reviewed and improved overtime"
+              "name": "Umfang & Relevanz",
+              "description": "Ein Set von Ergebnissen, welche klar mit dem Zweck, der Vision und der Strategie der Organisation verbunden sind, ist identifiziert. Es wird im Laufe der Zeit überprüft und angepasst"
             },
             {
               "key": "usable-data",
-              "name": "usable data",
-              "description": "Results are timely, reliable, accurate and appropriately segmented to provide meaningful insights that support improvement"
+              "name": "Verwendbare Daten",
+              "description": "Die Ergebnisse werden zeitgerecht erhoben, sind aussagekräftig, genau und angemessen segmentiert. Sie ermöglichen aussagekräftige Einblicke und Erkenntnisse in Leistungsverbesserungen und Transformation"
             }
           ]
         },
         {
           "key": "performance",
-          "name": "performance",
+          "name": "Leistung",
           "scores": [
             {
               "key": "trends",
               "name": "trends",
-              "description": "Positive trends or sustained good performance over the strategic period/cycle."
+              "description": "Es liegen positive Trends oder nachhaltig herausragende Leistungen über einen strategischen Zyklus vor"
             },
             {
               "key": "targets",
-              "name": "targets",
-              "description": "Relevant targets are set in line with the strategic intent & benchmarks and consistently achieved"
+              "name": "Ziele",
+              "description": "Angemessene, im Einklang mit der Strategie stehende Ziele werden gesetzt und durchgängig erreicht"
             },
             {
               "key": "comparisons",
-              "name": "comparisons",
-              "description": "Relevant external comparisons suitable to classify own performance in line with the strategic direction are made and are favourable"
+              "name": "Vergleiche",
+              "description": "Es werden relevante externe Vergleiche angestellt, um die eigene Leistung in Bezug auf die strategische Richtung beurteilen zu können. Diese fallen günstig aus"
             },
             {
               "key": "future-focus",
-              "name": "future focus",
-              "description": "Based on current cause & effect relationships, analysis of data sets, performance patterns & predictive measures, the organisation understands the drivers for exceptional performance in the future"
+              "name": "Fokus auf die Zukunft",
+              "description": "Basierend auf den aktuellen Ursache-Wirkungs-Beziehungen sowie der Analyse von Daten, Leistungsmustern und Vorhersagen versteht die Organisation die Treiber für herausragende Leistungsfähigkeit in der Zukunft"
             }
           ]
         }
