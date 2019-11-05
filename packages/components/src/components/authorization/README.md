@@ -8,7 +8,7 @@ This is a React context through which permissions and other authorization inform
 
 The authorization context includes the following properties:
 
-* `isAuthInitialized`: A flag inicating whether the context is initialized.
+* `isAuthInitialized`: A flag indicating whether the context is initialized.
 * `getUserTokenData`: A function for accessing user information.
 * `getUserRole`: A function for reading the user's role.
 * `hasPermissions`: A function for testing whether the current user has specified permissions.
@@ -60,8 +60,8 @@ The hook's third argument is a set of query options, which can be any of the fol
 
 The hook returns a state object with the following properties:
 
-* `data`: The result of executing the query. Will be `null` if the query hasn't been executed yet. If an `onFetch` and/or `onNoFetch` option was fetched, then this will be the result returned from either of these functions, depending on the query state.
+* `data`: The result of executing the query. Will be `null` if the query hasn't executed yet. If an `onFetch` and/or `onNoFetch` option is specified, then this will be the result returned from either of these functions, depending on the query state.
 * `loading`: A flag indicating whether data is pending or not. The flag is true if (1) the query is currently executing or (2) the hook is waiting for the authorization context to initialize before executing the query.
-* `error`: An object containing error information after a query execution failed.
-* `refetch`: A function which can be used to refetch data by re-executing the query. Query variables can be passed to the function when calling. If a `onPreFetch` option was specified then this will be called before re-running the query.
+* `error`: An object containing error information after a query execution failed; see `useQuery`.
+* `refetch`: A function which can be used to re-fetch data by re-executing the query. Query variables can be passed to the function when calling. If an `onPreFetch` option was specified then this will be called before re-running the query.
 
