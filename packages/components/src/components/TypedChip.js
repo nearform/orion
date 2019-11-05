@@ -10,16 +10,17 @@ export const PARTICIPANT_TYPE = {
 }
 
 function TypedChip({ type, color, name, onDelete, classes }) {
+  const { type: typeClass, ...chipClasses } = classes
   return (
     <Chip
-      onDelete={onDelete ? onDelete : false}
-      deleteIcon={onDelete ? <ClearIcon fontSize="small" /> : false}
-      classes={classes}
+      onDelete={onDelete}
+      deleteIcon={onDelete ? <ClearIcon fontSize="small" /> : null}
+      classes={chipClasses}
       clickable={false}
       label={
         <>
           <Typography className={'name'}>{name}</Typography>
-          <Typography variant="h4" className={classes.type} color={color}>
+          <Typography variant="h4" className={typeClass} color={color}>
             {type}
           </Typography>
         </>

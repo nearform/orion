@@ -39,7 +39,7 @@ const FeedbackReportLink = ({
       <Link
         className={classes.wrapper}
         data-test-id="feedback-report-link"
-        to={`assessment/${assessment.key}/feedback-report/#${assessment.id}`}
+        to={`/assessment/${assessment.key}/feedback-report/#${assessment.id}`}
       >
         <Assignment className={classes.icon} />
         <Typography className={classes.text}>{text}</Typography>
@@ -70,7 +70,7 @@ const ManagementReportLink = ({
     <Link
       className={classes.wrapper}
       data-test-id="management-report-link"
-      to={`management-report/${assessment.id}`}
+      to={`/management-report/${assessment.id}`}
     >
       <AssignmentTurnedIn className={classes.icon} />
       <Typography className={classes.text}>{text}</Typography>
