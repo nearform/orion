@@ -48,7 +48,7 @@ const AssessmentPillars = ({
                     component={assessmentData.id ? Link : null}
                     to={
                       assessmentData.id
-                        ? `assessment/${assessment.key}/${pillar.key}/${criterion.key}#${assessmentData.id}`
+                        ? `/assessment/${assessment.key}/${pillar.key}/${criterion.key}#${assessmentData.id}`
                         : null
                     }
                     variant="h3"

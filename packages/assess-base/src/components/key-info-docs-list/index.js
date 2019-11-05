@@ -10,7 +10,7 @@ const KeyInfoDocsList = ({
   assessment,
   classes,
   onFileDelete,
-  canDeleteFile,
+  canDeleteFile = false,
 }) => {
   const { t } = useTranslation()
   return (
@@ -41,6 +41,7 @@ KeyInfoDocsList.propTypes = {
   assessment: T.object,
   classes: T.object.isRequired,
   onFileDelete: T.func.isRequired,
+  canDeleteFile: T.bool,
 }
 
 const styles = theme => ({
