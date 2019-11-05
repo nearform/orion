@@ -4,6 +4,9 @@ import { AuthContext } from './AuthWrapper'
 
 /**
  * Execute a query which requires an authorization context to succeed.
+ * Many data queries will fail due to data access permission errors if executed
+ * without
+ *
  * @param query     The graphql query to execute.
  * @param variables Optional query parameters.
  * @param opts      Hook options; includes:
@@ -12,8 +15,9 @@ import { AuthContext } from './AuthWrapper'
  *                  should be fetched.
  *                  onFetch: A function called after the query is fetched;
  *                  passed the query data, returns the query result.
- *                  onNoFetch:
- *                  useCache:
+ *                  onNoFetch: A function called when no data is available; can
+ *                  be used to return a default data result.
+ *                  useCache: A flag indicating whether to use the query cache.
  */
 export default function useAuthorizedQuery(query, variables, opts = {}) {
   const {
