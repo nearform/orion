@@ -116,7 +116,7 @@ function AssessmentTemplate({
   const [createFileUpload] = useMutation(createFileUploadMutation)
   const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
-  if (!assessmentId || (isAuthInitialized && !isAdmin)) {
+  if (!assessmentId && (isAuthInitialized && !isAdmin)) {
     return <Redirect to="/auth" noThrow />
   }
 
