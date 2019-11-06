@@ -8,7 +8,7 @@
 
 ### ASSESS BASE
 
-* NOTE: Adding a language will also cause the homepage to search for a 'modelImage' with the same 2 letter abbreviation attached (current naming convention is modelImageAB_xx, where xx is the language abbreviation).
+* NOTE: Adding a language will also cause the homepage to search for a 'modelImage' with the same 2 letter abbreviation attached (current naming convention is modelImageAB_xx, where xx is the language abbreviation). If none is found, it will default to the _en (english) version of the image
 
 * All translations are kept within the ./assessments directory, each within a subdirectory titled after the language's 2 letter abbreviation (such as en, es, or de)
 

@@ -30,9 +30,9 @@ function AssessmentsHome({
   } = data
   const { t, i18n } = useTranslation()
   const lang = i18n.language || 'en'
-  const modelImage = modelImageAssets.find(
-    img => img.name === `${modelImageName}_${lang}`
-  )
+  const modelImage =
+    modelImageAssets.find(img => img.name === `${modelImageName}_${lang}`) ||
+    modelImageAssets.find(img => img.name === `${modelImageName}_en`)
   const assessmentTypes = getAssessmentTypes(lang)
   const { getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
