@@ -39,6 +39,7 @@ const AssessmentTool = ({
         {isAuthenticated && (
           <CardActions className={classes.bottom}>
             <Button
+              className={classes.button}
               component={Link}
               to={`/assessment/${assessmentToolMeta.key}`}
               color="secondary"
@@ -70,6 +71,10 @@ const styles = theme => ({
   },
   bottom: {
     borderTop: `solid 1px ${theme.palette.background.light}`,
+  },
+  button: {
+    whiteSpace: 'normal',
+    textAlign: 'center',
   },
 })
 
