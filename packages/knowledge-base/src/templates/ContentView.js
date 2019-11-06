@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { Cache } from 'aws-amplify'
 import get from 'lodash/get'
-import { useManualQuery } from 'graphql-hooks'
 import classnames from 'classnames'
 import { withStyles, Grid, Typography, LinearProgress } from '@material-ui/core'
 
@@ -9,8 +8,13 @@ import ContentMetadata from '../components/content/ContentMetadata'
 import ContentOptions from '../components/content/ContentOptions'
 import FeatureArticles from '../components/list/FeatureArticles'
 import HowToAuthenticate from '../components/HowToAuthenticate'
-import RichText from '../components/content//RichText'
-import { AuthContext, PaddedContainer, EmbeddedVideo } from 'components'
+import RichText from '../components/content/RichText'
+import {
+  AuthContext,
+  useAuthorizedQuery,
+  PaddedContainer,
+  EmbeddedVideo,
+} from 'components'
 import SEO from '../components/SEO'
 import { constructImageUrl } from '../utils/image'
 import { getArticleDetails, getArticleSummary } from '../queries'
@@ -19,47 +23,42 @@ function ContentView({ slug, classes, pageContext }) {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
 
-  // Only show the full article if the user is logged in.
-  const showFullArticle = isAuthenticated && isAuthInitialized
-  const articleQuery = showFullArticle ? getArticleDetails : getArticleSummary
-  const [fetchArticle, { loading, data }] = useManualQuery(articleQuery)
-
-  const [isChanged, setIsChanged] = useState(Symbol())
-  const refetchArticle = () => setIsChanged(Symbol())
-
   const articlePath = slug || get(pageContext, 'articleSummary.path', '')
   const contentId = articlePath.split('-')[0]
 
-  useEffect(() => {
-    if (contentId) {
-      fetchArticle({
-        variables: { id: contentId },
-      })
-    }
-  }, [contentId, showFullArticle, fetchArticle, isChanged])
+  // Only show the full article if the user is logged in.
+  const showFullArticle = isAuthenticated && isAuthInitialized
+  const articleQuery = showFullArticle ? getArticleDetails : getArticleSummary
 
-  // Resolve article data.
-  let article
-  if (data) {
-    // Read article data from query result.
-    article = showFullArticle ? data.articleDetails : data.articleSummary
-  } else if (pageContext) {
-    // Read article data from static page context data (SSR).
-    article = pageContext.articleSummary
-  }
-
-  if (!article && loading) {
-    // A minimal set of article properties to allow the page to render whilst
-    // article data is loading.
-    article = {
-      id: 0,
-      title: 'Loading...',
-      subtitle: '',
-      authors: [],
-      taxonomy_items: [],
-      published_at: '',
+  const {
+    data: article,
+    loading,
+    refetch: refetchArticle,
+  } = useAuthorizedQuery(
+    articleQuery,
+    { id: contentId },
+    {
+      onPreFetch: variables => !!variables.id,
+      onFetch: data =>
+        showFullArticle ? data.articleDetails : data.articleSummary,
+      onNoFetch: (variables, loading) => {
+        if (pageContext) {
+          return pageContext.articleSummary
+        }
+        if (loading) {
+          return {
+            id: 0,
+            title: 'Loading...',
+            subtitle: '',
+            authors: [],
+            taxonomy_items: [],
+            published_at: '',
+          }
+        }
+        return null
+      },
     }
-  }
+  )
 
   if (!article) {
     return (
