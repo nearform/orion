@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core'
 import { HowToReg, ErrorOutline, Edit } from '@material-ui/icons'
 import * as Yup from 'yup'
+import get from 'lodash/get'
 
 import UserRoleChip from '../StatusChip/UserRoleChip'
 import useAdminTable from '../../hooks/useAdminTable'
@@ -204,9 +205,8 @@ function AllUsers({ classes, query, variables }) {
   }
 
   const getModalInitialValues = user => {
-    const groupId = user.user_groups.length && user.user_groups[0].group.id
-    const roleId = user.user_roles.length && user.user_roles[0].role.id
-
+    const groupId = get(user, 'user_groups.0.group.id')
+    const roleId = get(user, 'user_roles.0.role.id')
     return {
       userId: user ? user.id : null,
       groupId: groupId || 0,

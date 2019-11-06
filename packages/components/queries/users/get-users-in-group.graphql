@@ -16,11 +16,13 @@ query getUsersInGroup(
     email
     user_groups {
       group {
+        id
         name
       }
     }
     user_roles {
       role {
+        id
         name
       }
     }
