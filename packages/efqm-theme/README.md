@@ -18,8 +18,6 @@
   * All fields within ./assessments/key-information-details are also copied
   * In total, there are 8 files that are required in each translation subdirectory
 
-* The xx_AB.json file (where xx = language 2 letter abbreviation) must be imported and referenced in assess-base/utils/i18n.js, following the convention already shown in that file.
-
 * If you add new keys to a file, please also add the key to the template.json file
 
 * When adding translations to a file where none have previously existed, follow these steps:
