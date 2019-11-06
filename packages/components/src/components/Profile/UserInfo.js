@@ -14,46 +14,44 @@ const UserInfo = ({
   editMode,
   rows,
   classes,
-}) => {
-  return (
-    <>
+}) => (
+  <>
+    <Typography
+      variant="h4"
+      className={classnames([
+        classes.title,
+        { [classes.titleLight]: variant === 'light' },
+      ])}
+    >
+      {title}
+    </Typography>
+    {!editMode ? (
       <Typography
-        variant="h4"
+        variant="body2"
         className={classnames([
-          classes.title,
-          { [classes.titleLight]: variant === 'light' },
+          classes.value,
+          { [classes.valueLarge]: size === 'large' },
         ])}
       >
-        {title}
+        {value}
       </Typography>
-      {!editMode ? (
-        <Typography
-          variant="body2"
-          className={classnames([
-            classes.value,
-            { [classes.valueLarge]: size === 'large' },
-          ])}
-        >
-          {value}
-        </Typography>
-      ) : (
-        <Field
-          name={name}
-          render={props => (
-            <TextField
-              className={classnames([classes.value])}
-              inputProps={{ className: classes.input }}
-              fullWidth
-              rows={rows}
-              multiline={!!rows}
-              {...props}
-            ></TextField>
-          )}
-        />
-      )}
-    </>
-  )
-}
+    ) : (
+      <Field
+        name={name}
+        render={props => (
+          <TextField
+            className={classnames([classes.value])}
+            inputProps={{ className: classes.input }}
+            fullWidth
+            rows={rows}
+            multiline={!!rows}
+            {...props}
+          ></TextField>
+        )}
+      />
+    )}
+  </>
+)
 
 UserInfo.propTypes = {
   title: T.string.isRequired,
