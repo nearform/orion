@@ -17,15 +17,22 @@ const assessmentColors = [
   theme => theme.palette.primary.main,
 ]
 
-function AssessmentsHome({ theme, classes, data }) {
+function AssessmentsHome({
+  theme,
+  classes,
+  data,
+  pageContext: { modelImageName },
+}) {
   const {
     heroBanner,
-    modelImage,
+    modelImageAssets: { nodes: modelImageAssets },
     assets: { nodes: assets },
   } = data
-
   const { t, i18n } = useTranslation()
-  const lang = i18n.language
+  const lang = i18n.language || 'en'
+  const modelImage = modelImageAssets.find(
+    img => img.name === `${modelImageName}_${lang}`
+  )
   const assessmentTypes = getAssessmentTypes(lang)
   const { getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
@@ -138,7 +145,7 @@ const styles = theme => ({
 export const query = graphql`
   query HomeTemplateQuery(
     $heroImageName: String!
-    $modelImageName: String!
+    $modelImageAssets: [String]!
     $assets: [String]!
   ) {
     site {
@@ -162,10 +169,13 @@ export const query = graphql`
         }
       }
     }
-    modelImage: file(name: { eq: $modelImageName }) {
-      childImageSharp {
-        fluid(quality: 100) {
-          ...GatsbyImageSharpFluid
+    modelImageAssets: allFile(filter: { name: { in: $modelImageAssets } }) {
+      nodes {
+        name
+        childImageSharp {
+          fluid(quality: 100) {
+            ...GatsbyImageSharpFluid
+          }
         }
       }
     }

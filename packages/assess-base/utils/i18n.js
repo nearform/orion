@@ -1,8 +1,8 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import espanol from './translations/es_ES.json'
-import deutsch from './translations/de_DE.json'
-import english from './translations/en_EN.json'
+import espanol from 'efqm-theme/assessments/es/es_AB.json'
+import deutsch from 'efqm-theme/assessments/de/de_AB.json'
+import english from 'efqm-theme/assessments/en/en_AB.json'
 
 const resources = {
   de: deutsch,

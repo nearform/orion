@@ -125,7 +125,10 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const { nodes } = assessmentsQueryResults.data.allAssessments
   const assessments = nodes.filter(assessment => assessment.orderIndex > 0)
-
+  const translationOptions = Object.keys(config.translations)
+  const modelImageAssets = translationOptions.map(
+    abb => `${config.modelImageAB}_${abb}`
+  )
   const homepageAssets = assessments.map(({ logoAsset }) => logoAsset)
 
   createPage({
@@ -134,6 +137,7 @@ exports.createPages = async ({ graphql, actions }) => {
     context: {
       heroImageName: config.heroImageNameAB,
       modelImageName: config.modelImageAB,
+      modelImageAssets: modelImageAssets,
       assets: homepageAssets,
     },
   })
