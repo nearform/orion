@@ -41,7 +41,9 @@ function FileItem({ classes, file, canDelete, onDeleteComplete }) {
     >
       <AttachmentIcon className={classes.attachmentIcon} />
       <div className={classes.attachment}>
-        <Typography variant="h4">{file.file_name}</Typography>
+        <Typography variant="h4" className={classes.fileName}>
+          {file.file_name}
+        </Typography>
         {isNumber(file.file_size) && (
           <Typography variant="h4" color="secondary">
             {formatFileSize(file.file_size)}
@@ -86,6 +88,11 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
+  },
+  fileName: {
+    textAlign: 'start',
+    wordBreak: 'break-word',
+    whiteSpace: 'normal',
   },
   actionButton: {
     marginLeft: theme.spacing(2),
