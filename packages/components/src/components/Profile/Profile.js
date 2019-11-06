@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import {
   withStyles,
@@ -11,12 +11,17 @@ import {
 } from '@material-ui/core'
 import { AccountCircle } from '@material-ui/icons'
 import classnames from 'classnames'
-import { useMutation, useManualQuery } from 'graphql-hooks'
+import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 import omit from 'lodash/omit'
 import { Formik, Form, Field } from 'formik'
 import { fieldToCheckbox } from 'formik-material-ui'
-import { AvatarImage, AuthContext, PaddedContainer } from 'components'
+import {
+  useAuthorizedQuery,
+  AvatarImage,
+  AuthContext,
+  PaddedContainer,
+} from 'components'
 import { updateUserMutation, getUser } from '../../../queries'
 import UserInfo from './UserInfo'
 import formFields from './formFields'
@@ -31,23 +36,21 @@ const Profile = ({
   classes,
 }) => {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
+
   const { userId } = getUserTokenData()
+  const { data: user = userContext } = useAuthorizedQuery(
+    getUser,
+    { id: userId },
+    {
+      onPreFetch: variables => !!variables.id,
+      onFetch: data => get(data, 'user.0'),
+    }
+  )
 
   const [editMode, setEditMode] = useState(false)
-  const [fetchUser, { data }] = useManualQuery(getUser, {
-    variables: { id: userId },
-  })
-  const [updateUser] = useMutation(updateUserMutation)
-  useEffect(() => {
-    // TODO: uncomment below when SSR is enabled
-    // if (isAuthInitialized && userId === userContext.id) {
-    // TODO: remove below when SSR is enabled
-    if (isAuthInitialized && userId) {
-      fetchUser()
-    }
-  }, [isAuthInitialized, userId, userContext, fetchUser])
 
-  const user = get(data, 'user.0') || userContext
+  const [updateUser] = useMutation(updateUserMutation)
+
   const signupRequest = get(user, 'signupRequest', {})
 
   const initialValues = !user
