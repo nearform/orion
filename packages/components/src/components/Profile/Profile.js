@@ -30,7 +30,7 @@ import { UploadImageWidget } from 'components'
 import { Redirect } from '@reach/router'
 import { constructImageUrl } from '../../utils/image'
 
-const Profile = ({ SEO, pageContext: { user: userContext } = {}, classes }) => {
+const Profile = ({ SEO, pageContext = {}, classes }) => {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
 
   const { userId } = getUserTokenData()
@@ -40,7 +40,7 @@ const Profile = ({ SEO, pageContext: { user: userContext } = {}, classes }) => {
     {
       onPreFetch: variables => !!variables.id,
       onFetch: data => get(data, 'user.0'),
-      onNoFetch: () => userContext,
+      onNoFetch: () => pageContext.user || null,
     }
   )
 
