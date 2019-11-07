@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { Cache } from 'aws-amplify'
 import get from 'lodash/get'
-import { withStyles, Grid, Typography } from '@material-ui/core'
+import classnames from 'classnames'
+import { withStyles, Grid, Typography, LinearProgress } from '@material-ui/core'
 
 import ContentMetadata from '../components/content/ContentMetadata'
 import ContentOptions from '../components/content/ContentOptions'
@@ -29,7 +30,11 @@ function ContentView({ slug, classes, pageContext }) {
   const showFullArticle = isAuthenticated && isAuthInitialized
   const articleQuery = showFullArticle ? getArticleDetails : getArticleSummary
 
-  const { data: article, refetch: refetchArticle } = useAuthorizedQuery(
+  const {
+    data: article,
+    loading,
+    refetch: refetchArticle,
+  } = useAuthorizedQuery(
     articleQuery,
     { id: contentId },
     {
@@ -88,6 +93,12 @@ function ContentView({ slug, classes, pageContext }) {
         </Grid>
         <Grid item xs={12} sm={8} lg={6} className={classes.article}>
           <div>
+            <LinearProgress
+              className={classnames({
+                [classes.loadingBar]: true,
+                show: loading,
+              })}
+            />
             <Typography variant="h1">{article.title}</Typography>
             <Typography variant="h2">{article.subtitle}</Typography>
             {article.banner && (
