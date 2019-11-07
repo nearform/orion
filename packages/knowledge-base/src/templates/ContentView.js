@@ -108,26 +108,22 @@ function ContentView({ slug, classes, pageContext }) {
                 alt=""
               />
             )}
-            {!showFullArticle && (
-              <>
-                <RichText value={article.summary} />
-                <HowToAuthenticate />
-              </>
-            )}
+            {!showFullArticle && <RichText value={article.summary} />}
+            {!showFullArticle && <HowToAuthenticate />}
 
             {get(article, 'fields', [])
               .filter(({ value }) => !!value)
               .map(getFieldType)}
           </div>
         </Grid>
-        {showFullArticle && (
-          <Grid item xs={12} sm={8} lg={3}>
+        <Grid item xs={12} sm={8} lg={3}>
+          {showFullArticle && (
             <ContentOptions
               articleData={article}
               refetchArticle={refetchArticle}
             />
-          </Grid>
-        )}
+          )}
+        </Grid>
       </Grid>
       <FeatureArticles
         hideEmpty
