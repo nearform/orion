@@ -30,6 +30,7 @@ export { default as RatingWidget } from './components/RatingWidget/RatingWidget'
 export {
   default as RichTextEditor,
 } from './components/RichTextEditor/RichTextEditor'
+export { default as UploadImageWidget } from './components/UploadImageWidget'
 
 // i18n / translation / language switching
 export { default as addTranslations } from './components/translations/utils'
@@ -63,4 +64,10 @@ export * from './components/authorization'
 
 export { default as CustomAuthenticator } from './components/authentication'
 
+// views
+export { default as Profile } from './components/Profile/Profile'
+
+// hooks
 export { default as useAdminTable } from './hooks/useAdminTable'
+export { default as useAmplifyImage } from './hooks/useAmplifyImage'
+export { default as useImageUpload } from './hooks/useImageUpload'

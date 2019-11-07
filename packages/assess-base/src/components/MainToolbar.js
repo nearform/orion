@@ -15,7 +15,7 @@ import {
 
 function MainToolbar({ classes, dark }) {
   const { getUserTokenData } = useContext(AuthContext)
-  const { isAdmin, isAuthenticated } = getUserTokenData()
+  const { userId, isAdmin, isAuthenticated } = getUserTokenData()
 
   const {
     site: {
@@ -95,7 +95,11 @@ function MainToolbar({ classes, dark }) {
               EFQM.ORG
             </Button>
             {isAuthenticated && (
-              <Button className={navButtonClass} component={NavLink} to="#">
+              <Button
+                className={navButtonClass}
+                component={NavLink}
+                to={userId ? `/profile/${userId}` : '#'}
+              >
                 <AccountCircleOutlinedIcon
                   className={classes.icon}
                   fontSize="large"
