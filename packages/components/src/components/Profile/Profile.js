@@ -34,12 +34,13 @@ const Profile = ({ SEO, pageContext: { user: userContext } = {}, classes }) => {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
 
   const { userId } = getUserTokenData()
-  const { data: user = userContext } = useAuthorizedQuery(
+  const { data: user } = useAuthorizedQuery(
     getUser,
     { id: userId },
     {
       onPreFetch: variables => !!variables.id,
       onFetch: data => get(data, 'user.0'),
+      onNoFetch: () => userContext,
     }
   )
 
