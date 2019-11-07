@@ -28,13 +28,9 @@ import formFields from './formFields'
 import validationSchema from './validationSchema'
 import { UploadImageWidget } from 'components'
 import { Redirect } from '@reach/router'
+import { constructImageUrl } from '../../utils/image'
 
-const Profile = ({
-  SEO,
-  constructImageUrl,
-  pageContext: { user: userContext } = {},
-  classes,
-}) => {
+const Profile = ({ SEO, pageContext: { user: userContext } = {}, classes }) => {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
 
   const { userId } = getUserTokenData()
@@ -345,7 +341,6 @@ const Profile = ({
 
 Profile.propTypes = {
   SEO: T.elementType,
-  constructImageUrl: T.func.isRequired,
   pageContext: T.object,
   classes: T.object.isRequired,
 }
