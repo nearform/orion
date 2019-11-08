@@ -135,7 +135,7 @@ const Profile = ({ SEO, pageContext = {}, classes }) => {
 
                     <Grid item className={classes.addImageButtonWrapper}>
                       <div className={classes.flexContainerHorizontalVertical}>
-                        {userId === user.id ? (
+                        {Number(userId) === user.id ? (
                           <UploadImageWidget
                             path={`uploads/users/${user.id}-profile`}
                             generateFileName={false}
@@ -191,7 +191,7 @@ const Profile = ({ SEO, pageContext = {}, classes }) => {
                   <Grid container item xs={2} direction="column">
                     <Grid item className={classes.spacer}></Grid>
                     <Grid item>
-                      {userId === user.id ? (
+                      {Number(userId) === user.id ? (
                         <>
                           <Typography
                             variant="h3"
