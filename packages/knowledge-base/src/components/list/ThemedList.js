@@ -12,6 +12,9 @@ const useThemedListStyles = makeStyles(theme => ({
     '& li': {
       listStyle: 'none',
     },
+    '@media (max-width: 800px)': {
+      marginBottom: theme.spacing(3),
+    },
   },
 }))
 

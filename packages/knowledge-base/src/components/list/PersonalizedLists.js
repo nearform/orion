@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography, useMediaQuery } from '@material-ui/core'
 import { Cache } from 'aws-amplify'
 import { useQuery, useManualQuery } from 'graphql-hooks'
 import { AuthContext } from 'components'
@@ -18,6 +18,8 @@ function PersonalizedLists() {
   const { getUserTokenData } = useContext(AuthContext)
   const { userId } = getUserTokenData()
   const readArticleIds = Cache.getItem('readArticles') || []
+
+  const isMobile = useMediaQuery('(max-width: 800px)')
 
   const { loading: recentLoading, data: recentData = {} } = useQuery(
     getRecentArticles
@@ -68,7 +70,9 @@ function PersonalizedLists() {
       : recent_articles.slice(hasReadArticles ? 0 : 3, hasReadArticles ? 3 : 6)
 
   return (
-    <ContentSignpostGrid title={<ListTitle title="Just for you" />}>
+    <ContentSignpostGrid
+      title={!isMobile ? <ListTitle title="Just for you" /> : null}
+    >
       <ThemedList
         hideEmpty={false}
         title={read_articles.length > 0 ? 'Last Read' : 'Recent Articles'}
