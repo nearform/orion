@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import { makeStyles, Box } from '@material-ui/core'
 import get from 'lodash/get'
-import useAmplifyImage from '../../hooks/useAmplifyImage'
+import { useAmplifyImage } from 'components'
 import { formatDateAsMonthAndYear } from '../../utils/date'
 
 import noThumbnailFallback from 'efqm-theme/assets/logo-1x'

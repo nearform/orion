@@ -1,8 +1,12 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
-import { AuthContext, PaddedContainer, SectionTitle } from 'components'
+import {
+  AuthContext,
+  useAuthorizedQuery,
+  PaddedContainer,
+  SectionTitle,
+} from 'components'
 import { Link } from 'gatsby'
-import { useManualQuery } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import { useTranslation } from 'react-i18next'
 
@@ -41,7 +45,7 @@ function CriterionPartTemplate({
     criteriaList,
   },
 }) {
-  const { getUserTokenData } = useContext(AuthContext)
+  const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
   const { t, i18n } = useTranslation()
   const lang = i18n.language || 'en'
@@ -52,10 +56,6 @@ function CriterionPartTemplate({
     contextCriterion,
     contextPart
   )
-
-  if (!isAuthenticated) {
-    return <Redirect to="/auth" noThrow />
-  }
 
   // Get most specific available definition or default from loaded JSON
   const columnsDef = criterion.columns || pillar.columns || assessment.columns
@@ -70,36 +70,45 @@ function CriterionPartTemplate({
   const assessmentId = getAssessmentId(location)
   const { isContributor, isAssessor, userId } = getUserTokenData()
 
-  const [
-    fetchAssessmentPartData,
+  const {
+    loading,
+    error,
+    data: assessmentData,
+    refetch: fetchAssessmentPartData,
+  } = useAuthorizedQuery(
+    getAssessmentPartData,
     {
-      loading,
-      error,
-      data: { assessment_by_pk: assessmentData } = { assessment_by_pk: null },
-    },
-  ] = useManualQuery(getAssessmentPartData, {
-    variables: {
       id: assessmentId,
       pillarKey: pillar.key,
       criterionKey: criterion.key,
       partNumber,
     },
-  })
-
-  filterOldScores(assessment, assessmentData)
-
-  useEffect(() => {
-    if (!assessmentData) {
-      fetchAssessmentPartData()
+    {
+      onPreFetch: variables => !!variables.id,
+      onFetch: data => filterOldScores(assessment, data.assessment_by_pk),
     }
-  }, [fetchAssessmentPartData, assessmentData])
+  )
+
+  if (isAuthInitialized && !isAuthenticated) {
+    return <Redirect to="/auth" noThrow />
+  }
 
   if (error) {
     return t('Error')
   }
 
   if (loading || !assessmentData) {
-    return t('Loading...')
+    return (
+      <div className={classes.root} data-testid="criterion-part">
+        <PaddedContainer className={classes.paddedContainer}>
+          <Grid container spacing={2} wrap="nowrap">
+            <Grid item>
+              <Typography variant="h3">{t('Loading...')}</Typography>
+            </Grid>
+          </Grid>
+        </PaddedContainer>
+      </div>
+    )
   }
 
   const canEditTablesAndUpload =
@@ -117,7 +126,7 @@ function CriterionPartTemplate({
             <Button
               className={classes.backButton}
               component={Link}
-              to={`assessment/${assessment.key}#${assessmentId}`}
+              to={`/assessment/${assessment.key}#${assessmentId}`}
               variant="text"
               color="secondary"
             >

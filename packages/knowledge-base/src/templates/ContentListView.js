@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { navigate } from 'gatsby'
 import { withStyles, Grid, Typography, Button } from '@material-ui/core'
-import { useManualQuery } from 'graphql-hooks'
 import get from 'lodash/get'
 import Taxonomies from '../components/content/Taxonomies'
 import ArticleSummary from '../components/content/ArticleSummary'
@@ -12,66 +11,27 @@ import {
   getArticlesCategoryResults,
 } from '../queries'
 import { getTaxonomyItemByKey, buildWhereClause } from '../utils/taxonomy'
-import { AuthContext, PaddedContainer } from 'components'
+import { useAuthorizedQuery, PaddedContainer } from 'components'
 import SEO from '../components/SEO'
 
 const PAGE_SIZE = 10
 const defaultAggregate = { aggregate: { count: 0 } }
 
-const ListContent = ({
-  classes,
-  term,
-  taxonomy,
-  pageContext: { results: resultsFromContext, page: pageFromContext } = {},
-}) => {
-  const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
-  const { userId } = getUserTokenData()
-
+const ListContent = ({ classes, term, taxonomy, pageContext }) => {
   const {
     fetchUserBookmarks,
     userBookmarks,
     loadingBookmarks,
   } = useUserBookmarks()
 
-  const [
-    fetchArticlesByTaxonomy,
-    { data: fetchedArticlesByTaxonomy },
-  ] = useManualQuery(getArticlesCategoryResults)
-
-  const [
-    fetchArticlesByTitle,
-    { data: fetchedArticlesByTitle },
-  ] = useManualQuery(getArticlesSearchResults)
-
-  const results =
-    fetchedArticlesByTaxonomy || fetchedArticlesByTitle || resultsFromContext
-
-  const data = {
-    articles: get(results, 'article') || get(results, 'search_article') || [],
-    aggregate:
-      get(results, 'article_aggregate') ||
-      get(results, 'search_article_aggregate') ||
-      defaultAggregate,
-    taxonomy: get(results, 'taxonomy'),
-  }
-
   const taxonomyTypes = useTaxonomies()
   const [taxonomyIds, setTaxonomyIds] = useState([])
   const [touched, setTouched] = useState(false)
 
-  const [page, setPage] = useState(pageFromContext || 1)
+  const [page, setPage] = useState(get(pageContext, 'page', 1))
   const offset = (page - 1) * PAGE_SIZE
-  const totalResults = get(data, 'aggregate.aggregate.count')
-  const rangeMin = totalResults > PAGE_SIZE ? offset + 1 : totalResults
-  const rangeMax =
-    totalResults > PAGE_SIZE
-      ? Math.min(offset + PAGE_SIZE, totalResults)
-      : totalResults
 
-  const isPreRendered = !(touched || term || taxonomy)
-
-  const fetchArticles = term ? fetchArticlesByTitle : fetchArticlesByTaxonomy
-  const vars = useMemo(
+  const variables = useMemo(
     () => ({
       whereClause: buildWhereClause(taxonomy, taxonomyIds, taxonomyTypes),
       limit: PAGE_SIZE,
@@ -82,26 +42,42 @@ const ListContent = ({
     [taxonomy, taxonomyIds, taxonomyTypes, offset, term]
   )
 
+  const formatData = data => {
+    return {
+      articles: get(data, 'article') || get(data, 'search_article') || [],
+      aggregate:
+        get(data, 'article_aggregate') ||
+        get(data, 'search_article_aggregate') ||
+        defaultAggregate,
+      taxonomy: get(data, 'taxonomy'),
+    }
+  }
+
+  const { data } = useAuthorizedQuery(
+    term ? getArticlesSearchResults : getArticlesCategoryResults,
+    variables,
+    {
+      onPreFetch: () => !isPreRendered,
+      onFetch: formatData,
+      onNoFetch: () => formatData(get(pageContext, 'results')),
+      useCache: false,
+    }
+  )
+
+  const totalResults = get(data, 'aggregate.aggregate.count')
+  const rangeMin = totalResults > PAGE_SIZE ? offset + 1 : totalResults
+  const rangeMax =
+    totalResults > PAGE_SIZE
+      ? Math.min(offset + PAGE_SIZE, totalResults)
+      : totalResults
+
+  const isPreRendered = !(touched || term || taxonomy)
+
   useEffect(() => {
     if (!isPreRendered) {
       setPage(1)
     }
   }, [isPreRendered, term])
-
-  useEffect(() => {
-    if (isAuthInitialized && !isPreRendered) {
-      fetchArticles({
-        variables: vars,
-        useCache: false,
-      })
-    }
-  }, [isAuthInitialized, isPreRendered, fetchArticles, vars])
-
-  useEffect(() => {
-    if (isAuthInitialized && userId) {
-      fetchUserBookmarks()
-    }
-  }, [isAuthInitialized, userId, fetchUserBookmarks])
 
   const handleTaxonomyFilter = (id, active) => {
     setTouched(true)

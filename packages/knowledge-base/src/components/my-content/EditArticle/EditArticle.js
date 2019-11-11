@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
-import UploadImageWidget from '../../UploadImageWidget'
+import { UploadImageWidget } from 'components'
 import { UserAvatar, AuthContext, EmbeddedVideo } from 'components'
 import { constructImageUrl } from '../../../utils/image'
 

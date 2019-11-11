@@ -20,4 +20,5 @@ export function filterOldScores(assessment, assessmentData) {
       })
     })
   }
+  return assessmentData
 }

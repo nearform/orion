@@ -205,7 +205,7 @@ exports.createPages = async ({ graphql, actions }) => {
         })
 
         const createCriterionPartLink = partNumber =>
-          `${criterionPagePath}/${partNumber}`
+          `/${criterionPagePath}/${partNumber}`
 
         criterion.parts.forEach((part, partIndex, { length: totalParts }) => {
           const isFirst = partIndex === 0

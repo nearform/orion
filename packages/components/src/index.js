@@ -30,6 +30,7 @@ export { default as RatingWidget } from './components/RatingWidget/RatingWidget'
 export {
   default as RichTextEditor,
 } from './components/RichTextEditor/RichTextEditor'
+export { default as UploadImageWidget } from './components/UploadImageWidget'
 
 // i18n / translation / language switching
 export { default as addTranslations } from './components/translations/utils'
@@ -56,9 +57,17 @@ export {
 } from './components/UserAvatar/CollapsedAvatars'
 export { default as EmbeddedVideo } from './components/EmbeddedVideo'
 
-export * from './components/AuthWrapper'
 export { default as ProtectedRoute } from './components/ProtectedRoute'
 export { default as AdminRoute } from './components/admin/AdminRoute'
-export { default as CustomAuthenticator } from './components/auth'
 
+export * from './components/authorization'
+
+export { default as CustomAuthenticator } from './components/authentication'
+
+// views
+export { default as Profile } from './components/Profile/Profile'
+
+// hooks
 export { default as useAdminTable } from './hooks/useAdminTable'
+export { default as useAmplifyImage } from './hooks/useAmplifyImage'
+export { default as useImageUpload } from './hooks/useImageUpload'

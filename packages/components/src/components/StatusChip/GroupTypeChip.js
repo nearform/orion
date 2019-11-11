@@ -7,6 +7,7 @@ import StatusChip from './StatusChip'
 export const GROUP_TYPES = {
   company: 'company',
   partner: 'partner',
+  platform: 'platform',
 }
 
 function getChipColor(status) {
