@@ -30,7 +30,7 @@ import { ConfirmDialog, GroupTypeChip, GROUP_TYPES } from 'components'
 
 import useAdminTable from '../../hooks/useAdminTable'
 
-import { AuthContext } from '../AuthWrapper'
+import { AuthContext } from '../authorization/AuthWrapper'
 
 const groupTypeKeys = Object.keys(GROUP_TYPES)
 const groupTypes = groupTypeKeys.map(key => ({ key, value: GROUP_TYPES[key] }))

@@ -93,49 +93,49 @@
   "scoring": [
     {
       "key": "approach",
-      "name": "approach",
+      "name": "Enfoques",
       "scores": [
         {
           "key": "sound",
-          "name": "sound",
-          "description": "The approaches have a clear rationale, aim to fulfil and respond to relevant stakeholder needs, are described appropriately and are designed to be innovative and agile"
+          "name": "Solidamente fundamentados",
+          "description": "Los enfoques tienen una lógica clara, con el objetivo de cumplir y responder a las necesidades de sus grupos de interés clave. Se describen adecuadamente y están diseñados para que la organización se adapte al futuro"
         },
         {
           "key": "aligned",
-          "name": "aligned",
-          "description": "The approaches support an Organisation’s direction and fit strategically with other relevant approaches"
+          "name": "Alienados",
+          "description": "Los enfoques apoyan los objetivos del bloque Dirección y están vinculados a otros enfoques relevantes"
         }
       ]
     },
     {
       "key": "deployment",
-      "name": "deployment",
+      "name": "Despliegue",
       "scores": [
         {
           "key": "executed",
-          "name": "executed",
-          "description": "The approaches are deployed in relevant areas in an effective and timely manner"
+          "name": "Implantado",
+          "description": "Los enfoques se implantan en las áreas relevantes de manera eficaz y oportuna."
         },
         {
           "key": "flexibility",
-          "name": "flexibility",
-          "description": "The execution enables flexibility and adaptation according to the circumstances"
+          "name": "Flexible",
+          "description": "La implantación facilita la agilidad y la adaptación de los enfoques"
         }
       ]
     },
     {
       "key": "assessment-refinement",
-      "name": "assessment and refinement",
+      "name": "Evaluación, Revisión  y mejora",
       "scores": [
         {
           "key": "measurement-learning",
-          "name": "measurement & learning",
-          "description": "Feedback on the effectiveness & efficiency of the approaches and their deployment are collected, lessons are learnt and shared"
+          "name": "Analizado y comprendido",
+          "description": "Se recoge, comprende y comparte el feedback relativo a la eficacia y eficiencia de los enfoques y su despliegue"
         },
         {
           "key": "improvement-creativity",
-          "name": "improvement through Creativity & Innovation",
-          "description": "Findings from emerging trends analysis, measurement, learning and benchmarking are used to inspire creativity and innovative solutions to improve performance in appropriate timescales"
+          "name": "Asimilado y mejorado",
+          "description": "Las conclusiones extraídas del análisis de tendencias emergentes, la medición, el aprendizaje y el benchmarking se utilizan para inspirar la creatividad y generar soluciones innovadoras con el fin de mejorar el rendimiento en los plazos adecuados"
         }
       ]
     }
@@ -143,20 +143,20 @@
   "pillars": [
     {
       "key": "direction",
-      "name": "direction",
+      "name": "DIRECCIÓN",
       "criteria": [
         {
           "key": "purpose-strategy",
-          "name": "purpose, vision & strategy",
-          "description": "An outstanding organisation is defined by a Purpose that inspires, a Vision that is aspirational and a Strategy that delivers.\n\nThe Purpose of the organisation:\n\n- Explains why its work is important\n- Sets the scene for it to create and deliver sustained value for its stakeholders\n- Provides a framework in which it takes responsibility for its contribution to, and impact on, the ecosystem in which it operates.\n\nThe Vision of the organisation:\n- Describes what the organisation is attempting to achieve in the long-term\n- Is intended to serve as a clear guide for choosing current and future courses of action\n- Provides, along with the organisation’s Purpose, the basis for setting the Strategy.\n\nThe Strategy of the organisation:\n\n- Describes how it intends to fulfil its Purpose\n- Details its plans to achieve the strategic priorities and move closer to its Vision\n",
+          "name": "Propósito, visión y estrategia",
+          "description": "Una organización sobresaliente se caracteriza por tener un propósito que inspira, una visión ambiciosa y una estrategia que genera resultados.\n\nEl propósito de la organización:\n- Explica por qué su actividad es importante.\n- Establece las bases para crear y proporcionar valor a sus grupos de interés.\n- Proporciona un marco de referencia en el que asume la responsabilidad de su contribución y el impacto en el ecosistema en el que opera.\n\nLa visión de la organización:\n- Describe lo que trata de alcanzar en el largo plazo.\n- Sirve de guía clara para elegir las líneas de actuación actuales y futuras.\n- Proporciona, junto con el propósito, las bases para definir la estrategia.\n\nLa estrategia de la organización:\n- Describe cómo se pretende alcanzar el propósito.\n- Detalla los planes para alcanzar las prioridades estratégicas y acercarse a la visión.\n",
           "guidance": "We are here to guide you how the purpose strategy works",
           "parts": [
             {
               "tables": [
                 {
                   "key": "purpose-vision",
-                  "name": "1.1. Define Purpose & Vision",
-                  "guidance": "In practice, we find that an outstanding organisation:\n\n- Defines a Purpose that provides an inspirational motive for the importance and value of its work and is appealing to all its stakeholders\n- Uses its Purpose to create an aspirational Vision that resonates with its stakeholders\n- Involves its Stakeholders in defining, shaping and communicating its Purpose and Vision\n- Identifies areas in which outstanding and sustainable levels of performance must be achieved to fulfil the Vision\n"
+                  "name": "1.1 Definir el propósito y la visión",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Comprende la importancia de que su propósito sea reconocido como beneficioso para su ecosistema.\n- Define un propósito que proporciona inspiración, resaltando la importancia y el valor de su actividad y que resulta atractivo a todos sus grupos de interés.\n- Utiliza su propósito para crear una visión que motive a todos sus grupos de interés.\n- Implica a sus grupos de interés, en definir, en dar forma y en comunicar su propósito y visión.\n- Identifica las áreas en las que debe alcanzar resultados sobresalientes, de manera sostenida, para conseguir su visión.\n"
                 }
               ]
             },
@@ -164,8 +164,8 @@
               "tables": [
                 {
                   "key": "stakeholder-needs",
-                  "name": "1.2: Identify & Understand Stakeholder Needs",
-                  "guidance": "In practice, we find that an outstanding organisation:\n\n- Identifies the stakeholders within its ecosystem and prioritises on those that it sees as the Key Stakeholders, i.e. those with the potential to help or hinder the achievement of the Purpose, Vision and Strategy\n- Understands how its Purpose and Vision affects these Key Stakeholders \n- Identifies Key Stakeholder needs and expectations, considering them within the context of the organisation’s own Purpose and Vision\n- Analyses the factors that influence the behaviours, relationships and decision-making of Key Stakeholders and how it may be affected by them\n- Studies and understands Key Stakeholder competences and strategies and responds appropriately to how these could affect its Purpose, Vision, Strategy and business model.\n"
+                  "name": "1.2 Identificar y entender las necesidades de los grupos de interés",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Identifica los grupos de interés de su ecosistema, dando prioridad a los que considera clave, que son los que potencialmente pueden facilitar o impedir el logro de su propósito, visión y estrategia.\n- Comprende cómo su propósito y visión afectan a estos grupos de interés clave .\n- Identifica las necesidades y expectativas de sus grupos de interés clave teniendo en cuenta su propio propósito y visión.\n- Analiza los comportamientos y relaciones de sus grupos de interés clave, y cómo pueden afectarle.\n- Examina y comprende las estrategias de sus grupos de interés clave, evalua cómo pueden afectar a su propósito, visión y modelo de negocio, y actúa en consecuencia.\n"
                 }
               ]
             },
@@ -173,63 +173,63 @@
               "tables": [
                 {
                   "key": "capabilities-challenges",
-                  "name": "1.3: Understand the Ecosystem, own Capabilities & Major Challenges",
-                  "guidance": "In practice, we find that an outstanding organisation:\n\n- Researches and understands the ecosystem, including Megatrends, and the consequences on it of the United Nations Sustainable Development Goals and Global Compact ambitions\n- Analyses different scenarios and responds appropriately to any effect these may have on the organisation’s Purpose, Vision, Strategy and Results\n- Knows the potential of its current capabilities and develops approaches to optimise the impact they have on the organisation’s Purpose, Vision, Strategy and Results \n- Investigates and understands current and future market-place dynamics, their potential impact on the organisation’s Purpose, Vision and Strategy and develops appropriate responses\n- Assesses and evaluates the data, information and knowledge gathered from across its ecosystem to understand the major challenges for today and in the future.\n"                }
+                  "name": "1.3 Comprender el ecosistema, las capacidades propias y los principales retos",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Examina y comprende su ecosistema, incluidas las megatendencias, y las consecuencias en él de los Objetivos de Desarrollo Sostenible.\n- Analiza diferentes escenarios y reacciona adecuadamente a cualquier impacto que puedan tener sobre su propósito, visión, estrategia y resultados.\n- Conoce el potencial de sus capacidades actuales y desarrolla sistemas para optimizar el impacto sobre su propósito, visión, estrategia y resultados.\n- Investiga y entiende las dinámicas del mercado, actuales y futuras, y el impacto que puedan tener sobre su propósito, visión y estrategia, desarrollando respuestas adecuadas a las mismas.\n- Evalúa y valora los datos, información y conocimiento, recogidos de su ecosistema, para entender cuáles son sus principales retos actuales y futuros.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "develop-strategy",
-                  "name": "1.4: Develop Strategy",
-                  "guidance": "In practice, we find that an outstanding organisation:\n\n- Develops Strategy and a set of related strategic priorities that tackle any major challenges identified, making sure appropriate action is taken when necessary and actioned to set the pace within its ecosystem \n- Translates Strategy and strategic priorities into performance targets and transformation initiatives\n- Involves Key Stakeholders in defining the Strategy to enable subsequent engagement, deployment and communication \n- Develops business models that fit with the Purpose, Vision and Strategy\n- Updates and adapts the strategic priorities to reflect market trends, social networks, internal learning and information from Key Stakeholders.\n"                }
+                  "name": "1.4 Desarrollar la estrategia",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Desarrolla la estrategia y un conjunto de prioridades estratégicas relacionadas que abordan los principales retos identificados, asegurándose de que se desarrollan y llevan a cabo acciones, cuando sea necesario, para marcar el ritmo dentro de su ecosistema.\n- Traduce la estrategia y las prioridades estratégicas en objetivos de rendimiento e iniciativas de transformación.\n- Implica a sus grupos de interés clave en la definición de la estrategia para favorecer su compromiso, despliegue y comunicación.\n- Desarrolla modelos de negocio que se ajustan a su propósito, visión y estrategia.\n- Actualiza y adapta las prioridades estratégicas para reflejar las tendencias del mercado, de las redes sociales, el aprendizaje interno y la información procedente de los grupos de interés clave.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "governance-performance",
-                  "name": "1.5: Design & Implement a Governance & Performance Management System",
-                  "guidance": "In practice, we find that an outstanding organisation:\n- Designs and implements a governance and performance management system that aligns with its aspirations and addresses the Strategy, developments in the ecosystem, own capabilities and major challenges \n- Puts in place a governance structure that enables Key Stakeholders to contibute to strategy and decision-making\n- Defines and implements a governance review schedule that matches the speed of the ecosystem, monitors progress with Strategy implementation and guides performance and transformation priorities\n- Ensures performance and transformation management and measurement reporting systems are built into the organisation’s way of working to enable timely accountability and transparency with Key Stakeholders\n- Makes sure that, as a minimum, it meets all relevant government, legal and regulatory requirements.\n"                }
+                  "name": "1.5 Diseñar e implantar un sistema de gestión y de gobierno",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Diseña e implanta un sistema de gestión (del funcionamiento y del rendimiento) y de gobierno, alineado con sus aspiraciones y que responde a su estrategia, a su evolución en el ecosistema, a sus propias capacidades y a los principales desafíos.\n- Establece un sistema de gobierno corporativo que permite a los grupos de interés clave, contribuir a la estrategia y la toma de decisiones.\n- Define e implanta un calendario de revisión del sistema de gobierno, que se adapta a la velocidad de los cambios en el ecosistema y que facilita el seguimiento de la implantación de la estrategia y orienta el funcionamiento y las prioridades de transformación.\n- Se asegura de que la gestión del funcionamiento y de la transformación y los sistemas de reporte están construidos de acuerdo a la forma de trabajar de la organización, para facilitar la información puntual y la transparencia con los grupos de interés clave.\n- Se asegura de cumplir con los principales requerimientos gubernamentales, legales y regulatorios.\n"                }
               ]
             }
           ]
         },
         {
           "key": "leadership-culture",
-          "name": "Organisational Culture & Leadership",
-          "description": "\n\nOrganisational Culture is the specific collection of values & norms that are shared by people and groups within an organisation that influence, over time, the way they behave with each other and with Key Stakeholders outside the organisation.\n\nOrganisational leadership relates to the organisation as a whole rather than any individual or team that provides direction from the top. It is about the organisation acting as a leader within its ecosystem, recognised by others as a role model, rather than from the traditional perspective of a top team managing the organisation.\n\nIn an outstanding organisation, leadership is positioned as an activity not a role and leadership behaviours are evident across all levels and parts of the organisation. This role model leadership behaviour inspires others, reinforces, and when necessary, adapts the values and norms, helping to steer Organisational Culture.\n\nAn organisation that aspires to be recognised as outstanding, a leader within its ecosystem, achieves success through a focus on the following activities:  \n",
+          "name": "Cultura de la organización y liderazgo",
+          "description": "La cultura de una organización es el conjunto específico de valores y normas que comparten sus personas y equipos y que influyen a lo largo del tiempo en la forma\nen que se comportan entre ellos y con los grupos de interés clave externos.\n\nEl liderazgo de la organización se refiere a toda ella en su conjunto, y no a un individuo o a un grupo que proporciona directrices desde la alta dirección. Se trata de\nla organización actuando como líder en su ecosistema y siendo reconocida como referente, en lugar del concepto tradicional del equipo de alta dirección de la organización.\n\nEn una organización sobresaliente, el liderazgo es una actividad y no un rol, y las conductas de liderazgo se evidencian en todos los niveles y áreas. Estas conductas de liderazgo son un referente que inspiran a otros, reforzando y adaptando cuando es necesario, los valores y normas de la organización, a la vez que ayudan a dirigir la cultura.\n\nUna organización que aspira a ser reconocida como referente y líder en su ecosistema, alcanza el éxito centrándose en:\n",
           "parts": [
             {
               "tables": [
                 {
                   "key": "culture-values",
-                  "name": "2.1: Steer the Organisation’s Culture & Nurture Values",
-                  "guidance": "In practice, we find that an outstanding organisation:\n\n- Understands and steers the culture to align with its Purpose and recognises when there is a need for the culture to be adapted\n- Nurtures its values, translating these into desired norms & behaviours that it promotes, communicates and clearly demonstrates through its actions\n- Demonstrates the desired behaviours for acting ethically, with integrity and a social conscience, making sure its People demonstrate these desired behaviours in their own actions\n- Expresses and promotes concern for the environment and the scarcity of resources, raising awareness of the importance of adopting a responsible approach to the environment\n- Aligns appraisal, recognition and reward systems with its values to steer it towards the organisation’s desired culture, celebrating success along the way\n- Identifies, recognises and promotes other role models from within its ecosystem that are leading the way to a more sustainable future for everyone.\n"                }
+                  "name": "2.1 Dirigir la cultura de la organización y reforzar los valores",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Comprende y orienta su cultura para alinearla con el propósito e identifica cuándo hay necesidad de reajustarla.\n- Refuerza sus valores, traduciéndolos en normas y conductas deseadas que se promueven, comunican y manifiestan claramente a través de acciones.\n- Transmite los comportamientos deseados en cuanto a ética, integridad y conciencia social, asegurando que sus personas incorporan estos comportamientos deseados en sus propias actuaciones.\n- Manifiesta y promueve la preocupación por el medioambiente y la escasez de recursos, alertando sobre la importancia de ser socialmente responsable con el entorno.\n- Alinea los sistemas de evaluación, reconocimiento y retribución con sus valores, con el fin de fomentar la cultura organizativa deseada, celebrando los logros que se van obteniendo.\n- Identifica, reconoce y promueve a otros referentes de su ecosistema que están liderando el camino hacia un futuro más sostenible para todos.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "realise-change",
-                  "name": "2.2: Create the Conditions for Realising Change",
-                  "guidance": "In practice, we find that an outstanding organisation:\n\n- Works with Key Stakeholders to create the conditions where the norm is successful change\n- Creates the conditions where a “no-blame” attitude and space for trying, making mistakes and learning from them can flourish\n- Facilitates a spirit of learning in the pursuit of its Strategy, encouraging the improvement and, at times, transformation of the organisation \n- Determines the pace of change and demonstrates through its actions, the need, benefits and consequences of any change in relation to its Purpose, Vision and Strategy\n- Learns from previous experiences of change and establishes strategies to manage change successfully. \n"                }
+                  "name": "2.2 Crear las condiciones para hacer realidad el cambio",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Trabaja con sus grupos de interés clave para crear las condiciones en las que conseguir que los cambios con éxito sean la norma.\n- Crea un ambiente en el que puedan desarrollarse actitudes de “no culpabilización” y un espacio donde experimentar, equivocarse y aprender de los errores.\n- Cultiva un espíritu de aprendizaje para hacer realidad su estrategia, estimulando la mejora continua y, a la vez, la transformación de la organización.\n- Establece el ritmo de cambio y demuestra mediante sus acciones, la necesidad, beneficios y consecuencias de cualquier cambio relacionado con su propósito, visión y estrategia.\n- Aprende de las experiencias de cambio anteriores y define estrategias que permiten gestionar el cambio con éxito.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "creativity-innovation",
-                  "name": "2.3: Enable Creativity & Innovation",
-                  "guidance": "In practice, we find that an outstanding organisation:\n\n- Understands the importance and benefits of having a focus on creativity, innovation and disruptive thinking to help it achieve its Purpose, Vision and Strategy\n- Sets ambitious goals and targets that encourage creative, innovative and disruptive thinking \n- Enables a culture where creativity, innovation and disruptive thinking is encouraged and, when a failure occurs, the cause is quickly identified and shared to avoid repetition of the same mistake happening again \n- Develops the culture for, and expertise in, using the tools and techniques that facilitate improvement \n- Engages in learning and collaboration networks to identify opportunities for creativity, innovation and disruptive thinking\n- Seeks external benchmarking opportunities to keep pace with the latest innovation opportunities.\n"                }
+                  "name": "2.3 Estimular la creatividad y la innovación",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Entiende la importancia y los beneficios de focalizarse en la creatividad, la innovación y el pensamiento disruptivo para alcanzar su propósito, visión y estrategia.\n- Establece metas y objetivos ambiciosos que estimulan la creatividad, la innovación y el pensamiento disruptivo.\n- Promueve una cultura en la que se fomenta la creatividad, la innovación y el pensamiento disruptivo y, cuando se produce un fallo, su causa se identifica rápidamente y se comparte para evitar que el mismo error se repita.\n- Desarrolla la cultura y el conocimiento práctico que facilitan la puesta en marcha de los diferentes tipos de mejora, utilizando para ello las herramientas y técnicas necesarias.\n- Participa en redes de aprendizaje y colaboración para identificar oportunidades de creatividad, innovación y pensamiento disruptivo.\n- Busca oportunidades de benchmarking externo para estar al día de las últimas tendencias y oportunidades de innovación.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "unite-engage",
-                  "name": "2.4: Unite Behind & Engage in Purpose, Vision & Strategy",
-                  "guidance": "In practice, we find that an outstanding organisation:\n- Invests in making sure its Purpose, Vision and Strategy are communicated effectively to Key Stakeholders, helping to create an atmosphere of openness, trust, confidence and commitment \n- Encourages and shows appreciation for honest feedback on concerns related to the Purpose, Vision and Strategy\n- Conveys to Key Stakeholders the impact and relevance of their specific contributions to the Purpose, Vision and Strategy, explaining the importance of gaining and maintaining their engagement\n- Ensures its Key Stakeholders know the importance of keeping aligned to its Purpose, Vision & Strategy\n- Recognises, celebrates and shares with Key Stakeholders every moment of success to help reinforce the desired behaviours.\n"                }
+                  "name": "2.4 Unirse y comprometerse en torno a un propósito, visión y estrategia",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Invierte en asegurar que su propósito, visión y estrategia se comunica eficazmente a sus grupos de interés clave, para obtener su confianza y compromiso, creando un ambiente abierto y de tranquilidad.\n- Fomenta y aprecia un feedback sincero en todo lo relativo a su propósito, visión y estrategia.\n- Transmite a sus grupos de interés clave, el impacto y relevancia de sus contribuciones específicas al propósito, visión y estrategia, explicándoles la importancia de obtener y mantener su compromiso.\n- Se asegura de que sus grupos de interés clave conocen la importancia de mantenerse alineados con el propósito, visión y estrategia.\n- Reconoce, celebra y comparte con sus grupos de interés clave cada éxito alcanzado, para ayudar a reforzar las conductas deseadas.\n"                }
               ]
             }
           ]
@@ -238,39 +238,39 @@
       "scoring": [
         {
           "key": "approach",
-          "name": "approach",
+          "name": "Enfoques",
           "scores": [
             {
               "key": "sound",
-              "name": "sound",
-              "description": "The approaches have a clear rationale, aim to fulfil and respond to relevant stakeholder needs, are described appropriately and are designed to be innovative and agile"
+              "name": "Solidamente fundamentados",
+              "description": "Los enfoques tienen una lógica clara, con el objetivo de cumplir y responder a las necesidades de sus grupos de interés clave. Se describen adecuadamente y están diseñados para que la organización se adapte al futuro"
             }
           ]
         },
         {
           "key": "deployment",
-          "name": "deployment",
+          "name": "Despliegue",
           "scores": [
             {
               "key": "executed",
-              "name": "executed",
-              "description": "The approaches are deployed in relevant areas in an effective and timely manner"
+              "name": "Implantado",
+              "description": "Los enfoques se implantan en las áreas relevantes de manera eficaz y oportuna."
             }
           ]
         },
         {
           "key": "assessment-refinement",
-          "name": "assessment and refinement",
+          "name": "Evaluación, Revisión  y mejora",
           "scores": [
             {
               "key": "measurement-learning",
-              "name": "measurement & learning",
-              "description": "Feedback on the effectiveness & efficiency of the approaches and their deployment are collected, lessons are learnt and shared"
+              "name": "Analizado y comprendido",
+              "description": "Se recoge, comprende y comparte el feedback relativo a la eficacia y eficiencia de los enfoques y su despliegue"
             },
             {
               "key": "improvement-creativity",
-              "name": "improvement through Creativity & Innovation",
-              "description": "Findings from emerging trends analysis, measurement, learning and benchmarking are used to inspire creativity and innovative solutions to improve performance in appropriate timescales"
+              "name": "Asimilado y mejorado",
+              "description": "Las conclusiones extraídas del análisis de tendencias emergentes, la medición, el aprendizaje y el benchmarking se utilizan para inspirar la creatividad y generar soluciones innovadoras con el fin de mejorar el rendimiento en los plazos adecuados"
             }
           ]
         }
@@ -278,138 +278,137 @@
     },
     {
       "key": "execution",
-      "name": "execution",
+      "name": "EJECUCIÓN",
       "criteria": [
         {
           "key": "engaging-stakeholders",
-          "name": "Engaging Stakeholders",
-          "description": "Having decided which Stakeholders are the most important to the organisation, i.e. its Key Stakeholders, and independent of the specific groups identified, it is highly likely that there is a degree of similarity in applying the following principles when engaging with Key Stakeholders.\n\nAn outstanding organisation: -\n- Identifies the specific types and categories within each of its Key Stakeholder Groups\n- Uses its understanding of Key Stakeholders needs and expectations to achieve continued engagement\n- Involves Key Stakeholders in deploying its Strategy and Creating Sustainable Value and recognises the contributions they make \n- Builds, maintains and further develops the relationship with Key Stakeholders based on transparency, accountability, ethical behaviour and trust\n- Works with its Key Stakeholders to develop a common understanding and focus on how, through co-development, it can contribute to, and draw inspiration from, the United Nations Sustainable Development Goals and Global Compact ambitions\n- Actively gathers the perceptions of its Key Stakeholders rather than waiting for them to make contact \n- Evaluates its performance in relation to Key Stakeholders needs and decides on the appropriate actions to be taken to help secure its future, as perceived by these Key Stakeholders.\n\nIn practice, we find that an outstanding organisation will include the following groups in the classification of its Key Stakeholders: \n",
-          "guidance": "We are here to guide you how Engaging Stakeholders works",
+          "name": "Implicar a los grupos de interés",
+          "description": "Tras identificar cuáles son los grupos de interés clave para la organización, e independientemente de los identificados, es muy probable que se apliquen los siguientes principios para implicarlos.\n\nUna organización sobresaliente:\n- Identifica los tipos y categorías específicas dentro de cada uno de los grupos de interés clave.\n- Utiliza el conocimiento de las necesidades y expectativas de sus grupos de interés clave para lograr su implicación continua.\n- Implica a sus grupos de interés clave en el despliegue de su estrategia y en crear valor sostenible, reconociendo sus contribuciones.\n- Construye, mantiene y desarrolla posteriormente una relación con sus grupos de interés clave basada en la transparencia, responsabilidad, comportamiento ético y confianza.\n- Trabaja con sus grupos de interés clave para comprender y tener un entendimiento común de cómo, a través del co-desarrollo, inspirarse y contribuir a los Objetivos de Desarrollo Sostenible (ODS).\n- Recoge activamente las percepciones de sus grupos de interés clave en lugar de esperar a que ellos hagan el contacto.\n- Evalúa su funcionamiento respecto a las necesidades de sus grupos de interés clave y decide qué acciones necesita acometer para que sus grupos de interés clave perciban que su futuro está asegurado\n\nEn la práctica, una organización sobresaliente incluirá los siguientes grupos en la clasificación de sus grupos de interés clave:",
           "parts": [
             {
               "tables": [
                 {
                   "key": "customer-relationships",
-                  "name": "3.1: Customers - Build Sustainable Relationships",
-                  "guidance": "These are the recipients of the products, services and solutions provided by the organisation. These may include:\n- Direct and indirect customers\n- Users and other persons involved in the different touchpoints of a customer journey \n- Prosumers \n- Persons or groups involved in buying decisions\n\nIn practice, we find that an outstanding organisation: \n- Identifies and classifies its customers based on defined criteria, e.g. social characteristics, needs and expectations, buying and user behaviour\n- Maintains a relationship with its customers during all stages of Creating Sustainable Value, even in those phases where there is no ongoing value creation\n- Understands the communication and contact needs of the different customer segments\n- Establishes communication channels that make it easy for customers to interact, give feedback on their experiences and for the organisation to react quickly and appropriately.\n"                }
+                  "name": "3.1 Clientes: Construir relaciones sostenibles",
+                  "guidance": "Los clientes son los destinatarios de los productos, servicios o soluciones que proporciona la organización. Pueden ser:\n- Clientes directos e indirectos.\n- Usuarios y otras personas implicadas en los diferentes puntos de interacción del pasillo del cliente.\n- Prosumidores (son simultáneamente productor y consumidor).\n- Personas o grupos implicados en la decisión de compra.\n\nEn la práctica una organización sobresaliente:\n- Identifica y clasifica sus clientes en base a criterios definidos, por ejemplo: características sociales, diferencias en necesidades y expectativas, comportamientos de usuario o comprador, etc.\n- Mantiene relación con sus clientes durante todas las etapas de creación de valor sostenible, incluso en aquellas fases en las que no hay creación de valor en curso.\n- Comprende las necesidades de comunicación y contacto directo de los diferentes segmentos de clientes.\n- Establece canales de comunicación que facilitan a sus clientes interactuar con la organización y proporcionar feedback sobre su experiencia de cliente, al tiempo que ayudan a que la organización pueda reaccionar de forma ágil y adecuada.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "develop-people",
-                  "name": "3.2: People – Attract, Engage, Develop & Retain",
-                  "guidance": "These are the individuals or groups of people that are employed by the organisation. \n\nIn practice, we find that an outstanding organisation: \n- Develops a People strategy and plans that support the overall strategy and plans of the organisation\n- Adapts to the evolving needs and expectations of its People, both current and future, taking account, for example, of changing expectations on Organisational Culture & Leadership, gender balance & parity, diversity & inclusion and the desired working environment\n- Enables its People - based on Purpose, Vision & Strategy - to understand the need for change and to see the opportunities for further development of their knowledge and capabilities.\n- Empowers its People to communicate and to share effectively their experiences and learning with others in the ecosystem \n- Creates an ambiance in which its People can thrive, and their well-being is supported\n- Ensures its People are proactively guided, rewarded, recognised and cared for.\n"                }
+                  "name": "3.2 Personas: Atraer, implicar, desarrollar y retener el talento",
+                  "guidance": "Este grupo de interés está constituido por los individuos o grupos de individuos que trabajan para la organización.\n\nEn la práctica una organización sobresaliente:\n- Desarrolla una estrategia y planes para la gestión de las personas que apoyan la estrategia global y los planes de la organización.\n- Se adapta a los cambios en las necesidades y expectativas de sus empleados actuales y futuros, teniendo en cuenta, por ejemplo, el cambio en sus expectativas sobre la cultura y el liderazgo, la paridad y el equilibrio de género, la diversidad e inclusión, o el entorno de trabajo deseado.\n- Facilita que las personas de su organización comprendan la necesidad de cambiar e identifiquen oportunidades para desarrollar su conocimiento y capacidades, teniendo en cuenta su propósito, visión y estrategia.\n- Empodera a las personas de su organización para que comuniquen y compartan eficazmente sus experiencias y aprendizajes con otros integrantes del ecosistema.\n- Crea un entorno en el que las personas de su organización pueden prosperar y en el que se favorece su bienestar.\n- Se asegura de dirigir de forma proactiva, recompensar, reconocer y cuidar a las personas de su organización.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "stakeholder-support",
-                  "name": "3.3: Business & Governing Stakeholders – Secure & Sustain Ongoing Support",
-                  "guidance": "These are the individuals or groups to whom the organisation is accountable in relation to its fiscal, legal, ethical and general stewardship requirements\n\n- Business stakeholders can include owners, shareholders, investors, funding organisations\n- Governing stakeholders can include government departments, regional or local bodies (statutory & regulatory), public authorities or parastatal institutions.\n\nIn practice, we find that an outstanding organisation: \n- Identifies the Key Business and Governing Stakeholders that have a financial, legal and general stewardship interest in the organisation and understands their expectations\n- Involves Key Business and Governing Stakeholders in the development of its improvement & transformation ambitions and overall strategic direction\n- Makes sure the relationships established with Key Business and Governing Stakeholders is are mutually beneficial\n- Makes itself transparent and accountable to this Key Stakeholder group, establishing and maintaining high levels of trust at all times.\n"                }
+                  "name": "3.3 Inversores y reguladores: Asegurar y mantener su apoyo continuo",
+                  "guidance": "Los inversores y reguladores incluyen los individuos o grupos a los que la organización debe rendir cuentas cumpliendo los requisitos fiscales, legales, éticos y administrativos.\n- Entre los inversores se pueden incluir los propietarios, accionistas, organizaciones de financiación e instituciones financieras.\n- Entre los reguladores se pueden incluir los ministerios, consejerías, organismos regionales o locales, otras autoridades públicas e instituciones paraestatales.\n\nEn la práctica una organización sobresaliente:\n- Identifica a los inversores y reguladores clave que poseen un interés financiero, legal y administrativo en la organización, y comprende sus necesidades y expectativas.\n- Implica a sus inversores y reguladores clave en sus objetivos de mejora y transformación y en la definición de su estrategia global.\n- Se asegura de que las relaciones con sus inversores y reguladores clave sean mutuamente beneficiosas.\n- Es transparente y rinde cuentas a este grupo de interés clave, estableciendo y manteniendo un alto nivel de confianza en todo momento.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "develop-society",
-                  "name": "3.4: Society - Contribute to Development, Well-Being & Prosperity",
-                  "guidance": "These are the individuals or groups outside the organisation that represent the immediate community or the wider society, including, for example, Special Interest Groups that focus on topics such as the environment.\n\nIn practice, we find that an outstanding organisation\n- Uses its Purpose, Vision & Strategy to develop a clear understanding and focus on how it will contribute to its Society\n- Establishes, develops and maintains a relationship with the Key Stakeholders in its Society, leading to mutual benefit for both the organisation and its Society\n- Utilises communication channels that make it easy for its Society to interact, give feedback on their experiences and for the organisation to react quickly and appropriately.\n- Makes itself transparent and accountable to this Key Stakeholder group and establishes and maintains a high level of trust.\n"                }
+                  "name": "3.4 Sociedad: Contribuir al desarrollo, bienestar y prosperidad",
+                  "guidance": "La sociedad incluye los individuos o grupos externos que representan a su comunidad más cercana, o a la sociedad en general, incluidos, por ejemplo, colectivos especiales que se centran en temas como la protección del medioambiente.\n\nEn la práctica una organización sobresaliente:\n- Usa su propósito, visión y estrategia para comprender y enfocar de manera clara su contribución a su comunidad.\n- Establece, desarrolla y mantiene una relación con los grupos de interés clave de su comunidad, encaminada al beneficio mutuo de la organización y su comunidad.\n- Utiliza canales de comunicación que facilitan a su comunidad interactuar con la organización y proporcionar feedback sobre sus experiencias, así como que ayudan a que la organización reaccione de forma ágil y adecuada.\n- Es transparente y rinde cuentas a este grupo de interés clave, estableciendo y manteniendo un alto nivel de confianza.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "governance-performance",
-                  "name": "3.5: Partners & Suppliers – Build Relationships & Ensure Support for Creating Sustainable Value",
-                  "guidance": "These are the external parties that the organisation chooses to work with to fulfil its Purpose, achieve the Vision, deliver the Strategy and reach shared objectives that benefit both parties\n\nIn practice, we find that an outstanding organisation: \n- Segments its Key Partners and Suppliers in line with its Purpose, Vision and Strategy\n- Ensures its Key Partners and Suppliers act in line with the organisation’s Strategy and that mutual transparency, integrity, and accountability in the relationship is established and enhanced\n- Builds a trusting relationship with its Key Partners and Suppliers to support the objective of Creating Sustainable Value \n- Works proactively with its Key Partners and Suppliers to leverage the culture and expertise of both parties to achieve mutual benefit. \n"                }
+                  "name": "3.5 Partners y proveedores: Construir relaciones y asegurar su compromiso para crear valor sostenible",
+                  "guidance": "Los partners y proveedores son los agentes externos con los que la organización decide trabajar para poder alcanzar su propósito y su visión, hacer realidad su estrategia y lograr objetivos compartidos que benefician a ambas partes.\n\nEn la práctica una organización sobresaliente:\n- Segmenta a sus partners y proveedores clave, de acuerdo con su propósito, visión y estrategia.\n- Se asegura de que sus partners y proveedores clave actúen alineados con su estrategia y de que la relación con ellos se establece en base a la transparencia, integridad y responsabilidad mutuas y se mejora.\n- Establece una relación de confianza con sus partners y proveedores clave con el objetivo de crear valor sostenible.\n- Trabaja, proactivamente, con sus partners y proveedores clave, para apalancarse en la cultura y el entendimiento de ambas partes con el fin de alcanzar un beneficio mutuo.\n"                }
               ]
             }
           ]
         },
         {
           "key": "creating-value",
-          "name": "Creating Sustainable Value",
-          "description": "An outstanding organisation recognises that Creating Sustainable Value is vital for its long-term success and financial strength. \n\nThe organisation’s clearly defined Purpose, enriched by the Strategy, defines for whom the organisation should be Creating Sustainable Value. In most cases, customers, segmented appropriately, are the target group for Creating Sustainable Value, although some organisations might also focus on selected Key Stakeholders within its Society or Business & Governing Stakeholder segments.\n\nAn outstanding organisation acknowledges that Key Stakeholder needs may change over time and that it is important to collect and analyse feedback to improve or change their products, services or solutions. \n\nThe different elements to Creating Sustainable Value are shown below in a step by sequence. It is recognised that the organisation’s plans for today and the future may well run in parallel or overlap at times, depending on the nature of the organisation’s business.\n",
+          "name": "Crear valor sostenible",
+          "description": "Una organización sobresaliente reconoce que crear valor sostenible es vital para su éxito a largo plazo y su fortaleza económica.\n\nEl propósito, claramente definido por la organización y reforzado por su estrategia, establece a quién debe ir dirigida la creación de valor sostenible. En la mayoría\nde los casos, los clientes, adecuadamente segmentados, son el centro de la creación de valor sostenible. No obstante, algunas organizaciones pueden también centrarse en otros grupos de interés clave de la sociedad o de los inversores y reguladores. \n\nUna organización sobresaliente sabe que las necesidades de sus grupos de interés clave pueden cambiar y entiende la importancia de recoger información directa (feedback) de ellos y analizarla para poder mejorar o adaptar sus productos, servicios o soluciones.\n\nLas diferentes etapas para la creación de valor sostenible se detallan a continuación de manera secuencial aunque podrían desarrollarse de forma paralela, o incluso\nsolaparse, dependiendo de la naturaleza de la actividad de la organización, en la situación actual o en el futuro:\n",
           "parts": [
             {
               "tables": [
                 {
                   "key": "design-value",
-                  "name": "4.1: Design the Value & How it is Created ",
-                  "guidance": "In practice, we find that an outstanding organisation: \n- Understands what differentiates it from others, including, where relevant, its competitors, and makes these differentiators an integral part of the value it creates\n- Involves its Key Stakeholders in the development process to (co-)create and maximise value. \n- Develops the portfolio of its products, services and solutions in line with its Purpose and the current and future needs of existing and potential target groups \n- Designs the value and the value creation approaches to reflect their lifecycle in a responsible way, considering impacts on public health, safety and the environment \n- Uses quantitative and qualitative market research, (customer) surveys and other forms of feedback, as well as insights, to develop and improve its value proposition and value creation.\n"                }
+                  "name": "4.1 Diseñar el valor y cómo se crea",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Es capaz de identificar lo que les diferencia de otros, incluyendo a la competencia cuando sea relevante, y lo convierte en la parte esencial del valor que crea.\n- Implica a sus grupos de interés clave en el proceso de desarrollo para (co-) crear y maximizar el valor.\n- Desarrolla un catálogo de productos, servicios y soluciones alineado con su propósito y con las necesidades y expectativas, actuales y futuras, de su público objetivo, existente y potencial.\n- Diseña la propuesta de valor y los sistemas para crearla, reflejando en el ciclo de vida de los productos, servicios y soluciones, de manera responsable, el impacto en la salud, seguridad pública y medioambiente.\n- Utiliza herramientas cuantitativas y cualitativas de investigación de mercado, encuestas (a clientes) y otros sistemas de obtener información y percepciones del\nentorno, para desarrollar y mejorar su propuesta de valor y las etapas de creación de valor.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "sell-value",
-                  "name": "4.2: Communicate & Sell the Value",
-                  "guidance": "In practice, we find that an outstanding organisation: \n- Expresses the differentiators and the value propositions to be created into attractive and engaging messages that are then communicated to existing and potential customers as well as other target groups\n- Leverages the power of networking and influencing in the on-line and off-line worlds in a responsible manner to increase the positive image of the organisation, its differentiators and its value proposition \n- Uses dedicated strategies and approaches to sell to target groups its differentiators and the value proposition(s) as well as the products, services and solutions \n\n- Makes it easy for its target groups to work with the organisation by offering support, both before and after they decide to do business, thus facilitating the successful selling of the value proposition.\n"                }
+                  "name": "4.2 Comunicar y vender la propuesta de valor",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Comunica lo que les diferencia de otros y su propuesta de valor con mensajes atractivos para sus clientes, actuales y potenciales, y otro posible público objetivo.\n- Aprovecha, de forma responsable, sus redes de contactos e influencias, en el mundo físico y digital, para potenciar una imagen positiva de la organización, de lo que les diferencia de otros y de su propuesta de valor.\n- Utiliza estrategias y sistemas específicamente destinados a vender lo que les diferencia de otros y su propuesta de valor, así como sus productos, servicios y soluciones, a su público objetivo.\n- Facilita la relación con su publico objetivo, ofreciéndole su apoyo, tanto antes como después de la relación comercial, favoreciendo así la venta con éxito de su propuesta de valor.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "deliver-value",
-                  "name": "4.3: Deliver the Value",
-                  "guidance": "In practice, we find that an outstanding organisation: \n- Implements effective and efficient ways to create value, making sure it can consistently deliver on its purpose and value propositions\n- Delivers sustainable value, as promised, through its portfolio of products, services and solutions and by meeting or exceeding the needs and expectations of its target groups\n- Delivers its products, services and solutions in a way that minimises negative social and environmental impact\n- Advises its target groups of the responsible use of its products, services and solutions\n"                }
+                  "name": "4.3 Elaborar y entregar la propuesta de valor",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Implanta sistemas eficaces y eficientes para crear el valor, asegurándose de que el valor creado está alineado con el propósito y el valor.\n- Entrega su propuesta de valor: productos, servicios y soluciones, según lo prometido, satisfaciendo o superando las expectativas de su público objetivo.\n- Entrega sus productos, servicios y soluciones minimizando el impacto negativo en la sociedad y el medioambiente.\n- Aconseja a su público objetivo sobre el uso responsable de sus productos, servicios y soluciones.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "implement-experience",
-                  "name": "4.4: Define & Implement the Overall Experience",
-                  "guidance": "In practice, we find that an outstanding organisation: \n- Uses insights about the target groups for defining and implementing the overall experience in working with the organisation\n- Puts in place a consistent, seamless and effective progression through the different phases of value creation, incorporating relevant measures at appropriate touch points in this journey\n- Takes advantage of opportunities to personalise the overall experience for its target groups, as well as the specific products, services and solutions \n\n- Makes sure its people have the necessary resources, competencies and empowerment they need to maximise the overall experience for its target groups\n\n- Designs, implements and uses timely feedback systems to improve the different phases of value creation as well as the products, services and solutions offered by the organisation. \n"                }
+                  "name": "4.4 Diseñar e implantar la experiencia global",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Utiliza la percepción, entendimiento y el conocimiento de sus grupos de interés clave para definir la experiencia global de relación con la propia organización.\n- Establece un seguimiento consistente, continuo y eficaz, a lo largo de las diferentes fases de la creación de valor, incorporando mediciones relevantes en los puntos de contacto adecuados.\n- Aprovecha todas las oportunidades de personalizar la experiencia global para cada grupo de interés clave, así como sus productos, servicios y soluciones.\n- Se asegura de que las personas de la organización disponen de los recursos, competencias y poder de decisión necesarios para maximizar la experiencia global de sus grupos de interés clave.\n- Diseña, implanta y utiliza en los momentos oportunos sistemas de feedback que le permiten mejorar las distintas etapas de creación de valor y sus productos, servicios y soluciones.\n"                }
               ]
             }
           ]
         },
         {
           "key": "driving-performance",
-          "name": "Driving Performance & Transformation",
-          "description": "Now and in the future, an organisation needs to be able to meet the following two important requirements at the same time to become and remain successful. \n\n- On the one side, it needs to continue managing successfully the delivery of its current business operations. (“Driving Performance.”) \n- On the other side, there are constant changes inside and outside the organisation that need to be managed in parallel if it is to remain successful. (“Driving Transformation.”)\n\nThe combination of Driving Performance & Transformation confirms the necessity for the organisation to deliver for today while preparing for the future.\n\nMajor elements in enabling performance & transformation are innovation and technology, the ever-increasing importance of data, information & knowledge and the focussed use of critical assets and resources.\n",
+          "name": "Gestionar el funcionamiento y la transformación",
+          "description": "Para poder alcanzar y mantener el éxito, toda organización tiene que ser capaz de satisfacer los dos siguientes requisitos al mismo tiempo.\n\nPor una parte, la necesidad de gestionar el funcionamiento de sus operaciones actuales, de forma continuada, para alcanzar el éxito (Gestionar el funcionamiento).\n\nPor otra parte, es necesario gestionar, en paralelo, los cambios continuos que se producen, tanto dentro como fuera de la organización, para mantener el éxito (Gestionar la transformación).\n\nLa combinación de ambos conceptos, “Gestionar el funcionamiento y la transformación”, confirma la necesidad de que las organizaciones trabajen para hoy mientras se preparan para el mañana. \n\nLos elementos fundamentales para facilitar el funcionamiento y la transformación son: la innovación y la tecnología, la creciente importancia de los datos, la información y el conocimiento y la utilización adecuada de los activos y recursos críticos.\n",
           "parts": [
             {
               "tables": [
                 {
                   "key": "performance-risk",
-                  "name": "5.1: Drive Performance & Manage Risk",
-                  "guidance": "In practice, we find that an outstanding organisation: \n- Uses the performance management system to ensure a coherent link between its Purpose, Strategy, Sustainable Value Creation objectives and Results\n- Uses the performance management system to guide informed, effective, responsive and fact-based improvements\n- Manages projects and improves processes based on information from its performance management system \n- Identifies risk and assesses the potential impact on the strategic priorities, the way things are executed and the desired results as well as potential opportunities\n- Develops and implements plans to manage risk from different perspectives such as cultural, strategic, operational, financial, legal, regulatory, societal and technical (including risks from IT and cyber security challenges) dimensions.\n"                }
+                  "name": "5.1 Gestionar el funcionamiento y el riesgo",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Utiliza el sistema de gestión para asegurar una vinculación coherente entre propósito, estrategia, objetivos de creación de valor sostenible y resultados.\n- Utiliza el sistema de gestión para promover las mejoras fundamentadas, basadas en hechos, eficaces y con resultados.\n- Gestiona proyectos y mejora los procesos utilizando información de su sistema de gestión.\n- Identifica riesgos y evalúa el impacto potencial en: sus prioridades estratégicas, su funcionamiento, los resultados deseados y las posibles oportunidades.\n- Desarrolla e implanta planes para gestionar el riesgo desde diferentes perspectivas: cultural, estratégica, operativa, financiera, legal, normativa, social o tecnológica (incluyendo los riesgos de las tecnologías de la información y los desafíos de la ciberseguridad).\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "transform-future",
-                  "name": "5.2: Transform the Organisation for the Future",
-                  "guidance": "In practice, we find that an outstanding organisation: \n- Identifies the transformation and change needs, taking into account its Purpose, Strategy, Sustainable Value Creation objectives and Results and scanning its ecosystem to forecast the main challenges and opportunities for the future \n- Adapts current strategy and existing business models to meet future needs, and implements new business models based on the challenges and opportunities that are forecast\n- Builds its organisational structure to best serve its Purpose, Vision and Strategy and considers innovative approaches to adapting its current organisational design based on the main challenges and opportunities that are forecast\n- Establishes and utilises agile working approaches, at the same time providing the necessary stability to manage current operations\n- Restructures in a timely manner its value creation and other organisational processes based on operational and future needs\n"                }
+                  "name": "5.2 Transformar la organización para el futuro",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Identifica las necesidades de cambio y transformación teniendo en cuenta su propósito, estrategia, objetivos de creación de valor sostenible y resultados, así como\nexamina su ecosistema para prever los principales retos y oportunidades del futuro.\n- Adapta la estrategia y su modelo de negocio actual, para satisfacer necesidades futuras, e implanta nuevos modelos de negocio basados en los retos y oportunidades previstos para el futuro.\n- Construye su estructura organizativa para servir mejor a su propósito, visión y estrategia y tiene en cuenta enfoques innovadores para adaptarla, basándose en los principales retos y oportunidades previstos para el futuro.\n- Establece y utiliza metodologías de trabajo ágiles, al tiempo que proporciona la estabilidad necesaria para gestionar las operaciones actuales.\n- Rediseña, cuando es necesario, la creación de valor y otros procesos organizativos, basándose en las necesidades operativas y de futuro.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "innovation-technology",
-                  "name": "5.3: Drive Innovation & Utilise Technology",
-                  "guidance": "In practice, we find that an outstanding organisation:\n- Provides the capabilities, resources and tools that develop and sustain creativity, innovation and disruptive thinking \n- Takes advantage of innovations that support improvement in the current business and the need for transformation in the future\n- Evaluates and exploits the potential that new technologies have to support ongoing value creation, improvements to its infrastructure and the responsiveness and adaptability of its processes & projects\n- Introduces relevant developments in technology at a speed that maximises the benefit to be gained\n- Evaluates and manages, based on circular economy principles, the full lifecycle of existing and emerging technologies, to maximise the benefit for all. \n"                }
+                  "name": "5.3 Impulsar la innovación y aprovechar la tecnología",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Proporciona las capacidades, recursos y herramientas para desarrollar y mantener la creatividad, la innovación y el pensamiento disruptivo.\n- Aprovecha las innovaciones que apoyan tanto la mejora en su actividad actual, como la necesidad de transformación en el futuro.\n- Evalúa y explota el potencial de las nuevas tecnologías para apoyar la creación de valor, las mejoras en su infraestructura y la capacidad de respuesta y flexibilidad de sus procesos y proyectos.\n- Introduce desarrollos relevantes en tecnología a una velocidad que maximiza los beneficios a obtener.\n- Evalúa y gestiona el ciclo de vida completo de las tecnologías existentes y emergentes, basándose en los principios de la economía circular, para maximizar el beneficio para todos.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "data-knowledge",
-                  "name": "5.4: Leverage Data, Information & Knowledge",
-                  "guidance": "In practice, we find that an outstanding organisation: \n- Ensures it has identified the data it needs to support its transformation plans as well as managing the products, services and solutions it currently offers, and is proficient in acquiring any essential information that may be lacking\n- Uses advanced analytics, including predictive models, to extract value from data, gain actionable insights and make informed decisions\n- Converts data into information and knowledge and uses the outcomes to identify potential opportunities for creating further sustainable value\n- Makes use of the knowledge held by Key Stakeholders to generate ideas and innovations, including the potential for working together, to develop products, services and solutions that Create Sustainable Value\n- Ensures that data, information and knowledge are treated and used in an ethical way, respecting the needs and rights of those providing the data, information and knowledge\n- Secures, protects and maximises the unique knowledge, such as the intellectual property, that it owns.\n"                }
+                  "name": "5.4 Aprovechar los datos, la información y el conocimiento",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Se asegura de haber identificado los datos que necesita para apoyar sus planes de transformación y gestionar los productos, servicios y soluciones que ofrece actualmente y es capaz de conseguir la información esencial que le pueda faltar.\n- Utiliza análitica avanzada de datos, incluyendo modelos predictivos, para extraer valor de los datos, obtener información útil y tomar decisiones fundamentadas.\n- Convierte los datos en información y conocimiento, utilizando el resultado para identificar oportunidades y crear más valor sostenible.\n- Usa el conocimiento que tienen sus grupos de interés para generar ideas e innovaciones con el fin de desarrollar productos, servicios y soluciones, que contribuyan a la creación de valor sostenible, con la posibilidad de desarrollarlos conjuntamente.\n- Garantiza que los datos, información y conocimiento se tratan y utilizan de manera ética, respetando las necesidades y derechos de quienes los proporcionan.\n- Asegura, protege y maximiza el conocimiento único que posee, como por ejemplo la propiedad intelectual.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "assets-resources",
-                  "name": "5.5: Manage Assets & Resources",
-                  "guidance": "In practice, we find that an outstanding organisation:\n\n- Uses financial resources in a balanced and sustainable way to help ensure current success and investment in the future\n- Identifies and manages, responsibly, the critical assets and resources that are vital for its Strategy, Performance and Transformation needs, including financial assets (cash, capital, investments), tangible assets (trading infrastructure, such as supply chain, real estate, technology and machinery) and intangible assets (proprietary data, self-developed software/technology, brand, goodwill, patents)\n- Discovers and embeds coherent and innovative ways to maximise the value of its assets & resources to enhance performance and transformation objectives in line with changing organisational and market demands, both short and long term\n- Determines the assets and resources it no longer needs (for current or future business) and, based on Circular Economy principles, disposes of them responsibly\n"                }
+                  "name": "5.5 Gestionar los activos y recursos",
+                  "guidance": "En la práctica una organización sobresaliente:\n- Utiliza recursos financieros de manera equilibrada y sostenible para garantizar el éxito actual y la inversión futura.\n- Identifica y gestiona de manera responsable los activos y recursos críticos que son vitales para su estrategia, funcionamiento y necesidades de transformación,\nincluyendo los activos financieros (liquidez, capital e inversiones), los activos tangibles (infraestructura comercial, como por ejemplo: cadena logística, bienes inmobiliarios, tecnología y maquinaria) y los activos intangibles (datos propiedad de la organización, tecnologías y software desarrollados por la propia organización, marca, fondo de comercio y patentes).\n- Identifica e incorpora métodos coherentes e innovadores para lograr el máximo aprovechamiento de los activos y recursos que impulsan los objetivos de funcionamiento y transformación, tanto a corto como a largo plazo, de acuerdo con las necesidades cambiantes de la organización y del mercado.\n- Determina los activos y recursos que ya no necesita (para su actividad actual o futura) y los desecha de manera responsable, basándose en los principios de la economía circular.\n"                }
               ]
             }
           ]
@@ -418,7 +417,7 @@
     },
     {
       "key": "results",
-      "name": "results",
+      "name": "RESULTADOS",
       "columns": [
         {
           "key": "title",
@@ -451,103 +450,103 @@
       "criteria": [
         {
           "key": "stakeholder-perceptions",
-          "name": "Stakeholder Perceptions",
-          "description": "This criterion concentrates on results based on feedback from Key Stakeholders about their personal experiences of dealing with the organisation - their perceptions\n\nThese perceptions could relate to past as well as current Key Stakeholders and could be obtained from a number of sources, including surveys, focus groups, ratings, press or social media, external recognition, advocacy, structured review meetings, investor reports and compliments/complaints, including feedback compiled by customer relationship management teams\n\nIn addition to the perceptions that a Key Stakeholder may have of an organisation based on personal experiences, perceptions may also be shaped by the environmental and social impact reputation of the organisation. For instance, the degree to which the organisation is perceived by its Key Stakeholders as contributing successfully to one or more of the United Nations Sustainable Development Goals and Global Compact ambitions.\n\nIn practice, we find that an outstanding organisation: -\n\n- Knows how successful it is at executing its Strategy to meet the needs and expectations of its Key Stakeholders\n- Uses its analysis of past and current performance to predict future performance\n- Uses Key Stakeholder Perception Results to stay informed and influence its current Direction and the Execution of its Strategy.\n",
+          "name": "Percepción de los grupos de interés",
+          "description": "Este criterio se centra en los resultados basados en el feedback de los grupos de interés clave obtenido tras su experiencia personal con la organización, es decir, sus percepciones.\n\nEstas percepciones pueden pertenecer a grupos de interés clave pasados o actuales y se pueden obtener de múltiples fuentes que incluyen: encuestas, grupos focales, ratings, medios de comunicación o redes sociales, reconocimientos externos, recomendaciones, reuniones periódicas de seguimiento, informes de inversores y felicitaciones y quejas, incluyendo el feedback recogido por los equipos de atención al cliente.\n\nAdemás de las percepciones que puede tener un grupo de interés clave, basadas en su experiencia personal con la organización, las percepciones también están conformadas por la reputación de la organización respecto al impacto social y ambiental. Por ejemplo, cómo perciben los grupos de interés clave la contribución positiva de la organización a uno o más de los 17 Objetivos de Desarrollo Sostenible (ODS) o al Pacto Mundial de Naciones Unidas.\n\nEn la práctica una organización sobresaliente:\n- Sabe cuál es su nivel de éxito en la ejecución de su estrategia para satisfacer las expectativas y necesidades de sus grupos de interés clave.\n- Utiliza el análisis de su rendimiento actual y pasado para predecir su rendimiento futuro.\n- Usa los resultados de percepción relevantes de sus grupos de interés clave para mantenerse informado e influir en su Dirección actual y en la Ejecución de su\nestrategia.\n\nA continuación, se muestran ejemplos de resultados de percepción de los grupos de interés clave y de posibles temas a abordar, si bien la relación no es exhaustiva y no aparecen por orden de prioridad:\n",
           "parts": [
             {
               "tables": [
                 {
                   "key": "customer-perception",
-                  "name": "Customer Perception Results",
-                  "guidance": "What are the perceptions of the Customers in relation to, for instance:\n- The delivery of the overall customer experience\n- The culture of the organisation; the attitude and level of commitment to the customer by People\n- The branding and reputation of the organisation, including its social and environmental performance\n- The products, services and solutions offered by the organisation\n- The use of innovation to improve the organisation’s processes, products, services and solutions\n- The usage of technology by the organisation to help deliver sustainable value\n- The delivery and after-sales support for the different channels\n- The effectiveness and efficiency of the communication channels used\n"                }
+                  "name": "Resultados de percepción de clientes",
+                  "guidance": "Cuáles son las percepciones de los clientes en relación a, por ejemplo:\n- La experiencia general en su trato con la organización.\n- La cultura de la organización, la actitud y el nivel de compromiso de las personas con el cliente.\n- La marca y reputación de la organización, incluyendo su impacto social y ambiental.\n- Los productos, servicios y soluciones ofertados por la organización.\n- El uso de la innovación para mejorar los productos, servicios y soluciones de la organización.\n- El uso de la tecnología por la organización, para aportar valor sostenible.\n- La entrega y servicio post-venta de los diferentes canales.\n- La eficacia y eficiencia de los canales de comunicación utilizados.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "people-perception",
-                  "name": "People Perception Results",
-                  "guidance": "What are the perceptions of the People in relation to, for instance: \n\n- The culture of the organisation\n- Their experience of working for the organisation, including how change is managed\n- The organisation’s commitment and achievements concerning gender balance, parity, diversity and inclusion \n- The way the organisation is adapting to future ways of working, for example, the co-existence of People working alongside robots, the use of artificial intelligence and augmented virtual reality\n- The organisation’s support for family and personal life\n- The organisation’s support, empowerment, recognition and development \n- The working environment, pay and benefits\n- The management and improvement of personal performance\n- The reputation of the organisation, including as a Leader in its ecosystem\n- Communication within the organisation\n- Talent attraction and engagement\n- The way in which strategy is executed, their contribution to it and their degree of confidence in the future direction of the organisation\n"                }
+                  "name": "Resultados de percepción de personas",
+                  "guidance": "Cuáles son las percepciones de las personas en relación a, por ejemplo:\n- La cultura de la organización.\n- Su experiencia trabajando en la organización, incluyendo cómo se gestiona el cambio.\n- El compromiso y los logros de la organización en cuanto a paridad y equilibrio de género, diversidad e inclusión.\n- La forma en que la organización se está adaptando a futuros modelos de trabajo como, por ejemplo, la coexistencia de personas trabajando con robots, el uso de la inteligencia artificial y la realidad virtual aumentada.\n- El apoyo de la organización a la conciliación entre el trabajo y la vida familiar.\n- Apoyo prestado a las personas, empoderamiento, reconocimiento y desarrollo profesional.\n- El ambiente de trabajo, la remuneración y los beneficios.\n- La gestión y mejora del desempeño de las personas.\n- La reputación de la organización, incluyendo su papel de líder en su ecosistema.\n- La comunicación interna.\n- La atracción y retención del talento.\n- Cómo se ejecuta la estrategia de la organización, la contribución de las personas a dicha ejecución y su grado de confianza en el futuro de la organización\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "governing-perception",
-                  "name": "Business & Governing Stakeholder Perception Results",
-                  "guidance": "What are the perceptions of the Business and Governing Stakeholders e.g. owners, shareholders,  investors, funding organisations, government departments, regional or local bodies (statutory & regulatory), public authorities or parastatal institutions in relation to, for instance:\n\n- The financial management, security and sustainability of the organisation\n- The governance structure, transparency, accountability and ethical behaviour of the organisation\n- The social and environmental responsibility of the organisation\n- The management of risk and compliance\n- The branding and reputation of the organisation\n- The products, services and solutions offered by the organisation and its approach to innovation in processes, products, services and solutions\n- The ability of the organisation to scan the horizon, spot megatrends and deal with them successfully \n- Their overall experience of dealing with the organisation\n"                }
+                  "name": "Resultados de percepción de inversores y reguladores",
+                  "guidance": "Cuáles son las percepciones de los inversores y reguladores (propietarios, accionistas, organizaciones de financiación e instituciones financieras, ministerios, consejerías, organismos regionales o locales, otras autoridades públicas e instituciones paraestatales) en relación a, por ejemplo:\n- La gestión financiera, la seguridad y la sostenibilidad de la organización.\n- La estructura de gobierno, transparencia, responsabilidad y comportamiento ético.\n- La responsabilidad social y ambiental.\n- La gestión de riesgos y cumplimiento normativo (compliance).\n- La marca y reputación de la organización.\n- Los productos, servicios y soluciones ofertadas y a la aplicación de la innovación en los procesos, productos, servicios y soluciones.\n- La capacidad de la organización de anticiparse al futuro, detectar megatendencias y afrontarlas con éxito.\n- La experiencia general en el trato con la organización.\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "society-perception",
-                  "name": "Society Perception Results",
-                  "guidance": "What are the perceptions of its Society, be it local, national or international, in relation to, for instance:\n\n- The organisation’s ability to meet the expectations of its Society\n- The impact the governance of the organisation, and the degree of transparency and ethical behaviour have on the community \n- The impact the operations of the organisation has on the community\n- The sustainability of the organisation’s contributions to the community in terms of its economic, social and environmental practices\n- The organisation’s commitment to move towards a Circular Economy \n- The organisation’s commitment to, and achievements in, reducing inequality, increasing diversity & inclusion and achieving a gender balance\n"                }
+                  "name": "Resultados de percepción de la sociedad",
+                  "guidance": "Cuáles son las percepciones de la sociedad y su comunidad, bien sea local, nacional o internacional, en relación a, por ejemplo:\n- La capacidad de la organización para satisfacer las expectativas de su comunidad.\n- El impacto que la gobernanza de la organización y su nivel de transparencia y comportamiento ético tienen sobre la comunidad.\n- El impacto que las operaciones de la organización tienen sobre la comunidad.\n- La sostenibilidad de las contribuciones de la organización a la comunidad por sus prácticas económicas, sociales y ambientales.\n- El compromiso de la organización para avanzar hacia la economía circular.\n- El compromiso y logros de la organización en reducir la desigualdad, en incrementar la diversidad e inclusión y en alcanzar el equilibrio de género\n"                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "partner-perception",
-                  "name": "Partner & Supplier Perception Results",
-                  "guidance": "What are the perceptions of the Key Partners & Suppliers in relation to, for instance:\n\n- Their experience of dealing with the organisation\n- The commitment and achievement of the organisation to co-creation and working towards mutual benefit\n- The rate of implementation of new technologies and changes\n- The social commitment of the organisation\n- The organisation’s commitment and achievement to move towards a Circular Economy \n- The management and improvement of Key Partners & Suppliers performance\n- Communication and relationship management with the organisation\n- The governance structure, transparency and ethics of the organisation and its practices\n- The sustainability of the relationship between the organisation and the Key Partners and Suppliers\n"                }
+                  "name": "Resultados de percepción de partners y proveedores",
+                  "guidance": "Cuáles son las percepciones de los partners y proveedores clave, en relación a, por ejemplo:\n- La experiencia en el trato con la organización.\n- El compromiso y los logros de la organización en cuanto a co-creación y el trabajo para el beneficio mutuo.\n- El grado de implantación de nuevas tecnologías y cambios.\n- El compromiso social de la organización.\n- El compromiso y logros alcanzados en el avance hacia la economía circular.\n- La gestión y mejora del rendimiento de los partners y proveedores claves.\n- La comunicación y gestión de las relaciones con la organización.\n- La estructura de gobierno, transparencia y ética de la organización y sus prácticas.\n- La sostenibilidad de la relación entre la organización y sus partners y proveedores claves.\n"                }
               ]
             }
           ]
         },
         {
           "key": "strategic-performance",
-          "name": "Strategic & Operational Performance",
-          "description": "This criterion concentrates on results linked to the organisation’s performance in terms of:\n- The ability to fulfil its Purpose, deliver the Strategy and Create Sustainable Value\n- Its fitness for the future\n\nThese results are used by the organisation to monitor, understand and improve its overall performance and to forecast the impact this performance will have on both the perceptions of its Key Stakeholders as well as its future strategic ambitions.\n\nIn practice, we find that an outstanding organisation: -\n- Uses both financial and non-financial indicators to help it measure its strategic and operational performance. \n- Understands the linkages between Key Stakeholder perceptions and actual performance and is able to predict, with a high degree of certainty, how future performance will evolve.\n- Considers the current and future needs and expectations of its Key Stakeholders when deciding on the most appropriate performance indicators to match its strategic & operational objectives\n- Understands the cause and effect relationships that impact on performance and uses the results achieved to stay informed and influence its current Direction & Execution \n- Uses the results currently being achieved to forecast its future performance with an expected degree of certainty. \n",
+          "name": "Rendimiento estratégico y operativo",
+          "description": "Este criterio se centra en los resultados ligados al rendimiento de la organización en cuanto a:\n- La capacidad de alcanzar su propósito, ejecutar su estrategia y crear valor sostenible.\n- Su preparación (estado de forma) para afrontar el futuro.\n\nEstos resultados se utilizan para dar seguimiento, comprender y mejorar el rendimiento global de la organización y para predecir el impacto que este rendimiento\ntendrá, tanto en las percepciones de sus grupos de interés clave como en sus objetivos estratégicos futuros.\n\nEn la práctica una organización sobresaliente:\n- Utiliza indicadores financieros y no financieros para medir su rendimiento estratégico y operativo.\n- Comprende la correlación entre las percepciones de sus grupos de interés clave y su rendimiento actual, y es capaz de predecir, con un elevado grado de certeza,\ncómo evolucionará su rendimiento en el futuro.\n- Decide los indicadores de rendimiento más apropiados para medir sus objetivos estratégicos y operativos, teniendo en cuenta las necesidades y expectativas\nactuales y futuras de sus grupos de interés clave.\n- Comprende las relaciones causa-efecto que afectan a su rendimiento y utiliza los resultados conseguidos para evaluar y modificar lo que está haciendo hoy en los\nbloques de Dirección y Ejecución.\n- Utiliza sus resultados actuales para predecir su rendimiento futuro con un determinado grado de certeza.\n\nLos indicadores de rendimiento estratégico y operativo, pueden incluir los siguientes, aunque no se limitan sólo a:\n",
           "parts": [
             {
               "tables": [
                 {
                   "key": "achievements-value",
-                  "name": "Achievements in delivering its Purpose and Creating Sustainable Value"                }
+                  "name": "Logros alcanzados en la consecución del propósito y la creación de valor sostenible."                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "financial-performance",
-                  "name": "Financial Performance"                }
+                  "name": "Rendimiento financiero."                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "fulfil-expectations",
-                  "name": "Fulfilment of Key Stakeholders Expectations"                }
+                  "name": "Cumplimiento de las expectativas de los grupos de interés clave."                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "strategic-objectives",
-                  "name": "Achievement of Strategic Objectives"                }
+                  "name": "Consecución de los objetivos estratégicos."                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "achievements-driving",
-                  "name": "Achievements in Driving Performance"                }
+                  "name": "Logros en la gestión del funcionamiento."                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "achievements-transformation",
-                  "name": "Achievements in Driving Transformation"                }
+                  "name": "Logros en la gestión de la transformación."                }
               ]
             },
             {
               "tables": [
                 {
                   "key": "predictive-measures",
-                  "name": "Predictive Measures for the Future"                }
+                  "name": "Mediciones predictivas para el futuro de la organización."                }
               ]
             }
           ]
@@ -559,43 +558,43 @@
       "scoring": [
         {
           "key": "relevance-usability",
-          "name": "relevance & usability",
+          "name": "Relevancia y Utilidad",
           "scores": [
             {
               "key": "scope-relevance",
-              "name": "scope & relevance",
-              "description": "A set of results that clearly link to the strategy of the organisation are identified and demonstrate the needs and expectations of the stakeholders. The selected set of results is reviewed and improved overtime"
+              "name": "Relevante",
+              "description": "La organización identifica un conjunto de resultados claramente vinculados con su propósito, visión y estrategia para los grupos de interés clave. Estos resultados se revisan y mejoran a lo largo del tiempo."
             },
             {
               "key": "usable-data",
-              "name": "usable data",
-              "description": "Results are timely, reliable, accurate and appropriately segmented to provide meaningful insights that support improvement"
+              "name": "Útil",
+              "description": "Los datos son oportunos, fiables, precisos y adecuadamente segmentados para proporcionar información significativa que ayude a mejorar el funcionamiento y la transformación."
             }
           ]
         },
         {
           "key": "performance",
-          "name": "performance",
+          "name": "Rendimiento",
           "scores": [
             {
               "key": "trends",
-              "name": "trends",
-              "description": "Positive trends or sustained good performance over the strategic period/cycle."
+              "name": "Con tendencias",
+              "description": "Existe una evolución positiva o rendimiento sobresaliente sostenido durante el periodo o ciclo estratégico."
             },
             {
               "key": "targets",
-              "name": "targets",
-              "description": "Relevant targets are set in line with the strategic intent & benchmarks and consistently achieved"
+              "name": "Con objetivos",
+              "description": "Las metas establecidas son relevantes, están alineadas con la estrategia y se alcanzan de manera continuada."
             },
             {
               "key": "comparisons",
-              "name": "comparisons",
-              "description": "Relevant external comparisons suitable to classify own performance in line with the strategic direction are made and are favourable"
+              "name": "Comparado",
+              "description": "Hay comparaciones externas relevantes (benchmarking de indicadores) que permiten determinar que el rendimiento está en línea con la estrategia. Dichas comparaciones son además favorables."
             },
             {
               "key": "future-focus",
-              "name": "future focus",
-              "description": "Based on current cause & effect relationships, analysis of data sets, performance patterns & predictive measures, the organisation understands the drivers for exceptional performance in the future"
+              "name": "Predictivo",
+              "description": "Las palancas para lograr unos resultados sobresalientes en el futuro están identificadas y se basan en las actuaciones para la transformación, las relaciones causa/efecto, el análisis de datos, los patrones de rendimiento y las medidas predictivas."
             }
           ]
         }

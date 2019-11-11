@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { navigate } from '@reach/router'
 import {
   withStyles,
@@ -18,6 +18,7 @@ import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 import {
   ASSESSMENT_STATUS,
   AuthContext,
+  useAuthorizedQuery,
   getChartData,
   BarChartTable,
   ConfirmDialog,
@@ -26,7 +27,7 @@ import {
 } from 'components'
 import { Link } from 'gatsby'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
-import { useMutation, useManualQuery } from 'graphql-hooks'
+import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 
 import FeedbackReportInput from '../components/FeedbackReportInput'
@@ -51,7 +52,7 @@ function sortByPart(obj, key) {
         ...acc,
         ...item.feedback_values.map(value => ({
           value: value[key],
-          link: `${item.pillar_key}/${item.criterion_key}/${item.part_number}`,
+          link: `/${item.pillar_key}/${item.criterion_key}/${item.part_number}`,
         })),
       ],
       []
@@ -72,24 +73,15 @@ function FeedbackReport({
 
   const { getUserTokenData } = useContext(AuthContext)
   const { isAdmin, isAssessor } = getUserTokenData()
-  const [fetchAssessmentFeedbackReportData, { data }] = useManualQuery(
+
+  const { data: assessmentData } = useAuthorizedQuery(
     getAssessmentFeedbackReportData,
+    { assessmentId },
     {
-      variables: {
-        assessmentId,
-      },
+      onPreFetch: variables => !!variables.assessmentId,
+      onFetch: data => filterOldScores(assessment, data.assessment_by_pk),
     }
   )
-
-  const assessmentData = get(data, 'assessment_by_pk')
-
-  filterOldScores(assessment, assessmentData)
-
-  useEffect(() => {
-    if (!assessmentData) {
-      fetchAssessmentFeedbackReportData()
-    }
-  }, [fetchAssessmentFeedbackReportData, assessmentData])
 
   const handleSubmitFeedbackReport = async () => {
     await updateAssessmentStatus({
@@ -115,7 +107,7 @@ function FeedbackReport({
       <PaddedContainer className={classes.paddedContainer}>
         <Button
           component={Link}
-          to={`assessment/${assessment.key}#${assessmentId}`}
+          to={`/assessment/${assessment.key}#${assessmentId}`}
           variant="text"
           color="secondary"
         >
@@ -175,13 +167,12 @@ function FeedbackReport({
             {assessmentData &&
               assessment.pillars.map((pillarDef, pillarIndex) => {
                 return (
-                  <>
+                  <React.Fragment key={pillarDef.key}>
                     <Grid item xs={12}>
                       {assessmentData && (
                         <FeedbackReportInput
                           label={pillarDef.name}
                           name="pillar_summary"
-                          key={pillarDef.key}
                           assessmentId={assessmentId}
                           initialValue={
                             assessmentData.pillar_summary !== null
@@ -287,7 +278,7 @@ function FeedbackReport({
                         </Grid>
                       )
                     })}
-                  </>
+                  </React.Fragment>
                 )
               })}
           </Grid>

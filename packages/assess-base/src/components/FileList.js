@@ -81,7 +81,6 @@ function FileList({
   return (
     <Grid
       container
-      xs={6}
       alignItems="flex-end"
       direction="column"
       spacing={2}

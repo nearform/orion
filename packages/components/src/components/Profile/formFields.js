@@ -1,4 +1,5 @@
 import { Link, Email } from '@material-ui/icons'
+
 import LinkedIn from '../../assets/social/linkedin.svg'
 import Twitter from '../../assets/social/twitter.svg'
 
@@ -35,7 +36,7 @@ export default [
     iconClass: 'linkIcon',
   },
   {
-    name: `signupRequest.userAttributes.email`,
+    name: 'signupRequest.userAttributes.email',
     label: 'Email',
     icon: Email,
   },

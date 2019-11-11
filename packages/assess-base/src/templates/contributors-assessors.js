@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   Typography,
   withStyles,
@@ -17,6 +17,7 @@ import { Redirect } from '@reach/router'
 
 import {
   AuthContext,
+  useAuthorizedQuery,
   TypedChip,
   PaddedContainer,
   SectionTitle,
@@ -35,7 +36,6 @@ import {
   upsertAssessmentAssessorMutation,
   deleteAssessmentAssessorMutation,
 } from '../queries'
-import { useManualQuery } from 'graphql-hooks'
 import { useMutation } from 'graphql-hooks'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import {
@@ -65,42 +65,29 @@ function ContributorsAssessorsTemplate({
   const assessmentId = getAssessmentId(location)
   const { getUserTokenData, getUserAuth } = useContext(AuthContext)
   const { isAdmin, groupId } = getUserTokenData()
-  if (!assessmentId && !isAdmin) {
-    return <Redirect to="/auth" noThrow />
-  }
 
-  const [fetchShallowAssessmentData, { data: assessmentByPk }] = useManualQuery(
+  const { data: assessmentData } = useAuthorizedQuery(
     getShallowAssessmentData,
+    { id: assessmentId },
     {
-      variables: {
-        id: assessmentId,
-      },
+      onPreFetch: variables => !!variables.id,
+      onFetch: data => get(data, 'assessment_by_pk'),
     }
   )
 
-  const [fetchAssessmentContributorsAssessorsData, { data }] = useManualQuery(
+  const {
+    data: assessorsData,
+    refetch: fetchAssessmentContributorsAssessorsData,
+  } = useAuthorizedQuery(
     getAssessmentContributorsAssessorsData,
+    { assessmentId },
     {
-      variables: { assessmentId },
+      onPreFetch: variables => !!variables.assessmentId,
     }
   )
-  useEffect(() => {
-    if (!assessmentByPk) {
-      fetchShallowAssessmentData()
-    }
-    if (!data) {
-      fetchAssessmentContributorsAssessorsData()
-    }
-  }, [
-    fetchShallowAssessmentData,
-    assessmentByPk,
-    fetchAssessmentContributorsAssessorsData,
-    data,
-  ])
 
-  const assessmentData = get(assessmentByPk, 'assessment_by_pk')
-  const assessors = get(data, 'assessors', [])
-  const contributors = get(data, 'contributors', [])
+  const assessors = get(assessorsData, 'assessors', [])
+  const contributors = get(assessorsData, 'contributors', [])
 
   const canEditAssesors = getUserAuth('platform-admin')
     ? true
@@ -204,6 +191,10 @@ function ContributorsAssessorsTemplate({
       })
     },
   })
+
+  if (!(assessmentId || isAdmin)) {
+    return <Redirect to="/auth" noThrow />
+  }
 
   return (
     <>

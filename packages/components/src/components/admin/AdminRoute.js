@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import { Router, Redirect } from '@reach/router'
 
-import { AuthContext } from '../AuthWrapper'
+import { AuthContext } from '../authorization/AuthWrapper'
 import PaddedContainer from '../PaddedContainer'
 import PendingUsers from './PendingUsers'
 import AllUsers from './AllUsers'

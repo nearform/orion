@@ -1,12 +1,17 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
-import { AuthContext, PaddedContainer, SectionTitle } from 'components'
+import {
+  AuthContext,
+  useAuthorizedQuery,
+  PaddedContainer,
+  SectionTitle,
+} from 'components'
 import { Link } from 'gatsby'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
 import { Field, Formik, Form } from 'formik'
 import { TextField } from 'formik-material-ui'
-import { useManualQuery, useMutation } from 'graphql-hooks'
+import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 import { getAssessmentId } from '../utils/url'
@@ -55,21 +60,21 @@ function CriterionTemplate({
     contextCriterion
   )
 
-  const [
-    fetchAssessmentCriterionData,
-    { data: assessmentCriterionData },
-  ] = useManualQuery(getAssessmentCriterionData, {
-    variables: {
+  const {
+    data: assessmentCriterionData,
+    loading,
+    refetch: fetchAssessmentCriterionData,
+  } = useAuthorizedQuery(
+    getAssessmentCriterionData,
+    {
       assessmentId,
       pillarKey: pillar.key,
       criterionKey: criterion.key,
     },
-  })
-  useEffect(() => {
-    if (!assessmentCriterionData) {
-      fetchAssessmentCriterionData()
+    {
+      onPreFetch: variables => !!variables.assessmentId,
     }
-  }, [fetchAssessmentCriterionData, assessmentCriterionData])
+  )
 
   const [upsertAssessmentData] = useMutation(
     upsertAssessmentCriterionDataMutation
@@ -101,6 +106,20 @@ function CriterionTemplate({
     isContributor &&
     assessmentInProgress(get(assessmentCriterionData, 'assessment_by_pk'))
 
+  if (loading) {
+    return (
+      <div className={classes.root} data-testid="criterion">
+        <PaddedContainer className={classes.paddedContainer}>
+          <Grid container spacing={2} wrap="nowrap">
+            <Grid item>
+              <Typography variant="h3">Loading...</Typography>
+            </Grid>
+          </Grid>
+        </PaddedContainer>
+      </div>
+    )
+  }
+
   return (
     <div className={classes.root} data-testid="criterion">
       <SEO title={criterion.name} />
@@ -109,7 +128,7 @@ function CriterionTemplate({
           <Grid item>
             <Button
               component={Link}
-              to={`assessment/${assessment.key}#${assessmentId}`}
+              to={`/assessment/${assessment.key}#${assessmentId}`}
               variant="text"
               color="secondary"
             >
