@@ -21,18 +21,21 @@ import {
   AvatarImage,
   PaddedContainer,
 } from 'components'
-import SEO from '../components/SEO'
+import SEO from './SEO'
 import { updateUserMutation, getUser } from '../queries'
-import { UserInfo, formFields, validationSchema } from '../components/profile'
-import UploadImageWidget from '../components/UploadImageWidget'
+import { UserInfo, formFields, validationSchema } from './profile'
+import UploadImageWidget from './UploadImageWidget'
 import { constructImageUrl } from '../utils/image'
 
-const Profile = ({ pageContext: { user: userContext } = {}, classes }) => {
+const Profile = ({ userSummary, classes }) => {
   const { getUserTokenData } = useContext(AuthContext)
   const { userId } = getUserTokenData()
   const [editMode, setEditMode] = useState(false)
 
-  const { data: user = userContext } = useAuthorizedQuery(
+  // TODO: Currently, this query just reloads data already entirely present in
+  // the user summary; this should be reviewed to see whether the user summary
+  // dataset should be reduced (perhaps even to just the user id).
+  const { data: user = userSummary } = useAuthorizedQuery(
     getUser,
     { id: userId },
     {

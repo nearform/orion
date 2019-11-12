@@ -4,28 +4,27 @@ import get from 'lodash/get'
 import classnames from 'classnames'
 import { withStyles, Grid, Typography, LinearProgress } from '@material-ui/core'
 
-import ContentMetadata from '../components/content/ContentMetadata'
-import ContentOptions from '../components/content/ContentOptions'
-import FeatureArticles from '../components/list/FeatureArticles'
-import HowToAuthenticate from '../components/HowToAuthenticate'
-import RichText from '../components/content/RichText'
+import ContentMetadata from './content/ContentMetadata'
+import ContentOptions from './content/ContentOptions'
+import FeatureArticles from './list/FeatureArticles'
+import HowToAuthenticate from './HowToAuthenticate'
+import RichText from './content/RichText'
 import {
   AuthContext,
   useAuthorizedQuery,
   PaddedContainer,
   EmbeddedVideo,
 } from 'components'
-import SEO from '../components/SEO'
+import SEO from './SEO'
 import { constructImageUrl } from '../utils/image'
 import { getArticleDetails, getArticleSummary } from '../queries'
 
-function ContentView({ slug, classes, pageContext }) {
+function ContentView({ slug, classes, articleSummary }) {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
 
-  const articlePath = slug || get(pageContext, 'articleSummary.path', '')
+  const articlePath = slug || get(articleSummary, 'path', '')
   const contentId = articlePath.split('-')[0]
-
   // Only show the full article if the user is logged in.
   const showFullArticle = isAuthenticated && isAuthInitialized
   const articleQuery = showFullArticle ? getArticleDetails : getArticleSummary
@@ -38,12 +37,13 @@ function ContentView({ slug, classes, pageContext }) {
     articleQuery,
     { id: contentId },
     {
-      onPreFetch: variables => !!variables.id,
+      onPreFetch: variables =>
+        !!variables.id && get(articleSummary, 'id') !== variables.id,
       onFetch: data =>
         showFullArticle ? data.articleDetails : data.articleSummary,
       onNoFetch: (variables, loading) => {
-        if (pageContext) {
-          return pageContext.articleSummary
+        if (articleSummary) {
+          return articleSummary
         }
         if (loading) {
           return {
@@ -136,14 +136,14 @@ function ContentView({ slug, classes, pageContext }) {
   )
 }
 
-const getFieldType = field => {
+const getFieldType = (field, idx) => {
   switch (field.type) {
     case 'rich-text':
-      return <RichText {...field} />
+      return <RichText key={idx} {...field} />
     case 'image':
-      return <div {...field} />
+      return <div key={idx} {...field} />
     case 'embed-video-link':
-      return <EmbeddedVideo url={field.value} {...field} />
+      return <EmbeddedVideo key={idx} url={field.value} {...field} />
   }
 }
 
