@@ -114,7 +114,7 @@ function ContributorsAssessorsTemplate({
     const variables = { assessmentId, contributorId: user.id }
     await upsertAssessmentContributor({ variables })
     refetchUnassigned()
-    fetchAssessmentContributorsAssessorsData()
+    fetchAssessmentContributorsAssessorsData({ assessmentId })
   }
 
   const [deleteAssessmentContributor] = useMutation(
@@ -124,7 +124,7 @@ function ContributorsAssessorsTemplate({
     const variables = { assessmentId, contributorId: user.id }
     await deleteAssessmentContributor({ variables })
     refetchUnassigned()
-    fetchAssessmentContributorsAssessorsData()
+    fetchAssessmentContributorsAssessorsData({ assessmentId })
   }
 
   const [upsertAssessmentAssessor] = useMutation(
@@ -134,7 +134,7 @@ function ContributorsAssessorsTemplate({
     const variables = { assessmentId, assessorId: user.id }
     await upsertAssessmentAssessor({ variables })
     refetchUnassigned()
-    fetchAssessmentContributorsAssessorsData()
+    fetchAssessmentContributorsAssessorsData({ assessmentId })
   }
 
   const [deleteAssessmentAssessor] = useMutation(
@@ -144,7 +144,7 @@ function ContributorsAssessorsTemplate({
     const variables = { assessmentId, assessorId: user.id }
     await deleteAssessmentAssessor({ variables })
     refetchUnassigned()
-    fetchAssessmentContributorsAssessorsData()
+    fetchAssessmentContributorsAssessorsData({ assessmentId })
   }
 
   const { table, refetch: refetchUnassigned } = useAdminTable({
