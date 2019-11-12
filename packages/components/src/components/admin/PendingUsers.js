@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import T from 'prop-types'
 import { useQuery, useMutation } from 'graphql-hooks'
 import {
@@ -15,6 +15,7 @@ import * as Yup from 'yup'
 import useAdminTable from '../../hooks/useAdminTable'
 import AdminModal from './AdminModal'
 import UserSelectPicker from './UserSelectPicker'
+import { UserFilter } from 'components'
 
 import {
   getPendingUsers,
@@ -30,6 +31,9 @@ const styles = theme => ({
   },
   actionButton: {
     marginRight: theme.spacing(4),
+  },
+  userFilterWrapper: {
+    marginBottom: '10px',
   },
 })
 
@@ -64,9 +68,13 @@ function getStyledSignupAttr(user, key) {
 }
 
 function PendingUsers({ classes }) {
+  const [filterText, setFilterText] = useState('')
   const { selected, setSelected, refetch, table } = useAdminTable({
     query: getPendingUsers,
     headers,
+    variables: {
+      emailFilter: `%${filterText}%`,
+    },
     renderTableBody: (data, { setSelected }) =>
       data.user.map(user => (
         <TableRow key={user.id} data-testid="pending-users" size="small">
@@ -172,6 +180,9 @@ function PendingUsers({ classes }) {
         schema={modalSchema}
         getInitialValues={getModalInitialValues}
       />
+      <div className={classes.userFilterWrapper}>
+        <UserFilter setFilterText={setFilterText} />
+      </div>
       {table}
     </>
   )
