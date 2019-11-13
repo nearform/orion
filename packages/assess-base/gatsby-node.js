@@ -140,7 +140,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   assessments.forEach(assessment => {
     const createCriterionPagePath = (pillar, criterion) =>
-      `assessment/${assessment.key}/${pillar.key}/${criterion.key}`
+      `/assessment/${assessment.key}/${pillar.key}/${criterion.key}`
 
     const criteriaList = assessment.pillars.reduce(
       (acc, pillar, pillarIndex) => {
@@ -162,7 +162,8 @@ exports.createPages = async ({ graphql, actions }) => {
     )
 
     createPage({
-      path: `assessment/${assessment.key}`,
+      path: `/assessment/${assessment.key}`,
+      matchPath: `/assessment/${assessment.key}`,
       component: assessmentTemplate,
       context: {
         assessment,
@@ -171,7 +172,7 @@ exports.createPages = async ({ graphql, actions }) => {
     })
 
     createPage({
-      path: `assessment/${assessment.key}/feedback-report`,
+      path: `/assessment/${assessment.key}/feedback-report`,
       component: feedbackReportTemplate,
       context: {
         assessment,
@@ -180,7 +181,7 @@ exports.createPages = async ({ graphql, actions }) => {
     })
 
     createPage({
-      path: `assessment/${assessment.key}/contributors-assessors`,
+      path: `/assessment/${assessment.key}/contributors-assessors`,
       component: contributorsAssessorsTemplate,
       context: {
         assessment,
