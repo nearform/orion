@@ -59,7 +59,7 @@ const ContentMetadata = ({ classes, content }) => {
           <div
             key={user.id}
             className={classnames(
-              { [classes.xsHidden]: !avatarsOpen },
+              { [classes.xsHidden]: users.length > 1 ? !avatarsOpen : false },
               classes.listedUser
             )}
           >

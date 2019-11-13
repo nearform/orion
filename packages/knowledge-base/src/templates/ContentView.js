@@ -2,7 +2,13 @@ import React, { useContext } from 'react'
 import { Cache } from 'aws-amplify'
 import get from 'lodash/get'
 import classnames from 'classnames'
-import { withStyles, Grid, Typography, LinearProgress } from '@material-ui/core'
+import {
+  withStyles,
+  Grid,
+  Typography,
+  LinearProgress,
+  Hidden,
+} from '@material-ui/core'
 
 import ContentMetadata from '../components/content/ContentMetadata'
 import ContentOptions from '../components/content/ContentOptions'
@@ -102,11 +108,15 @@ function ContentView({ slug, classes, pageContext }) {
             <Typography variant="h1">{article.title}</Typography>
             <Typography variant="h2">{article.subtitle}</Typography>
             {article.banner && (
-              <img
-                className={classes.bannerImage}
-                src={constructImageUrl(article.banner)}
-                alt=""
-              />
+              <div className={classes.bannerImageWrapper}>
+                <figure>
+                  <img
+                    className={classes.bannerImage}
+                    src={constructImageUrl(article.banner)}
+                    alt=""
+                  />
+                </figure>
+              </div>
             )}
             {!showFullArticle && <RichText value={article.summary} />}
             {!showFullArticle && <HowToAuthenticate />}
@@ -117,22 +127,26 @@ function ContentView({ slug, classes, pageContext }) {
                 .map(getFieldType)}
           </div>
         </Grid>
-        <Grid item xs={12} sm={8} lg={3}>
-          {showFullArticle && (
-            <ContentOptions
-              articleData={article}
-              refetchArticle={refetchArticle}
-            />
-          )}
-        </Grid>
+        <Hidden xsDown>
+          <Grid item sm={8} lg={3}>
+            {showFullArticle && (
+              <ContentOptions
+                articleData={article}
+                refetchArticle={refetchArticle}
+              />
+            )}
+          </Grid>
+        </Hidden>
       </Grid>
-      <FeatureArticles
-        hideEmpty
-        title="Further reading"
-        articles={get(article, 'recommended_articles', []).map(
-          ({ recommended_article }) => recommended_article
-        )}
-      />
+      <div className={classes.featureArticlesWrapper}>
+        <FeatureArticles
+          hideEmpty
+          title="Further reading"
+          articles={get(article, 'recommended_articles', []).map(
+            ({ recommended_article }) => recommended_article
+          )}
+        />
+      </div>
     </PaddedContainer>
   )
 }
@@ -151,6 +165,7 @@ const getFieldType = field => {
 export default withStyles(theme => ({
   mainWrapper: {
     marginBottom: theme.spacing(),
+    marginTop: theme.spacing(1),
   },
   loadingBar: {
     marginTop: theme.spacing(-0.5),
@@ -178,8 +193,14 @@ export default withStyles(theme => ({
       paddingRight: '16.5%',
     },
   },
-  bannerImage: {
+  bannerImageWrapper: {
     marginTop: theme.spacing(2),
+    [theme.breakpoints.down('xs')]: {
+      marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(2),
+    },
+  },
+  bannerImage: {
     width: '100%',
   },
   article: {
@@ -200,9 +221,17 @@ export default withStyles(theme => ({
     '& figure': {
       marginLeft: 0,
       marginRight: 0,
+      [theme.breakpoints.down('xs')]: {
+        margin: theme.spacing(-2),
+      },
       '& img': {
         maxWidth: '100%',
       },
+    },
+  },
+  featureArticlesWrapper: {
+    [theme.breakpoints.down('xs')]: {
+      marginTop: theme.spacing(3),
     },
   },
 }))(ContentView)
