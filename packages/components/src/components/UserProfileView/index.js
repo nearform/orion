@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import T from 'prop-types'
 import {
   withStyles,
   Grid,
@@ -16,33 +17,38 @@ import omit from 'lodash/omit'
 import { Formik, Form, Field } from 'formik'
 import { fieldToCheckbox } from 'formik-material-ui'
 import {
-  AuthContext,
   useAuthorizedQuery,
   AvatarImage,
+  AuthContext,
   PaddedContainer,
 } from 'components'
-import SEO from './SEO'
-import { updateUserMutation, getUser } from '../queries'
-import { UserInfo, formFields, validationSchema } from './profile'
-import UploadImageWidget from './UploadImageWidget'
-import { constructImageUrl } from '../utils/image'
+import { updateUserMutation, getUser } from '../../../queries'
+import UserInfo from './UserInfo'
+import formFields from './formFields'
+import validationSchema from './validationSchema'
+import { UploadImageWidget } from 'components'
+import { Redirect } from '@reach/router'
+import { constructImageUrl } from '../../utils/image'
 
-const Profile = ({ userSummary, classes }) => {
-  const { getUserTokenData } = useContext(AuthContext)
+const UserProfileView = ({ SEO, userSummary, classes }) => {
+  const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
+
   const { userId } = getUserTokenData()
-  const [editMode, setEditMode] = useState(false)
-
   // TODO: Currently, this query just reloads data already entirely present in
   // the user summary; this should be reviewed to see whether the user summary
   // dataset should be reduced (perhaps even to just the user id).
-  const { data: user = userSummary } = useAuthorizedQuery(
+  const { data: user } = useAuthorizedQuery(
     getUser,
     { id: userId },
     {
       onPreFetch: variables => !!variables.id,
       onFetch: data => get(data, 'user.0'),
+      onNoFetch: () => userSummary,
     }
   )
+
+  const [editMode, setEditMode] = useState(false)
+
   const [updateUser] = useMutation(updateUserMutation)
 
   const signupRequest = get(user, 'signupRequest', {})
@@ -78,12 +84,15 @@ const Profile = ({ userSummary, classes }) => {
         },
       })
       setEditMode(false)
+      return true
     } catch (err) {
       return false
     } finally {
       actions.setSubmitting(false)
     }
   }
+
+  if (isAuthInitialized && !userId) return <Redirect to="/auth" noThrow />
 
   return user ? (
     <>
@@ -129,7 +138,7 @@ const Profile = ({ userSummary, classes }) => {
 
                     <Grid item className={classes.addImageButtonWrapper}>
                       <div className={classes.flexContainerHorizontalVertical}>
-                        {userId === user.id ? (
+                        {Number(userId) === user.id ? (
                           <UploadImageWidget
                             path={`uploads/users/${user.id}-profile`}
                             generateFileName={false}
@@ -185,7 +194,7 @@ const Profile = ({ userSummary, classes }) => {
                   <Grid container item xs={2} direction="column">
                     <Grid item className={classes.spacer}></Grid>
                     <Grid item>
-                      {userId === user.id ? (
+                      {Number(userId) === user.id ? (
                         <>
                           <Typography
                             variant="h3"
@@ -334,6 +343,12 @@ const Profile = ({ userSummary, classes }) => {
   )
 }
 
+UserProfileView.propTypes = {
+  SEO: T.elementType,
+  userSummary: T.object,
+  classes: T.object.isRequired,
+}
+
 export default withStyles(theme => ({
   root: {
     color: theme.palette.primary.dark,
@@ -399,7 +414,7 @@ export default withStyles(theme => ({
     ...theme.iconLight,
   },
   linkIcon: {
-    transform: `rotate(-45deg)`,
+    transform: 'rotate(-45deg)',
   },
   customIcon: {
     '& path': {
@@ -412,4 +427,4 @@ export default withStyles(theme => ({
   consents: {
     marginTop: theme.spacing(3),
   },
-}))(Profile)
+}))(UserProfileView)

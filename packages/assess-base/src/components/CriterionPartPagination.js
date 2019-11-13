@@ -1,10 +1,11 @@
 import React from 'react'
 import T from 'prop-types'
-import { Grid, Typography, withTheme } from '@material-ui/core'
+import { withStyles, Grid, Typography } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 
 function CriterionPartPagination({
   theme,
+  classes,
   link,
   previousLink,
   nextLink,
@@ -13,51 +14,42 @@ function CriterionPartPagination({
   totalParts,
 }) {
   const { t } = useTranslation()
+
   return (
     <Grid container spacing={2} justify="flex-end" alignItems="center">
-      <Grid item>
-        {previousLink ? (
-          <Typography
-            color="secondary"
-            component={link}
-            to={`${previousLink}#${assessmentId}`}
-            variant="body2"
-          >
-            ❮
-          </Typography>
-        ) : (
-          <Typography variant="body2" color="textSecondary">
-            ❮
-          </Typography>
-        )}
+      <Grid item className={classes.expandedClickAreaWrapper}>
+        <Typography
+          className={classes.expandedClickArea}
+          color="secondary"
+          component={link}
+          to={`${previousLink}#${assessmentId}`}
+          variant="body2"
+        >
+          ❮
+        </Typography>
       </Grid>
       <Grid item>
         <Typography variant="h3" color="secondary">
           {t('PART OF', { part: partNumber, total: totalParts })}
         </Typography>
       </Grid>
-      <Grid item>
-        {nextLink ? (
-          <Typography
-            variant="body2"
-            color="secondary"
-            component={link}
-            to={`${nextLink}#${assessmentId}`}
-          >
-            ❯
-          </Typography>
-        ) : (
-          <Typography variant="body2" color="textSecondary">
-            ❯
-          </Typography>
-        )}
+      <Grid item className={classes.expandedClickAreaWrapper}>
+        <Typography
+          className={classes.expandedClickArea}
+          variant="body2"
+          color="secondary"
+          component={link}
+          to={`${nextLink}#${assessmentId}`}
+        >
+          ❯
+        </Typography>
       </Grid>
     </Grid>
   )
 }
 
 CriterionPartPagination.propTypes = {
-  theme: T.object.isRequired,
+  classes: T.object.isRequired,
   link: T.any,
   previousLink: T.string,
   nextLink: T.string,
@@ -66,4 +58,20 @@ CriterionPartPagination.propTypes = {
   totalParts: T.number.isRequired,
 }
 
-export default withTheme(CriterionPartPagination)
+const styles = theme => ({
+  expandedClickArea: {
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      top: 'calc(50% - 16px)',
+      left: 'calc(50% - 16px)',
+      width: '32px',
+      height: '32px',
+    },
+  },
+  expandedClickAreaWrapper: {
+    position: 'relative',
+  },
+})
+
+export default withStyles(styles, { withTheme: true })(CriterionPartPagination)

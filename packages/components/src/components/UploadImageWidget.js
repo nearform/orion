@@ -10,7 +10,7 @@ import {
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import classnames from 'classnames'
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate'
-import useImageUpload from '../hooks/useImageUpload'
+import { useImageUpload } from 'components'
 
 function UploadImageWidget({
   path,

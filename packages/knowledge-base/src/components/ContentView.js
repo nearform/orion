@@ -111,9 +111,10 @@ function ContentView({ slug, classes, articleSummary }) {
             {!showFullArticle && <RichText value={article.summary} />}
             {!showFullArticle && <HowToAuthenticate />}
 
-            {get(article, 'fields', [])
-              .filter(({ value }) => !!value)
-              .map(getFieldType)}
+            {showFullArticle &&
+              get(article, 'fields', [])
+                .filter(({ value }) => !!value)
+                .map(getFieldType)}
           </div>
         </Grid>
         <Grid item xs={12} sm={8} lg={3}>

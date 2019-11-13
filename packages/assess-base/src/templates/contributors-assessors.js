@@ -4,7 +4,6 @@ import {
   withStyles,
   Grid,
   Button,
-  Input,
   TableRow,
   TableCell,
 } from '@material-ui/core'
@@ -14,7 +13,6 @@ import { Link } from 'gatsby'
 import HelpIcon from '@material-ui/icons/Help'
 import get from 'lodash/get'
 import { Redirect } from '@reach/router'
-
 import {
   AuthContext,
   useAuthorizedQuery,
@@ -22,6 +20,7 @@ import {
   PaddedContainer,
   SectionTitle,
   useAdminTable,
+  UserFilter,
 } from 'components'
 
 import { getAssessmentId } from '../utils/url'
@@ -37,7 +36,6 @@ import {
   deleteAssessmentAssessorMutation,
 } from '../queries'
 import { useMutation } from 'graphql-hooks'
-import FilterListIcon from '@material-ui/icons/FilterList'
 import {
   getCanEditAssesors,
   getCanEditContributors,
@@ -114,7 +112,7 @@ function ContributorsAssessorsTemplate({
     const variables = { assessmentId, contributorId: user.id }
     await upsertAssessmentContributor({ variables })
     refetchUnassigned()
-    fetchAssessmentContributorsAssessorsData()
+    fetchAssessmentContributorsAssessorsData({ assessmentId })
   }
 
   const [deleteAssessmentContributor] = useMutation(
@@ -124,7 +122,7 @@ function ContributorsAssessorsTemplate({
     const variables = { assessmentId, contributorId: user.id }
     await deleteAssessmentContributor({ variables })
     refetchUnassigned()
-    fetchAssessmentContributorsAssessorsData()
+    fetchAssessmentContributorsAssessorsData({ assessmentId })
   }
 
   const [upsertAssessmentAssessor] = useMutation(
@@ -134,7 +132,7 @@ function ContributorsAssessorsTemplate({
     const variables = { assessmentId, assessorId: user.id }
     await upsertAssessmentAssessor({ variables })
     refetchUnassigned()
-    fetchAssessmentContributorsAssessorsData()
+    fetchAssessmentContributorsAssessorsData({ assessmentId })
   }
 
   const [deleteAssessmentAssessor] = useMutation(
@@ -144,7 +142,7 @@ function ContributorsAssessorsTemplate({
     const variables = { assessmentId, assessorId: user.id }
     await deleteAssessmentAssessor({ variables })
     refetchUnassigned()
-    fetchAssessmentContributorsAssessorsData()
+    fetchAssessmentContributorsAssessorsData({ assessmentId })
   }
 
   const { table, refetch: refetchUnassigned } = useAdminTable({
@@ -281,12 +279,7 @@ function ContributorsAssessorsTemplate({
               )}
             </Grid>
             <Grid item xs={12} className={classes.filterContainer}>
-              <Input
-                fullWidth
-                className={classes.filterInput}
-                endAdornment={<FilterListIcon color="secondary" />}
-                onChange={event => setFilterText(event.target.value)}
-              />
+              <UserFilter setFilterText={setFilterText} />
               <Button
                 component={Link}
                 to={`assessment/${assessment.key}/#${assessmentId}`}
@@ -348,10 +341,6 @@ const styles = theme => ({
     marginLeft: 0,
     display: 'flex',
     alignItems: 'flex-end',
-  },
-  filterInput: {
-    maxWidth: 318,
-    margin: '0 auto 0 0',
   },
   participants: {
     display: 'flex',
