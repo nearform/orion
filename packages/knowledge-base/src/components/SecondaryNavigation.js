@@ -95,7 +95,13 @@ function SecondaryNavigation({ classes, dark, theme }) {
     </Grid>
   ) : (
     <>
-      <Grid id="secondary-navigation" container justify="flex-end" spacing={3}>
+      <Grid
+        id="secondary-navigation"
+        container
+        justify="flex-end"
+        spacing={3}
+        className={classes.inputContainer}
+      >
         <ClickAwayListener onClickAway={() => setSearch(false)}>
           <Grid item>
             <Input
@@ -125,6 +131,9 @@ function SecondaryNavigation({ classes, dark, theme }) {
   )
 }
 const styles = theme => ({
+  inputContainer: {
+    paddingBottom: '12px',
+  },
   inputCloseIcon: {
     fontSize: 16, //tiny icon size, overriding MUI defaults
   },
