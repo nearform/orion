@@ -6,7 +6,7 @@ import {
   Typography,
   Button,
   TextField,
-  useMediaQuery,
+  Hidden,
 } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import PaddedContainer from '../PaddedContainer'
@@ -22,12 +22,11 @@ function Footer({ classes, theme, content, Img }) {
     },
   } = content
   const { t } = useTranslation()
-  const isMobile = useMediaQuery('(max-width: 800px)')
   return (
     <div className={classes.root}>
       <PaddedContainer>
         <Grid container spacing={3}>
-          <Grid item xs={isMobile ? 12 : 8}>
+          <Grid item xs={8} sm={12}>
             <Typography variant="h4" gutterBottom>
               {t('Get in touch')}
             </Typography>
@@ -49,7 +48,7 @@ function Footer({ classes, theme, content, Img }) {
               </div>
             </Typography>
           </Grid>
-          <Grid item xs={isMobile ? 12 : 4}>
+          <Grid item xs={12} sm={4}>
             <Typography variant="h4" gutterBottom>
               {t('subscribe to our newsletter')}
             </Typography>
@@ -87,41 +86,63 @@ function Footer({ classes, theme, content, Img }) {
               )
             )
           })}
-          {!isMobile && <Img fixed={logoFixed} />}
-        </div>
-        {isMobile && (
-          <>
+          <Hidden xsDown>
             <Img fixed={logoFixed} />
-            <br />
-            <br />
-          </>
-        )}
-        <Grid
-          container
-          spacing={isMobile ? 3 : 1}
-          justify={isMobile ? 'left' : 'center'}
-        >
-          <Grid item xs={isMobile ? 12 : null}>
-            <Typography display="inline" variant="body2">
-              © EFQM
-            </Typography>
+          </Hidden>
+        </div>
+        <Hidden smUp>
+          <Img fixed={logoFixed} />
+          <br />
+          <br />
+        </Hidden>
+        <Hidden xsDown>
+          <Grid container spacing={1} justify={'center'}>
+            <Grid item>
+              <Typography display="inline" variant="body2">
+                © EFQM
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography display="inline" variant="body2">
+                {t('Terms of Use')}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography display="inline" variant="body2">
+                {t('Privacy Statement')}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography display="inline" variant="body2">
+                (version {version})
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={isMobile ? 12 : null}>
-            <Typography display="inline" variant="body2">
-              {t('Terms of Use')}
-            </Typography>
+        </Hidden>
+        <Hidden smUp>
+          <Grid container spacing={3} justify={'left'}>
+            <Grid item xs={12}>
+              <Typography display="inline" variant="body2">
+                © EFQM
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography display="inline" variant="body2">
+                {t('Terms of Use')}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography display="inline" variant="body2">
+                {t('Privacy Statement')}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography display="inline" variant="body2">
+                (version {version})
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={isMobile ? 12 : null}>
-            <Typography display="inline" variant="body2">
-              {t('Privacy Statement')}
-            </Typography>
-          </Grid>
-          <Grid item xs={isMobile ? 12 : null}>
-            <Typography display="inline" variant="body2">
-              (version {version})
-            </Typography>
-          </Grid>
-        </Grid>
+        </Hidden>
       </PaddedContainer>
     </div>
   )
@@ -149,7 +170,7 @@ const styles = theme => ({
       marginLeft: theme.spacing(2),
     },
     justifyContent: 'flex-end',
-    '@media (max-width: 800px)': {
+    [theme.breakpoints.down('xs')]: {
       justifyContent: 'flex-start',
       marginTop: theme.spacing(2),
     },

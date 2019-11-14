@@ -16,7 +16,7 @@ const useLinkStyles = makeStyles(theme => ({
     margin: 0,
     padding: 0,
     width: '100%',
-    '@media (max-width: 800px)': {
+    [theme.breakpoints.down('xs')]: {
       gridGap: theme.spacing(2),
       gridTemplateColumns: () => 'repeat(1 , minmax(0, 1fr))',
     },
@@ -26,7 +26,7 @@ const useLinkStyles = makeStyles(theme => ({
     marginBottom: 0,
     marginRight: theme.spacing(2),
     marginTop: 0,
-    '@media (max-width: 800px)': {
+    [theme.breakpoints.down('xs')]: {
       marginBottom: theme.spacing(3),
       width: '100%',
     },

@@ -6,7 +6,7 @@ export default theme => gap => ({
   flexDirection: 'column',
   '& > *': {
     margin: theme.spacing(0, 0, gap, 0),
-    '@media (max-width: 800px)': {
+    [theme.breakpoints.down('xs')]: {
       margin: theme.spacing(0, 0, gap / 2, 0),
     },
   },

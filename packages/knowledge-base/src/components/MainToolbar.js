@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { useStaticQuery, graphql, navigate, Link } from 'gatsby'
 import Img from 'gatsby-image'
-import { Typography, Button, withStyles } from '@material-ui/core'
+import { Typography, Button, Hidden, withStyles } from '@material-ui/core'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
@@ -73,87 +73,95 @@ function MainToolbar({ classes, dark, ...props }) {
         {gradient}
         <PaddedContainer className={darkClass}>
           <div className={classes.root}>
-            <Button
-              className={classnames(classes.menuButton, {
-                [classes.menuButtonDark]: dark,
-                [classes.menuButtonLight]: !dark,
-              })}
-              onClick={toggleSidebar(true)}
-            >
-              MENU
-            </Button>
+            <Hidden smUp>
+              <Button
+                className={classnames(classes.menuButton, {
+                  [classes.menuButtonDark]: dark,
+                  [classes.menuButtonLight]: !dark,
+                })}
+                onClick={toggleSidebar(true)}
+              >
+                MENU
+              </Button>
+            </Hidden>
             <Link
               to="/"
               className={classnames(classes.logoHomeLink, darkClass)}
               data-testid="main-toolbar__logo"
             >
               <Img className={classes.logo} fixed={fixed} />
-              <Typography variant="h2" className={classes.logotype}>
-                {title}
-              </Typography>
+              <Hidden xsDown>
+                <Typography variant="h2" className={classes.logotype}>
+                  {title}
+                </Typography>
+              </Hidden>
             </Link>
-            <div className={classes.grow} />
-            <div
-              className={classes.linksContainer}
-              data-testid="main-toolbar__links-container"
-            >
-              <Button
-                partial={false}
-                className={navButtonClass}
-                component={NavLink}
-                to="/"
+            <Hidden xsDown>
+              <div className={classes.grow} />
+            </Hidden>
+            <Hidden xsDown>
+              <div
+                className={classes.linksContainer}
+                data-testid="main-toolbar__links-container"
               >
-                KNOWLEDGE BASE
-              </Button>
-              <Button
-                className={navButtonClass}
-                component={NavLink}
-                to="https://www.efqm.org/"
-              >
-                EFQM.ORG
-              </Button>
-              {isAuthenticated && (
+                <Button
+                  partial={false}
+                  className={navButtonClass}
+                  component={NavLink}
+                  to="/"
+                >
+                  KNOWLEDGE BASE
+                </Button>
                 <Button
                   className={navButtonClass}
                   component={NavLink}
-                  to={userId ? `/profile/${userId}` : '#'}
+                  to="https://www.efqm.org/"
                 >
-                  <AccountCircleOutlinedIcon
-                    className={classes.icon}
-                    fontSize="large"
-                  />
-                  MyEFQM
+                  EFQM.ORG
                 </Button>
-              )}
-              {!isAuthenticated && (
-                <Button
-                  className={navButtonClass}
-                  component={NavLink}
-                  data-testid="login-button"
-                  to="/auth"
-                >
-                  LOGIN
-                </Button>
-              )}
-              {isAdmin && (
-                <Button
-                  className={navButtonClass}
-                  component={NavLink}
-                  to="/admin"
-                >
-                  ADMIN
-                </Button>
-              )}
-              {isAuthenticated && (
-                <Button className={navButtonClass} onClick={doLogout}>
-                  LOGOUT
-                </Button>
-              )}
-            </div>
+                {isAuthenticated && (
+                  <Button
+                    className={navButtonClass}
+                    component={NavLink}
+                    to={userId ? `/profile/${userId}` : '#'}
+                  >
+                    <AccountCircleOutlinedIcon
+                      className={classes.icon}
+                      fontSize="large"
+                    />
+                    MyEFQM
+                  </Button>
+                )}
+                {!isAuthenticated && (
+                  <Button
+                    className={navButtonClass}
+                    component={NavLink}
+                    data-testid="login-button"
+                    to="/auth"
+                  >
+                    LOGIN
+                  </Button>
+                )}
+                {isAdmin && (
+                  <Button
+                    className={navButtonClass}
+                    component={NavLink}
+                    to="/admin"
+                  >
+                    ADMIN
+                  </Button>
+                )}
+                {isAuthenticated && (
+                  <Button className={navButtonClass} onClick={doLogout}>
+                    LOGOUT
+                  </Button>
+                )}
+              </div>
+            </Hidden>
           </div>
-          <div className={classes.secondaryNavigation}>
+          <Hidden xsDown>
             <SecondaryNavigation dark={dark} />
-          </div>
+          </Hidden>
         </PaddedContainer>
       </div>
     </>
@@ -169,20 +177,18 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     paddingTop: theme.spacing(1),
-    '@media (max-width: 800px)': {
+    [theme.breakpoints.down('xs')]: {
       paddingTop: theme.spacing(1.5),
     },
   },
   menuButton: {
-    display: 'none',
     top: theme.spacing(-0.5),
     fontWeight: 'normal',
     width: '79px',
     height: '32px',
     borderRadius: '4px',
     border: 'solid 1px',
-    '@media (max-width: 800px)': {
-      display: 'block',
+    [theme.breakpoints.down('xs')]: {
       marginBottom: theme.spacing(1),
     },
   },
@@ -195,7 +201,7 @@ const styles = theme => ({
   logoHomeLink: {
     display: 'flex',
     alignItems: 'center',
-    '@media (max-width: 800px)': {
+    [theme.breakpoints.down('xs')]: {
       display: 'block',
       paddingRight: 'calc(79px/2)',
       marginBottom: theme.spacing(1),
@@ -208,9 +214,6 @@ const styles = theme => ({
   },
   logotype: {
     fontWeight: 900,
-    '@media (max-width: 800px)': {
-      display: 'none',
-    },
   },
   toolbarDark: {
     backgroundColor: theme.palette.primary.main,
@@ -223,9 +226,6 @@ const styles = theme => ({
   },
   grow: {
     flexGrow: 1,
-    '@media (max-width: 800px)': {
-      display: 'none',
-    },
   },
   navButton: {
     fontWeight: 'normal',
@@ -238,18 +238,9 @@ const styles = theme => ({
     opacity: 0.6,
   },
   linksContainer: {
-    display: 'flex',
     marginRight: `-${theme.spacing(1)}px`,
     '& > * + *': {
       marginLeft: theme.spacing(2),
-    },
-    '@media (max-width: 800px)': {
-      display: 'none',
-    },
-  },
-  secondaryNavigation: {
-    '@media (max-width: 800px)': {
-      display: 'none',
     },
   },
 })

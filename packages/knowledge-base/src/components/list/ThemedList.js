@@ -12,7 +12,7 @@ const useThemedListStyles = makeStyles(theme => ({
     '& li': {
       listStyle: 'none',
     },
-    '@media (max-width: 800px)': {
+    [theme.breakpoints.down('xs')]: {
       marginBottom: theme.spacing(3),
     },
   },
