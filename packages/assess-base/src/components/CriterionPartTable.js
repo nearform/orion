@@ -228,7 +228,7 @@ function CriterionPartTable({
                       </Grid>
                     </Grid>
                     <Grid item xs>
-                      <Grid container spacing={2}>
+                      <Grid container spacing={2} alignItems="flex-end">
                         {columnsDef.map(column => {
                           const inputKey = `${tableKey}-${column.key}`
                           return (
