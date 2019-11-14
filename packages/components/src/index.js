@@ -66,7 +66,7 @@ export * from './components/authorization'
 export { default as CustomAuthenticator } from './components/authentication'
 
 // views
-export { default as UserProfileProfile } from './components/UserProfileView'
+export { default as UserProfileView } from './components/UserProfileView'
 
 // hooks
 export { default as useAdminTable } from './hooks/useAdminTable'
