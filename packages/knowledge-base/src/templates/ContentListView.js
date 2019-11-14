@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { navigate } from 'gatsby'
-import { withStyles, Grid, Typography, Button } from '@material-ui/core'
+import { withStyles, Grid, Typography, Button, Hidden } from '@material-ui/core'
 import get from 'lodash/get'
 import Taxonomies from '../components/content/Taxonomies'
 import ArticleSummary from '../components/content/ArticleSummary'
+import CondensedArticleSummary from '../components/content/CondensedArticleSummary'
 import useTaxonomies from '../hooks/useTaxonomies'
 import useUserBookmarks from '../hooks/useUserBookmarks'
 import {
@@ -112,17 +113,17 @@ const ListContent = ({ classes, term, taxonomy, pageContext }) => {
       <Grid container spacing={3}>
         <Grid item xs={12} className={classes.pageHeader}>
           <Grid container spacing={3} alignItems="center">
-            <Grid item xs={9}>
+            <Grid item xs={12} sm={9} className={classes.headerGrid}>
               <Typography variant="h4" color="secondary">
                 {term
                   ? 'SEARCH RESULTS FOR'
                   : get(data, 'taxonomy[0].taxonomy_type.name')}
               </Typography>
-              <Typography variant="h1">
+              <Typography variant="h1" className={classes.term}>
                 {term ? <span>&lsquo;{term}&rsquo;</span> : sectionName}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={3} className={classes.mobileSpacing}>
               <Typography className={classes.resultCount}>
                 Showing {rangeMin} - {rangeMax} of {totalResults} results
               </Typography>
@@ -132,22 +133,36 @@ const ListContent = ({ classes, term, taxonomy, pageContext }) => {
 
         <Grid item xs={12}>
           <Grid container spacing={3}>
-            <Grid item xs={3}>
-              <Taxonomies
-                taxonomyIds={taxonomyIds}
-                showAll={true}
-                callback={handleTaxonomyFilter}
-              />
-            </Grid>
-            <Grid item xs={9}>
-              {data.articles.map(article => (
-                <ArticleSummary
-                  article={article}
-                  bookmarked={userBookmarks.includes(article.id)}
-                  bookmarkButtonDisabled={loadingBookmarks}
-                  onBookmarkToggle={fetchUserBookmarks}
-                  key={`article-${article.id}`}
+            <Hidden xsDown>
+              <Grid item xs={3}>
+                <Taxonomies
+                  taxonomyIds={taxonomyIds}
+                  showAll={true}
+                  callback={handleTaxonomyFilter}
                 />
+              </Grid>
+            </Hidden>
+            <Grid item xs={12} sm={9}>
+              {data.articles.map(article => (
+                <React.Fragment key={`article-${article.id}`}>
+                  <Hidden xsDown>
+                    <ArticleSummary
+                      article={article}
+                      bookmarked={userBookmarks.includes(article.id)}
+                      bookmarkButtonDisabled={loadingBookmarks}
+                      onBookmarkToggle={fetchUserBookmarks}
+                    />
+                  </Hidden>
+                  <Hidden smUp>
+                    <CondensedArticleSummary
+                      article={article}
+                      bookmarked={userBookmarks.includes(article.id)}
+                      bookmarkButtonDisabled={loadingBookmarks}
+                      onBookmarkToggle={fetchUserBookmarks}
+                      filterText={term ? term : sectionName}
+                    />
+                  </Hidden>
+                </React.Fragment>
               ))}
             </Grid>
           </Grid>
@@ -208,9 +223,29 @@ export default withStyles(theme => ({
       backgroundColor: 'white',
     },
   },
+  term: {
+    marginLeft: '0 !important', // needed to properly align with subheading
+  },
+  headerGrid: {
+    // paddingTop: `${theme.spacing(30)} !important`,
+    [theme.breakpoints.down('xs')]: {
+      paddingBottom: '0 !important',
+      marginTop: theme.spacing(2),
+    },
+  },
+  mobileSpacing: {
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: '0 !important',
+      paddingBottom: '0 !important',
+    },
+  },
   resultCount: {
-    paddingRight: '1px', // Due to the font this was looking mis-aligned
+    paddingRight: '1px', // Due to the font this was looking misaligned
     textAlign: 'right',
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'left',
+      marginBottom: theme.spacing(1),
+    },
   },
   link: {
     '&:hover': {

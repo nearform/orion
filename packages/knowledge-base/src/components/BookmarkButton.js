@@ -20,6 +20,7 @@ const BookmarkButton = ({
   disabled: disabledProp,
   onToggle: onToggleProp,
   compact,
+  forceShowText,
   className,
   classes,
 }) => {
@@ -105,7 +106,11 @@ const BookmarkButton = ({
           ])}
         />
       )}
-      <Hidden only="xs">{bookmarked ? 'Bookmarked' : 'Bookmark'}</Hidden>
+      {!forceShowText ? (
+        <Hidden only="xs">{bookmarked ? 'Bookmarked' : 'Bookmark'}</Hidden>
+      ) : (
+        <>{bookmarked ? 'Bookmarked' : 'Bookmark'}</>
+      )}
     </Button>
   )
 }
@@ -117,6 +122,7 @@ BookmarkButton.propTypes = {
   disabled: T.bool,
   onToggle: T.func,
   compact: T.bool,
+  forceShowText: T.bool,
 }
 
 export default withStyles(theme => ({
