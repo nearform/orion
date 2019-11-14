@@ -30,13 +30,15 @@ const ArticlePreview = ({
             {get(article, 'authors[0].author.first_name')}{' '}
             {get(article, 'authors[0].author.last_name')}
           </div>
-          <BookmarkButton
-            articleId={article.id}
-            bookmarked={bookmarked}
-            onToggle={onBookmarkToggle}
-            disabled={bookmarkDisabled}
-            compact={true}
-          />
+          <div className={classes.bookmark}>
+            <BookmarkButton
+              articleId={article.id}
+              bookmarked={bookmarked}
+              onToggle={onBookmarkToggle}
+              disabled={bookmarkDisabled}
+              compact={true}
+            />
+          </div>
         </div>
       </div>
     </Box>
@@ -52,14 +54,18 @@ const styles = theme => ({
   },
   articleTitle: theme.editorsPicks.title,
   articleMeta: {
-    display: 'flex',
-    justifyContent: 'space-between',
+    display: 'inline',
   },
   articleDate: {
     ...theme.editorsPicks.date,
+    float: 'left',
     marginRight: theme.spacing(1),
   },
-  articleAuthor: theme.editorsPicks.author,
+  articleAuthor: { ...theme.editorsPicks.author, float: 'left' },
+  bookmark: {
+    float: 'right',
+    marginTop: '-7.5px',
+  },
 })
 
 ArticlePreview.propTypes = {
