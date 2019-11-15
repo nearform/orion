@@ -21,6 +21,7 @@ const smallPreviewStyles = makeStyles(theme => ({
     fontWeight: 'bold',
     fontSize: '11px',
     letterSpacing: '1.23px',
+    minHeight: '1.43em',
   },
   articleTitle: {
     ...theme.editorsPicks.title,
