@@ -154,28 +154,26 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
         </Grid>
 
         <Grid item xs={12}>
-          <Grid container spacing={3} alignItems="center">
-            <Grid item xs={7}></Grid>
-            <Grid item xs={4}>
-              {offset > 0 ? (
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => handlePagination(-1)}
-                >
-                  Previous Page
-                </Button>
-              ) : null}
-              {totalResults > offset + PAGE_SIZE ? (
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => handlePagination(1)}
-                >
-                  Next Page
-                </Button>
-              ) : null}
-            </Grid>
+          <Grid container spacing={3} alignItems="center" justify="flex-end">
+            {offset > 0 ? (
+              <Button
+                variant="contained"
+                color="default"
+                onClick={() => handlePagination(-1)}
+                className={classes.prevButton}
+              >
+                Previous Page
+              </Button>
+            ) : null}
+            {totalResults > offset + PAGE_SIZE ? (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => handlePagination(1)}
+              >
+                Next Page
+              </Button>
+            ) : null}
           </Grid>
         </Grid>
       </Grid>
@@ -201,9 +199,10 @@ export default withStyles(theme => ({
       color: theme.palette.primary.main,
     },
   },
-  PrevButton: {
-    backgroundColor: 'theme.palette.background.paper',
+  prevButton: {
+    backgroundColor: 'white',
     color: theme.palette.secondary.main,
+    marginRight: '15px',
     '&:hover': {
       backgroundColor: 'white',
     },
