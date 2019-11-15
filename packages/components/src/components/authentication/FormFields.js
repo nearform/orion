@@ -184,6 +184,7 @@ function InputSelectField({
   onChange,
   value = '',
   children,
+  helperText,
   ...props
 }) {
   const classes = useStyles()
@@ -201,6 +202,9 @@ function InputSelectField({
       <FieldLabel required={required} hasError={!!error}>
         {children}
       </FieldLabel>
+      {helperText && (
+        <InputHelperText hasError={!!error}>{helperText}</InputHelperText>
+      )}
       <Select
         name={name}
         disabled={submitting}
@@ -224,6 +228,7 @@ InputSelectField.propTypes = {
   name: T.string.isRequired,
   options: T.array,
   value: T.string,
+  helperText: T.string,
   required: T.bool,
   onChange: T.func,
   children: T.node.isRequired,
