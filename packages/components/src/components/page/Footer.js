@@ -86,16 +86,16 @@ function Footer({ classes, theme, content, Img }) {
               )
             )
           })}
-          <Hidden xsDown>
+          <Hidden xsDown implementation="css">
             <Img fixed={logoFixed} />
           </Hidden>
         </div>
-        <Hidden smUp>
+        <Hidden smUp implementation="css">
           <Img fixed={logoFixed} />
           <br />
           <br />
         </Hidden>
-        <Hidden xsDown>
+        <Hidden xsDown implementation="css">
           <Grid container spacing={1} justify={'center'}>
             <Grid item>
               <Typography display="inline" variant="body2">
@@ -119,7 +119,7 @@ function Footer({ classes, theme, content, Img }) {
             </Grid>
           </Grid>
         </Hidden>
-        <Hidden smUp>
+        <Hidden smUp implementation="css">
           <Grid container spacing={3} justify={'left'}>
             <Grid item xs={12}>
               <Typography display="inline" variant="body2">

@@ -61,7 +61,7 @@ function KnowledgeHome({ classes }) {
           <PersonalizedLists />
         </Box>
       </PageSection>
-      <Hidden xsDown>
+      <Hidden xsDown implementation="css">
         <PageSection
           className={classes.mostRecentAndEvents}
           paletteColor={['background', 'light']}
@@ -78,8 +78,10 @@ function KnowledgeHome({ classes }) {
 
   return (
     <>
-      <Hidden smUp>{content}</Hidden>
-      <Hidden xsDown>
+      <Hidden smUp implementation="css">
+        {content}
+      </Hidden>
+      <Hidden xsDown implementation="css">
         <HeroImageWrapper>{content}</HeroImageWrapper>
       </Hidden>
     </>

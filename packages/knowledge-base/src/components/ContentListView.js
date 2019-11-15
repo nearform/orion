@@ -133,7 +133,7 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
 
         <Grid item xs={12}>
           <Grid container spacing={3}>
-            <Hidden xsDown>
+            <Hidden xsDown implementation="css">
               <Grid item xs={3}>
                 <Taxonomies
                   taxonomyIds={taxonomyIds}
@@ -145,7 +145,7 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
             <Grid item xs={12} sm={9}>
               {data.articles.map(article => (
                 <React.Fragment key={`article-${article.id}`}>
-                  <Hidden xsDown>
+                  <Hidden xsDown implementation="css">
                     <ArticleSummary
                       article={article}
                       bookmarked={userBookmarks.includes(article.id)}
@@ -153,7 +153,7 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
                       onBookmarkToggle={fetchUserBookmarks}
                     />
                   </Hidden>
-                  <Hidden smUp>
+                  <Hidden smUp implementation="css">
                     <CondensedArticleSummary
                       article={article}
                       bookmarked={userBookmarks.includes(article.id)}

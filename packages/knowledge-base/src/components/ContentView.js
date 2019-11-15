@@ -127,7 +127,7 @@ function ContentView({ slug, classes, articleSummary }) {
                 .map(getFieldType)}
           </div>
         </Grid>
-        <Hidden xsDown>
+        <Hidden xsDown implementation="css">
           <Grid item sm={8} lg={3}>
             {showFullArticle && (
               <ContentOptions

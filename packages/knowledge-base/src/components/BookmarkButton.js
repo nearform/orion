@@ -106,11 +106,9 @@ const BookmarkButton = ({
           ])}
         />
       )}
-      {!forceShowText ? (
-        <Hidden only="xs">{bookmarked ? 'Bookmarked' : 'Bookmark'}</Hidden>
-      ) : (
-        <>{bookmarked ? 'Bookmarked' : 'Bookmark'}</>
-      )}
+      <Hidden only={forceShowText ? [] : 'xs'} implementation="css">
+        {bookmarked ? 'Bookmarked' : 'Bookmark'}
+      </Hidden>
     </Button>
   )
 }

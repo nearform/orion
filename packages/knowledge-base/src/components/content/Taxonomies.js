@@ -22,14 +22,14 @@ const Taxonomies = ({ classes, taxonomyIds, showAll, callback }) => {
             className={classes.TaxonomyType}
             key={'taxonomy_type_' + type.name}
           >
-            <Hidden xsDown>
+            <Hidden xsDown implementation="css">
               <Typography
                 className={classnames(classes.inlinable, classes.subhead)}
               >
                 {type.name}
               </Typography>
             </Hidden>
-            <Hidden smUp>
+            <Hidden smUp implementation="css">
               {/* Button needed to align text properly with TaxonomyItem that are button styles */}
               <Button
                 disabled
