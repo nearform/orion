@@ -37,6 +37,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const contributorsAssessorsTemplate = require.resolve(
     './src/templates/contributors-assessors.js'
   )
+  const profileTemplate = require.resolve('./src/templates/profile.js')
 
   const columnsFragment = `
             columns {
@@ -140,7 +141,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   assessments.forEach(assessment => {
     const createCriterionPagePath = (pillar, criterion) =>
-      `assessment/${assessment.key}/${pillar.key}/${criterion.key}`
+      `/assessment/${assessment.key}/${pillar.key}/${criterion.key}`
 
     const criteriaList = assessment.pillars.reduce(
       (acc, pillar, pillarIndex) => {
@@ -162,7 +163,8 @@ exports.createPages = async ({ graphql, actions }) => {
     )
 
     createPage({
-      path: `assessment/${assessment.key}`,
+      path: `/assessment/${assessment.key}`,
+      matchPath: `/assessment/${assessment.key}`,
       component: assessmentTemplate,
       context: {
         assessment,
@@ -171,7 +173,7 @@ exports.createPages = async ({ graphql, actions }) => {
     })
 
     createPage({
-      path: `assessment/${assessment.key}/feedback-report`,
+      path: `/assessment/${assessment.key}/feedback-report`,
       component: feedbackReportTemplate,
       context: {
         assessment,
@@ -180,7 +182,7 @@ exports.createPages = async ({ graphql, actions }) => {
     })
 
     createPage({
-      path: `assessment/${assessment.key}/contributors-assessors`,
+      path: `/assessment/${assessment.key}/contributors-assessors`,
       component: contributorsAssessorsTemplate,
       context: {
         assessment,
@@ -237,6 +239,46 @@ exports.createPages = async ({ graphql, actions }) => {
           })
         })
       })
+    })
+  })
+
+  const usersQueryResults = await graphql(`
+    {
+      raw_salmon {
+        user {
+          id
+          first_name
+          last_name
+          email
+          signupRequest
+          avatar
+          biography
+          linkedin
+          website
+          twitter
+          title
+          consent_contact
+          consent_directory
+          user_roles {
+            role {
+              name
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  if (usersQueryResults.errors) {
+    throw usersQueryResults.errors
+  }
+  usersQueryResults.data.raw_salmon.user.forEach(user => {
+    const path = `/profile/${user.id}`
+    createPage({
+      path,
+      matchPath: path,
+      component: profileTemplate,
+      context: { user },
     })
   })
 

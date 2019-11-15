@@ -1,5 +1,7 @@
+body {
+    margin: 0;
+}
 /* Media queries for print */
-
 @media print {
     /* Hide links in top-level nav bar */
     #main-toolbar {
