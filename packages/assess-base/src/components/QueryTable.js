@@ -55,7 +55,11 @@ function QueryTable({
               {headers.map(({ id, sortable, cellProps, label }) => {
                 if (!sortable) {
                   return (
-                    <TableCell key={id} {...cellProps}>
+                    <TableCell
+                      key={id}
+                      {...cellProps}
+                      data-testid="assessment-table-titles"
+                    >
                       {label}
                     </TableCell>
                   )
@@ -65,6 +69,7 @@ function QueryTable({
                   <TableCell
                     key={id}
                     sortDirection={columnIsOrdered ? orderBy[id] : false}
+                    data-testid="assessment-table-titles"
                     {...cellProps}
                   >
                     <Tooltip title="Sort" enterDelay={300}>
@@ -89,6 +94,7 @@ function QueryTable({
           <TableFooter>
             <TableRow>
               <TablePagination
+                data-testid="assessment-table-footer"
                 rowsPerPageOptions={pageSizes}
                 colSpan={headers.length}
                 count={data.field_aggregate.aggregate.count}

@@ -19,7 +19,7 @@ function AssessmentsTable({ classes }) {
   const assessmentTypes = getAssessmentTypes(lang)
 
   const headers = [
-    { id: 'id', label: t('Your assessments'), sortable: true },
+    { id: 'name', label: t('Your assessments'), sortable: true },
     { id: 'created_at', label: t('Created At'), sortable: true },
     { id: 'assessmentType', label: t('Assessment Type') },
     { id: 'company', label: t('Company') },
@@ -38,10 +38,8 @@ function AssessmentsTable({ classes }) {
   ]
 
   const assessmentKeyToName = keyBy(assessmentTypes, 'key')
-
   return (
     <QueryTable
-      testid="assessments-table"
       headers={headers}
       query={getAssessmentsData}
       orderBy={{ created_at: 'desc' }}
@@ -51,23 +49,27 @@ function AssessmentsTable({ classes }) {
           const { [key]: { name = '' } = {} } = assessmentKeyToName
           return (
             <TableRow hover key={index} size="small">
-              <TableCell>{title}</TableCell>
-              <TableCell>{formatDate(created_at)}</TableCell>
-              <TableCell>{t(name)}</TableCell>
-              <TableCell>
+              <TableCell data-testid="assessment-table-name">{title}</TableCell>
+              <TableCell data-testid="assessment-table-date">
+                {formatDate(created_at)}
+              </TableCell>
+              <TableCell data-testid="assessment-table-type">
+                {t(name)}
+              </TableCell>
+              <TableCell data-testid="assessment-table-company">
                 {get(assessment, 'owner.user_groups[0].group.name')}
               </TableCell>
-              <TableCell>
+              <TableCell data-testid="assessment-table-status">
                 <AssessmentStatusChip status={status} />
               </TableCell>
-              <TableCell>
+              <TableCell data-testid="assessment-table-report">
                 <ManagementReportLink
                   assessment={assessment}
                   spacing={1}
                   text={t('View')}
                 />
               </TableCell>
-              <TableCell>
+              <TableCell data-testid="assessment-table-feedback">
                 <FeedbackReportLink
                   assessment={assessment}
                   visible={status === 'submitted'}
@@ -75,7 +77,7 @@ function AssessmentsTable({ classes }) {
                   text={t('View')}
                 />
               </TableCell>
-              <TableCell padding="none">
+              <TableCell padding="none" data-testid="assessment-table-link">
                 <IconButton component={Link} to={`/assessment/${key}#${id}`}>
                   <ChevronRightIcon />
                 </IconButton>
