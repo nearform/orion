@@ -28,6 +28,10 @@ const authEventMixin = Base =>
       this.setState({ submitting })
     }
 
+    setResendingVerificationCode(resending) {
+      this.setState({ resending })
+    }
+
     /**
      * Read the current form state from the component's state.
      * The form state is composed of the following:
@@ -49,9 +53,9 @@ const authEventMixin = Base =>
         return { errors: {} }
       }
       // Read auth state.
-      const { error, submitting } = state
+      const { error, submitting, resending } = state
       if (!error) {
-        return { errors: {}, submitting }
+        return { errors: {}, submitting, resending }
       }
       // Generate error categories from the error message.
       const errors = Object.keys(authErrorCategories).reduce(
@@ -70,7 +74,7 @@ const authEventMixin = Base =>
       if (Object.keys(errors).length === 0) {
         errors.general = error
       }
-      return { errors, submitting }
+      return { errors, submitting, resending }
     }
 
     render() {
