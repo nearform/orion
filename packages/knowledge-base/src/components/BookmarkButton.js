@@ -123,6 +123,9 @@ export default withStyles(theme => ({
   iconButtonPrimary: {
     color: theme.articleWidgetColor,
     fontWeight: 'bold',
+    '&:disabled': {
+      visibility: 'hidden',
+    },
   },
   sidebarButtonIcon: {
     marginRight: theme.spacing(1),
