@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, renderAuthenticated, fireEvent, wait } from '../test-utils'
 import AssessmentsHome from './home'
+import { getByText as getByElementText } from '@testing-library/react'
 
 import HomeTemplateQueryResult from './__mocks__/HomeTemplateQueryResult.mock'
 jest.mock('../components/SEO')
@@ -108,30 +109,30 @@ describe('<AssessmentsHome />', () => {
     const reportLinks = getAllByTestId('assessment-table-report')
     expect(reportLinks.length).toBe(10)
     expect(reportLinks[0]).toHaveTextContent('View')
-    expect(reportLinks[0].childNodes[0]).toHaveAttribute(
-      'href',
-      '/management-report/135'
-    )
+    const reportLink = reportLinks[0].getElementsByTagName('a')
+    expect(reportLink[0]).toHaveAttribute('href', '/management-report/135')
 
     const feedbackLinks = getAllByTestId('assessment-table-feedback')
     expect(feedbackLinks.length).toBe(10)
     expect(feedbackLinks[0]).toHaveTextContent('View')
-    expect(feedbackLinks[0].childNodes[0]).toHaveAttribute(
+    const feedbackLink = feedbackLinks[0].getElementsByTagName('a')
+    expect(feedbackLink[0]).toHaveAttribute(
       'href',
       '/assessment/efqm-2020-advanced/feedback-report/#135'
     )
 
     const assessmentLinks = getAllByTestId('assessment-table-link')
     expect(assessmentLinks.length).toBe(10)
-    expect(assessmentLinks[0].childNodes[0]).toHaveAttribute(
+    const assessmentLink = assessmentLinks[0].getElementsByTagName('a')
+    expect(assessmentLink[0]).toHaveAttribute(
       'href',
       '/assessment/efqm-2020-advanced#135'
     )
 
-    const tableFoot = getByTestId('assessment-table-footer').childNodes[0]
-    expect(tableFoot.childNodes[1]).toHaveTextContent('Rows per page:')
-    expect(tableFoot.childNodes[2]).toHaveTextContent('10')
-    expect(tableFoot.childNodes[3]).toHaveTextContent('1-10 of 130')
+    const tableFoot = getByTestId('assessment-table-footer')
+    getByElementText(tableFoot, 'Rows per page:')
+    getByElementText(tableFoot, '10')
+    getByElementText(tableFoot, '1-10 of 130')
   })
 
   test('Assesment Table with assesments sorting', async () => {
@@ -200,23 +201,19 @@ describe('<AssessmentsHome />', () => {
       <AssessmentsHome data={HomeTemplateQueryResult} />
     )
 
-    const tableFoot = getByTestId('assessment-table-footer').childNodes[0]
-    expect(tableFoot.childNodes[4].childNodes[0]).toHaveClass(
-      'MuiButtonBase-root'
-    )
-    expect(tableFoot.childNodes[4].childNodes[0]).toBeDisabled()
-    expect(tableFoot.childNodes[4].childNodes[1]).toHaveClass(
-      'MuiButtonBase-root'
-    )
+    const tableFoot = getByTestId('assessment-table-footer')
+    const pageLinks = tableFoot.getElementsByTagName('button')
+    expect(pageLinks[0]).toBeDisabled()
 
-    fireEvent.click(tableFoot.childNodes[4].childNodes[1])
+    fireEvent.click(pageLinks[1])
     await wait(async () => {
       getByText('Ivan Test')
     })
-    expect(tableFoot.childNodes[4].childNodes[0]).toBeEnabled()
-    fireEvent.click(tableFoot.childNodes[4].childNodes[0])
+    expect(pageLinks[0]).toBeEnabled()
+    fireEvent.click(pageLinks[0])
     await wait(async () => {
       getByText('Spanish test')
     })
+    expect(pageLinks[0]).toBeDisabled()
   })
 })
