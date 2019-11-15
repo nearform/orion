@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import T from 'prop-types'
-import { withStyles, Grid, Button } from '@material-ui/core'
+import { withStyles, Grid, Button, Typography } from '@material-ui/core'
 import { useTheme } from '@material-ui/styles'
 import EmailIcon from '@material-ui/icons/Email'
+import { AuthFormStateContext } from './AuthEventMixin'
 
 import { SectionTitleField, InputField, SubmitButton } from './FormFields'
 
@@ -14,7 +15,9 @@ function RegisterConfirm({
   handleInput,
   username,
   message,
+  resend,
 }) {
+  const { resending } = useContext(AuthFormStateContext)
   return (
     <div className={classes.root}>
       <div>
@@ -49,6 +52,23 @@ function RegisterConfirm({
                   In the email you will find a code that will activate your
                   account.
                 </p>
+                <p>
+                  <span>This code will expire after 24 hours</span>
+                </p>
+                {resending ? (
+                  <p>Your confirmation code has been resent.</p>
+                ) : (
+                  <p>
+                    <Button
+                      data-testid="login-submit"
+                      color="secondary"
+                      onClick={resend}
+                      size="small"
+                    >
+                      Resend Code
+                    </Button>
+                  </p>
+                )}
               </div>
             </div>
           </Grid>
@@ -103,6 +123,7 @@ RegisterConfirm.propTypes = {
   handleInput: T.func.isRequired,
   username: T.string,
   message: T.string,
+  resend: T.func.isRequired,
 }
 
 const styles = theme => ({
@@ -124,6 +145,9 @@ const styles = theme => ({
     '& div': {
       padding: '0 7px',
     },
+  },
+  resend: {
+    marginRight: '20px;',
   },
 })
 
