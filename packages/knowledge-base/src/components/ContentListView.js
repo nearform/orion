@@ -1,6 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { navigate } from 'gatsby'
-import { withStyles, Grid, Typography, Button, Hidden } from '@material-ui/core'
+import {
+  withStyles,
+  Grid,
+  Typography,
+  Button,
+  useMediaQuery,
+} from '@material-ui/core'
 import get from 'lodash/get'
 import Taxonomies from './content/Taxonomies'
 import ArticleSummary from './content/ArticleSummary'
@@ -24,6 +30,8 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
     userBookmarks,
     loadingBookmarks,
   } = useUserBookmarks()
+
+  const isSmUp = useMediaQuery('(min-width:600px)')
 
   const taxonomyTypes = useTaxonomies()
   const [taxonomyIds, setTaxonomyIds] = useState([])
@@ -133,37 +141,36 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
 
         <Grid item xs={12}>
           <Grid container spacing={3}>
-            <Hidden xsDown implementation="css">
-              <Grid item xs={3}>
+            <Grid item xs={3}>
+              {isSmUp && (
                 <Taxonomies
                   taxonomyIds={taxonomyIds}
                   showAll={true}
                   callback={handleTaxonomyFilter}
                 />
-              </Grid>
-            </Hidden>
+              )}
+            </Grid>
             <Grid item xs={12} sm={9}>
-              {data.articles.map(article => (
-                <React.Fragment key={`article-${article.id}`}>
-                  <Hidden xsDown implementation="css">
-                    <ArticleSummary
-                      article={article}
-                      bookmarked={userBookmarks.includes(article.id)}
-                      bookmarkButtonDisabled={loadingBookmarks}
-                      onBookmarkToggle={fetchUserBookmarks}
-                    />
-                  </Hidden>
-                  <Hidden smUp implementation="css">
-                    <CondensedArticleSummary
-                      article={article}
-                      bookmarked={userBookmarks.includes(article.id)}
-                      bookmarkButtonDisabled={loadingBookmarks}
-                      onBookmarkToggle={fetchUserBookmarks}
-                      filterText={term ? term : sectionName}
-                    />
-                  </Hidden>
-                </React.Fragment>
-              ))}
+              {data.articles.map(article =>
+                isSmUp ? (
+                  <ArticleSummary
+                    article={article}
+                    bookmarked={userBookmarks.includes(article.id)}
+                    bookmarkButtonDisabled={loadingBookmarks}
+                    onBookmarkToggle={fetchUserBookmarks}
+                    key={`article-${article.id}`}
+                  />
+                ) : (
+                  <CondensedArticleSummary
+                    article={article}
+                    bookmarked={userBookmarks.includes(article.id)}
+                    bookmarkButtonDisabled={loadingBookmarks}
+                    onBookmarkToggle={fetchUserBookmarks}
+                    filterText={term ? term : sectionName}
+                    key={`article-${article.id}`}
+                  />
+                )
+              )}
             </Grid>
           </Grid>
         </Grid>

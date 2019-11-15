@@ -7,7 +7,7 @@ import {
   Grid,
   Typography,
   LinearProgress,
-  Hidden,
+  useMediaQuery,
 } from '@material-ui/core'
 
 import ContentMetadata from './content/ContentMetadata'
@@ -28,6 +28,8 @@ import { getArticleDetails, getArticleSummary } from '../queries'
 function ContentView({ slug, classes, articleSummary }) {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
+
+  const isSmUp = useMediaQuery('(min-width:600px)')
 
   const articlePath = slug || get(articleSummary, 'path', '')
   const contentId = articlePath.split('-')[0]
@@ -127,16 +129,14 @@ function ContentView({ slug, classes, articleSummary }) {
                 .map(getFieldType)}
           </div>
         </Grid>
-        <Hidden xsDown implementation="css">
-          <Grid item sm={8} lg={3}>
-            {showFullArticle && (
-              <ContentOptions
-                articleData={article}
-                refetchArticle={refetchArticle}
-              />
-            )}
-          </Grid>
-        </Hidden>
+        <Grid item sm={8} lg={3}>
+          {showFullArticle && isSmUp && (
+            <ContentOptions
+              articleData={article}
+              refetchArticle={refetchArticle}
+            />
+          )}
+        </Grid>
       </Grid>
       <div className={classes.featureArticlesWrapper}>
         <FeatureArticles

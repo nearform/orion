@@ -6,6 +6,7 @@ import {
   withStyles,
   Box,
   Hidden,
+  useMediaQuery,
 } from '@material-ui/core'
 import { Link as RouterLink } from '@reach/router'
 import { PaddedContainer } from 'components'
@@ -22,8 +23,12 @@ import row from '../components/layout/flex-with-gap/row'
 import HeroImageWrapper from '../components/layout/hero-image-wrapper'
 
 function KnowledgeHome({ classes }) {
-  const content = (
-    <>
+  const Wrapper = useMediaQuery('(min-width:600px)')
+    ? HeroImageWrapper
+    : React.Fragment
+
+  return (
+    <Wrapper>
       <SEO title="Knowledge Base Home Page" />
       <div className={classes.header}>
         <PaddedContainer className={classes.heroDescription}>
@@ -73,18 +78,7 @@ function KnowledgeHome({ classes }) {
           <GainKnowledgeLinks />
         </PageSection>
       </Hidden>
-    </>
-  )
-
-  return (
-    <>
-      <Hidden smUp implementation="css">
-        {content}
-      </Hidden>
-      <Hidden xsDown implementation="css">
-        <HeroImageWrapper>{content}</HeroImageWrapper>
-      </Hidden>
-    </>
+    </Wrapper>
   )
 }
 
