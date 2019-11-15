@@ -56,6 +56,7 @@ export {
   default as CollapsedAvatars,
 } from './components/UserAvatar/CollapsedAvatars'
 export { default as EmbeddedVideo } from './components/EmbeddedVideo'
+export { default as UserFilter } from './components/page/UserFilter'
 
 export { default as ProtectedRoute } from './components/ProtectedRoute'
 export { default as AdminRoute } from './components/admin/AdminRoute'
@@ -65,7 +66,7 @@ export * from './components/authorization'
 export { default as CustomAuthenticator } from './components/authentication'
 
 // views
-export { default as Profile } from './components/Profile/Profile'
+export { default as UserProfileView } from './components/UserProfileView'
 
 // hooks
 export { default as useAdminTable } from './hooks/useAdminTable'

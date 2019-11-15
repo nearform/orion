@@ -1,4 +1,4 @@
-export const readableAuthors = authorsArray => {
+export const readableAuthors = (authorsArray = []) => {
   authorsArray = authorsArray.filter(({ author }) => {
     return (
       // remove instances of profiles in db with no names

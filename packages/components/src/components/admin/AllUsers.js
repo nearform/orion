@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery, useMutation } from 'graphql-hooks'
 import classnames from 'classnames'
 import T from 'prop-types'
@@ -18,6 +18,7 @@ import UserRoleChip from '../StatusChip/UserRoleChip'
 import useAdminTable from '../../hooks/useAdminTable'
 import AdminModal from './AdminModal'
 import UserSelectPicker from './UserSelectPicker'
+import { UserFilter } from 'components'
 
 import {
   getUsers,
@@ -34,6 +35,9 @@ const styles = theme => ({
   },
   assigned: {
     color: theme.palette.secondary.main,
+  },
+  userFilterWrapper: {
+    marginBottom: '10px',
   },
 })
 
@@ -103,6 +107,10 @@ function getGroupAndStatus(user, classes) {
 }
 
 function AllUsers({ classes, query, variables }) {
+  const [filterText, setFilterText] = useState('')
+  variables.where = {
+    email: { _ilike: `%${filterText}%` },
+  }
   const { table, selected, setSelected, refetch } = useAdminTable({
     query,
     headers,
@@ -228,6 +236,9 @@ function AllUsers({ classes, query, variables }) {
         schema={modalSchema}
         getInitialValues={getModalInitialValues}
       />
+      <div className={classes.userFilterWrapper}>
+        <UserFilter setFilterText={setFilterText} />
+      </div>
       {table}
     </>
   )
@@ -236,6 +247,7 @@ function AllUsers({ classes, query, variables }) {
 AllUsers.defaultProps = {
   query: getUsers,
   pageTitle: 'All Users',
+  variables: {},
 }
 
 AllUsers.propTypes = {

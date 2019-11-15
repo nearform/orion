@@ -24,18 +24,24 @@ const client = new GraphQLClient({
   fetch,
 })
 
-export const wrapRootElement = ({ element }) => (
-  <RootWrapper
-    client={client}
-    ClientContext={ClientContext}
-    muiTheme={muiTheme}
-    ThemeProvider={ThemeProvider}
-    ThemeWrapper={ThemeWrapper}
-    CssBaseline={CssBaseline}
-  >
-    <AuthWrapper>{element}</AuthWrapper>
-  </RootWrapper>
-)
+const AuthInitializationWrapper = ({ element }) => {
+  return (
+    <RootWrapper
+      client={client}
+      ClientContext={ClientContext}
+      muiTheme={muiTheme}
+      ThemeProvider={ThemeProvider}
+      ThemeWrapper={ThemeWrapper}
+      CssBaseline={CssBaseline}
+    >
+      <AuthWrapper>{element}</AuthWrapper>
+    </RootWrapper>
+  )
+}
+
+export const wrapRootElement = ({ element }) => {
+  return <AuthInitializationWrapper element={element} />
+}
 
 const PageWrapper = ({ darkToolbar, children }) => {
   useUserGroups()

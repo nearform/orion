@@ -1,6 +1,11 @@
-query getPendingUsers($limit: Int!, $offset: Int!, $orderBy: user_order_by!) {
+query getPendingUsers(
+  $limit: Int!
+  $offset: Int!
+  $orderBy: user_order_by!
+  $emailFilter: String!
+) {
   user(
-    where: { pending: { _eq: true } }
+    where: { pending: { _eq: true }, email: { _ilike: $emailFilter } }
     limit: $limit
     offset: $offset
     order_by: [$orderBy]
@@ -21,7 +26,9 @@ query getPendingUsers($limit: Int!, $offset: Int!, $orderBy: user_order_by!) {
       }
     }
   }
-  field_aggregate: user_aggregate(where: { pending: { _eq: true } }) {
+  field_aggregate: user_aggregate(
+    where: { pending: { _eq: true }, email: { _ilike: $emailFilter } }
+  ) {
     aggregate {
       count
     }

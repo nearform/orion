@@ -28,15 +28,13 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const homeTemplate = require.resolve('./src/templates/home.js')
-
-  const ContentViewTemplate = require.resolve('./src/templates/ContentView.js')
-  const ProfileViewTemplate = require.resolve('./src/templates/ProfileView.js')
-  const ContentListViewTemplate = require.resolve(
-    './src/templates/ContentListView.js'
-  )
+  const contentTemplate = require.resolve('./src/templates/content.js')
+  const profileTemplate = require.resolve('./src/templates/profile.js')
+  const contentListTemplate = require.resolve('./src/templates/content-list.js')
 
   createPage({
     path: '/',
+    matchPath: '/',
     component: homeTemplate,
     context: {
       heroImageName: config.heroImageNameKB,
@@ -70,11 +68,13 @@ exports.createPages = async ({ graphql, actions }) => {
 
   articlesByTaxonomies.forEach(results =>
     chunk(results.article, PAGE_SIZE).forEach((articles, index) => {
+      const path = `/section/${results.taxonomy.key}${
+        index !== 0 ? `/page/${index + 1}` : ''
+      }`
       createPage({
-        path: `/section/${results.taxonomy.key}${
-          index !== 0 ? `/page/${index + 1}` : ''
-        }`,
-        component: ContentListViewTemplate,
+        path,
+        matchPath: path,
+        component: contentListTemplate,
         context: {
           results: {
             ...results,
@@ -85,6 +85,12 @@ exports.createPages = async ({ graphql, actions }) => {
       })
     })
   )
+  createPage({
+    path: '/section/',
+    matchPath: '/section/*',
+    component: contentListTemplate,
+    context: { results: {}, page: 1 },
+  })
 
   const articlesQueryResults = await graphql(getArticlesQuery)
 
@@ -96,11 +102,12 @@ exports.createPages = async ({ graphql, actions }) => {
     'data.raw_salmon.article',
     []
   )
-
   publishedArticles.forEach(articleSummary => {
+    const path = `/content/${articleSummary.path}`
     createPage({
-      path: `/content/${articleSummary.path}`,
-      component: ContentViewTemplate,
+      path,
+      matchPath: path,
+      component: contentTemplate,
       context: { articleSummary },
     })
   })
@@ -111,11 +118,12 @@ exports.createPages = async ({ graphql, actions }) => {
     throw usersQueryResults.errors
   }
   const users = get(usersQueryResults, 'data.raw_salmon.user', [])
-
   users.forEach(user => {
+    const path = `/profile/${user.id}`
     createPage({
-      path: `/profile/${user.id}`,
-      component: ProfileViewTemplate,
+      path,
+      matchPath: path,
+      component: profileTemplate,
       context: { user },
     })
   })
@@ -146,5 +154,6 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     react: path.resolve('../../node_modules/react'),
     '@material-ui/core': path.resolve('../../node_modules/@material-ui/core'),
   })
+
   actions.replaceWebpackConfig(config)
 }

@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { navigate } from 'gatsby'
 import { withStyles, Grid, Typography, Button, Hidden } from '@material-ui/core'
 import get from 'lodash/get'
-import Taxonomies from '../components/content/Taxonomies'
-import ArticleSummary from '../components/content/ArticleSummary'
-import CondensedArticleSummary from '../components/content/CondensedArticleSummary'
+import Taxonomies from './content/Taxonomies'
+import ArticleSummary from './content/ArticleSummary'
+import CondensedArticleSummary from './content/CondensedArticleSummary'
 import useTaxonomies from '../hooks/useTaxonomies'
 import useUserBookmarks from '../hooks/useUserBookmarks'
 import {
@@ -13,12 +13,12 @@ import {
 } from '../queries'
 import { getTaxonomyItemByKey, buildWhereClause } from '../utils/taxonomy'
 import { useAuthorizedQuery, PaddedContainer } from 'components'
-import SEO from '../components/SEO'
+import SEO from './SEO'
 
 const PAGE_SIZE = 10
 const defaultAggregate = { aggregate: { count: 0 } }
 
-const ListContent = ({ classes, term, taxonomy, pageContext }) => {
+const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
   const {
     fetchUserBookmarks,
     userBookmarks,
@@ -29,8 +29,8 @@ const ListContent = ({ classes, term, taxonomy, pageContext }) => {
   const [taxonomyIds, setTaxonomyIds] = useState([])
   const [touched, setTouched] = useState(false)
 
-  const [page, setPage] = useState(get(pageContext, 'page', 1))
-  const offset = (page - 1) * PAGE_SIZE
+  const [currentPage, setCurrentPage] = useState(page)
+  const offset = (currentPage - 1) * PAGE_SIZE
 
   const variables = useMemo(
     () => ({
@@ -42,6 +42,8 @@ const ListContent = ({ classes, term, taxonomy, pageContext }) => {
     }),
     [taxonomy, taxonomyIds, taxonomyTypes, offset, term]
   )
+
+  const isPreRendered = !(touched || term || taxonomy)
 
   const formatData = data => {
     return {
@@ -60,7 +62,7 @@ const ListContent = ({ classes, term, taxonomy, pageContext }) => {
     {
       onPreFetch: () => !isPreRendered,
       onFetch: formatData,
-      onNoFetch: () => formatData(get(pageContext, 'results')),
+      onNoFetch: () => formatData(results),
       useCache: false,
     }
   )
@@ -72,17 +74,15 @@ const ListContent = ({ classes, term, taxonomy, pageContext }) => {
       ? Math.min(offset + PAGE_SIZE, totalResults)
       : totalResults
 
-  const isPreRendered = !(touched || term || taxonomy)
-
   useEffect(() => {
     if (!isPreRendered) {
-      setPage(1)
+      setCurrentPage(1)
     }
   }, [isPreRendered, term])
 
   const handleTaxonomyFilter = (id, active) => {
     setTouched(true)
-    setPage(1)
+    setCurrentPage(1)
     setTaxonomyIds(taxonomyIds =>
       active ? [...taxonomyIds, id] : taxonomyIds.filter(item => item !== id)
     )
@@ -94,11 +94,11 @@ const ListContent = ({ classes, term, taxonomy, pageContext }) => {
     if (isPreRendered) {
       navigate(
         `/section/${taxonomyKey}${
-          page + dir !== 1 ? `/page/${page + dir}` : ''
+          currentPage + dir !== 1 ? `/page/${currentPage + dir}` : ''
         }`
       )
     } else {
-      setPage(page => page + dir)
+      setCurrentPage(page => page + dir)
     }
   }
 

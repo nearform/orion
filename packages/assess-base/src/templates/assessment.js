@@ -300,91 +300,97 @@ function AssessmentTemplate({
                 </Grid>
               </Grid>
               <Grid item xs>
-                {assessmentId ? (
-                  <Grid container direction="column" spacing={1}>
-                    <Grid item>
-                      <Typography variant="h4">
-                        {get(assessmentData, 'internal')
-                          ? t('internal assessment name')
-                          : t('external assessment name')}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs>
-                      <Typography variant="h2" color="primary">
-                        {assessmentName}
-                      </Typography>
-                    </Grid>
+                <Grid
+                  container
+                  direction="column"
+                  spacing={1}
+                  display={assessmentId ? null : 'none'}
+                >
+                  <Grid item>
+                    <Typography variant="h4">
+                      {get(assessmentData, 'internal')
+                        ? t('internal assessment name')
+                        : t('external assessment name')}
+                    </Typography>
                   </Grid>
-                ) : (
-                  <Formik
-                    enableReinitialize
-                    initialValues={{
-                      name: '',
-                      internal: true,
-                    }}
-                    validationSchema={assessmentValidationSchema}
-                    onSubmit={handleCreateAssessment}
-                  >
-                    {({ isValid }) => (
-                      <Form>
-                        <Grid container spacing={2}>
-                          <Grid item xs>
-                            <Grid container direction="column" spacing={1}>
-                              <Grid item>
-                                <Typography variant="h4">
-                                  {t('Enter your assessment name')}
-                                </Typography>
-                              </Grid>
-                              <Grid item>
-                                <Field
-                                  name="name"
-                                  component={FormikTextField}
-                                  fullWidth
-                                  FormHelperTextProps={{
-                                    classes: { root: classes.displayNone },
-                                  }}
-                                />
-                              </Grid>
+                  <Grid item xs>
+                    <Typography variant="h2" color="primary">
+                      {assessmentName}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Formik
+                  enableReinitialize
+                  initialValues={{
+                    name: '',
+                    internal: true,
+                  }}
+                  validationSchema={assessmentValidationSchema}
+                  onSubmit={handleCreateAssessment}
+                >
+                  {({ isValid }) => (
+                    <Form>
+                      <Grid
+                        container
+                        spacing={2}
+                        display={assessmentId ? 'none' : null}
+                      >
+                        <Grid item xs>
+                          <Grid container direction="column" spacing={1}>
+                            <Grid item>
+                              <Typography variant="h4">
+                                {t('Enter your assessment name')}
+                              </Typography>
                             </Grid>
-                          </Grid>
-                          <Grid item>
-                            <Grid container direction="column" spacing={0}>
-                              <Grid item>
-                                <Typography variant="h4">
-                                  {t('Internal')}
-                                </Typography>
-                              </Grid>
-                              <Grid item>
-                                <Field
-                                  name="internal"
-                                  className={classes.switch}
-                                  component={FormikSwitch}
-                                />
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                          <Grid item xs>
-                            <Grid container direction="column" spacing={1}>
-                              <Grid item>
-                                <Typography variant="h4">&nbsp;</Typography>
-                              </Grid>
-                              <Grid item>
-                                <Button
-                                  type="submit"
-                                  color="secondary"
-                                  variant="contained"
-                                  disabled={!isValid || !canCreateAssessment}
-                                >
-                                  {t('Create Assessment')}
-                                </Button>
-                              </Grid>
+                            <Grid item>
+                              <Field
+                                name="name"
+                                component={FormikTextField}
+                                fullWidth
+                                FormHelperTextProps={{
+                                  classes: { root: classes.displayNone },
+                                }}
+                              />
                             </Grid>
                           </Grid>
                         </Grid>
-                      </Form>
-                    )}
-                  </Formik>
-                )}
+                        <Grid item>
+                          <Grid container direction="column" spacing={0}>
+                            <Grid item>
+                              <Typography variant="h4">
+                                {t('Internal')}
+                              </Typography>
+                            </Grid>
+                            <Grid item>
+                              <Field
+                                name="internal"
+                                className={classes.switch}
+                                component={FormikSwitch}
+                              />
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                        <Grid item xs>
+                          <Grid container direction="column" spacing={1}>
+                            <Grid item>
+                              <Typography variant="h4">&nbsp;</Typography>
+                            </Grid>
+                            <Grid item>
+                              <Button
+                                type="submit"
+                                color="secondary"
+                                variant="contained"
+                                disabled={!isValid || !canCreateAssessment}
+                              >
+                                {t('Create Assessment')}
+                              </Button>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Form>
+                  )}
+                </Formik>
               </Grid>
               {canAssignContributorsAndAssessors && (
                 <Grid container>

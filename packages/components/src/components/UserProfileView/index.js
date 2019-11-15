@@ -30,17 +30,20 @@ import { UploadImageWidget } from 'components'
 import { Redirect } from '@reach/router'
 import { constructImageUrl } from '../../utils/image'
 
-const Profile = ({ SEO, pageContext = {}, classes }) => {
+const UserProfileView = ({ SEO, userSummary, classes }) => {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
 
   const { userId } = getUserTokenData()
+  // TODO: Currently, this query just reloads data already entirely present in
+  // the user summary; this should be reviewed to see whether the user summary
+  // dataset should be reduced (perhaps even to just the user id).
   const { data: user } = useAuthorizedQuery(
     getUser,
     { id: userId },
     {
       onPreFetch: variables => !!variables.id,
       onFetch: data => get(data, 'user.0'),
-      onNoFetch: () => pageContext.user || null,
+      onNoFetch: () => userSummary,
     }
   )
 
@@ -340,9 +343,9 @@ const Profile = ({ SEO, pageContext = {}, classes }) => {
   )
 }
 
-Profile.propTypes = {
+UserProfileView.propTypes = {
   SEO: T.elementType,
-  pageContext: T.object,
+  userSummary: T.object,
   classes: T.object.isRequired,
 }
 
@@ -424,4 +427,4 @@ export default withStyles(theme => ({
   consents: {
     marginTop: theme.spacing(3),
   },
-}))(Profile)
+}))(UserProfileView)
