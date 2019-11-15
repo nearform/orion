@@ -35,13 +35,7 @@ query getAssessmentPartData(
       table_key
       feedback_values
     }
-    scoring(
-      where: {
-        pillar_key: { _eq: $pillarKey }
-        criterion_key: { _eq: $criterionKey }
-        part_number: { _eq: $partNumber }
-      }
-    ) {
+    scoring {
       id
       pillar_key
       criterion_key
