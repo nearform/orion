@@ -277,6 +277,11 @@ const styles = theme => ({
     // see https://github.com/mui-org/material-ui/issues/13455
     overflow: 'hidden',
   },
+  '@global': {
+    footer: {
+      display: 'none',
+    },
+  },
 })
 
 export default withStyles(styles, { withTheme: true })(CriterionPartTemplate)
