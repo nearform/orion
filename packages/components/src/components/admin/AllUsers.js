@@ -28,6 +28,7 @@ import {
   addUserRoleMutation,
   assignUserRoleMutation,
   updateUserMutation,
+  deleteUserMutation,
 } from '../../../queries'
 
 const styles = theme => ({
@@ -120,24 +121,27 @@ function AllUsers({ classes, query, variables }) {
     headers,
     variables,
     renderTableBody: (data, { refetch: refetchUsers }) => {
-      const doDeleteUser = async id => {
-        await deleteUser({
-          variables: {
-            id: id,
-            input: {
-              email: null,
-              consent_contact: false,
-              consent_directory: false,
-              title: null,
-              avatar: null,
-              biography: null,
-              linkedin: null,
-              website: null,
-              twitter: null,
-              active: false,
-            },
-          },
-        })
+      const doDeleteUser = async (id, pending) => {
+        // eslint-disable-next-line no-unused-expressions
+        pending
+          ? await deleteUser({ variables: { userId: id } })
+          : await modifyUser({
+              variables: {
+                id: id,
+                input: {
+                  email: null,
+                  consent_contact: false,
+                  consent_directory: false,
+                  title: null,
+                  avatar: null,
+                  biography: null,
+                  linkedin: null,
+                  website: null,
+                  twitter: null,
+                  active: false,
+                },
+              },
+            })
         refetchUsers()
       }
       return data.user.map(user => (
@@ -168,7 +172,7 @@ function AllUsers({ classes, query, variables }) {
             <ConfirmDialog
               title={`Delete user “${user.email}”?`}
               text="This user will be permanently deleted. This cannot be undone."
-              onConfirm={() => doDeleteUser(user.id)}
+              onConfirm={() => doDeleteUser(user.id, user.pending)}
               okayLabel="Delete"
             >
               <IconButton className={classes.actionButton}>
@@ -186,7 +190,8 @@ function AllUsers({ classes, query, variables }) {
   const [doAssignUserGroup] = useMutation(assignUserGroupMutation)
   const [doAddUserRole] = useMutation(addUserRoleMutation)
   const [doAssignUserRole] = useMutation(assignUserRoleMutation)
-  const [deleteUser] = useMutation(updateUserMutation)
+  const [deleteUser] = useMutation(deleteUserMutation)
+  const [modifyUser] = useMutation(updateUserMutation)
 
   const modalContents = [
     {
