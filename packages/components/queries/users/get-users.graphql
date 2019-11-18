@@ -1,10 +1,10 @@
-query getUsers($limit: Int!, $offset: Int!, $orderBy: user_order_by!) {
-  user(
-    limit: $limit
-    offset: $offset
-    where: { active: { _eq: true } }
-    order_by: [$orderBy]
-  ) {
+query getUsers(
+  $limit: Int!
+  $offset: Int!
+  $orderBy: user_order_by!
+  $where: user_bool_exp
+) {
+  user(limit: $limit, offset: $offset, where: $where, order_by: [$orderBy]) {
     id
     pending
     email
@@ -12,7 +12,6 @@ query getUsers($limit: Int!, $offset: Int!, $orderBy: user_order_by!) {
     last_name
     avatar
     signupRequest
-    active
     user_groups {
       group {
         id

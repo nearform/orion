@@ -12,14 +12,13 @@ import {
 } from '@material-ui/core'
 import { HowToReg, ErrorOutline, Edit, DeleteForever } from '@material-ui/icons'
 import * as Yup from 'yup'
-import { ConfirmDialog } from 'components'
+import { ConfirmDialog, UserFilter } from 'components'
 import get from 'lodash/get'
 
 import UserRoleChip from '../StatusChip/UserRoleChip'
 import useAdminTable from '../../hooks/useAdminTable'
 import AdminModal from './AdminModal'
 import UserSelectPicker from './UserSelectPicker'
-import { UserFilter } from 'components'
 
 import {
   getUsers,
@@ -111,7 +110,10 @@ function getGroupAndStatus(user, classes) {
 function AllUsers({ classes, query, variables }) {
   const [filterText, setFilterText] = useState('')
   variables.where = {
-    email: { _ilike: `%${filterText}%` },
+    _and: {
+      email: { _ilike: `%${filterText}%` },
+      active: { _eq: true },
+    },
   }
   const { table, selected, setSelected, refetch } = useAdminTable({
     query,
@@ -124,8 +126,8 @@ function AllUsers({ classes, query, variables }) {
             id: id,
             input: {
               email: null,
-              consent_contact: 0,
-              consent_directory: 0,
+              consent_contact: false,
+              consent_directory: false,
               title: null,
               avatar: null,
               biography: null,
