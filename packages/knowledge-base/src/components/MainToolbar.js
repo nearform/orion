@@ -1,7 +1,13 @@
 import React, { useContext, useState } from 'react'
 import { useStaticQuery, graphql, navigate, Link } from 'gatsby'
 import Img from 'gatsby-image'
-import { Typography, Button, Hidden, withStyles } from '@material-ui/core'
+import {
+  Typography,
+  Button,
+  Hidden,
+  useMediaQuery,
+  withStyles,
+} from '@material-ui/core'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
@@ -12,6 +18,7 @@ import MobileSidebar from './MobileSidebar'
 
 function MainToolbar({ classes, dark, ...props }) {
   const [showSidebar, setShowSidebar] = useState(false)
+  const isSmUp = useMediaQuery('(min-width:600px)')
   const { getUserTokenData } = useContext(AuthContext)
 
   const {
@@ -61,6 +68,7 @@ function MainToolbar({ classes, dark, ...props }) {
   // to avoid hairline gap between toolbar and main element in mobile WebKit
 
   const gradient = <div className={classes.gradient} />
+  const growDiv = <div className={classes.grow} />
 
   return (
     <>
@@ -73,7 +81,7 @@ function MainToolbar({ classes, dark, ...props }) {
         {gradient}
         <PaddedContainer className={darkClass}>
           <div className={classes.root}>
-            <Hidden smUp>
+            <Hidden smUp implementation="css">
               <Button
                 className={classnames(classes.menuButton, {
                   [classes.menuButtonDark]: dark,
@@ -90,16 +98,14 @@ function MainToolbar({ classes, dark, ...props }) {
               data-testid="main-toolbar__logo"
             >
               <Img className={classes.logo} fixed={fixed} />
-              <Hidden xsDown>
+              <Hidden xsDown implementation="css">
                 <Typography variant="h2" className={classes.logotype}>
                   {title}
                 </Typography>
               </Hidden>
             </Link>
-            <Hidden xsDown>
-              <div className={classes.grow} />
-            </Hidden>
-            <Hidden xsDown>
+            {isSmUp && growDiv}
+            <Hidden xsDown implementation="css">
               <div
                 className={classes.linksContainer}
                 data-testid="main-toolbar__links-container"
@@ -159,7 +165,7 @@ function MainToolbar({ classes, dark, ...props }) {
               </div>
             </Hidden>
           </div>
-          <Hidden xsDown>
+          <Hidden xsDown implementation="css">
             <SecondaryNavigation dark={dark} />
           </Hidden>
         </PaddedContainer>
