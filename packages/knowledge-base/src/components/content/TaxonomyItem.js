@@ -47,10 +47,15 @@ export default withStyles(theme => ({
     whiteSpace: 'normal',
     textAlign: 'left',
     padding: '8px 10px',
-    marginTop: '4px',
     borderRadius: '0',
-    '&:first-of-type': {
-      marginTop: '10px',
+    [theme.breakpoints.down('xs')]: {
+      padding: '6px 7px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      marginTop: '4px',
+      '&:first-of-type': {
+        marginTop: '10px',
+      },
     },
   },
   TaxonomyC1: {

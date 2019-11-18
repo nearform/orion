@@ -6,6 +6,7 @@ import {
   Typography,
   Button,
   TextField,
+  Hidden,
 } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import PaddedContainer from '../PaddedContainer'
@@ -25,7 +26,7 @@ function Footer({ classes, theme, content, Img }) {
     <div className={classes.root}>
       <PaddedContainer>
         <Grid container spacing={3}>
-          <Grid item xs>
+          <Grid item xs={12} sm={8}>
             <Typography variant="h4" gutterBottom>
               {t('Get in touch')}
             </Typography>
@@ -47,7 +48,7 @@ function Footer({ classes, theme, content, Img }) {
               </div>
             </Typography>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4}>
             <Typography variant="h4" gutterBottom>
               {t('subscribe to our newsletter')}
             </Typography>
@@ -85,30 +86,63 @@ function Footer({ classes, theme, content, Img }) {
               )
             )
           })}
-          <Img fixed={logoFixed} />
+          <Hidden xsDown implementation="css">
+            <Img fixed={logoFixed} />
+          </Hidden>
         </div>
-        <Grid container spacing={1} justify="center">
-          <Grid item>
-            <Typography display="inline" variant="body2">
-              © EFQM
-            </Typography>
+        <Hidden smUp implementation="css">
+          <Img fixed={logoFixed} />
+          <br />
+          <br />
+        </Hidden>
+        <Hidden xsDown implementation="css">
+          <Grid container spacing={1} justify={'center'}>
+            <Grid item>
+              <Typography display="inline" variant="body2">
+                © EFQM
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography display="inline" variant="body2">
+                {t('Terms of Use')}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography display="inline" variant="body2">
+                {t('Privacy Statement')}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography display="inline" variant="body2">
+                (version {version})
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Typography display="inline" variant="body2">
-              {t('Terms of Use')}
-            </Typography>
+        </Hidden>
+        <Hidden smUp implementation="css">
+          <Grid container spacing={3} justify={'left'}>
+            <Grid item xs={12}>
+              <Typography display="inline" variant="body2">
+                © EFQM
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography display="inline" variant="body2">
+                {t('Terms of Use')}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography display="inline" variant="body2">
+                {t('Privacy Statement')}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography display="inline" variant="body2">
+                (version {version})
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Typography display="inline" variant="body2">
-              {t('Privacy Statement')}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography display="inline" variant="body2">
-              (version {version})
-            </Typography>
-          </Grid>
-        </Grid>
+        </Hidden>
       </PaddedContainer>
     </div>
   )
@@ -136,6 +170,10 @@ const styles = theme => ({
       marginLeft: theme.spacing(2),
     },
     justifyContent: 'flex-end',
+    [theme.breakpoints.down('xs')]: {
+      justifyContent: 'flex-start',
+      marginTop: theme.spacing(2),
+    },
   },
 })
 

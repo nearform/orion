@@ -39,14 +39,14 @@ const ContentMetadata = ({ classes, content }) => {
           {knowledgeTypes[content.knowledge_type]}
         </Typography>
       </Grid>
-      <Hidden only="xs">
+      <Hidden only="xs" implementation="css">
         <Grid item sm={12}>
           <div className={classes.spacerBar} />
         </Grid>
       </Hidden>
       <Grid item xs={12}>
         {users.length > 1 && (
-          <Hidden smUp>
+          <Hidden smUp implementation="css">
             <CollapsedAvatars
               users={users}
               label="Multiple authors"
@@ -59,7 +59,7 @@ const ContentMetadata = ({ classes, content }) => {
           <div
             key={user.id}
             className={classnames(
-              { [classes.xsHidden]: !avatarsOpen },
+              { [classes.xsHidden]: users.length > 1 ? !avatarsOpen : false },
               classes.listedUser
             )}
           >

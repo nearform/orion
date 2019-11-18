@@ -4,27 +4,37 @@ import BookmarkButton from '../BookmarkButton'
 import RichText from './RichText'
 import { formatDateAsMonthAndYear } from '../../utils/date'
 import { withStyles, Typography, Box } from '@material-ui/core'
-import get from 'lodash/get'
 
-import ArticleVisualSummary from './article-visual-summary'
+import ThumbnailImage from './thumbnail-image'
+import { constructImageUrl } from '../../utils/image'
+import { readableAuthors } from '../../utils/fixStrings'
 
-const ArticleSummary = ({
+const CondensedArticleSummary = ({
   classes,
   component = 'li',
   article,
   bookmarked,
   onBookmarkToggle,
   bookmarkButtonDisabled,
+  filterText,
 }) => {
   return (
     <Box className={classes.summaryObj} component={component}>
-      <Box className={classes.articleImageLink}>
-        <ArticleVisualSummary
-          article={article}
-          text={get(article, 'primary_taxonomy[0].taxonomy.name') || 'No Topic'}
+      <Box>
+        <ThumbnailImage
+          height={64}
+          width={56}
+          path={constructImageUrl(article.thumbnail)}
         />
       </Box>
       <Box className={classes.articleSummary}>
+        <Typography
+          variant="h4"
+          color="secondary"
+          className={classes.filterText}
+        >
+          {filterText}
+        </Typography>
         <Link to={`/content/${article.path}`}>
           <Typography className={classes.articleTitle} variant="h2">
             {article.title || 'No Title'}
@@ -35,8 +45,7 @@ const ArticleSummary = ({
             {formatDateAsMonthAndYear(article.updated_at)}
           </Typography>
           <Typography variant="h4" className={classes.authorTitle}>
-            {get(article, 'authors.author.first_name')}{' '}
-            {get(article, 'authors.author.last_name')}
+            {readableAuthors(article.authors)}
           </Typography>
         </Box>
         <RichText
@@ -57,6 +66,7 @@ const ArticleSummary = ({
             bookmarked={bookmarked}
             onToggle={onBookmarkToggle}
             disabled={bookmarkButtonDisabled}
+            forceShowText={true}
           />
         </Box>
       </Box>
@@ -69,18 +79,15 @@ export default withStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     overflow: 'hidden',
-    color: theme.palette.primary.dark,
-    borderBottom: `2px solid ${theme.palette.grey[200]}`,
-    padding: `${theme.spacing(2.5)}px 0 ${theme.spacing(1.5)}px`,
+    padding: theme.spacing(0, 0, 1.5),
     marginBottom: theme.spacing(1.5),
     '&:last-of-type': {
       borderBottom: 'none',
       marginBottom: 0,
     },
   },
-  articleImageLink: {
-    flex: '0 0 280px',
-    maxWidth: '280px',
+  filterText: {
+    marginBottom: theme.spacing(1),
   },
   articleMeta: {
     display: 'flex',
@@ -97,9 +104,6 @@ export default withStyles(theme => ({
     color: theme.palette.tertiary.main,
     marginLeft: theme.spacing(1),
   },
-  highlight: {
-    color: theme.palette.secondary.main,
-  },
   readMore: {
     fontSize: '11px',
     fontWeight: 'bold',
@@ -108,12 +112,13 @@ export default withStyles(theme => ({
     marginRight: theme.spacing(1),
   },
   articleSummary: {
-    marginLeft: theme.spacing(2.5),
+    marginLeft: theme.spacing(1),
     '& a': {
       color: theme.palette.secondary.main,
     },
     '& h2': {
-      fontSize: '21px',
+      marginBottom: theme.spacing(0.5),
+      fontSize: '14px',
       fontWeight: 'bold',
       fontStyle: 'normal',
       fontStretch: 'normal',
@@ -134,4 +139,4 @@ export default withStyles(theme => ({
       margin: '0',
     },
   },
-}))(ArticleSummary)
+}))(CondensedArticleSummary)
