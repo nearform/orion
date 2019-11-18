@@ -1,15 +1,24 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useStaticQuery, graphql, navigate, Link } from 'gatsby'
 import Img from 'gatsby-image'
-import { Typography, Button, withStyles } from '@material-ui/core'
+import {
+  Typography,
+  Button,
+  Hidden,
+  useMediaQuery,
+  withStyles,
+} from '@material-ui/core'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import classnames from 'classnames'
 import { Auth } from 'aws-amplify'
 import { AuthContext, NavLink, PaddedContainer } from 'components'
 
 import SecondaryNavigation from './SecondaryNavigation'
+import MobileSidebar from './MobileSidebar'
 
-function MainToolbar({ classes, dark }) {
+function MainToolbar({ classes, dark, ...props }) {
+  const [showSidebar, setShowSidebar] = useState(false)
+  const isSmUp = useMediaQuery('(min-width:600px)')
   const { getUserTokenData } = useContext(AuthContext)
 
   const {
@@ -36,6 +45,10 @@ function MainToolbar({ classes, dark }) {
     }
   `)
 
+  const toggleSidebar = open => () => {
+    setShowSidebar(open)
+  }
+
   const doLogout = () => {
     Auth.signOut()
     navigate('/auth')
@@ -53,83 +66,111 @@ function MainToolbar({ classes, dark }) {
 
   // darkClass is needed on both outer container and inner padded container
   // to avoid hairline gap between toolbar and main element in mobile WebKit
+
+  const gradient = <div className={classes.gradient} />
+  const growDiv = <div className={classes.grow} />
+
   return (
-    <div id="main-toolbar" className={darkClass} data-testid="main-toolbar">
-      <div className={classes.gradient} />
-      <PaddedContainer className={darkClass}>
-        <div className={classes.root}>
-          <Link
-            to="/"
-            className={classnames(classes.logoHomeLink, darkClass)}
-            data-testid="main-toolbar__logo"
-          >
-            <Img className={classes.logo} fixed={fixed} />
-            <Typography variant="h2" className={classes.logotype}>
-              {title}
-            </Typography>
-          </Link>
-          <div className={classes.grow} />
-          <div
-            className={classes.linksContainer}
-            data-testid="main-toolbar__links-container"
-          >
-            <Button
-              partial={false}
-              className={navButtonClass}
-              component={NavLink}
+    <>
+      <MobileSidebar
+        open={showSidebar}
+        closeSidebar={toggleSidebar(false)}
+        gradient={gradient}
+      />
+      <div id="main-toolbar" className={darkClass} data-testid="main-toolbar">
+        {gradient}
+        <PaddedContainer className={darkClass}>
+          <div className={classes.root}>
+            <Hidden smUp implementation="css">
+              <Button
+                className={classnames(classes.menuButton, {
+                  [classes.menuButtonDark]: dark,
+                  [classes.menuButtonLight]: !dark,
+                })}
+                onClick={toggleSidebar(true)}
+              >
+                MENU
+              </Button>
+            </Hidden>
+            <Link
               to="/"
+              className={classnames(classes.logoHomeLink, darkClass)}
+              data-testid="main-toolbar__logo"
             >
-              KNOWLEDGE BASE
-            </Button>
-            <Button
-              className={navButtonClass}
-              component={NavLink}
-              to="https://www.efqm.org/"
-            >
-              EFQM.ORG
-            </Button>
-            {isAuthenticated && (
-              <Button
-                className={navButtonClass}
-                component={NavLink}
-                to={userId ? `/profile/${userId}` : '#'}
+              <Img className={classes.logo} fixed={fixed} />
+              <Hidden xsDown implementation="css">
+                <Typography variant="h2" className={classes.logotype}>
+                  {title}
+                </Typography>
+              </Hidden>
+            </Link>
+            {isSmUp && growDiv}
+            <Hidden xsDown implementation="css">
+              <div
+                className={classes.linksContainer}
+                data-testid="main-toolbar__links-container"
               >
-                <AccountCircleOutlinedIcon
-                  className={classes.icon}
-                  fontSize="large"
-                />
-                MyEFQM
-              </Button>
-            )}
-            {!isAuthenticated && (
-              <Button
-                className={navButtonClass}
-                component={NavLink}
-                data-testid="login-button"
-                to="/auth"
-              >
-                LOGIN
-              </Button>
-            )}
-            {isAdmin && (
-              <Button
-                className={navButtonClass}
-                component={NavLink}
-                to="/admin"
-              >
-                ADMIN
-              </Button>
-            )}
-            {isAuthenticated && (
-              <Button className={navButtonClass} onClick={doLogout}>
-                LOGOUT
-              </Button>
-            )}
+                <Button
+                  partial={false}
+                  className={navButtonClass}
+                  component={NavLink}
+                  to="/"
+                >
+                  KNOWLEDGE BASE
+                </Button>
+                <Button
+                  className={navButtonClass}
+                  component={NavLink}
+                  to="https://www.efqm.org/"
+                >
+                  EFQM.ORG
+                </Button>
+                {isAuthenticated && (
+                  <Button
+                    className={navButtonClass}
+                    component={NavLink}
+                    to={userId ? `/profile/${userId}` : '#'}
+                  >
+                    <AccountCircleOutlinedIcon
+                      className={classes.icon}
+                      fontSize="large"
+                    />
+                    MyEFQM
+                  </Button>
+                )}
+                {!isAuthenticated && (
+                  <Button
+                    className={navButtonClass}
+                    component={NavLink}
+                    data-testid="login-button"
+                    to="/auth"
+                  >
+                    LOGIN
+                  </Button>
+                )}
+                {isAdmin && (
+                  <Button
+                    className={navButtonClass}
+                    component={NavLink}
+                    to="/admin"
+                  >
+                    ADMIN
+                  </Button>
+                )}
+                {isAuthenticated && (
+                  <Button className={navButtonClass} onClick={doLogout}>
+                    LOGOUT
+                  </Button>
+                )}
+              </div>
+            </Hidden>
           </div>
-        </div>
-        <SecondaryNavigation dark={dark} />
-      </PaddedContainer>
-    </div>
+          <Hidden xsDown implementation="css">
+            <SecondaryNavigation dark={dark} />
+          </Hidden>
+        </PaddedContainer>
+      </div>
+    </>
   )
 }
 
@@ -142,10 +183,37 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     paddingTop: theme.spacing(1),
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: theme.spacing(1.5),
+    },
+  },
+  menuButton: {
+    top: theme.spacing(-0.5),
+    fontWeight: 'normal',
+    width: '79px',
+    height: '32px',
+    borderRadius: '4px',
+    border: 'solid 1px',
+    [theme.breakpoints.down('xs')]: {
+      marginBottom: theme.spacing(1),
+    },
+  },
+  menuButtonLight: {
+    color: theme.palette.secondary.main,
+  },
+  menuButtonDark: {
+    color: theme.palette.background.paper,
   },
   logoHomeLink: {
     display: 'flex',
     alignItems: 'center',
+    [theme.breakpoints.down('xs')]: {
+      display: 'block',
+      paddingRight: 'calc(79px/2)',
+      marginBottom: theme.spacing(1),
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
   },
   logo: {
     marginRight: theme.spacing(2),
@@ -176,7 +244,6 @@ const styles = theme => ({
     opacity: 0.6,
   },
   linksContainer: {
-    display: 'flex',
     marginRight: `-${theme.spacing(1)}px`,
     '& > * + *': {
       marginLeft: theme.spacing(2),

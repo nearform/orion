@@ -12,6 +12,9 @@ const useThemedListStyles = makeStyles(theme => ({
     '& li': {
       listStyle: 'none',
     },
+    [theme.breakpoints.down('xs')]: {
+      marginBottom: theme.spacing(3),
+    },
   },
 }))
 

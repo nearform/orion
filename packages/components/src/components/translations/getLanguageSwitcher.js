@@ -1,31 +1,12 @@
 import React from 'react'
 import T from 'prop-types'
-import classnames from 'classnames'
 import { Select, MenuItem, withStyles } from '@material-ui/core'
 import MoreVert from '@material-ui/icons/MoreVert'
 import Twemoji from 'react-twemoji'
-
-const languageOptions = {
-  en: {
-    abb: 'en',
-    name: 'English',
-    flag: '🇬🇧',
-  },
-  de: {
-    abb: 'de',
-    name: 'Deutsch',
-    flag: '🇩🇪',
-  },
-  es: {
-    abb: 'es',
-    name: 'Español',
-    flag: '🇪🇸',
-  },
-}
+import { translations } from 'efqm-theme/config'
 
 function getLanguageSwitcher(useTranslation) {
   // Must use app's import of useTranslation, can't import it here
-  // Flag icons are twitter-style emojis from github source here: https://twitter.github.io/twemoji/2/test/preview.html
 
   const LanguageSwitcher = ({ classes }) => {
     const { i18n } = useTranslation()
@@ -44,13 +25,13 @@ function getLanguageSwitcher(useTranslation) {
           renderValue={() => (
             <MenuItem className={classes.item} key={'val_' + l} value={l}>
               <Twemoji options={{ className: classes.icon }}>
-                {languageOptions[l].flag}
+                {translations[l].flag}
               </Twemoji>
               {l.toUpperCase()}
             </MenuItem>
           )}
         >
-          {Object.values(languageOptions).map(lang => (
+          {Object.values(translations).map(lang => (
             <MenuItem
               className={classes.item}
               key={'val_' + lang.abb}

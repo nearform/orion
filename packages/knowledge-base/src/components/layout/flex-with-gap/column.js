@@ -6,6 +6,9 @@ export default theme => gap => ({
   flexDirection: 'column',
   '& > *': {
     margin: theme.spacing(0, 0, gap, 0),
+    [theme.breakpoints.down('xs')]: {
+      margin: theme.spacing(0, 0, gap / 2, 0),
+    },
   },
   '& > *:last-child': {
     margin: 0,
