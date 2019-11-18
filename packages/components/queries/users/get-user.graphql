@@ -1,5 +1,5 @@
 query getUser($id: Int!) {
-  user(where: { id: { _eq: $id } }) {
+  user(where: { _and: { active: { _eq: true }, id: { _eq: $id } } }) {
     id
     first_name
     last_name

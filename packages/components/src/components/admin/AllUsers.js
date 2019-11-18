@@ -27,7 +27,7 @@ import {
   assignUserGroupMutation,
   addUserRoleMutation,
   assignUserRoleMutation,
-  deleteUserMutation,
+  updateUserMutation,
 } from '../../../queries'
 
 const styles = theme => ({
@@ -111,7 +111,23 @@ function AllUsers({ classes, query, variables }) {
     variables,
     renderTableBody: (data, { refetch: refetchUsers }) => {
       const doDeleteUser = async id => {
-        await deleteUser({ variables: { id } })
+        await deleteUser({
+          variables: {
+            id: id,
+            input: {
+              email: null,
+              consent_contact: 0,
+              consent_directory: 0,
+              title: null,
+              avatar: null,
+              biography: null,
+              linkedin: null,
+              website: null,
+              twitter: null,
+              active: false,
+            },
+          },
+        })
         refetchUsers()
       }
       return data.user.map(user => (
@@ -160,7 +176,7 @@ function AllUsers({ classes, query, variables }) {
   const [doAssignUserGroup] = useMutation(assignUserGroupMutation)
   const [doAddUserRole] = useMutation(addUserRoleMutation)
   const [doAssignUserRole] = useMutation(assignUserRoleMutation)
-  const [deleteUser] = useMutation(deleteUserMutation)
+  const [deleteUser] = useMutation(updateUserMutation)
 
   const modalContents = [
     {

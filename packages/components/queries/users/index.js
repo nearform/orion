@@ -16,4 +16,3 @@ export {
   default as deleteUserBookmarkMutation,
 } from './delete-user-bookmark.graphql'
 export { default as updateUserMutation } from './update-user.graphql'
-export { default as deleteUserMutation } from './delete-user.graphql'

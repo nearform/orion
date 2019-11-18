@@ -54,6 +54,7 @@ function SelectAuthors({ classes, selectedUsers, onChange }) {
     //https://docs.hasura.io/1.0/graphql/manual/queries/custom-functions.html#example-fuzzy-match-search-functions
     queryVariables.where = {
       email: { _ilike: `%${filter}%` },
+      active: { _eq: true },
     }
   }
 
