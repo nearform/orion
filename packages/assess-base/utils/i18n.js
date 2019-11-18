@@ -1,16 +1,18 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import espanol from './translations/es_ES.json'
-import deutsch from './translations/de_DE.json'
-import english from './translations/en_EN.json'
+import { translations } from 'efqm-theme/config'
 
-const resources = {
-  de: deutsch,
-  es: espanol,
-  en: english,
+const getResources = () => {
+  const translationOptions = Object.keys(translations)
+  const resources = {}
+  translationOptions.map(abb => {
+    resources[abb] = require(`efqm-theme/assessments/${abb}/${abb}_AB.json`)
+  })
+  return resources
 }
 
 export async function init() {
+  const resources = getResources()
   await i18n.use(initReactI18next).init({
     resources,
     lng: 'en',
