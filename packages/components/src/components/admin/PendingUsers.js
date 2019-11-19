@@ -9,13 +9,13 @@ import {
   Typography,
   IconButton,
 } from '@material-ui/core'
-import { HowToReg } from '@material-ui/icons'
+import { HowToReg, DeleteForever } from '@material-ui/icons'
 import * as Yup from 'yup'
 
 import useAdminTable from '../../hooks/useAdminTable'
 import AdminModal from './AdminModal'
 import UserSelectPicker from './UserSelectPicker'
-import { UserFilter } from 'components'
+import { UserFilter, ConfirmDialog } from 'components'
 
 import {
   getPendingUsers,
@@ -23,6 +23,7 @@ import {
   addUserGroupMutation,
   assignUserGroupMutation,
   addUserRoleMutation,
+  deleteUserMutation,
 } from '../../../queries'
 
 const styles = theme => ({
@@ -75,8 +76,16 @@ function PendingUsers({ classes }) {
     variables: {
       emailFilter: `%${filterText}%`,
     },
-    renderTableBody: (data, { setSelected }) =>
-      data.user.map(user => (
+    renderTableBody: (data, { refetch: refetchUsers }) => {
+      const doDeleteUser = async id => {
+        await deleteUser({
+          variables: {
+            userId: id,
+          },
+        })
+        refetchUsers()
+      }
+      return data.user.map(user => (
         <TableRow key={user.id} data-testid="pending-users" size="small">
           <TableCell>
             <Typography variant="body2">{user.id}</Typography>
@@ -97,8 +106,21 @@ function PendingUsers({ classes }) {
               </IconButton>
             </Tooltip>
           </TableCell>
+          <TableCell align="right" padding="none">
+            <ConfirmDialog
+              title={`Delete user “${user.email}”?`}
+              text="This user will be permanently deleted. This cannot be undone."
+              onConfirm={() => doDeleteUser(user.id)}
+              okayLabel="Delete"
+            >
+              <IconButton className={classes.actionButton}>
+                <DeleteForever />
+              </IconButton>
+            </ConfirmDialog>
+          </TableCell>
         </TableRow>
-      )),
+      ))
+    },
   })
 
   const { data: modalData } = useQuery(getEdittableUserFields)
@@ -106,6 +128,7 @@ function PendingUsers({ classes }) {
   const [doAddUserGroup] = useMutation(addUserGroupMutation)
   const [doAssignUserGroup] = useMutation(assignUserGroupMutation)
   const [doAddUserRole] = useMutation(addUserRoleMutation)
+  const [deleteUser] = useMutation(deleteUserMutation)
 
   const modalContents = [
     {

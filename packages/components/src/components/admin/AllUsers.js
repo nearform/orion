@@ -10,15 +10,15 @@ import {
   Tooltip,
   IconButton,
 } from '@material-ui/core'
-import { HowToReg, ErrorOutline, Edit } from '@material-ui/icons'
+import { HowToReg, ErrorOutline, Edit, DeleteForever } from '@material-ui/icons'
 import * as Yup from 'yup'
+import { ConfirmDialog, UserFilter } from 'components'
 import get from 'lodash/get'
 
 import UserRoleChip from '../StatusChip/UserRoleChip'
 import useAdminTable from '../../hooks/useAdminTable'
 import AdminModal from './AdminModal'
 import UserSelectPicker from './UserSelectPicker'
-import { UserFilter } from 'components'
 
 import {
   getUsers,
@@ -27,6 +27,8 @@ import {
   assignUserGroupMutation,
   addUserRoleMutation,
   assignUserRoleMutation,
+  updateUserMutation,
+  deleteUserMutation,
 } from '../../../queries'
 
 const styles = theme => ({
@@ -109,14 +111,40 @@ function getGroupAndStatus(user, classes) {
 function AllUsers({ classes, query, variables }) {
   const [filterText, setFilterText] = useState('')
   variables.where = {
-    email: { _ilike: `%${filterText}%` },
+    _and: {
+      email: { _ilike: `%${filterText}%` },
+      active: { _eq: true },
+    },
   }
   const { table, selected, setSelected, refetch } = useAdminTable({
     query,
     headers,
     variables,
-    renderTableBody: data =>
-      data.user.map(user => (
+    renderTableBody: (data, { refetch: refetchUsers }) => {
+      const doDeleteUser = async (id, pending) => {
+        // eslint-disable-next-line no-unused-expressions
+        pending
+          ? await deleteUser({ variables: { userId: id } })
+          : await modifyUser({
+              variables: {
+                id: id,
+                input: {
+                  email: null,
+                  consent_contact: false,
+                  consent_directory: false,
+                  title: null,
+                  avatar: null,
+                  biography: null,
+                  linkedin: null,
+                  website: null,
+                  twitter: null,
+                  active: false,
+                },
+              },
+            })
+        refetchUsers()
+      }
+      return data.user.map(user => (
         <TableRow key={user.id.toString()} data-testid="all-users" size="small">
           <TableCell>
             <Typography variant="body2">{user.id}</Typography>
@@ -140,8 +168,21 @@ function AllUsers({ classes, query, variables }) {
               <Edit color="secondary" />
             </IconButton>
           </TableCell>
+          <TableCell align="right" padding="none">
+            <ConfirmDialog
+              title={`Delete user “${user.email}”?`}
+              text="This user will be permanently deleted. This cannot be undone."
+              onConfirm={() => doDeleteUser(user.id, user.pending)}
+              okayLabel="Delete"
+            >
+              <IconButton className={classes.actionButton}>
+                <DeleteForever />
+              </IconButton>
+            </ConfirmDialog>
+          </TableCell>
         </TableRow>
-      )),
+      ))
+    },
   })
 
   const { data: modalData } = useQuery(getEdittableUserFields)
@@ -149,6 +190,8 @@ function AllUsers({ classes, query, variables }) {
   const [doAssignUserGroup] = useMutation(assignUserGroupMutation)
   const [doAddUserRole] = useMutation(addUserRoleMutation)
   const [doAssignUserRole] = useMutation(assignUserRoleMutation)
+  const [deleteUser] = useMutation(deleteUserMutation)
+  const [modifyUser] = useMutation(updateUserMutation)
 
   const modalContents = [
     {
