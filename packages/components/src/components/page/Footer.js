@@ -120,7 +120,7 @@ function Footer({ classes, theme, content, Img }) {
           </Grid>
         </Hidden>
         <Hidden smUp implementation="css">
-          <Grid container spacing={3} justify={'left'}>
+          <Grid container spacing={3} justify={'flex-start'}>
             <Grid item xs={12}>
               <Typography display="inline" variant="body2">
                 © EFQM
