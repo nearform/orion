@@ -29,7 +29,11 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
     fetchUserBookmarks,
     userBookmarks,
     loadingBookmarks,
-  } = useUserBookmarks()
+  } = useUserBookmarks(true)
+
+  const userBookmarksList = get(userBookmarks, 'user_bookmarks', []).map(
+    bookmark => bookmark.article_id
+  )
 
   const isSmUp = useMediaQuery('(min-width:600px)')
 
@@ -40,31 +44,41 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
   const [currentPage, setCurrentPage] = useState(page)
   const offset = (currentPage - 1) * PAGE_SIZE
 
+  const taxonomyKey = taxonomy || get(results, 'taxonomy.key')
+
   const variables = useMemo(
     () => ({
       whereClause: buildWhereClause(taxonomy, taxonomyIds, taxonomyTypes),
       limit: PAGE_SIZE,
       offset,
-      taxonomyKey: taxonomy,
+      taxonomyKey,
       ...(term && { contentLike: term }),
     }),
-    [taxonomy, taxonomyIds, taxonomyTypes, offset, term]
+    [taxonomy, taxonomyIds, taxonomyTypes, offset, term, taxonomyKey]
   )
 
   const isPreRendered = !(touched || term || taxonomy)
 
   const formatData = data => {
     return {
-      articles: get(data, 'article') || get(data, 'search_article') || [],
+      articles:
+        get(data, 'article') ||
+        get(data, 'search_article') ||
+        get(data, 'user_bookmarks', []).map(
+          bookmark => bookmark.bookmarked_article
+        ) ||
+        [],
       aggregate:
         get(data, 'article_aggregate') ||
-        get(data, 'search_article_aggregate') ||
+        get(data, 'search_article_aggregate') || {
+          aggregate: { count: get(data, 'user_bookmarks', []).length },
+        } ||
         defaultAggregate,
       taxonomy: get(data, 'taxonomy'),
     }
   }
 
-  const { data } = useAuthorizedQuery(
+  let { data } = useAuthorizedQuery(
     term ? getArticlesSearchResults : getArticlesCategoryResults,
     variables,
     {
@@ -74,6 +88,10 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
       useCache: false,
     }
   )
+
+  if (taxonomyKey === 'my_bookmarks') {
+    data = formatData(userBookmarks)
+  }
 
   const totalResults = get(data, 'aggregate.aggregate.count')
   const rangeMin = totalResults > PAGE_SIZE ? offset + 1 : totalResults
@@ -95,8 +113,6 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
       active ? [...taxonomyIds, id] : taxonomyIds.filter(item => item !== id)
     )
   }
-
-  const taxonomyKey = taxonomy || get(data, 'taxonomy.key')
 
   const handlePagination = dir => {
     if (isPreRendered) {
@@ -155,7 +171,7 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
                 isSmUp ? (
                   <ArticleSummary
                     article={article}
-                    bookmarked={userBookmarks.includes(article.id)}
+                    bookmarked={userBookmarksList.includes(article.id)}
                     bookmarkButtonDisabled={loadingBookmarks}
                     onBookmarkToggle={fetchUserBookmarks}
                     key={`article-${article.id}`}
@@ -163,7 +179,7 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
                 ) : (
                   <CondensedArticleSummary
                     article={article}
-                    bookmarked={userBookmarks.includes(article.id)}
+                    bookmarked={userBookmarksList.includes(article.id)}
                     bookmarkButtonDisabled={loadingBookmarks}
                     onBookmarkToggle={fetchUserBookmarks}
                     filterText={term ? term : sectionName}

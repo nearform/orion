@@ -66,7 +66,23 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   )
 
-  articlesByTaxonomies.forEach(results =>
+  articlesByTaxonomies.forEach(results => {
+    if (!results.article.length) {
+      const path = `/section/${results.taxonomy.key}`
+      createPage({
+        path,
+        matchPath: path,
+        component: contentListTemplate,
+        context: {
+          results: {
+            ...results,
+            article: [],
+          },
+          page: 1,
+        },
+      })
+    }
+
     chunk(results.article, PAGE_SIZE).forEach((articles, index) => {
       const path = `/section/${results.taxonomy.key}${
         index !== 0 ? `/page/${index + 1}` : ''
@@ -84,7 +100,8 @@ exports.createPages = async ({ graphql, actions }) => {
         },
       })
     })
-  )
+  })
+
   createPage({
     path: '/section/',
     matchPath: '/section/*',
