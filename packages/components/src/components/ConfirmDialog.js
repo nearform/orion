@@ -16,7 +16,7 @@ function ConfirmDialog({
   classes,
   children,
   onConfirm,
-  onCancel,
+  onCancel = () => {},
   title,
   type,
   okayLabel,

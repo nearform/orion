@@ -17,22 +17,22 @@ const assessmentColors = [
   theme => theme.palette.primary.main,
 ]
 
-function AssessmentsHome({
-  theme,
-  classes,
-  data,
-  pageContext: { modelImageName },
-}) {
+function AssessmentsHome({ theme, classes, data, pageContext = {} }) {
   const {
     heroBanner,
     modelImageAssets: { nodes: modelImageAssets },
     assets: { nodes: assets },
   } = data
+
+  const { modelImageName } = pageContext
+
   const { t, i18n } = useTranslation()
   const lang = i18n.language || 'en'
+
   const modelImage =
     modelImageAssets.find(img => img.name === `${modelImageName}_${lang}`) ||
     modelImageAssets.find(img => img.name === `${modelImageName}_en`)
+
   const assessmentTypes = getAssessmentTypes(lang)
   const { getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
@@ -75,10 +75,12 @@ function AssessmentsHome({
               </Grid>
             </Grid>
             <Grid item xs={12} sm={5}>
-              <Img
-                className={classes.modelContainer}
-                fluid={modelImage.childImageSharp.fluid}
-              />
+              {modelImage && (
+                <Img
+                  className={classes.modelContainer}
+                  fluid={modelImage.childImageSharp.fluid}
+                />
+              )}
             </Grid>
           </Grid>
         </PaddedContainer>

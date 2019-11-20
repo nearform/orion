@@ -1,5 +1,6 @@
 export default {
   site: { siteMetadata: { title: 'EFQM Assess Base' } },
+  modelImageAssets: { nodes: [] },
   assessmentTypes: {
     nodes: [
       {
