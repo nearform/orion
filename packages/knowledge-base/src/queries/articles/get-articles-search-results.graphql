@@ -1,11 +1,11 @@
 query getSearchArticles(
-  $titleLike: String!
+  $contentLike: String!
   $whereClause: article_bool_exp
   $limit: Int!
   $offset: Int!
 ) {
   search_article(
-    args: { search: $titleLike }
+    args: { search: $contentLike }
     limit: $limit
     offset: $offset
     where: $whereClause
@@ -40,7 +40,10 @@ query getSearchArticles(
     path
     editors_pick
   }
-  search_article_aggregate(args: { search: $titleLike }, where: $whereClause) {
+  search_article_aggregate(
+    args: { search: $contentLike }
+    where: $whereClause
+  ) {
     aggregate {
       count
     }

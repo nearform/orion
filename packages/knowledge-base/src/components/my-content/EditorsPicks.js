@@ -83,7 +83,7 @@ const EditorsPicks = ({ classes }) => {
     <>
       <SEO pageTitle="Editor's Picks" />
       <ContentToolbar pageTitle="Content" />
-      <FeatureArticles title="Editors' Picks Preview" articles={editorsPicks} />
+      <FeatureArticles title="Editor's Picks Preview" articles={editorsPicks} />
       <QueryTable
         headers={headers}
         query={getArticlesData}

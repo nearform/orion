@@ -46,7 +46,7 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
       limit: PAGE_SIZE,
       offset,
       taxonomyKey: taxonomy,
-      ...(term && { titleLike: term }),
+      ...(term && { contentLike: term }),
     }),
     [taxonomy, taxonomyIds, taxonomyTypes, offset, term]
   )
