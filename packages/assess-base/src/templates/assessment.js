@@ -301,10 +301,10 @@ function AssessmentTemplate({
               </Grid>
               <Grid item xs>
                 <Grid
+                  className={!assessmentId ? classes.displayNone : null}
                   container
                   direction="column"
                   spacing={1}
-                  display={assessmentId ? null : 'none'}
                 >
                   <Grid item>
                     <Typography variant="h4">
@@ -333,7 +333,7 @@ function AssessmentTemplate({
                       <Grid
                         container
                         spacing={2}
-                        display={assessmentId ? 'none' : null}
+                        className={assessmentId ? classes.displayNone : null}
                       >
                         <Grid item xs>
                           <Grid container direction="column" spacing={1}>
@@ -393,7 +393,10 @@ function AssessmentTemplate({
                 </Formik>
               </Grid>
               {canAssignContributorsAndAssessors && (
-                <Grid container>
+                <Grid
+                  container
+                  className={!assessmentId ? classes.displayNone : null}
+                >
                   <Grid item xs={12} className={classes.participants}>
                     {assessors.map(({ assessor }) =>
                       assessor ? (
