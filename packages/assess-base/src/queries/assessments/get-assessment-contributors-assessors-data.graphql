@@ -1,16 +1,22 @@
-query getAssessmentContributorsAssessorsData(
-  $assessmentId: Int!
-) {
-  contributors: assessment_contributor(where: {assessment_id: {_eq: $assessmentId}}) {
+query getAssessmentContributorsAssessorsData($assessmentId: Int!) {
+  contributors: assessment_contributor(
+    where: { assessment_id: { _eq: $assessmentId } }
+  ) {
     contributor {
       id
       email
+      first_name
+      last_name
     }
   }
-  assessors: assessment_assessor(where: {assessment_id: {_eq: $assessmentId}}) {
+  assessors: assessment_assessor(
+    where: { assessment_id: { _eq: $assessmentId } }
+  ) {
     assessor {
       id
       email
+      first_name
+      last_name
     }
   }
 }
