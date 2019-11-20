@@ -15,11 +15,13 @@ function djb2(str) {
 }
 
 function _placeholderEtoN(email) {
-  return email
-    .split('@')[0]
-    .split('.')
-    .map(n => n.charAt(0).toUpperCase() + n.slice(1))
-    .join(' ')
+  return email !== null
+    ? email
+        .split('@')[0]
+        .split('.')
+        .map(n => n.charAt(0).toUpperCase() + n.slice(1))
+        .join(' ')
+    : ''
 }
 
 function getColorFromEmail(email) {
