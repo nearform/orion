@@ -1,0 +1,35 @@
+- args:
+    role: user
+    table:
+      name: user
+      schema: public
+  type: drop_update_permission
+- args:
+    permission:
+      columns:
+      - avatar
+      - biography
+      - cognito_id
+      - consent_contact
+      - consent_directory
+      - email
+      - first_name
+      - last_name
+      - linkedin
+      - pending
+      - signupRequest
+      - title
+      - twitter
+      - website
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: user
+    table:
+      name: user
+      schema: public
+  type: create_update_permission

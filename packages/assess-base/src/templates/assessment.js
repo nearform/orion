@@ -206,14 +206,6 @@ function AssessmentTemplate({
 
   const assessmentName = get(assessmentData, 'name', 'Loading...')
 
-  function _placeholderEtoN(email) {
-    return email
-      .split('@')[0]
-      .split('.')
-      .map(n => n.charAt(0).toUpperCase() + n.slice(1))
-      .join(' ')
-  }
-
   const assessors = get(assessorsData, 'assessors', [])
   const contributors = get(assessorsData, 'contributors', [])
 
@@ -402,7 +394,7 @@ function AssessmentTemplate({
                       assessor ? (
                         <TypedChip
                           key={assessor.id}
-                          name={_placeholderEtoN(assessor.email)}
+                          name={`${assessor.first_name} ${assessor.last_name}`}
                           type="Assessor"
                           color="primary"
                         />
@@ -412,7 +404,7 @@ function AssessmentTemplate({
                       contributor ? (
                         <TypedChip
                           key={contributor.id}
-                          name={_placeholderEtoN(contributor.email)}
+                          name={`${contributor.first_name} ${contributor.last_name}`}
                           type="Contributor"
                           color="secondary"
                         />

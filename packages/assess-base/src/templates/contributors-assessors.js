@@ -41,14 +41,6 @@ import {
   getCanEditContributors,
 } from '../utils/permission-checks'
 
-function _placeholderEtoN(email) {
-  return email
-    .split('@')[0]
-    .split('.')
-    .map(n => n.charAt(0).toUpperCase() + n.slice(1))
-    .join(' ')
-}
-
 function ContributorsAssessorsTemplate({
   location,
   theme,
@@ -253,7 +245,7 @@ function ContributorsAssessorsTemplate({
                 assessor ? (
                   <TypedChip
                     key={assessor.id}
-                    name={_placeholderEtoN(assessor.email)}
+                    name={`${assessor.first_name} ${assessor.last_name}`}
                     onDelete={
                       canEditAssesors ? () => unassignAssessor(assessor) : null
                     }
@@ -266,7 +258,7 @@ function ContributorsAssessorsTemplate({
                 contributor ? (
                   <TypedChip
                     key={contributor.id}
-                    name={_placeholderEtoN(contributor.email)}
+                    name={`${contributor.first_name} ${contributor.last_name}`}
                     onDelete={
                       canEditContributors
                         ? () => unassignContributor(contributor)
