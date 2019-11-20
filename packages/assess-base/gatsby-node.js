@@ -15,8 +15,8 @@ exports.onPreInit = () => {
     const { validateAssessmentFiles } = require('./src/validations')
     validateAssessmentFiles(currentTheme, logger)
   } catch (e) {
-    // useful to catch and show because gatsby might swallow the error and break in next processing
-    // parts so it would be hard to trace the error to here
+    // useful to catch and show because gatsby might swallow the error and break
+    // in next processing parts so it would be hard to trace the error to here
     logger.error(e)
     throw e
   }
@@ -149,17 +149,23 @@ exports.createPages = async ({ graphql, actions }) => {
 
     const criteriaList = assessment.pillars.reduce(
       (acc, pillar, pillarIndex) => {
+        const { key: pillarKey } = pillar
         const pillarCriteria = pillar.criteria.map(criterion => {
-          let subCatNum = 0
-          return criterion.parts.map(part => ({
-            key: JSON.stringify({
-              pillarKey: pillar.key,
-              criterionKey: part.tables[0].key,
-            }),
-            name: part.tables[0].name,
-            path:
-              createCriterionPagePath(pillar, criterion) + '/' + ++subCatNum,
-          }))
+          return criterion.parts.map((part, idx) => {
+            const {
+              tables: [{ key: criterionKey, name }],
+            } = part
+            const path = createCriterionPagePath(pillar, criterion) + '/' + idx
+            return {
+              key: JSON.stringify({
+                pillarKey,
+                criterionKey,
+              }),
+              name,
+              path,
+              matchPath: path,
+            }
+          })
         })
         return [...acc, ...pillarCriteria]
       },
@@ -211,7 +217,7 @@ exports.createPages = async ({ graphql, actions }) => {
         })
 
         const createCriterionPartLink = partNumber =>
-          `/${criterionPagePath}/${partNumber}`
+          `${criterionPagePath}/${partNumber}`
 
         criterion.parts.forEach((part, partIndex, { length: totalParts }) => {
           const isFirst = partIndex === 0
