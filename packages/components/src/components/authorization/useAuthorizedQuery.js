@@ -55,9 +55,9 @@ export default function useAuthorizedQuery(query, variables, opts = {}) {
   const data = _data ? onFetch(_data) : onNoFetch(variables, loading, error)
 
   // Function for refetching the query with new variables.
-  function refetch(variables) {
-    if (onPreFetch(variables)) {
-      _fetch({ variables })
+  function refetch(_variables = variables) {
+    if (onPreFetch(_variables)) {
+      _fetch({ variables: _variables })
     }
   }
 
