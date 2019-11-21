@@ -13,15 +13,19 @@ import { useMutation, useQuery } from 'graphql-hooks'
 
 import ContentToolbar from './ContentToolbar'
 import SEO from '../SEO'
-
-import { updateArticleMutation } from '../../queries'
-
 import QueryTable from '../QueryTable'
-import { getArticlesData } from '../../queries'
+import FeatureArticles from '../list/FeatureArticles'
+
+import {
+  getArticlesData,
+  getEditorsPicks,
+  updateArticleMutation,
+} from '../../queries'
 
 import { formatDateTime } from '../../utils/date'
+import { getRandomRows } from '../../utils/array'
+
 import get from 'lodash/get'
-import FeatureArticles from '../list/FeatureArticles'
 
 const headers = [
   { id: 'title', label: 'Title', sortable: true },
@@ -58,16 +62,9 @@ const EditorsPicks = ({ classes }) => {
   )
 
   const {
-    data: { article: editorsPicks = [] } = {},
+    data: { editors_picks: editorsPicks = [] } = {},
     refetch: refetchEditorsPicks,
-  } = useQuery(getArticlesData, {
-    variables: {
-      editorsPick: true,
-      offset: 0,
-      limit: 3,
-      orderBy: { updated_at: 'desc' },
-    },
-  })
+  } = useQuery(getEditorsPicks)
 
   const toggleEditorPick = async (id, editors_pick) =>
     await updateEditorsPick({
@@ -83,7 +80,10 @@ const EditorsPicks = ({ classes }) => {
     <>
       <SEO pageTitle="Editor's Picks" />
       <ContentToolbar pageTitle="Content" />
-      <FeatureArticles title="Editor's Picks Preview" articles={editorsPicks} />
+      <FeatureArticles
+        title="Editor's Picks Preview"
+        articles={getRandomRows(editorsPicks, 3)}
+      />
       <QueryTable
         headers={headers}
         query={getArticlesData}
