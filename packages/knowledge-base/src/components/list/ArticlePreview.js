@@ -1,5 +1,6 @@
 import React from 'react'
 import T from 'prop-types'
+import { Link } from 'gatsby'
 import { Box, withStyles } from '@material-ui/core'
 import get from 'lodash/get'
 import { formatDateAsMonthAndYear } from '../../utils/date'
@@ -13,23 +14,27 @@ const ArticlePreview = ({
   onBookmarkToggle,
   classes,
 }) => {
+  const link = `/content/${article.path}`
   return (
     <Box>
       <div key={article.id} className={classes.article}>
         <ArticleVisualSummary
-          article={article}
+          link={link}
+          thumbnail={article.thumbnail}
           className={classes.visualSummary}
           text={get(article, 'primary_taxonomy[0].taxonomy.name')}
         />
         <div className={classes.articleTitle}>{article.title}</div>
         <div className={classes.articleMeta}>
-          <div className={classes.articleDate}>
-            {formatDateAsMonthAndYear(article.published_at)}
-          </div>
-          <div className={classes.articleAuthor}>
-            {get(article, 'authors[0].author.first_name')}{' '}
-            {get(article, 'authors[0].author.last_name')}
-          </div>
+          <Link to={link}>
+            <div className={classes.articleDate}>
+              {formatDateAsMonthAndYear(article.published_at)}
+            </div>
+            <div className={classes.articleAuthor}>
+              {get(article, 'authors[0].author.first_name')}{' '}
+              {get(article, 'authors[0].author.last_name')}
+            </div>
+          </Link>
           <div className={classes.bookmark}>
             <BookmarkButton
               articleId={article.id}

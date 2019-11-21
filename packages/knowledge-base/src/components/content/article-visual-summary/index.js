@@ -28,27 +28,13 @@ const useLinkStyles = makeStyles(theme => ({
   }),
 }))
 
-const ArticleVisualSummary = ({
-  article,
-  className = '',
-  link = true,
-  text,
-}) => {
+const ArticleVisualSummary = ({ thumbnail, className = '', link, text }) => {
   const { textBox, wrapper } = useLinkStyles()
 
   const WrapperComponent = link ? Link : Box
 
-  // Build up some dynamic props, with an optional classname prop and `to`
-  // if it's a link
-  const props = { className: [className, wrapper].join(' ') }
-  if (link) {
-    props.to = `/content/${article.path}`
-  }
-
-  const { thumbnail } = article
-
   return (
-    <WrapperComponent {...props}>
+    <WrapperComponent to={link} className={`${className} ${wrapper}`}>
       <ThumbnailImage height={140} path={constructImageUrl(thumbnail)} />
       {text && (
         <Box className={textBox} component="p">
@@ -60,10 +46,10 @@ const ArticleVisualSummary = ({
 }
 
 ArticleVisualSummary.propTypes = {
-  article: T.object.isRequired,
-  className: T.string, // Allow a class to come in from the parent
-  link: T.bool, // Makes the summary into a link
+  thumbnail: T.string.isRequired,
+  link: T.string,
   text: T.string,
+  className: T.string, // Allow a class to come in from the parent
 }
 
 export default ArticleVisualSummary
