@@ -46,7 +46,7 @@ const ArticleVisualSummary = ({ thumbnail, className = '', link, text }) => {
 }
 
 ArticleVisualSummary.propTypes = {
-  thumbnail: T.string.isRequired,
+  thumbnail: T.string,
   link: T.string,
   text: T.string,
   className: T.string, // Allow a class to come in from the parent
