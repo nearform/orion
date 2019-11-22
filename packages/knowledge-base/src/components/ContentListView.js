@@ -188,7 +188,7 @@ const ListContent = ({
               <Typography variant="h4" color="secondary">
                 {term
                   ? 'SEARCH RESULTS FOR'
-                  : get(data, 'taxonomy[0].taxonomy_type.name')}
+                  : get(data, 'taxonomy[0].taxonomy_type.name', '\u00A0')}
               </Typography>
               <Typography variant="h1" className={classes.term}>
                 {term ? <span>&lsquo;{term}&rsquo;</span> : sectionName}
