@@ -13,6 +13,7 @@ function TypedChip({ type, color, name, onDelete, classes }) {
   const { type: typeClass, ...chipClasses } = classes
   return (
     <Chip
+      data-testid="typed-chip"
       onDelete={onDelete}
       deleteIcon={onDelete ? <ClearIcon fontSize="small" /> : null}
       classes={chipClasses}

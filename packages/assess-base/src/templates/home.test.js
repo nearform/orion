@@ -1,10 +1,19 @@
 import React from 'react'
-import { render, renderAuthenticated, fireEvent, wait } from '../test-utils'
+import {
+  render,
+  renderAuthenticated,
+  fireEvent,
+  wait,
+  cleanup,
+} from '../test-utils'
 import AssessmentsHome from './home'
 import { getByText as getByElementText } from '@testing-library/react'
 
 import HomeTemplateQueryResult from './__mocks__/HomeTemplateQueryResult.mock'
 jest.mock('../components/SEO')
+jest.mock('@reach/router', () => ({
+  Redirect: 'Redirected',
+}))
 jest.mock('graphql-hooks', () => {
   return {
     useQuery: (query, options) => {
@@ -35,6 +44,8 @@ jest.mock('graphql-hooks', () => {
     },
   }
 })
+
+afterEach(cleanup)
 
 describe('<AssessmentsHome />', () => {
   test('Renders when not authenticated', () => {
