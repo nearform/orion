@@ -27,6 +27,9 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const homeTemplate = require.resolve('./src/templates/home.js')
   const assessmentTemplate = require.resolve('./src/templates/assessment.js')
+  const questionnaireTemplate = require.resolve(
+    './src/templates/questionnaire.js'
+  )
   const criterionTemplate = require.resolve('./src/templates/criterion.js')
   const criterionPartTemplate = require.resolve(
     './src/templates/criterion-part.js'
@@ -140,6 +143,15 @@ exports.createPages = async ({ graphql, actions }) => {
       modelImageName: config.modelImageAB,
       modelImageAssets: modelImageAssets,
       assets: homepageAssets,
+    },
+  })
+
+  createPage({
+    path: '/questionnaire',
+    component: questionnaireTemplate,
+    context: {
+      assessment: assessments.find(a => a.key === 'questionnaire'),
+      pillarColors,
     },
   })
 
