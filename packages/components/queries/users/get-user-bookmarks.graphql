@@ -1,5 +1,36 @@
 query getUserBookmarks($userId: Int!) {
   user_bookmarks(where: { user_id: { _eq: $userId } }) {
     article_id
+    bookmarked_article {
+      id
+      thumbnail
+      title
+      summary
+      created_at
+      published_at
+      updated_at
+      status
+      primary_taxonomy: taxonomy_items(
+        limit: 1
+        order_by: { taxonomy: { taxonomy_type: { order_index: asc } } }
+      ) {
+        taxonomy {
+          name
+          key
+        }
+      }
+      taxonomy_items {
+        taxonomy_id
+      }
+      authors {
+        author {
+          first_name
+          last_name
+        }
+      }
+      knowledge_type
+      path
+      editors_pick
+    }
   }
 }
