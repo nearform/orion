@@ -96,7 +96,7 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
     )
   }
 
-  const taxonomyKey = taxonomy || get(data, 'taxonomy.key')
+  const taxonomyKey = taxonomy || get(results, 'taxonomy.key')
 
   const handlePagination = dir => {
     if (isPreRendered) {
@@ -125,7 +125,7 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
               <Typography variant="h4" color="secondary">
                 {term
                   ? 'SEARCH RESULTS FOR'
-                  : get(data, 'taxonomy[0].taxonomy_type.name')}
+                  : get(data, 'taxonomy[0].taxonomy_type.name', '\u00A0')}
               </Typography>
               <Typography variant="h1" className={classes.term}>
                 {term ? <span>&lsquo;{term}&rsquo;</span> : sectionName}
