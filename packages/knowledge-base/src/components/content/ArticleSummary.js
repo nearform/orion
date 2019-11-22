@@ -16,16 +16,18 @@ const ArticleSummary = ({
   onBookmarkToggle,
   bookmarkButtonDisabled,
 }) => {
+  const link = `/content/${article.path}`
   return (
     <Box className={classes.summaryObj} component={component}>
       <Box className={classes.articleImageLink}>
         <ArticleVisualSummary
-          article={article}
+          link={link}
+          thumbnail={article.thumbnail}
           text={get(article, 'primary_taxonomy[0].taxonomy.name') || 'No Topic'}
         />
       </Box>
       <Box className={classes.articleSummary}>
-        <Link to={`/content/${article.path}`}>
+        <Link to={link}>
           <Typography className={classes.articleTitle} variant="h2">
             {article.title || 'No Title'}
           </Typography>
@@ -49,7 +51,7 @@ const ArticleSummary = ({
           }}
         />
         <Box alignItems="center" display="flex" flexDirection="row">
-          <Link to={`/content/${article.path}`} className={classes.readMore}>
+          <Link to={link} className={classes.readMore}>
             READ MORE
           </Link>
           <BookmarkButton
