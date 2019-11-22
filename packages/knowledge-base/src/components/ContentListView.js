@@ -8,42 +8,80 @@ import {
   useMediaQuery,
 } from '@material-ui/core'
 import get from 'lodash/get'
+
+import { useAuthorizedQuery, PaddedContainer } from 'components'
+
+import SEO from './SEO'
 import Taxonomies from './content/Taxonomies'
 import ArticleSummary from './content/ArticleSummary'
 import CondensedArticleSummary from './content/CondensedArticleSummary'
+
 import useTaxonomies from '../hooks/useTaxonomies'
 import useUserBookmarks from '../hooks/useUserBookmarks'
+
 import {
   getArticlesSearchResults,
   getArticlesCategoryResults,
 } from '../queries'
+
 import { getTaxonomyItemByKey, buildWhereClause } from '../utils/taxonomy'
-import { useAuthorizedQuery, PaddedContainer } from 'components'
-import SEO from './SEO'
 
 const PAGE_SIZE = 10
+
 const defaultAggregate = { aggregate: { count: 0 } }
 
-const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
-  const {
-    fetchUserBookmarks,
-    userBookmarks,
-    loadingBookmarks,
-  } = useUserBookmarks(true)
+const formatData = data => {
+  return {
+    articles:
+      get(data, 'article') ||
+      get(data, 'search_article') ||
+      get(data, 'user_bookmarks', []).map(
+        bookmark => bookmark.bookmarked_article
+      ) ||
+      [],
+    aggregate:
+      get(data, 'article_aggregate') ||
+      get(data, 'search_article_aggregate') || {
+        aggregate: { count: get(data, 'user_bookmarks', []).length },
+      } ||
+      defaultAggregate,
+    taxonomy: get(data, 'taxonomy'),
+  }
+}
 
-  const userBookmarksList = get(userBookmarks, 'user_bookmarks', []).map(
-    bookmark => bookmark.article_id
-  )
-
-  const isSmUp = useMediaQuery('(min-width:600px)')
-
+const BookmarkListView = ({ term, taxonomy, page = 1, results }) => {
   const taxonomyTypes = useTaxonomies()
   const [taxonomyIds, setTaxonomyIds] = useState([])
   const [touched, setTouched] = useState(false)
-
   const [currentPage, setCurrentPage] = useState(page)
   const offset = (currentPage - 1) * PAGE_SIZE
+  const { userBookmarks } = useUserBookmarks(true)
+  const data = formatData(userBookmarks)
+  return (
+    <StyledListContent
+      term={term}
+      taxonomy={taxonomy}
+      page={page}
+      results={results}
+      data={data}
+      taxonomyTypes={taxonomyTypes}
+      taxonomyIds={taxonomyIds}
+      setTaxonomyIds={setTaxonomyIds}
+      currentPage={currentPage}
+      setCurrentPage={setCurrentPage}
+      offset={offset}
+      touched={touched}
+      setTouched={setTouched}
+    />
+  )
+}
 
+const ArticleListView = ({ term, taxonomy, page, results }) => {
+  const taxonomyTypes = useTaxonomies()
+  const [taxonomyIds, setTaxonomyIds] = useState([])
+  const [touched, setTouched] = useState(false)
+  const [currentPage, setCurrentPage] = useState(page)
+  const offset = (currentPage - 1) * PAGE_SIZE
   const taxonomyKey = taxonomy || get(results, 'taxonomy.key')
 
   const variables = useMemo(
@@ -56,56 +94,68 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
     }),
     [taxonomy, taxonomyIds, taxonomyTypes, offset, term, taxonomyKey]
   )
-
-  const isPreRendered = !(touched || term || taxonomy)
-
-  const formatData = data => {
-    return {
-      articles:
-        get(data, 'article') ||
-        get(data, 'search_article') ||
-        get(data, 'user_bookmarks', []).map(
-          bookmark => bookmark.bookmarked_article
-        ) ||
-        [],
-      aggregate:
-        get(data, 'article_aggregate') ||
-        get(data, 'search_article_aggregate') || {
-          aggregate: { count: get(data, 'user_bookmarks', []).length },
-        } ||
-        defaultAggregate,
-      taxonomy: get(data, 'taxonomy'),
-    }
-  }
-
-  let { data } = useAuthorizedQuery(
+  const { data } = useAuthorizedQuery(
     term ? getArticlesSearchResults : getArticlesCategoryResults,
     variables,
     {
-      onPreFetch: () => !isPreRendered,
       onFetch: formatData,
       onNoFetch: () => formatData(results),
       useCache: false,
     }
   )
+  return (
+    <StyledListContent
+      term={term}
+      taxonomy={taxonomy}
+      page={page}
+      results={results}
+      data={data}
+      taxonomyTypes={taxonomyTypes}
+      taxonomyIds={taxonomyIds}
+      setTaxonomyIds={setTaxonomyIds}
+      currentPage={currentPage}
+      setCurrentPage={setCurrentPage}
+      offset={offset}
+      touched={touched}
+      setTouched={setTouched}
+    />
+  )
+}
 
-  if (taxonomyKey === 'my_bookmarks') {
-    data = formatData(userBookmarks)
-  }
-
+const ListContent = ({
+  classes,
+  term,
+  taxonomy,
+  results,
+  data,
+  taxonomyTypes,
+  taxonomyIds,
+  setTaxonomyIds,
+  currentPage,
+  setCurrentPage,
+  offset,
+  touched,
+  setTouched,
+}) => {
+  const {
+    fetchUserBookmarks,
+    userBookmarks,
+    loadingBookmarks,
+  } = useUserBookmarks()
+  const isSmUp = useMediaQuery('(min-width:600px)')
+  const taxonomyKey = taxonomy || get(results, 'taxonomy.key')
+  const isPreRendered = !(touched || term || taxonomy)
   const totalResults = get(data, 'aggregate.aggregate.count')
   const rangeMin = totalResults > PAGE_SIZE ? offset + 1 : totalResults
   const rangeMax =
     totalResults > PAGE_SIZE
       ? Math.min(offset + PAGE_SIZE, totalResults)
       : totalResults
-
   useEffect(() => {
     if (!isPreRendered) {
       setCurrentPage(1)
     }
-  }, [isPreRendered, term])
-
+  }, [isPreRendered, term, setCurrentPage])
   const handleTaxonomyFilter = (id, active) => {
     setTouched(true)
     setCurrentPage(1)
@@ -113,7 +163,6 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
       active ? [...taxonomyIds, id] : taxonomyIds.filter(item => item !== id)
     )
   }
-
   const handlePagination = dir => {
     if (isPreRendered) {
       navigate(
@@ -125,10 +174,8 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
       setCurrentPage(page => page + dir)
     }
   }
-
   const section = getTaxonomyItemByKey(taxonomyTypes, taxonomyKey)
   const sectionName = get(section, 'name', '')
-
   return (
     <PaddedContainer>
       <SEO
@@ -154,7 +201,6 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
             </Grid>
           </Grid>
         </Grid>
-
         <Grid item xs={12}>
           <Grid container spacing={3}>
             <Grid item xs={3}>
@@ -171,7 +217,7 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
                 isSmUp ? (
                   <ArticleSummary
                     article={article}
-                    bookmarked={userBookmarksList.includes(article.id)}
+                    bookmarked={userBookmarks.includes(article.id)}
                     bookmarkButtonDisabled={loadingBookmarks}
                     onBookmarkToggle={fetchUserBookmarks}
                     key={`article-${article.id}`}
@@ -179,7 +225,7 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
                 ) : (
                   <CondensedArticleSummary
                     article={article}
-                    bookmarked={userBookmarksList.includes(article.id)}
+                    bookmarked={userBookmarks.includes(article.id)}
                     bookmarkButtonDisabled={loadingBookmarks}
                     onBookmarkToggle={fetchUserBookmarks}
                     filterText={term ? term : sectionName}
@@ -190,7 +236,6 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
             </Grid>
           </Grid>
         </Grid>
-
         <Grid item xs={12}>
           <Grid container spacing={3} alignItems="center" justify="flex-end">
             {offset > 0 ? (
@@ -218,8 +263,7 @@ const ListContent = ({ classes, term, taxonomy, page = 1, results }) => {
     </PaddedContainer>
   )
 }
-
-export default withStyles(theme => ({
+const StyledListContent = withStyles(theme => ({
   pageHeader: {
     borderBottom: `1px solid ${theme.palette.tertiary.light}`,
     '& h1': {
@@ -275,3 +319,23 @@ export default withStyles(theme => ({
     },
   },
 }))(ListContent)
+
+const ContentListView = ({ term, taxonomy, page = 1, results }) => {
+  const taxonomyKey = taxonomy || get(results, 'taxonomy.key')
+  return taxonomyKey === 'my_bookmarks' ? (
+    <BookmarkListView
+      term={term}
+      taxonomy={taxonomy}
+      page={page}
+      results={results}
+    />
+  ) : (
+    <ArticleListView
+      term={term}
+      taxonomy={taxonomy}
+      page={page}
+      results={results}
+    />
+  )
+}
+export default ContentListView
