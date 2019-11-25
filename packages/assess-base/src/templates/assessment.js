@@ -411,7 +411,7 @@ function AssessmentTemplate({
                       ) : null
                     )}
                   </Grid>
-                  <Grid item xs>
+                  <Grid item xs className={classes.participants}>
                     <Button
                       variant="outlined"
                       color="secondary"
@@ -637,6 +637,7 @@ const styles = theme => ({
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
     marginRight: -theme.spacing(1),
+    padding: '4px 16px',
     '& > *': {
       marginRight: theme.spacing(1),
       marginBottom: theme.spacing(2),
