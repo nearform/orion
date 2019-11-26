@@ -7,6 +7,7 @@ const managementStructure = require('./key-information-details/management-struct
 module.exports = [
   require('./business-matrix.json'),
   require('./business-matrix-advanced.json'),
+  require('./questionnaire.json'),
   {
     key: 'key-information-details',
     overview,
