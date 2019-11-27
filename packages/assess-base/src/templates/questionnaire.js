@@ -166,7 +166,7 @@ function QuestionnaireTemplate({
           className={classes.section}
           data-testid="assessment__key-information"
         >
-          <Grid container spacing={4}>
+          <Grid container spacing={4} className={classes.topGrid}>
             <Grid
               item
               xs={9}
@@ -178,7 +178,7 @@ function QuestionnaireTemplate({
               <Grid item container>
                 <Grid item xs={4}>
                   <SectionTitle
-                    barColor={theme.palette.primary.dark}
+                    barColor={theme.palette.secondary.main}
                     className={classes.sectionTitle}
                     gutterBottom
                   >
@@ -329,7 +329,7 @@ function QuestionnaireTemplate({
                   </Grid>
                 </Grid>
               )}
-              <Grid item xs={7}>
+              <Grid item xs={9}>
                 <Typography variant="body2">
                   {t(`A simple assessments tool with about 5 questions per criteria
                   of the EFQM Model. The best tool to conduct a first
@@ -395,24 +395,8 @@ const styles = theme => ({
   filesSeparator: {
     borderLeft: `solid 1px ${theme.palette.background.light}`,
   },
-  keyInformationHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: theme.spacing(2),
-  },
-  keyInformationSectionHeadingWrapper: {
-    alignItems: 'flex-start',
-    display: 'flex',
-  },
-  keyInformationSectionHeading: {
-    flexGrow: '1',
-  },
-  keyInformationSectionHeadingMoreInfo: {
-    ...theme.typography.h3,
-    color: theme.palette.secondary.main,
-    cursor: 'pointer',
-    marginLeft: theme.spacing(2),
-    whiteSpace: 'nowrap',
+  topGrid: {
+    marginBottom: theme.spacing(18),
   },
   buttonBar: {
     marginTop: theme.spacing(2),
