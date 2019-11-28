@@ -69,12 +69,14 @@ const ArticleList = ({ classes, path }) => {
           data.article.map(article => (
             <TableRow hover key={article.id} size="small">
               <TableCell>{article.title}</TableCell>
-              {isPlatformGroup && (
-                <TableCell>
-                  {get(article, 'createdBy.first_name')}{' '}
-                  {get(article, 'createdBy.last_name')}
-                </TableCell>
-              )}
+              <TableCell>
+                {isPlatformGroup && (
+                  <>
+                    {get(article, 'createdBy.first_name')}{' '}
+                    {get(article, 'createdBy.last_name')}
+                  </>
+                )}
+              </TableCell>
               <TableCell>{formatDateTime(article.updated_at)}</TableCell>
               <TableCell>{knowledgeTypes[article.knowledge_type]}</TableCell>
               <TableCell>
