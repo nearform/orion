@@ -104,6 +104,7 @@ function QuestionnaireTemplate({
         key: assessment.key,
         name,
         owner_id: userId,
+        internal: false,
       },
     })
     const id = get(data, 'insert_assessment.returning.0.id')
