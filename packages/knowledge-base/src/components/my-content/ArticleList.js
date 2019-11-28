@@ -98,9 +98,7 @@ const ArticleList = ({ classes, path }) => {
                 <IconButton
                   className={classes.icon}
                   component={Link}
-                  to={`/content${
-                    article.status !== 'published' ? '-preview' : ''
-                  }/${article.path}`}
+                  to={`/my-content/preview/${article.id}`}
                 >
                   <InsertDriveFileIcon />
                 </IconButton>

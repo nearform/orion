@@ -5,6 +5,22 @@ import urlSlug from 'url-slug'
 import * as Yup from 'yup'
 import { UploadImageWidget } from 'components'
 import { UserAvatar, AuthContext, EmbeddedVideo } from 'components'
+import {
+  Checkbox,
+  withStyles,
+  Radio,
+  Grid,
+  Typography,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+} from '@material-ui/core'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { Formik, Form, Field, FastField } from 'formik'
+import { fieldToCheckbox, TextField } from 'formik-material-ui'
+import get from 'lodash/get'
+import difference from 'lodash/difference'
+
 import { constructImageUrl } from '../../../utils/image'
 
 import {
@@ -18,27 +34,14 @@ import {
   deleteRecommendedArticlesMutation,
   addRecommendedArticlesMutation,
 } from '../../../queries'
-import { Formik, Form, Field, FastField } from 'formik'
-import { fieldToCheckbox, TextField } from 'formik-material-ui'
-import {
-  Checkbox,
-  withStyles,
-  Radio,
-  Grid,
-  Typography,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
-} from '@material-ui/core'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import get from 'lodash/get'
-import difference from 'lodash/difference'
+
 import BoxControlLabel from '../../BoxControlLabel'
 import SEO from '../../SEO'
 import SelectAuthor from './SelectAuthor'
 import EditArticleButtons from './EditArticleButtons'
 import ReviewArticleButtons from './ReviewArticleButtons'
 import PublishedArticleButtons from './PublishedArticleButtons'
+import PreviewArticleButton from './PreviewArticleButton'
 import SelectArticleRecommendations from './SelectArticleRecommendations'
 import FormikRichTextEditor from './FormikRichTextEditor'
 
@@ -277,6 +280,7 @@ function EditArticle({ classes, articleId }) {
       >
         {({
           values,
+          dirty,
           handleSubmit,
           isSubmitting,
           submitForm,
@@ -488,7 +492,6 @@ function EditArticle({ classes, articleId }) {
                 </div>
               </Grid>
               <Grid item xs={2} className={classes.rightToolbar}>
-                {/*todo better handling of disabled fields}*/}
                 <div className={classes.fieldLabel}>
                   <UploadImageWidget
                     alwaysShowBox
@@ -505,6 +508,13 @@ function EditArticle({ classes, articleId }) {
                       in search engines.
                     </Typography>
                   </div>
+                </div>
+                <div>
+                  <PreviewArticleButton
+                    articleId={articleId}
+                    dirty={dirty}
+                    submitForm={submitForm}
+                  />
                 </div>
               </Grid>
             </Grid>
