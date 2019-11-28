@@ -20,7 +20,7 @@ const ArticleList = ({ classes, path }) => {
   const { getUserTokenData } = useContext(AuthContext)
   const { userId, isPlatformGroup } = getUserTokenData()
   const [statusFilter, setStatusFilter] = useState()
-  const [pageTitle, setPageTitle] = useState()
+  const [pageTitle, setPageTitle] = useState('All Stories')
 
   useEffect(() => {
     const inReview = path === '/needs-review'
@@ -57,7 +57,7 @@ const ArticleList = ({ classes, path }) => {
 
   return (
     <>
-      <SEO pageTitle={pageTitle} />
+      <SEO title={pageTitle} />
       <ContentToolbar pageTitle="Content" />
       <QueryTable
         headers={headers}
