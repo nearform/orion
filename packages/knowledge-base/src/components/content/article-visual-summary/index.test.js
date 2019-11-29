@@ -15,8 +15,9 @@ describe('<ArticleVisualSummary />', () => {
   let articleVisualSummary, link
 
   beforeAll(() => {
+    const { path, thumbnail } = articleMock
     articleVisualSummary = TestRenderer.create(
-      <ArticleVisualSummary article={articleMock} />
+      <ArticleVisualSummary link={`/content/${path}`} thumbnail={thumbnail} />
     ).root
     link = articleVisualSummary.findAll(aPredicate)
   })
@@ -49,8 +50,13 @@ describe('<ArticleVisualSummary />', () => {
 
   describe('with text added', () => {
     beforeAll(() => {
+      const { path, thumbnail } = articleMock
       articleVisualSummary = TestRenderer.create(
-        <ArticleVisualSummary article={articleMock} text="Test Text" />
+        <ArticleVisualSummary
+          link={`/content/${path}`}
+          thumbnail={thumbnail}
+          text="Test Text"
+        />
       ).root
     })
 
@@ -62,12 +68,9 @@ describe('<ArticleVisualSummary />', () => {
 
   describe('with link set to false', () => {
     test('doesnt render an a tag', () => {
+      const { thumbnail } = articleMock
       articleVisualSummary = TestRenderer.create(
-        <ArticleVisualSummary
-          article={articleMock}
-          link={false}
-          text="Test Text"
-        />
+        <ArticleVisualSummary thumbnail={thumbnail} text="Test Text" />
       ).root
       expect(articleVisualSummary.findAll(aPredicate).length).toEqual(0)
     })

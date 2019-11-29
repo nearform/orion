@@ -3,7 +3,7 @@ import { getUserBookmarks } from '../queries'
 import { AuthContext, useAuthorizedQuery } from 'components'
 import get from 'lodash/get'
 
-const useUserBookmarks = () => {
+const useUserBookmarks = (fullData = false) => {
   const { getUserTokenData } = useContext(AuthContext)
   const { userId } = getUserTokenData()
 
@@ -17,7 +17,11 @@ const useUserBookmarks = () => {
     {
       onPreFetch: () => !!userId,
       onFetch: data =>
-        get(data, 'user_bookmarks', []).map(bookmark => bookmark.article_id),
+        fullData
+          ? data
+          : get(data, 'user_bookmarks', []).map(
+              bookmark => bookmark.article_id
+            ),
       onNoFetch: () => [],
     }
   )
