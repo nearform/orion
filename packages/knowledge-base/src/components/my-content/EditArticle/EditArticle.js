@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
+import * as Yup from 'yup'
 import { UploadImageWidget } from 'components'
 import { UserAvatar, AuthContext, EmbeddedVideo } from 'components'
 import { constructImageUrl } from '../../../utils/image'
@@ -48,6 +49,11 @@ const diff = (previous, current) => [
   difference(previous, current),
 ]
 
+const ArticleSchema = Yup.object().shape({
+  title: Yup.string().required('Please enter a title'),
+  subtitle: Yup.string().required('Please enter a subtitle'),
+})
+
 function EditArticle({ classes, articleId }) {
   const { getUserTokenData } = useContext(AuthContext)
   const { userId, isPlatformGroup } = getUserTokenData()
@@ -77,7 +83,7 @@ function EditArticle({ classes, articleId }) {
   //TODO: nicer loading indication
   if (!articleDetails || !taxonomyTypes) return null
 
-  //TODO: better handling of roles, reddirect to a article list page?
+  //TODO: better handling of roles, redirect to a article list page?
   if (
     !(
       articleDetails.created_by_id === userId &&
@@ -95,8 +101,8 @@ function EditArticle({ classes, articleId }) {
   const initialValues = {
     knowledgeType: articleDetails.knowledge_type,
     authors: articleDetails.authors,
-    title: articleDetails.title,
-    subtitle: articleDetails.subtitle,
+    title: articleDetails.title || '',
+    subtitle: articleDetails.subtitle || '',
     summary: articleDetails.summary,
     fields: fieldsMap,
     thumbnail: articleDetails.thumbnail,
@@ -257,8 +263,18 @@ function EditArticle({ classes, articleId }) {
 
   return (
     <>
-      <SEO title={`Edit Article - ${articleDetails.title}`} />
-      <Formik initialValues={initialValues} onSubmit={saveArticle}>
+      <SEO
+        title={
+          articleDetails.title != null
+            ? `Edit Article - ${articleDetails.title}`
+            : 'New Article'
+        }
+      />
+      <Formik
+        initialValues={initialValues}
+        onSubmit={saveArticle}
+        validationSchema={ArticleSchema}
+      >
         {({
           values,
           handleSubmit,

@@ -192,7 +192,7 @@ function ContributorsAssessorsTemplate({
       <PaddedContainer>
         <Button
           component={Link}
-          to={`assessment/${assessment.key}/#${assessmentId}`}
+          to={`/assessment/${assessment.key}/#${assessmentId}`}
           color="secondary"
         >
           ◀ {t('Assessment Home')}
@@ -274,7 +274,7 @@ function ContributorsAssessorsTemplate({
               <UserFilter setFilterText={setFilterText} />
               <Button
                 component={Link}
-                to={`assessment/${assessment.key}/#${assessmentId}`}
+                to={`/assessment/${assessment.key}/#${assessmentId}`}
                 color="secondary"
                 variant="contained"
               >
