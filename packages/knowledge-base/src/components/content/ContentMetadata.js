@@ -68,7 +68,7 @@ const ContentMetadata = ({ classes, content }) => {
         ))}
       </Grid>
       <Grid item xs={5} sm={12}>
-        <PublishDate date={content.published_at} />
+        {content.published_at && <PublishDate date={content.published_at} />}
       </Grid>
       <Grid item xs={5} sm={12}>
         {content.fields && <ReadTime fields={content.fields} />}

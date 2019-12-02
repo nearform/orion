@@ -20,7 +20,7 @@ const ArticleList = ({ classes, path }) => {
   const { getUserTokenData } = useContext(AuthContext)
   const { userId, isPlatformGroup } = getUserTokenData()
   const [statusFilter, setStatusFilter] = useState()
-  const [pageTitle, setPageTitle] = useState()
+  const [pageTitle, setPageTitle] = useState('All Stories')
 
   useEffect(() => {
     const inReview = path === '/needs-review'
@@ -57,7 +57,7 @@ const ArticleList = ({ classes, path }) => {
 
   return (
     <>
-      <SEO pageTitle={pageTitle} />
+      <SEO title={pageTitle} />
       <ContentToolbar pageTitle="Content" />
       <QueryTable
         headers={headers}
@@ -69,12 +69,14 @@ const ArticleList = ({ classes, path }) => {
           data.article.map(article => (
             <TableRow hover key={article.id} size="small">
               <TableCell>{article.title}</TableCell>
-              {isPlatformGroup && (
-                <TableCell>
-                  {get(article, 'createdBy.first_name')}{' '}
-                  {get(article, 'createdBy.last_name')}
-                </TableCell>
-              )}
+              <TableCell>
+                {isPlatformGroup && (
+                  <>
+                    {get(article, 'createdBy.first_name')}{' '}
+                    {get(article, 'createdBy.last_name')}
+                  </>
+                )}
+              </TableCell>
               <TableCell>{formatDateTime(article.updated_at)}</TableCell>
               <TableCell>{knowledgeTypes[article.knowledge_type]}</TableCell>
               <TableCell>
@@ -96,9 +98,7 @@ const ArticleList = ({ classes, path }) => {
                 <IconButton
                   className={classes.icon}
                   component={Link}
-                  to={`/content${
-                    article.status !== 'published' ? '-preview' : ''
-                  }/${article.path}`}
+                  to={`/my-content/preview/${article.id}`}
                 >
                   <InsertDriveFileIcon />
                 </IconButton>

@@ -23,6 +23,10 @@ query getArticles(
     published_at
     updated_at
     status
+    createdBy {
+      last_name
+      first_name
+    }
     authors {
       author {
         first_name

@@ -25,7 +25,7 @@ import SEO from './SEO'
 import { constructImageUrl } from '../utils/image'
 import { getArticleDetails, getArticleSummary } from '../queries'
 
-function ContentView({ slug, classes, articleSummary }) {
+function ContentView({ slug, classes, articleSummary, preview = false }) {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
 
@@ -87,7 +87,7 @@ function ContentView({ slug, classes, articleSummary }) {
 
   return (
     <PaddedContainer>
-      <SEO title={article.title} />
+      <SEO title={`${preview && 'Preview '} ${article.title}`} />
       <Grid
         container
         spacing={2}

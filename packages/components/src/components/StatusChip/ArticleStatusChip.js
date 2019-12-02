@@ -92,11 +92,6 @@ const styles = theme => {
       marginLeft: '-5px',
       marginRight: '5px',
     },
-    status: {
-      textTransform: 'none',
-      // color: theme.palette.primary.dark,
-      // padding: theme.spacing(0.5, 0),
-    },
   }
 }
 
