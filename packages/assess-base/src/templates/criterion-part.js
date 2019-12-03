@@ -177,7 +177,8 @@ function CriterionPartTemplate({
             canEdit={canEditTablesAndUpload}
             criteriaList={criteriaList}
             paginationNode={
-              tableIndex === 0 && (
+              tableIndex === 0 &&
+              assessment.matrixType !== 'basic' && (
                 <CriterionPartPagination
                   assessmentId={assessmentId}
                   link={Link}

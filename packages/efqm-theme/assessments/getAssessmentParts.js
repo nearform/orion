@@ -1,6 +1,6 @@
 const assessmentKeys = {
   questionnaire: 'questionnaire.json',
-  'efqm-2020': 'business-matrix.json',
+  'efqm-2020': 'business-matrix-basic.json',
   'efqm-2020-advanced': 'business-matrix-advanced.json',
 }
 

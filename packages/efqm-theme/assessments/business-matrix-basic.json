@@ -1,0 +1,376 @@
+{
+  "key": "efqm-2020",
+  "name": "business matrix",
+  "matrixType": "basic",
+  "tableName": "Business Matrix",
+  "orderIndex": 2,
+  "logoAsset": "assess-2-img",
+  "shortDescription": "This tool allows organisation to complete an assessment against the criteria of the EFQM Model and score based on the RADAR elements.  The information captured for each criterion generate a first Enablers Maps.",
+  "guidance": "We are here to guide you how the business matrix works",
+  "keyInformation": {
+    "guidance": "Key Information is those key facts about your organisation which help Assessorsto gain an overall view of your organisation and its strategic context.",
+    "keyInformationItems": [
+      {
+        "key": "overview",
+        "name": "facts & figures"
+      },
+      {
+        "key": "challenges-and-strategy",
+        "name": "challenges & strategy of the organization"
+      },
+      {
+        "key": "operations-partners-suppliers",
+        "name": "operations, partners & suppliers"
+      },
+      {
+        "key": "market-offerings-and-customers",
+        "name": "market, offerings and customers"
+      },
+      {
+        "key": "management-structure",
+        "name": "management structure and activities"
+      }
+    ]
+  },
+  "pillars": [
+    {
+      "key": "direction",
+      "name": "direction",
+      "criteria": [
+        {
+          "key": "purpose-strategy",
+          "name": "purpose & strategy",
+          "description": "The Organisation has clearly defined its Purpose, including the value it will create for its Stakeholders and the wider Ecosystem in which it operates\nThe Purpose of the Organisation governs the way it operates and constantly strives to improve.\nThe Strategy of the Organisation describes the way in which it intends to fulfil its Purpose, move ever closer to its Vision and, more specifically, plan to reach the Perception & Performance objectives that it has set for itself\n- 1a: Set & Communicate Purpose & Vision\n- 1b: Understand the External Environment, Key Challenges & Own Capabilities\n- 1c: Develop and Update Strategy\n- 1d: Unite Behind and Engage in Purpose & Strategy",
+          "guidance": "We are here to guide you how the purpose strategy works",
+          "translations": {
+            "de": {
+              "name": "[DE] purpose & strategy",
+              "description": "# DE\nThe Organisation has clearly defined its Purpose, including the value it will create for its Stakeholders and the wider Ecosystem in which it operates\nThe Purpose of the Organisation governs the way it operates and constantly strives to improve.\nThe Strategy of the Organisation describes the way in which it intends to fulfil its Purpose, move ever closer to its Vision and, more specifically, plan to reach the Perception & Performance objectives that it has set for itself\n- 1a: Set & Communicate Purpose & Vision\n- 1b: Understand the External Environment, Key Challenges & Own Capabilities\n- 1c: Develop and Update Strategy\n- 1d: Unite Behind and Engage in Purpose & Strategy"
+            }
+          },
+          "parts": [
+            {
+              "guidance": "some guidance",
+              "tables": [
+                {
+                  "key": "purpose-vision",
+                  "name": "1a. Set & communicate purpose & vision",
+                  "guidance": "We are here to guide you how to complete the purpose and vision criterion part",
+                  "columns": [
+                    {
+                      "key": "approach",
+                      "name": "what we do (approach)"
+                    },
+                    {
+                      "key": "deployment",
+                      "name": "how we do it (deployment)"
+                    },
+                    {
+                      "key": "assessment-refinement",
+                      "name": "how & when we review it (assessment & refinement)"
+                    },
+                    {
+                      "key": "evidence",
+                      "name": "how we show this (evidence)"
+                    },
+                    {
+                      "key": "owner",
+                      "name": "owner"
+                    },
+                    {
+                      "key": "links",
+                      "name": "efqm links",
+                      "type": "link"
+                    }
+                  ]
+                }
+              ],
+              "feedbackTables": [
+                {
+                  "key": "strengths",
+                  "columns": [
+                    {
+                      "key": "strengths",
+                      "name": "strengths"
+                    }
+                  ]
+                },
+                {
+                  "key": "areas-of-improvement",
+                  "columns": [
+                    {
+                      "key": "areas-of-improvement",
+                      "name": "areas of improvement"
+                    }
+                  ]
+                },
+                {
+                  "key": "good-practice",
+                  "columns": [
+                    {
+                      "key": "good-practice",
+                      "name": "good practice"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "guidance": "some guidance to purpose and strategy part 2",
+              "tables": [
+                {
+                  "key": "strategic-vision",
+                  "name": "define strategic vision based on purpose",
+                  "columns": [
+                    {
+                      "key": "placeholder",
+                      "name": "placeholder columns (placeholders)"
+                    },
+                    {
+                      "key": "goals",
+                      "name": "long term targets (goals)"
+                    },
+                    {
+                      "key": "milestones",
+                      "name": "key steps towards meeting goals (milestones)"
+                    },
+                    {
+                      "key": "resources",
+                      "name": "resources available to use (resources)"
+                    },
+                    {
+                      "key": "needs",
+                      "name": "resources needed not currently available (needs)"
+                    }
+                  ]
+                }
+              ],
+              "feedbackTables": [
+                {
+                  "key": "strengths",
+                  "columns": [
+                    {
+                      "key": "strengths",
+                      "name": "strengths"
+                    }
+                  ]
+                },
+                {
+                  "key": "areas-of-improvement",
+                  "columns": [
+                    {
+                      "key": "areas-of-improvement",
+                      "name": "areas of improvement"
+                    }
+                  ]
+                },
+                {
+                  "key": "good-practice",
+                  "columns": [
+                    {
+                      "key": "good-practice",
+                      "name": "good practice"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "leadership-culture",
+          "name": "organisational leadership & culture",
+          "parts": []
+        }
+      ],
+      "scoring": [
+        {
+          "key": "relevance-usability",
+          "name": "relevance & usability",
+          "scores": [
+            {
+              "key": "scope-relevance",
+              "name": "scope & relevance",
+              "description": "A coherent set of results, including key results, are identified that demonstrate the performance of the organisation in terms of strategy, objectives and the needs and expectations of stakeholders."
+            },
+            {
+              "key": "integrity",
+              "name": "integrity",
+              "description": "..."
+            },
+            {
+              "key": "segmentation",
+              "name": "segmentation",
+              "description": "..."
+            }
+          ]
+        },
+        {
+          "key": "performance",
+          "name": "performance",
+          "scores": [
+            {
+              "key": "trends",
+              "name": "trends"
+            },
+            {
+              "key": "targets",
+              "name": "targets"
+            },
+            {
+              "key": "comparisons",
+              "name": "comparisons"
+            },
+            {
+              "key": "confidence",
+              "name": "confidence"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "execution",
+      "name": "execution",
+      "criteria": [
+        {
+          "key": "engaging-stakeholders",
+          "name": "engaging with stakeholders",
+          "description": "Placeholder content for the Engaging with Stakeholders criteria under the Execution pillar.",
+          "parts": [
+            {
+              "guidance": "some placeholder guidance",
+              "tables": [
+                {
+                  "key": "example-table-1",
+                  "name": "example table 1",
+                  "columns": [
+                    {
+                      "key": "example-input-1",
+                      "name": "example input 1"
+                    },
+                    {
+                      "key": "example-input-2",
+                      "name": "example input 2"
+                    },
+                    {
+                      "key": "example-input-3",
+                      "name": "example input 3"
+                    },
+                    {
+                      "key": "example-input-4",
+                      "name": "example input 4"
+                    }
+                  ]
+                },
+                {
+                  "key": "example-table-2",
+                  "name": "example table 2",
+                  "columns": [
+                    {
+                      "key": "example-input-5",
+                      "name": "example input 5"
+                    },
+                    {
+                      "key": "example-input-6",
+                      "name": "example input 6"
+                    }
+                  ]
+                }
+              ],
+              "feedbackTables": [
+                {
+                  "key": "strengths",
+                  "columns": [
+                    {
+                      "key": "strengths",
+                      "name": "strengths"
+                    }
+                  ]
+                },
+                {
+                  "key": "areas-of-improvement",
+                  "columns": [
+                    {
+                      "key": "areas-of-improvement",
+                      "name": "areas of improvement"
+                    }
+                  ]
+                },
+                {
+                  "key": "good-practice",
+                  "columns": [
+                    {
+                      "key": "good-practice",
+                      "name": "good practice"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "creating-value",
+          "name": "creating sustainable value",
+          "parts": []
+        },
+        {
+          "key": "performance-transformation",
+          "name": "driving performance and transformation",
+          "parts": []
+        }
+      ],
+      "scoring": [
+        {
+          "key": "scoring-section-1",
+          "name": "Example scoring section 1",
+          "scores": [
+            {
+              "key": "example-1",
+              "name": "example score 1",
+              "description": "Example description 1."
+            },
+            {
+              "key": "example-2",
+              "name": "example score 2",
+              "description": "Example description 2."
+            }
+          ]
+        },
+        {
+          "key": "scoring-section-2",
+          "name": "Example scoring section 2",
+          "scores": [
+            {
+              "key": "example-3",
+              "name": "example score 3",
+              "description": "Example description 3."
+            },
+            {
+              "key": "example-4",
+              "name": "example score 4",
+              "description": "Example description 4."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "results",
+      "name": "results",
+      "criteria": [
+        {
+          "key": "stakeholder-perceptions",
+          "name": "stakeholder perceptions",
+          "parts": []
+        },
+        {
+          "key": "organisational-performance",
+          "name": "organisational performance",
+          "parts": []
+        }
+      ]
+    }
+  ]
+}
