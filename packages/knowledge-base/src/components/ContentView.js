@@ -9,7 +9,6 @@ import {
   LinearProgress,
   useMediaQuery,
 } from '@material-ui/core'
-
 import ContentMetadata from './content/ContentMetadata'
 import ContentOptions from './content/ContentOptions'
 import FeatureArticles from './list/FeatureArticles'
@@ -22,10 +21,15 @@ import {
   EmbeddedVideo,
 } from 'components'
 import SEO from './SEO'
-import { constructImageUrl } from '../utils/image'
 import { getArticleDetails, getArticleSummary } from '../queries'
 
-function ContentView({ slug, classes, articleSummary, preview = false }) {
+function ContentView({
+  slug,
+  classes,
+  articleSummary,
+  imgSrc,
+  preview = false,
+}) {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
 
@@ -112,11 +116,7 @@ function ContentView({ slug, classes, articleSummary, preview = false }) {
             {article.banner && (
               <div className={classes.bannerImageWrapper}>
                 <figure>
-                  <img
-                    className={classes.bannerImage}
-                    src={constructImageUrl(article.banner)}
-                    alt=""
-                  />
+                  <img src={imgSrc} className={classes.bannerImage} alt="" />
                 </figure>
               </div>
             )}
