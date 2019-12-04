@@ -1,6 +1,8 @@
 {
   "key": "efqm-2020",
-  "name": "Matriz de Evaluación por Criterios",
+  "name": "business matrix",
+  "matrixType": "basic",
+  "tableName": "Matriz de Evaluación por Criterios",
   "orderIndex": 2,
   "logoAsset": "assess-2-img",
   "shortDescription": "Esta herramienta permite a la organización completar una evaluación usando los criterios del Modelo EFQM y obtener una puntuación basada en los elementos REDER. La información obtenida para cada criterio, genera un primer mapa de facilitadores.",

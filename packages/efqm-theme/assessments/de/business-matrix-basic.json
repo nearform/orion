@@ -1,6 +1,8 @@
 {
   "key": "efqm-2020",
-  "name": "Unternehmensmatrix (Business Matrix)",
+  "name": "business matrix",
+  "matrixType": "basic",
+  "tableName": "Unternehmensmatrix (Business Matrix)",
   "orderIndex": 2,
   "logoAsset": "assess-2-img",
   "shortDescription": "Dieses Bewertungstool gibt Unternehmen die Möglichkeit, basierend auf den Kriterien des EFQM Modells eine Selbstbewertung durchzuführen. Die Punktevergabe erfolgt basierend auf der RADAR Logik. Mittels der Informationen, die für jedes Kriterium erfasst werden, wird eine erste Enabler Map (Übersicht über die Maßnahmen) erstellt.",

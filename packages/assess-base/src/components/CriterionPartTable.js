@@ -14,8 +14,8 @@ import {
   deleteAssessmentTableRowMutation,
 } from '../queries'
 
-import CriterionPartInput from '../components/CriterionPartInput'
-import CriterionPartHeader from '../components/CriterionPartHeader'
+import CriterionPartInput from './CriterionPartInput'
+import CriterionPartHeader from './CriterionPartHeader'
 
 function getEmptyTableRow(columnsDef) {
   return columnsDef.reduce(
