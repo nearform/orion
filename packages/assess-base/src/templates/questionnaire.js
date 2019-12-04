@@ -44,7 +44,6 @@ import { filterOldScores } from '../utils/filter-old-scores'
 
 const assessmentValidationSchema = Yup.object().shape({
   name: Yup.string().required(),
-  internal: Yup.boolean().required(),
 })
 
 function QuestionnaireTemplate({
@@ -357,7 +356,7 @@ function QuestionnaireTemplate({
         </div>
         <AssessmentPillars
           assessment={assessment}
-          assessmentData={{}}
+          assessmentData={assessmentData}
           pillarColors={pillarColors}
         />
       </PaddedContainer>

@@ -30,6 +30,9 @@ exports.createPages = async ({ graphql, actions }) => {
   const questionnaireTemplate = require.resolve(
     './src/templates/questionnaire.js'
   )
+  const questionnaireScoringTemplate = require.resolve(
+    './src/templates/questionnaire-scoring.js'
+  )
   const criterionTemplate = require.resolve('./src/templates/criterion.js')
   const criterionPartTemplate = require.resolve(
     './src/templates/criterion-part.js'
@@ -312,50 +315,24 @@ exports.createPages = async ({ graphql, actions }) => {
         const pillarColor = pillarColors[pillarIndex]
 
         pillar.criteria.forEach(criterion => {
-          const criterionPagePath = createCriterionPagePath(pillar, criterion)
+          const questionnaireScoringPagePath = createCriterionPagePath(
+            pillar,
+            criterion
+          )
 
           createPage({
-            path: criterionPagePath,
-            component: criterionTemplate,
+            path: questionnaireScoringPagePath,
+            component: questionnaireScoringTemplate,
             context: {
               assessment,
               pillar,
+              part: criterion.parts[0],
               criterion,
               pillarColor,
+              pillarColors,
+              partNumber: 1,
+              criteriaList,
             },
-          })
-
-          const createCriterionPartLink = partNumber =>
-            `${criterionPagePath}/${partNumber}`
-
-          criterion.parts.forEach((part, partIndex, { length: totalParts }) => {
-            const isFirst = partIndex === 0
-            const isLast = partIndex === totalParts - 1
-            const partNumber = partIndex + 1
-            const previousLink = isFirst
-              ? `/${criterionPagePath}`
-              : createCriterionPartLink(partNumber - 1)
-            const nextLink = isLast
-              ? `/assessment/${assessment.key}`
-              : createCriterionPartLink(partNumber + 1)
-
-            createPage({
-              path: createCriterionPartLink(partNumber),
-              component: criterionPartTemplate,
-              context: {
-                partNumber,
-                part,
-                assessment,
-                pillar,
-                criterion,
-                pillarColor,
-                pillarColors,
-                previousLink,
-                nextLink,
-                totalParts,
-                criteriaList,
-              },
-            })
           })
         })
       })
