@@ -9,7 +9,7 @@ import {
   LinearProgress,
   useMediaQuery,
 } from '@material-ui/core'
-
+import { constructImageUrl } from '../utils/image'
 import ContentMetadata from './content/ContentMetadata'
 import ContentOptions from './content/ContentOptions'
 import FeatureArticles from './list/FeatureArticles'
@@ -22,7 +22,6 @@ import {
   EmbeddedVideo,
 } from 'components'
 import SEO from './SEO'
-import { constructImageUrl } from '../utils/image'
 import { getArticleDetails, getArticleSummary } from '../queries'
 
 function ContentView({ slug, classes, articleSummary }) {
@@ -113,8 +112,8 @@ function ContentView({ slug, classes, articleSummary }) {
               <div className={classes.bannerImageWrapper}>
                 <figure>
                   <img
-                    className={classes.bannerImage}
                     src={constructImageUrl(article.banner)}
+                    className={classes.bannerImage}
                     alt=""
                   />
                 </figure>
