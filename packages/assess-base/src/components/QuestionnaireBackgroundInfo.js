@@ -133,9 +133,11 @@ function QuestionnaireBackgroundInfo({
   const [column] = columnsDef
 
   return (
-    <Grid container>
-      <Grid item xs={3}>
-        <SectionTitle barColor={pillarColor}>{tableDef.name}</SectionTitle>
+    <Grid container className={classes.root}>
+      <Grid item xs={3} className={classes.titleGrid}>
+        <SectionTitle barColor={theme.palette.secondary.main}>
+          {tableDef.name}
+        </SectionTitle>
       </Grid>
       <Grid item xs={9}>
         <Formik
@@ -147,16 +149,24 @@ function QuestionnaireBackgroundInfo({
           {({ isSubmitting, dirty, values, setFieldValue }) => (
             <Form className={classes.section}>
               <Grid container direction="column" spacing={2}>
-                <Grid item container spacing={1} wrap="nowrap">
+                <Grid item container wrap="nowrap">
                   <Grid item xs>
-                    <Grid container spacing={2} alignItems="flex-end">
+                    <Grid container alignItems="flex-end">
                       <Field
                         id={`${tableDef.key}-${column.key}`}
                         key={column.key}
                         disabled={!canEdit}
                         component={TextField}
                         name={column.key}
-                        className={classes.field}
+                        className={classes.input}
+                        fullWidth
+                        multiline={true}
+                        InputProps={{
+                          style: {
+                            'min-height': '184px',
+                            alignItems: 'flex-start',
+                          },
+                        }}
                       />
                     </Grid>
                   </Grid>
@@ -197,11 +207,20 @@ QuestionnaireBackgroundInfo.propTypes = {
   canEdit: T.bool.isRequired,
 }
 const styles = theme => ({
+  root: {
+    marginTop: theme.spacing(7),
+  },
+  titleGrid: {
+    marginTop: theme.spacing(3.25),
+  },
   section: {
     margin: theme.spacing(3, 0),
   },
   disabledAndEmpty: {
     color: theme.palette.background.dark,
+  },
+  input: {
+    marginLeft: theme.spacing(3),
   },
 })
 
