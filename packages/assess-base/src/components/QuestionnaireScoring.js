@@ -175,9 +175,7 @@ function AssessmentPillarScoring({
                                         variant="h2"
                                         className={classes.question}
                                       >
-                                        {Math.random() > 0.5
-                                          ? score.description
-                                          : `Researches and understands the ecosystem, including Megatrends, and the consequences on it of the United Nations Sustainable Development Goals and Global Compact ambitions and analyses different scenarios, current and future capabilities and market-place dynamics.`}
+                                        {score.description}
                                       </Typography>
                                     </Grid>
                                     <Grid
