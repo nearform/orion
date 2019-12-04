@@ -1,28 +1,13 @@
 import React from 'react'
-import { graphql } from 'gatsby'
 
 import ContentView from '../components/ContentView'
 
-function Content({ slug, pageContext, data }) {
-  //const { edges } = data
+function Content({ slug, pageContext }) {
+  const { articleSummary, banner } = pageContext
 
-  //console.log(edges)
-
-  const { articleSummary } = pageContext
-
-  return <ContentView slug={slug} articleSummary={articleSummary} />
+  return (
+    <ContentView slug={slug} articleSummary={articleSummary} imgSrc={banner} />
+  )
 }
 
-export const query = graphql`
-  query S3ImageQuery {
-    allS3Image {
-      edges {
-        node {
-          Key
-          Url
-        }
-      }
-    }
-  }
-`
 export default Content
