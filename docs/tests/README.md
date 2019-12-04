@@ -12,6 +12,48 @@ to test page functionality such as events and links.
 
 - `yarn run test` in the root will run all jest tests. Alternatively if run from a package directory
 
+### GraphQL
+
+To mock graphql-hooks (including ) firstly mock the query files with the filenames.
+
+    jest.mock('../queries', () => ({
+        fooQuery: 'fooQuery',
+        ...
+    }))
+
+Then mock the query results based on the filename and options
+
+For example To mock useQuery:
+
+    jest.mock('components', () => ({
+      ...jest.requireActual('components'),
+      useQuery: (queryName, options) => {
+        const selectOption = optionsString =>
+        ({
+          'fooQuery-{"id":null}': 'getShallowAssessmentData-null',
+          ...
+        }[optionsString])
+        const mockUrl = selectOption(`${queryName}-${JSON.stringify(options)}`)
+
+        return {
+          data: require(`./__mocks__/foo-${mockUrl}.mock`).default,
+          loading: false,
+          refetch: false,
+        }
+      },
+    }))
+
+### Material-UI
+
+Testing material-ui elements can provide challenges:
+
+- Check boxes - It is neccessary to test the getter on the DOM and not the checked attribute.
+  expect(inputElement.checked).toBe(true) and not expect(inputElement).toHaveAttribute('checked', true)
+
+See https://stackoverflow.com/questions/53271663/how-to-test-material-ui-checkbox-is-checked-with-react-testing-library
+
+- Modals and select lists must be mocked as they are rendered outside of the container.
+
 ## End-to-end tests
 
 End-to-end tests are provided in [./packages/e2e-tests](./packages/e2e-tests) and run using
