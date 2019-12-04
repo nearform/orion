@@ -9,6 +9,7 @@ import {
 import { Link } from 'gatsby'
 import { Redirect } from '@reach/router'
 import { useTranslation } from 'react-i18next'
+import ReactMarkdown from 'react-markdown'
 
 import { getAssessmentPartData } from '../queries'
 import QuestionnaireScoring from '../components/QuestionnaireScoring'
@@ -140,10 +141,12 @@ function CriterionPartTemplate({
               </SectionTitle>
             </Grid>
             <Grid item xs={9}>
-              <div
-                className={classes.description}
-                dangerouslySetInnerHTML={{ __html: criterion.description }}
-              ></div>
+              <Typography component="div">
+                <ReactMarkdown
+                  className={classes.description}
+                  source={criterion.description}
+                />
+              </Typography>
             </Grid>
           </Grid>
         </div>
