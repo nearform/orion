@@ -65,16 +65,6 @@ module.exports = {
         typeName: ({ node }) => upperFirst(path.basename(node.dir)),
       },
     },
-    {
-      resolve: 'gatsby-source-s3',
-      options: {
-        aws: {
-          accessKeyId: `${process.env.GATSBY_AWS_S3_ACCESSKEY}`,
-          secretAccessKey: `${process.env.GATSBY_AWS_S3_SECRETKEY}`,
-        },
-        buckets: [`${process.env.GATSBY_AWS_S3_BUCKET}`],
-      },
-    },
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     {
