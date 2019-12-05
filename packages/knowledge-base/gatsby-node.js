@@ -10,6 +10,8 @@ const getTaxonomiesQuery = require('./queries/get-taxonomies')
 const getArticlesByTaxonomyQuery = require('./queries/get-articles-by-taxonomy')
 const { config } = currentTheme
 
+/*eslint no-console: ["error", { allow: ["log", "error"] }] */
+
 exports.onPreInit = () => {
   console.log(
     '******** CORECOUNT',
