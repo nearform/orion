@@ -71,6 +71,9 @@
   "keywords": [
     "gatsby"
   ],
+  "sideEffects": [
+    "./utils/i18n.js"
+  ],
   "main": "n/a",
   "repository": {
     "type": "git",
