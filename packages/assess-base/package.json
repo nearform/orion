@@ -85,7 +85,7 @@
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "test": "jest",
+    "test": "jest --maxWorkers=4",
     "artifact:create": "tar -zcf $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz public",
     "artifact:name": "echo $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz"
   }
