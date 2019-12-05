@@ -194,7 +194,6 @@ function AssessmentPillarScoring({
                                             field.value ? 'secondary' : null
                                           }
                                           step={SLIDER_STEP}
-                                          // label={score.name}
                                           onChange={(e, value) => {
                                             setFieldValue(fieldName, value)
                                             submitOnLastAction('onChange')

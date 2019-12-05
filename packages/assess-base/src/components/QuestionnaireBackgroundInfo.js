@@ -127,7 +127,7 @@ function QuestionnaireBackgroundInfo({
   if (canEdit || !tables.length) {
     tables.push(getEmptyTableRow(columnsDef))
   }
-  const isDisabledAndEmpty = !canEdit && !tableRows.length
+  // const isDisabledAndEmpty = !canEdit && !tableRows.length
 
   const [table] = tables
   const [column] = columnsDef

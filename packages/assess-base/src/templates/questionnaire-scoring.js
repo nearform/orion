@@ -55,18 +55,13 @@ function CriterionPartTemplate({
 
   // Get most specific available definition or default from loaded JSON
   const columnsDef = criterion.columns || pillar.columns || assessment.columns
-  const scoringDef = pillar.scoring || assessment.scoring
+  const scoringDef = criterion.scoring || pillar.scoring || assessment.scoring
   const scoringRules = pillar.scoringRules || assessment.scoringRules || {}
 
   const assessmentId = getAssessmentId(location)
   const { isContributor, isAssessor } = getUserTokenData()
 
-  const {
-    loading,
-    error,
-    data: assessmentData,
-    refetch: fetchAssessmentPartData,
-  } = useAuthorizedQuery(
+  const { loading, error, data: assessmentData } = useAuthorizedQuery(
     getAssessmentPartData,
     {
       id: assessmentId,
