@@ -81,6 +81,9 @@
     "type": "git",
     "url": "git+https://github.com/nearform/raw-salmon.git"
   },
+  "sideEffects": [
+    "./utils/i18n.js"
+  ],
   "scripts": {
     "build": "gatsby build --max-old-space-size=4096",
     "develop": "gatsby develop -p 8001",
