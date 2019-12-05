@@ -14,7 +14,7 @@ const { config } = currentTheme
 
 exports.onPreInit = () => {
   console.log(
-    '******** CORECOUNT',
+    '******** CORECOUNT=',
     require('gatsby-core-utils/dist/physical-cpu-count')
   )
 
