@@ -11,6 +11,11 @@ const getArticlesByTaxonomyQuery = require('./queries/get-articles-by-taxonomy')
 const { config } = currentTheme
 
 exports.onPreInit = () => {
+  console.log(
+    '******** CORECOUNT',
+    require('gatsby-core-utils/dist/physical-cpu-count')
+  )
+
   //add validations!
   // const logger = console
   // try {
