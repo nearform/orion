@@ -32,8 +32,6 @@
     "gatsby-plugin-react-svg": "^2.1.1",
     "gatsby-plugin-sharp": "^2.3.5",
     "gatsby-source-graphql": "^2.0.18",
-    "gatsby-source-s3": "^0.0.0",
-    "gatsby-source-s3-image": "^1.6.111",
     "gatsby-transformer-json": "^2.1.11",
     "gatsby-transformer-sharp": "^2.3.6",
     "graphql": "^14.3.0",
@@ -67,9 +65,7 @@
     "dotenv": "^7.0.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "gatsby-plugin-sharp": "^2.0.37",
     "gatsby-source-filesystem": "^2.0.33",
-    "gatsby-transformer-sharp": "^2.1.19",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
     "prettier": "^1.18.2",
@@ -86,7 +82,7 @@
     "url": "git+https://github.com/nearform/raw-salmon.git"
   },
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby build --max-old-space-size=4096",
     "develop": "gatsby develop -p 8001",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
