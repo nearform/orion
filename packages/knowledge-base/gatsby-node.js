@@ -11,6 +11,7 @@ const getArticlesByTaxonomyQuery = require('./queries/get-articles-by-taxonomy')
 const { config } = currentTheme
 
 exports.onPreInit = () => {
+  /*
   // eslint-disable-next-line no-console
   console.log('#### Applying MONKEY PATCH')
   require('../../node_modules/gatsby-core-utils').cpuCoreCount = () => {
@@ -19,6 +20,11 @@ exports.onPreInit = () => {
     console.log('#### MONKEY PATCH cpuCoreCount=', coreCount)
     return coreCount
   }
+  */
+  require('fs').writeFileSync(
+    '../../node_modules/gatsby-core-utils/dist/cpu-core-count.js',
+    'module.exports = () => 1'
+  )
   //add validations!
   // const logger = console
   // try {
