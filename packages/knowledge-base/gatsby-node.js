@@ -11,6 +11,7 @@ const getArticlesByTaxonomyQuery = require('./queries/get-articles-by-taxonomy')
 const { config } = currentTheme
 
 exports.onPreInit = () => {
+    // eslint-disable-next-line no-console
   console.log('#### Applying MONKEY PATCH')
   require('../../node_modules/gatsby-core-utils').cpuCoreCount = () => {
     const coreCount = 2
@@ -32,6 +33,7 @@ exports.onPreInit = () => {
 }
 
 exports.createPages = async ({ graphql, actions }) => {
+    // eslint-disable-next-line no-console
   console.log('#### cpuCoreCount=',require('../../node_modules/gatsby-core-utils').cpuCoreCount())
   const { createPage } = actions
 
