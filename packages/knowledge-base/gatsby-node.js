@@ -13,6 +13,7 @@ const { config } = currentTheme
 exports.onPreInit = () => {
   require('../../node_modules/gatsby-core-utils').cpuCoreCount = () => {
     const coreCount = 2
+    // eslint-disable-next-line no-console
     console.log('#### MONKEY PATCH cpuCoreCount=', coreCount)
     return coreCount
   }
