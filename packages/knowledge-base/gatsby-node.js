@@ -14,7 +14,7 @@ exports.onPreInit = () => {
   // eslint-disable-next-line no-console
   console.log('#### Applying MONKEY PATCH')
   require('../../node_modules/gatsby-core-utils').cpuCoreCount = () => {
-    const coreCount = 2
+    const coreCount = 1
     // eslint-disable-next-line no-console
     console.log('#### MONKEY PATCH cpuCoreCount=', coreCount)
     return coreCount
