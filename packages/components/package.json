@@ -47,7 +47,7 @@
     "storybook-addon-material-ui": "^0.9.0-alpha.18"
   },
   "peerDependencies": {
-    "gatsby": "git+https://github.com/juliangoacher/gatsby.git"
+    "gatsby": "^2.13.0"
   },
   "jest": {
     "transform": {
