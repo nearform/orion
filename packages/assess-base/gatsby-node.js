@@ -27,6 +27,12 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const homeTemplate = require.resolve('./src/templates/home.js')
   const assessmentTemplate = require.resolve('./src/templates/assessment.js')
+  const questionnaireTemplate = require.resolve(
+    './src/templates/questionnaire.js'
+  )
+  const questionnaireScoringTemplate = require.resolve(
+    './src/templates/questionnaire-scoring.js'
+  )
   const criterionTemplate = require.resolve('./src/templates/criterion.js')
   const criterionPartTemplate = require.resolve(
     './src/templates/criterion-part.js'
@@ -143,114 +149,194 @@ exports.createPages = async ({ graphql, actions }) => {
     },
   })
 
-  assessments.forEach(assessment => {
-    const createCriterionPagePath = (pillar, criterion) =>
-      `/assessment/${assessment.key}/${pillar.key}/${criterion.key}`
+  assessments
+    .filter(({ key }) => ['efqm-2020', 'efqm-2020-advanced'].includes(key))
+    .forEach(assessment => {
+      const createCriterionPagePath = (pillar, criterion) =>
+        `/assessment/${assessment.key}/${pillar.key}/${criterion.key}`
 
-    const criteriaList = assessment.pillars.reduce(
-      (acc, pillar, pillarIndex) => {
-        const { key: pillarKey } = pillar
-        const pillarCriteria = pillar.criteria.map(criterion => {
-          return criterion.parts.map((part, idx) => {
-            const {
-              tables: [{ key: criterionKey, name }],
-            } = part
-            const path = createCriterionPagePath(pillar, criterion) + '/' + idx
-            return {
-              key: JSON.stringify({
-                pillarKey,
-                criterionKey,
-              }),
-              name,
-              path,
-              matchPath: path,
-            }
+      const criteriaList = assessment.pillars.reduce(
+        (acc, pillar, pillarIndex) => {
+          const { key: pillarKey } = pillar
+          const pillarCriteria = pillar.criteria.map(criterion => {
+            return criterion.parts.map((part, idx) => {
+              const {
+                tables: [{ key: criterionKey, name }],
+              } = part
+              const path =
+                createCriterionPagePath(pillar, criterion) + '/' + idx
+              return {
+                key: JSON.stringify({
+                  pillarKey,
+                  criterionKey,
+                }),
+                name,
+                path,
+                matchPath: path,
+              }
+            })
           })
-        })
-        return [...acc, ...pillarCriteria]
-      },
-      []
-    )
+          return [...acc, ...pillarCriteria]
+        },
+        []
+      )
 
-    createPage({
-      path: `/assessment/${assessment.key}`,
-      matchPath: `/assessment/${assessment.key}`,
-      component: assessmentTemplate,
-      context: {
-        assessment,
-        pillarColors,
-      },
-    })
+      createPage({
+        path: `/assessment/${assessment.key}`,
+        matchPath: `/assessment/${assessment.key}`,
+        component: assessmentTemplate,
+        context: {
+          assessment,
+          pillarColors,
+        },
+      })
 
-    createPage({
-      path: `/assessment/${assessment.key}/feedback-report`,
-      component: feedbackReportTemplate,
-      context: {
-        assessment,
-        pillarColors,
-      },
-    })
+      createPage({
+        path: `/assessment/${assessment.key}/feedback-report`,
+        component: feedbackReportTemplate,
+        context: {
+          assessment,
+          pillarColors,
+        },
+      })
 
-    createPage({
-      path: `/assessment/${assessment.key}/contributors-assessors`,
-      component: contributorsAssessorsTemplate,
-      context: {
-        assessment,
-      },
-    })
+      createPage({
+        path: `/assessment/${assessment.key}/contributors-assessors`,
+        component: contributorsAssessorsTemplate,
+        context: {
+          assessment,
+        },
+      })
 
-    assessment.pillars.forEach((pillar, pillarIndex) => {
-      const pillarColor = pillarColors[pillarIndex]
+      assessment.pillars.forEach((pillar, pillarIndex) => {
+        const pillarColor = pillarColors[pillarIndex]
 
-      pillar.criteria.forEach(criterion => {
-        const criterionPagePath = createCriterionPagePath(pillar, criterion)
-
-        createPage({
-          path: criterionPagePath,
-          component: criterionTemplate,
-          context: {
-            assessment,
-            pillar,
-            criterion,
-            pillarColor,
-          },
-        })
-
-        const createCriterionPartLink = partNumber =>
-          `${criterionPagePath}/${partNumber}`
-
-        criterion.parts.forEach((part, partIndex, { length: totalParts }) => {
-          const isFirst = partIndex === 0
-          const isLast = partIndex === totalParts - 1
-          const partNumber = partIndex + 1
-          const previousLink = isFirst
-            ? `/${criterionPagePath}`
-            : createCriterionPartLink(partNumber - 1)
-          const nextLink = isLast
-            ? `/assessment/${assessment.key}`
-            : createCriterionPartLink(partNumber + 1)
+        pillar.criteria.forEach(criterion => {
+          const criterionPagePath = createCriterionPagePath(pillar, criterion)
 
           createPage({
-            path: createCriterionPartLink(partNumber),
-            component: criterionPartTemplate,
+            path: criterionPagePath,
+            component: criterionTemplate,
             context: {
-              partNumber,
-              part,
               assessment,
               pillar,
               criterion,
               pillarColor,
+            },
+          })
+
+          const createCriterionPartLink = partNumber =>
+            `${criterionPagePath}/${partNumber}`
+
+          criterion.parts.forEach((part, partIndex, { length: totalParts }) => {
+            const isFirst = partIndex === 0
+            const isLast = partIndex === totalParts - 1
+            const partNumber = partIndex + 1
+            const previousLink = isFirst
+              ? `/${criterionPagePath}`
+              : createCriterionPartLink(partNumber - 1)
+            const nextLink = isLast
+              ? `/assessment/${assessment.key}`
+              : createCriterionPartLink(partNumber + 1)
+
+            createPage({
+              path: createCriterionPartLink(partNumber),
+              component: criterionPartTemplate,
+              context: {
+                partNumber,
+                part,
+                assessment,
+                pillar,
+                criterion,
+                pillarColor,
+                pillarColors,
+                previousLink,
+                nextLink,
+                totalParts,
+                criteriaList,
+              },
+            })
+          })
+        })
+      })
+    })
+
+  assessments
+    .filter(({ key }) => ['questionnaire'].includes(key))
+    .forEach((assessment, i, questionnaires) => {
+      const createCriterionPagePath = (pillar, criterion) =>
+        `/assessment/${assessment.key}/${pillar.key}/${criterion.key}`
+
+      const criteriaList = assessment.pillars.reduce(
+        (acc, pillar, pillarIndex) => {
+          const { key: pillarKey } = pillar
+          const pillarCriteria = pillar.criteria.map(criterion => {
+            return criterion.parts.map((part, idx) => {
+              const {
+                tables: [{ key: criterionKey, name }],
+              } = part
+              const path =
+                createCriterionPagePath(pillar, criterion) + '/' + idx
+              return {
+                key: JSON.stringify({
+                  pillarKey,
+                  criterionKey,
+                }),
+                name,
+                path,
+                matchPath: path,
+              }
+            })
+          })
+          return [...acc, ...pillarCriteria]
+        },
+        []
+      )
+
+      createPage({
+        path: `/assessment/${assessment.key}`,
+        matchPath: `/assessment/${assessment.key}`,
+        component: questionnaireTemplate,
+        context: {
+          assessment,
+          pillarColors,
+        },
+      })
+
+      createPage({
+        path: `/assessment/${assessment.key}/contributors-assessors`,
+        component: contributorsAssessorsTemplate,
+        context: {
+          assessment,
+        },
+      })
+
+      assessment.pillars.forEach((pillar, pillarIndex) => {
+        const pillarColor = pillarColors[pillarIndex]
+
+        pillar.criteria.forEach(criterion => {
+          const questionnaireScoringPagePath = createCriterionPagePath(
+            pillar,
+            criterion
+          )
+
+          createPage({
+            path: questionnaireScoringPagePath,
+            component: questionnaireScoringTemplate,
+            context: {
+              assessment,
+              pillar,
+              part: criterion.parts[0],
+              criterion,
+              pillarColor,
               pillarColors,
-              previousLink,
-              nextLink,
-              totalParts,
+              partNumber: 1,
               criteriaList,
             },
           })
         })
       })
     })
-  })
 
   const usersQueryResults = await graphql(`
     {
