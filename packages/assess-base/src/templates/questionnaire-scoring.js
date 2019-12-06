@@ -17,10 +17,7 @@ import { getAssessmentId } from '../utils/url'
 import QuestionnaireBackgroundInfo from '../components/QuestionnaireBackgroundInfo'
 import AssessmentPillars from '../components/AssessmentPillars'
 import SEO from '../components/SEO'
-import {
-  assessmentInProgress,
-  assessmentSubmitted,
-} from '../utils/assessment-status'
+import { assessmentInProgress } from '../utils/assessment-status'
 import { filterOldScores } from '../utils/filter-old-scores'
 import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 
@@ -59,7 +56,7 @@ function CriterionPartTemplate({
   const scoringRules = pillar.scoringRules || assessment.scoringRules || {}
 
   const assessmentId = getAssessmentId(location)
-  const { isContributor, isAssessor } = getUserTokenData()
+  const { isContributor } = getUserTokenData()
 
   const { loading, error, data: assessmentData } = useAuthorizedQuery(
     getAssessmentPartData,
@@ -97,10 +94,12 @@ function CriterionPartTemplate({
     )
   }
 
-  const canEditTablesAndUpload =
-    isContributor && assessmentInProgress(assessmentData)
-  const canEditFeedbackAndScoring =
-    isAssessor && assessmentSubmitted(assessmentData)
+  // TODO: when doing permission story fix here
+  const canEdit = isContributor && assessmentInProgress(assessmentData)
+  // const canEditTablesAndUpload =
+  //   isContributor && assessmentInProgress(assessmentData)
+  // const canEditFeedbackAndScoring =
+  //   isAssessor && assessmentSubmitted(assessmentData)
 
   return (
     <div className={classes.root} data-testid="criterion-part">
@@ -154,7 +153,7 @@ function CriterionPartTemplate({
           scoringRules={scoringRules}
           criterion={criterion}
           partNumber={partNumber}
-          canEdit={canEditFeedbackAndScoring}
+          canEdit={canEdit}
           pillarColor={pillarColor}
         />
         <QuestionnaireBackgroundInfo
@@ -166,7 +165,7 @@ function CriterionPartTemplate({
           criterionKey={criterion.key}
           pillarKey={pillar.key}
           partNumber={partNumber}
-          canEdit={canEditTablesAndUpload}
+          canEdit={canEdit}
           pillarColor={pillarColor}
         />
         <AssessmentPillars
