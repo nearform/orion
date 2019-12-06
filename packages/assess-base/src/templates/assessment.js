@@ -234,7 +234,7 @@ function AssessmentTemplate({
         </Button>
         <div
           className={classes.section}
-          data-testid="assessment__key-information"
+          data-testid="assessment_key-information"
         >
           <Grid container spacing={4}>
             <Grid
@@ -293,6 +293,7 @@ function AssessmentTemplate({
               </Grid>
               <Grid item xs>
                 <Grid
+                  data-testid="name"
                   className={!assessmentId ? classes.displayNone : null}
                   container
                   direction="column"
@@ -325,6 +326,7 @@ function AssessmentTemplate({
                       <Grid
                         container
                         spacing={2}
+                        data-testid="create"
                         className={assessmentId ? classes.displayNone : null}
                       >
                         <Grid item xs>
@@ -336,6 +338,7 @@ function AssessmentTemplate({
                             </Grid>
                             <Grid item>
                               <Field
+                                data-testid="create-name"
                                 name="name"
                                 component={FormikTextField}
                                 fullWidth
@@ -356,6 +359,7 @@ function AssessmentTemplate({
                             <Grid item>
                               <Field
                                 name="internal"
+                                data-testid="create-internal"
                                 className={classes.switch}
                                 component={FormikSwitch}
                               />
@@ -403,6 +407,7 @@ function AssessmentTemplate({
                     {contributors.map(({ contributor }) =>
                       contributor ? (
                         <TypedChip
+                          data-testid="contributors"
                           key={contributor.id}
                           name={`${contributor.first_name} ${contributor.last_name}`}
                           type="Contributor"
@@ -413,6 +418,7 @@ function AssessmentTemplate({
                   </Grid>
                   <Grid item xs className={classes.participants}>
                     <Button
+                      data-testid="assign"
                       variant="outlined"
                       color="secondary"
                       component={Link}
@@ -423,7 +429,7 @@ function AssessmentTemplate({
                   </Grid>
                 </Grid>
               )}
-              <Grid item xs>
+              <Grid item xs data-testid="key-information">
                 <Typography
                   variant="h3"
                   className={classes.keyInformationHeader}
@@ -455,7 +461,11 @@ function AssessmentTemplate({
                           {assessment.keyInformation.keyInformationItems.map(
                             (keyInfo, index) => (
                               <Fragment key={keyInfo.key}>
-                                <Grid item xs={6}>
+                                <Grid
+                                  item
+                                  xs={6}
+                                  data-testid={`keyinfo-${keyInfo.key}`}
+                                >
                                   <Box
                                     className={
                                       classes.keyInformationSectionHeadingWrapper
@@ -509,7 +519,7 @@ function AssessmentTemplate({
                         </Grid>
                         {canEditKeyInformationAndUpload && (
                           <Grid item container spacing={2} justify="flex-end">
-                            <Grid item>
+                            <Grid item data-testid="upload-assessment">
                               <UploadButton
                                 onFileSelected={handleFileUpload}
                                 color="secondary"

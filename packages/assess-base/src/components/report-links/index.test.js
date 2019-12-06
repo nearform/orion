@@ -5,9 +5,9 @@ import assessment from '../../../__mocks__/assessment.mock'
 import { FeedbackReportLink, ManagementReportLink, ReportLinks } from './'
 
 const feedbackLinkPredicate = el =>
-  el.props['data-test-id'] === 'feedback-report-link' && el.type === 'a'
+  el.props['data-testid'] === 'feedback-report-link' && el.type === 'a'
 const managementLinkPredicate = el =>
-  el.props['data-test-id'] === 'management-report-link' && el.type === 'a'
+  el.props['data-testid'] === 'management-report-link' && el.type === 'a'
 const linkText = 'Testing'
 const linkTextPredicate = el => el.children[0] === linkText
 

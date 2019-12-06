@@ -11,7 +11,7 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap --concurrency=2",
-    "build": "lerna run build",
+    "build": "./scripts/patch-core-count.sh && lerna run build",
     "artifact:create": "lerna run artifact:create",
     "test": "lerna run test",
     "clean": "lerna clean",
@@ -89,6 +89,7 @@
     ]
   },
   "dependencies": {
+    "gatsby-source-s3": "0.0.0",
     "moment": "^2.24.0",
     "react-markdown": "^4.2.2"
   }

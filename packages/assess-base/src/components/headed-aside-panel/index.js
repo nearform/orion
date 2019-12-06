@@ -18,11 +18,7 @@ const HeadedAsidePanel = ({ children, title }) => {
   const { t } = useTranslation()
 
   return (
-    <Box
-      className={wrapper}
-      component="aside"
-      data-test-id="headed-aside-panel"
-    >
+    <Box className={wrapper} component="aside" data-testid="headed-aside-panel">
       <Typography className={heading} variant="h3">
         {t(title)}
       </Typography>

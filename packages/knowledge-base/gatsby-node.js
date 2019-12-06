@@ -10,14 +10,7 @@ const getTaxonomiesQuery = require('./queries/get-taxonomies')
 const getArticlesByTaxonomyQuery = require('./queries/get-articles-by-taxonomy')
 const { config } = currentTheme
 
-/*eslint no-console: ["error", { allow: ["log", "error"] }] */
-
 exports.onPreInit = () => {
-  console.log(
-    '******** CORECOUNT=',
-    require('gatsby-core-utils/dist/physical-cpu-count')
-  )
-
   //add validations!
   // const logger = console
   // try {
@@ -132,7 +125,10 @@ exports.createPages = async ({ graphql, actions }) => {
       path,
       matchPath: path,
       component: contentTemplate,
-      context: { articleSummary },
+      context: {
+        articleSummary,
+        banner: `https://s3.${process.env.GATSBY_AWS_REGION}.amazonaws.com/${process.env.GATSBY_AWS_S3_BUCKET}/public/${articleSummary.banner}`,
+      },
     })
   })
 

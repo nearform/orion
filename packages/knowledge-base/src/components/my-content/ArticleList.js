@@ -72,8 +72,8 @@ const ArticleList = ({ classes, path }) => {
               <TableCell>
                 {isPlatformGroup && (
                   <>
-                    {get(article, 'createdBy.first_name')}{' '}
-                    {get(article, 'createdBy.last_name')}
+                    {get(article, 'authors.author.first_name')}{' '}
+                    {get(article, 'authors.author.last_name')}
                   </>
                 )}
               </TableCell>
