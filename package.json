@@ -11,7 +11,7 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap --concurrency=2",
-    "build": "./patch-core-count.sh && lerna run build",
+    "build": "./scripts/patch-core-count.sh && lerna run build",
     "artifact:create": "lerna run artifact:create",
     "test": "lerna run test",
     "clean": "lerna clean",
