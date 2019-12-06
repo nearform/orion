@@ -21,10 +21,6 @@ exports.onPreInit = () => {
     return coreCount
   }
   */
-  require('fs').writeFileSync(
-    '../../node_modules/gatsby-core-utils/dist/cpu-core-count.js',
-    'module.exports = () => 1'
-  )
   //add validations!
   // const logger = console
   // try {
