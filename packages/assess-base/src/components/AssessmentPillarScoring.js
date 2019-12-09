@@ -186,12 +186,14 @@ function AssessmentPillarScoring({
 
                       return (
                         <Grid item key={score.key} xs={colWidth}>
-                          <ContextualHelp
-                            helpContent={score.description}
-                            className={classes.helpIcon}
-                          >
-                            <HelpIcon color="secondary" />
-                          </ContextualHelp>
+                          {score.description && (
+                            <ContextualHelp
+                              helpContent={score.description}
+                              className={classes.helpIcon}
+                            >
+                              <HelpIcon color="secondary" />
+                            </ContextualHelp>
+                          )}
                           <Field name={fieldName}>
                             {({ field }) => (
                               <ScoringSlider

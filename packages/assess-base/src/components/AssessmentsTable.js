@@ -3,7 +3,6 @@ import { withStyles, TableRow, TableCell, IconButton } from '@material-ui/core'
 import { Link } from 'gatsby'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useTranslation } from 'react-i18next'
-import keyBy from 'lodash/keyBy'
 import get from 'lodash/get'
 
 import { AssessmentStatusChip } from 'components'
@@ -11,12 +10,12 @@ import { getAssessmentsData } from '../queries'
 import { formatDate } from '../utils/date'
 import QueryTable from './QueryTable'
 import { FeedbackReportLink, ManagementReportLink } from './report-links'
-import { getAssessmentTypes } from 'efqm-theme/assessments/getAssessmentParts'
+import { getAssessmentTypeNames } from 'efqm-theme/assessments/getAssessmentParts'
 
 function AssessmentsTable({ classes }) {
   const { t, i18n } = useTranslation()
   const lang = i18n.language
-  const assessmentTypes = getAssessmentTypes(lang)
+  const assessmentTypeNames = getAssessmentTypeNames(lang)
 
   const headers = [
     { id: 'name', label: t('Your assessments'), sortable: true },
@@ -37,7 +36,6 @@ function AssessmentsTable({ classes }) {
     { id: 'link', label: '' },
   ]
 
-  const assessmentKeyToName = keyBy(assessmentTypes, 'key')
   return (
     <QueryTable
       headers={headers}
@@ -46,7 +44,6 @@ function AssessmentsTable({ classes }) {
       renderTableBody={data =>
         data.assessment.map((assessment, index) => {
           const { id, key, name: title, created_at, status } = assessment
-          const { [key]: { name = '' } = {} } = assessmentKeyToName
           return (
             <TableRow hover key={index} size="small">
               <TableCell data-testid="assessment-table-name">{title}</TableCell>
@@ -54,7 +51,7 @@ function AssessmentsTable({ classes }) {
                 {formatDate(created_at)}
               </TableCell>
               <TableCell data-testid="assessment-table-type">
-                {t(name)}
+                {assessmentTypeNames[key]}
               </TableCell>
               <TableCell data-testid="assessment-table-company">
                 {get(assessment, 'owner.user_groups[0].group.name')}

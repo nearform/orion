@@ -80,7 +80,7 @@
     "url": "git+https://github.com/nearform/raw-salmon.git"
   },
   "scripts": {
-    "build": "node --max_old_space_size=4096 --stack-size=100000 ./node_modules/.bin/gatsby build",
+    "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
