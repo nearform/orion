@@ -7,7 +7,10 @@
   "orderIndex": 3,
   "logoAsset": "assess-3-img",
   "shortDescription": "Dieses Bewertungstool ermöglicht eine vollständige Bewertung basierend auf allen (Teil)Kriterien des EFQM Modells. Die Punktevergabe erfolgt nach der RADAR Logik. Mit diesem Bewertungsinstrument kann Ihre Organisation eine detaillierte Enabler Map (Übersicht über die Maßnahmen) und einen Ergebnisbericht erstellen.",
-  "startPhrase": "Mit der erweiterten Unternehmensmatrix starten",
+  "startPhrases": {
+    "efqm-2020": "Mit der Unternehmensmatrix starten",
+    "efqm-2020-advanced": "Mit der erweiterten Unternehmensmatrix starten"
+  },
   "keyInformation": {
     "guidance": "Schlüsselinformationen sind jene Informationen, die den Assessor*innen helfen, einen Gesamtüberblick über Ihre Organisation und den strategischen Kontext zu erlangen.",
     "keyInformationItems": [
