@@ -5,7 +5,7 @@
   "logoAsset": "assess-1-img",
   "shortDescription": "A simple assessment tool with about 5 questions per criteria of the EFQM Model.  The best tool to conduct a first assessment, helping identify the current position and determine future directions and priorities.",
   "startPhrases": {
-    "questionnaire": "Enter Questionnaire Matrix"
+    "questionnaire": "Enter Questionnaire"
   },
   "keyInformation": {
     "guidance": "We are here to help you fill out the key information",
