@@ -48,7 +48,12 @@ const authErrors = {
     code: error => /code/i.test(error),
   },
   forgotPassword: {
-    username: error => /user/i.test(error) && 'Email is required',
+    username: error => {
+      if (/username.*client id combination not found/i.test(error)) {
+        return 'Email not found'
+      }
+      return /user/i.test(error) && 'Email is required'
+    },
     code: error => /code/i.test(error),
     password: error =>
       passwordValidationErrors(error) || /password/i.test(error),
