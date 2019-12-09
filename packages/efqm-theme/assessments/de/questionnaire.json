@@ -4,7 +4,9 @@
   "orderIndex": 1,
   "logoAsset": "assess-1-img",
   "shortDescription": "Ein einfaches Bewertungstool mit 5 Fragen pro Kriterium des EFQM Modells. Dieses Tool eignet sich, um ein erstes Assessment durchzuführen, einen Eindruck über den aktuellen Status der Organisation zu gewinnen und die zukünftige Ausrichtung und Prioritätensetzung zu bestimmen.",
-  "startPhrase": "Fragebogen starten",
+  "startPhrases": {
+    "questionnaire": "Fragebogen starten"
+  },
   "keyInformation": {
     "guidance": "We are here to help you fill out the key information",
     "keyInformationItems": []

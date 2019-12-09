@@ -45,7 +45,7 @@ const AssessmentTool = ({
               color="secondary"
               fullWidth
             >
-              {assessmentToolMeta.startPhrase}
+              {assessmentToolMeta.startPhrases[assessmentToolMeta.key]}
             </Button>
           </CardActions>
         )}

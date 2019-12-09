@@ -461,7 +461,7 @@
           ]
         },
         {
-          "key": "strategic-performance-scores",
+          "key": "strategic-performance",
           "name": "Strategic & Operational Performance scores",
           "description": "This criterion concentrates on results linked to the organisation’s performance in terms of:\n- The ability to fulfil its Purpose, deliver the Strategy and Create Sustainable Value\n- Its fitness for the future\n\nThese results are used by the organisation to monitor, understand and improve its overall performance and to forecast the impact this performance will have on both the perceptions of its Key Stakeholders as well as its future strategic ambitions.\n",
           "parts": [
@@ -482,7 +482,7 @@
           ],
           "scoring": [
             {
-              "key": "strategic-performance",
+              "key": "strategic-performance-scores",
               "name": "Strategic & Operational Performance",
               "scores": [
                 {

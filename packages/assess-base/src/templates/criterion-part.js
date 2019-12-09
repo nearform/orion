@@ -177,7 +177,8 @@ function CriterionPartTemplate({
             canEdit={canEditTablesAndUpload}
             criteriaList={criteriaList}
             paginationNode={
-              tableIndex === 0 && (
+              tableIndex === 0 &&
+              assessment.matrixType !== 'basic' && (
                 <CriterionPartPagination
                   assessmentId={assessmentId}
                   link={Link}
@@ -219,14 +220,16 @@ function CriterionPartTemplate({
           />
         ))}
         <div className={classes.section}>
-          <CriterionPartPagination
-            assessmentId={assessmentId}
-            link={Link}
-            nextLink={nextLink}
-            previousLink={previousLink}
-            partNumber={partNumber}
-            totalParts={totalParts}
-          />
+          {assessment.matrixType !== 'basic' && (
+            <CriterionPartPagination
+              assessmentId={assessmentId}
+              link={Link}
+              nextLink={nextLink}
+              previousLink={previousLink}
+              partNumber={partNumber}
+              totalParts={totalParts}
+            />
+          )}
         </div>
         <AssessmentPillars
           assessment={assessment}

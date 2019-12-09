@@ -1,6 +1,7 @@
 {
   "key": "efqm-2020-advanced",
   "name": "business matrix advanced",
+  "matrixType": "advanced",
   "tableName": "Business Matrix Advanced",
   "orderIndex": 3,
   "logoAsset": "assess-3-img",
