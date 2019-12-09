@@ -158,7 +158,7 @@ jobs:
           command: |
             echo 'export ENRICHMENT_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-enrichment-hook --silent`"' >> $BASH_ENV
             echo 'export SIGNUP_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-signup-hook --silent`"' >> $BASH_ENV
-            echo 'export HASURA_ARTIFACT="packages/`cd packages/hasura && yarn run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export HASURA_ARTIFACT="packages/`cd packages/hasura && npm run artifact:name --silent`"' >> $BASH_ENV
             echo 'export ASSESS_BASE_ARTIFACT="packages/assess-base/`cd packages/assess-base && npm run artifact:name --silent`"' >> $BASH_ENV
             echo 'export KNOWLEDGE_BASE_ARTIFACT="packages/knowledge-base/`cd packages/knowledge-base && npm run artifact:name --silent`"' >> $BASH_ENV
             echo 'export ASSESS_BASE_HASURA_ARTIFACT="packages/`cd packages/assess-base-hasura && npm run artifact:name --silent`"' >> $BASH_ENV
