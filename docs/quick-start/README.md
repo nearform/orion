@@ -42,13 +42,13 @@ Ensure you have a local `.env.development` file available.
 
 ```
 # Starts knowledge-base via `gatsby develop`
-npm run start:kb
+yarn start:kb
 
 # Starts assess-base via `gatsby develop`
-npm run start:ab
+yarn start:ab
 
 # Runs both the above in parallel
-npm run start:apps
+yarn start:apps
 ```
 
 ## Storybook
@@ -59,5 +59,5 @@ A hosted version of the storybook stories is running at https://raw-salmon-story
 
 ```
 cd packages/components
-npm run storybook
+yarn storybook
 ```
