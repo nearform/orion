@@ -33,6 +33,9 @@ exports.createPages = async ({ graphql, actions }) => {
   const questionnaireScoringTemplate = require.resolve(
     './src/templates/questionnaire-scoring.js'
   )
+  const questionnaireFeedbackReportTemplate = require.resolve(
+    './src/templates/questionnaire-feedback-report.js'
+  )
   const criterionTemplate = require.resolve('./src/templates/criterion.js')
   const criterionPartTemplate = require.resolve(
     './src/templates/criterion-part.js'
@@ -308,6 +311,15 @@ exports.createPages = async ({ graphql, actions }) => {
         component: contributorsAssessorsTemplate,
         context: {
           assessment,
+        },
+      })
+
+      createPage({
+        path: `/assessment/${assessment.key}/feedback-report`,
+        component: questionnaireFeedbackReportTemplate,
+        context: {
+          assessment,
+          pillarColors,
         },
       })
 
