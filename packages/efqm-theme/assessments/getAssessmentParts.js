@@ -122,7 +122,8 @@ const getKeyInfo = (key, lang = 'en') => {
   if (!keyInfo.hasOwnProperty(key)) {
     return {}
   }
-  return require(`./${lang}/key-information-details/${keyInfo[key]}`)
+  // See note above on dynamic requires.
+  return require(`./data/${lang}/key-information-details/${keyInfo[key]}`)
 }
 
 /**
