@@ -27,6 +27,10 @@ export default class CustomForgotPassword extends authEventMixin(
         <PasswordResetConfirm
           resendCode={() => super.send(event)}
           submit={event => {
+            // Trim non-numeric chars from code.
+            const { inputs } = this
+            inputs.code = inputs.code.replace(/[^\d]/g, '')
+            // Continue with submit.
             this.setSubmitting(true)
             super.submit(event)
           }}
