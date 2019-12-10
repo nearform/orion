@@ -11,7 +11,7 @@ git clone https://github.com/nearform/raw-salmon.git
 
 cd raw-salmon
 
-npm i
+yarn
 ```
 
 ### 2. Configure
