@@ -122,6 +122,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
     createPage({
       path: `/assessment/${assessment.key}/feedback-report`,
+      matchPath: `/assessment/${assessment.key}/feedback-report`,
       component: feedbackReportTemplate,
       context: {
         assessment,
@@ -131,6 +132,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
     createPage({
       path: `/assessment/${assessment.key}/contributors-assessors`,
+      matchPath: `/assessment/${assessment.key}/contributors-assessors`,
       component: contributorsAssessorsTemplate,
       context: {
         assessment,
@@ -231,7 +233,18 @@ exports.createPages = async ({ graphql, actions }) => {
     })
 
     createPage({
+      path: `/assessment/${assessment.key}/feedback-report`,
+      matchPath: `/assessment/${assessment.key}/feedback-report`,
+      component: feedbackReportTemplate,
+      context: {
+        assessment,
+        pillarColors,
+      },
+    })
+
+    createPage({
       path: `/assessment/${assessment.key}/contributors-assessors`,
+      matchPath: `/assessment/${assessment.key}/contributors-assessors`,
       component: contributorsAssessorsTemplate,
       context: {
         assessment,

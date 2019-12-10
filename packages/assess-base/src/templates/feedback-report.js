@@ -65,8 +65,10 @@ function FeedbackReport({
   pageContext: { assessment: contextAssessment, pillarColors },
   location,
 }) {
-  const { t, i18n } = useTranslation()
-  const lang = i18n.language
+  const {
+    t,
+    i18n: { language: lang },
+  } = useTranslation()
   const { assessment } = getAssessmentParts(contextAssessment.key, lang)
   const assessmentId = getAssessmentId(location)
   const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
