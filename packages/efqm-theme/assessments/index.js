@@ -5,7 +5,6 @@ const marketOfferingsAndCustomers = require('./key-information-details/market-of
 const managementStructure = require('./key-information-details/management-structure.js')
 
 module.exports = [
-  require('./questionnaire.json'),
   {
     key: 'key-information-details',
     overview,
