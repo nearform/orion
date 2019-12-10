@@ -21,7 +21,7 @@ import { assessmentInProgress } from '../utils/assessment-status'
 import { filterOldScores } from '../utils/filter-old-scores'
 import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 
-function CriterionPartTemplate({
+function QuestionnaireScoringTemplate({
   theme,
   classes,
   location,
@@ -223,4 +223,6 @@ const styles = theme => ({
   },
 })
 
-export default withStyles(styles, { withTheme: true })(CriterionPartTemplate)
+export default withStyles(styles, { withTheme: true })(
+  QuestionnaireScoringTemplate
+)
