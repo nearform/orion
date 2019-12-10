@@ -1,10 +1,12 @@
 {
   "key": "questionnaire",
-  "name": "questionnaire",
-  "tableName": "Questionnaire",
+  "name": "Fragebogen",
   "orderIndex": 1,
   "logoAsset": "assess-1-img",
-  "shortDescription": "A simple assessment tool with about 5 questions per criteria of the EFQM Model.  The best tool to conduct a first assessment, helping identify the current position and determine future directions and priorities.",
+  "shortDescription": "Ein einfaches Bewertungstool mit 5 Fragen pro Kriterium des EFQM Modells. Dieses Tool eignet sich, um ein erstes Assessment durchzuführen, einen Eindruck über den aktuellen Status der Organisation zu gewinnen und die zukünftige Ausrichtung und Prioritätensetzung zu bestimmen.",
+  "startPhrases": {
+    "questionnaire": "Fragebogen starten"
+  },
   "keyInformation": {
     "guidance": "We are here to help you fill out the key information",
     "keyInformationItems": []
@@ -462,7 +464,7 @@
         },
         {
           "key": "strategic-performance",
-          "name": "Strategic & Operational Performance scores",
+          "name": "Strategic & Operational Performance",
           "description": "This criterion concentrates on results linked to the organisation’s performance in terms of:\n- The ability to fulfil its Purpose, deliver the Strategy and Create Sustainable Value\n- Its fitness for the future\n\nThese results are used by the organisation to monitor, understand and improve its overall performance and to forecast the impact this performance will have on both the perceptions of its Key Stakeholders as well as its future strategic ambitions.\n",
           "parts": [
             {
@@ -483,7 +485,7 @@
           "scoring": [
             {
               "key": "strategic-performance-scores",
-              "name": "Strategic & Operational Performance",
+              "name": "Strategic & Operational Performance scores",
               "scores": [
                 {
                   "key": "results-link-to-purpose-performance",

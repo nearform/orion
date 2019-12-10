@@ -331,10 +331,7 @@ function QuestionnaireTemplate({
               )}
               <Grid item xs={9}>
                 <Typography variant="body2">
-                  {t(`A simple assessments tool with about 5 questions per criteria
-                  of the EFQM Model. The best tool to conduct a first
-                  assessment, helping identify the current position and
-                  determine future directions and priorities.`)}
+                  {assessment.shortDescription}
                 </Typography>
               </Grid>
             </Grid>

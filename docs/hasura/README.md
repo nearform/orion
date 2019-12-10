@@ -57,7 +57,7 @@ HASURA_GRAPHQL_ENDPOINT=http://localhost:8080/
 _3_ **Apply the migrations to the local DB**. In packages `hasura` and then `assess-base-hasura` (must be in that order):
 
 ```
-npm run migrate apply
+yarn migrate apply
 ```
 
 Then launch the Hasura console and check that there is the expected DB structure in Data, but no content.

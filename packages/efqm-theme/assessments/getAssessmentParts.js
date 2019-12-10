@@ -22,6 +22,7 @@ const assessmentTypes = {
       const result = deepClone(matrix)
       result.key = key
       result.matrixType = 'basic'
+      result.logoAsset = 'assess-2-img'
       result.name = result.typeNames[key]
       // Select first subcriteria of each pillar.
       result.pillars.forEach(pillar => {
@@ -38,6 +39,7 @@ const assessmentTypes = {
       const result = deepClone(matrix)
       result.key = key
       result.matrixType = 'advanced'
+      result.logoAsset = 'assess-3-img'
       result.name = result.typeNames[key]
       // Number subcriteria.
       result.pillars.forEach(pillar => {
@@ -64,7 +66,12 @@ const loadAssessmentType = (lang, type) => {
     return {}
   }
   const { filter, filename } = assessmentType
-  return filter(require(`./${lang}/${filename}`), type)
+  // Note that the following is a dynamic require and relies on Webpack's context
+  // functionality in order for it to work in a bundled environment (e.g. in the
+  // browser). See https://github.com/webpack/docs/wiki/context for details. Note
+  // also that all language-specific assessment data files are stored under a common
+  // parent folder (/data) to avoid bundling resources which aren't dynamically loaded.
+  return filter(require(`./data/${lang}/${filename}`), type)
 }
 
 /*
@@ -115,7 +122,8 @@ const getKeyInfo = (key, lang = 'en') => {
   if (!keyInfo.hasOwnProperty(key)) {
     return {}
   }
-  return require(`./${lang}/key-information-details/${keyInfo[key]}`)
+  // See note above on dynamic requires.
+  return require(`./data/${lang}/key-information-details/${keyInfo[key]}`)
 }
 
 /**
@@ -149,7 +157,7 @@ const getAssessmentTypeNames = (lang = 'en') => {
   return result
 }
 
-export {
+module.exports = {
   getAssessmentParts,
   getKeyInfo,
   getAssessmentTypes,
