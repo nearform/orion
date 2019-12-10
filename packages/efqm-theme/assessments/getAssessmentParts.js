@@ -1,15 +1,70 @@
-const assessmentKeys = {
-  questionnaire: 'questionnaire.json',
-  'efqm-2020': 'business-matrix.json',
-  'efqm-2020-advanced': 'business-matrix-advanced.json',
-}
-
 const keyInfo = {
   'challenges-and-strategy': 'challenges-and-strategy.js',
   'management-structure': 'management-structure.js',
   'market-offerings-and-customers': 'market-offerings-and-customers.js',
   'operations-partners-suppliers': 'operations-partners-suppliers.js',
   overview: 'overview.js',
+}
+
+// Each assessment type specifies a filename and a filter:
+// - The filename is the name of the JSON file containing the assessment
+//   configuration;
+// - The filter is applied to the assessment configuration after it is
+//   loaded to produce the required assessment type.
+const assessmentTypes = {
+  questionnaire: {
+    filename: 'questionnaire.json',
+    filter: assessment => assessment,
+  },
+  'efqm-2020': {
+    filename: 'business-matrix.json',
+    filter: (matrix, key) => {
+      const result = deepClone(matrix)
+      result.key = key
+      result.matrixType = 'basic'
+      result.name = result.typeNames[key]
+      // Select first subcriteria of each pillar.
+      result.pillars.forEach(pillar => {
+        pillar.criteria.forEach(criteria => {
+          criteria.parts = criteria.parts.slice(0, 1)
+        })
+      })
+      return result
+    },
+  },
+  'efqm-2020-advanced': {
+    filename: 'business-matrix.json',
+    filter: (matrix, key) => {
+      const result = deepClone(matrix)
+      result.key = key
+      result.matrixType = 'advanced'
+      result.name = result.typeNames[key]
+      // Number subcriteria.
+      result.pillars.forEach(pillar => {
+        pillar.criteria.forEach((criteria, cidx) => {
+          criteria.parts.forEach((part, pidx) => {
+            const [table] = part.tables
+            // Produce a name like "1.1: Xxxx"
+            table.name = `${cidx + 1}.${pidx + 1}: ${table.name}`
+          })
+        })
+      })
+      return result
+    },
+  },
+}
+
+// Deep clone an object.
+const deepClone = obj => JSON.parse(JSON.stringify(obj))
+
+// Load an assessment type.
+const loadAssessmentType = (lang, type) => {
+  const assessmentType = assessmentTypes[type]
+  if (!assessmentType) {
+    return {}
+  }
+  const { filter, filename } = assessmentType
+  return filter(require(`./${lang}/${filename}`), type)
 }
 
 /*
@@ -30,31 +85,17 @@ const getAssessmentParts = (
   criterion = null,
   part = null
 ) => {
-  if (!assessmentKeys.hasOwnProperty(key)) {
-    return {}
-  }
-  const assessment = require(`./${lang}/${assessmentKeys[key]}`)
+  // Load and filter assessment data.
+  const assessment = loadAssessmentType(lang, key)
+
+  // Apply pillar/criterion/part filters.
   if (pillar) {
-    for (const p of assessment.pillars) {
-      if (p.key === pillar.key) {
-        pillar = p
-        break
-      }
-    }
-    if (criterion) {
-      for (const c of pillar.criteria) {
-        if (c.key === criterion.key) {
-          criterion = c
-          break
-        }
-      }
-      if (part) {
-        for (const pt of criterion.parts) {
-          if (pt.tables[0]['key'] === part.tables[0]['key']) {
-            part = pt
-            break
-          }
-        }
+    pillar = assessment.pillars.find(p => p.key === pillar.key)
+    if (pillar && criterion) {
+      criterion = pillar.criteria.find(c => c.key === criterion.key)
+      if (part && criterion) {
+        const { key } = part.tables[0]
+        part = criterion.parts.find(p => p.tables[0].key === key)
       }
     }
   }
@@ -77,14 +118,40 @@ const getKeyInfo = (key, lang = 'en') => {
   return require(`./${lang}/key-information-details/${keyInfo[key]}`)
 }
 
-/*
- * Return data for all assessment types (name, description, associated logo, etc)
+/**
+ * Return localized assessment type configurations.
  *
  * @param {string} lang The string identifier of the language (2 character lower-case ISO code)
  *
  * @return {array} Array of objects representing each available assessment type
  */
-const getAssessmentTypes = (lang = 'en') =>
-  Object.values(assessmentKeys).map(value => require(`./${lang}/${value}`))
+const getAssessmentTypes = (lang = 'en') => {
+  const result = []
+  for (const type in assessmentTypes) {
+    result.push(loadAssessmentType(lang, type))
+  }
+  return result
+}
 
-export { getAssessmentParts, getKeyInfo, getAssessmentTypes }
+/**
+ * Return localized names for the different assessment types.
+ *
+ * @param {string} lang The string identifier of the language (2 character lower-case ISO code)
+ *
+ * @return {object} A map of assessment type keys to localized assessment names.
+ */
+const getAssessmentTypeNames = (lang = 'en') => {
+  const result = {}
+  for (const type in assessmentTypes) {
+    const assessment = loadAssessmentType(lang, type)
+    result[type] = assessment.name
+  }
+  return result
+}
+
+export {
+  getAssessmentParts,
+  getKeyInfo,
+  getAssessmentTypes,
+  getAssessmentTypeNames,
+}

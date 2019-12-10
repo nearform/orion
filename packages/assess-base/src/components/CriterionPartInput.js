@@ -248,7 +248,7 @@ function getSelectFieldProps(
             key={selectedKey}
           >
             <Link
-              to={`/${selectedCriterion.path}#${assessmentId}`}
+              to={`${selectedCriterion.path}#${assessmentId}`}
               className={classes.active}
             >
               {selectedCriterion.name}

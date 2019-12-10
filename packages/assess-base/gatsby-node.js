@@ -232,11 +232,12 @@ exports.createPages = async ({ graphql, actions }) => {
             `${criterionPagePath}/${partNumber}`
 
           criterion.parts.forEach((part, partIndex, { length: totalParts }) => {
+            if (assessment.key === 'efqm-2020' && partIndex > 0) return
             const isFirst = partIndex === 0
             const isLast = partIndex === totalParts - 1
             const partNumber = partIndex + 1
             const previousLink = isFirst
-              ? `/${criterionPagePath}`
+              ? criterionPagePath
               : createCriterionPartLink(partNumber - 1)
             const nextLink = isLast
               ? `/assessment/${assessment.key}`

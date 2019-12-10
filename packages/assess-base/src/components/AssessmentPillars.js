@@ -58,9 +58,14 @@ const AssessmentPillars = ({
                   >
                     {criterion.name}
                   </Typography>
-                  <Typography variant="h4" className={classes.sectionProgress}>
-                    {criterion.parts.length} {t('Subcriteria')}
-                  </Typography>
+                  {assessment.matrixType !== 'basic' && (
+                    <Typography
+                      variant="h4"
+                      className={classes.sectionProgress}
+                    >
+                      {criterion.parts.length} {t('Subcriteria')}
+                    </Typography>
+                  )}
                 </Grid>
               ))}{' '}
             </Grid>
