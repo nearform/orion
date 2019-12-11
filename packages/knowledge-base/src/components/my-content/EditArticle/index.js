@@ -15,7 +15,6 @@ import {
   ExpansionPanelDetails,
   ExpansionPanelSummary,
 } from '@material-ui/core'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { Formik, Form, Field, FastField } from 'formik'
 import { fieldToCheckbox, TextField } from 'formik-material-ui'
 import get from 'lodash/get'
@@ -335,7 +334,6 @@ function EditArticle({ classes, articleId }) {
                     <ExpansionPanelSummary
                       className={classes.expansionSummary}
                       IconButtonProps={{ size: 'small' }}
-                      expandIcon={<ExpandMoreIcon />}
                     >
                       <Typography variant="h3">Author</Typography>
                     </ExpansionPanelSummary>
@@ -365,7 +363,6 @@ function EditArticle({ classes, articleId }) {
                       <ExpansionPanelSummary
                         className={classes.expansionSummary}
                         IconButtonProps={{ size: 'small' }}
-                        expandIcon={<ExpandMoreIcon />}
                       >
                         <Typography variant="h3">{type.name}</Typography>
                       </ExpansionPanelSummary>
