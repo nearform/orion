@@ -5,7 +5,7 @@ import { config } from '../../../theme.es'
 const SLIDER_STEP = 5
 
 const getPointScore = (percentScore, weight, possiblePoints) =>
-  (percentScore * weight * possiblePoints) / 100
+  Math.round((percentScore * weight * possiblePoints) / 100)
 
 function getOverallScore(chartData) {
   return chartData.reduce((acc, dataItem) => acc + dataItem.pointScore, 0)
@@ -32,9 +32,6 @@ function getChartData(assessmentDef, assessmentData, pillarColors) {
    *
    * TODO: Optimise and simplify when sure that business logic is sound.
    */
-
-  console.log(config)
-
   if (!assessmentData) return null
 
   const chartData = assessmentDef.pillars.reduce(
@@ -80,8 +77,6 @@ function getChartData(assessmentDef, assessmentData, pillarColors) {
         )
       })
 
-      console.log(chartData)
-
       return chartData
     },
     []
@@ -109,6 +104,8 @@ function getScoresByCritera(
     criterionPartScore => criterionPartScore.criterion_key === criterionKey
   )
 
+  const { criteriaWeighting, [assessmentKey]: scoringPoints } = config.scoring
+
   const compositeKey = `${pillarKey}_${criterionKey}`
   const criterionPath = `assessment/${assessmentKey}/${pillarKey}/${criterionKey}`
 
@@ -120,12 +117,11 @@ function getScoresByCritera(
         scoringDef,
         scoringRules,
         compositeKey,
-        criterionPath
+        criterionPath,
+        scoringPoints
       )
     )
     .sort((a, b) => (a.label > b.label && 1) || (a.label < b.label && -1) || 0)
-
-  const { criteriaWeighting, [assessmentKey]: scoringPoints } = config.scoring
 
   const criteriaScore = calculatePartsMean(chartDataByCriterionParts)
   const pointCriteriaScore = getPointScore(
@@ -141,6 +137,7 @@ function getScoresByCritera(
     scores: chartDataByCriterionParts,
     score: criteriaScore,
     pointScore: pointCriteriaScore,
+    weighting: criteriaWeighting[criterionKey],
   }
 }
 
@@ -150,13 +147,15 @@ function getScoresbyCriterionPart(
   scoringDef,
   scoringRules,
   previousKey,
-  criterionPath
+  criterionPath,
+  scoringPoints
 ) {
   const {
     part_number: partNumber,
     scoring_values: scoringValues,
   } = scoreValuesByCriterionPart
   const { tables: partTablesDef } = criterionPartsDefs[partNumber - 1]
+  const partScoringPoints = scoringPoints / partTablesDef.length
 
   const cap = roundBySliderStep(get(scoringValues, scoringRules.capBy, 100))
 
@@ -174,16 +173,18 @@ function getScoresbyCriterionPart(
     []
   )
 
-  console.log(scoresByScoringItems)
+  const score = Math.min(
+    roundBySliderStep(calculatePartsMean(scoresByScoringItems)),
+    cap
+  )
+  const pointScore = getPointScore(score, 1, partScoringPoints)
 
   return {
     key: `${previousKey}_${partNumber}`,
     label: partTablesDef.map(table => table.name).join(', '),
     scores: scoresByScoringItems,
-    score: Math.min(
-      roundBySliderStep(calculatePartsMean(scoresByScoringItems)),
-      cap
-    ),
+    score,
+    pointScore,
     path: `${criterionPath}/${partNumber}`,
   }
 }
@@ -194,13 +195,11 @@ function roundBySliderStep(num) {
 
 function getScoresFromScoringGroups(scoringValues, def) {
   return Object.entries(scoringValues).map(([key, score]) => {
-    const { weighting, name: label } = def.find(
-      scoreDef => scoreDef.key === key
-    )
+    const { name: label } = def.find(scoreDef => scoreDef.key === key)
 
     return {
       score: roundBySliderStep(score),
-      weighting,
+      pointScore: '--',
       key,
       label,
     }

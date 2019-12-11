@@ -82,7 +82,7 @@ function BarChartTableRow({
             className={classes.barContainer}
           >
             <Bar
-              value={weightedScore}
+              value={chartDataItem.score}
               color={barColor}
               height={barHeight}
               absolute
@@ -96,7 +96,7 @@ function BarChartTableRow({
         </TableCell>
         <TableCell align="right" className={classes.cell}>
           <Typography variant="h6" className={classes.score}>
-            {Math.round(chartDataItem.pointScore)}
+            {chartDataItem.pointScore}
             <Typography component="span" className={classes.weighting}>
               {chartDataItem.weighting && `(${chartDataItem.weighting})`}
             </Typography>
