@@ -62,7 +62,7 @@ function sortByPart(obj, key) {
 function FeedbackReport({
   theme,
   classes,
-  pageContext: { assessment: contextAssessment, pillarColors, scoringSchema },
+  pageContext: { assessment: contextAssessment, pillarColors },
   location,
 }) {
   const {

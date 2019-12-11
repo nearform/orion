@@ -36,9 +36,17 @@ module.exports = {
      *     (30 * 67% = 20)
      * 5 - Point scores are displayed on the Feedback Report by part, criteria, pillar, and total
      */
-    criteria_weighting: [1, 1, 1, 2, 1, 2, 2],
-    questionnaire: 100,
-    'efqm-2020': 300,
-    'efqm-2020-advanced': 1000,
+    criteriaWeighting: {
+      'purpose-strategy': 1,
+      'leadership-culture': 1,
+      'engaging-stakeholders': 1,
+      'creating-value': 2,
+      'driving-performance': 1,
+      'stakeholder-perceptions': 2,
+      'strategic-performance': 2,
+    },
+    questionnaire: 10,
+    'efqm-2020': 30,
+    'efqm-2020-advanced': 100,
   },
 }

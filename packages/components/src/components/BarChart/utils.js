@@ -1,27 +1,23 @@
 import T from 'prop-types'
 import get from 'lodash/get'
+import { config } from '../../../theme.es'
 
 const SLIDER_STEP = 5
 
-function getWeightedScore(dataItem) {
-  return dataItem.score * (dataItem.weighting || 1)
-}
+const getPointScore = (percentScore, weight, possiblePoints) =>
+  (percentScore * weight * possiblePoints) / 100
 
 function getOverallScore(chartData) {
-  return chartData.reduce(
-    (acc, dataItem) => acc + getWeightedScore(dataItem),
-    0
-  )
+  return chartData.reduce((acc, dataItem) => acc + dataItem.pointScore, 0)
 }
 
-function calculateWeightedMean(scores) {
+function calculatePartsMean(scores) {
   if (!scores.length) return 0
   return Math.min(
     scores.reduce((sum, scoreItem) => {
-      const weighting = scoreItem.weighting || 1
       const scoreValue = scoreItem.score
 
-      return sum + scoreValue * weighting
+      return sum + scoreValue
     }, 0) / scores.length
   )
 }
@@ -36,6 +32,8 @@ function getChartData(assessmentDef, assessmentData, pillarColors) {
    *
    * TODO: Optimise and simplify when sure that business logic is sound.
    */
+
+  console.log(config)
 
   if (!assessmentData) return null
 
@@ -82,6 +80,8 @@ function getChartData(assessmentDef, assessmentData, pillarColors) {
         )
       })
 
+      console.log(chartData)
+
       return chartData
     },
     []
@@ -125,12 +125,22 @@ function getScoresByCritera(
     )
     .sort((a, b) => (a.label > b.label && 1) || (a.label < b.label && -1) || 0)
 
+  const { criteriaWeighting, [assessmentKey]: scoringPoints } = config.scoring
+
+  const criteriaScore = calculatePartsMean(chartDataByCriterionParts)
+  const pointCriteriaScore = getPointScore(
+    criteriaScore,
+    criteriaWeighting[criterionKey],
+    scoringPoints
+  )
+
   return {
     key: compositeKey,
     label: criterionName,
     color: pillarColor,
     scores: chartDataByCriterionParts,
-    score: calculateWeightedMean(chartDataByCriterionParts),
+    score: criteriaScore,
+    pointScore: pointCriteriaScore,
   }
 }
 
@@ -164,12 +174,14 @@ function getScoresbyCriterionPart(
     []
   )
 
+  console.log(scoresByScoringItems)
+
   return {
     key: `${previousKey}_${partNumber}`,
     label: partTablesDef.map(table => table.name).join(', '),
     scores: scoresByScoringItems,
     score: Math.min(
-      roundBySliderStep(calculateWeightedMean(scoresByScoringItems)),
+      roundBySliderStep(calculatePartsMean(scoresByScoringItems)),
       cap
     ),
     path: `${criterionPath}/${partNumber}`,
@@ -203,4 +215,4 @@ const chartDataShape = T.shape({
   key: T.string.isRequired,
 })
 
-export { getWeightedScore, getOverallScore, chartDataShape, getChartData }
+export { getOverallScore, chartDataShape, getChartData }

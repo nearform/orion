@@ -14,7 +14,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 
 import Bar from './Bar'
 import ChartTicks from '../ChartTicks'
-import { getWeightedScore, chartDataShape } from './utils'
+import { chartDataShape } from './utils'
 
 function BarChartTableRow({
   classes,
@@ -39,8 +39,6 @@ function BarChartTableRow({
     { [classes.clickable]: hasChildren },
     { [classes.lastRow]: isLast && !isOpened }
   )
-
-  const weightedScore = getWeightedScore(chartDataItem)
 
   const barColor =
     depth === 2 ? theme.palette.background.dark : chartDataItem.color
@@ -98,7 +96,7 @@ function BarChartTableRow({
         </TableCell>
         <TableCell align="right" className={classes.cell}>
           <Typography variant="h6" className={classes.score}>
-            {Math.round(weightedScore)}
+            {Math.round(chartDataItem.pointScore)}
             <Typography component="span" className={classes.weighting}>
               {chartDataItem.weighting && `(${chartDataItem.weighting})`}
             </Typography>
