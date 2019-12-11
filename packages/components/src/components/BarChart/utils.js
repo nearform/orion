@@ -42,26 +42,33 @@ function getChartData(assessmentDef, assessmentData, pillarColors) {
   const chartData = assessmentDef.pillars.reduce(
     (chartData, pillarDef, pillarIndex) => {
       const { key: pillarKey, criteria: criteriaDef } = pillarDef
-
-      const scoringDef = pillarDef.scoring || assessmentDef.scoring
-      const scoringRules =
-        pillarDef.scoringRules || assessmentDef.scoringRules || {}
-
-      if (!scoringDef || !assessmentData.scoring) return chartData
+      if (!assessmentData.scoring) return chartData
 
       const pillarColor = pillarColors[pillarIndex]
       const pillarScores = assessmentData.scoring.filter(
         scoresByPillar => scoresByPillar.pillar_key === pillarKey
       )
 
+      let skipFlag = false
       criteriaDef.forEach(criterionDef => {
+        const scoringDef =
+          criterionDef.scoring || pillarDef.scoring || assessmentDef.scoring
+        const scoringRules =
+          criterionDef.scoringRules ||
+          pillarDef.scoringRules ||
+          assessmentDef.scoringRules ||
+          {}
+
         if (
+          skipFlag ||
           !pillarScores.some(
             pillarScore => pillarScore.criterion_key === criterionDef.key
           )
         ) {
+          skipFlag = true
           return
         }
+
         chartData.push(
           getScoresByCritera(
             criterionDef,

@@ -1,0 +1,527 @@
+{
+  "key": "questionnaire",
+  "name": "Cuestionario",
+  "orderIndex": 1,
+  "logoAsset": "assess-1-img",
+  "shortDescription": "Una herramienta de evaluación sencilla, con 5 preguntas por cada criterio del Modelo EFQM. La mejor opción para hacer una primera evaluación, diagnosticando cuál es la situación actual e identificando las acciones y prioridades futuras.",
+  "startPhrases": {
+    "questionnaire": "Empezar con el cuestionario"
+  },
+  "keyInformation": {
+    "guidance": "We are here to help you fill out the key information",
+    "keyInformationItems": []
+  },
+  "pillars": [
+    {
+      "key": "direction",
+      "name": "direction",
+      "criteria": [
+        {
+          "key": "purpose-strategy",
+          "name": "purpose, vision & strategy",
+          "description": "An outstanding organisation is defined by a Purpose that inspires, a Vision that is aspirational and a Strategy that delivers.\n\nThe Purpose of the organisation:\n\n- Explains why its work is important\n- Sets the scene for it to create and deliver sustained value for its stakeholders\n- Provides a framework in which it takes responsibility for its contribution to, and impact on, the ecosystem in which it operates.\n\nThe Vision of the organisation:\n- Describes what the organisation is attempting to achieve in the long-term\n- Is intended to serve as a clear guide for choosing current and future courses of action\n- Provides, along with the organisation’s Purpose, the basis for setting the Strategy.\n",
+          "parts": [
+            {
+              "tables": [
+                {
+                  "key": "background-info-table",
+                  "name": "background information for your scoring rationale",
+                  "columns": [
+                    {
+                      "key": "background-info",
+                      "name": "background information for your scoring rationale"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "scoring": [
+            {
+              "key": "purpose-strategy-scores",
+              "name": "purpose, vision & strategy scores",
+              "scores": [
+                {
+                  "key": "defines-purpose",
+                  "name": "Defines Purpose",
+                  "description": "Defines a Purpose that provides an inspirational motive for the importance and value of its work and is appealing to all its stakeholders"
+                },
+                {
+                  "key": "involves-stakeholders",
+                  "name": "Involves Stakeholders",
+                  "description": "Involves its stakeholders in defining, shaping and communicating its Purpose and Vision"
+                },
+                {
+                  "key": "identifies-stakeholders",
+                  "name": "Identifies Stakeholders",
+                  "description": "Identifies the stakeholders and their needs and expectations within its ecosystem and prioritises on those that it sees as the Key Stakeholders, i.e. those with the potential to help or hinder the achievement of the Purpose, Vision and Strategy"
+                },
+                {
+                  "key": "studies-key-stakeholder",
+                  "name": "Studies Key Stakeholder",
+                  "description": "Studies and understands Key Stakeholder competences and strategies and responds appropriately to how these could affect its Purpose, Vision, Strategy and business model."
+                },
+                {
+                  "key": "researches-ecosystem",
+                  "name": "Researches ecosystem",
+                  "description": "Researches and understands the ecosystem, including Megatrends, and the consequences on it of the United Nations Sustainable Development Goals and Global Compact ambitions and analyses different scenarios, current and future capabilities and market-place dynamics."
+                },
+                {
+                  "key": "assesses-data-across-ecosystems",
+                  "name": "Assesses Data Across Ecosystems",
+                  "description": "Assesses and evaluates the data, information and knowledge gathered from across its data to understand the major challenges for today and in the future."
+                },
+                {
+                  "key": "develops-strategy",
+                  "name": "Develops Strategy",
+                  "description": "Develops Strategy and a set of related strategic priorities that tackle any major challenges identified, making sure appropriate action is taken when necessary and actioned to set the pace within its ecosystem "
+                },
+                {
+                  "key": "translates-strategy",
+                  "name": "Translates Strategy",
+                  "description": "Translates Strategy and strategic priorities into performance targets and transformation initiatives"
+                },
+                {
+                  "key": "Designs-implements-governance",
+                  "name": "Designs implements governance",
+                  "description": "Designs and implements a governance and performance management system that aligns with its aspirations and addresses the Strategy, developments in the ecosystem, own capabilities and major challenges"
+                },
+                {
+                  "key": "ensures-performance",
+                  "name": "Ensures Performance",
+                  "description": "Ensures performance and transformation management and measurement reporting systems are built into the organisation’s way of working to enable timely accountability and transparency with Key Stakeholders"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "leadership-culture",
+          "name": "Organisational Culture & Leadership",
+          "description": "Organisational Culture is the specific collection of values & norms that are shared by people and groups within an organisation that influence, over time, the way they behave with each other and with Key Stakeholders outside the organisation.\n\nOrganisational leadership relates to the organisation as a whole rather than any individual or team that provides direction from the top. It is about the organisation acting as a leader within its ecosystem, recognised by others as a role model, rather than from the traditional perspective of a top team managing the organisation.\n\nIn an outstanding organisation, leadership is positioned as an activity not a role and leadership behaviours are evident across all levels and parts of the organisation. This role model leadership behaviour inspires others, reinforces, and when necessary, adapts the values and norms, helping to steer Organisational Culture.\n\nFor an organisation to achieve and sustain outstanding results that meet or exceed the expectations of its Stakeholders it is necessary, but not sufficient, for it to: \n- Define an inspiring Purpose\n- Create a Vision that is aspirational\n- Develop a Strategy that is centred on Creating Sustainable Value \n- Build a winning culture.\n\nThe Direction setting as outlined above, prepares the way forward for the organisation, but it then needs to execute its Strategy effectively and efficiently, ensuring that it:\n- Knows who the stakeholders are in its ecosystem and engages fully with those that are Key to its success\n- Creates Sustainable Value\n- Drives the levels of performance necessary for success today and, at the same time, drives the necessary improvement and transformation if it is to be successful in the future.",
+          "parts": [
+            {
+              "tables": [
+                {
+                  "key": "background-info-table",
+                  "name": "background information for your scoring rationale",
+                  "columns": [
+                    {
+                      "key": "background-info",
+                      "name": "background information for your scoring rationale"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "scoring": [
+            {
+              "key": "leadership-culture-scores",
+              "name": "Organisational Culture & Leadership scores",
+              "scores": [
+                {
+                  "key": "understands-culture",
+                  "name": "Understands Culture",
+                  "description": "Understands and steers the culture to align with its Purpose and recognises when there is a need for the culture to be adapted"
+                },
+                {
+                  "key": "nurtures-values",
+                  "name": "Nurtures Values",
+                  "description": "Nurtures its values, translating these into desired norms & behaviours that it promotes, communicates and clearly demonstrates through its actions"
+                },
+                {
+                  "key": "no-blame-attitude",
+                  "name": "No-Blame Attitude",
+                  "description": "Creates the conditions where a “no-blame” attitude and space for trying, making mistakes and learning from them can flourish"
+                },
+                {
+                  "key": "Facilitates-learning",
+                  "name": "Facilitates Learning",
+                  "description": "Facilitates a spirit of learning in the pursuit of its Strategy, encouraging the improvement and, at times, transformation of the organisation"
+                },
+                {
+                  "key": "focus-creativity",
+                  "name": "Focus Creativity",
+                  "description": "Understands the importance and benefits of having a focus on creativity, innovation and disruptive thinking to help it achieve its Purpose, Vision and Strategy and set relevant goals and targets for these."
+                },
+                {
+                  "key": "develops-improvement-techniques",
+                  "name": "Develops Improvement Techniques",
+                  "description": "Develops the culture for, and expertise in, using the tools and techniques that facilitate improvement"
+                },
+                {
+                  "key": "atmosphere-of-openness",
+                  "name": "Atmosphere of Openness",
+                  "description": "Invests in making sure its Purpose, Vision and Strategy are communicated effectively to Key Stakeholders, helping to create an atmosphere of openness, trust, confidence and commitment"
+                },
+                {
+                  "key": "conveys-impact",
+                  "name": "Conveys Impact",
+                  "description": "Conveys to Key Stakeholders the impact and relevance of their specific contributions to the Purpose, Vision and Strategy, explaining the importance of gaining and maintaining their engagement"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "execution",
+      "name": "execution",
+      "criteria": [
+        {
+          "key": "engaging-stakeholders",
+          "name": "Engaging Stakeholders",
+          "description": "Having decided which Stakeholders are the most important to the organisation, i.e. its Key Stakeholders, and independent of the specific groups identified, it is highly likely that there is a degree of similarity in applying the following principles when engaging with Key Stakeholders.\n\nAn outstanding organisation: -\n- Identifies the specific types and categories within each of its Key Stakeholder Groups\n- Uses its understanding of Key Stakeholders needs and expectations to achieve continued engagement\n- Involves Key Stakeholders in deploying its Strategy and Creating Sustainable Value and recognises the contributions they make \n- Builds, maintains and further develops the relationship with Key Stakeholders based on transparency, accountability, ethical behaviour and trust\n- Works with its Key Stakeholders to develop a common understanding and focus on how, through co-development, it can contribute to, and draw inspiration from, the United Nations Sustainable Development Goals and Global Compact ambitions\n- Actively gathers the perceptions of its Key Stakeholders rather than waiting for them to make contact \n- Evaluates its performance in relation to Key Stakeholders needs and decides on the appropriate actions to be taken to help secure its future, as perceived by these Key Stakeholders.\n\n",
+          "parts": [
+            {
+              "tables": [
+                {
+                  "key": "background-info-table",
+                  "name": "background information for your scoring rationale",
+                  "columns": [
+                    {
+                      "key": "background-info",
+                      "name": "background information for your scoring rationale"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "scoring": [
+            {
+              "key": "engaging-stakeholders-scores",
+              "name": "Engaging Stakeholders Scores",
+              "scores": [
+                {
+                  "key": "identifies-customers",
+                  "name": "identifies customers",
+                  "description": "Identifies and classifies its customers based on defined criteria, e.g. social characteristics, needs and expectations, buying and user behaviour"
+                },
+                {
+                  "key": "customers-communication-channels",
+                  "name": "customers communication channels",
+                  "description": "Establishes communication channels that make it easy for customers to interact, give feedback on their experiences and for the organisation to react quickly and appropriately."
+                },
+                {
+                  "key": "people-strategy",
+                  "name": "people strategy",
+                  "description": "Develops a People strategy and plans that support the overall strategy and plans of the organisation"
+                },
+                {
+                  "key": "Adapts-evolves-expectations",
+                  "name": "Adapts evolves expectations",
+                  "description": "Adapts to the evolving needs and expectations of its People, both current and future, taking account, for example, of changing expectations on Organisational Culture & Leadership, gender balance & parity, diversity & inclusion and the desired working environment"
+                },
+                {
+                  "key": "identifies-governing-stakeholders",
+                  "name": "identifies-governing-stakeholders",
+                  "description": "Identifies the Key Business and Governing Stakeholders that have a financial, legal and general stewardship interest in the organisation and understands their expectations"
+                },
+                {
+                  "key": "involves-stakeholders-in-development",
+                  "name": "involves stakeholders in development",
+                  "description": "Involves Key Business and Governing Stakeholders in the development of its improvement & transformation ambitions and overall strategic direction"
+                },
+                {
+                  "key": "clear-focus-on-society",
+                  "name": "clear focus on society",
+                  "description": "Uses its Purpose, Vision & Strategy to develop a clear understanding and focus on how it will contribute to its Society"
+                },
+                {
+                  "key": "maintain-stakeholder-relationship",
+                  "name": "maintain stakeholder relationship",
+                  "description": "Establishes, develops and maintains a relationship with the Key Stakeholders in its Society, leading to mutual benefit for both the organisation and its Society"
+                },
+                {
+                  "key": "segments-partners",
+                  "name": "Segments Partners",
+                  "description": "Segments its Key Partners and Suppliers in line with its Purpose, Vision and Strategy"
+                },
+                {
+                  "key": "partner-accountability",
+                  "name": "partner accountability",
+                  "description": "Ensures its Key Partners and Suppliers act in line with the organisation’s Strategy and that mutual transparency, integrity, and accountability in the trusting relationship is established and enhanced"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "creating-value",
+          "name": "Creating Sustainable Value",
+          "description": "An outstanding organisation recognises that Creating Sustainable Value is vital for its long-term success and financial strength.\n\nThe organisation’s clearly defined Purpose, enriched by the Strategy, defines for whom the organisation should be Creating Sustainable Value. In most cases, customers, segmented appropriately, are the target group for Creating Sustainable Value, although some organisations might also focus on selected Key Stakeholders within its Society or Business & Governing Stakeholder segments.\n\nAn outstanding organisation acknowledges that Key Stakeholder needs may change over time and that it is important to collect and analyse feedback to improve or change their products, services or solutions.",
+          "parts": [
+            {
+              "tables": [
+                {
+                  "key": "background-info-table",
+                  "name": "background information for your scoring rationale",
+                  "columns": [
+                    {
+                      "key": "background-info",
+                      "name": "background information for your scoring rationale"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "scoring": [
+            {
+              "key": "purpose-strategy-scores",
+              "name": "purpose, vision & strategy scores",
+              "scores": [
+                {
+                  "key": "understands-differentiators",
+                  "name": "Understands differentiators",
+                  "description": "Understands what differentiates it from others, including, where relevant, its competitors, and makes these differentiators an integral part of the value it creates"
+                },
+                {
+                  "key": "develop-products-with-purpose",
+                  "name": "develop products with purpose",
+                  "description": "Develops the portfolio of its products, services and solutions in line with its Purpose and the current and future needs of existing and potential target groups"
+                },
+                {
+                  "key": "Expresses-differentiators",
+                  "name": "Expresses differentiators",
+                  "description": "Expresses the differentiators and the value propositions into attractive and engaging messages that are then communicated to existing and potential customers as well as other target groups"
+                },
+                {
+                  "key": "target-using-differentiators",
+                  "name": "target using differentiators",
+                  "description": "Uses dedicated strategies and approaches to sell to target groups its differentiators and the value proposition(s) as well as the products, services and solutions"
+                },
+                {
+                  "key": "meeting-target-needs",
+                  "name": "meeting target needs",
+                  "description": "Delivers sustainable value, as promised, through its portfolio of products, services and solutions and by meeting or exceeding the needs and expectations of its target groups"
+                },
+                {
+                  "key": "minimises-negative-impacts",
+                  "name": "minimises negative impacts",
+                  "description": "Delivers its products, services and solutions in a way that minimises negative social and environmental impact"
+                },
+                {
+                  "key": "ensure-necessary-resources",
+                  "name": "ensure necessary resources",
+                  "description": "Makes sure its people have the necessary resources, competencies and empowerment they need to maximise the overall experience for its target groups"
+                },
+                {
+                  "key": "timely-feedback",
+                  "name": "timely feedback",
+                  "description": "Designs, implements and uses timely feedback systems to improve the different phases of value creation as well as the products, services and solutions offered by the organisation."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "driving-performance",
+          "name": "Driving Performance & Transformation",
+          "description": "Now and in the future, an organisation needs to be able to meet the following two important requirements at the same time to become and remain successful. \n\n- On the one side, it needs to continue managing successfully the delivery of its current business operations. (“Driving Performance.”) \n- On the other side, there are constant changes inside and outside the organisation that need to be managed in parallel if it is to remain successful. (“Driving Transformation.”)\n\nThe combination of Driving Performance & Transformation confirms the necessity for the organisation to deliver for today while preparing for the future.\n\nMajor elements in enabling performance & transformation are innovation and technology, the ever-increasing importance of data, information & knowledge and the focussed use of critical assets and resources.\n",
+          "parts": [
+            {
+              "tables": [
+                {
+                  "key": "background-info-table",
+                  "name": "background information for your scoring rationale",
+                  "columns": [
+                    {
+                      "key": "background-info",
+                      "name": "background information for your scoring rationale"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "scoring": [
+            {
+              "key": "driving-performance-scores",
+              "name": "Driving Performance & Transformation scores",
+              "scores": [
+                {
+                  "key": "performance-management-system",
+                  "name": "performance management system",
+                  "description": "Uses the performance management system to guide informed, effective, responsive and fact-based improvements"
+                },
+                {
+                  "key": "Identifies-risk",
+                  "name": "Identifies risk",
+                  "description": "Identifies risk and assesses the potential impact on the strategic priorities, the way things are executed and the desired results as well as potential opportunities"
+                },
+                {
+                  "key": "Identifies-transformation-needs",
+                  "name": "Identifies transformation needs",
+                  "description": "Identifies the transformation and change needs, taking into account its Purpose, Strategy, Sustainable Value Creation objectives and Results and scanning its ecosystem to forecast the main challenges and opportunities for the future"
+                },
+                {
+                  "key": "structure-serve-purpose",
+                  "name": "structure serve Purpose",
+                  "description": "Builds its organisational structure to best serve its Purpose, Vision and Strategy and considers innovative approaches to adapting its current organisational design based on the main challenges and opportunities that are forecast"
+                },
+                {
+                  "key": "innovations-support-improvement",
+                  "name": "innovations support improvement",
+                  "description": "Takes advantage of innovations that support improvement in the current business and the need for transformation in the future"
+                },
+                {
+                  "key": "technologies-support-value",
+                  "name": "technologies support value",
+                  "description": "Evaluates and exploits the potential that new technologies have to support ongoing value creation, improvements to its infrastructure and the responsiveness and adaptability of its processes & projects"
+                },
+                {
+                  "key": "data-support-transformation",
+                  "name": "data support transformation",
+                  "description": "Ensures it has identified the data it needs to support its transformation plans as well as managing the products, services and solutions it currently offers, and is proficient in acquiring any essential information that may be lacking"
+                },
+                {
+                  "key": "data-outcomes-opportunity",
+                  "name": "data outcomes opportunity",
+                  "description": "Converts data into information and knowledge and uses the outcomes to identify potential opportunities for creating further sustainable value"
+                },
+                {
+                  "key": "sustainable-financials",
+                  "name": "sustainable financials",
+                  "description": "Uses financial resources in a balanced and sustainable way to help ensure current success and investment in the future"
+                },
+                {
+                  "key": "manages-assets-responsibly",
+                  "name": "manages assets responsibly",
+                  "description": "Identifies and manages responsibly, the critical assets and resources that are vital for its Strategy, Performance and Transformation needs, including financial assets (cash, capital, investments), tangible assets (trading infrastructure, such as supply chain, real estate, technology and machinery) and intangible assets (proprietary data, self-developed software/technology, brand, goodwill, patents)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "results",
+      "name": "results",
+      "criteria": [
+        {
+          "key": "stakeholder-perceptions",
+          "name": "Stakeholder Perceptions",
+          "description": "This criterion concentrates on results based on feedback from Key Stakeholders about their personal experiences of dealing with the organisation - their perceptions\n\nThese perceptions could relate to past as well as current Key Stakeholders and could be obtained from a number of sources, including surveys, focus groups, ratings, press or social media, external recognition, advocacy, structured review meetings, investor reports and compliments/complaints, including feedback compiled by customer relationship management teams\n\nIn addition to the perceptions that a Key Stakeholder may have of an organisation based on personal experiences, perceptions may also be shaped by the environmental and social impact reputation of the organisation. For instance, the degree to which the organisation is perceived by its Key Stakeholders as contributing successfully to one or more of the United Nations Sustainable Development Goals and Global Compact ambitions.\n",
+          "parts": [
+            {
+              "tables": [
+                {
+                  "key": "background-info-table",
+                  "name": "background information for your scoring rationale",
+                  "columns": [
+                    {
+                      "key": "background-info",
+                      "name": "background information for your scoring rationale"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "scoring": [
+            {
+              "key": "stakeholder-perceptions-scores",
+              "name": "Stakeholder Perceptions Scores",
+              "scores": [
+                {
+                  "key": "results-link-to-purpose",
+                  "name": "results link to purpose",
+                  "description": "A set of results that clearly link to the Purpose, Vision & Strategy of the organisation are identified. The selected set of Results is reviewed and improved overtime"
+                },
+                {
+                  "key": "timely-results",
+                  "name": "timely results",
+                  "description": "Results are timely, reliable, accurate and appropriately segmented to provide meaningful insights that support performance improvement and transformation"
+                },
+                {
+                  "key": "sustained-outstanding-performance",
+                  "name": "sustained outstanding performance",
+                  "description": "Positive trends or sustained outstanding performance over the strategic period/cycle"
+                },
+                {
+                  "key": "relevant-targets",
+                  "name": "Relevant targets",
+                  "description": "Relevant targets are set in line with the Strategy and are consistently achieved"
+                },
+                {
+                  "key": "relevant-external-comparisons",
+                  "name": "Relevant external comparisons",
+                  "description": "Relevant external comparisons suitable to position own performance in line with the strategic direction are made and are favourable"
+                },
+                {
+                  "key": "future-performance-drivers",
+                  "name": "future performance drivers",
+                  "description": "Based on current cause & effect relationships, analysis of data sets, performance patterns & predictive measures, the organisation understands the drivers for outstanding performance in the future"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "strategic-performance",
+          "name": "Strategic & Operational Performance",
+          "description": "This criterion concentrates on results linked to the organisation’s performance in terms of:\n- The ability to fulfil its Purpose, deliver the Strategy and Create Sustainable Value\n- Its fitness for the future\n\nThese results are used by the organisation to monitor, understand and improve its overall performance and to forecast the impact this performance will have on both the perceptions of its Key Stakeholders as well as its future strategic ambitions.\n",
+          "parts": [
+            {
+              "tables": [
+                {
+                  "key": "background-info-table",
+                  "name": "background information for your scoring rationale",
+                  "columns": [
+                    {
+                      "key": "background-info",
+                      "name": "background information for your scoring rationale"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "scoring": [
+            {
+              "key": "strategic-performance-scores",
+              "name": "Strategic & Operational Performance scores",
+              "scores": [
+                {
+                  "key": "results-link-to-purpose-performance",
+                  "name": "results link to purpose",
+                  "description": "A set of results that clearly link to the Purpose, Vision & Strategy of the organisation are identified. The selected set of Results is reviewed and improved overtime"
+                },
+                {
+                  "key": "timely-results-performance",
+                  "name": "timely results",
+                  "description": "Results are timely, reliable, accurate and appropriately segmented to provide meaningful insights that support performance improvement and transformation"
+                },
+                {
+                  "key": "sustained-outstanding-performance-performance",
+                  "name": "sustained outstanding performance",
+                  "description": "Positive trends or sustained outstanding performance over the strategic period/cycle"
+                },
+                {
+                  "key": "relevant-targets-performance",
+                  "name": "Relevant targets",
+                  "description": "Relevant targets are set in line with the Strategy and are consistently achieved"
+                },
+                {
+                  "key": "relevant-external-comparisons-performance",
+                  "name": "Relevant external comparisons",
+                  "description": "Relevant external comparisons suitable to position own performance in line with the strategic direction are made and are favourable"
+                },
+                {
+                  "key": "future-performance-drivers-performance",
+                  "name": "future performance drivers",
+                  "description": "Based on current cause & effect relationships, analysis of data sets, performance patterns & predictive measures, the organisation understands the drivers for outstanding performance in the future"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

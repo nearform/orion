@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 import T from 'prop-types'
+import get from 'lodash/get'
 import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 import { Box, Typography, withStyles } from '@material-ui/core'
 
 import { useAuthorizedQuery, PaddedContainer } from 'components'
-import { useTranslation } from 'react-i18next'
-
+import SEO from '../components/SEO'
 import HeadedSection from '../components/management-report/headed-section'
 import HeadedSubSection from '../components/management-report/headed-sub-section'
 import Header from '../components/management-report/header'
@@ -74,72 +75,79 @@ function ManagementReport({ assessmentId, classes }) {
   } = data
 
   return (
-    <Box className={classes.pageContainer} component="article">
-      <PaddedContainer>
-        <Header assessment={assessment} />
-        <HeadedSection pillar="default" title={t('Key Information')}>
-          {// Output the key info summary section (page intro)
-          keyInfoItemsMeta.map(({ key, name }) => {
-            const keyInfoBody =
-              assessmentKeyInfo && assessmentKeyInfo[key]
-                ? assessmentKeyInfo[key]
-                : t('not provided for this assessment')
-            return (
-              <HeadedSubSection body={keyInfoBody} key={key} title={name} />
+    <>
+      <SEO title={get(assessment, 'name', 'Assessment')} />
+      <Box className={classes.pageContainer} component="article">
+        <PaddedContainer>
+          <Header assessment={assessment} />
+          <HeadedSection pillar="default" title={t('Key Information')}>
+            {// Output the key info summary section (page intro)
+            keyInfoItemsMeta.map(({ key, name }) => {
+              const keyInfoBody =
+                assessmentKeyInfo && assessmentKeyInfo[key]
+                  ? assessmentKeyInfo[key]
+                  : t('not provided for this assessment')
+              return (
+                <HeadedSubSection body={keyInfoBody} key={key} title={name} />
+              )
+            })}
+          </HeadedSection>
+
+          {// Loop over three pillars
+          pillarsMeta.map(({ criteria: criteriaMeta, key: pillarKey }) => {
+            // Loop over each criterion (set of questions)
+            return criteriaMeta.map(
+              ({
+                key: criterionKey,
+                name: criterionName,
+                parts: partsMeta,
+              }) => {
+                // Get assessment data from this criterion, for example, the summary paragraph
+                // Provide a default if no data is entered for this criteria yet
+                const [
+                  { data: { summary } } = { data: { summary: null } },
+                ] = assessmentCriteria.filter(
+                  ({ criterion_key }) => criterion_key === criterionKey
+                )
+
+                // Create a section with header to hold all of this criterion's questions
+                return (
+                  <Fragment key={criterionKey}>
+                    <HeadedSection pillar={pillarKey} title={criterionName}>
+                      {summary && (
+                        <HeadedSubSection title="Summary" body={summary} />
+                      )}
+                    </HeadedSection>
+                    {// Loop over each part (question)
+                    partsMeta.map(({ tables: [{ key, name }] }) => {
+                      // Extract the answers, providing a fallback empty array if there's none yet for this
+                      // question
+                      const [
+                        { table_values: answers } = { table_values: [] },
+                      ] = assessmentParts.filter(
+                        ({ criterion_key, table_key }) =>
+                          table_key === key && criterion_key === criterionKey
+                      )
+                      return (
+                        <Question
+                          answers={answers}
+                          answersMeta={answersMeta}
+                          answerSectionTitles={answerSectionTitles}
+                          key={key}
+                          pillarKey={pillarKey}
+                          questionTitles={questionTitles}
+                          title={name}
+                        />
+                      )
+                    })}
+                  </Fragment>
+                )
+              }
             )
           })}
-        </HeadedSection>
-
-        {// Loop over three pillars
-        pillarsMeta.map(({ criteria: criteriaMeta, key: pillarKey }) => {
-          // Loop over each criterion (set of questions)
-          return criteriaMeta.map(
-            ({ key: criterionKey, name: criterionName, parts: partsMeta }) => {
-              // Get assessment data from this criterion, for example, the summary paragraph
-              // Provide a default if no data is entered for this criteria yet
-              const [
-                { data: { summary } } = { data: { summary: null } },
-              ] = assessmentCriteria.filter(
-                ({ criterion_key }) => criterion_key === criterionKey
-              )
-
-              // Create a section with header to hold all of this criterion's questions
-              return (
-                <Fragment key={criterionKey}>
-                  <HeadedSection pillar={pillarKey} title={criterionName}>
-                    {summary && (
-                      <HeadedSubSection title="Summary" body={summary} />
-                    )}
-                  </HeadedSection>
-                  {// Loop over each part (question)
-                  partsMeta.map(({ tables: [{ key, name }] }) => {
-                    // Extract the answers, providing a fallback empty array if there's none yet for this
-                    // question
-                    const [
-                      { table_values: answers } = { table_values: [] },
-                    ] = assessmentParts.filter(
-                      ({ criterion_key, table_key }) =>
-                        table_key === key && criterion_key === criterionKey
-                    )
-                    return (
-                      <Question
-                        answers={answers}
-                        answersMeta={answersMeta}
-                        answerSectionTitles={answerSectionTitles}
-                        key={key}
-                        pillarKey={pillarKey}
-                        questionTitles={questionTitles}
-                        title={name}
-                      />
-                    )
-                  })}
-                </Fragment>
-              )
-            }
-          )
-        })}
-      </PaddedContainer>
-    </Box>
+        </PaddedContainer>
+      </Box>
+    </>
   )
 }
 

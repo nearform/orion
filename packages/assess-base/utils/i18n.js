@@ -6,7 +6,9 @@ const getResources = () => {
   const translationOptions = Object.keys(translations)
   const resources = {}
   translationOptions.map(abb => {
-    resources[abb] = require(`efqm-theme/assessments/${abb}/${abb}_AB.json`)
+    resources[
+      abb
+    ] = require(`efqm-theme/assessments/data/${abb}/${abb}_AB.json`)
   })
   return resources
 }
