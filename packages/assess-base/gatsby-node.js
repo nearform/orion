@@ -47,6 +47,9 @@ exports.createPages = async ({ graphql, actions }) => {
   const feedbackReportTemplate = require.resolve(
     './src/templates/feedback-report.js'
   )
+  const managementReportTemplate = require.resolve(
+    './src/templates/management-report.js'
+  )
   const contributorsAssessorsTemplate = require.resolve(
     './src/templates/contributors-assessors.js'
   )
@@ -127,6 +130,16 @@ exports.createPages = async ({ graphql, actions }) => {
       path: `/assessment/${assessment.key}/feedback-report`,
       matchPath: `/assessment/${assessment.key}/feedback-report`,
       component: feedbackReportTemplate,
+      context: {
+        assessment,
+        pillarColors,
+      },
+    })
+
+    createPage({
+      path: `/assessment/${assessment.key}/management-report`,
+      matchPath: `/assessment/${assessment.key}/management-report`,
+      component: managementReportTemplate,
       context: {
         assessment,
         pillarColors,
@@ -239,6 +252,16 @@ exports.createPages = async ({ graphql, actions }) => {
       path: `/assessment/${assessment.key}/feedback-report`,
       matchPath: `/assessment/${assessment.key}/feedback-report`,
       component: questionnaireFeedbackReportTemplate,
+      context: {
+        assessment,
+        pillarColors,
+      },
+    })
+
+    createPage({
+      path: `/assessment/${assessment.key}/management-report`,
+      matchPath: `/assessment/${assessment.key}/management-report`,
+      component: managementReportTemplate,
       context: {
         assessment,
         pillarColors,

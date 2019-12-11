@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import T from 'prop-types'
-import get from 'lodash/get'
 import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 import { Box, Typography, withStyles } from '@material-ui/core'
 
@@ -12,18 +11,33 @@ import HeadedSubSection from '../components/management-report/headed-sub-section
 import Header from '../components/management-report/header'
 import Question from '../components/management-report/question'
 import { getManagementReportData } from '../queries'
+import { getAssessmentId } from '../utils/url'
 
-function ManagementReport({ assessmentId, classes }) {
-  const { data, loading } = useAuthorizedQuery(
+function ManagementReport({ classes, pageContext, location }) {
+  const {
+    assessment: { key: assessmentKey },
+  } = pageContext
+
+  const { t, i18n } = useTranslation()
+  const lang = i18n.language || 'en'
+
+  const {
+    assessment: {
+      keyInformation: { keyInformationItems: keyInfoItemsMeta },
+      pillars: pillarsMeta,
+      columns: answersMeta = [],
+    },
+  } = getAssessmentParts(assessmentKey, lang)
+
+  const assessmentId = getAssessmentId(location)
+
+  const { data: assessmentData, loading } = useAuthorizedQuery(
     getManagementReportData,
     { assessmentId },
     {
       onPreFetch: variables => !!variables.assessmentId,
     }
   )
-
-  const { t, i18n } = useTranslation()
-  const lang = i18n.language || 'en'
 
   if (loading) {
     return (
@@ -35,18 +49,9 @@ function ManagementReport({ assessmentId, classes }) {
     )
   }
 
-  if (!data) {
+  if (!assessmentData) {
     return null
   }
-
-  // Retrieve the assessment meta data
-  const {
-    assessment: {
-      keyInformation: { keyInformationItems: keyInfoItemsMeta },
-      pillars: pillarsMeta,
-      columns: answersMeta,
-    },
-  } = getAssessmentParts('efqm-2020-advanced', lang)
 
   // avoid filtering for every answer
   const answerSectionTitles = {}
@@ -68,18 +73,23 @@ function ManagementReport({ assessmentId, classes }) {
 
   // Destructure the data from the assessment query
   const {
-    assessment: [assessment],
-    assessment: [{ key_information: assessmentKeyInfo }],
+    assessment: [
+      { key_information: assessmentKeyInfo, name = t('Loading...') },
+    ],
     assessment_criterion_data: assessmentCriteria,
     assessment_table: assessmentParts,
-  } = data
+  } = assessmentData
 
   return (
     <>
-      <SEO title={get(assessment, 'name', 'Assessment')} />
+      <SEO title={name} />
       <Box className={classes.pageContainer} component="article">
         <PaddedContainer>
-          <Header assessment={assessment} />
+          <Header
+            assessmentId={assessmentId}
+            assessmentKey={assessmentKey}
+            name={name}
+          />
           <HeadedSection pillar="default" title={t('Key Information')}>
             {// Output the key info summary section (page intro)
             keyInfoItemsMeta.map(({ key, name }) => {
