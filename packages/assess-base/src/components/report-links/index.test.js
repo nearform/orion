@@ -63,7 +63,9 @@ describe('<ManagementReportLink />', () => {
 
   test('is a link with the correct URL based on the provided assessment', () => {
     const link = managementReportLink.find(managementLinkPredicate)
-    expect(link.props.href).toEqual('/management-report/123')
+    expect(link.props.href).toEqual(
+      '/assessment/efqm-2020-advanced/management-report/#123'
+    )
   })
 
   test('uses the text provided', () => {

@@ -121,7 +121,10 @@ describe('<AssessmentsHome />', () => {
     expect(reportLinks.length).toBe(10)
     expect(reportLinks[0]).toHaveTextContent('View')
     const reportLink = reportLinks[0].getElementsByTagName('a')
-    expect(reportLink[0]).toHaveAttribute('href', '/management-report/135')
+    expect(reportLink[0]).toHaveAttribute(
+      'href',
+      '/assessment/efqm-2020-advanced/management-report/#135'
+    )
 
     const feedbackLinks = getAllByTestId('assessment-table-feedback')
     expect(feedbackLinks.length).toBe(10)
