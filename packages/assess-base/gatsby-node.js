@@ -11,7 +11,7 @@ const pillarColors = [
 
 const {
   getAssessmentTypes,
-} = require('efqm-theme/assessments/getAssessmentParts')
+} = require(`${currentTheme}/assessments/getAssessmentParts`)
 
 exports.onPreInit = () => {
   const logger = console
@@ -56,6 +56,8 @@ exports.createPages = async ({ graphql, actions }) => {
   const modelImageAssets = translationOptions.map(
     abb => `${config.modelImageAB}_${abb}`
   )
+
+  const scoringSchema = config.scoring
 
   const assessments = getAssessmentTypes()
   const homepageAssets = assessments.map(({ logoAsset }) => logoAsset)
@@ -120,6 +122,7 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         assessment,
         pillarColors,
+        scoringSchema,
       },
     })
 
@@ -130,6 +133,7 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         assessment,
         pillarColors,
+        scoringSchema,
       },
     })
 
@@ -156,6 +160,7 @@ exports.createPages = async ({ graphql, actions }) => {
             pillar,
             criterion,
             pillarColor,
+            scoringSchema,
           },
         })
 
@@ -189,6 +194,7 @@ exports.createPages = async ({ graphql, actions }) => {
               nextLink,
               totalParts,
               criteriaList,
+              scoringSchema,
             },
           })
         })
@@ -232,6 +238,7 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         assessment,
         pillarColors,
+        scoringSchema,
       },
     })
 
@@ -242,6 +249,7 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         assessment,
         pillarColors,
+        scoringSchema,
       },
     })
 
@@ -275,6 +283,7 @@ exports.createPages = async ({ graphql, actions }) => {
             pillarColors,
             partNumber: 1,
             criteriaList,
+            scoringSchema,
           },
         })
       })

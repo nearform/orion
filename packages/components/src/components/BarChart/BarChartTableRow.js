@@ -3,13 +3,8 @@ import T from 'prop-types'
 import {
   withStyles,
   IconButton,
-  Paper,
-  Table,
-  TableHead,
-  TableBody,
   TableRow,
   TableCell,
-  TableFooter,
   Typography,
 } from '@material-ui/core'
 import classnames from 'classnames'
