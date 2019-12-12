@@ -3,14 +3,14 @@ import T from 'prop-types'
 import { Box, Button, withStyles, Typography } from '@material-ui/core'
 import { Link } from 'gatsby'
 
-const Header = ({ assessment, classes }) => {
+const Header = ({ assessmentId, assessmentKey, name, classes }) => {
   return (
     <Box className={classes.headerWrapper} component="header">
       <Box className={classes.nav} component="nav">
         <Button
           color="secondary"
           component={Link}
-          to={`/assessment/efqm-2020-advanced#${assessment.id}`}
+          to={`/assessment/${assessmentKey}#${assessmentId}`}
           variant="text"
         >
           ◀ Asessment Summary
@@ -26,7 +26,7 @@ const Header = ({ assessment, classes }) => {
       <Box>
         <Typography className={classes.prefix}>Management Report</Typography>
         <Typography className={classes.heading} component="h1">
-          {assessment.name}
+          {name}
         </Typography>
       </Box>
     </Box>

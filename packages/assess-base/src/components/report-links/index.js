@@ -70,7 +70,7 @@ const ManagementReportLink = ({
     <Link
       className={classes.wrapper}
       data-testid="management-report-link"
-      to={`/management-report/${assessment.id}`}
+      to={`/assessment/${assessment.key}/management-report/#${assessment.id}`}
     >
       <AssignmentTurnedIn className={classes.icon} />
       <Typography className={classes.text}>{text}</Typography>
