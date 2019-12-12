@@ -70,7 +70,9 @@ function AssessmentsTable({ classes }) {
               <TableCell data-testid="assessment-table-feedback">
                 <FeedbackReportLink
                   assessment={assessment}
-                  visible={status === 'submitted'}
+                  visible={
+                    status === 'submitted' || assessment.key === 'questionnaire'
+                  }
                   spacing={1}
                   text={t('View')}
                 />

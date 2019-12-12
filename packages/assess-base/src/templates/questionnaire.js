@@ -32,10 +32,7 @@ import SEO from '../components/SEO'
 import AssessmentPillars from '../components/AssessmentPillars'
 import { ReportLinks } from '../components/report-links'
 import { Redirect } from '@reach/router'
-import {
-  assessmentInProgress,
-  assessmentSubmitted,
-} from '../utils/assessment-status'
+import { assessmentInProgress } from '../utils/assessment-status'
 import {
   getCanEditAssesors,
   getCanEditContributors,
@@ -125,9 +122,6 @@ function QuestionnaireTemplate({
   const canSubmit = isAdmin && assessmentInProgress(assessmentData)
 
   const canCreateAssessment = isAdmin
-
-  // TODO: change this with correct rule based on assessment state
-  const canViewFeedbackReport = assessmentSubmitted(assessmentData)
 
   const canAssignContributorsAndAssessors = getUserAuth('platform-admin')
     ? true
@@ -345,7 +339,8 @@ function QuestionnaireTemplate({
               <Box className={classes.sideBar}>
                 <ReportLinks
                   assessment={assessmentData}
-                  canViewFeedbackReport={canViewFeedbackReport}
+                  canViewFeedbackReport={true}
+                  canViewManagementReport={false}
                 />
               </Box>
             </Grid>

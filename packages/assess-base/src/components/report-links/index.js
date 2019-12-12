@@ -104,7 +104,11 @@ const useReportLinksStyles = makeStyles(theme => ({
   },
 }))
 
-const ReportLinks = ({ assessment, canViewFeedbackReport }) => {
+const ReportLinks = ({
+  assessment,
+  canViewFeedbackReport,
+  canViewManagementReport,
+}) => {
   const { wrapper } = useReportLinksStyles()
   const { t } = useTranslation()
 
@@ -126,6 +130,7 @@ const ReportLinks = ({ assessment, canViewFeedbackReport }) => {
             assessment={assessment}
             text={t('View Management Report')}
             uppercase
+            visible={canViewManagementReport}
           />
         </Box>
       ) : (
