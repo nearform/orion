@@ -62,6 +62,7 @@ function AssessmentsTable({ classes }) {
               <TableCell data-testid="assessment-table-report">
                 <ManagementReportLink
                   assessment={assessment}
+                  visible={assessment.key !== 'questionnaire'}
                   spacing={1}
                   text={t('View')}
                 />

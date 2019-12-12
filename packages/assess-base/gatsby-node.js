@@ -259,16 +259,6 @@ exports.createPages = async ({ graphql, actions }) => {
     })
 
     createPage({
-      path: `/assessment/${assessment.key}/management-report`,
-      matchPath: `/assessment/${assessment.key}/management-report`,
-      component: managementReportTemplate,
-      context: {
-        assessment,
-        pillarColors,
-      },
-    })
-
-    createPage({
       path: `/assessment/${assessment.key}/contributors-assessors`,
       matchPath: `/assessment/${assessment.key}/contributors-assessors`,
       component: contributorsAssessorsTemplate,
