@@ -4,6 +4,7 @@ import { Link } from 'gatsby'
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded'
 import { useTranslation } from 'react-i18next'
 import get from 'lodash/get'
+import RemoveIcon from '@material-ui/icons/Remove'
 
 import { AssessmentStatusChip } from 'components'
 import { getAssessmentsData } from '../queries'
@@ -60,12 +61,16 @@ function AssessmentsTable({ classes }) {
                 <AssessmentStatusChip status={status} />
               </TableCell>
               <TableCell data-testid="assessment-table-report">
-                <ManagementReportLink
-                  assessment={assessment}
-                  visible={assessment.key !== 'questionnaire'}
-                  spacing={1}
-                  text={t('View')}
-                />
+                {assessment.key !== 'questionnaire' ? (
+                  <ManagementReportLink
+                    assessment={assessment}
+                    visible={assessment.key !== 'questionnaire'}
+                    spacing={1}
+                    text={t('View')}
+                  />
+                ) : (
+                  <RemoveIcon className={classes.nonApplicableReport} />
+                )}
               </TableCell>
               <TableCell data-testid="assessment-table-feedback">
                 <FeedbackReportLink
@@ -99,6 +104,11 @@ const styles = theme => ({
   feedbackIcon: {
     color: theme.palette.secondary.main,
     marginRight: '6px',
+  },
+  nonApplicableReport: {
+    // only way to match chevron color as it does not exist in theme
+    color: 'rgba(0, 0, 0, 0.54)',
+    marginLeft: '20px',
   },
 })
 
