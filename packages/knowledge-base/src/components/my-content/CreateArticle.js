@@ -73,45 +73,43 @@ function CreateArticle({ classes }) {
   }
 
   return (
-    <>
+    <PaddedContainer>
       <SEO title="Create Article" />
-      <PaddedContainer>
-        <Formik
-          validationSchema={Yup.object().shape({
-            knowledgeType: Yup.string().required(),
-          })}
-          onSubmit={handleSelectType}
-        >
-          {({ handleSubmit, submitForm, submitCount, isSubmitting }) => (
-            <Form onSubmit={handleSubmit}>
-              <Typography
-                color="secondary"
-                variant="h4"
-                className={classes.fieldLabel}
-              >
-                Let’s start by selecting a knowledge type
-              </Typography>
-              <Field
-                name="knowledgeType"
-                label="Knowledge Type"
-                component={CustomRadioGroup}
-              >
-                {knowledgeTypes.map(({ key, name }) => (
-                  <BoxControlLabel
-                    key={key}
-                    disabled={isSubmitting}
-                    onChange={() => setImmediate(submitForm)}
-                    value={key}
-                    control={<Radio />}
-                    label={name}
-                  />
-                ))}
-              </Field>
-            </Form>
-          )}
-        </Formik>
-      </PaddedContainer>
-    </>
+      <Formik
+        validationSchema={Yup.object().shape({
+          knowledgeType: Yup.string().required(),
+        })}
+        onSubmit={handleSelectType}
+      >
+        {({ handleSubmit, submitForm, submitCount, isSubmitting }) => (
+          <Form onSubmit={handleSubmit}>
+            <Typography
+              color="secondary"
+              variant="h4"
+              className={classes.fieldLabel}
+            >
+              Let’s start by selecting a knowledge type
+            </Typography>
+            <Field
+              name="knowledgeType"
+              label="Knowledge Type"
+              component={CustomRadioGroup}
+            >
+              {knowledgeTypes.map(({ key, name }) => (
+                <BoxControlLabel
+                  key={key}
+                  disabled={isSubmitting}
+                  onChange={() => setImmediate(submitForm)}
+                  value={key}
+                  control={<Radio />}
+                  label={name}
+                />
+              ))}
+            </Field>
+          </Form>
+        )}
+      </Formik>
+    </PaddedContainer>
   )
 }
 

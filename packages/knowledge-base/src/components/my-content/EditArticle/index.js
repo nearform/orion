@@ -3,7 +3,7 @@ import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
 import * as Yup from 'yup'
-import { UploadImageWidget } from 'components'
+import { PaddedContainer, UploadImageWidget } from 'components'
 import { UserAvatar, AuthContext, EmbeddedVideo } from 'components'
 import {
   Checkbox,
@@ -264,7 +264,7 @@ function EditArticle({ classes, articleId }) {
   }
 
   return (
-    <>
+    <PaddedContainer>
       <SEO
         title={
           articleDetails.title != null
@@ -286,8 +286,8 @@ function EditArticle({ classes, articleId }) {
           setFieldValue,
         }) => (
           <Form onSubmit={handleSubmit}>
-            <Grid container spacing={7}>
-              <Grid item xs={3}>
+            <Grid container spacing={7} className={classes.mainWrapper}>
+              <Grid item xs={12} sm={4} lg={3}>
                 <Grid
                   container
                   spacing={1}
@@ -391,138 +391,152 @@ function EditArticle({ classes, articleId }) {
                   ))}
                 </Grid>
               </Grid>
-              <Grid item xs={7}>
-                <Field
-                  name="title"
-                  component={TextField}
-                  fullWidth
-                  placeholder="Add Title"
-                  className={classes.titleInput}
-                />
-                <Field
-                  name="subtitle"
-                  component={TextField}
-                  fullWidth
-                  placeholder="Add Subtitle"
-                  className={classes.subtitleInput}
-                />
-                <div className={classes.fieldLabel}>
-                  <UploadImageWidget
-                    path={`uploads/articles/${articleId}`}
-                    value={values.banner}
-                    onChange={s3key => {
-                      setFieldValue('banner', s3key)
-                      setImmediate(submitForm)
-                    }}
-                  />
-                </div>
-                <div>
-                  <Typography
-                    color="secondary"
-                    variant="h4"
-                    className={classes.fieldLabel}
-                  >
-                    Summary
-                  </Typography>
+              <Grid
+                container
+                item
+                spacing={7}
+                xs={12}
+                sm={8}
+                lg={9}
+                alignContent="flex-start"
+              >
+                <Grid item xs={12} lg={9}>
                   <Field
-                    name={'summary'}
-                    component={FormikRichTextEditor}
-                    articleId={articleId}
+                    name="title"
+                    component={TextField}
+                    fullWidth
+                    placeholder="Add Title"
+                    className={classes.titleInput}
                   />
-                </div>
-                {articleDetails.fields.map(({ key, name, type }) => (
-                  <div key={key}>
+                  <Field
+                    name="subtitle"
+                    component={TextField}
+                    fullWidth
+                    placeholder="Add Subtitle"
+                    className={classes.subtitleInput}
+                  />
+                  <div className={classes.fieldLabel}>
+                    <UploadImageWidget
+                      path={`uploads/articles/${articleId}`}
+                      value={values.banner}
+                      onChange={s3key => {
+                        setFieldValue('banner', s3key)
+                        setImmediate(submitForm)
+                      }}
+                    />
+                  </div>
+                  <div>
                     <Typography
                       color="secondary"
                       variant="h4"
                       className={classes.fieldLabel}
                     >
-                      {name}
+                      Summary
                     </Typography>
-                    {type === 'embed-video-link' ? (
-                      <>
-                        <Field
+                    <Field
+                      name={'summary'}
+                      component={FormikRichTextEditor}
+                      articleId={articleId}
+                    />
+                  </div>
+                  {articleDetails.fields.map(({ key, name, type }) => (
+                    <div key={key}>
+                      <Typography
+                        color="secondary"
+                        variant="h4"
+                        className={classes.fieldLabel}
+                      >
+                        {name}
+                      </Typography>
+                      {type === 'embed-video-link' ? (
+                        <>
+                          <Field
+                            name={`fields.${key}`}
+                            component={TextField}
+                            fullWidth
+                            placeholder="Paste YouTube or Vimeo URL"
+                          />
+                          <EmbeddedVideo
+                            url={values.fields[key]}
+                            className={classes.embeddedVideo}
+                          />
+                        </>
+                      ) : null}
+                      {type === 'rich-text' ? (
+                        <FastField
                           name={`fields.${key}`}
-                          component={TextField}
-                          fullWidth
-                          placeholder="Paste YouTube or Vimeo URL"
+                          component={FormikRichTextEditor}
+                          articleId={articleId}
                         />
-                        <EmbeddedVideo
-                          url={values.fields[key]}
-                          className={classes.embeddedVideo}
+                      ) : null}
+                      {type === 'image' ? (
+                        <UploadImageWidget
+                          path={`uploads/articles/${articleId}`}
+                          value={values.fields[key]}
+                          onChange={s3key => {
+                            setFieldValue(`fields.${key}`, s3key)
+                            setImmediate(submitForm)
+                          }}
                         />
-                      </>
-                    ) : null}
-                    {type === 'rich-text' ? (
-                      <FastField
-                        name={`fields.${key}`}
-                        component={FormikRichTextEditor}
-                        articleId={articleId}
-                      />
-                    ) : null}
-                    {type === 'image' ? (
-                      <UploadImageWidget
-                        path={`uploads/articles/${articleId}`}
-                        value={values.fields[key]}
-                        onChange={s3key => {
-                          setFieldValue(`fields.${key}`, s3key)
-                          setImmediate(submitForm)
-                        }}
-                      />
-                    ) : null}
-                  </div>
-                ))}
-                <div>
-                  <Typography
-                    color="secondary"
-                    variant="h4"
-                    className={classes.fieldLabel}
-                  >
-                    Recommendations for further reading
-                  </Typography>
-                  <SelectArticleRecommendations
-                    onChange={articles =>
-                      setFieldValue('recommendations', articles)
-                    }
-                    selectedArticles={values.recommendations}
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={2} className={classes.rightToolbar}>
-                <div className={classes.fieldLabel}>
-                  <UploadImageWidget
-                    alwaysShowBox
-                    path={`uploads/articles/${articleId}`}
-                    value={values.thumbnail}
-                    onChange={s3key => {
-                      setFieldValue('thumbnail', s3key)
-                      setImmediate(submitForm)
-                    }}
-                  />
+                      ) : null}
+                    </div>
+                  ))}
                   <div>
-                    <Typography variant="caption">
-                      This image will be used in categories, search results and
-                      in search engines.
+                    <Typography
+                      color="secondary"
+                      variant="h4"
+                      className={classes.fieldLabel}
+                    >
+                      Recommendations for further reading
                     </Typography>
+                    <SelectArticleRecommendations
+                      onChange={articles =>
+                        setFieldValue('recommendations', articles)
+                      }
+                      selectedArticles={values.recommendations}
+                    />
                   </div>
-                </div>
-                <div>
-                  <PreviewArticleButton
-                    articleId={articleId}
-                    dirty={dirty}
-                    submitForm={submitForm}
-                  />
-                </div>
+                </Grid>
+                <Grid item xs={12} lg={3} className={classes.rightToolbar}>
+                  <div className={classes.fieldLabel}>
+                    <UploadImageWidget
+                      alwaysShowBox
+                      path={`uploads/articles/${articleId}`}
+                      value={values.thumbnail}
+                      onChange={s3key => {
+                        setFieldValue('thumbnail', s3key)
+                        setImmediate(submitForm)
+                      }}
+                    />
+                    <div>
+                      <Typography variant="caption">
+                        This image will be used in categories, search results
+                        and in search engines.
+                      </Typography>
+                    </div>
+                  </div>
+                  <div>
+                    <PreviewArticleButton
+                      articleId={articleId}
+                      dirty={dirty}
+                      submitForm={submitForm}
+                    />
+                  </div>
+                </Grid>
               </Grid>
             </Grid>
           </Form>
         )}
       </Formik>
-    </>
+    </PaddedContainer>
   )
 }
 
 export default withStyles(theme => ({
+  mainWrapper: {
+    marginBottom: theme.spacing(),
+    marginTop: theme.spacing(1),
+  },
   selectedContentType: {
     margin: 0,
   },

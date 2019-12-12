@@ -92,50 +92,63 @@ function ContentView({
   return (
     <PaddedContainer>
       <SEO title={`${preview && 'Preview '} ${article.title}`} />
-      <Grid
-        container
-        spacing={2}
-        justify="flex-end"
-        className={classes.mainWrapper}
-      >
-        <Grid id="content-metadata" item xs={12} sm={4} lg={3}>
-          <div className={classes.spacingRight}>
-            <ContentMetadata content={article} />
-          </div>
-        </Grid>
-        <Grid item xs={12} sm={8} lg={6} className={classes.article}>
-          <div>
-            <LinearProgress
-              className={classnames({
-                [classes.loadingBar]: true,
-                show: loading,
-              })}
-            />
-            <Typography variant="h1">{article.title}</Typography>
-            <Typography variant="h2">{article.subtitle}</Typography>
-            {article.banner && (
-              <div className={classes.bannerImageWrapper}>
-                <figure>
-                  <img src={imgSrc} className={classes.bannerImage} alt="" />
-                </figure>
+      <Grid container spacing={7} className={classes.mainWrapper}>
+        <Grid item xs={12} sm={4} lg={3}>
+          <Grid
+            container
+            spacing={1}
+            className={classes.knowledgeTypeContainer}
+          >
+            <Grid id="content-metadata" item xs>
+              <div className={classes.spacingRight}>
+                <ContentMetadata content={article} />
               </div>
-            )}
-            {!showFullArticle && <RichText value={article.summary} />}
-            {!showFullArticle && <HowToAuthenticate />}
-
-            {showFullArticle &&
-              get(article, 'fields', [])
-                .filter(({ value }) => !!value)
-                .map(getFieldType)}
-          </div>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item sm={8} lg={3}>
-          {showFullArticle && isSmUp && (
-            <ContentOptions
-              articleData={article}
-              refetchArticle={refetchArticle}
-            />
-          )}
+        <Grid
+          container
+          item
+          spacing={7}
+          xs={12}
+          sm={8}
+          lg={9}
+          alignContent="flex-start"
+        >
+          <Grid item xs={12} lg={9} className={classes.article}>
+            <div className={classes.articleContainer}>
+              <LinearProgress
+                className={classnames({
+                  [classes.loadingBar]: true,
+                  show: loading,
+                })}
+              />
+              <Typography variant="h1">{article.title}</Typography>
+              <Typography variant="h2">{article.subtitle}</Typography>
+              {article.banner && (
+                <div className={classes.bannerImageWrapper}>
+                  <figure>
+                    <img src={imgSrc} className={classes.bannerImage} alt="" />
+                  </figure>
+                </div>
+              )}
+              {!showFullArticle && <RichText value={article.summary} />}
+              {!showFullArticle && <HowToAuthenticate />}
+
+              {showFullArticle &&
+                get(article, 'fields', [])
+                  .filter(({ value }) => !!value)
+                  .map(getFieldType)}
+            </div>
+          </Grid>
+          <Grid item xs={12} lg={3} className={classes.rightToolbar}>
+            {showFullArticle && isSmUp && (
+              <ContentOptions
+                articleData={article}
+                refetchArticle={refetchArticle}
+              />
+            )}
+          </Grid>
         </Grid>
       </Grid>
       <div className={classes.featureArticlesWrapper}>
@@ -167,6 +180,10 @@ export default withStyles(theme => ({
     marginBottom: theme.spacing(),
     marginTop: theme.spacing(1),
   },
+  rightToolbar: {
+    paddingRight: [0, '!important'],
+    paddingLeft: [0, '!important'],
+  },
   loadingBar: {
     marginTop: theme.spacing(-0.5),
     height: theme.spacing(0.5),
@@ -175,6 +192,9 @@ export default withStyles(theme => ({
     '&.show': {
       opacity: 1,
     },
+  },
+  articleContainer: {
+    marginTop: theme.spacing(-2.25),
   },
   gapAbove: {
     marginTop: theme.spacing(8),
@@ -205,7 +225,10 @@ export default withStyles(theme => ({
   },
   article: {
     '& h1': theme.articleTypography.heading1,
-    '& h2': theme.articleTypography.heading2,
+    '& h2': {
+      ...theme.articleTypography.heading2,
+      marginTop: theme.spacing(0.5),
+    },
     '& h3': theme.articleTypography.heading3,
     '& h4': theme.articleTypography.heading4,
     '& > p:first-of-type': theme.articleTypography.firstParagraph,
