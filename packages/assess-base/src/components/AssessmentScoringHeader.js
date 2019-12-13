@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core'
 import { KeyboardArrowUp } from '@material-ui/icons'
 
-const AssessmentScoringHeader = ({ classes }) => {
+const AssessmentScoringHeader = ({ classes, isQuestionnaire = false }) => {
   const [isOpen, setIsOpen] = useState(false)
   const toggleOpen = () => setIsOpen(!isOpen)
   const { t } = useTranslation()
@@ -36,23 +36,53 @@ const AssessmentScoringHeader = ({ classes }) => {
       <Table className={classnames(classes.table, { [classes.hide]: !isOpen })}>
         <TableBody>
           <TableRow>
-            <TableCell className={classes.keyColumn}>0-20%</TableCell>
+            <TableCell
+              className={classnames(classes.keyColumn, {
+                [classes.questionnaireScoring]: isQuestionnaire,
+              })}
+            >
+              0-20%
+            </TableCell>
             <TableCell>{t('Inability to achieve')}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className={classes.keyColumn}>21-40%</TableCell>
+            <TableCell
+              className={classnames(classes.keyColumn, {
+                [classes.questionnaireScoring]: isQuestionnaire,
+              })}
+            >
+              21-40%
+            </TableCell>
             <TableCell>{t('Limited ability to achieve')}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className={classes.keyColumn}>41-60%</TableCell>
+            <TableCell
+              className={classnames(classes.keyColumn, {
+                [classes.questionnaireScoring]: isQuestionnaire,
+              })}
+            >
+              41-60%
+            </TableCell>
             <TableCell>{t('Ability to achieve')}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className={classes.keyColumn}>61-80%</TableCell>
+            <TableCell
+              className={classnames(classes.keyColumn, {
+                [classes.questionnaireScoring]: isQuestionnaire,
+              })}
+            >
+              61-80%
+            </TableCell>
             <TableCell>{t('Comprehensive ability to achieve')}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className={classes.keyColumn}>81-100%</TableCell>
+            <TableCell
+              className={classnames(classes.keyColumn, {
+                [classes.questionnaireScoring]: isQuestionnaire,
+              })}
+            >
+              81-100%
+            </TableCell>
             <TableCell>{t('Outstanding ability to achieve')}</TableCell>
           </TableRow>
         </TableBody>
@@ -63,6 +93,7 @@ const AssessmentScoringHeader = ({ classes }) => {
 
 AssessmentScoringHeader.propTypes = {
   classes: T.object.isRequired,
+  isQuestionnaire: T.bool,
 }
 
 const styles = theme => ({
@@ -86,6 +117,9 @@ const styles = theme => ({
     maxWidth: theme.spacing(8),
     fontWeight: 700,
     color: theme.palette.primary.main,
+  },
+  questionnaireScoring: {
+    padding: 0,
   },
 })
 
