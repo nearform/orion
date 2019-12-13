@@ -13,7 +13,7 @@ function getOverallScore(chartData) {
 
 function calculatePartsMean(scores) {
   return scores.length > 0
-    ? scores.reduce((sum, { score }) => sum + score) / scores.length
+    ? scores.reduce((sum, { score }) => sum + score, 0) / scores.length
     : 0
 }
 
@@ -88,8 +88,6 @@ function getScoresByCritera(
     criterionPartScore => criterionPartScore.criterion_key === criterionKey
   )
 
-  console.log(assessments)
-
   const {
     criteriaWeighting,
     [assessmentKey]: scoringPoints,
@@ -113,6 +111,7 @@ function getScoresByCritera(
     .sort((a, b) => (a.label > b.label && 1) || (a.label < b.label && -1) || 0)
 
   const criteriaScore = calculatePartsMean(chartDataByCriterionParts)
+
   const pointCriteriaScore = getPointScore(
     criteriaScore,
     criteriaWeighting[criterionKey],
@@ -166,6 +165,7 @@ function getScoresbyCriterionPart(
     roundBySliderStep(calculatePartsMean(scoresByScoringItems)),
     cap
   )
+
   const pointScore = getPointScore(score, 1, partScoringPoints)
 
   return {

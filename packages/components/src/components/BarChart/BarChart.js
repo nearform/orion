@@ -32,9 +32,7 @@ function BarChart({ classes, chartData, theme }) {
       <ChartTicks variant="above" height={barHeight} />
       {chartData &&
         chartData.map((dataItem, index) => {
-          const { label, color } = dataItem
-          const score = getWeightedScore(dataItem)
-
+          const { label, color, score } = dataItem
           return (
             <LightTooltip
               placement="top-start"
