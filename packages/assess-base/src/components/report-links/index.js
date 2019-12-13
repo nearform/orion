@@ -113,7 +113,13 @@ const ReportLinks = ({
   const { t } = useTranslation()
 
   return (
-    <HeadedAsidePanel title={t('Assessment Reports')}>
+    <HeadedAsidePanel
+      title={t(
+        `Assessment Report${
+          assessment && assessment.key !== 'questionnaire' ? 's' : ''
+        }`
+      )}
+    >
       {assessment && assessment.id ? (
         <Box component="nav" className={wrapper}>
           {assessment.status !== 'in-progress' ||
