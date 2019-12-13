@@ -11,7 +11,7 @@ const pillarColors = [
 
 const {
   getAssessmentTypes,
-} = require('efqm-theme/assessments/getAssessmentParts')
+} = require(`${currentTheme.THEME_NAME}/assessments/getAssessmentParts`)
 
 exports.onPreInit = () => {
   const logger = console

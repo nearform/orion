@@ -22,6 +22,7 @@ const assessmentTypes = {
       const result = deepClone(matrix)
       result.key = key
       result.matrixType = 'basic'
+      result.orderIndex = 2
       result.logoAsset = 'assess-2-img'
       result.name = result.typeNames[key]
       // Select first subcriteria of each pillar.
@@ -39,6 +40,7 @@ const assessmentTypes = {
       const result = deepClone(matrix)
       result.key = key
       result.matrixType = 'advanced'
+      result.orderIndex = 3
       result.logoAsset = 'assess-3-img'
       result.name = result.typeNames[key]
       // Number subcriteria.
