@@ -31,6 +31,20 @@ const assessmentTypes = {
           criteria.parts = criteria.parts.slice(0, 1)
         })
       })
+      // Select first scoring item at top level and for each pillar; clear the
+      // display name for each score item (scoring group name only is used).
+      result.scoring.forEach(item => {
+        item.scores = item.scores.slice(0, 1)
+        item.scores[0].name = ''
+      })
+      result.pillars.forEach(pillar => {
+        if (pillar.scoring) {
+          pillar.scoring.forEach(item => {
+            item.scores = item.scores.slice(0, 1)
+            item.scores[0].name = ''
+          })
+        }
+      })
       return result
     },
   },
