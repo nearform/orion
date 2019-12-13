@@ -316,9 +316,9 @@ function QuestionnaireTemplate({
                       variant="outlined"
                       color="secondary"
                       component={Link}
-                      to={`/assessment/${assessment.key}/contributors-assessors#${assessmentId}`}
+                      to={`/assessment/${assessment.key}/contributors#${assessmentId}`}
                     >
-                      {t('Assign Contributors and Assessors')}
+                      {t('Assign Contributors')}
                     </Button>
                   </Grid>
                 </Grid>
