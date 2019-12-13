@@ -11,7 +11,7 @@ const pillarColors = [
 
 const {
   getAssessmentTypes,
-} = require('efqm-theme/assessments/getAssessmentParts')
+} = require(`${currentTheme.THEME_NAME}/assessments/getAssessmentParts`)
 
 exports.onPreInit = () => {
   const logger = console
@@ -176,7 +176,6 @@ exports.createPages = async ({ graphql, actions }) => {
           `${criterionPagePath}/${partNumber}`
 
         criterion.parts.forEach((part, partIndex, { length: totalParts }) => {
-          if (assessment.key === 'efqm-2020' && partIndex > 0) return
           const isFirst = partIndex === 0
           const isLast = partIndex === totalParts - 1
           const partNumber = partIndex + 1

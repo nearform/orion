@@ -22,6 +22,7 @@ const assessmentTypes = {
       const result = deepClone(matrix)
       result.key = key
       result.matrixType = 'basic'
+      result.orderIndex = 2
       result.logoAsset = 'assess-2-img'
       result.name = result.typeNames[key]
       // Select first subcriteria of each pillar.
@@ -29,6 +30,20 @@ const assessmentTypes = {
         pillar.criteria.forEach(criteria => {
           criteria.parts = criteria.parts.slice(0, 1)
         })
+      })
+      // Select first scoring item at top level and for each pillar; clear the
+      // display name for each score item (scoring group name only is used).
+      result.scoring.forEach(item => {
+        item.scores = item.scores.slice(0, 1)
+        item.scores[0].name = ''
+      })
+      result.pillars.forEach(pillar => {
+        if (pillar.scoring) {
+          pillar.scoring.forEach(item => {
+            item.scores = item.scores.slice(0, 1)
+            item.scores[0].name = ''
+          })
+        }
       })
       return result
     },
@@ -39,6 +54,7 @@ const assessmentTypes = {
       const result = deepClone(matrix)
       result.key = key
       result.matrixType = 'advanced'
+      result.orderIndex = 3
       result.logoAsset = 'assess-3-img'
       result.name = result.typeNames[key]
       // Number subcriteria.
