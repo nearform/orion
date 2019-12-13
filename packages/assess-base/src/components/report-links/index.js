@@ -116,7 +116,8 @@ const ReportLinks = ({
     <HeadedAsidePanel title={t('Assessment Reports')}>
       {assessment && assessment.id ? (
         <Box component="nav" className={wrapper}>
-          {assessment.status !== 'in-progress' ? (
+          {assessment.status !== 'in-progress' ||
+          assessment.key === 'questionnaire' ? (
             <FeedbackReportLink
               assessment={assessment}
               text={t('View Feedback Report')}
