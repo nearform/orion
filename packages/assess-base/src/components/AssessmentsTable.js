@@ -76,7 +76,9 @@ function AssessmentsTable({ classes }) {
                 <FeedbackReportLink
                   assessment={assessment}
                   visible={
-                    status === 'submitted' || assessment.key === 'questionnaire'
+                    status === 'submitted' ||
+                    status === 'closed' ||
+                    assessment.key === 'questionnaire'
                   }
                   spacing={1}
                   text={t('View')}
