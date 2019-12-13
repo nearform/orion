@@ -96,7 +96,7 @@ function CriterionTemplate({
           },
         },
       })
-      resetForm(returning[0].data)
+      resetForm({ values: returning[0].data })
     } finally {
       setSubmitting(false)
     }
