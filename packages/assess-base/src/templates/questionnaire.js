@@ -14,15 +14,12 @@ import {
   AuthContext,
   useAuthorizedQuery,
   PaddedContainer,
-  ASSESSMENT_STATUS,
-  ConfirmDialog,
   SectionTitle,
   TypedChip,
 } from 'components'
 import {
   createAssessmentMutation,
   getShallowAssessmentData,
-  updateAssessmentStatusMutation,
   getAssessmentContributorsAssessorsData,
 } from '../queries'
 import { getAssessmentId } from '../utils/url'
@@ -32,7 +29,6 @@ import SEO from '../components/SEO'
 import AssessmentPillars from '../components/AssessmentPillars'
 import { ReportLinks } from '../components/report-links'
 import { Redirect } from '@reach/router'
-import { assessmentInProgress } from '../utils/assessment-status'
 import {
   getCanEditAssesors,
   getCanEditContributors,
@@ -65,10 +61,7 @@ function QuestionnaireTemplate({
   )
   const { isAdmin, userId, groupId } = getUserTokenData()
 
-  const {
-    data: assessmentData,
-    refetch: refetchAssessmentData,
-  } = useAuthorizedQuery(
+  const { data: assessmentData } = useAuthorizedQuery(
     getShallowAssessmentData,
     { id: assessmentId },
     {
@@ -84,14 +77,9 @@ function QuestionnaireTemplate({
   )
 
   const [createAssessment] = useMutation(createAssessmentMutation)
-  const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
   if (!assessmentId && (isAuthInitialized && !isAdmin)) {
     return <Redirect to="/auth" noThrow />
-  }
-
-  function loadAssessment(id) {
-    refetchAssessmentData({ id })
   }
 
   async function handleCreateAssessment({ name }) {
@@ -107,19 +95,6 @@ function QuestionnaireTemplate({
 
     navigate(`${location.pathname}#${id}`)
   }
-
-  async function handleSubmitAssessment() {
-    await updateAssessmentStatus({
-      variables: {
-        id: assessmentId,
-        status: ASSESSMENT_STATUS.submitted,
-      },
-    })
-
-    loadAssessment(assessmentId)
-  }
-
-  const canSubmit = isAdmin && assessmentInProgress(assessmentData)
 
   const canCreateAssessment = isAdmin
 
@@ -188,32 +163,6 @@ function QuestionnaireTemplate({
                   </SectionTitle>
                 </Grid>
                 <Grid item xs />
-                <Grid item>
-                  {canSubmit && (
-                    <ConfirmDialog
-                      disabled={!assessmentData}
-                      onConfirm={handleSubmitAssessment}
-                      type="submit"
-                      title={t('Submit Assessment Filename', {
-                        fileName: assessmentName,
-                      })}
-                      text={
-                        <>
-                          <p>
-                            {t(
-                              'This assessment will be submitted to the assessors for scoring and evaluation. Contributors will no longer be able to edit the assessment content.'
-                            )}
-                          </p>
-                          <p>{t('This cannot be undone.')}</p>
-                        </>
-                      }
-                    >
-                      <Button color="secondary" variant="contained">
-                        {t('Submit Assessment')}
-                      </Button>
-                    </ConfirmDialog>
-                  )}
-                </Grid>
               </Grid>
               <Grid item xs>
                 <Grid
