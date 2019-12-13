@@ -85,7 +85,9 @@ const AssessmentPillars = ({
               <SectionTitle barColor={theme.palette.primary.dark} gutterBottom>
                 {t('Scoring Summary')}
               </SectionTitle>
-              <BarChart chartData={chartData} />
+              <div className={classes.chart}>
+                <BarChart chartData={chartData} />
+              </div>
             </Grid>
           </Grid>
         )}
@@ -100,6 +102,9 @@ const styles = theme => ({
   },
   sectionProgress: {
     color: theme.palette.primary.dark,
+  },
+  chart: {
+    marginLeft: '4px',
   },
 })
 
