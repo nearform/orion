@@ -1,6 +1,6 @@
 import T from 'prop-types'
 import get from 'lodash/get'
-import { config } from '../../../theme.es'
+import { assessments } from '../../../theme.es'
 
 const SLIDER_STEP = 5
 
@@ -12,14 +12,13 @@ function getOverallScore(chartData) {
 }
 
 function calculatePartsMean(scores) {
-  if (!scores.length) return 0
-  return Math.min(
-    scores.reduce((sum, scoreItem) => {
-      const scoreValue = scoreItem.score
-
-      return sum + scoreValue
-    }, 0) / scores.length
-  )
+  console.log(scores)
+  return scores.length > 0
+    ? scores.reduce((sum, scoreItem) => {
+        const scoreValue = scoreItem.score
+        return sum + scoreValue
+      }, 0) / scores.length
+    : 0
 }
 
 function getChartData(assessmentDef, assessmentData, pillarColors) {
@@ -104,7 +103,12 @@ function getScoresByCritera(
     criterionPartScore => criterionPartScore.criterion_key === criterionKey
   )
 
-  const { criteriaWeighting, [assessmentKey]: scoringPoints } = config.scoring
+  console.log(assessments)
+
+  const {
+    criteriaWeighting,
+    [assessmentKey]: scoringPoints,
+  } = assessments[0].scoring
 
   const compositeKey = `${pillarKey}_${criterionKey}`
   const criterionPath = `assessment/${assessmentKey}/${pillarKey}/${criterionKey}`
@@ -197,6 +201,10 @@ function getScoresFromScoringGroups(scoringValues, def) {
   return Object.entries(scoringValues).map(([key, score]) => {
     const { name: label } = def.find(scoreDef => scoreDef.key === key)
 
+    /* Scoring Groups are percentage-based scores used, in aggregate, to generate
+     * point-value scores for SubCriteria. They do not have point-value scores of
+     * their own. The pointScore is therefore always set to a placeholder: '--'
+     */
     return {
       score: roundBySliderStep(score),
       pointScore: '--',
