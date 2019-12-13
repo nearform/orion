@@ -49,7 +49,6 @@ function getChartData(assessmentDef, assessmentData, pillarColors) {
         scoresByPillar => scoresByPillar.pillar_key === pillarKey
       )
 
-      let skipFlag = false
       criteriaDef.forEach(criterionDef => {
         const scoringDef =
           criterionDef.scoring || pillarDef.scoring || assessmentDef.scoring
@@ -58,16 +57,6 @@ function getChartData(assessmentDef, assessmentData, pillarColors) {
           pillarDef.scoringRules ||
           assessmentDef.scoringRules ||
           {}
-
-        if (
-          skipFlag ||
-          !pillarScores.some(
-            pillarScore => pillarScore.criterion_key === criterionDef.key
-          )
-        ) {
-          skipFlag = true
-          return
-        }
 
         chartData.push(
           getScoresByCritera(

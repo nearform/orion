@@ -5,7 +5,7 @@ import T from 'prop-types'
 
 const TICKS_COUNT = 6
 
-function ChartTicks({ classes, children, variant, height }) {
+function ChartTicks({ classes, children, variant, height, showBackground }) {
   const getTickContentClass = i => {
     if (variant === 'across') return ''
     if (variant === 'below' && i === 0) return 'tickGap'
@@ -14,7 +14,11 @@ function ChartTicks({ classes, children, variant, height }) {
 
   return (
     <div
-      className={classnames(classes.root, classes[variant])}
+      className={classnames(
+        classes.root,
+        classes[variant],
+        showBackground && classes.background
+      )}
       style={height && { height }}
     >
       {new Array(TICKS_COUNT).fill(null).map((_, i) => (
@@ -39,6 +43,9 @@ const styles = theme => {
     root: {
       display: 'flex',
       justifyContent: 'space-between',
+    },
+    background: {
+      backgroundColor: theme.palette.background.light,
     },
     across: {
       position: 'relative',
@@ -110,6 +117,7 @@ ChartTicks.propTypes = {
   children: T.node,
   classes: T.object.isRequired,
   variant: T.oneOf(['below', 'above', 'across']),
+  showBackground: T.bool,
   height: T.oneOfType([T.string, T.number]),
 }
 

@@ -6,7 +6,7 @@ import {
   Table,
   TableHead,
   TableBody,
-  // Tooltip,
+  Tooltip,
   Typography,
 } from '@material-ui/core'
 
@@ -14,34 +14,47 @@ import ChartTicks from '../ChartTicks'
 import Bar from './Bar'
 import { getWeightedScore, chartDataShape } from './utils'
 
+const LightTooltip = withStyles(theme => ({
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.primary.dark,
+    boxShadow: theme.shadows[1],
+    fontSize: 12,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+}))(Tooltip)
+
 function BarChart({ classes, chartData, theme }) {
   const barHeight = theme.spacing(4)
-
   return (
     <div>
       <ChartTicks variant="above" height={barHeight} />
       {chartData &&
         chartData.map((dataItem, index) => {
-          const weightedScore = getWeightedScore(dataItem)
+          const { label, color } = dataItem
+          const score = getWeightedScore(dataItem)
 
-          /** TODO: Tooltip works, but needs design input on tooltip styling, behaviour and content
-
-        const tooltipTitle = `
-          ${dataItem.label}: ${weightedScore} ${dataItem.weighting ? `(${dataItem.score} × ${dataItem.weighting})` : ''}
-        `
-        */
           return (
-            /*<Tooltip placement="right-start" title={tooltipTitle}>
-            <div>*/
-            <ChartTicks
-              variant="across"
-              height={barHeight}
+            <LightTooltip
+              placement="top-start"
+              title={
+                <>
+                  {label}: <b>{score}%</b>
+                </>
+              }
               key={`bar_${index}`}
             >
-              <Bar value={weightedScore} color={dataItem.color} absolute />
-            </ChartTicks>
-            /*</div>
-          </Tooltip>*/
+              <div>
+                <ChartTicks
+                  variant="across"
+                  height={barHeight}
+                  showBackground={score === 0}
+                >
+                  <Bar value={score} color={color} absolute />
+                </ChartTicks>
+              </div>
+            </LightTooltip>
           )
         })}
     </div>
