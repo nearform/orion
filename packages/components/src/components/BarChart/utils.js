@@ -12,7 +12,6 @@ function getOverallScore(chartData) {
 }
 
 function calculatePartsMean(scores) {
-  console.log(scores)
   return scores.length > 0
     ? scores.reduce((sum, scoreItem) => {
         const scoreValue = scoreItem.score
