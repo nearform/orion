@@ -1,29 +1,20 @@
 import T from 'prop-types'
 import get from 'lodash/get'
+import { assessments } from '../../../theme.es'
 
 const SLIDER_STEP = 5
 
-function getWeightedScore(dataItem) {
-  return dataItem.score * (dataItem.weighting || 1)
-}
+const getPointScore = (percentScore, weight, possiblePoints) =>
+  Math.round((percentScore * weight * possiblePoints) / 100)
 
 function getOverallScore(chartData) {
-  return chartData.reduce(
-    (acc, dataItem) => acc + getWeightedScore(dataItem),
-    0
-  )
+  return chartData.reduce((acc, dataItem) => acc + dataItem.pointScore, 0)
 }
 
-function calculateWeightedMean(scores) {
-  if (!scores.length) return 0
-  return Math.min(
-    scores.reduce((sum, scoreItem) => {
-      const weighting = scoreItem.weighting || 1
-      const scoreValue = scoreItem.score
-
-      return sum + scoreValue * weighting
-    }, 0) / scores.length
-  )
+function calculatePartsMean(scores) {
+  return scores.length > 0
+    ? scores.reduce((sum, { score }) => sum + score) / scores.length
+    : 0
 }
 
 function getChartData(assessmentDef, assessmentData, pillarColors) {
@@ -36,7 +27,6 @@ function getChartData(assessmentDef, assessmentData, pillarColors) {
    *
    * TODO: Optimise and simplify when sure that business logic is sound.
    */
-
   if (!assessmentData) return null
 
   const chartData = assessmentDef.pillars.reduce(
@@ -98,6 +88,13 @@ function getScoresByCritera(
     criterionPartScore => criterionPartScore.criterion_key === criterionKey
   )
 
+  console.log(assessments)
+
+  const {
+    criteriaWeighting,
+    [assessmentKey]: scoringPoints,
+  } = assessments[0].scoring
+
   const compositeKey = `${pillarKey}_${criterionKey}`
   const criterionPath = `assessment/${assessmentKey}/${pillarKey}/${criterionKey}`
 
@@ -109,17 +106,27 @@ function getScoresByCritera(
         scoringDef,
         scoringRules,
         compositeKey,
-        criterionPath
+        criterionPath,
+        scoringPoints
       )
     )
     .sort((a, b) => (a.label > b.label && 1) || (a.label < b.label && -1) || 0)
+
+  const criteriaScore = calculatePartsMean(chartDataByCriterionParts)
+  const pointCriteriaScore = getPointScore(
+    criteriaScore,
+    criteriaWeighting[criterionKey],
+    scoringPoints
+  )
 
   return {
     key: compositeKey,
     label: criterionName,
     color: pillarColor,
     scores: chartDataByCriterionParts,
-    score: calculateWeightedMean(chartDataByCriterionParts),
+    score: criteriaScore,
+    pointScore: pointCriteriaScore,
+    weighting: criteriaWeighting[criterionKey],
   }
 }
 
@@ -129,13 +136,15 @@ function getScoresbyCriterionPart(
   scoringDef,
   scoringRules,
   previousKey,
-  criterionPath
+  criterionPath,
+  scoringPoints
 ) {
   const {
     part_number: partNumber,
     scoring_values: scoringValues,
   } = scoreValuesByCriterionPart
   const { tables: partTablesDef } = criterionPartsDefs[partNumber - 1]
+  const partScoringPoints = scoringPoints / partTablesDef.length
 
   const cap = roundBySliderStep(get(scoringValues, scoringRules.capBy, 100))
 
@@ -153,14 +162,18 @@ function getScoresbyCriterionPart(
     []
   )
 
+  const score = Math.min(
+    roundBySliderStep(calculatePartsMean(scoresByScoringItems)),
+    cap
+  )
+  const pointScore = getPointScore(score, 1, partScoringPoints)
+
   return {
     key: `${previousKey}_${partNumber}`,
     label: partTablesDef.map(table => table.name).join(', '),
     scores: scoresByScoringItems,
-    score: Math.min(
-      roundBySliderStep(calculateWeightedMean(scoresByScoringItems)),
-      cap
-    ),
+    score,
+    pointScore,
     path: `${criterionPath}/${partNumber}`,
   }
 }
@@ -171,13 +184,15 @@ function roundBySliderStep(num) {
 
 function getScoresFromScoringGroups(scoringValues, def) {
   return Object.entries(scoringValues).map(([key, score]) => {
-    const { weighting, name: label } = def.find(
-      scoreDef => scoreDef.key === key
-    )
+    const { name: label } = def.find(scoreDef => scoreDef.key === key)
 
+    /* Scoring Groups are percentage-based scores used, in aggregate, to generate
+     * point-value scores for SubCriteria. They do not have point-value scores of
+     * their own. The pointScore is therefore always set to a placeholder: '--'
+     */
     return {
       score: roundBySliderStep(score),
-      weighting,
+      pointScore: '--',
       key,
       label,
     }
@@ -192,4 +207,4 @@ const chartDataShape = T.shape({
   key: T.string.isRequired,
 })
 
-export { getWeightedScore, getOverallScore, chartDataShape, getChartData }
+export { getOverallScore, chartDataShape, getChartData }

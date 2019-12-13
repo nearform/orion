@@ -3,6 +3,7 @@ const challengesAndStrategy = require('./key-information-details/challenges-and-
 const operationsPartnersSuppliers = require('./key-information-details/operations-partners-suppliers.js')
 const marketOfferingsAndCustomers = require('./key-information-details/market-offerings-and-customers.js')
 const managementStructure = require('./key-information-details/management-structure.js')
+const scoring = require('./scoring')
 
 module.exports = [
   {
@@ -12,5 +13,6 @@ module.exports = [
     'operations-partners-suppliers': operationsPartnersSuppliers,
     'market-offerings-and-customers': marketOfferingsAndCustomers,
     'management-structure': managementStructure,
+    scoring: scoring,
   },
 ]

@@ -12,7 +12,7 @@ import {
 
 import ChartTicks from '../ChartTicks'
 import Bar from './Bar'
-import { getWeightedScore, chartDataShape } from './utils'
+import { chartDataShape } from './utils'
 
 const LightTooltip = withStyles(theme => ({
   tooltip: {
