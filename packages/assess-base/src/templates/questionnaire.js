@@ -317,6 +317,7 @@ function QuestionnaireTemplate({
                       color="secondary"
                       component={Link}
                       to={`/assessment/${assessment.key}/contributors#${assessmentId}`}
+                      className={classes.assignButton}
                     >
                       {t('Assign Contributors')}
                     </Button>
@@ -383,6 +384,9 @@ const styles = theme => ({
       marginBottom: 0,
     },
     width: '100%',
+  },
+  assignButton: {
+    marginLeft: '16px',
   },
   filesSeparator: {
     borderLeft: `solid 1px ${theme.palette.background.light}`,
