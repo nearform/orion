@@ -102,8 +102,6 @@ function getScoresByCritera(
     criterionPartScore => criterionPartScore.criterion_key === criterionKey
   )
 
-  console.log(assessments)
-
   const {
     criteriaWeighting,
     [assessmentKey]: scoringPoints,
