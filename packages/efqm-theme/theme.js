@@ -103,7 +103,7 @@ const articleTypography = {
     },
   },
   bulletedList: {
-    margin: '36px 0 2px',
+    margin: '16px 0 2px',
     paddingLeft: '36px',
     listStyle: 'none',
   },
@@ -133,7 +133,7 @@ const articleTypography = {
   },
   numberedList: {
     fontFamily,
-    margin: '36px 0 2px',
+    margin: '16px 0 2px',
     paddingLeft: '36px',
     listStyle: 'none',
     counterReset: 'li',
