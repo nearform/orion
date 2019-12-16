@@ -20,8 +20,11 @@ const LightTooltip = withStyles(theme => ({
     color: theme.palette.primary.dark,
     boxShadow: theme.shadows[1],
     fontSize: 12,
-    fontWeight: 'bold',
     textTransform: 'uppercase',
+    '& b': {
+      fontSize: 14,
+      fontWeight: 'bold',
+    },
   },
 }))(Tooltip)
 

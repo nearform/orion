@@ -43,6 +43,7 @@ const styles = theme => {
     root: {
       display: 'flex',
       justifyContent: 'space-between',
+      margin: theme.spacing(0.75, 0, 0.75, 0),
     },
     background: {
       backgroundColor: theme.palette.background.light,
@@ -64,6 +65,7 @@ const styles = theme => {
         position: 'absolute',
         transform: 'translateX(-50%)',
       },
+      margin: theme.spacing(-0.75, 0, -0.75, 0),
     },
     acrossTick: {
       '&::before': {

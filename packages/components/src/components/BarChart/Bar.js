@@ -19,7 +19,7 @@ function Bar({ classes, value, color, absolute, max, height }) {
 const styles = theme => ({
   root: {
     height: theme.spacing(4),
-    padding: theme.spacing(0.5, 0),
+    padding: theme.spacing(0, 0),
     display: 'flex',
     alignItems: 'center',
   },
