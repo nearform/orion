@@ -11,7 +11,7 @@ const pillarColors = [
 
 const {
   getAssessmentTypes,
-} = require('efqm-theme/assessments/getAssessmentParts')
+} = require(`${currentTheme.THEME_NAME}/assessments/getAssessmentParts`)
 
 exports.onPreInit = () => {
   const logger = console
@@ -46,6 +46,9 @@ exports.createPages = async ({ graphql, actions }) => {
   )
   const feedbackReportTemplate = require.resolve(
     './src/templates/feedback-report.js'
+  )
+  const managementReportTemplate = require.resolve(
+    './src/templates/management-report.js'
   )
   const contributorsAssessorsTemplate = require.resolve(
     './src/templates/contributors-assessors.js'
@@ -134,6 +137,16 @@ exports.createPages = async ({ graphql, actions }) => {
     })
 
     createPage({
+      path: `/assessment/${assessment.key}/management-report`,
+      matchPath: `/assessment/${assessment.key}/management-report`,
+      component: managementReportTemplate,
+      context: {
+        assessment,
+        pillarColors,
+      },
+    })
+
+    createPage({
       path: `/assessment/${assessment.key}/contributors-assessors`,
       matchPath: `/assessment/${assessment.key}/contributors-assessors`,
       component: contributorsAssessorsTemplate,
@@ -163,7 +176,6 @@ exports.createPages = async ({ graphql, actions }) => {
           `${criterionPagePath}/${partNumber}`
 
         criterion.parts.forEach((part, partIndex, { length: totalParts }) => {
-          if (assessment.key === 'efqm-2020' && partIndex > 0) return
           const isFirst = partIndex === 0
           const isLast = partIndex === totalParts - 1
           const partNumber = partIndex + 1

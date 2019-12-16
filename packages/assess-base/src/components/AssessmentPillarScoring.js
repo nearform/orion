@@ -114,10 +114,11 @@ function AssessmentPillarScoring({
     }
   }
 
-  let maxCols = 2
-  for (let arr of scoringDef) {
-    maxCols = arr.scores.length > maxCols ? arr.scores.length : maxCols
-  }
+  const maxCols = scoringDef.reduce(
+    (maxCols, { scores: { length } }) => Math.max(maxCols, length),
+    0
+  )
+
   const colWidth = 12 / maxCols
 
   const hasCap = !!scoringRules.capBy

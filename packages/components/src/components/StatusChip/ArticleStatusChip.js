@@ -1,26 +1,17 @@
 import React from 'react'
-import { Chip, withStyles, Typography } from '@material-ui/core'
+import { Chip, withStyles } from '@material-ui/core'
 import T from 'prop-types'
-
-import EditIcon from '@material-ui/icons/Edit'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
-import DoneIcon from '@material-ui/icons/Done'
-
-import { theme } from '../../../theme.es'
 
 export const articleStatusMap = {
   'in-progress': {
     label: 'In Progress',
-    Icon: MoreHorizIcon,
   },
   'in-review': {
     label: 'Needs Review',
-    Icon: EditIcon,
   },
   published: {
     label: 'Published',
-    Icon: DoneIcon,
   },
   hidden: {
     label: 'Hidden',

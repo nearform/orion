@@ -58,14 +58,6 @@ function ContentToolbar({ classes, pageTitle }) {
               >
                 Editors Picks
               </Button>
-              <Button
-                color="inherit"
-                component={NavLink}
-                className={classes.navLink}
-                to="../tag-manager"
-              >
-                Tag Manager
-              </Button>
             </>
           )}
         </div>

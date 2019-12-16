@@ -6,7 +6,7 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 import { Link } from 'gatsby'
 import get from 'lodash/get'
 
-import { ArticleStatusChip, AuthContext } from 'components'
+import { ArticleStatusChip, AuthContext, PaddedContainer } from 'components'
 import SEO from '../SEO'
 import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
 
@@ -56,7 +56,7 @@ const ArticleList = ({ classes, path }) => {
   }
 
   return (
-    <>
+    <PaddedContainer>
       <SEO title={pageTitle} />
       <ContentToolbar pageTitle="Content" />
       <QueryTable
@@ -107,7 +107,7 @@ const ArticleList = ({ classes, path }) => {
           ))
         }
       />
-    </>
+    </PaddedContainer>
   )
 }
 

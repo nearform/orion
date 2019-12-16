@@ -557,6 +557,7 @@ function AssessmentTemplate({
                 <ReportLinks
                   assessment={assessmentData}
                   canViewFeedbackReport={canViewFeedbackReport}
+                  canViewManagementReport={true}
                 />
                 <KeyInfoDocsList
                   assessment={assessmentData}

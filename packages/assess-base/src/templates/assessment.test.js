@@ -359,7 +359,10 @@ describe('<AssessmentTemplate />', () => {
       sidePanels[0],
       'management-report-link'
     )
-    expect(managementLink).toHaveAttribute('href', '/management-report/159')
+    expect(managementLink).toHaveAttribute(
+      'href',
+      '/assessment/efqm-2020-advanced/management-report/#159'
+    )
     expect(managementLink).toHaveTextContent('View Management Report')
 
     getByElementText(sidePanels[1], 'Assessment Documents')

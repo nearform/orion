@@ -1,9 +1,9 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import { translations } from 'efqm-theme/config'
+import { config } from '../theme.es'
 
 const getResources = () => {
-  const translationOptions = Object.keys(translations)
+  const translationOptions = Object.keys(config.translations)
   const resources = {}
   translationOptions.map(abb => {
     resources[

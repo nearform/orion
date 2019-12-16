@@ -7,6 +7,7 @@ import {
   withStyles,
   Checkbox,
 } from '@material-ui/core'
+import { PaddedContainer } from 'components'
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 import { useMutation, useQuery } from 'graphql-hooks'
@@ -77,7 +78,7 @@ const EditorsPicks = ({ classes }) => {
     })
 
   return (
-    <>
+    <PaddedContainer>
       <SEO pageTitle="Editor's Picks" />
       <ContentToolbar pageTitle="Content" />
       <FeatureArticles
@@ -125,7 +126,7 @@ const EditorsPicks = ({ classes }) => {
           ))
         }
       />
-    </>
+    </PaddedContainer>
   )
 }
 

@@ -96,7 +96,6 @@ function FeedbackReport({
     navigate('/')
   }
 
-  // TODO: Check that this is correct
   const canEditSummaryAndAdvice = isAdmin || isAssessor
 
   const chartData = getChartData(assessment, assessmentData, pillarColors)

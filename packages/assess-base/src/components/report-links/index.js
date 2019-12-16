@@ -61,21 +61,26 @@ FeedbackReportLink.propTypes = {
 // Handles link to management report with specific icon and link formatting
 const ManagementReportLink = ({
   assessment,
+  visible = true,
   spacing = 2,
   text,
   uppercase = false,
 }) => {
-  const classes = useLinkStyles({ spacing, uppercase })
-  return (
-    <Link
-      className={classes.wrapper}
-      data-testid="management-report-link"
-      to={`/management-report/${assessment.id}`}
-    >
-      <AssignmentTurnedIn className={classes.icon} />
-      <Typography className={classes.text}>{text}</Typography>
-    </Link>
-  )
+  if (visible) {
+    const classes = useLinkStyles({ spacing, uppercase })
+    return (
+      <Link
+        className={classes.wrapper}
+        data-testid="management-report-link"
+        to={`/assessment/${assessment.key}/management-report/#${assessment.id}`}
+      >
+        <AssignmentTurnedIn className={classes.icon} />
+        <Typography className={classes.text}>{text}</Typography>
+      </Link>
+    )
+  }
+
+  return null
 }
 
 ManagementReportLink.propTypes = {
@@ -99,7 +104,11 @@ const useReportLinksStyles = makeStyles(theme => ({
   },
 }))
 
-const ReportLinks = ({ assessment, canViewFeedbackReport }) => {
+const ReportLinks = ({
+  assessment,
+  canViewFeedbackReport,
+  canViewManagementReport,
+}) => {
   const { wrapper } = useReportLinksStyles()
   const { t } = useTranslation()
 
@@ -121,6 +130,7 @@ const ReportLinks = ({ assessment, canViewFeedbackReport }) => {
             assessment={assessment}
             text={t('View Management Report')}
             uppercase
+            visible={canViewManagementReport}
           />
         </Box>
       ) : (
