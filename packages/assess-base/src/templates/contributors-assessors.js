@@ -79,9 +79,13 @@ function ContributorsAssessorsTemplate({
   const assessors = get(assessorsData, 'assessors', [])
   const contributors = get(assessorsData, 'contributors', [])
 
-  const canEditAssesors = getUserAuth('platform-admin')
-    ? true
-    : getCanEditAssesors(groupId, assessmentData)
+  const canEditAssesors =
+    contextAssessment.key !== 'questionnaire'
+      ? getUserAuth('platform-admin')
+        ? true
+        : getCanEditAssesors(groupId, assessmentData)
+      : false
+
   const canEditContributors = getUserAuth('platform-admin')
     ? true
     : getCanEditContributors(groupId, assessmentData)
@@ -235,7 +239,7 @@ function ContributorsAssessorsTemplate({
         </div>
         <div className={classes.section}>
           <Typography variant="h1">
-            {t('Assign Contributors and Assessors')}
+            {t(`Assign Contributors${canEditAssesors ? ' and Assessors' : ''}`)}
           </Typography>
         </div>
         <div className={classes.section}>
