@@ -1,23 +1,63 @@
 import React from 'react'
 import T from 'prop-types'
-import { withStyles } from '@material-ui/core'
+import {
+  withStyles,
+  Paper,
+  Table,
+  TableHead,
+  TableBody,
+  Tooltip,
+  Typography,
+} from '@material-ui/core'
 
 import ChartTicks from '../ChartTicks'
 import Bar from './Bar'
 import { chartDataShape } from './utils'
 
+const LightTooltip = withStyles(theme => ({
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.primary.dark,
+    boxShadow: theme.shadows[1],
+    fontSize: 12,
+    textTransform: 'uppercase',
+    '& b': {
+      fontSize: 14,
+      fontWeight: 'bold',
+    },
+  },
+}))(Tooltip)
+
 function BarChart({ classes, chartData, theme }) {
   const barHeight = theme.spacing(4)
-
   return (
     <div>
       <ChartTicks variant="above" height={barHeight} />
       {chartData &&
-        chartData.map((dataItem, index) => (
-          <ChartTicks variant="across" height={barHeight} key={`bar_${index}`}>
-            <Bar value={dataItem.score} color={dataItem.color} absolute />
-          </ChartTicks>
-        ))}
+        chartData.map((dataItem, index) => {
+          const { label, color, score } = dataItem
+          return (
+            <LightTooltip
+              placement="top-start"
+              title={
+                <>
+                  {label}: <b>{score}%</b>
+                </>
+              }
+              key={`bar_${index}`}
+            >
+              <div>
+                <ChartTicks
+                  variant="across"
+                  height={barHeight}
+                  showBackground={score === 0}
+                >
+                  <Bar value={score} color={color} absolute />
+                </ChartTicks>
+              </div>
+            </LightTooltip>
+          )
+        })}
     </div>
   )
 }
