@@ -184,8 +184,7 @@ function roundBySliderStep(num) {
 
 function getScoresFromScoringGroups(scoringValues, def) {
   return Object.entries(scoringValues).map(([key, score]) => {
-    const { name: label } = def.find(scoreDef => scoreDef.key === key)
-
+    const scoreDef = def.find(scoreDef => scoreDef.key === key)
     /* Scoring Groups are percentage-based scores used, in aggregate, to generate
      * point-value scores for SubCriteria. They do not have point-value scores of
      * their own. The pointScore is therefore always set to a placeholder: '--'
@@ -194,7 +193,7 @@ function getScoresFromScoringGroups(scoringValues, def) {
       score: roundBySliderStep(score),
       pointScore: '--',
       key,
-      label,
+      label: scoreDef ? scoreDef.name : '',
     }
   })
 }
