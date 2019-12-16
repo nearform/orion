@@ -3,12 +3,17 @@ import { useQuery, useMutation } from 'graphql-hooks'
 import { Redirect } from '@reach/router'
 import urlSlug from 'url-slug'
 import * as Yup from 'yup'
-import { PaddedContainer, UploadImageWidget } from 'components'
-import { UserAvatar, AuthContext, EmbeddedVideo } from 'components'
+import {
+  ArticleStatusChip,
+  AuthContext,
+  EmbeddedVideo,
+  PaddedContainer,
+  UploadImageWidget,
+  UserAvatar,
+} from 'components'
 import {
   Checkbox,
   withStyles,
-  Radio,
   Grid,
   Typography,
   ExpansionPanel,
@@ -321,16 +326,23 @@ function EditArticle({ classes, articleId }) {
                     justify="space-between"
                   >
                     <Grid item xs>
-                      <Typography color="secondary" variant="h4">
-                        knowledge type
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <BoxControlLabel
-                        className={classes.selectedContentType}
-                        control={<Radio checked disabled />}
-                        label={values.knowledgeType}
-                      />
+                      <div className={classes.statusContainer}>
+                        <Typography color="secondary" variant="h4">
+                          knowledge type
+                        </Typography>
+                        <Typography
+                          variant="h4"
+                          className={classes.knowledgeType}
+                        >
+                          {values.knowledgeType}
+                        </Typography>
+                      </div>
+                      <div className={classes.statusContainer}>
+                        <Typography color="secondary" variant="h4">
+                          status
+                        </Typography>
+                        <ArticleStatusChip status={articleDetails.status} />
+                      </div>
                     </Grid>
                     <Grid item xs={12} className={classes.spacer}></Grid>
                     {saveButtons}
@@ -610,7 +622,13 @@ export default withStyles(theme => ({
       minWidth: 0,
     },
   },
-
+  knowledgeType: {
+    color: theme.articleTypography.heading2.color,
+    fontWeight: '900',
+    fontSize: 11,
+    letterSpacing: 2.25,
+    textTransform: 'uppercase',
+  },
   expansionPanel: {
     backgroundColor: theme.palette.background.light,
     marginTop: `${theme.spacing(2)}px !important`,
@@ -644,6 +662,16 @@ export default withStyles(theme => ({
     marginBottom: theme.spacing(4),
     '& > div': {
       flexBasis: 'auto',
+    },
+  },
+  statusContainer: {
+    height: 'auto',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: theme.spacing(1),
+    '&:last-child': {
+      marginBottom: theme.spacing(0.5),
     },
   },
 }))(EditArticle)
