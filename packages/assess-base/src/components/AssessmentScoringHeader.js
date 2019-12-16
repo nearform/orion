@@ -18,6 +18,10 @@ const AssessmentScoringHeader = ({ classes, isQuestionnaire = false }) => {
   const toggleOpen = () => setIsOpen(!isOpen)
   const { t } = useTranslation()
 
+  const keyColumnClassName = classnames(classes.keyColumn, {
+    [classes.questionnaireScoring]: isQuestionnaire,
+  })
+
   return (
     <>
       <Typography variant="h2" color="primary" gutterBottom>
@@ -36,53 +40,23 @@ const AssessmentScoringHeader = ({ classes, isQuestionnaire = false }) => {
       <Table className={classnames(classes.table, { [classes.hide]: !isOpen })}>
         <TableBody>
           <TableRow>
-            <TableCell
-              className={classnames(classes.keyColumn, {
-                [classes.questionnaireScoring]: isQuestionnaire,
-              })}
-            >
-              0-20%
-            </TableCell>
+            <TableCell className={keyColumnClassName}>0-20%</TableCell>
             <TableCell>{t('Inability to achieve')}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell
-              className={classnames(classes.keyColumn, {
-                [classes.questionnaireScoring]: isQuestionnaire,
-              })}
-            >
-              21-40%
-            </TableCell>
+            <TableCell className={keyColumnClassName}>21-40%</TableCell>
             <TableCell>{t('Limited ability to achieve')}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell
-              className={classnames(classes.keyColumn, {
-                [classes.questionnaireScoring]: isQuestionnaire,
-              })}
-            >
-              41-60%
-            </TableCell>
+            <TableCell className={keyColumnClassName}>41-60%</TableCell>
             <TableCell>{t('Ability to achieve')}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell
-              className={classnames(classes.keyColumn, {
-                [classes.questionnaireScoring]: isQuestionnaire,
-              })}
-            >
-              61-80%
-            </TableCell>
+            <TableCell className={keyColumnClassName}>61-80%</TableCell>
             <TableCell>{t('Comprehensive ability to achieve')}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell
-              className={classnames(classes.keyColumn, {
-                [classes.questionnaireScoring]: isQuestionnaire,
-              })}
-            >
-              81-100%
-            </TableCell>
+            <TableCell className={keyColumnClassName}>81-100%</TableCell>
             <TableCell>{t('Outstanding ability to achieve')}</TableCell>
           </TableRow>
         </TableBody>
