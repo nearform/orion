@@ -319,6 +319,7 @@ function AssessmentTemplate({
                     internal: true,
                   }}
                   validationSchema={assessmentValidationSchema}
+                  isInitialValid={false} // NOTE: This is a deprecated prop. Investigate a better solution to validate the initialValues.
                   onSubmit={handleCreateAssessment}
                 >
                   {({ isValid }) => (
