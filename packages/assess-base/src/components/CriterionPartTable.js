@@ -1,6 +1,14 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
-import { Grid, Button, Typography, withStyles } from '@material-ui/core'
+import {
+  Grid,
+  Button,
+  Typography,
+  withStyles,
+  Chip,
+  CircularProgress,
+} from '@material-ui/core'
+import DoneIcon from '@material-ui/icons/Done'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
@@ -16,6 +24,7 @@ import {
 
 import CriterionPartInput from './CriterionPartInput'
 import CriterionPartHeader from './CriterionPartHeader'
+import AutoSaveFormik from './AutoSaveFormik'
 
 function getEmptyTableRow(columnsDef) {
   return columnsDef.reduce(
@@ -170,6 +179,7 @@ function CriterionPartTable({
           >
             {({ isSubmitting, dirty, values, setFieldValue }) => (
               <Form className={classes.section}>
+                <AutoSaveFormik />
                 <Grid container direction="column" spacing={2}>
                   <Grid item container spacing={1} wrap="nowrap">
                     <Grid item>
@@ -250,18 +260,29 @@ function CriterionPartTable({
                   </Grid>
                   {canEdit && (
                     <Grid item container spacing={2} justify="flex-end">
-                      <Grid item>
-                        <Button
-                          type="submit"
-                          variant={canEdit ? 'contained' : 'outlined'}
-                          color="secondary"
-                          disabled={!canEdit || !dirty || isSubmitting}
-                        >
-                          {rowIndex === tableRows.length
-                            ? t('Save & add row')
-                            : t('Save Updates')}
-                        </Button>
-                      </Grid>
+                      {(rowIndex !== tableRows.length || dirty) && (
+                        <Grid item>
+                          <Chip
+                            size="small"
+                            label={
+                              dirty ? (
+                                <>
+                                  {t('Saving')}&nbsp;
+                                  <CircularProgress
+                                    size="1em"
+                                    color="inherit"
+                                  />
+                                </>
+                              ) : (
+                                <>
+                                  {t('Saved')}&nbsp; <DoneIcon />
+                                </>
+                              )
+                            }
+                            color={dirty ? 'default' : 'secondary'}
+                          />
+                        </Grid>
+                      )}
                       {rowIndex !== tableRows.length && (
                         <Grid item>
                           <Button
