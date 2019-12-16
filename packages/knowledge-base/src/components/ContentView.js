@@ -22,14 +22,9 @@ import {
 } from 'components'
 import SEO from './SEO'
 import { getArticleDetails, getArticleSummary } from '../queries'
+import { constructImageUrl } from '../utils/image'
 
-function ContentView({
-  slug,
-  classes,
-  articleSummary,
-  imgSrc,
-  preview = false,
-}) {
+function ContentView({ slug, classes, articleSummary, preview = false }) {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
   const { isAuthenticated } = getUserTokenData()
 
@@ -128,7 +123,11 @@ function ContentView({
               {article.banner && (
                 <div className={classes.bannerImageWrapper}>
                   <figure>
-                    <img src={imgSrc} className={classes.bannerImage} alt="" />
+                    <img
+                      src={constructImageUrl(article.banner)}
+                      className={classes.bannerImage}
+                      alt=""
+                    />
                   </figure>
                 </div>
               )}
