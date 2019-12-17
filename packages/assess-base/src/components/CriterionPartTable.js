@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import T from 'prop-types'
 import {
   Grid,
@@ -85,6 +85,11 @@ function CriterionPartTable({
   const [tableRows, setTableRows] = useState(
     tableData ? tableData.table_values : []
   )
+
+  // Update the form data anytime the table data changes (i.e. due to watches in the DB)
+  useEffect(() => setTableRows(tableData ? tableData.table_values : []), [
+    tableData,
+  ])
 
   const [insertTableData] = useMutation(insertAssessmentTableDataMutation)
   const [updateTableData] = useMutation(updateAssessmentTableDataMutation)
