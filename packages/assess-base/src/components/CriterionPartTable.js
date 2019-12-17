@@ -1,18 +1,11 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
-import {
-  Grid,
-  Button,
-  Typography,
-  withStyles,
-  Chip,
-  CircularProgress,
-} from '@material-ui/core'
-import DoneIcon from '@material-ui/icons/Done'
+import { Grid, Button, Typography, withStyles } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 import classnames from 'classnames'
+import SaveChip from './SaveChip'
 
 import { Formik, Form } from 'formik'
 
@@ -159,7 +152,7 @@ function CriterionPartTable({
   const isDisabledAndEmpty = !canEdit && !tableRows.length
 
   return (
-    <div>
+    <Grid>
       <CriterionPartHeader
         helpContent={tableDef.guidance}
         title={tableDef.name}
@@ -262,25 +255,9 @@ function CriterionPartTable({
                     <Grid item container spacing={2} justify="flex-end">
                       {(rowIndex !== tableRows.length || dirty) && (
                         <Grid item>
-                          <Chip
-                            size="small"
-                            label={
-                              dirty ? (
-                                <>
-                                  {t('Saving')}&nbsp;
-                                  <CircularProgress
-                                    size="1em"
-                                    color="inherit"
-                                  />
-                                </>
-                              ) : (
-                                <>
-                                  {t('Saved')}&nbsp; <DoneIcon />
-                                </>
-                              )
-                            }
-                            color={dirty ? 'default' : 'secondary'}
-                          />
+                          <div className={classes.saveStatus}>
+                            <SaveChip dirty={dirty} />
+                          </div>
                         </Grid>
                       )}
                       {rowIndex !== tableRows.length && (
@@ -303,7 +280,7 @@ function CriterionPartTable({
           </Formik>
         )
       })}
-    </div>
+    </Grid>
   )
 }
 
@@ -342,6 +319,9 @@ const styles = theme => ({
   },
   disbledAndEmpty: {
     color: theme.palette.background.dark,
+  },
+  saveStatus: {
+    marginTop: '4px',
   },
 })
 
