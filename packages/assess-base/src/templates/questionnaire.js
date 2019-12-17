@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Typography, withStyles, Grid, Button, Box } from '@material-ui/core'
 import { Link, navigate } from 'gatsby'
 import { Formik, Form, Field } from 'formik'
@@ -55,7 +55,14 @@ function QuestionnaireTemplate({
   const { t, i18n } = useTranslation()
   const lang = i18n.language || 'en'
   const { assessment } = getAssessmentParts(contextAssessment.key, lang)
+
   const assessmentId = getAssessmentId(location)
+  // Use an effect hook to test if page has an assessment ID; this is done
+  // to avoid problems with SSR and hydration. Value defaults to 'true' for
+  // better page loading experience.
+  const [hasAssessmentId, setHasAssessmentId] = useState(true)
+  useEffect(() => setHasAssessmentId(!!assessmentId), [assessmentId])
+
   const { isAuthInitialized, getUserTokenData, getUserAuth } = useContext(
     AuthContext
   )
@@ -166,7 +173,7 @@ function QuestionnaireTemplate({
               </Grid>
               <Grid item xs>
                 <Grid
-                  className={!assessmentId ? classes.displayNone : null}
+                  className={!hasAssessmentId ? classes.displayNone : null}
                   container
                   direction="column"
                   spacing={1}
@@ -190,7 +197,7 @@ function QuestionnaireTemplate({
                       <Grid
                         container
                         spacing={2}
-                        className={assessmentId ? classes.displayNone : null}
+                        className={hasAssessmentId ? classes.displayNone : null}
                       >
                         <Grid item xs>
                           <Grid container direction="column" spacing={1}>
@@ -236,7 +243,7 @@ function QuestionnaireTemplate({
               {canAssignContributorsAndAssessors && (
                 <Grid
                   container
-                  className={!assessmentId ? classes.displayNone : null}
+                  className={!hasAssessmentId ? classes.displayNone : null}
                 >
                   <Grid item xs={12} className={classes.participants}>
                     {assessors.map(({ assessor }) =>
