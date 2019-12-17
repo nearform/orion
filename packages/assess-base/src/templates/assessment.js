@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { Typography, withStyles, Grid, Button, Box } from '@material-ui/core'
 import { Link, navigate } from 'gatsby'
 import { Formik, Form, Field } from 'formik'
@@ -87,7 +87,14 @@ function AssessmentTemplate({
   const { t, i18n } = useTranslation()
   const lang = i18n.language || 'en'
   const { assessment } = getAssessmentParts(contextAssessment.key, lang)
+
   const assessmentId = getAssessmentId(location)
+  // Use an effect hook to test if page has an assessment ID; this is done
+  // to avoid problems with SSR and hydration. Value defaults to 'true' for
+  // better page loading experience.
+  const [hasAssessmentId, setHasAssessmentId] = useState(true)
+  useEffect(() => setHasAssessmentId(!!assessmentId), [assessmentId])
+
   const { isAuthInitialized, getUserTokenData, getUserAuth } = useContext(
     AuthContext
   )
@@ -294,7 +301,7 @@ function AssessmentTemplate({
               <Grid item xs>
                 <Grid
                   data-testid="name"
-                  className={!assessmentId ? classes.displayNone : null}
+                  className={!hasAssessmentId ? classes.displayNone : null}
                   container
                   direction="column"
                   spacing={1}
@@ -327,7 +334,7 @@ function AssessmentTemplate({
                         container
                         spacing={2}
                         data-testid="create"
-                        className={assessmentId ? classes.displayNone : null}
+                        className={hasAssessmentId ? classes.displayNone : null}
                       >
                         <Grid item xs>
                           <Grid container direction="column" spacing={1}>
@@ -391,7 +398,7 @@ function AssessmentTemplate({
               {canAssignContributorsAndAssessors && (
                 <Grid
                   container
-                  className={!assessmentId ? classes.displayNone : null}
+                  className={!hasAssessmentId ? classes.displayNone : null}
                 >
                   <Grid item xs={12} className={classes.participants}>
                     {assessors.map(({ assessor }) =>
@@ -507,7 +514,7 @@ function AssessmentTemplate({
                                     multiline
                                     rows={5}
                                     disabled={
-                                      !assessmentId ||
+                                      !hasAssessmentId ||
                                       !canEditKeyInformationAndUpload
                                     }
                                   />
@@ -533,7 +540,7 @@ function AssessmentTemplate({
                                 type="submit"
                                 color="secondary"
                                 variant="contained"
-                                disabled={!assessmentId || !dirty}
+                                disabled={!hasAssessmentId || !dirty}
                               >
                                 {t('Save Updates')}
                               </Button>
