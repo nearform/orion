@@ -76,14 +76,7 @@ function Login({
               </Button>
             </Grid>
           </Grid>
-          <Grid
-            item
-            container
-            alignItems="baseline"
-            spacing={1}
-            xs={10}
-            wrap="nowrap"
-          >
+          <Grid item container alignItems="baseline" spacing={1} wrap="nowrap">
             <Grid item>
               <Typography variant="h4" color="textSecondary" noWrap>
                 No account?
@@ -117,7 +110,7 @@ Login.propTypes = {
   message: T.string,
 }
 
-const styles = {
+const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
@@ -126,8 +119,8 @@ const styles = {
   },
   form: {
     margin: 'auto',
-    maxWidth: 463,
+    maxWidth: '40%',
   },
-}
+})
 
 export default withStyles(styles, { withTheme: true })(Login)
