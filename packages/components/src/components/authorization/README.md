@@ -62,6 +62,7 @@ The hook returns a state object with the following properties:
 
 * `data`: The result of executing the query. Will be `null` if the query hasn't executed yet. If an `onFetch` and/or `onNoFetch` option is specified, then this will be the result returned from either of these functions, depending on the query state.
 * `loading`: A flag indicating whether data is pending or not. The flag is true if (1) the query is currently executing or (2) the hook is waiting for the authorization context to initialize before executing the query.
+* `isPreFetch`: A flag indicating if the currently executing query is the initial query (use in conjunction with `loading`)
 * `error`: An object containing error information after a query execution failed; see `useQuery`.
 * `refetch`: A function which can be used to re-fetch data by re-executing the query. Query variables can be passed to the function when calling. If an `onPreFetch` option was specified then this will be called before re-running the query.
 
