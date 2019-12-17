@@ -58,13 +58,15 @@ const assessmentTypes = {
       result.logoAsset = 'assess-3-img'
       result.name = result.typeNames[key]
       // Number subcriteria.
+      let cidx = 1
       result.pillars.forEach(pillar => {
-        pillar.criteria.forEach((criteria, cidx) => {
+        pillar.criteria.forEach(criteria => {
           criteria.parts.forEach((part, pidx) => {
             const [table] = part.tables
             // Produce a name like "1.1: Xxxx"
-            table.name = `${cidx + 1}.${pidx + 1}: ${table.name}`
+            table.name = `${cidx}.${pidx + 1}: ${table.name}`
           })
+          cidx++
         })
       })
       return result
