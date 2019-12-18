@@ -75,7 +75,9 @@ function fetchPage(url, results = [], page = 0) {
               } = event
               return {
                 uid: `event-${id}`,
-                name: title,
+                name: title.replace(/&#(\d+);/g, (m, r) =>
+                  String.fromCharCode(Number(r))
+                ),
                 startTime: start_date,
                 endTime: end_date,
                 location: {
