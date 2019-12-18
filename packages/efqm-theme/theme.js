@@ -103,7 +103,7 @@ const articleTypography = {
     },
   },
   bulletedList: {
-    margin: '36px 0 2px',
+    margin: '16px 0 2px',
     paddingLeft: '36px',
     listStyle: 'none',
   },
@@ -120,7 +120,7 @@ const articleTypography = {
     position: 'relative',
     '&::before': {
       content: '"."',
-      backgroundColor: 'rgb(216,216,216, .5)',
+      backgroundColor: colorDefinitions.lightGrey,
       color: 'transparent',
       display: 'block',
       width: '8px',
@@ -133,7 +133,7 @@ const articleTypography = {
   },
   numberedList: {
     fontFamily,
-    margin: '36px 0 2px',
+    margin: '16px 0 2px',
     paddingLeft: '36px',
     listStyle: 'none',
     counterReset: 'li',
@@ -166,7 +166,7 @@ const articleTypography = {
     position: 'relative',
     '&::before': {
       borderRadius: '4px',
-      backgroundColor: colorDefinitions.paleGrey,
+      backgroundColor: colorDefinitions.lightGrey,
       color: 'transparent',
       position: 'absolute',
       width: '8px',

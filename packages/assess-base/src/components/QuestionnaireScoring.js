@@ -109,9 +109,12 @@ function AssessmentPillarScoring({
         </SectionTitle>
       </Grid>
       <Grid xs={3}></Grid>
-      <Grid xs={3} className={classes.scoringSection}>
+      <Grid
+        xs={3}
+        className={classnames(classes.scoringSection, classes.scoringGuide)}
+      >
         <div className={classes.scoringHeader}>
-          <AssessmentScoringHeader />
+          <AssessmentScoringHeader isQuestionnaire={true} />
         </div>
       </Grid>
       <Grid xs={12}>
@@ -276,6 +279,9 @@ export default withStyles(theme => ({
   },
   overall: {
     position: 'relative',
+  },
+  scoringGuide: {
+    marginBottom: '-40px',
   },
   scoringHeader: {
     marginLeft: theme.spacing(1.75),

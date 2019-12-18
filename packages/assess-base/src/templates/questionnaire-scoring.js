@@ -195,6 +195,9 @@ const styles = theme => ({
   },
   description: {
     fontSize: theme.spacing(2),
+    '& p:first-of-type': {
+      marginTop: '-6px',
+    },
     '& ul': {
       listStyle: 'none',
       '& li::before': {

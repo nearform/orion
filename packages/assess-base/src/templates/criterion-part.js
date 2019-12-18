@@ -1,11 +1,6 @@
 import React, { useContext } from 'react'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
-import {
-  AuthContext,
-  useAuthorizedQuery,
-  PaddedContainer,
-  SectionTitle,
-} from 'components'
+import { AuthContext, PaddedContainer, SectionTitle } from 'components'
 import { Link } from 'gatsby'
 import { Redirect } from '@reach/router'
 import { useTranslation } from 'react-i18next'
@@ -26,6 +21,7 @@ import {
 } from '../utils/assessment-status'
 import { filterOldScores } from '../utils/filter-old-scores'
 import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
+import useAuthorizedWatch from '../hooks/useAuthorizedWatch'
 
 function CriterionPartTemplate({
   theme,
@@ -72,10 +68,11 @@ function CriterionPartTemplate({
 
   const {
     loading,
+    isPreFetch,
     error,
     data: assessmentData,
     refetch: fetchAssessmentPartData,
-  } = useAuthorizedQuery(
+  } = useAuthorizedWatch(
     getAssessmentPartData,
     {
       id: assessmentId,
@@ -97,7 +94,7 @@ function CriterionPartTemplate({
     return t('Error')
   }
 
-  if (loading || !assessmentData) {
+  if ((loading && isPreFetch) || !assessmentData) {
     return (
       <div className={classes.root} data-testid="criterion-part">
         <PaddedContainer className={classes.paddedContainer}>

@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import T from 'prop-types'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 import classnames from 'classnames'
+import SaveChip from './SaveChip'
 
 import { Formik, Form } from 'formik'
 
@@ -16,6 +17,7 @@ import {
 
 import CriterionPartInput from './CriterionPartInput'
 import CriterionPartHeader from './CriterionPartHeader'
+import AutoSaveFormik from './AutoSaveFormik'
 
 function getEmptyTableRow(columnsDef) {
   return columnsDef.reduce(
@@ -76,6 +78,11 @@ function CriterionPartTable({
   const [tableRows, setTableRows] = useState(
     tableData ? tableData.table_values : []
   )
+
+  // Update the form data anytime the table data changes (i.e. due to watches in the DB)
+  useEffect(() => setTableRows(tableData ? tableData.table_values : []), [
+    tableData,
+  ])
 
   const [insertTableData] = useMutation(insertAssessmentTableDataMutation)
   const [updateTableData] = useMutation(updateAssessmentTableDataMutation)
@@ -150,7 +157,7 @@ function CriterionPartTable({
   const isDisabledAndEmpty = !canEdit && !tableRows.length
 
   return (
-    <div>
+    <Grid>
       <CriterionPartHeader
         helpContent={tableDef.guidance}
         title={tableDef.name}
@@ -170,6 +177,7 @@ function CriterionPartTable({
           >
             {({ isSubmitting, dirty, values, setFieldValue }) => (
               <Form className={classes.section}>
+                <AutoSaveFormik />
                 <Grid container direction="column" spacing={2}>
                   <Grid item container spacing={1} wrap="nowrap">
                     <Grid item>
@@ -250,18 +258,13 @@ function CriterionPartTable({
                   </Grid>
                   {canEdit && (
                     <Grid item container spacing={2} justify="flex-end">
-                      <Grid item>
-                        <Button
-                          type="submit"
-                          variant={canEdit ? 'contained' : 'outlined'}
-                          color="secondary"
-                          disabled={!canEdit || !dirty || isSubmitting}
-                        >
-                          {rowIndex === tableRows.length
-                            ? t('Save & add row')
-                            : t('Save Updates')}
-                        </Button>
-                      </Grid>
+                      {(rowIndex !== tableRows.length || dirty) && (
+                        <Grid item>
+                          <div className={classes.saveStatus}>
+                            <SaveChip dirty={dirty} />
+                          </div>
+                        </Grid>
+                      )}
                       {rowIndex !== tableRows.length && (
                         <Grid item>
                           <Button
@@ -282,7 +285,7 @@ function CriterionPartTable({
           </Formik>
         )
       })}
-    </div>
+    </Grid>
   )
 }
 
@@ -321,6 +324,9 @@ const styles = theme => ({
   },
   disbledAndEmpty: {
     color: theme.palette.background.dark,
+  },
+  saveStatus: {
+    marginTop: '4px',
   },
 })
 

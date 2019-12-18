@@ -13,10 +13,7 @@ function getOverallScore(chartData) {
 
 function calculatePartsMean(scores) {
   return scores.length > 0
-    ? scores.reduce((sum, scoreItem) => {
-        const scoreValue = scoreItem.score
-        return sum + scoreValue
-      }, 0) / scores.length
+    ? scores.reduce((sum, { score }) => sum + score, 0) / scores.length
     : 0
 }
 
@@ -42,7 +39,6 @@ function getChartData(assessmentDef, assessmentData, pillarColors) {
         scoresByPillar => scoresByPillar.pillar_key === pillarKey
       )
 
-      let skipFlag = false
       criteriaDef.forEach(criterionDef => {
         const scoringDef =
           criterionDef.scoring || pillarDef.scoring || assessmentDef.scoring
@@ -51,16 +47,6 @@ function getChartData(assessmentDef, assessmentData, pillarColors) {
           pillarDef.scoringRules ||
           assessmentDef.scoringRules ||
           {}
-
-        if (
-          skipFlag ||
-          !pillarScores.some(
-            pillarScore => pillarScore.criterion_key === criterionDef.key
-          )
-        ) {
-          skipFlag = true
-          return
-        }
 
         chartData.push(
           getScoresByCritera(
@@ -102,8 +88,6 @@ function getScoresByCritera(
     criterionPartScore => criterionPartScore.criterion_key === criterionKey
   )
 
-  console.log(assessments)
-
   const {
     criteriaWeighting,
     [assessmentKey]: scoringPoints,
@@ -127,6 +111,7 @@ function getScoresByCritera(
     .sort((a, b) => (a.label > b.label && 1) || (a.label < b.label && -1) || 0)
 
   const criteriaScore = calculatePartsMean(chartDataByCriterionParts)
+
   const pointCriteriaScore = getPointScore(
     criteriaScore,
     criteriaWeighting[criterionKey],
@@ -180,6 +165,7 @@ function getScoresbyCriterionPart(
     roundBySliderStep(calculatePartsMean(scoresByScoringItems)),
     cap
   )
+
   const pointScore = getPointScore(score, 1, partScoringPoints)
 
   return {
@@ -198,8 +184,7 @@ function roundBySliderStep(num) {
 
 function getScoresFromScoringGroups(scoringValues, def) {
   return Object.entries(scoringValues).map(([key, score]) => {
-    const { name: label } = def.find(scoreDef => scoreDef.key === key)
-
+    const scoreDef = def.find(scoreDef => scoreDef.key === key)
     /* Scoring Groups are percentage-based scores used, in aggregate, to generate
      * point-value scores for SubCriteria. They do not have point-value scores of
      * their own. The pointScore is therefore always set to a placeholder: '--'
@@ -208,7 +193,7 @@ function getScoresFromScoringGroups(scoringValues, def) {
       score: roundBySliderStep(score),
       pointScore: '--',
       key,
-      label,
+      label: scoreDef ? scoreDef.name : '',
     }
   })
 }

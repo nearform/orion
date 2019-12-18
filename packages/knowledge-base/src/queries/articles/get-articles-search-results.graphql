@@ -9,6 +9,7 @@ query getSearchArticles(
     limit: $limit
     offset: $offset
     where: $whereClause
+    order_by: { updated_at: desc }
   ) {
     id
     thumbnail

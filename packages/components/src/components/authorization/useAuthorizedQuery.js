@@ -62,5 +62,5 @@ export default function useAuthorizedQuery(query, variables, opts = {}) {
   }
 
   // Return result.
-  return { data, loading, error, refetch }
+  return { data, loading, isPreFetch, error, refetch }
 }
