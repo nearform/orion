@@ -42,7 +42,7 @@ const usePromoSpotStyles = makeStyles(theme => {
 function PromoSpot({ link, strapline, title }) {
   const content = useStaticQuery(graphql`
     query {
-      efqmAwards: file(name: { eq: "efqm-lyon-2020" }) {
+      efqmAwards: file(name: { eq: "efqm" }) {
         childImageSharp {
           fixed(width: 320) {
             ...GatsbyImageSharpFixed
@@ -57,10 +57,10 @@ function PromoSpot({ link, strapline, title }) {
   })
 
   return (
-    <a className={classes.wrapper} href={link}>
+    <div className={classes.wrapper}>
       <Typography className={classes.title}>{title}</Typography>
       <Typography className={classes.strapline}>{strapline}</Typography>
-    </a>
+    </div>
   )
 }
 
