@@ -86,7 +86,7 @@ function ContentView({ slug, classes, articleSummary, preview = false }) {
 
   return (
     <PaddedContainer>
-      <SEO title={`${preview && 'Preview '} ${article.title}`} />
+      <SEO title={`${preview ? 'Preview ' : ''} ${article.title || ''}`} />
       <Grid container spacing={7} className={classes.mainWrapper}>
         <Grid item xs={12} sm={4} lg={3}>
           <Grid
