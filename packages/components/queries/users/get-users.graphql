@@ -2,9 +2,14 @@ query getUsers(
   $limit: Int!
   $offset: Int!
   $orderBy: user_order_by!
-  $where: user_bool_exp
+  $email: String
 ) {
-  user(limit: $limit, offset: $offset, where: $where, order_by: [$orderBy]) {
+  user(
+    where: { _and: { active: { _eq: true }, email: { _ilike: $email } } }
+    limit: $limit
+    offset: $offset
+    order_by: [$orderBy]
+  ) {
     id
     pending
     email
@@ -25,7 +30,9 @@ query getUsers(
       }
     }
   }
-  field_aggregate: user_aggregate(where: $where) {
+  field_aggregate: user_aggregate(
+    where: { _and: { active: { _eq: true }, email: { _ilike: $email } } }
+  ) {
     aggregate {
       count
     }
