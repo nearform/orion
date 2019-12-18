@@ -75,14 +75,11 @@ function CriterionPartTable({
   const tableData = getExistingTableData(assessmentTables, tableDef)
 
   const [tableId, setTableId] = useState(tableData ? tableData.id : null)
-  const [tableRows, setTableRows] = useState(
-    tableData ? tableData.table_values : []
-  )
+  const rowsOrDefault = tableData ? tableData.table_values : []
+  const [tableRows, setTableRows] = useState(rowsOrDefault)
 
-  // Update the form data anytime the table data changes (i.e. due to watches in the DB)
-  useEffect(() => setTableRows(tableData ? tableData.table_values : []), [
-    tableData,
-  ])
+  // Update the form state anytime the table data changes (i.e. due to watches in the DB)
+  useEffect(() => setTableRows(rowsOrDefault), [tableData])
 
   const [insertTableData] = useMutation(insertAssessmentTableDataMutation)
   const [updateTableData] = useMutation(updateAssessmentTableDataMutation)

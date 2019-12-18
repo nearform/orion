@@ -1,5 +1,5 @@
 import { useMutation } from 'graphql-hooks'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import T from 'prop-types'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
 import classnames from 'classnames'
@@ -69,9 +69,11 @@ function CriterionPartFeedbackTable({
   const { t } = useTranslation()
   const tableData = getExistingTableData(assessmentFeedbackTables, tableDef)
   const [tableId, setTableId] = useState(tableData ? tableData.id : null)
-  const [tableRows, setTableRows] = useState(
-    tableData ? tableData.feedback_values : []
-  )
+  const rowsOrDefault = tableData ? tableData.feedback_values : []
+  const [tableRows, setTableRows] = useState(rowsOrDefault)
+
+  // Update the form state anytime the table data changes (i.e. due to watches in the DB)
+  useEffect(() => setTableRows(rowsOrDefault), [tableData])
 
   const [insertTableData] = useMutation(insertAssessmentFeedbackDataMutation)
   const [updateTableData] = useMutation(updateAssessmentFeedbackDataMutation)
