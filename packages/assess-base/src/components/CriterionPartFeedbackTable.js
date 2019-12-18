@@ -16,6 +16,9 @@ import {
   updateAssessmentFeedbackDataMutation,
 } from '../queries/assessments'
 
+import SaveChip from './SaveChip'
+import AutoSaveFormik from './AutoSaveFormik'
+
 function getEmptyTableRow(tableDef) {
   return tableDef.columns.reduce(
     (initialValues, { key }) => ({ ...initialValues, [key]: '' }),
@@ -170,6 +173,7 @@ function CriterionPartFeedbackTable({
         >
           {({ isSubmitting, dirty }) => (
             <Form>
+              <AutoSaveFormik />
               <Grid container spacing={2}>
                 <Grid item container spacing={1} alignItems="baseline">
                   <Grid item>
@@ -242,22 +246,13 @@ function CriterionPartFeedbackTable({
                                   justify="flex-end"
                                   wrap="nowrap"
                                 >
-                                  <Grid item>
-                                    <Button
-                                      type="submit"
-                                      variant={
-                                        canEdit ? 'contained' : 'outlined'
-                                      }
-                                      color="secondary"
-                                      disabled={
-                                        !canEdit || !dirty || isSubmitting
-                                      }
-                                    >
-                                      {rowIndex === tableRows.length
-                                        ? t('Save & add row')
-                                        : t('Save Updates')}
-                                    </Button>
-                                  </Grid>
+                                  {(rowIndex !== tableRows.length || dirty) && (
+                                    <Grid item>
+                                      <div className={classes.saveStatus}>
+                                        <SaveChip dirty={dirty} />
+                                      </div>
+                                    </Grid>
+                                  )}
                                   {rowIndex !== tableRows.length && (
                                     <Grid item>
                                       <Button
