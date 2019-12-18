@@ -1,7 +1,11 @@
 import React, { useContext } from 'react'
 import { AuthContext, PaddedContainer } from 'components'
-import { useMutation } from 'graphql-hooks'
-import { createArticleMutation } from '../../queries'
+import { useMutation, useQuery } from 'graphql-hooks'
+import {
+  addArticleTaxonomiesMutation,
+  createArticleMutation,
+  getTaxonomyTypes,
+} from '../../queries'
 import { navigate } from '@reach/router'
 import BoxControlLabel from '../BoxControlLabel'
 import SEO from '../SEO'
@@ -16,6 +20,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { useStaticQuery, graphql } from 'gatsby'
+import find from 'lodash/find'
 import get from 'lodash/get'
 import keyBy from 'lodash/keyBy'
 
@@ -51,9 +56,12 @@ function CreateArticle({ classes }) {
       }
     }
   `)
+  const taxonomyResult = useQuery(getTaxonomyTypes)
   const knowledgeTypes = get(staticResult, 'allKnowledgeTypes.nodes')
   const knowledgeTypeMap = keyBy(knowledgeTypes, 'key')
   const [createArticle] = useMutation(createArticleMutation)
+  const [addArticleTaxonomies] = useMutation(addArticleTaxonomiesMutation)
+  const taxonomyData = get(taxonomyResult, 'data.taxonomy_type')
   const isSmUp = useMediaQuery('(min-width:600px)')
 
   const handleSelectType = async ({ knowledgeType }, actions) => {
@@ -66,6 +74,16 @@ function CreateArticle({ classes }) {
       ...field,
       value: null,
     }))
+    const taxonomyId = get(
+      find(
+        get(
+          find(taxonomyData, { taxonomy_items: [{ key: knowledgeType }] }),
+          'taxonomy_items'
+        ),
+        { key: knowledgeType }
+      ),
+      'id'
+    )
     //TODO: graceful error handling
     const {
       data: {
@@ -74,6 +92,15 @@ function CreateArticle({ classes }) {
         },
       },
     } = await createArticle({ variables: { knowledgeType, fields, creatorId } })
+
+    await addArticleTaxonomies({
+      variables: {
+        addTaxonomies: {
+          article_id: id,
+          taxonomy_id: taxonomyId,
+        },
+      },
+    })
 
     actions.setSubmitting(false)
     navigate(`/my-content/edit/${id}`)
