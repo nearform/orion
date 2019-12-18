@@ -24,7 +24,9 @@ const ArticlePreview = ({
           className={classes.visualSummary}
           text={get(article, 'primary_taxonomy[0].taxonomy.name')}
         />
-        <div className={classes.articleTitle}>{article.title}</div>
+        <Link to={link} className={classes.articleTitle}>
+          {article.title}
+        </Link>
         <div className={classes.articleMeta}>
           <Link to={link}>
             <div className={classes.articleDate}>

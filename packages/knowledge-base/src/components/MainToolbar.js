@@ -214,6 +214,9 @@ const styles = theme => ({
       marginLeft: 'auto',
       marginRight: 'auto',
     },
+    '&:hover': {
+      textDecoration: 'none',
+    },
   },
   logo: {
     marginRight: theme.spacing(2),
