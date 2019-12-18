@@ -78,11 +78,11 @@ const BookmarkListView = ({ term, taxonomy, page = 1, results }) => {
 
 const ArticleListView = ({ term, taxonomy, page, results }) => {
   const taxonomyTypes = useTaxonomies()
-  const [taxonomyIds, setTaxonomyIds] = useState([])
   const [touched, setTouched] = useState(false)
   const [currentPage, setCurrentPage] = useState(page)
   const offset = (currentPage - 1) * PAGE_SIZE
   const taxonomyKey = taxonomy || get(results, 'taxonomy.key')
+  const [taxonomyIds, setTaxonomyIds] = useState([get(results, 'taxonomy.id')])
 
   const variables = useMemo(
     () => ({
