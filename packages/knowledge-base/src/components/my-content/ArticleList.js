@@ -1,9 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { TableRow, TableCell, IconButton, withStyles } from '@material-ui/core'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  DialogContentText,
+  TableRow,
+  TableCell,
+  IconButton,
+  withStyles,
+} from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 import { Link } from 'gatsby'
+import { deleteArticleMutation } from '../../queries'
+import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 
 import { ArticleStatusChip, AuthContext, PaddedContainer } from 'components'
@@ -20,7 +34,9 @@ const ArticleList = ({ classes, path }) => {
   const { getUserTokenData } = useContext(AuthContext)
   const { userId, isPlatformGroup } = getUserTokenData()
   const [statusFilter, setStatusFilter] = useState()
+  const [deleteDialog, setDeleteDialog] = useState(null)
   const [pageTitle, setPageTitle] = useState('All Stories')
+  const [deleteArticle] = useMutation(deleteArticleMutation)
 
   useEffect(() => {
     const inReview = path === '/needs-review'
@@ -48,6 +64,7 @@ const ArticleList = ({ classes, path }) => {
     { id: 'knowledge_type', label: 'Type', sortable: true },
     { id: 'status', label: 'Status', sortable: true },
     { id: 'edit', label: 'Edit', cellProps: { align: 'center' } },
+    { id: 'delete', label: 'Delete', cellProps: { align: 'center' } },
     { id: 'view', label: 'View', cellProps: { align: 'center' } },
   ]
 
@@ -64,48 +81,92 @@ const ArticleList = ({ classes, path }) => {
         query={query}
         variables={variables}
         orderBy={{ updated_at: 'desc' }}
-        renderTableBody={data =>
-          data &&
-          data.article.map(article => (
-            <TableRow hover key={article.id} size="small">
-              <TableCell>{article.title}</TableCell>
-              <TableCell>
-                {isPlatformGroup && (
-                  <>
-                    {get(article, 'authors.author.first_name')}{' '}
-                    {get(article, 'authors.author.last_name')}
-                  </>
-                )}
-              </TableCell>
-              <TableCell>{formatDateTime(article.updated_at)}</TableCell>
-              <TableCell>{knowledgeTypes[article.knowledge_type]}</TableCell>
-              <TableCell>
-                <ArticleStatusChip status={article.status} />
-              </TableCell>
-              <TableCell align="center" padding="none">
-                <IconButton
-                  className={classes.icon}
-                  component={Link}
-                  disabled={
-                    article.status !== 'in-progress' && !isPlatformGroup
-                  }
-                  to={`/my-content/edit/${article.id}`}
+        renderTableBody={(data, refetch) => (
+          <>
+            {data &&
+              data.article.map(article => (
+                <TableRow hover key={article.id} size="small">
+                  <TableCell>{article.title}</TableCell>
+                  <TableCell>
+                    {isPlatformGroup && (
+                      <>
+                        {get(article, 'authors.author.first_name')}{' '}
+                        {get(article, 'authors.author.last_name')}
+                      </>
+                    )}
+                  </TableCell>
+                  <TableCell>{formatDateTime(article.updated_at)}</TableCell>
+                  <TableCell>
+                    {knowledgeTypes[article.knowledge_type]}
+                  </TableCell>
+                  <TableCell>
+                    <ArticleStatusChip status={article.status} />
+                  </TableCell>
+                  <TableCell align="center" padding="none">
+                    <IconButton
+                      className={classes.icon}
+                      component={Link}
+                      disabled={
+                        article.status !== 'in-progress' && !isPlatformGroup
+                      }
+                      to={`/my-content/edit/${article.id}`}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell align="center" padding="none">
+                    <IconButton
+                      className={classes.icon}
+                      onClick={() => setDeleteDialog(article)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell align="center" padding="none">
+                    <IconButton
+                      className={classes.icon}
+                      component={Link}
+                      to={`/my-content/preview/${article.id}`}
+                    >
+                      <InsertDriveFileIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            <Dialog
+              open={deleteDialog !== null}
+              onClose={() => setDeleteDialog(null)}
+            >
+              <DialogTitle id="alert-dialog-title">
+                {'Delete Article?'}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Are you sure you want to delete this article?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={() => setDeleteDialog(null)} color="secondary">
+                  Cancel
+                </Button>
+                <Button
+                  color="primary"
+                  onClick={async () => {
+                    if (deleteDialog !== null) {
+                      await deleteArticle({
+                        variables: { articleId: deleteDialog.id },
+                      })
+                      setDeleteDialog(null)
+                      refetch()
+                    }
+                  }}
                 >
-                  <EditIcon />
-                </IconButton>
-              </TableCell>
-              <TableCell align="center" padding="none">
-                <IconButton
-                  className={classes.icon}
-                  component={Link}
-                  to={`/my-content/preview/${article.id}`}
-                >
-                  <InsertDriveFileIcon />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          ))
-        }
+                  Delete Article
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </>
+        )}
       />
     </PaddedContainer>
   )

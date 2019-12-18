@@ -1,0 +1,6 @@
+- args:
+    role: partner-admin
+    table:
+      name: article
+      schema: public
+  type: drop_delete_permission

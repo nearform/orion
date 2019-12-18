@@ -1,0 +1,49 @@
+mutation deleteArticle(
+  $articleId: Int!
+) {
+  delete_article_author(
+    where: {
+      article_id: { _eq: $articleId }
+    }
+  ) {
+    returning {
+      author_id
+    }
+  }
+  delete_article_taxonomy(
+    where: {
+      article_id: { _eq: $articleId }
+    }
+  ) {
+    returning {
+      taxonomy_id
+    }
+  }
+  delete_recommended_articles(
+    where: {
+      article_id: { _eq: $articleId }
+    }
+  ) {
+    returning {
+      recommended_id
+    }
+  }
+  delete_article_rating(
+    where: {
+      article_id: { _eq: $articleId }
+    }
+  ) {
+    returning {
+      id
+    }
+  }
+  delete_article(
+    where: {
+      id: { _eq: $articleId }
+    }
+  ) {
+    returning {
+      id
+    }
+  }
+}

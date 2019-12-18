@@ -1,0 +1,8 @@
+- args:
+    permission:
+      filter: {}
+    role: company-admin
+    table:
+      name: article
+      schema: public
+  type: create_delete_permission
