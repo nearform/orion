@@ -246,7 +246,6 @@ const taxonomyColor = {
 
 const editorsPicks = {
   title: {
-    display: 'block',
     textAlign: 'left',
     fontFamily,
     fontSize: 14,

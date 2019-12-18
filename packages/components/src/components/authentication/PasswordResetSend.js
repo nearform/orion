@@ -15,7 +15,7 @@ function PasswordResetSend({
   return (
     <div className={classes.root}>
       <div>
-        <Grid container direction="column" spacing={3}>
+        <Grid container direction="column" justify="center" spacing={3}>
           <Grid item xs={9}>
             <SectionTitleField
               barColor={theme.palette.secondary.main}

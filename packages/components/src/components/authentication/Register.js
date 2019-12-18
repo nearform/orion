@@ -16,8 +16,8 @@ function Register({
   return (
     <div className={classes.root}>
       <div>
-        <Grid container spacing={3} className={classes.form}>
-          <Grid item xs={8}>
+        <Grid container spacing={3} justify="center" className={classes.form}>
+          <Grid item xs={10}>
             <SectionTitleField
               barColor={theme.palette.secondary.main}
               category="general"
@@ -51,7 +51,7 @@ function Register({
             item
             container
             alignItems="baseline"
-            xs={9}
+            xs={10}
             spacing={1}
             wrap="nowrap"
           >

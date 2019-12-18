@@ -16,8 +16,8 @@ function Login({
   return (
     <div className={classes.root}>
       <div>
-        <Grid container spacing={3} className={classes.form}>
-          <Grid item xs={8}>
+        <Grid container spacing={3} justify="center" className={classes.form}>
+          <Grid item xs={10}>
             <SectionTitleField
               barColor={theme.palette.secondary.main}
               category="general"
@@ -117,7 +117,7 @@ Login.propTypes = {
   message: T.string,
 }
 
-const styles = {
+const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
@@ -126,8 +126,8 @@ const styles = {
   },
   form: {
     margin: 'auto',
-    maxWidth: 463,
+    maxWidth: '40%',
   },
-}
+})
 
 export default withStyles(styles, { withTheme: true })(Login)

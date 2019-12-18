@@ -57,10 +57,10 @@ function PromoSpot({ link, strapline, title }) {
   })
 
   return (
-    <a className={classes.wrapper} href={link}>
+    <div className={classes.wrapper}>
       <Typography className={classes.title}>{title}</Typography>
       <Typography className={classes.strapline}>{strapline}</Typography>
-    </a>
+    </div>
   )
 }
 

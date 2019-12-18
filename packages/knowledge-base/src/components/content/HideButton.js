@@ -14,7 +14,7 @@ const HideButton = ({ classes, articleId, status, refetchArticle }) => {
   const [updateArticle] = useMutation(updateArticleMutation)
 
   const isHidden = status === 'hidden'
-  const actionVerb = isHidden ? 'Republish' : 'Hide'
+  const actionTitle = isHidden ? 'Republish' : 'Unpublish'
   const ActionIcon = isHidden ? VisibilityIcon : VisibilityOffIcon
 
   const onClick = async () => {
@@ -51,7 +51,7 @@ const HideButton = ({ classes, articleId, status, refetchArticle }) => {
           })}
         />
       )}
-      {actionVerb} this article
+      {actionTitle}
     </Button>
   )
 }
@@ -71,7 +71,7 @@ export default withStyles(theme => ({
     ...theme.typography.h4,
   },
   icon: {
-    marginRight: theme.spacing(),
+    marginRight: theme.spacing(2),
     color: 'rgb(156,175,195)',
   },
   secondary: {

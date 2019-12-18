@@ -90,8 +90,8 @@ function PersonalizedLists() {
         articles={bookmarkedArticles}
       />
       <PromoSpot
-        title="EFQM Forum 2019"
-        strapline="23rd October 2019 in Helsinki"
+        title="EFQM Forum 2020"
+        strapline="22nd & 23rd October in Lyon"
         link="http://efqmforum.org/"
       />
     </ContentSignpostGrid>
