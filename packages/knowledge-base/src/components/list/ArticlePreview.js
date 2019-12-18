@@ -59,12 +59,7 @@ const styles = theme => ({
   visualSummary: {
     marginBottom: theme.spacing(1),
   },
-  articleTitle: {
-    ...theme.editorsPicks.title,
-    '&:hover': {
-      textDecoration: 'none',
-    },
-  },
+  articleTitle: theme.editorsPicks.title,
   articleMeta: {
     display: 'inline',
   },

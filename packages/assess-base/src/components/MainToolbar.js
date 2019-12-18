@@ -148,6 +148,9 @@ const styles = theme => ({
   logoHomeLink: {
     display: 'flex',
     alignItems: 'center',
+    '&:hover': {
+      textDecoration: 'none',
+    },
   },
   logo: {
     marginRight: theme.spacing(2),

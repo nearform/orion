@@ -8,6 +8,7 @@ const colorDefinitions = {
   navyBlue: 'rgb(73, 98, 173)',
   cyan: 'rgb(80, 184, 242)',
   aqua: 'rgb(121, 204, 198)',
+  textAqua: 'rgb(60, 160, 175)',
   emeraldGreen: 'rgb(112, 214, 112)',
   pearGreen: 'rgb(155, 220, 106)',
   yellow: 'rgb(255, 204, 0)',
@@ -94,12 +95,11 @@ const articleTypography = {
     fontStyle: 'italic',
   },
   link: {
-    color: colorDefinitions.aqua,
+    color: colorDefinitions.textAqua,
     paddingBottom: '2px',
-    borderBottom: '2px solid',
     '&:hover': {
-      borderBottom: 'none',
-      textDecoration: 'none',
+      textDecoration: 'underline',
+      textDecorationColor: colorDefinitions.textAqua,
     },
   },
   bulletedList: {
