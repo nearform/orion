@@ -4,7 +4,7 @@ import { withStyles, Button, Grid } from '@material-ui/core'
 import { AuthContext } from 'components'
 import RateArticle from './RateArticle'
 import HideButton from './HideButton'
-import { Share, Print, Edit } from '@material-ui/icons'
+import { Print, Edit } from '@material-ui/icons'
 import { navigate } from '@reach/router'
 
 const OptionsButton = withStyles(theme => ({
@@ -44,6 +44,7 @@ const ContentOptions = ({ classes, articleData, refetchArticle }) => {
       spacing={2}
       className={classes.wrapper}
     >
+      {/*
       <Grid item xs={12} sm={6} lg={12}>
         <OptionsButton>
           <i className={classes.icons}>
@@ -52,6 +53,7 @@ const ContentOptions = ({ classes, articleData, refetchArticle }) => {
           Share this article
         </OptionsButton>
       </Grid>
+      */}
       <Grid item xs={12} sm={6} lg={12}>
         <RateArticle id={articleData.id} content={articleData}></RateArticle>
       </Grid>
@@ -113,7 +115,7 @@ export default withStyles(theme => ({
     },
   },
   icons: {
-    paddingRight: '15px',
+    marginRight: theme.spacing(2),
     color: 'rgb(156,175,195)',
   },
 }))(ContentOptions)
