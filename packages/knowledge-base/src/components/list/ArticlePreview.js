@@ -24,7 +24,9 @@ const ArticlePreview = ({
           className={classes.visualSummary}
           text={get(article, 'primary_taxonomy[0].taxonomy.name')}
         />
-        <div className={classes.articleTitle}>{article.title}</div>
+        <Link to={link} className={classes.articleTitle}>
+          <div>{article.title}</div>
+        </Link>
         <div className={classes.articleMeta}>
           <Link to={link}>
             <div className={classes.articleDate}>
@@ -57,7 +59,12 @@ const styles = theme => ({
   visualSummary: {
     marginBottom: theme.spacing(1),
   },
-  articleTitle: theme.editorsPicks.title,
+  articleTitle: {
+    ...theme.editorsPicks.title,
+    '&:hover': {
+      textDecoration: 'none',
+    },
+  },
   articleMeta: {
     display: 'inline',
   },
