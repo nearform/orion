@@ -7548,16 +7548,9 @@ ReactTestInstance {
             "containerInfo": Object {
               "children": Array [
                 Object {
-                  "children": Array [
-                    Object {
-                      "isHidden": false,
-                      "tag": "TEXT",
-                      "text": " ",
-                    },
-                  ],
+                  "children": Array [],
                   "isHidden": false,
                   "props": Object {
-                    "children": " ",
                     "className": "makeStyles-wrapper-1 makeStyles-wrapper-2",
                     "data-test-id": "thumbnail-image",
                   },
@@ -7667,16 +7660,9 @@ ReactTestInstance {
           "containerInfo": Object {
             "children": Array [
               Object {
-                "children": Array [
-                  Object {
-                    "isHidden": false,
-                    "tag": "TEXT",
-                    "text": " ",
-                  },
-                ],
+                "children": Array [],
                 "isHidden": false,
                 "props": Object {
-                  "children": " ",
                   "className": "makeStyles-wrapper-1 makeStyles-wrapper-2",
                   "data-test-id": "thumbnail-image",
                 },
@@ -7758,45 +7744,7 @@ ReactTestInstance {
     "actualDuration": 0,
     "actualStartTime": -1,
     "alternate": null,
-    "child": FiberNode {
-      "_debugHookTypes": null,
-      "_debugID": 5,
-      "_debugIsCurrentlyTiming": false,
-      "_debugNeedsRemount": false,
-      "_debugOwner": null,
-      "_debugSource": null,
-      "actualDuration": 0,
-      "actualStartTime": -1,
-      "alternate": null,
-      "child": null,
-      "childExpirationTime": 0,
-      "dependencies": null,
-      "effectTag": 0,
-      "elementType": null,
-      "expirationTime": 0,
-      "firstEffect": null,
-      "index": 0,
-      "key": null,
-      "lastEffect": null,
-      "memoizedProps": " ",
-      "memoizedState": null,
-      "mode": 0,
-      "nextEffect": null,
-      "pendingProps": " ",
-      "ref": null,
-      "return": [Circular],
-      "selfBaseDuration": 0,
-      "sibling": null,
-      "stateNode": Object {
-        "isHidden": false,
-        "tag": "TEXT",
-        "text": " ",
-      },
-      "tag": 6,
-      "treeBaseDuration": 0,
-      "type": null,
-      "updateQueue": null,
-    },
+    "child": null,
     "childExpirationTime": 0,
     "dependencies": null,
     "effectTag": 0,
@@ -7807,7 +7755,6 @@ ReactTestInstance {
     "key": null,
     "lastEffect": null,
     "memoizedProps": Object {
-      "children": " ",
       "className": "makeStyles-wrapper-1 makeStyles-wrapper-2",
       "data-test-id": "thumbnail-image",
     },
@@ -7815,7 +7762,6 @@ ReactTestInstance {
     "mode": 0,
     "nextEffect": null,
     "pendingProps": Object {
-      "children": " ",
       "className": "makeStyles-wrapper-1 makeStyles-wrapper-2",
       "data-test-id": "thumbnail-image",
     },
@@ -15361,16 +15307,9 @@ ReactTestInstance {
             "containerInfo": Object {
               "children": Array [
                 Object {
-                  "children": Array [
-                    Object {
-                      "isHidden": false,
-                      "tag": "TEXT",
-                      "text": " ",
-                    },
-                  ],
+                  "children": Array [],
                   "isHidden": false,
                   "props": Object {
-                    "children": " ",
                     "className": "makeStyles-wrapper-1 makeStyles-wrapper-2",
                     "data-test-id": "thumbnail-image",
                   },
@@ -15480,16 +15419,9 @@ ReactTestInstance {
           "containerInfo": Object {
             "children": Array [
               Object {
-                "children": Array [
-                  Object {
-                    "isHidden": false,
-                    "tag": "TEXT",
-                    "text": " ",
-                  },
-                ],
+                "children": Array [],
                 "isHidden": false,
                 "props": Object {
-                  "children": " ",
                   "className": "makeStyles-wrapper-1 makeStyles-wrapper-2",
                   "data-test-id": "thumbnail-image",
                 },
@@ -15570,16 +15502,9 @@ ReactTestInstance {
     "selfBaseDuration": 0,
     "sibling": null,
     "stateNode": Object {
-      "children": Array [
-        Object {
-          "isHidden": false,
-          "tag": "TEXT",
-          "text": " ",
-        },
-      ],
+      "children": Array [],
       "isHidden": false,
       "props": Object {
-        "children": " ",
         "className": "makeStyles-wrapper-1 makeStyles-wrapper-2",
         "data-test-id": "thumbnail-image",
       },
@@ -15605,7 +15530,7 @@ exports[`<ThumbnailImage /> when no path is provided snapshot 1`] = `
 ReactTestInstance {
   "_fiber": FiberNode {
     "_debugHookTypes": null,
-    "_debugID": 9,
+    "_debugID": 8,
     "_debugIsCurrentlyTiming": false,
     "_debugNeedsRemount": false,
     "_debugOwner": FiberNode {
@@ -15619,7 +15544,7 @@ ReactTestInstance {
         "useEffect",
         "useEffect",
       ],
-      "_debugID": 8,
+      "_debugID": 7,
       "_debugIsCurrentlyTiming": false,
       "_debugNeedsRemount": false,
       "_debugOwner": null,
@@ -23104,7 +23029,7 @@ ReactTestInstance {
       "ref": null,
       "return": FiberNode {
         "_debugHookTypes": null,
-        "_debugID": 6,
+        "_debugID": 5,
         "_debugIsCurrentlyTiming": false,
         "_debugNeedsRemount": false,
         "_debugOwner": null,
@@ -23113,7 +23038,7 @@ ReactTestInstance {
         "actualStartTime": -1,
         "alternate": FiberNode {
           "_debugHookTypes": null,
-          "_debugID": 6,
+          "_debugID": 5,
           "_debugIsCurrentlyTiming": false,
           "_debugNeedsRemount": false,
           "_debugOwner": null,
@@ -23147,16 +23072,9 @@ ReactTestInstance {
             "containerInfo": Object {
               "children": Array [
                 Object {
-                  "children": Array [
-                    Object {
-                      "isHidden": false,
-                      "tag": "TEXT",
-                      "text": " ",
-                    },
-                  ],
+                  "children": Array [],
                   "isHidden": false,
                   "props": Object {
-                    "children": " ",
                     "className": "makeStyles-wrapper-1 makeStyles-wrapper-3",
                     "data-test-id": "thumbnail-image",
                   },
@@ -23263,16 +23181,9 @@ ReactTestInstance {
           "containerInfo": Object {
             "children": Array [
               Object {
-                "children": Array [
-                  Object {
-                    "isHidden": false,
-                    "tag": "TEXT",
-                    "text": " ",
-                  },
-                ],
+                "children": Array [],
                 "isHidden": false,
                 "props": Object {
-                  "children": " ",
                   "className": "makeStyles-wrapper-1 makeStyles-wrapper-3",
                   "data-test-id": "thumbnail-image",
                 },
@@ -23353,45 +23264,7 @@ ReactTestInstance {
     "actualDuration": 0,
     "actualStartTime": -1,
     "alternate": null,
-    "child": FiberNode {
-      "_debugHookTypes": null,
-      "_debugID": 10,
-      "_debugIsCurrentlyTiming": false,
-      "_debugNeedsRemount": false,
-      "_debugOwner": null,
-      "_debugSource": null,
-      "actualDuration": 0,
-      "actualStartTime": -1,
-      "alternate": null,
-      "child": null,
-      "childExpirationTime": 0,
-      "dependencies": null,
-      "effectTag": 0,
-      "elementType": null,
-      "expirationTime": 0,
-      "firstEffect": null,
-      "index": 0,
-      "key": null,
-      "lastEffect": null,
-      "memoizedProps": " ",
-      "memoizedState": null,
-      "mode": 0,
-      "nextEffect": null,
-      "pendingProps": " ",
-      "ref": null,
-      "return": [Circular],
-      "selfBaseDuration": 0,
-      "sibling": null,
-      "stateNode": Object {
-        "isHidden": false,
-        "tag": "TEXT",
-        "text": " ",
-      },
-      "tag": 6,
-      "treeBaseDuration": 0,
-      "type": null,
-      "updateQueue": null,
-    },
+    "child": null,
     "childExpirationTime": 0,
     "dependencies": null,
     "effectTag": 0,
@@ -23402,7 +23275,6 @@ ReactTestInstance {
     "key": null,
     "lastEffect": null,
     "memoizedProps": Object {
-      "children": " ",
       "className": "makeStyles-wrapper-1 makeStyles-wrapper-3",
       "data-test-id": "thumbnail-image",
     },
@@ -23410,7 +23282,6 @@ ReactTestInstance {
     "mode": 0,
     "nextEffect": null,
     "pendingProps": Object {
-      "children": " ",
       "className": "makeStyles-wrapper-1 makeStyles-wrapper-3",
       "data-test-id": "thumbnail-image",
     },
@@ -23426,7 +23297,7 @@ ReactTestInstance {
         "useEffect",
         "useEffect",
       ],
-      "_debugID": 8,
+      "_debugID": 7,
       "_debugIsCurrentlyTiming": false,
       "_debugNeedsRemount": false,
       "_debugOwner": null,
@@ -30911,7 +30782,7 @@ ReactTestInstance {
       "ref": null,
       "return": FiberNode {
         "_debugHookTypes": null,
-        "_debugID": 6,
+        "_debugID": 5,
         "_debugIsCurrentlyTiming": false,
         "_debugNeedsRemount": false,
         "_debugOwner": null,
@@ -30920,7 +30791,7 @@ ReactTestInstance {
         "actualStartTime": -1,
         "alternate": FiberNode {
           "_debugHookTypes": null,
-          "_debugID": 6,
+          "_debugID": 5,
           "_debugIsCurrentlyTiming": false,
           "_debugNeedsRemount": false,
           "_debugOwner": null,
@@ -30954,16 +30825,9 @@ ReactTestInstance {
             "containerInfo": Object {
               "children": Array [
                 Object {
-                  "children": Array [
-                    Object {
-                      "isHidden": false,
-                      "tag": "TEXT",
-                      "text": " ",
-                    },
-                  ],
+                  "children": Array [],
                   "isHidden": false,
                   "props": Object {
-                    "children": " ",
                     "className": "makeStyles-wrapper-1 makeStyles-wrapper-3",
                     "data-test-id": "thumbnail-image",
                   },
@@ -31070,16 +30934,9 @@ ReactTestInstance {
           "containerInfo": Object {
             "children": Array [
               Object {
-                "children": Array [
-                  Object {
-                    "isHidden": false,
-                    "tag": "TEXT",
-                    "text": " ",
-                  },
-                ],
+                "children": Array [],
                 "isHidden": false,
                 "props": Object {
-                  "children": " ",
                   "className": "makeStyles-wrapper-1 makeStyles-wrapper-3",
                   "data-test-id": "thumbnail-image",
                 },
@@ -31159,16 +31016,9 @@ ReactTestInstance {
     "selfBaseDuration": 0,
     "sibling": null,
     "stateNode": Object {
-      "children": Array [
-        Object {
-          "isHidden": false,
-          "tag": "TEXT",
-          "text": " ",
-        },
-      ],
+      "children": Array [],
       "isHidden": false,
       "props": Object {
-        "children": " ",
         "className": "makeStyles-wrapper-1 makeStyles-wrapper-3",
         "data-test-id": "thumbnail-image",
       },
