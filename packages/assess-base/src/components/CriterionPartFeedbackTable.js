@@ -1,5 +1,5 @@
 import { useMutation } from 'graphql-hooks'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import T from 'prop-types'
 import { Grid, Button, Typography, withStyles } from '@material-ui/core'
 import classnames from 'classnames'
@@ -15,6 +15,9 @@ import {
   insertAssessmentFeedbackDataMutation,
   updateAssessmentFeedbackDataMutation,
 } from '../queries/assessments'
+
+import SaveChip from './SaveChip'
+import AutoSaveFormik from './AutoSaveFormik'
 
 function getEmptyTableRow(tableDef) {
   return tableDef.columns.reduce(
@@ -66,9 +69,11 @@ function CriterionPartFeedbackTable({
   const { t } = useTranslation()
   const tableData = getExistingTableData(assessmentFeedbackTables, tableDef)
   const [tableId, setTableId] = useState(tableData ? tableData.id : null)
-  const [tableRows, setTableRows] = useState(
-    tableData ? tableData.feedback_values : []
-  )
+  const rowsOrDefault = tableData ? tableData.feedback_values : []
+  const [tableRows, setTableRows] = useState(rowsOrDefault)
+
+  // Update the form state anytime the table data changes (i.e. due to watches in the DB)
+  useEffect(() => setTableRows(rowsOrDefault), [tableData])
 
   const [insertTableData] = useMutation(insertAssessmentFeedbackDataMutation)
   const [updateTableData] = useMutation(updateAssessmentFeedbackDataMutation)
@@ -170,6 +175,7 @@ function CriterionPartFeedbackTable({
         >
           {({ isSubmitting, dirty }) => (
             <Form>
+              <AutoSaveFormik />
               <Grid container spacing={2}>
                 <Grid item container spacing={1} alignItems="baseline">
                   <Grid item>
@@ -242,22 +248,13 @@ function CriterionPartFeedbackTable({
                                   justify="flex-end"
                                   wrap="nowrap"
                                 >
-                                  <Grid item>
-                                    <Button
-                                      type="submit"
-                                      variant={
-                                        canEdit ? 'contained' : 'outlined'
-                                      }
-                                      color="secondary"
-                                      disabled={
-                                        !canEdit || !dirty || isSubmitting
-                                      }
-                                    >
-                                      {rowIndex === tableRows.length
-                                        ? t('Save & add row')
-                                        : t('Save Updates')}
-                                    </Button>
-                                  </Grid>
+                                  {(rowIndex !== tableRows.length || dirty) && (
+                                    <Grid item>
+                                      <div className={classes.saveStatus}>
+                                        <SaveChip dirty={dirty} />
+                                      </div>
+                                    </Grid>
+                                  )}
                                   {rowIndex !== tableRows.length && (
                                     <Grid item>
                                       <Button
