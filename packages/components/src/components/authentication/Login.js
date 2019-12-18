@@ -16,8 +16,8 @@ function Login({
   return (
     <div className={classes.root}>
       <div>
-        <Grid container spacing={3} className={classes.form}>
-          <Grid item xs={8}>
+        <Grid container spacing={3} justify="center" className={classes.form}>
+          <Grid item xs={10}>
             <SectionTitleField
               barColor={theme.palette.secondary.main}
               category="general"
@@ -76,7 +76,14 @@ function Login({
               </Button>
             </Grid>
           </Grid>
-          <Grid item container alignItems="baseline" spacing={1} wrap="nowrap">
+          <Grid
+            item
+            container
+            alignItems="baseline"
+            spacing={1}
+            xs={10}
+            wrap="nowrap"
+          >
             <Grid item>
               <Typography variant="h4" color="textSecondary" noWrap>
                 No account?
