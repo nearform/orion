@@ -110,12 +110,7 @@ function getGroupAndStatus(user, classes) {
 
 function AllUsers({ classes, query, variables }) {
   const [filterText, setFilterText] = useState('')
-  variables.where = {
-    _and: {
-      email: { _ilike: `%${filterText}%` },
-      active: { _eq: true },
-    },
-  }
+  variables.email = `%${filterText}%`
   const { table, selected, setSelected, refetch } = useAdminTable({
     query,
     headers,

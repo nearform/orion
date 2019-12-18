@@ -3,9 +3,16 @@ query getUsersInGroup(
   $limit: Int!
   $offset: Int!
   $orderBy: user_order_by!
+  $email: String
 ) {
   user(
-    where: { user_groups: { group_id: { _eq: $groupId } } }
+    where: {
+      _and: {
+        active: { _eq: true }
+        user_groups: { group_id: { _eq: $groupId } }
+        email: { _ilike: $email }
+      }
+    }
     limit: $limit
     offset: $offset
     order_by: [$orderBy]
