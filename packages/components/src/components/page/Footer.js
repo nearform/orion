@@ -11,6 +11,37 @@ import {
 import { useTranslation } from 'react-i18next'
 import PaddedContainer from '../PaddedContainer'
 
+function NewsletterSignup({ classes, hidden = false }) {
+  const { t } = useTranslation()
+  return hidden ? null : (
+    <Grid item xs={12} sm={4}>
+      <Typography variant="h4" gutterBottom>
+        {t('subscribe to our newsletter')}
+      </Typography>
+      <Typography gutterBottom variant="body2">
+        {t(
+          'The latest EFQM news, articles, and resources, sent straight to your inbox every month.'
+        )}
+      </Typography>
+      <div className={classes.horizontalContainer}>
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder={t('Your email address')}
+        />
+        <Button color="secondary" variant="contained">
+          {t('subscribe')}
+        </Button>
+      </div>
+    </Grid>
+  )
+}
+
+NewsletterSignup.propTypes = {
+  classes: T.object,
+  hidden: T.bool,
+}
+
 function Footer({ classes, theme, content, Img }) {
   const {
     site: {
@@ -48,26 +79,7 @@ function Footer({ classes, theme, content, Img }) {
               </div>
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            <Typography variant="h4" gutterBottom>
-              {t('subscribe to our newsletter')}
-            </Typography>
-            <Typography gutterBottom variant="body2">
-              {t(
-                'The latest EFQM news, articles, and resources, sent straight to your inbox every month.'
-              )}
-            </Typography>
-            <div className={classes.horizontalContainer}>
-              <TextField
-                fullWidth
-                variant="outlined"
-                placeholder={t('Your email address')}
-              />
-              <Button color="secondary" variant="contained">
-                {t('subscribe')}
-              </Button>
-            </div>
-          </Grid>
+          <NewsletterSignup classes={classes} hidden />
         </Grid>
         <div className={classes.socialAndLogo}>
           {social.map(([name, url]) => {
@@ -112,11 +124,6 @@ function Footer({ classes, theme, content, Img }) {
                 {t('Privacy Statement')}
               </Typography>
             </Grid>
-            <Grid item>
-              <Typography display="inline" variant="body2">
-                (version {version})
-              </Typography>
-            </Grid>
           </Grid>
         </Hidden>
         <Hidden smUp implementation="css">
@@ -134,11 +141,6 @@ function Footer({ classes, theme, content, Img }) {
             <Grid item xs={12}>
               <Typography display="inline" variant="body2">
                 {t('Privacy Statement')}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography display="inline" variant="body2">
-                (version {version})
               </Typography>
             </Grid>
           </Grid>
