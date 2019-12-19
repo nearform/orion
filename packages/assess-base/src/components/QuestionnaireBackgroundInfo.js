@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
-import { SectionTitle } from 'components'
+import { navigate } from 'gatsby'
+import { SectionTitle, ASSESSMENT_STATUS, NavLink } from 'components'
 import { Grid, Button, withStyles } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from 'graphql-hooks'
@@ -12,6 +13,7 @@ import { TextField } from 'formik-material-ui'
 import {
   insertAssessmentTableDataMutation,
   updateAssessmentTableDataMutation,
+  updateAssessmentStatusMutation,
 } from '../queries'
 
 function getEmptyTableRow(columnsDef) {
@@ -64,6 +66,8 @@ function QuestionnaireBackgroundInfo({
   pillarKey,
   canEdit,
   pillarColor,
+  nextLink,
+  isFinalCriteria,
 }) {
   const { t } = useTranslation()
   const tableData = getExistingTableData(assessmentTables, tableDef)
@@ -75,6 +79,7 @@ function QuestionnaireBackgroundInfo({
 
   const [insertTableData] = useMutation(insertAssessmentTableDataMutation)
   const [updateTableData] = useMutation(updateAssessmentTableDataMutation)
+  const [updateAssessmentStatus] = useMutation(updateAssessmentStatusMutation)
 
   async function handleSaveTable(rowIndex, rowValues, { setSubmitting }) {
     if (tableId) {
@@ -122,12 +127,22 @@ function QuestionnaireBackgroundInfo({
     }
   }
 
+  async function handleSubmitAssessment() {
+    await updateAssessmentStatus({
+      variables: {
+        id: assessmentId,
+        status: ASSESSMENT_STATUS.submitted,
+      },
+    })
+
+    navigate(nextLink + `#${assessmentId}`)
+  }
+
   let tables = [...tableRows]
 
   if (canEdit || !tables.length) {
     tables.push(getEmptyTableRow(columnsDef))
   }
-  // const isDisabledAndEmpty = !canEdit && !tableRows.length
 
   const [table] = tables
   const [column] = columnsDef
@@ -179,9 +194,28 @@ function QuestionnaireBackgroundInfo({
                         variant={canEdit ? 'contained' : 'outlined'}
                         color="secondary"
                         disabled={!canEdit || !dirty || isSubmitting}
+                        className={classes.saveButton}
                       >
                         {t('Save Updates')}
                       </Button>
+                      {isFinalCriteria ? (
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          onClick={handleSubmitAssessment}
+                        >
+                          {t('Submit Assessment')}
+                        </Button>
+                      ) : (
+                        <Button
+                          component={NavLink}
+                          variant="outlined"
+                          color="secondary"
+                          to={`${nextLink}#${assessmentId}`}
+                        >
+                          {t('Next Criteria')}
+                        </Button>
+                      )}
                     </Grid>
                   </Grid>
                 )}
@@ -205,6 +239,8 @@ QuestionnaireBackgroundInfo.propTypes = {
   pillarKey: T.string.isRequired,
   paginationNode: T.node,
   canEdit: T.bool.isRequired,
+  nextLink: T.string.isRequired,
+  isFinalCriteria: T.bool.isRequired,
 }
 const styles = theme => ({
   root: {
@@ -221,6 +257,9 @@ const styles = theme => ({
   },
   input: {
     marginLeft: theme.spacing(3),
+  },
+  saveButton: {
+    marginRight: theme.spacing(3),
   },
 })
 
