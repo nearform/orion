@@ -17,7 +17,6 @@ import { getAssessmentId } from '../utils/url'
 import QuestionnaireBackgroundInfo from '../components/QuestionnaireBackgroundInfo'
 import AssessmentPillars from '../components/AssessmentPillars'
 import SEO from '../components/SEO'
-import { assessmentInProgress } from '../utils/assessment-status'
 import { filterOldScores } from '../utils/filter-old-scores'
 import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 
@@ -34,6 +33,8 @@ function QuestionnaireScoringTemplate({
     pillarColor,
     pillarColors,
     criteriaList,
+    nextLink,
+    isFinalCriteria,
   },
 }) {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
@@ -95,7 +96,7 @@ function QuestionnaireScoringTemplate({
   }
 
   // TODO: when doing permission story fix here
-  const canEdit = isContributor && assessmentInProgress(assessmentData)
+  const canEdit = isContributor
   // const canEditTablesAndUpload =
   //   isContributor && assessmentInProgress(assessmentData)
   // const canEditFeedbackAndScoring =
@@ -167,6 +168,8 @@ function QuestionnaireScoringTemplate({
           partNumber={partNumber}
           canEdit={canEdit}
           pillarColor={pillarColor}
+          nextLink={nextLink}
+          isFinalCriteria={isFinalCriteria}
         />
         <AssessmentPillars
           assessment={assessment}

@@ -220,7 +220,7 @@ exports.createPages = async ({ graphql, actions }) => {
             const {
               tables: [{ key: criterionKey, name }],
             } = part
-            const path = createCriterionPagePath(pillar, criterion) + '/' + idx
+            const path = createCriterionPagePath(pillar, criterion)
             return {
               key: JSON.stringify({
                 pillarKey,
@@ -275,6 +275,11 @@ exports.createPages = async ({ graphql, actions }) => {
           criterion
         )
 
+        const idx = criteriaList.findIndex(
+          ([c]) => questionnaireScoringPagePath === c.path
+        )
+
+        const isFinalCriteria = idx + 1 === criteriaList.length
         createPage({
           path: questionnaireScoringPagePath,
           component: questionnaireScoringTemplate,
@@ -287,6 +292,10 @@ exports.createPages = async ({ graphql, actions }) => {
             pillarColors,
             partNumber: 1,
             criteriaList,
+            nextLink: !isFinalCriteria
+              ? criteriaList[idx + 1][0].path
+              : `/assessment/${assessment.key}/feedback-report`,
+            isFinalCriteria,
           },
         })
       })
