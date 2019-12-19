@@ -78,7 +78,7 @@ function UserGroups({ classes }) {
     query: getGroups,
     variables: {
       // Allow platform-admin and above to see all groups;
-      // Limit parnter-admin and below to groups under the platform group.
+      // Limit partner-admin and below to groups under the platform group.
       parentId: hasPermissions('platform-admin') ? null : userTokenData.groupId,
     },
     headers,

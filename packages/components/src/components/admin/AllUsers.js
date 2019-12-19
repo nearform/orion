@@ -62,7 +62,7 @@ const headers = [
 
 function getRelationalName(user, relation, entity) {
   const entries = user[relation]
-  return entries.length ? entries[0][entity].name : null
+  return entries.length && entries[0][entity] ? entries[0][entity].name : null
 }
 
 function getStyledSignupAttr(user, key) {
