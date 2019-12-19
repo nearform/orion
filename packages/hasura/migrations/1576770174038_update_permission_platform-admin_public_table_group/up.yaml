@@ -1,0 +1,8 @@
+- args:
+    permission:
+      filter: {}
+    role: platform-admin
+    table:
+      name: group
+      schema: public
+  type: create_delete_permission

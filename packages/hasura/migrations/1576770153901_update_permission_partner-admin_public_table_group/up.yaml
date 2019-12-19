@@ -1,0 +1,13 @@
+- args:
+    permission:
+      filter:
+        _or:
+        - id:
+            _eq: X-Hasura-Group-Id
+        - parent_id:
+            _eq: X-Hasura-Group-Id
+    role: partner-admin
+    table:
+      name: group
+      schema: public
+  type: create_delete_permission
