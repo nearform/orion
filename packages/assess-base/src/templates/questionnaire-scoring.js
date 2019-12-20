@@ -205,7 +205,7 @@ const styles = theme => ({
       listStyle: 'none',
       '& li::before': {
         content: '"\\2022"',
-        color: '#d8d8d8',
+        color: theme.palette.tertiary.main,
         fontWeight: 'bold',
         display: 'inline-block',
         width: '1em',

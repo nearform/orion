@@ -173,6 +173,7 @@ const styles = theme => ({
   },
   navButton: {
     fontWeight: 700,
+    minHeight: '48px',
     textTransform: 'none',
   },
   icon: {
