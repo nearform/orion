@@ -15,12 +15,11 @@ import {
   initGraphQLClient,
   theme,
 } from 'components'
+import awsConfig from './utils/aws-exports'
 import * as i18n from './utils/i18n'
 import AppFooter from './src/components/AppFooter'
 import MainToolbar from './src/components/MainToolbar'
 import useUserGroups from './src/hooks/useUserGroups'
-
-import awsConfig from './utils/aws-exports'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
 
