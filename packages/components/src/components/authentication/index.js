@@ -51,13 +51,4 @@ CustomAuthenticator.propTypes = {
   messages: T.object,
 }
 
-/// Refresh the JWT token after a session timeout.
-async function refreshToken() {
-  const user = await Auth.currentAuthenticatedUser()
-  const { refreshToken } = await Auth.currentSession()
-  const session = user.refreshSession(refreshToken)
-  //const { idToken, refreshToken, accessToken } = session
-  return session
-}
-
-export { refreshToken }
+export * from './graphql'
