@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { GraphQLClient, ClientContext } from 'graphql-hooks'
+import { ClientContext } from 'graphql-hooks'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -11,9 +11,11 @@ import {
   RootWrapper,
   Layout,
   ThemeWrapper,
+  makeGraphQLClient,
+  initGraphQLClient,
   theme,
 } from 'components'
-import * as auth from './utils/auth'
+import awsConfig from './utils/aws-exports'
 //import * as i18n from './utils/i18n'
 import AppFooter from './src/components/AppFooter'
 import MainToolbar from './src/components/MainToolbar'
@@ -21,9 +23,7 @@ import useUserGroups from './src/hooks/useUserGroups'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
 
-const client = new GraphQLClient({
-  url: process.env.GATSBY_GRAPHQL_API,
-})
+const client = makeGraphQLClient(process.env.GATSBY_GRAPHQL_API)
 
 export async function onClientEntry() {
   /*
@@ -36,7 +36,7 @@ const AuthInitializationWrapper = ({ element }) => {
   const [isAuthInitialized, setIsAuthInitialized] = useState(false)
   useEffect(() => {
     const init = async () => {
-      await auth.init(client)
+      await initGraphQLClient(client, awsConfig)
       setIsAuthInitialized(true)
     }
     init()
