@@ -1,11 +1,6 @@
 import React, { useContext } from 'react'
 import { Typography, withStyles, Grid, Button } from '@material-ui/core'
-import {
-  AuthContext,
-  useAuthorizedQuery,
-  PaddedContainer,
-  SectionTitle,
-} from 'components'
+import { AuthContext, PaddedContainer, SectionTitle } from 'components'
 import { Link } from 'gatsby'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
@@ -21,7 +16,10 @@ import {
 } from '../queries'
 import FileList from '../components/FileList'
 import SEO from '../components/SEO'
+import AutoSaveFormik from '../components/AutoSaveFormik'
+import SaveChip from '../components/SaveChip'
 import { assessmentInProgress } from '../utils/assessment-status'
+import useAuthorizedWatch from '../hooks/useAuthorizedWatch'
 
 function createFormInitialValues(assessmentCriterionData) {
   if (
@@ -63,8 +61,9 @@ function CriterionTemplate({
   const {
     data: assessmentCriterionData,
     loading,
+    isPreFetch,
     refetch: fetchAssessmentCriterionData,
-  } = useAuthorizedQuery(
+  } = useAuthorizedWatch(
     getAssessmentCriterionData,
     {
       assessmentId,
@@ -106,7 +105,7 @@ function CriterionTemplate({
     isContributor &&
     assessmentInProgress(get(assessmentCriterionData, 'assessment_by_pk'))
 
-  if (loading) {
+  if (loading && isPreFetch) {
     return (
       <div className={classes.root} data-testid="criterion">
         <PaddedContainer className={classes.paddedContainer}>
@@ -179,8 +178,9 @@ function CriterionTemplate({
                 enableReinitialize
                 onSubmit={handleFormSubmit}
               >
-                {({ isSubmitting, dirty }) => (
+                {({ dirty }) => (
                   <Form>
+                    <AutoSaveFormik />
                     <Grid
                       container
                       direction="column"
@@ -202,14 +202,9 @@ function CriterionTemplate({
                       </Grid>
                       {canEditAndUpload && (
                         <Grid item>
-                          <Button
-                            variant="outlined"
-                            color="secondary"
-                            type="submit"
-                            disabled={!dirty || isSubmitting}
-                          >
-                            {t('Save Updates')}
-                          </Button>
+                          <div className={classes.saveStatus}>
+                            <SaveChip dirty={dirty} />
+                          </div>
                         </Grid>
                       )}
                     </Grid>
