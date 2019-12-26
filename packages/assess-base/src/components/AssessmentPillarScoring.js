@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import classnames from 'classnames'
 import mean from 'lodash/mean'
 import round from 'lodash/round'
@@ -84,6 +84,9 @@ function AssessmentPillarScoring({
   )
 
   const [currentScoringId, setCurrentScoringId] = useState(scoringId)
+  // Keep the state in synch if the score is saved elsewhere (due to the watch in the parent)
+  useEffect(() => setCurrentScoringId(scoringId), [scoringId])
+
   const [insertScoringData] = useMutation(insertAssessmentScoringDataMutation)
   const [updateScoringData] = useMutation(updateAssessmentScoringDataMutation)
 
@@ -134,6 +137,8 @@ function AssessmentPillarScoring({
       // validation disabled because triggered manually below
       validateOnChange={false}
       validateOnBlur={false}
+      // re-initialize if the initialValues change due to the watch
+      enableReinitialize
     >
       {({ setFieldValue, submitForm, values, validateForm }) => {
         const submitOnLastAction = async key => {
