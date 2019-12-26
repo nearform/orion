@@ -64,6 +64,7 @@ export { default as AdminRoute } from './components/admin/AdminRoute'
 export * from './components/authorization'
 
 export { default as CustomAuthenticator } from './components/authentication'
+export * from './components/authentication'
 
 // views
 export { default as UserProfileView } from './components/UserProfileView'

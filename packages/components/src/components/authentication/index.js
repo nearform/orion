@@ -50,3 +50,5 @@ export default function CustomAuthenticator({ messages = {} }) {
 CustomAuthenticator.propTypes = {
   messages: T.object,
 }
+
+export * from './graphql'
