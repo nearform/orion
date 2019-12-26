@@ -42,6 +42,8 @@ import UploadButton from '../components/UploadButton'
 import AssessmentPillars from '../components/AssessmentPillars'
 import KeyInfoDocsList from '../components/key-info-docs-list'
 import { ReportLinks } from '../components/report-links'
+import AutoSaveFormik from '../components/AutoSaveFormik'
+import SaveChip from '../components/SaveChip'
 import { Redirect } from '@reach/router'
 import {
   assessmentInProgress,
@@ -52,6 +54,7 @@ import {
   getCanEditContributors,
 } from '../utils/permission-checks'
 import { filterOldScores } from '../utils/filter-old-scores'
+import useAuthorizedWatch from '../hooks/useAuthorizedWatch'
 
 function createFormInitialValues(assessmentKeyInfoDef, assessmentData) {
   return assessmentKeyInfoDef.reduce(
@@ -103,7 +106,7 @@ function AssessmentTemplate({
   const {
     data: assessmentData,
     refetch: refetchAssessmentData,
-  } = useAuthorizedQuery(
+  } = useAuthorizedWatch(
     getShallowAssessmentData,
     { id: assessmentId },
     {
@@ -464,6 +467,7 @@ function AssessmentTemplate({
                 >
                   {({ dirty }) => (
                     <Form>
+                      <AutoSaveFormik />
                       <Grid container spacing={2}>
                         <Grid item container spacing={2}>
                           {assessment.keyInformation.keyInformationItems.map(
@@ -536,16 +540,13 @@ function AssessmentTemplate({
                                 {t('upload key information')}
                               </UploadButton>
                             </Grid>
-                            <Grid item>
-                              <Button
-                                type="submit"
-                                color="secondary"
-                                variant="contained"
-                                disabled={!hasAssessmentId || !dirty}
-                              >
-                                {t('Save Updates')}
-                              </Button>
-                            </Grid>
+                            {(hasAssessmentId || dirty) && (
+                              <Grid item>
+                                <div className={classes.saveStatus}>
+                                  <SaveChip dirty={dirty} />
+                                </div>
+                              </Grid>
+                            )}
                           </Grid>
                         )}
                       </Grid>

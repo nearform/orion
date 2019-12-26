@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useMutation, useManualQuery } from 'graphql-hooks'
 import {
   renderAuthenticatedPlatformAdmin,
   renderAuthenticatedPartnerAdmin,
@@ -43,62 +44,106 @@ jest.mock('../queries', () => ({
     'getAssessmentContributorsAssessorsData',
 }))
 
+// Mock only useMutation and useManualQuery
+// Don't define the mock implementation here, since we can't access any variables in the outer scope due to jest's hoisting of mocks
 jest.mock('graphql-hooks', () => ({
   ...jest.requireActual('graphql-hooks'),
-  useMutation(mutationName) {
-    return [
-      options => {
-        const selectOption = optionsString =>
-          ({
-            'createAssessmentMutation-{"variables":{"key":"efqm-2020-advanced","name":"New Assessment Test","internal":false,"owner_id":1}}':
-              'createAssessmentMutation-new',
-            'createFileUploadMutation-{"variables":{"fileUploadData":{"user_id":1,"assessment_id":159,"file_name":"test-file.png","file_size":9,"s3_key":"uploaded-for-159"}}}':
-              'createFileUploadMutation',
-            'updateAssessmentKeyInfoMutation-{"variables":{"id":159,"keyInfo":{"overview":"new facts and figures","challenges-and-strategy":"new challenges and strategy","operations-partners-suppliers":"new operations, partners and suppliers","market-offerings-and-customers":"new offerings and customers","management-structure":"new structure and activities"}}}':
-              'createAssessmentMutation-new',
-          }[optionsString])
-        const mockUrl = selectOption(
-          `${mutationName}-${JSON.stringify(options)}`
-        )
-        return require(`./__mocks__/assessment-${mockUrl}.mock`).default
-      },
-    ]
-  },
-  useManualQuery(queryName, options) {
-    const selectOption = optionsString =>
-      ({
-        'getShallowAssessmentData-{"id":159}': 'getShallowAssessmentData',
-        'getShallowAssessmentData-{"id":null}': 'getShallowAssessmentData-null',
-        'getShallowAssessmentData-{"id":160}':
-          'getShallowAssessmentData-submitted',
-        'getAssessmentContributorsAssessorsData-{"assessmentId":null}':
-          'getAssessmentContributorsAssessorsData-null',
-        'getAssessmentContributorsAssessorsData-{"assessmentId":159}':
-          'getAssessmentContributorsAssessorsData',
-        'getAssessmentContributorsAssessorsData-{"assessmentId":160}':
-          'getAssessmentContributorsAssessorsData',
-      }[optionsString])
-    const mockUrl = selectOption(
-      `${queryName}-${JSON.stringify(options.variables)}`
-    )
-
-    const result = {
-      data: require(`./__mocks__/assessment-${mockUrl}.mock`).default,
-    }
-
-    // This should be a refetch. It fires but does not result in a page render.
-    return [
-      options => {
-        const result = {
-          data: require(`./__mocks__/assessment-${mockUrl}-refetch.mock`)
-            .default,
-        }
-        return result
-      },
-      result,
-    ]
-  },
+  useMutation: jest.fn(),
+  useManualQuery: jest.fn(),
 }))
+
+// Define the mock implementation here with access to all variables in the current scope
+useManualQuery.mockImplementation(useManualQueryMock)
+useMutation.mockImplementation(useMutationMock)
+
+let currentMutation
+
+function useMutationMock(mutationName) {
+  return [
+    options => {
+      const selectOption = optionsString =>
+        ({
+          'createAssessmentMutation-{"variables":{"key":"efqm-2020-advanced","name":"New Assessment Test","internal":false,"owner_id":1}}':
+            'createAssessmentMutation-new',
+          'createFileUploadMutation-{"variables":{"fileUploadData":{"user_id":1,"assessment_id":159,"file_name":"test-file.png","file_size":9,"s3_key":"uploaded-for-159"}}}':
+            'createFileUploadMutation',
+          'updateAssessmentKeyInfoMutation-{"variables":{"id":159,"keyInfo":{"overview":"new facts and figures","challenges-and-strategy":"Key information - challenges and strategy","operations-partners-suppliers":"Key information - operations, partners and suppliers","market-offerings-and-customers":"Key information - offerings and customers","management-structure":"Key information - structure and activities"}}}': {
+            mutationName: 'createAssessmentMutation-new',
+            nextQueryPostfix: 'new-overview',
+          },
+          'updateAssessmentKeyInfoMutation-{"variables":{"id":159,"keyInfo":{"overview":"new facts and figures","challenges-and-strategy":"new challenges and strategy","operations-partners-suppliers":"Key information - operations, partners and suppliers","market-offerings-and-customers":"Key information - offerings and customers","management-structure":"Key information - structure and activities"}}}': {
+            mutationName: 'createAssessmentMutation-new',
+            nextQueryPostfix: 'new-challenges',
+          },
+          'updateAssessmentKeyInfoMutation-{"variables":{"id":159,"keyInfo":{"overview":"new facts and figures","challenges-and-strategy":"new challenges and strategy","operations-partners-suppliers":"new operations, partners and suppliers","market-offerings-and-customers":"Key information - offerings and customers","management-structure":"Key information - structure and activities"}}}': {
+            mutationName: 'createAssessmentMutation-new',
+            nextQueryPostfix: 'new-operations',
+          },
+          'updateAssessmentKeyInfoMutation-{"variables":{"id":159,"keyInfo":{"overview":"new facts and figures","challenges-and-strategy":"new challenges and strategy","operations-partners-suppliers":"new operations, partners and suppliers","market-offerings-and-customers":"new offerings and customers","management-structure":"Key information - structure and activities"}}}': {
+            mutationName: 'createAssessmentMutation-new',
+            nextQueryPostfix: 'new-offerings',
+          },
+          'updateAssessmentKeyInfoMutation-{"variables":{"id":159,"keyInfo":{"overview":"new facts and figures","challenges-and-strategy":"new challenges and strategy","operations-partners-suppliers":"new operations, partners and suppliers","market-offerings-and-customers":"new offerings and customers","management-structure":"new structure and activities"}}}': {
+            mutationName: 'createAssessmentMutation-new',
+            nextQueryPostfix: 'new-structure',
+          },
+        }[optionsString])
+
+      currentMutation = selectOption(
+        `${mutationName}-${JSON.stringify(options)}`
+      )
+
+      const postfix =
+        currentMutation === undefined ||
+        currentMutation.mutationName === undefined
+          ? currentMutation
+          : currentMutation.mutationName
+
+      return require(`./__mocks__/assessment-${postfix}.mock`).default
+    },
+  ]
+}
+
+function useManualQueryMock(queryName, options) {
+  const selectOption = optionsString =>
+    ({
+      'getShallowAssessmentData-{"id":159}': 'getShallowAssessmentData',
+      'getShallowAssessmentData-{"id":null}': 'getShallowAssessmentData-null',
+      'getShallowAssessmentData-{"id":160}':
+        'getShallowAssessmentData-submitted',
+      'getAssessmentContributorsAssessorsData-{"assessmentId":null}':
+        'getAssessmentContributorsAssessorsData-null',
+      'getAssessmentContributorsAssessorsData-{"assessmentId":159}':
+        'getAssessmentContributorsAssessorsData',
+      'getAssessmentContributorsAssessorsData-{"assessmentId":160}':
+        'getAssessmentContributorsAssessorsData',
+    }[optionsString])
+  const mockUrl = selectOption(
+    `${queryName}-${JSON.stringify(options.variables)}`
+  )
+
+  const fetchQueryData = () => {
+    const currentUrl =
+      currentMutation === undefined ||
+      currentMutation.nextQueryPostfix === undefined
+        ? mockUrl
+        : `${mockUrl}-${currentMutation.nextQueryPostfix}`
+    return require(`./__mocks__/assessment-${currentUrl}.mock`).default
+  }
+
+  // Store the query result in state to force re-rending of the component when the data is (re)fetched.
+  // This mimics the actual graphql hooks behavior, allowing asynchrounous updating of the query data.
+  const [data, setData] = useState(undefined)
+  const result = {
+    data,
+  }
+
+  return [() => setData(fetchQueryData()), result]
+}
+
+beforeEach(() => {
+  currentMutation = undefined
+})
 
 afterEach(cleanup)
 
@@ -339,7 +384,7 @@ describe('<AssessmentTemplate />', () => {
     })
 
     getByText('upload key information')
-    expect(getByText('Save Updates')).toBeDisabled()
+    getByText('Saved')
   })
 
   test('Existing assessment side panel renders', () => {
@@ -457,6 +502,8 @@ describe('<AssessmentTemplate />', () => {
     'The following test is unfinished. useAuthorizedQuery.refresh does not currently result in data returning to AssessmentTemplate when triggered in the test'
   )
   test('Edit and save key information', async () => {
+    jest.setTimeout(10000)
+
     const { getByText } = renderAuthenticatedPlatformAdmin(
       <AssessmentTemplate
         pageContext={newAssessmentPageContextMock}
@@ -464,40 +511,66 @@ describe('<AssessmentTemplate />', () => {
       />
     )
 
-    const saveButton = getByText('Save Updates')
-    expect(saveButton).toBeDisabled()
+    // Modify one field of the form at a time wait for the autosave to complete
 
     fireEvent.change(getByText('Key information - facts and figures'), {
       target: { value: 'new facts and figures' },
     })
-    expect(saveButton).toBeEnabled()
+    await wait(async () => {
+      getByText('Saving')
+    })
+    await wait(async () => {
+      getByText('Saved')
+    })
 
     fireEvent.change(getByText('Key information - challenges and strategy'), {
       target: { value: 'new challenges and strategy' },
     })
+    await wait(async () => {
+      getByText('Saving')
+    })
+    await wait(async () => {
+      getByText('Saved')
+    })
+
     fireEvent.change(
       getByText('Key information - operations, partners and suppliers'),
       {
         target: { value: 'new operations, partners and suppliers' },
       }
     )
+    await wait(async () => {
+      getByText('Saving')
+    })
+    await wait(async () => {
+      getByText('Saved')
+    })
+
     fireEvent.change(getByText('Key information - offerings and customers'), {
       target: { value: 'new offerings and customers' },
     })
+    await wait(async () => {
+      getByText('Saving')
+    })
+    await wait(async () => {
+      getByText('Saved')
+    })
+
     fireEvent.change(getByText('Key information - structure and activities'), {
       target: { value: 'new structure and activities' },
     })
+    await wait(async () => {
+      getByText('Saving')
+    })
+    await wait(async () => {
+      getByText('Saved')
+    })
 
-    fireEvent.click(saveButton)
-    // await wait(async () => {
-    //   expect(saveButton).toBeDisabled()
-
-    //   // getByText('new facts and figures')
-    //   // getByText('new challenges and strategy')
-    //   // getByText('new operations, partners and suppliers')
-    //   // getByText('new offerings and customers')
-    //   // getByText('new structure and activities')
-    // })
+    getByText('new facts and figures')
+    getByText('new challenges and strategy')
+    getByText('new operations, partners and suppliers')
+    getByText('new offerings and customers')
+    getByText('new structure and activities')
   })
 
   test.todo(
