@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import T from 'prop-types'
-import { withStyles, Grid, Button } from '@material-ui/core'
+import { withStyles, Grid } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
@@ -8,6 +8,8 @@ import get from 'lodash/get'
 import { Formik, Form, Field } from 'formik'
 import { TextField as FormikTextField } from 'formik-material-ui'
 import { SectionTitle } from 'components'
+import AutoSaveFormik from './AutoSaveFormik'
+import SaveChip from './SaveChip'
 
 function FeedbackReportInput({
   theme,
@@ -24,9 +26,12 @@ function FeedbackReportInput({
   const { t } = useTranslation()
   // If the value is null or '' from DB, uncontrolled TextArea prefers `undefined`
   const part = typeof initialValue === 'object'
-  const [currentValue, setCurrentValue] = useState(
-    part ? initialValue[label] : initialValue || undefined
-  )
+
+  const defaultValue = part ? initialValue[label] : initialValue || undefined
+  const [currentValue, setCurrentValue] = useState(defaultValue)
+  // Keep the state synchronized if the data changed in the parent (where the watch is implemented)
+  useEffect(() => setCurrentValue(defaultValue), [JSON.stringify(defaultValue)])
+
   const [updateMutation] = useMutation(mutation)
 
   const handleSaveInput = async (values, { setSubmitting }) => {
@@ -56,8 +61,9 @@ function FeedbackReportInput({
       initialValues={{ [name]: currentValue }}
       onSubmit={(values, actions) => handleSaveInput(values, actions)}
     >
-      {({ isSubmitting, dirty }) => (
+      {({ dirty }) => (
         <Form>
+          <AutoSaveFormik />
           <Grid container spacing={5}>
             <Grid item xs={3}>
               <SectionTitle
@@ -83,14 +89,9 @@ function FeedbackReportInput({
           </Grid>
           <Grid container justify="flex-end" spacing={5}>
             <Grid item>
-              <Button
-                type="submit"
-                color="secondary"
-                variant="contained"
-                disabled={!dirty || isSubmitting}
-              >
-                {t('Save Updates')}
-              </Button>
+              <div className={classes.saveStatus}>
+                <SaveChip dirty={dirty} />
+              </div>
             </Grid>
           </Grid>
         </Form>

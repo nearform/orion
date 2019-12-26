@@ -18,7 +18,6 @@ import { getAssessmentParts } from 'efqm-theme/assessments/getAssessmentParts'
 import {
   ASSESSMENT_STATUS,
   AuthContext,
-  useAuthorizedQuery,
   getChartData,
   BarChartTable,
   ConfirmDialog,
@@ -41,6 +40,7 @@ import {
   updateAssessmentAdviceMutation,
   updateAssessmentStatusMutation,
 } from '../queries'
+import useAuthorizedWatch from '../hooks/useAuthorizedWatch'
 
 function sortByPart(obj, key) {
   if (!obj[key]) return null
@@ -76,7 +76,7 @@ function FeedbackReport({
   const { getUserTokenData } = useContext(AuthContext)
   const { isAdmin, isAssessor } = getUserTokenData()
 
-  const { data: assessmentData } = useAuthorizedQuery(
+  const { data: assessmentData } = useAuthorizedWatch(
     getAssessmentFeedbackReportData,
     { assessmentId },
     {
