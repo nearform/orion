@@ -68,12 +68,17 @@ function CriterionPartFeedbackTable({
 }) {
   const { t } = useTranslation()
   const tableData = getExistingTableData(assessmentFeedbackTables, tableDef)
-  const [tableId, setTableId] = useState(tableData ? tableData.id : null)
+  const tableIdOrNull = tableData ? tableData.id : null
+  const [tableId, setTableId] = useState(tableIdOrNull)
   const rowsOrDefault = tableData ? tableData.feedback_values : []
   const [tableRows, setTableRows] = useState(rowsOrDefault)
 
-  // Update the form state anytime the table data changes (i.e. due to watches in the DB)
-  useEffect(() => setTableRows(rowsOrDefault), [tableData])
+  // Update the form state and id anytime the table data changes (i.e. due to watches in the DB).
+  // This is required since this component stores table data from props in its state.
+  useEffect(() => {
+    setTableId(tableIdOrNull)
+    setTableRows(rowsOrDefault)
+  }, [JSON.stringify(tableData)])
 
   const [insertTableData] = useMutation(insertAssessmentFeedbackDataMutation)
   const [updateTableData] = useMutation(updateAssessmentFeedbackDataMutation)
