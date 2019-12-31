@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import T from 'prop-types'
 import { navigate } from 'gatsby'
 import { SectionTitle, ASSESSMENT_STATUS, NavLink } from 'components'
@@ -15,6 +15,8 @@ import {
   updateAssessmentTableDataMutation,
   updateAssessmentStatusMutation,
 } from '../queries'
+import AutoSaveFormik from './AutoSaveFormik'
+import SaveChip from './SaveChip'
 
 function getEmptyTableRow(columnsDef) {
   return columnsDef.reduce(
@@ -72,10 +74,17 @@ function QuestionnaireBackgroundInfo({
   const { t } = useTranslation()
   const tableData = getExistingTableData(assessmentTables, tableDef)
 
-  const [tableId, setTableId] = useState(tableData ? tableData.id : null)
-  const [tableRows, setTableRows] = useState(
-    tableData ? tableData.table_values : []
-  )
+  const tableIdOrNull = tableData ? tableData.id : null
+  const [tableId, setTableId] = useState(tableIdOrNull)
+  const rowsOrDefault = tableData ? tableData.table_values : []
+  const [tableRows, setTableRows] = useState(rowsOrDefault)
+
+  // Update the form state and id anytime the table data changes (i.e. due to watches in the DB).
+  // This is required since this component stores table data from props in its state.
+  useEffect(() => {
+    setTableId(tableIdOrNull)
+    setTableRows(rowsOrDefault)
+  }, [JSON.stringify(tableData)])
 
   const [insertTableData] = useMutation(insertAssessmentTableDataMutation)
   const [updateTableData] = useMutation(updateAssessmentTableDataMutation)
@@ -163,6 +172,7 @@ function QuestionnaireBackgroundInfo({
         >
           {({ isSubmitting, dirty, values, setFieldValue }) => (
             <Form className={classes.section}>
+              <AutoSaveFormik />
               <Grid container direction="column" spacing={2}>
                 <Grid item container wrap="nowrap">
                   <Grid item xs>
@@ -189,15 +199,11 @@ function QuestionnaireBackgroundInfo({
                 {canEdit && (
                   <Grid item container spacing={2} justify="flex-end">
                     <Grid item>
-                      <Button
-                        type="submit"
-                        variant={canEdit ? 'contained' : 'outlined'}
-                        color="secondary"
-                        disabled={!canEdit || !dirty || isSubmitting}
-                        className={classes.saveButton}
-                      >
-                        {t('Save Updates')}
-                      </Button>
+                      <div className={classes.saveStatus}>
+                        <SaveChip dirty={dirty} />
+                      </div>
+                    </Grid>
+                    <Grid item>
                       {isFinalCriteria ? (
                         <Button
                           variant="outlined"
