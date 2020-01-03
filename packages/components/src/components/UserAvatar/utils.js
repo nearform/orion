@@ -6,7 +6,7 @@ const validColors = Object.keys(colors)
   .filter(c => !!colors[c][500])
   .map(c => colors[c][500])
 
-function djb2(str) {
+function djb2(str = '') {
   let hash = 5381
   for (let i = 0; i < str.length; i++) {
     hash = (hash << 5) + hash + str.charCodeAt(i) /* hash * 33 + c */
