@@ -257,7 +257,7 @@
           "name": "Despliegue",
           "scores": [
             {
-              "key": "executed",
+              "key": "implemented",
               "name": "Implantado",
               "description": "Los enfoques se implantan en las áreas relevantes de manera eficaz y oportuna."
             }
@@ -268,12 +268,12 @@
           "name": "Evaluación, Revisión  y mejora",
           "scores": [
             {
-              "key": "measurement-learning",
+              "key": "evaluated-understood",
               "name": "Analizado y comprendido",
               "description": "Se recoge, comprende y comparte el feedback relativo a la eficacia y eficiencia de los enfoques y su despliegue"
             },
             {
-              "key": "improvement-creativity",
+              "key": "learn-improve",
               "name": "Asimilado y mejorado",
               "description": "Las conclusiones extraídas del análisis de tendencias emergentes, la medición, el aprendizaje y el benchmarking se utilizan para inspirar la creatividad y generar soluciones innovadoras con el fin de mejorar el rendimiento en los plazos adecuados"
             }
@@ -415,6 +415,56 @@
                   "name": "Gestionar los activos y recursos",
                   "guidance": "En la práctica una organización sobresaliente:\n- Utiliza recursos financieros de manera equilibrada y sostenible para garantizar el éxito actual y la inversión futura.\n- Identifica y gestiona de manera responsable los activos y recursos críticos que son vitales para su estrategia, funcionamiento y necesidades de transformación,\nincluyendo los activos financieros (liquidez, capital e inversiones), los activos tangibles (infraestructura comercial, como por ejemplo: cadena logística, bienes inmobiliarios, tecnología y maquinaria) y los activos intangibles (datos propiedad de la organización, tecnologías y software desarrollados por la propia organización, marca, fondo de comercio y patentes).\n- Identifica e incorpora métodos coherentes e innovadores para lograr el máximo aprovechamiento de los activos y recursos que impulsan los objetivos de funcionamiento y transformación, tanto a corto como a largo plazo, de acuerdo con las necesidades cambiantes de la organización y del mercado.\n- Determina los activos y recursos que ya no necesita (para su actividad actual o futura) y los desecha de manera responsable, basándose en los principios de la economía circular.\n"                }
               ]
+            }
+          ]
+        }
+      ],
+      "scoring": [
+        {
+          "key": "approach",
+          "name": "Enfoques",
+          "scores": [
+            {
+              "key": "sound",
+              "name": "Solidamente fundamentados",
+              "description": "Los enfoques tienen una lógica clara, con el objetivo de cumplir y responder a las necesidades de sus grupos de interés clave. Se describen adecuadamente y están diseñados para que la organización se adapte al futuro"
+            },
+            {
+              "key": "aligned",
+              "name": "alineado",
+              "description": ""
+            }
+          ]
+        },
+        {
+          "key": "deployment",
+          "name": "Despliegue",
+          "scores": [
+            {
+              "key": "implemented",
+              "name": "Implantado",
+              "description": "Los enfoques se implantan en las áreas relevantes de manera eficaz y oportuna."
+            },
+            {
+              "key": "flexible",
+              "name": "flexible",
+              "description": ""
+            }
+          ]
+        },
+        {
+          "key": "assessment-refinement",
+          "name": "Evaluación, Revisión  y mejora",
+          "scores": [
+            {
+              "key": "evaluated-understood",
+              "name": "Analizado y comprendido",
+              "description": "Se recoge, comprende y comparte el feedback relativo a la eficacia y eficiencia de los enfoques y su despliegue"
+            },
+            {
+              "key": "learn-improve",
+              "name": "Asimilado y mejorado",
+              "description": "Las conclusiones extraídas del análisis de tendencias emergentes, la medición, el aprendizaje y el benchmarking se utilizan para inspirar la creatividad y generar soluciones innovadoras con el fin de mejorar el rendimiento en los plazos adecuados"
             }
           ]
         }
