@@ -1,0 +1,5 @@
+mutation deleteUserRole($userId: Int!) {
+  delete_user_role(where: { user_id: { _eq: $userId } }) {
+    affected_rows
+  }
+}

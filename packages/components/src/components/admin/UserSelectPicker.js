@@ -13,6 +13,7 @@ function UserSelectPicker({
   data,
   label,
   entityKey,
+  emptyLabel,
 }) {
   const fieldName = `${entityKey}Id`
   const inputId = `select-${entityKey}`
@@ -43,16 +44,19 @@ function UserSelectPicker({
           IconComponent: KeyboardArrowUp,
         }}
       >
-        {!values[fieldName] && (
-          <MenuItem disabled value={0}>
-            <Typography component="span" color="textSecondary">
-              No {label.toLowerCase()} selected
+        {(emptyLabel || !values[fieldName]) && (
+          <MenuItem disabled={!emptyLabel} value={0}>
+            <Typography
+              component="span"
+              color={emptyLabel ? undefined : 'textSecondary'}
+            >
+              {emptyLabel || `No ${label.toLowerCase()} selected`}
             </Typography>
           </MenuItem>
         )}
         {data[entityKey].map(option => (
           <MenuItem key={option.id} value={option.id}>
-            {option.name}
+            <Typography component="span">{option.name}</Typography>
           </MenuItem>
         ))}
       </Field>
@@ -93,6 +97,7 @@ UserSelectPicker.propTypes = {
   entityKey: T.string,
   values: T.object,
   handleChange: T.func,
+  emptyLabel: T.string,
 }
 
 export default withStyles(styles)(UserSelectPicker)

@@ -43,20 +43,23 @@ function AdminModal({
         {({ isSubmitting, values, handleChange, isValid, dirty }) => (
           <Form>
             <DialogContent>
-              {contents.map(({ FieldComponent, entityKey, label }, index) => {
-                const key = `${FieldComponent.name}_${index}`
-                return (
-                  <FieldComponent
-                    key={key}
-                    values={values}
-                    handleChange={handleChange}
-                    selected={selected}
-                    data={data}
-                    label={label}
-                    entityKey={entityKey}
-                  />
-                )
-              })}
+              {contents.map(
+                ({ FieldComponent, entityKey, label, emptyLabel }, index) => {
+                  const key = `${FieldComponent.name}_${index}`
+                  return (
+                    <FieldComponent
+                      key={key}
+                      values={values}
+                      handleChange={handleChange}
+                      selected={selected}
+                      data={data}
+                      label={label}
+                      entityKey={entityKey}
+                      emptyLabel={emptyLabel}
+                    />
+                  )
+                }
+              )}
             </DialogContent>
             <DialogActions className={classes.modalButtons}>
               <Button
