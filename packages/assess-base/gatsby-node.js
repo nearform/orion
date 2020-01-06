@@ -78,8 +78,10 @@ exports.createPages = async ({ graphql, actions }) => {
     const { key } = assessment
     switch (key) {
       case 'efqm-2020':
-      case 'efqm-2020-advanced':
         makeBusinessMatrixPages(assessment)
+        break
+      case 'efqm-2020-advanced':
+        makeBusinessMatrixPages(assessment, { advanced: true })
         break
       case 'questionnaire':
         makeQuestionnairePages(assessment)
@@ -87,7 +89,7 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   })
 
-  function makeBusinessMatrixPages(assessment) {
+  function makeBusinessMatrixPages(assessment, { advanced = false } = {}) {
     const createCriterionPagePath = (pillar, criterion) =>
       `/assessment/${assessment.key}/${pillar.key}/${criterion.key}`
 
@@ -95,9 +97,10 @@ exports.createPages = async ({ graphql, actions }) => {
       (acc, pillar, pillarIndex) => {
         const { key: pillarKey } = pillar
         const pillarCriteria = pillar.criteria.map(criterion => {
+          const { name: criterionName } = criterion
           return criterion.parts.map((part, idx) => {
             const {
-              tables: [{ key: criterionKey, name }],
+              tables: [{ key: criterionKey, name: partName }],
             } = part
             const path = createCriterionPagePath(pillar, criterion) + '/' + idx
             return {
@@ -105,7 +108,7 @@ exports.createPages = async ({ graphql, actions }) => {
                 pillarKey,
                 criterionKey,
               }),
-              name,
+              name: advanced ? partName : criterionName,
               path,
               matchPath: path,
             }
