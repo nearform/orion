@@ -29,6 +29,7 @@ import {
   assignUserRoleMutation,
   updateUserMutation,
   deleteUserMutation,
+  deleteUserRoleMutation,
 } from '../../../queries'
 
 const styles = theme => ({
@@ -185,6 +186,7 @@ function AllUsers({ classes, query, variables }) {
   const [doAssignUserGroup] = useMutation(assignUserGroupMutation)
   const [doAddUserRole] = useMutation(addUserRoleMutation)
   const [doAssignUserRole] = useMutation(assignUserRoleMutation)
+  const [doDeleteUserRole] = useMutation(deleteUserRoleMutation)
   const [deleteUser] = useMutation(deleteUserMutation)
   const [modifyUser] = useMutation(updateUserMutation)
 
@@ -198,6 +200,7 @@ function AllUsers({ classes, query, variables }) {
       label: 'Role',
       FieldComponent: UserSelectPicker,
       entityKey: 'role',
+      emptyLabel: 'non-member',
     },
   ]
 
@@ -237,6 +240,14 @@ function AllUsers({ classes, query, variables }) {
           variables: {
             userId: values.userId,
             roleId: values.roleId,
+          },
+        })
+      )
+    } else if (values.roleIsAssigned) {
+      mutationPromises.push(
+        doDeleteUserRole({
+          variables: {
+            userId: values.userId,
           },
         })
       )
