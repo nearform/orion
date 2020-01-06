@@ -171,7 +171,7 @@ function CriterionTemplate({
                 color="secondary"
                 className={classes.section}
               >
-                {t('Assess')} {criterion.name}
+                {t('Enter')} {criterion.name}
               </Button>
               <Formik
                 initialValues={createFormInitialValues(assessmentCriterionData)}

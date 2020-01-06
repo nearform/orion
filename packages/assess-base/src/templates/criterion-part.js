@@ -108,6 +108,8 @@ function CriterionPartTemplate({
     )
   }
 
+  const paginationText = pillar.key !== 'results' ? 'PART OF' : 'SECTION OF'
+
   const canEditTablesAndUpload =
     isContributor && assessmentInProgress(assessmentData)
 
@@ -183,6 +185,7 @@ function CriterionPartTemplate({
                   previousLink={previousLink}
                   partNumber={partNumber}
                   totalParts={totalParts}
+                  paginationText={paginationText}
                 />
               )
             }
