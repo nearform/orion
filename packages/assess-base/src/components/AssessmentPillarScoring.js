@@ -25,10 +25,21 @@ function getOverallValue(groupOverall, cap) {
     : 0
 }
 
-function getScoringData(assessmentData, scoringDef, partNumber) {
+function getScoringData(
+  assessmentData,
+  scoringDef,
+  pillar,
+  criterion,
+  partNumber
+) {
   // Find the scoring date for the current part.
-  const { id, scoring_values: values } =
-    assessmentData.scoring.find(s => s.part_number === partNumber) || {}
+  const { id: scoringId, scoring_values: values } =
+    assessmentData.scoring.find(
+      s =>
+        s.pillar_key === pillar.key &&
+        s.criterion_key === criterion.key &&
+        s.part_number === partNumber
+    ) || {}
 
   // Get any previously saved data that is in latest def, ignore data dropped from
   // def, set new def keys to 0
@@ -47,7 +58,7 @@ function getScoringData(assessmentData, scoringDef, partNumber) {
   )
 
   return {
-    scoringId: id,
+    scoringId,
     scoringValues,
   }
 }
@@ -80,6 +91,8 @@ function AssessmentPillarScoring({
   const { scoringId, scoringValues } = getScoringData(
     assessmentData,
     scoringDef,
+    pillar,
+    criterion,
     partNumber
   )
 
