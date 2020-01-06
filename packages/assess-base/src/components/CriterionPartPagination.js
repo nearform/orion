@@ -12,6 +12,7 @@ function CriterionPartPagination({
   assessmentId,
   partNumber,
   totalParts,
+  paginationText,
 }) {
   const { t } = useTranslation()
 
@@ -30,7 +31,7 @@ function CriterionPartPagination({
       </Grid>
       <Grid item>
         <Typography variant="h3" color="secondary">
-          {t('PART OF', { part: partNumber, total: totalParts })}
+          {t(paginationText, { part: partNumber, total: totalParts })}
         </Typography>
       </Grid>
       <Grid item className={classes.expandedClickAreaWrapper}>
