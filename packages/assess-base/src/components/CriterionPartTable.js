@@ -160,12 +160,16 @@ function CriterionPartTable({
 
   return (
     <Grid>
-      <CriterionPartHeader
-        helpContent={tableDef.guidance}
-        title={tableDef.name}
-        paginationNode={paginationNode}
-        buttonLabel="guidance"
-      />
+      {paginationNode ? (
+        <CriterionPartHeader
+          helpContent={tableDef.guidance}
+          title={tableDef.name}
+          paginationNode={paginationNode}
+          buttonLabel="guidance"
+        />
+      ) : (
+        ''
+      )}
       {tables.map((initialValues, rowIndex, { length: totalRows }) => {
         const tableKey = `${tableDef.key}-${rowIndex}`
         return (
