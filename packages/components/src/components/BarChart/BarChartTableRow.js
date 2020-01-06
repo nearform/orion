@@ -25,6 +25,7 @@ function BarChartTableRow({
   assessmentId,
   depth,
   isLast,
+  canExpand,
 }) {
   const [isOpened, setIsOpened] = useState(false)
   const hasChildren = !!chartDataItem.scores
@@ -46,7 +47,7 @@ function BarChartTableRow({
   return (
     <>
       <TableRow
-        onClick={() => hasChildren && setIsOpened(!isOpened)}
+        onClick={() => canExpand && hasChildren && setIsOpened(!isOpened)}
         className={rowClasses}
       >
         <TableCell
@@ -128,6 +129,7 @@ BarChartTableRow.propTypes = {
   assessmentId: T.number,
   depth: T.number,
   isLast: T.bool,
+  canExpand: T.bool,
 }
 
 BarChartTableChildRows.propTypes = {

@@ -17,7 +17,7 @@ import BarChartTableRow from './BarChartTableRow'
 import ChartTicks from '../ChartTicks'
 import { getOverallScore, chartDataShape } from './utils'
 
-function BarChartTable({ classes, theme, chartData, assessmentId }) {
+function BarChartTable({ classes, theme, chartData, assessmentId, canExpand }) {
   const barHeight = theme.spacing(4)
   const barTicksHeight = theme.spacing(6)
   const overallScore = chartData
@@ -60,6 +60,7 @@ function BarChartTable({ classes, theme, chartData, assessmentId }) {
                 assessmentId={assessmentId}
                 isFirst={index === 0}
                 isLast={index === chartData.length - 1}
+                canExpand={canExpand}
               />
             ))}
         </TableBody>
@@ -90,6 +91,7 @@ BarChartTable.propTypes = {
   theme: T.object.isRequired,
   chartData: T.arrayOf(chartDataShape),
   assessmentId: T.number,
+  canExpand: T.bool,
 }
 
 const styles = theme => ({

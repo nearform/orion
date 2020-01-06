@@ -158,6 +158,7 @@ function FeedbackReport({
                 <BarChartTable
                   chartData={chartData}
                   assessmentId={assessmentId}
+                  canExpand={assessmentData.key !== 'efqm-2020'}
                 />
               )}
             </Grid>
