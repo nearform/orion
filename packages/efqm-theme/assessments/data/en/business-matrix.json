@@ -257,8 +257,8 @@
           "name": "deployment",
           "scores": [
             {
-              "key": "executed",
-              "name": "executed",
+              "key": "implemented",
+              "name": "implemented",
               "description": "The approaches are deployed in relevant areas in an effective and timely manner"
             }
           ]
@@ -268,13 +268,13 @@
           "name": "assessment and refinement",
           "scores": [
             {
-              "key": "measurement-learning",
-              "name": "measurement & learning",
+              "key": "evaluated-understood",
+              "name": "evaluated & understood",
               "description": "Feedback on the effectiveness & efficiency of the approaches and their deployment are collected, lessons are learnt and shared"
             },
             {
-              "key": "improvement-creativity",
-              "name": "improvement through Creativity & Innovation",
+              "key": "learn-improve",
+              "name": "learn & improve",
               "description": "Findings from emerging trends analysis, measurement, learning and benchmarking are used to inspire creativity and innovative solutions to improve performance in appropriate timescales"
             }
           ]
@@ -416,6 +416,56 @@
                   "name": "Manage Assets & Resources",
                   "guidance": "In practice, we find that an outstanding organisation:\n\n- Uses financial resources in a balanced and sustainable way to help ensure current success and investment in the future\n- Identifies and manages, responsibly, the critical assets and resources that are vital for its Strategy, Performance and Transformation needs, including financial assets (cash, capital, investments), tangible assets (trading infrastructure, such as supply chain, real estate, technology and machinery) and intangible assets (proprietary data, self-developed software/technology, brand, goodwill, patents)\n- Discovers and embeds coherent and innovative ways to maximise the value of its assets & resources to enhance performance and transformation objectives in line with changing organisational and market demands, both short and long term\n- Determines the assets and resources it no longer needs (for current or future business) and, based on Circular Economy principles, disposes of them responsibly\n"                }
               ]
+            }
+          ]
+        }
+      ],
+      "scoring": [
+        {
+          "key": "approach",
+          "name": "approach",
+          "scores": [
+            {
+              "key": "sound",
+              "name": "sound",
+              "description": "The approaches have a clear rationale, aim to fulfil and respond to relevant stakeholder needs, are described appropriately and are designed to be innovative and agile"
+            },
+            {
+              "key": "aligned",
+              "name": "aligned",
+              "description": ""
+            }
+          ]
+        },
+        {
+          "key": "deployment",
+          "name": "deployment",
+          "scores": [
+            {
+              "key": "implemented",
+              "name": "implemented",
+              "description": "The approaches are deployed in relevant areas in an effective and timely manner"
+            },
+            {
+              "key": "flexible",
+              "name": "flexible",
+              "description": ""
+            }
+          ]
+        },
+        {
+          "key": "assessment-refinement",
+          "name": "assessment and refinement",
+          "scores": [
+            {
+              "key": "evaludated-understood",
+              "name": "evaluated & understood",
+              "description": "Feedback on the effectiveness & efficiency of the approaches and their deployment are collected, lessons are learnt and shared"
+            },
+            {
+              "key": "learn-improve",
+              "name": "learn & improve",
+              "description": "Findings from emerging trends analysis, measurement, learning and benchmarking are used to inspire creativity and innovative solutions to improve performance in appropriate timescales"
             }
           ]
         }
