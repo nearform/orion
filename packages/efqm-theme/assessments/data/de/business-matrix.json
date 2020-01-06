@@ -257,7 +257,7 @@
           "name": "Umsetzung",
           "scores": [
             {
-              "key": "executed",
+              "key": "implemented",
               "name": "Eingeführt",
               "description": "Das Vorgehen wird in den relevanten Bereichen in angemessenem Zeitraum und effektiver Weise umgesetzt"
             }
@@ -268,12 +268,12 @@
           "name": "Bewertung & Verbesserung",
           "scores": [
             {
-              "key": "measurement-learning",
+              "key": "evaluated-understood",
               "name": "Analyse",
               "description": "Rückmeldungen zu Effizienz und Effektivität des Vorgehens und sder Umsetzung werden eingeholt, verstanden und geteilt"
             },
             {
-              "key": "improvement-creativity",
+              "key": "learn-improve",
               "name": "Lernen & Verbessen",
               "description": "Erkenntnisse aus Trendanalysen, Messungen, Lernen und Benchmarking werden genutzt, um Kreativität anzuregen und in angemessenen Zeitabschnitten innovative Lösungen für die Verbesserung der Leistungsfähigkeit zu entwickeln"
             }
@@ -415,6 +415,56 @@
                   "name": "Vermögenswerte und Ressourcen managen",
                   "guidance": "Eine herausragende Organisation:\n- verwendet finanzielle Ressourcen ausgewogen und nachhaltig, um aktuellen Erfolg und Investition in die Zukunft abzusichern\n- identifiziert und steuert die erfolgskritischen Vermögenswerte und Ressourcen, die sie für Strategie, Leistungsfähigkeit und Transformation benötigt, inklusive Finanzvermögen (Bargeld, Kapital, Kapitalanlagen), Sachanlagen (veränderbare Infrastruktur wie die Wertschöpfungskette, Immobilien, Technologie) und Anlagen und immaterielle Anlagewerte (firmeneigene Daten, selbst entwickelte Software/Technologie, Markenrechte, Goodwill, Patente)\n- bezieht innovative Möglichkeiten zur Maximierung der Vermögenswerte und Ressourcen ein, um ihre Leistungsfähigkeits- und Transformationsziele in Balance mit sich ändernden Anforderungen aus der Organisation und dem Markt kurz- und langfristig weiterzuentwickeln\n- legt die Vermögenswerte und Ressourcen fest, die für aktuelle und zukünftige Geschäfte nicht mehr benötigt werden und baut diese verantwortungsvoll unter Berücksichtigung der Prinzipien der Kreislaufwirtschaft ab\n"                }
               ]
+            }
+          ]
+        }
+      ],
+      "scoring": [
+        {
+          "key": "approach",
+          "name": "Vorgehen",
+          "scores": [
+            {
+              "key": "sound",
+              "name": "Fundiert",
+              "description": "Das Vorgehen ist klar begründet und zielt darauf ab, die Bedürfnisse der für Zweck, Vision und Strategie wichtigen Interessengruppen zu erfüllen. Es ist angemessen beschrieben und zukunftsfähig gestaltet"
+            },
+            {
+              "key": "aligned",
+              "name": "ausgerichtet",
+              "description": ""
+            }
+          ]
+        },
+        {
+          "key": "deployment",
+          "name": "Umsetzung",
+          "scores": [
+            {
+              "key": "implemented",
+              "name": "Eingeführt",
+              "description": "Das Vorgehen wird in den relevanten Bereichen in angemessenem Zeitraum und effektiver Weise umgesetzt"
+            },
+            {
+              "key": "flexible",
+              "name": "flexibel",
+              "description": ""
+            }
+          ]
+        },
+        {
+          "key": "assessment-refinement",
+          "name": "Bewertung & Verbesserung",
+          "scores": [
+            {
+              "key": "evaluated-understood",
+              "name": "Analyse",
+              "description": "Rückmeldungen zu Effizienz und Effektivität des Vorgehens und sder Umsetzung werden eingeholt, verstanden und geteilt"
+            },
+            {
+              "key": "learn-improve",
+              "name": "Lernen & Verbessen",
+              "description": "Erkenntnisse aus Trendanalysen, Messungen, Lernen und Benchmarking werden genutzt, um Kreativität anzuregen und in angemessenen Zeitabschnitten innovative Lösungen für die Verbesserung der Leistungsfähigkeit zu entwickeln"
             }
           ]
         }
