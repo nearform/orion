@@ -188,7 +188,7 @@ function QuestionnaireBackgroundInfo({
                         multiline={true}
                         InputProps={{
                           style: {
-                            'min-height': '184px',
+                            minHeight: '184px',
                             alignItems: 'flex-start',
                           },
                         }}
