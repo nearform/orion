@@ -26,7 +26,8 @@ const AvatarImage = ({ theme, classes, user, fullName, className, src }) => {
       }}
       src={imgSrc}
     >
-      {getInitials(fullName || getFullName(firstName, lastName, email))}
+      {imgSrc === undefined &&
+        getInitials(fullName || getFullName(firstName, lastName, email))}
     </Avatar>
   )
 }
