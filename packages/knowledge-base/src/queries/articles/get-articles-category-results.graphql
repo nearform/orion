@@ -4,7 +4,12 @@ query getCategoryArticles(
   $offset: Int!
   $taxonomyKey: String
 ) {
-  article(where: $whereClause, limit: $limit, offset: $offset) {
+  article(
+    where: $whereClause
+    limit: $limit
+    offset: $offset
+    order_by: { updated_at: desc }
+  ) {
     id
     thumbnail
     title
