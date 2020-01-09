@@ -7,7 +7,7 @@ import get from 'lodash/get'
 import classnames from 'classnames'
 import SaveChip from './SaveChip'
 
-import { Formik, Form } from 'formik'
+import { Form } from 'formik'
 
 import {
   insertAssessmentTableDataMutation,
@@ -17,7 +17,7 @@ import {
 
 import CriterionPartInput from './CriterionPartInput'
 import CriterionPartHeader from './CriterionPartHeader'
-import AutoSaveFormik from './AutoSaveFormik'
+import AutoSaveWatchFormik from './AutoSaveWatchFormik'
 
 function getEmptyTableRow(columnsDef) {
   return columnsDef.reduce(
@@ -63,6 +63,7 @@ function CriterionPartTable({
   tableDef,
   columnsDef,
   assessmentTables,
+  tablesFetchedTimestamp,
   assessmentId,
   partNumber,
   criterionKey,
@@ -84,7 +85,7 @@ function CriterionPartTable({
   useEffect(() => {
     setTableId(tableIdOrNull)
     setTableRows(rowsOrDefault)
-  }, [JSON.stringify(tableData)])
+  }, [tableIdOrNull, JSON.stringify(rowsOrDefault)])
 
   const [insertTableData] = useMutation(insertAssessmentTableDataMutation)
   const [updateTableData] = useMutation(updateAssessmentTableDataMutation)
@@ -173,17 +174,17 @@ function CriterionPartTable({
       {tables.map((initialValues, rowIndex, { length: totalRows }) => {
         const tableKey = `${tableDef.key}-${rowIndex}`
         return (
-          <Formik
-            enableReinitialize
+          <AutoSaveWatchFormik
+            validateOnMount={true}
             initialValues={initialValues}
+            initialValuesTimestamp={tablesFetchedTimestamp}
             onSubmit={(values, actions) =>
               handleSaveTable(rowIndex, values, actions)
             }
             key={tableKey}
           >
-            {({ isSubmitting, dirty, values, setFieldValue }) => (
+            {({ values, setFieldValue, saving }) => (
               <Form className={classes.section}>
-                <AutoSaveFormik />
                 <Grid container direction="column" spacing={2}>
                   <Grid item container spacing={1} wrap="nowrap">
                     <Grid item>
@@ -264,10 +265,10 @@ function CriterionPartTable({
                   </Grid>
                   {canEdit && (
                     <Grid item container spacing={2} justify="flex-end">
-                      {(rowIndex !== tableRows.length || dirty) && (
+                      {(rowIndex !== tableRows.length || saving) && (
                         <Grid item>
                           <div className={classes.saveStatus}>
-                            <SaveChip dirty={dirty} />
+                            <SaveChip dirty={saving} />
                           </div>
                         </Grid>
                       )}
@@ -288,7 +289,7 @@ function CriterionPartTable({
                 </Grid>
               </Form>
             )}
-          </Formik>
+          </AutoSaveWatchFormik>
         )
       })}
     </Grid>

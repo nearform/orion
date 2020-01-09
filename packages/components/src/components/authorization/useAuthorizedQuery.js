@@ -57,8 +57,9 @@ export default function useAuthorizedQuery(query, variables, opts = {}) {
   // Function for refetching the query with new variables.
   function refetch(_variables = variables) {
     if (onPreFetch(_variables)) {
-      _fetch({ variables: _variables })
+      return _fetch({ variables: _variables })
     }
+    return Promise.resolve()
   }
 
   // Return result.

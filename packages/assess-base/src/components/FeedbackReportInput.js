@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next'
 import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 
-import { Formik, Form, Field } from 'formik'
+import { Form, Field } from 'formik'
 import { TextField as FormikTextField } from 'formik-material-ui'
 import { SectionTitle } from 'components'
-import AutoSaveFormik from './AutoSaveFormik'
+import AutoSaveWatchFormik from './AutoSaveWatchFormik'
 import SaveChip from './SaveChip'
 
 function FeedbackReportInput({
@@ -17,6 +17,7 @@ function FeedbackReportInput({
   label,
   name,
   initialValue,
+  dataFetchedTimestamp,
   assessmentId,
   mutation,
   canEdit,
@@ -56,14 +57,13 @@ function FeedbackReportInput({
   }
 
   return (
-    <Formik
-      enableReinitialize
+    <AutoSaveWatchFormik
       initialValues={{ [name]: currentValue }}
+      initialValuesTimestamp={dataFetchedTimestamp}
       onSubmit={(values, actions) => handleSaveInput(values, actions)}
     >
-      {({ dirty }) => (
+      {({ saving }) => (
         <Form>
-          <AutoSaveFormik />
           <Grid container spacing={5}>
             <Grid item xs={3}>
               <SectionTitle
@@ -90,13 +90,13 @@ function FeedbackReportInput({
           <Grid container justify="flex-end" spacing={5}>
             <Grid item>
               <div className={classes.saveStatus}>
-                <SaveChip dirty={dirty} />
+                <SaveChip dirty={saving} />
               </div>
             </Grid>
           </Grid>
         </Form>
       )}
-    </Formik>
+    </AutoSaveWatchFormik>
   )
 }
 

@@ -502,7 +502,7 @@ describe('<AssessmentTemplate />', () => {
     'The following test is unfinished. useAuthorizedQuery.refresh does not currently result in data returning to AssessmentTemplate when triggered in the test'
   )
   test('Edit and save key information', async () => {
-    jest.setTimeout(10000)
+    jest.setTimeout(20000)
 
     const { getByText } = renderAuthenticatedPlatformAdmin(
       <AssessmentTemplate

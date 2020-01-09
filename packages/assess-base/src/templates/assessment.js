@@ -42,7 +42,7 @@ import UploadButton from '../components/UploadButton'
 import AssessmentPillars from '../components/AssessmentPillars'
 import KeyInfoDocsList from '../components/key-info-docs-list'
 import { ReportLinks } from '../components/report-links'
-import AutoSaveFormik from '../components/AutoSaveFormik'
+import AutoSaveWatchFormik from '../components/AutoSaveWatchFormik'
 import SaveChip from '../components/SaveChip'
 import { Redirect } from '@reach/router'
 import {
@@ -105,6 +105,7 @@ function AssessmentTemplate({
 
   const {
     data: assessmentData,
+    fetchedTimestamp,
     refetch: refetchAssessmentData,
   } = useAuthorizedWatch(
     getShallowAssessmentData,
@@ -457,17 +458,16 @@ function AssessmentTemplate({
                     </ContextualHelp>
                   )}
                 </Typography>
-                <Formik
-                  enableReinitialize
+                <AutoSaveWatchFormik
                   initialValues={createFormInitialValues(
                     assessment.keyInformation.keyInformationItems,
                     assessmentData
                   )}
+                  initialValuesTimestamp={fetchedTimestamp}
                   onSubmit={handleUpdateKeyInfo}
                 >
-                  {({ dirty }) => (
+                  {({ saving }) => (
                     <Form>
-                      <AutoSaveFormik />
                       <Grid container spacing={2}>
                         <Grid item container spacing={2}>
                           {assessment.keyInformation.keyInformationItems.map(
@@ -540,10 +540,10 @@ function AssessmentTemplate({
                                 {t('upload key information')}
                               </UploadButton>
                             </Grid>
-                            {(hasAssessmentId || dirty) && (
+                            {(hasAssessmentId || saving) && (
                               <Grid item>
                                 <div className={classes.saveStatus}>
-                                  <SaveChip dirty={dirty} />
+                                  <SaveChip dirty={saving} />
                                 </div>
                               </Grid>
                             )}
@@ -552,7 +552,7 @@ function AssessmentTemplate({
                       </Grid>
                     </Form>
                   )}
-                </Formik>
+                </AutoSaveWatchFormik>
               </Grid>
             </Grid>
             <Grid

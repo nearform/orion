@@ -4,7 +4,7 @@ import { AuthContext, PaddedContainer, SectionTitle } from 'components'
 import { Link } from 'gatsby'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
-import { Field, Formik, Form } from 'formik'
+import { Field, Form } from 'formik'
 import { TextField } from 'formik-material-ui'
 import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
@@ -16,23 +16,10 @@ import {
 } from '../queries'
 import FileList from '../components/FileList'
 import SEO from '../components/SEO'
-import AutoSaveFormik from '../components/AutoSaveFormik'
+import AutoSaveWatchFormik from '../components/AutoSaveWatchFormik'
 import SaveChip from '../components/SaveChip'
 import { assessmentInProgress } from '../utils/assessment-status'
 import useAuthorizedWatch from '../hooks/useAuthorizedWatch'
-
-function createFormInitialValues(assessmentCriterionData) {
-  if (
-    !assessmentCriterionData ||
-    !assessmentCriterionData.assessment_criterion_data_by_pk
-  ) {
-    return {
-      summary: '',
-    }
-  }
-
-  return assessmentCriterionData.assessment_criterion_data_by_pk.data
-}
 
 function CriterionTemplate({
   theme,
@@ -60,6 +47,7 @@ function CriterionTemplate({
 
   const {
     data: assessmentCriterionData,
+    fetchedTimestamp,
     loading,
     isPreFetch,
     refetch: fetchAssessmentCriterionData,
@@ -79,13 +67,9 @@ function CriterionTemplate({
     upsertAssessmentCriterionDataMutation
   )
 
-  async function handleFormSubmit(values, { setSubmitting, resetForm }) {
+  async function handleFormSubmit(values, { setSubmitting }) {
     try {
-      const {
-        data: {
-          insert_assessment_criterion_data: { returning },
-        },
-      } = await upsertAssessmentData({
+      await upsertAssessmentData({
         variables: {
           input: {
             assessment_id: assessmentId,
@@ -95,12 +79,17 @@ function CriterionTemplate({
           },
         },
       })
-      resetForm({ values: returning[0].data })
     } finally {
       setSubmitting(false)
     }
   }
 
+  const criteriaExists =
+    assessmentCriterionData &&
+    assessmentCriterionData.assessment_criterion_data_by_pk
+  const formInitialValues = criteriaExists
+    ? assessmentCriterionData.assessment_criterion_data_by_pk.data
+    : { summary: '' }
   const canEditAndUpload =
     isContributor &&
     assessmentInProgress(get(assessmentCriterionData, 'assessment_by_pk'))
@@ -173,14 +162,13 @@ function CriterionTemplate({
               >
                 {t('Enter')} {criterion.name}
               </Button>
-              <Formik
-                initialValues={createFormInitialValues(assessmentCriterionData)}
-                enableReinitialize
+              <AutoSaveWatchFormik
+                initialValues={formInitialValues}
+                initialValuesTimestamp={fetchedTimestamp}
                 onSubmit={handleFormSubmit}
               >
-                {({ dirty }) => (
+                {({ saving }) => (
                   <Form>
-                    <AutoSaveFormik />
                     <Grid
                       container
                       direction="column"
@@ -200,17 +188,17 @@ function CriterionTemplate({
                           fullWidth
                         />
                       </Grid>
-                      {canEditAndUpload && (
+                      {canEditAndUpload && (criteriaExists || saving) && (
                         <Grid item>
                           <div className={classes.saveStatus}>
-                            <SaveChip dirty={dirty} />
+                            <SaveChip dirty={saving} />
                           </div>
                         </Grid>
                       )}
                     </Grid>
                   </Form>
                 )}
-              </Formik>
+              </AutoSaveWatchFormik>
             </Grid>
           </Grid>
         </div>

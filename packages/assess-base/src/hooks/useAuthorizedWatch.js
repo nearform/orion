@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuthorizedQuery } from 'components'
 
 /**
@@ -20,16 +20,33 @@ import { useAuthorizedQuery } from 'components'
  *                  pollingPeriodMs: Number of ms between refreshes of the query.
  */
 export default function useAuthorizedWatch(query, variables, opts = {}) {
-  // Setup query hook.
+  // Store the timestamp of the when the last polling was requested.
+  const [fetchedTimestamp, setFetchedTimestamp] = useState(Date.now())
   const result = useAuthorizedQuery(query, variables, opts)
 
   const { pollingPeriodMs = 1000 } = opts
 
   useEffect(() => {
-    const id = setTimeout(result.refetch, pollingPeriodMs)
+    let id = setTimeout(refetchIfIdle, pollingPeriodMs)
+
+    async function refetchIfIdle() {
+      // Don't let requests queue. Reschedule the update if there is a pending request (possible on slow connections).
+      if (result.loading) {
+        id = setTimeout(refetchIfIdle, pollingPeriodMs)
+        return
+      }
+
+      const currentTimestamp = Date.now()
+      await result.refetch()
+      setFetchedTimestamp(currentTimestamp)
+    }
+
     return () => clearTimeout(id)
   })
 
   // Return result.
-  return result
+  return {
+    ...result,
+    fetchedTimestamp,
+  }
 }

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 
-import { Formik, Form, Field } from 'formik'
+import { Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
 
 import {
@@ -15,7 +15,7 @@ import {
   updateAssessmentTableDataMutation,
   updateAssessmentStatusMutation,
 } from '../queries'
-import AutoSaveFormik from './AutoSaveFormik'
+import AutoSaveWatchFormik from './AutoSaveWatchFormik'
 import SaveChip from './SaveChip'
 
 function getEmptyTableRow(columnsDef) {
@@ -62,6 +62,7 @@ function QuestionnaireBackgroundInfo({
   tableDef,
   columnsDef,
   assessmentTables,
+  tablesFetchedTimestamp,
   assessmentId,
   partNumber,
   criterionKey,
@@ -84,7 +85,7 @@ function QuestionnaireBackgroundInfo({
   useEffect(() => {
     setTableId(tableIdOrNull)
     setTableRows(rowsOrDefault)
-  }, [JSON.stringify(tableData)])
+  }, [tableIdOrNull, JSON.stringify(rowsOrDefault)])
 
   const [insertTableData] = useMutation(insertAssessmentTableDataMutation)
   const [updateTableData] = useMutation(updateAssessmentTableDataMutation)
@@ -164,15 +165,14 @@ function QuestionnaireBackgroundInfo({
         </SectionTitle>
       </Grid>
       <Grid item xs={9}>
-        <Formik
-          enableReinitialize
+        <AutoSaveWatchFormik
           initialValues={table}
+          initialValuesTimestamp={tablesFetchedTimestamp}
           onSubmit={(values, actions) => handleSaveTable(0, values, actions)}
           key={tableDef.key}
         >
-          {({ isSubmitting, dirty, values, setFieldValue }) => (
+          {({ saving }) => (
             <Form className={classes.section}>
-              <AutoSaveFormik />
               <Grid container direction="column" spacing={2}>
                 <Grid item container wrap="nowrap">
                   <Grid item xs>
@@ -200,7 +200,7 @@ function QuestionnaireBackgroundInfo({
                   <Grid item container spacing={2} justify="flex-end">
                     <Grid item>
                       <div className={classes.saveStatus}>
-                        <SaveChip dirty={dirty} />
+                        <SaveChip dirty={saving} />
                       </div>
                     </Grid>
                     <Grid item>
@@ -228,7 +228,7 @@ function QuestionnaireBackgroundInfo({
               </Grid>
             </Form>
           )}
-        </Formik>
+        </AutoSaveWatchFormik>
       </Grid>
     </Grid>
   )

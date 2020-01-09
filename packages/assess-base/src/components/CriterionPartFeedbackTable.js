@@ -6,7 +6,7 @@ import classnames from 'classnames'
 import get from 'lodash/get'
 import { useTranslation } from 'react-i18next'
 
-import { Formik, Form, Field } from 'formik'
+import { Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
 
 import ContextualHelp from '../components/ContextualHelp'
@@ -17,7 +17,7 @@ import {
 } from '../queries/assessments'
 
 import SaveChip from './SaveChip'
-import AutoSaveFormik from './AutoSaveFormik'
+import AutoSaveWatchFormik from './AutoSaveWatchFormik'
 
 function getEmptyTableRow(tableDef) {
   return tableDef.columns.reduce(
@@ -60,6 +60,7 @@ function CriterionPartFeedbackTable({
   classes,
   tableDef,
   assessmentFeedbackTables,
+  tablesFetchedTimestamp,
   assessmentId,
   pillarKey,
   criterionKey,
@@ -78,7 +79,7 @@ function CriterionPartFeedbackTable({
   useEffect(() => {
     setTableId(tableIdOrNull)
     setTableRows(rowsOrDefault)
-  }, [JSON.stringify(tableData)])
+  }, [tableIdOrNull, JSON.stringify(rowsOrDefault)])
 
   const [insertTableData] = useMutation(insertAssessmentFeedbackDataMutation)
   const [updateTableData] = useMutation(updateAssessmentFeedbackDataMutation)
@@ -170,17 +171,16 @@ function CriterionPartFeedbackTable({
         <Grid item xs />
       </Grid>
       {tables.map((initialValues, rowIndex, { length: totalRows }) => (
-        <Formik
-          enableReinitialize
+        <AutoSaveWatchFormik
           initialValues={initialValues}
+          initialValuesTimestamp={tablesFetchedTimestamp}
           onSubmit={(values, actions) =>
             handleSaveTable(rowIndex, values, actions)
           }
           key={`${tableDef.key}-${rowIndex}`}
         >
-          {({ isSubmitting, dirty }) => (
+          {({ saving }) => (
             <Form>
-              <AutoSaveFormik />
               <Grid container spacing={2}>
                 <Grid item container spacing={1} alignItems="baseline">
                   <Grid item>
@@ -253,10 +253,11 @@ function CriterionPartFeedbackTable({
                                   justify="flex-end"
                                   wrap="nowrap"
                                 >
-                                  {(rowIndex !== tableRows.length || dirty) && (
+                                  {(rowIndex !== tableRows.length ||
+                                    saving) && (
                                     <Grid item>
                                       <div className={classes.saveStatus}>
-                                        <SaveChip dirty={dirty} />
+                                        <SaveChip dirty={saving} />
                                       </div>
                                     </Grid>
                                   )}
@@ -286,7 +287,7 @@ function CriterionPartFeedbackTable({
               </Grid>
             </Form>
           )}
-        </Formik>
+        </AutoSaveWatchFormik>
       ))}
     </div>
   )

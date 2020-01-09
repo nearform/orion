@@ -76,7 +76,7 @@ function FeedbackReport({
   const { getUserTokenData } = useContext(AuthContext)
   const { isAdmin, isAssessor } = getUserTokenData()
 
-  const { data: assessmentData } = useAuthorizedWatch(
+  const { data: assessmentData, fetchedTimestamp } = useAuthorizedWatch(
     getAssessmentFeedbackReportData,
     { assessmentId },
     {
@@ -292,6 +292,7 @@ function FeedbackReport({
               name="advice"
               assessmentId={assessmentId}
               initialValue={assessmentData.advice || ''}
+              dataFetchedTimestamp={fetchedTimestamp}
               mutation={updateAssessmentAdviceMutation}
               canEdit={canEditSummaryAndAdvice}
               rows={6}

@@ -58,6 +58,7 @@ function QuestionnaireScoringTemplate({
   const {
     loading,
     isPreFetch,
+    fetchedTimestamp,
     error,
     data: assessmentData,
   } = useAuthorizedWatch(
@@ -163,6 +164,7 @@ function QuestionnaireScoringTemplate({
           columnsDef={table.columns || columnsDef}
           key={table.key}
           assessmentTables={assessmentData.tables}
+          tablesFetchedTimestamp={fetchedTimestamp}
           assessmentId={assessmentId}
           criterionKey={criterion.key}
           pillarKey={pillar.key}

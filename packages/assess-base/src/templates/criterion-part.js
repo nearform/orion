@@ -69,6 +69,7 @@ function CriterionPartTemplate({
   const {
     loading,
     isPreFetch,
+    fetchedTimestamp,
     error,
     data: assessmentData,
     refetch: fetchAssessmentPartData,
@@ -169,6 +170,7 @@ function CriterionPartTemplate({
             columnsDef={table.columns || columnsDef}
             key={table.key}
             assessmentTables={assessmentData.tables}
+            tablesFetchedTimestamp={fetchedTimestamp}
             assessmentId={assessmentId}
             criterionKey={criterion.key}
             pillarKey={pillar.key}
@@ -212,6 +214,7 @@ function CriterionPartTemplate({
             tableDef={tableDef}
             key={tableDef.key}
             assessmentFeedbackTables={assessmentData.feedbackTables}
+            tablesFetchedTimestamp={fetchedTimestamp}
             assessmentId={assessmentId}
             criterionKey={criterion.key}
             pillarKey={pillar.key}
