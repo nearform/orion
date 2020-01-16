@@ -29,12 +29,37 @@ Shared secrets are stored in a vault. Get in touch with a team member to get acc
 ## Contributing
 
 1. Clone the project.
-2. Pick an issue to work on from the project board.
-3. Work on a new branch using the convention `{change type}/{change name}`. For instance `feature/signup-form` or `fix/broken-signup form`.
-4. Commit changes using conventional commits via Commitizen: `git cz`. This requires installing [Commitizen](http://commitizen.github.io/cz-cli/) first.
-5. Reference the issue in the commit message (the conventional commits wizard prompts for that at some point), for instance `Fixes #12`. Doing this, GitHub will close the issue once the PR that references it in this way gets merged.
-6. Create a pull request and get someone to review it.
-7. Once approved, you as the author of the PR should merge it.
+1. Pick a story to work on from the clubhouse project.
+1. Work on a new branch, using the [name suggested by clubhouse](https://help.clubhouse.io/hc/en-us/articles/207540323-Using-the-Clubhouse-GitHub-Integration-with-Branches-and-Pull-Requests) by clicking on the github helpers button on your story. Clubhouse will use the convention `{username}/ch{story number}/{story-summary}`. For example `codyzu/ch81/poc-automatic-versioning-in-ci`.
+   ![clubhouse branch name](../images/clubhouse-branch-name.jpg)
+1. Commit changes using conventional commits via [Commitizen](http://commitizen.github.io/cz-cli/):
+   1. `yarn commit` from the repo root
+   1. `git cz` if you have installed Commitizen globally with npm
+   1. `npx git-cz` from anywhere in the repo. _Note: this runs git-cz directly, skipping commitizen and disabling its ability to [`--retry` commits](https://github.com/commitizen/cz-cli#retrying-failed-commits)._
+   1. your favorite tool ⚠️ Warning: commit messages are linted. See details below.
+   
+   💡Options 1 and 2 above, support commitizen's ability to [`--retry` failed commit attempts](https://github.com/commitizen/cz-cli#retrying-failed-commits) (due to linting or other reasons).
+1. Follow the [conventional-commits](https://www.conventionalcommits.org/en/v1.0.0/) commit conventions. Generally, the format should match:
+
+   ```
+   <type>[(<scope>)]: <subject>
+   ```
+
+   where the scope is optional.
+
+   **⚠️ Commit messages are linted!!!**
+
+   💡 Use Commitizen as described in the previous step to ensure correctly formatted messages.
+
+   💡 Include the clubhouse story tag in your commit messages to create a link between your story and github. Clubhouse uses the form `[ch1234]` where 1234 is the story number. If using Commitizen, use the entire tag, `[ch1234]`, in the "Issues this commit closes" prompt.
+
+   🚑 _In case of emergency_ (or when rebasing), you can disable commit linting by deactivating git hooks with either of the following:
+
+   - `git commit --no-verify ...`
+   - `HUSKY_SKIP_HOOKS=1 git ...`
+
+1. Create a pull request and get someone to review it.
+1. Once approved, you as the author of the PR should merge it.
 
 ## Running the application
 
