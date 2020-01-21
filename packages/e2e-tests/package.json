@@ -1,9 +1,10 @@
 {
   "name": "e2e-tests",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "local.js",
   "scripts": {
+    "commit": "cd .. && yarn commit",
     "e2e-test": "npx testcafe --color",
     "chrome-local": "npx testcafe chrome ./local.js",
     "chrome-hosted": "npx testcafe chrome ./hosted.js",

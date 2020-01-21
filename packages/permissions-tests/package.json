@@ -1,9 +1,10 @@
 {
   "name": "permissions-tests",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "commit": "cd .. && yarn commit",
     "pretest": "npm run migrate:all",
     "dev:test": "env-cmd -f async-env.js jest",
     "migrate:all": "npm run migrate:common -- apply && npm run migrate:assess-base -- apply",

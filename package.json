@@ -10,6 +10,7 @@
     ]
   },
   "scripts": {
+    "commit": "node_modules/commitizen/bin/git-cz",
     "bootstrap": "lerna bootstrap --concurrency=2",
     "build": "./scripts/patch-core-count.sh && lerna run build",
     "artifact:create": "lerna run artifact:create",
@@ -21,7 +22,6 @@
     "lint": "npm run generate-schema && npm run lint-files",
     "dev:lint": "npm run dev:generate-schema && npm run lint-files",
     "lint:fix": "eslint --fix --ext .js --ext .graphql .",
-    "postcommit": "git update-index --again",
     "dev:generate-schema": "graphql get-schema --dotenv packages/knowledge-base/.env.development --output=hasura-schema.json",
     "generate-schema": "graphql get-schema --output=hasura-schema.json",
     "start:ab": "lerna exec --scope=assess-base npm start",
@@ -30,7 +30,8 @@
     "e2e-test": "lerna run --scope=e2e-tests --stream --no-prefix e2e-test -- ",
     "dev:e2e-test": "npm run e2e-test -- ./local.js -- --screenshots-on-fails",
     "hosted:e2e-test": "npm run e2e-test -- ./hosted.js -- --screenshots-on-fails",
-    "ci:e2e-test": "start-server-and-test 'start:apps' http-get://localhost:8000 'npm run e2e-test ./local.js'"
+    "ci:e2e-test": "start-server-and-test 'start:apps' http-get://localhost:8000 'npm run e2e-test ./local.js'",
+    "ci:version": "lerna version --conventional-commits"
   },
   "repository": {
     "type": "git",
@@ -44,8 +45,10 @@
   },
   "homepage": "https://github.com/nearform/orion#readme",
   "devDependencies": {
+    "@commitlint/cli": "^8.3.4",
+    "@commitlint/config-conventional": "^8.3.4",
     "babel-eslint": "^10.0.1",
-    "cz-conventional-changelog": "^2.1.0",
+    "commitizen": "^4.0.3",
     "docsify-cli": "^4.3.0",
     "dotenv": "^8.0.0",
     "eslint": "^5.16.0",
@@ -60,6 +63,7 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "eslint-plugin-testcafe": "^0.2.1",
+    "git-cz": "^3.3.0",
     "graphql": "^14.2.1",
     "graphql-cli": "^3.0.13",
     "husky": "^1.3.1",
@@ -72,12 +76,19 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "git-cz"
     }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
   "husky": {
     "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged && pretty-quick --staged --pattern '**/*.graphql'",
+      "post-commit": "git update-index --again",
       "pre-push": "npm run dev:lint"
     }
   },

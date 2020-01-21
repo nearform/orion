@@ -1,10 +1,11 @@
 {
   "name": "functions",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "private": true,
   "main": "index.js",
   "scripts": {
+    "commit": "cd .. && yarn commit",
     "build": "webpack -p",
     "test": "jest",
     "test:watch": "npm run test -- --watch",
