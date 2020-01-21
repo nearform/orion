@@ -5,6 +5,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
+    "commit": "cd .. && yarn commit",
     "build": "webpack -p",
     "test": "jest",
     "test:watch": "npm run test -- --watch",

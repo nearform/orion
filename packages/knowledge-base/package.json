@@ -86,6 +86,7 @@
     "./utils/i18n.js"
   ],
   "scripts": {
+    "commit": "cd .. && yarn commit",
     "build": "gatsby build",
     "develop": "gatsby develop -p 8001",
     "format": "prettier --write src/**/*.{js,jsx}",
