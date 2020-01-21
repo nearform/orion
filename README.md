@@ -1,6 +1,6 @@
 [![Logo][logo-img]][docs]
 
-[![CircleCI](https://circleci.com/gh/nearform/raw-salmon.svg?style=svg&circle-token=0ce58bd80ab2db1fd16b1eca28dba58c62588a74)](https://circleci.com/gh/nearform/raw-salmon)
+[![CircleCI](https://circleci.com/gh/nearform/orion.svg?style=svg&circle-token=0ce58bd80ab2db1fd16b1eca28dba58c62588a74)](https://circleci.com/gh/nearform/orion)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
 This repository is a collection of packages that can be used as a foundation for a statically built, GraphQL-driven knowledge platform.
@@ -20,8 +20,8 @@ To clean the project's package dependencies use `yarn run clean`.
 To get started quickly, check out these useful links:
 
 - [Documentation][docs]
-- [Demo](https://raw-salmon.nearform.com)
-- [Storybook](https://raw-salmon-storybook.nearform.com)
+- [Demo](https://orion.nearform.com)
+- [Storybook](https://orion-storybook.nearform.com)
 
 ## Repo structure
 
@@ -29,7 +29,7 @@ The application is stored in a [lerna](https://github.com/lerna/lerna) monorepo.
 
 ### [./.circleci](./.circleci)
 
-CircleCI [project](https://circleci.com/gh/nearform/raw-salmon) continuous integration configuration.
+CircleCI [project](https://circleci.com/gh/nearform/orion) continuous integration configuration.
 
 ### [./packages/hasura](./packages/hasura)
 
@@ -81,4 +81,4 @@ End-to-end tests using TestCafe. Requires environment variables to run, see
 
 
 [logo-img]: docs/images/Accel_Logo_Orion.svg
-[docs]: https://nearform.github.io/raw-salmon
+[docs]: https://nearform.github.io/orion

@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "author": "NearForm",
   "bugs": {
-    "url": "https://github.com/nearform/raw-salmon/issues"
+    "url": "https://github.com/nearform/orion/issues"
   },
   "dependencies": {
     "@aws-amplify/analytics": "1.2.16",
@@ -80,7 +80,7 @@
   "main": "exports.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/raw-salmon.git"
+    "url": "git+https://github.com/nearform/orion.git"
   },
   "sideEffects": [
     "./utils/i18n.js"

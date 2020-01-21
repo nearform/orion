@@ -1,7 +1,7 @@
 {
   "name": "assess-base-hasura",
   "private": true,
-  "description": "Raw-salmon assess base database",
+  "description": "Orion assess base database",
   "version": "1.0.0",
   "author": "NearForm",
   "scripts": {

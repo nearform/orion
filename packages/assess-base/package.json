@@ -78,7 +78,7 @@
   "main": "n/a",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/raw-salmon.git"
+    "url": "git+https://github.com/nearform/orion.git"
   },
   "scripts": {
     "build": "gatsby build",

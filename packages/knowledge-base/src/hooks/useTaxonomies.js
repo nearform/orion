@@ -4,7 +4,7 @@ import get from 'lodash/get'
 const useTaxonomies = (taxonomyData = []) => {
   const taxonomyQueryResult = useStaticQuery(graphql`
     query {
-      raw_salmon {
+      orion {
         taxonomy_type(order_by: [{ order_index: asc }]) {
           name
           key
@@ -17,7 +17,7 @@ const useTaxonomies = (taxonomyData = []) => {
       }
     }
   `)
-  const taxonomyTypes = get(taxonomyQueryResult, 'raw_salmon.taxonomy_type', [])
+  const taxonomyTypes = get(taxonomyQueryResult, 'orion.taxonomy_type', [])
   const taxonomyIds = taxonomyData.filter((val, i, a) => a.indexOf(val) === i) // removes duplicates
 
   for (let type of taxonomyTypes) {

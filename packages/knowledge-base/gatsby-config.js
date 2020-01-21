@@ -103,8 +103,8 @@ const plugins = [
   {
     resolve: 'gatsby-source-graphql',
     options: {
-      typeName: 'RawSalmon',
-      fieldName: 'raw_salmon',
+      typeName: 'Orion',
+      fieldName: 'orion',
       url: process.env.GATSBY_GRAPHQL_API,
       headers: {
         'x-hasura-admin-secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET,

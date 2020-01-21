@@ -1,5 +1,5 @@
 {
-  "name": "raw-salmon",
+  "name": "orion",
   "version": "1.0.0",
   "description": "The goto knowledge base",
   "private": true,
@@ -34,15 +34,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/raw-salmon.git"
+    "url": "git+https://github.com/nearform/orion.git"
   },
   "keywords": [],
   "author": "NearForm",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nearform/raw-salmon/issues"
+    "url": "https://github.com/nearform/orion/issues"
   },
-  "homepage": "https://github.com/nearform/raw-salmon#readme",
+  "homepage": "https://github.com/nearform/orion#readme",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "cz-conventional-changelog": "^2.1.0",

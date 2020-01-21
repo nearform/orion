@@ -1,6 +1,6 @@
 module.exports = `
 {
-  raw_salmon {
+  orion {
     user {
       id
       first_name

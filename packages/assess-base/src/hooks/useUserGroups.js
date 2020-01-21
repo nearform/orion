@@ -8,7 +8,7 @@ export default function useUserGroups() {
   const groups = useStaticQuery(
     graphql`
       query {
-        raw_salmon {
+        orion {
           group {
             id
             type

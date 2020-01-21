@@ -5,7 +5,7 @@ import find from 'lodash/find'
 
 const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
-const CUSTOM_CLAIMS_NAMESPACE = 'x-raw-salmon-claims'
+const CUSTOM_CLAIMS_NAMESPACE = 'x-orion-claims'
 const CUSTOM_CLAIMS_CONTRIBUTOR_KEY = 'x-assess-base-contributor'
 const CUSTOM_CLAIMS_ASSESSOR_KEY = 'x-assess-base-assessor'
 const HASURA_DEFAULT_ROLE_KEY = 'x-hasura-default-role'
@@ -107,7 +107,7 @@ const getUserBaseRole = () => {
 const getUserGroup = () => {
   const taxonomyQueryResult = useStaticQuery(graphql`
     query {
-      raw_salmon {
+      orion {
         group {
           id
           type
@@ -119,7 +119,7 @@ const getUserGroup = () => {
 
   try {
     const groupId = extractTokenPayload(HASURA_GROUP_ID)
-    return find(taxonomyQueryResult.raw_salmon.group, { id: groupId })
+    return find(taxonomyQueryResult.orion.group, { id: groupId })
   } catch (err) {
     return null
   }

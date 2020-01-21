@@ -15,7 +15,7 @@ Hasura is a third-party package that provides common backend features around a P
 
  - Permissions:
    - Hasura applies table and row level permissions. These can be viewed in the Permissions tab for any table in the Data section of the Hasura console.
-   - The "Roles" are defined in the `functions` package, using a lambda to extract data from a raw-salmon user's JWT
+   - The "Roles" are defined in the `functions` package, using a lambda to extract data from an Orion user's JWT
    - Hasura migrations that change permissions typically involve removing all previous permissions on a table, and adding a new set including or missing the permission(s) that were added or removed. Be aware that this can therefore have unintended side effects if any changes have been made from any source other than the current hasura migrations directory.
 
 
@@ -66,7 +66,7 @@ _4_ **Get a dump file of the current shared Hasura content**, using the Hasura A
 
 ```sh
 SECRET=<insert here>
-curl -H "x-hasura-admin-secret: $SECRET" -d'{"opts": ["--data-only", "-Fc"]}' https://raw-salmon-hasura.nearform.com/v1alpha1/pg_dump > dumpfile
+curl -H "x-hasura-admin-secret: $SECRET" -d'{"opts": ["--data-only", "-Fc"]}' https://orion-hasura.nearform.com/v1alpha1/pg_dump > dumpfile
 
 ```
 

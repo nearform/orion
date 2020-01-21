@@ -83,7 +83,7 @@ describe('ProtectedRoute', () => {
               'x-hasura-default-role': 'admin',
               'x-hasura-group-id': null,
             }),
-            'x-raw-salmon-claims': JSON.stringify({
+            'x-orion-claims': JSON.stringify({
               'x-assess-base-contributor': false,
               'x-assess-base-assessor': false,
             }),

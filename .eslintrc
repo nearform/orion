@@ -49,7 +49,7 @@
       "warn",
       {
         "env": "literal",
-        "projectName": "raw-salmon",
+        "projectName": "orion",
         "validators": "all",
         "schemaJsonFilepath": "hasura-schema.json"
         // no need to specify schema here, it will be automatically determined using .graphqlconfig

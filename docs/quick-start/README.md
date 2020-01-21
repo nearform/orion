@@ -7,9 +7,9 @@
 ### 1. Clone and install dependencies
 
 ```
-git clone https://github.com/nearform/raw-salmon.git
+git clone https://github.com/nearform/orion.git
 
-cd raw-salmon
+cd orion
 
 yarn
 ```
@@ -55,7 +55,7 @@ yarn start:apps
 
 The components package contains storybook stories to document and test the components contained therein.
 
-A hosted version of the storybook stories is running at https://raw-salmon-storybook.nearform.com
+A hosted version of the storybook stories is running at https://orion-storybook.nearform.com
 
 ```
 cd packages/components

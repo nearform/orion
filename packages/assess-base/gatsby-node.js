@@ -307,7 +307,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const usersQueryResults = await graphql(`
     {
-      raw_salmon {
+      orion {
         user {
           id
           first_name
@@ -335,7 +335,7 @@ exports.createPages = async ({ graphql, actions }) => {
   if (usersQueryResults.errors) {
     throw usersQueryResults.errors
   }
-  usersQueryResults.data.raw_salmon.user.forEach(user => {
+  usersQueryResults.data.orion.user.forEach(user => {
     const path = `/profile/${user.id}`
     createPage({
       path,
