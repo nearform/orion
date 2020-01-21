@@ -32,13 +32,14 @@ Shared secrets are stored in a vault. Get in touch with a team member to get acc
 1. Pick a story to work on from the clubhouse project.
 1. Work on a new branch, using the [name suggested by clubhouse](https://help.clubhouse.io/hc/en-us/articles/207540323-Using-the-Clubhouse-GitHub-Integration-with-Branches-and-Pull-Requests) by clicking on the github helpers button on your story. Clubhouse will use the convention `{username}/ch{story number}/{story-summary}`. For example `codyzu/ch81/poc-automatic-versioning-in-ci`.
    ![clubhouse branch name](../images/clubhouse-branch-name.jpg)
-1. Commit changes using conventional commits via [Commitizen](http://commitizen.github.io/cz-cli/):
-   1. `yarn commit` from the repo root
-   1. `git cz` if you have installed Commitizen globally with npm
-   1. `npx git-cz` from anywhere in the repo. _Note: this runs git-cz directly, skipping commitizen and disabling its ability to [`--retry` commits](https://github.com/commitizen/cz-cli#retrying-failed-commits)._
-   1. your favorite tool ⚠️ Warning: commit messages are linted. See details below.
+1. Commit changes:
+   1. `yarn commit` in the console
+      
+      **This is the easy way** and will guide you through the commit conventions 🤖! If your commit fails (linting or other problems), it can retried with `yarn commit --retry` (see [commitizen's docs](https://github.com/commitizen/cz-cli#retrying-failed-commits) for details).
+   1. your favorite tool
    
-   💡Options 1 and 2 above, support commitizen's ability to [`--retry` failed commit attempts](https://github.com/commitizen/cz-cli#retrying-failed-commits) (due to linting or other reasons).
+      ⚠️ Warning: no matter what tool you use, commit messages are linted. See details below.
+   
 1. Follow the [conventional-commits](https://www.conventionalcommits.org/en/v1.0.0/) commit conventions. Generally, the format should match:
 
    ```

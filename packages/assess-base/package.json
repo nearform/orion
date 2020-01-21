@@ -81,6 +81,7 @@
     "url": "git+https://github.com/nearform/raw-salmon.git"
   },
   "scripts": {
+    "commit": "cd .. && yarn commit",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",

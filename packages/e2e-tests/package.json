@@ -4,6 +4,7 @@
   "description": "",
   "main": "local.js",
   "scripts": {
+    "commit": "cd .. && yarn commit",
     "e2e-test": "npx testcafe --color",
     "chrome-local": "npx testcafe chrome ./local.js",
     "chrome-hosted": "npx testcafe chrome ./hosted.js",
