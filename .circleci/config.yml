@@ -191,6 +191,7 @@ workflows:
               ignore:
                 - staging
                 - production
+                - feature/terraform
       - build:
           requires:
             - setup
@@ -212,6 +213,7 @@ workflows:
               only:
                 - staging
                 - production
+                - feature/terraform
       - apply-hasura-migrations:
           requires:
             - setup
