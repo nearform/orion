@@ -2,7 +2,7 @@
   "name": "assess-base-hasura",
   "private": true,
   "description": "Raw-salmon assess base database",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "author": "NearForm",
   "scripts": {
     "console": "env-cmd .env hasura console",
