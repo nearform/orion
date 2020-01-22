@@ -41,7 +41,7 @@ module "rds" {
   port                   = "5432"
   backup_window          = "03:00-06:00"
   maintenance_window     = "Mon:00:00-Mon:03:00"
-  subnet_ids             = ["${aws_subnet.public.*.id}", "${aws_subnet.private.*.id}"]
+  subnet_ids             = ["${aws_subnet.hasura_ecs.*.id}", "${aws_subnet.hasura_rds.*.id}"]
   vpc_security_group_ids = ["${aws_vpc.main.default_security_group_id}", "${aws_security_group.rds.id}"]
   deletion_protection    = false
   tags                   = "${merge(var.default_tags, map("Name", "${var.project_name}"))}"

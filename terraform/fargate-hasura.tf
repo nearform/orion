@@ -58,7 +58,7 @@ resource "aws_route53_record" "ecs_alb" {
 
 resource "aws_alb" "hasura" {
   name            = "${var.project_name}-ecs-hasura"
-  subnets         = ["${aws_subnet.public.*.id}"]
+  subnets         = ["${aws_subnet.hasura_ecs.*.id}"]
   security_groups = ["${aws_security_group.lb.id}"]
   tags            = "${var.default_tags}"
 }
@@ -162,8 +162,9 @@ resource "aws_ecs_service" "hasura" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    security_groups = ["${aws_security_group.hasura.id}"]
-    subnets         = ["${aws_subnet.private.*.id}"]
+    assign_public_ip  = true
+    security_groups   = ["${aws_security_group.hasura.id}"]
+    subnets           = ["${aws_subnet.hasura_ecs.*.id}"]
   }
 
   load_balancer {
