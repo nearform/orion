@@ -1,5 +1,0 @@
-mutation updateAssessmentStatus($id: Int!, $status: String!) {
-  update_assessment(where: { id: { _eq: $id } }, _set: { status: $status }) {
-    affected_rows
-  }
-}
