@@ -172,13 +172,13 @@ jobs:
       - *install_hasura_cli
       - *load_envars
       - run:
-          name: Apply Hasura migrations
-          command: |
-            hasura migrate apply --project packages/hasura
-      - run:
           name: Apply Assess-base Hasura migrations
           command: |
             hasura migrate apply --project packages/assess-base-hasura
+      - run:
+          name: Apply Hasura migrations
+          command: |
+            hasura migrate apply --project packages/hasura
       - run:
           name: Seed DB with data
           command: |
