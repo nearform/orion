@@ -176,6 +176,10 @@ jobs:
           command: |
             hasura migrate apply --project packages/hasura
       - run:
+          name: Apply Assess-base Hasura migrations
+          command: |
+            hasura migrate apply --project packages/assess-base-hasura
+      - run:
           name: Seed DB with data
           command: |
             export HASURA_GRAPHQL_API=${GATSBY_GRAPHQL_API}
