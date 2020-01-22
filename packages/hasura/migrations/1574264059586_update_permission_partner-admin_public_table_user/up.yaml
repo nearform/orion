@@ -8,7 +8,6 @@
     permission:
       allow_aggregations: true
       columns:
-      - active
       - avatar
       - biography
       - cognito_id
