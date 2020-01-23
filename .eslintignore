@@ -4,6 +4,7 @@ docs
 packages/components/storybook-static
 packages/functions/build
 /hasura-schema.json
+terraform
 
 # ingore the build result.
 packages/knowledge-base/.cache
