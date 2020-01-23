@@ -1,5 +1,0 @@
-- args:
-    name: assessment_tables
-    new_name: tables
-    table: assessment
-  type: rename_relationship

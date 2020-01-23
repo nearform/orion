@@ -47,14 +47,14 @@ exports.createPages = async ({ graphql, actions }) => {
   if (taxonomiesQueryResults.errors) {
     throw taxonomiesQueryResults.errors
   }
-  const taxonomies = get(taxonomiesQueryResults, 'data.raw_salmon.taxonomy', [])
+  const taxonomies = get(taxonomiesQueryResults, 'data.orion.taxonomy', [])
 
   const articlesByTaxonomiesData = await Promise.all(
     taxonomies.map(async taxonomy => {
       const results = await graphql(getArticlesByTaxonomyQuery, {
         taxonomy: taxonomy.key,
       })
-      return get(results, 'data.raw_salmon', [])
+      return get(results, 'data.orion', [])
     })
   )
   const articlesByTaxonomies = zipWith(
@@ -114,11 +114,7 @@ exports.createPages = async ({ graphql, actions }) => {
   if (articlesQueryResults.errors) {
     throw articlesQueryResults.errors
   }
-  const publishedArticles = get(
-    articlesQueryResults,
-    'data.raw_salmon.article',
-    []
-  )
+  const publishedArticles = get(articlesQueryResults, 'data.orion.article', [])
   publishedArticles.forEach(articleSummary => {
     const path = `/content/${articleSummary.path}`
     createPage({
@@ -137,7 +133,7 @@ exports.createPages = async ({ graphql, actions }) => {
   if (usersQueryResults.errors) {
     throw usersQueryResults.errors
   }
-  const users = get(usersQueryResults, 'data.raw_salmon.user', [])
+  const users = get(usersQueryResults, 'data.orion.user', [])
   users.forEach(user => {
     const path = `/profile/${user.id}`
     createPage({

@@ -1,6 +1,6 @@
 {
   "projects": {
-    "raw-salmon": {
+    "orion": {
       "schemaPath": "hasura-schema.json",
       "includes": [
         "*.graphql"

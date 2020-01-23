@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."assessment" ADD COLUMN "key_information" jsonb NULL
-  type: run_sql

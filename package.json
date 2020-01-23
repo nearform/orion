@@ -1,5 +1,5 @@
 {
-  "name": "raw-salmon",
+  "name": "orion",
   "version": "1.0.0",
   "description": "The goto knowledge base",
   "private": true,
@@ -24,9 +24,8 @@
     "lint:fix": "eslint --fix --ext .js --ext .graphql .",
     "dev:generate-schema": "graphql get-schema --dotenv packages/knowledge-base/.env.development --output=hasura-schema.json",
     "generate-schema": "graphql get-schema --output=hasura-schema.json",
-    "start:ab": "lerna exec --scope=assess-base npm start",
     "start:kb": "lerna exec --scope=knowledge-base npm start",
-    "start:apps": "npm run start:ab & npm run start:kb",
+    "start:apps": "npm run start:kb",
     "e2e-test": "lerna run --scope=e2e-tests --stream --no-prefix e2e-test -- ",
     "dev:e2e-test": "npm run e2e-test -- ./local.js -- --screenshots-on-fails",
     "hosted:e2e-test": "npm run e2e-test -- ./hosted.js -- --screenshots-on-fails",
@@ -35,15 +34,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/raw-salmon.git"
+    "url": "git+https://github.com/nearform/orion.git"
   },
   "keywords": [],
   "author": "NearForm",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nearform/raw-salmon/issues"
+    "url": "https://github.com/nearform/orion/issues"
   },
-  "homepage": "https://github.com/nearform/raw-salmon#readme",
+  "homepage": "https://github.com/nearform/orion#readme",
   "devDependencies": {
     "@commitlint/cli": "^8.3.4",
     "@commitlint/config-conventional": "^8.3.4",

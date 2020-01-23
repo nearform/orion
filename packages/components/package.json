@@ -26,7 +26,8 @@
     "nearform-theme": "^0.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-helmet": "^5.2.1"
+    "react-helmet": "^5.2.1",
+    "react-twemoji": "^0.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",

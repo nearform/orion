@@ -19,7 +19,7 @@ get_envars: &get_envars
     run:
       name: Get environment variables from AWS
       environment:
-        ORG: "digitalefqm"
+        ORG: "orion"
       command: |
         if [ "$CIRCLE_BRANCH" == "production" ]; then
             export AWS_DEFAULT_REGION=${PRODUCTION_AWS_REGION}
@@ -44,8 +44,7 @@ get_envars: &get_envars
         echo "export HASURA_GRAPHQL_ENDPOINT=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ENDPOINT --with-decryption --query Parameters[0].Value --output=text)" >> .env
         echo "export HASURA_GRAPHQL_ADMIN_SECRET=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ADMIN_SECRET --with-decryption --query Parameters[0].Value --output=text)" >> .env
         echo "export ARTIFACTS_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/s3_deploy_artifacts --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export ASSESSBASE_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/assessbase_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export KNOWLEDGEBASE_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/knowledgebase_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
+        echo "export APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
         echo "export STORYBOOK_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/storybook_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
 
 
@@ -125,11 +124,8 @@ jobs:
       - *load_envars
       - *install_awscli
       - run:
-          name: Deploy assess-base bundle to S3
-          command: aws s3 sync packages/assess-base/public ${ASSESSBASE_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
-      - run:
           name: Deploy knowledge-base bundle to S3
-          command: aws s3 sync packages/knowledge-base/public ${KNOWLEDGEBASE_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+          command: aws s3 sync packages/knowledge-base/public ${APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
       - run:
           name: Deploy storybook bundle to S3
           command: aws s3 sync packages/components/storybook-static ${STORYBOOK_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
@@ -137,12 +133,12 @@ jobs:
           name: Deploy jwt-enrichment-hook Lambda function
           command: |
             zip jwt-enrichment-hook.zip -FSj packages/functions/build/jwt-enrichment-hook.js
-            aws lambda update-function-code --function-name rawsalmon_jwt_enrichment_hook --zip-file fileb://jwt-enrichment-hook.zip
+            aws lambda update-function-code --function-name orion_jwt_enrichment_hook --zip-file fileb://jwt-enrichment-hook.zip
       - run:
           name: Deploy signup-hook Lambda function
           command: |
             zip signup-hook.zip -FSj packages/functions/build/signup-hook.js
-            aws lambda update-function-code --function-name rawsalmon_signup_hook --zip-file fileb://signup-hook.zip
+            aws lambda update-function-code --function-name orion_signup_hook --zip-file fileb://signup-hook.zip
   publish-artifacts:
     <<: *deploy_environment
     steps:
@@ -159,19 +155,15 @@ jobs:
             echo 'export ENRICHMENT_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-enrichment-hook --silent`"' >> $BASH_ENV
             echo 'export SIGNUP_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-signup-hook --silent`"' >> $BASH_ENV
             echo 'export HASURA_ARTIFACT="packages/`cd packages/hasura && npm run artifact:name --silent`"' >> $BASH_ENV
-            echo 'export ASSESS_BASE_ARTIFACT="packages/assess-base/`cd packages/assess-base && npm run artifact:name --silent`"' >> $BASH_ENV
-            echo 'export KNOWLEDGE_BASE_ARTIFACT="packages/knowledge-base/`cd packages/knowledge-base && npm run artifact:name --silent`"' >> $BASH_ENV
-            echo 'export ASSESS_BASE_HASURA_ARTIFACT="packages/`cd packages/assess-base-hasura && npm run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export APP_ARTIFACT="packages/knowledge-base/`cd packages/knowledge-base && npm run artifact:name --silent`"' >> $BASH_ENV
       - *install_awscli
       - run:
           name: Copy artifacts to S3 bucket
           command: |
-            aws s3 cp ${ASSESS_BASE_ARTIFACT} ${ARTIFACTS_BUCKET}
-            aws s3 cp ${KNOWLEDGE_BASE_ARTIFACT} ${ARTIFACTS_BUCKET}
+            aws s3 cp ${APP_ARTIFACT} ${ARTIFACTS_BUCKET}
             aws s3 cp ${ENRICHMENT_ARTIFACT} ${ARTIFACTS_BUCKET}
             aws s3 cp ${SIGNUP_ARTIFACT} ${ARTIFACTS_BUCKET}
             aws s3 cp ${HASURA_ARTIFACT} ${ARTIFACTS_BUCKET}
-            aws s3 cp ${ASSESS_BASE_HASURA_ARTIFACT} ${ARTIFACTS_BUCKET}
   apply-hasura-migrations:
     <<: *deploy_environment
     steps:
@@ -183,10 +175,6 @@ jobs:
           name: Apply Hasura migrations
           command: |
             hasura migrate apply --project packages/hasura
-      - run:
-          name: Apply Assess-base Hasura migrations
-          command: |
-            hasura migrate apply --project packages/assess-base-hasura
       - run:
           name: Seed DB with data
           command: |

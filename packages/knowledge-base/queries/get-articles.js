@@ -1,6 +1,6 @@
 module.exports = `
 {
-  raw_salmon {
+  orion {
     article(where: { status: { _eq: "published" } }) {
       primary_taxonomy: taxonomy_items(
         limit: 1

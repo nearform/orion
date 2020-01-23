@@ -1,6 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."assessment" ADD COLUMN "exec_summary" text NULL
-  type: run_sql
-- args:
-    sql: ALTER TABLE "public"."assessment" ADD COLUMN "advice" text NULL
-  type: run_sql

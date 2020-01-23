@@ -7,7 +7,6 @@
 - args:
     permission:
       columns:
-      - active
       - avatar
       - biography
       - cognito_id

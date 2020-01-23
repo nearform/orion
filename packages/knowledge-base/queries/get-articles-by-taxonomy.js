@@ -1,6 +1,6 @@
 module.exports = `
 query getArticlesByTaxonomy($taxonomy:String!) {
-  raw_salmon {
+  orion {
     article(where: {
       _and: [
         { status: { _eq: "published" } },

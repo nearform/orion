@@ -1,3 +1,0 @@
-- args:
-    sql: DROP TABLE "public"."assessment_criterion_data"
-  type: run_sql
