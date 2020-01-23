@@ -1,5 +1,6 @@
 // shared mui theme
 export { default as ThemeWrapper, theme } from '../theme.es.js'
+export { default as PaddedContainer } from './components/PaddedContainer'
 
 // status chips
 export {
