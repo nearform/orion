@@ -1,8 +1,0 @@
-mutation updateAssessmentKeyInfo($id: Int!, $keyInfo: jsonb!) {
-  update_assessment(
-    where: { id: { _eq: $id } }
-    _set: { key_information: $keyInfo }
-  ) {
-    affected_rows
-  }
-}

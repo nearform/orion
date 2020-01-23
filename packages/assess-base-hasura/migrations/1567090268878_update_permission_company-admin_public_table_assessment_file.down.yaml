@@ -1,6 +1,0 @@
-- args:
-    role: company-admin
-    table:
-      name: assessment_file
-      schema: public
-  type: drop_select_permission

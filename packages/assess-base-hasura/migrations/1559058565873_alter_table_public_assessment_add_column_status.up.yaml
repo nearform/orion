@@ -1,4 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."assessment" ADD COLUMN "status" text NOT NULL DEFAULT
-      'in-progress'
-  type: run_sql

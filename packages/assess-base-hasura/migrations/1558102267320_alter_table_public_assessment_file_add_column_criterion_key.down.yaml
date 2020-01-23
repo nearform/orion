@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."assessment_file" DROP COLUMN "criterion_key"
-  type: run_sql

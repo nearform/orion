@@ -1,8 +1,0 @@
-- args:
-    name: assessment
-    table:
-      name: assessment_table
-      schema: public
-    using:
-      foreign_key_constraint_on: assessment_id
-  type: create_object_relationship
