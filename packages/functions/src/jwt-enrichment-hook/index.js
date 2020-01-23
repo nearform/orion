@@ -6,7 +6,6 @@ import {
 } from './user-roles'
 import { getUserGroup } from './user-groups'
 import getUserByCognitoId from './graphql/get-user-by-cognito-id.graphql'
-import { getCustomClaims } from './custom-claims'
 import pino from 'pino'
 const logger = pino()
 
@@ -40,7 +39,6 @@ export const handler = async event => {
               'x-hasura-user-id': user.id.toString(),
               'x-hasura-group-id': userGroup.id.toString(),
             }),
-            ...getCustomClaims(user),
           },
         },
       }

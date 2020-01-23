@@ -4,11 +4,6 @@ import { withStyles, Chip, Typography } from '@material-ui/core'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import ClearIcon from '@material-ui/icons/Clear'
 
-export const PARTICIPANT_TYPE = {
-  assessor: 'Assessor',
-  contributor: 'Contributor',
-}
-
 function TypedChip({ type, color, name, onDelete, classes }) {
   const { type: typeClass, ...chipClasses } = classes
   return (

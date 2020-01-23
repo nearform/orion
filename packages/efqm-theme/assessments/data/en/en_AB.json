@@ -1,9 +1,0 @@
-{
-  "translation": {
-    "Delete File": "Delete File {{fileName}}?",
-    "PART OF": "CRITERION-PART {{part}} OF {{total}}",
-    "SECTION OF": "SECTION {{part}} OF {{total}}",
-    "Submit Assessment Filename": "Submit assessment {{fileName}}?",
-    "Submit report for": "Submit report for {{fileName}}?"
-  }
-}

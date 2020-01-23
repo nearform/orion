@@ -6,8 +6,6 @@ import find from 'lodash/find'
 const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
 const CUSTOM_CLAIMS_NAMESPACE = 'x-orion-claims'
-const CUSTOM_CLAIMS_CONTRIBUTOR_KEY = 'x-assess-base-contributor'
-const CUSTOM_CLAIMS_ASSESSOR_KEY = 'x-assess-base-assessor'
 const HASURA_DEFAULT_ROLE_KEY = 'x-hasura-default-role'
 const HASURA_USER_ID = 'x-hasura-user-id'
 const HASURA_GROUP_ID = 'x-hasura-group-id'
@@ -32,8 +30,6 @@ export const getUserTokenData = () => {
     authenticated: false,
     user: false,
     admin: false,
-    contributor: false,
-    assessor: false,
     userId: null,
     groupId: null,
     role: 'public',
@@ -42,9 +38,6 @@ export const getUserTokenData = () => {
   data.isAuthenticated = isAuthenticatedSync() ? true : false
   data.isUser = hasPermissions('user')
   data.isAdmin = hasPermissions('company-admin')
-  data.isContributor =
-    extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY) || false
-  data.isAssessor = extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY) || false
   data.userId = extractTokenPayload(HASURA_USER_ID)
   data.groupId = extractTokenPayload(HASURA_GROUP_ID)
   data.role = getUserRole()
@@ -61,14 +54,7 @@ export const getUserTokenData = () => {
 export const getUserAuth = reqRole => {
   if (!isAuthenticatedSync()) return false
 
-  switch (reqRole.toLowerCase()) {
-    case 'contributor':
-      return extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY)
-    case 'assessor':
-      return extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY)
-    default:
-      return hasPermissions(reqRole.toLowerCase())
-  }
+  return hasPermissions(reqRole.toLowerCase())
 }
 
 /**
