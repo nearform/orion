@@ -114,11 +114,7 @@ exports.createPages = async ({ graphql, actions }) => {
   if (articlesQueryResults.errors) {
     throw articlesQueryResults.errors
   }
-  const publishedArticles = get(
-    articlesQueryResults,
-    'data.orion.article',
-    []
-  )
+  const publishedArticles = get(articlesQueryResults, 'data.orion.article', [])
   publishedArticles.forEach(articleSummary => {
     const path = `/content/${articleSummary.path}`
     createPage({
