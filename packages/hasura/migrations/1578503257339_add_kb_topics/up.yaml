@@ -1,6 +1,0 @@
-- args:
-    cascade: false
-    sql: "INSERT INTO \n  taxonomy (taxonomy_type_id, name, key) \nVALUES \n  (1,
-      'Diversity & Inclusion', 'diversity_inclusion'), \n  (1, 'Gender Balance', 'gender_balance'),
-      \n  (1, 'UN SDGs', 'UN_SDGs')\nON CONFLICT DO NOTHING;"
-  type: run_sql
