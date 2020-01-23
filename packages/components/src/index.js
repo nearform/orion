@@ -6,10 +6,6 @@ export { default as PaddedContainer } from './components/PaddedContainer'
 export {
   default as ArticleStatusChip,
 } from './components/StatusChip/ArticleStatusChip'
-export {
-  default as AssessmentStatusChip,
-} from './components/StatusChip/AssessmentStatusChip'
-export * from './components/StatusChip/AssessmentStatusChip'
 export { default as TypedChip } from './components/TypedChip'
 export * from './components/TypedChip'
 export { default as UserRoleChip } from './components/StatusChip/UserRoleChip'

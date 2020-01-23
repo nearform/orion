@@ -37,10 +37,6 @@ The application follows a serverless application model, where the only API used 
 
 This folder contains the migrations and scripts necessary to run them.
 
-### [./packages/assess-base-hasura](./packages/assess-base-hasura)
-
-This package contains the assess-base specific Hasura schema and metatada.
-
 ### [./packages/components](./packages/components)
 
 - a component library based on [styled-components](https://www.styled-components.com/)
@@ -53,12 +49,6 @@ This package contains the assess-base specific Hasura schema and metatada.
 - a static build enabled app based on [gatsby](https://www.gatsbyjs.org)
 - Gatsby uses [graphql](https://graphql.org/) to fetch data from the API
 - exports commonjs logic and config
-
-### [./packages/assess-base](./packages/assess-base)
-
-- another static build app based on [gatsby](https://www.gatsbyjs.org)
-- Gatsby uses [graphql](https://graphql.org/) to fetch data from the API
-- builds on knowledge-base, importing gatsby-config and some other logic
 
 ### [./packages/nearform-theme](./packages/nearform-theme)
 

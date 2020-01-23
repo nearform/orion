@@ -7,9 +7,8 @@
     "commit": "cd .. && yarn commit",
     "pretest": "npm run migrate:all",
     "dev:test": "env-cmd -f async-env.js jest",
-    "migrate:all": "npm run migrate:common -- apply && npm run migrate:assess-base -- apply",
-    "migrate:common": "env-cmd -f async-env.js hasura migrate --project ../hasura",
-    "migrate:assess-base": "env-cmd -f async-env.js hasura migrate --project ../assess-base-hasura"
+    "migrate:all": "npm run migrate:common -- apply",
+    "migrate:common": "env-cmd -f async-env.js hasura migrate --project ../hasura"
   },
   "author": "",
   "license": "ISC",

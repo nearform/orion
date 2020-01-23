@@ -42,19 +42,19 @@ HASURA_GRAPHQL_API=http://localhost:8080/v1/graphql
 HASURA_GRAPHQL_ENDPOINT=http://localhost:8080/
 ```
 
-In packages `assess-base` and `knowledge-base`'s appropriate .env file, e.g. `.env.development`:
+In package `knowledge-base`'s appropriate .env file, e.g. `.env.development`:
 
 ```
 GATSBY_GRAPHQL_API=http://localhost:8080/v1/graphql
 ```
 
-In `packages/assess-base-hasura`'s .env:
+In `packages/knowledge-base-hasura`'s .env:
 
 ```
 HASURA_GRAPHQL_ENDPOINT=http://localhost:8080/
 ```
 
-_3_ **Apply the migrations to the local DB**. In packages `hasura` and then `assess-base-hasura` (must be in that order):
+_3_ **Apply the migrations to the local DB**. In packages `hasura` and then `knowledge-base-hasura` (must be in that order):
 
 ```
 yarn migrate apply

@@ -29,12 +29,12 @@ The Amplify authentication module doesn't provide any mechanism for performing a
 
 ## Dependency managemnt
 
-When the common authentication components are used within a client project (e.g. `assess-base` or `knowledge-base`) it's important that component module and its client share the same instances of the `aws-amplify-*` module dependencies otherwise runtime errors occur and the authentication forms will fail to work properly. In order to achieve this, the project repo uses `lerna` with `yarn` to hoist all common project dependencies to the repo root.
+When the common authentication components are used within a client project (e.g. `knowledge-base`) it's important that component module and its client share the same instances of the `aws-amplify-*` module dependencies otherwise runtime errors occur and the authentication forms will fail to work properly. In order to achieve this, the project repo uses `lerna` with `yarn` to hoist all common project dependencies to the repo root.
 
 ### Gatsby config
 
 Gatsby has an odd bug that occurs when building in a monorepo environment with hoisted `react` and `material-ui` dependencies, and which causes the build process to go into an infinite loop. To avoid this problem, Gatsby's webpack configuration has to be modified to force loading of these dependencies from the project's root `node_modules` folder.
-See the `onCreateWebpackConfig` function in `gatsby-node.js` in [assess-base](https://github.com/nearform/orion/blob/master/packages/assess-base/gatsby-node.js) or [knowledge-base](https://github.com/nearform/orion/blob/master/packages/knowledge-base/gatsby-node.js).
+See the `onCreateWebpackConfig` function in `gatsby-node.js` in [knowledge-base](https://github.com/nearform/orion/blob/master/packages/knowledge-base/gatsby-node.js) or [knowledge-base](https://github.com/nearform/orion/blob/master/packages/knowledge-base/gatsby-node.js).
 
 # Authorization
 
@@ -51,10 +51,10 @@ The `components` package provides functions for performing authorization and per
 
 ## User group loading
 
-The authorization functions defined in `AuthWrapper` need a list of available user groups in order to work correctly. This user group list is loaded _at build time_, using a Gatsby static graphql query. Because of limitations within Gatsby, the static query has to be defined in the Gatsby project's source code, and the query result then passed to the `AuthWrapper` component. In addition, static queries don't work if called from Gatsby's `wrapRootElement()` function. To get around these restrictions, both `assess-base` and `knowledge-base` include a small amount of boilerplate code to bootstrap the authentication system. Both projects have a hook called [useUserGroups](https://github.com/nearform/orion/blob/master/packages/assess-base/src/hooks/useUserGroups.js) which executes the user group query and passes the result to the in-scope `AuthWrapper` component. This hook is then called from the `wrapPageElement()` function in both `gatsby-browser.js` and `gatsby-ssr.js`.
+The authorization functions defined in `AuthWrapper` need a list of available user groups in order to work correctly. This user group list is loaded _at build time_, using a Gatsby static graphql query. Because of limitations within Gatsby, the static query has to be defined in the Gatsby project's source code, and the query result then passed to the `AuthWrapper` component. In addition, static queries don't work if called from Gatsby's `wrapRootElement()` function. To get around these restrictions, `knowledge-base` includes a small amount of boilerplate code to bootstrap the authentication system. Both projects have a hook called [useUserGroups](https://github.com/nearform/orion/blob/master/packages/knowledge-base/src/hooks/useUserGroups.js) which executes the user group query and passes the result to the in-scope `AuthWrapper` component. This hook is then called from the `wrapPageElement()` function in both `gatsby-browser.js` and `gatsby-ssr.js`.
 
 
 # Administration
 
-The `components` package also includes a standard set of components for performing user and group administration tasks, see the [packages/components/src/components/admin](https://github.com/nearform/orion/blob/master/packages/assess-base/src/hooks/useUserGroups.js) sub-module.
+The `components` package also includes a standard set of components for performing user and group administration tasks, see the [packages/components/src/components/admin](https://github.com/nearform/orion/blob/master/packages/knowledge-base/src/hooks/useUserGroups.js) sub-module.
 
