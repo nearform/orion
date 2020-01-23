@@ -7,8 +7,6 @@ import { find, get } from 'lodash'
 const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
 const CUSTOM_CLAIMS_NAMESPACE = 'x-orion-claims'
-const CUSTOM_CLAIMS_CONTRIBUTOR_KEY = 'x-assess-base-contributor'
-const CUSTOM_CLAIMS_ASSESSOR_KEY = 'x-assess-base-assessor'
 const HASURA_DEFAULT_ROLE_KEY = 'x-hasura-default-role'
 const HASURA_USER_ID = 'x-hasura-user-id'
 const HASURA_GROUP_ID = 'x-hasura-group-id'
@@ -67,9 +65,6 @@ export function AuthWrapper({
       isUser: hasPermissions('user'),
       isAdmin: hasPermissions('company-admin'),
       isPlatformGroup: hasPermissions('platform-admin'),
-      isContributor:
-        extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY) || false,
-      isAssessor: extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY) || false,
       userId: extractTokenPayload(HASURA_USER_ID),
       groupId: extractTokenPayload(HASURA_GROUP_ID),
       role: getUserRole(),
@@ -88,14 +83,7 @@ export function AuthWrapper({
     if (!isAuthenticatedSync()) return false
     if (!reqRole || reqRole === undefined) return true
 
-    switch (reqRole.toLowerCase()) {
-      case 'contributor':
-        return extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY)
-      case 'assessor':
-        return extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY)
-      default:
-        return hasPermissions(reqRole.toLowerCase())
-    }
+    return hasPermissions(reqRole.toLowerCase())
   }
 
   /**

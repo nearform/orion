@@ -10,11 +10,7 @@ const { getThemePaths } = require('./utils/paths')
 const { version } = require('./package.json')
 const { getApplicationVersion } = require('./utils/version')
 
-const {
-  themeAssetsPath,
-  themeAssessmentsPath,
-  themeKnowledgeTypes,
-} = getThemePaths(currentTheme)
+const { themeAssetsPath, themeKnowledgeTypes } = getThemePaths(currentTheme)
 
 const plugins = [
   {
@@ -36,13 +32,6 @@ const plugins = [
     options: {
       name: 'theme-knowledge-types',
       path: themeKnowledgeTypes,
-    },
-  },
-  {
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      name: 'theme-assessments',
-      path: themeAssessmentsPath,
     },
   },
   {
