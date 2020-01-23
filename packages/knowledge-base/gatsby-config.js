@@ -10,10 +10,7 @@ const { getThemePaths } = require('./utils/paths')
 const { version } = require('./package.json')
 const { getApplicationVersion } = require('./utils/version')
 
-const {
-  themeAssetsPath,
-  themeKnowledgeTypes,
-} = getThemePaths(currentTheme)
+const { themeAssetsPath, themeKnowledgeTypes } = getThemePaths(currentTheme)
 
 const plugins = [
   {
