@@ -8,6 +8,7 @@ const shadows = require('./mui/shadows')
 
 const MuiButton = require('./mui/muiComponentsOverrides/MuiButton')
 const MuiListItemText = require('./mui/muiComponentsOverrides/MuiListItemText')
+const MuiOutlinedInput = require('./mui/muiComponentsOverrides/MuiOutlinedInput')
 
 // const fontFamily = (exports.fontFamily = 'Lato, sans-serif')
 
@@ -403,20 +404,7 @@ exports.muiTheme = {
     MuiInput: inputClasses,
     MuiInputBase: inputClasses,
     MuiListItemText,
-    MuiOutlinedInput: {
-      root: {
-        ...typography.body1,
-        borderRadius: 3,
-        boxShadow: shadows[1],
-        background: colorDefinitions.white,
-      },
-      notchedOutline: {
-        border: 'none',
-      },
-      input: {
-        padding: '7.5px 12px 8.5px',
-      },
-    },
+    MuiOutlinedInput,
     MuiTypography: {
       gutterBottom: {
         marginBottom: '.75em',
