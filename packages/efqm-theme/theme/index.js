@@ -21,6 +21,7 @@ const articleRateIconColor = require('./custom/articleRateIconColor')
 const taxonomyColor = require('./custom/taxonomyColor')
 const editorsPicks = require('./custom/editorsPicks')
 const iconLight = require('./custom/iconLight')
+const profileSpacerBackground = require('./custom/profileSpacerBackground')
 
 // const fontFamily = (exports.fontFamily = 'Lato, sans-serif')
 
@@ -257,7 +258,7 @@ const iconLight = require('./custom/iconLight')
 //   color: colorDefinitions.lightGrey,
 // }
 // const articleWidgetColor = colorDefinitions.purple
-const profileSpacerBackground = colorDefinitions.purple
+// const profileSpacerBackground = colorDefinitions.purple
 
 // const taxonomyColor = {
 //   C1: colorDefinitions.orange,
