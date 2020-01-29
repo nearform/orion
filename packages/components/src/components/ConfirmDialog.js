@@ -3,14 +3,12 @@ import T from 'prop-types'
 import {
   withStyles,
   Button,
-  ButtonBase,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   Typography,
 } from '@material-ui/core'
-import classnames from 'classnames'
 
 function ConfirmDialog({
   classes,
@@ -30,10 +28,12 @@ function ConfirmDialog({
   function handleOpen() {
     if (!disabled) setIsOpen(true)
   }
+
   function handleClose() {
     onCancel()
     setIsOpen(false)
   }
+
   function handleConfirm() {
     onConfirm()
     setIsOpen(false)
@@ -57,11 +57,11 @@ function ConfirmDialog({
             {cancelLabel}
           </Button>
           <Button
+            autoFocus
             color="secondary"
             variant="contained"
-            onClick={handleConfirm}
             type={type} // For example, type="submit" on form submit actions
-            autoFocus
+            onClick={handleConfirm}
           >
             {okayLabel}
           </Button>

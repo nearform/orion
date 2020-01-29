@@ -4,8 +4,8 @@ import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { text } from '@storybook/addon-knobs'
 
-import EmbeddedVideo from './EmbeddedVideo'
 import { Card, withStyles } from '@material-ui/core'
+import EmbeddedVideo from './EmbeddedVideo'
 
 const Section = withStyles(theme => ({
   root: {

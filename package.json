@@ -101,6 +101,7 @@
   "xo": {
     "prettier": true,
     "extends": "xo-react",
+    "parser": "babel-eslint",
     "envs": [
       "es2017",
       "browser"
@@ -114,16 +115,67 @@
         {
           "skipUndeclared": true
         }
+      ],
+      "react/boolean-prop-naming": "warn",
+      "react/require-default-props": "warn",
+      "import/extensions": [
+        "error",
+        "never",
+        {
+          "svg": "always"
+        }
       ]
     },
     "overrides": [
       {
-        "files": "packages/*/src/components/**/*.js",
+        "files": [
+          "packages/*/src/components/**/*.js",
+          "!packages/*/src/components/**/utils/*.js",
+          "!packages/*/src/components/**/utils.js"
+        ],
         "rules": {
           "unicorn/filename-case": [
             "error",
             {
               "case": "pascalCase"
+            }
+          ],
+          "no-console": [
+            "error",
+            {
+              "allow": [
+                "warn",
+                "error"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "files": [
+          "packages/*/src/components/**/*.stories.js",
+          "packages/*/src/components/**/*.test.js"
+        ],
+        "rules": {
+          "unicorn/filename-case": "off"
+        }
+      },
+      {
+        "files": "packages/*/src/components/**/hooks/*.js",
+        "rules": {
+          "unicorn/filename-case": [
+            "error",
+            {
+              "case": "camelCase"
+            }
+          ],
+          "no-console": [
+            "error",
+            {
+              "allow": [
+                "warn",
+                "error"
+              ]
             }
           ]
         }

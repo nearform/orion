@@ -12,11 +12,9 @@ import {
 import { HowToReg, DeleteForever } from '@material-ui/icons'
 import * as Yup from 'yup'
 
+import UserFilter from '../page'
+import ConfirmDialog from '../ConfirmDialog'
 import useAdminTable from '../../hooks/useAdminTable'
-import AdminModal from './AdminModal'
-import UserSelectPicker from './UserSelectPicker'
-import { UserFilter, ConfirmDialog } from 'components'
-
 import {
   getPendingUsers,
   getEdittableUserFields,
@@ -25,6 +23,8 @@ import {
   addUserRoleMutation,
   deleteUserMutation,
 } from '../../../queries'
+import AdminModal from './AdminModal'
+import UserSelectPicker from './UserSelectPicker'
 
 const styles = theme => ({
   middle: {
@@ -85,6 +85,7 @@ function PendingUsers({ classes }) {
         })
         refetchUsers()
       }
+
       return data.user.map(user => (
         <TableRow key={user.id} data-testid="pending-users" size="small">
           <TableCell>
@@ -99,8 +100,8 @@ function PendingUsers({ classes }) {
           <TableCell align="right" padding="none">
             <Tooltip title={`Assign group to ${user.email}`} aria-label="Add">
               <IconButton
-                onClick={() => setSelected(user)}
                 className={classes.actionButton}
+                onClick={() => setSelected(user)}
               >
                 <HowToReg color="secondary" />
               </IconButton>
@@ -110,8 +111,8 @@ function PendingUsers({ classes }) {
             <ConfirmDialog
               title={`Delete user “${user.email}”?`}
               text="This user will be permanently deleted. This cannot be undone."
-              onConfirm={() => doDeleteUser(user.id)}
               okayLabel="Delete"
+              onConfirm={() => doDeleteUser(user.id)}
             >
               <IconButton className={classes.actionButton}>
                 <DeleteForever />
@@ -152,7 +153,7 @@ function PendingUsers({ classes }) {
     }
 
     const setupUserRole = () => {
-      if (!user.user_roles.length) {
+      if (user.user_roles.length === 0) {
         const memberRole = modalData.role.find(
           ({ name }) => name.toLowerCase() === 'member'
         )
@@ -165,12 +166,13 @@ function PendingUsers({ classes }) {
             },
           })
         }
+
         // No stable ref to "member" role on db. Warn if someone changed role's name or didn't create one
-        // eslint-disable-next-line no-console
         console.warn(
           `No "member" role found. Approved user ${values.userId} will have no role`
         )
       }
+
       return Promise.resolve()
     }
 
@@ -182,12 +184,12 @@ function PendingUsers({ classes }) {
   }
 
   const getModalInitialValues = user => {
-    const { id: userId = 0, user_groups } = user
-    const groupId = user_groups.length && user_groups[0].group.id
+    const { id: userId = 0, user_groups: userGroups } = user
+    const groupId = userGroups.length && userGroups[0].group.id
     return {
       userId,
       groupId,
-      groupIsAssigned: !!groupId,
+      groupIsAssigned: Boolean(groupId),
     }
   }
 
@@ -198,10 +200,10 @@ function PendingUsers({ classes }) {
         data={modalData}
         contents={modalContents}
         getTitleParts={user => ['Assign group to', user.email]}
-        onSave={onModalSave}
-        onClose={() => setSelected(null)}
         schema={modalSchema}
         getInitialValues={getModalInitialValues}
+        onSave={onModalSave}
+        onClose={() => setSelected(null)}
       />
       <div className={classes.userFilterWrapper}>
         <UserFilter setFilterText={setFilterText} />
@@ -210,6 +212,7 @@ function PendingUsers({ classes }) {
     </>
   )
 }
+
 PendingUsers.propTypes = {
   classes: T.object.isRequired,
 }

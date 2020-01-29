@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import T from 'prop-types'
-import { Router, Redirect } from '@reach/router'
+import { Router, Redirect } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 
 import { AuthContext } from '../authorization/AuthWrapper'
 import PaddedContainer from '../PaddedContainer'
@@ -10,8 +10,8 @@ import AdminToolbar from './AdminToolbar'
 import UserGroups from './UserGroups'
 import GroupUsers from './GroupUsers'
 
-function AdminRoute({ SEO }) {
-  const { getUserTokenData, getUserAuth } = useContext(AuthContext)
+function AdminRoute({ SEO: Seo }) {
+  const { getUserAuth } = useContext(AuthContext)
   const [pageTitle, setPageTitle] = useState('')
 
   const canAccessPendingUsers = getUserAuth('platform-admin')
@@ -26,7 +26,7 @@ function AdminRoute({ SEO }) {
 
   return (
     <PaddedContainer>
-      {SEO && <SEO title={`${pageTitle} | Admin`} />}
+      {Seo && <Seo title={`${pageTitle} | Admin`} />}
       <AdminToolbar pageTitle={pageTitle} userCanAccess={userCanAccess} />
       <Router>
         {userCanAccess.pendingUsers && (

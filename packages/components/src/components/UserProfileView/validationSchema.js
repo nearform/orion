@@ -1,3 +1,4 @@
+/* eslint unicorn/filename-case: "off" */
 import * as Yup from 'yup'
 
 export default Yup.object().shape({
@@ -23,6 +24,6 @@ export default Yup.object().shape({
   twitter: Yup.string()
     .url()
     .nullable(),
-  consent_contact: Yup.boolean().required(),
-  consent_directory: Yup.boolean().required(),
+  consent_contact: Yup.boolean().required(), // eslint-disable-line camelcase
+  consent_directory: Yup.boolean().required(), // eslint-disable-line camelcase
 })

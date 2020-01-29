@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Storage } from 'aws-amplify'
 
-export default function useAmplifyImage(path, options) {
+export default function useAmplifyImage(path) {
   const [imageURL, setImageURL] = useState()
   useEffect(() => {
     if (path) {

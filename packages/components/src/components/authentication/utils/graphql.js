@@ -18,10 +18,10 @@ function setAuthorization(client, session) {
  * Refresh the JWT token after a session timeout.
  */
 const refreshToken = debounce(
-  client =>
-    new Promise(async (resolve, reject) => {
-      const user = await Auth.currentAuthenticatedUser()
-      const { refreshToken } = await Auth.currentSession()
+  async client => {
+    const user = await Auth.currentAuthenticatedUser()
+    const { refreshToken } = await Auth.currentSession()
+    return new Promise((resolve, reject) => {
       user.refreshSession(refreshToken, (err, session) => {
         const bearer = setAuthorization(client, session)
         if (err) {
@@ -30,7 +30,8 @@ const refreshToken = debounce(
           resolve(bearer)
         }
       })
-    }),
+    })
+  },
   3000,
   { leading: true }
 )
@@ -55,6 +56,7 @@ function makeGraphQLClient(url) {
         // Resubmit the fetch.
         return fetch(resource, init)
       }
+
       return result
     },
   })
@@ -77,7 +79,7 @@ async function initGraphQLClient(client, awsConfig) {
   try {
     const user = await Auth.currentAuthenticatedUser()
     setAuthorization(client, user.signInUserSession)
-  } catch (e) {}
+  } catch {}
 }
 
 export { makeGraphQLClient, initGraphQLClient }

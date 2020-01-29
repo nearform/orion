@@ -1,6 +1,5 @@
-import React, { useContext, createContext, useEffect, useState } from 'react'
+import React, { createContext, useState } from 'react'
 import T from 'prop-types'
-import { useQuery } from 'graphql-hooks'
 import { Auth } from 'aws-amplify'
 import { find, get } from 'lodash'
 
@@ -23,16 +22,18 @@ const ROLES_PERMISSIONS = {
 
 export const AuthContext = createContext({ isAuthInitialized: false })
 
-const isAuthenticatedSync = () => isBrowser && !!Auth.user
+const isAuthenticatedSync = () => isBrowser && Boolean(Auth.user)
 
 const extractTokenPayload = dataKey => {
   if (!Auth.user) {
     return null
   }
+
   const tokenPayload = get(Auth, 'user.signInUserSession.idToken.payload')
   if (!tokenPayload) {
     return null
   }
+
   const claims =
     CUSTOM_CLAIMS_NAMESPACE in tokenPayload
       ? {
@@ -61,7 +62,7 @@ export function AuthWrapper({
    */
   const getUserTokenData = () => {
     const data = {
-      isAuthenticated: isAuthenticatedSync() ? true : false,
+      isAuthenticated: Boolean(isAuthenticatedSync()),
       isUser: hasPermissions('user'),
       isAdmin: hasPermissions('company-admin'),
       isPlatformGroup: hasPermissions('platform-admin'),
@@ -108,7 +109,7 @@ export function AuthWrapper({
   const getUserBaseRole = () => {
     try {
       return extractTokenPayload(HASURA_DEFAULT_ROLE_KEY)
-    } catch (err) {
+    } catch {
       return 'public'
     }
   }
@@ -123,7 +124,7 @@ export function AuthWrapper({
       const taxonomyQueryResult = userGroups
       const groupId = extractTokenPayload(HASURA_GROUP_ID)
       return find(taxonomyQueryResult.orion.group, { id: groupId })
-    } catch (err) {
+    } catch {
       return undefined
     }
   }
@@ -155,6 +156,7 @@ export function AuthWrapper({
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
 }
+
 AuthWrapper.propTypes = {
   isAuthInitialized: T.bool,
   allowNoParentGroups: T.bool,

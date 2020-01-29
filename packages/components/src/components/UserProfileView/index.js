@@ -16,21 +16,18 @@ import get from 'lodash/get'
 import omit from 'lodash/omit'
 import { Formik, Form, Field } from 'formik'
 import { fieldToCheckbox } from 'formik-material-ui'
-import {
-  useAuthorizedQuery,
-  AvatarImage,
-  AuthContext,
-  PaddedContainer,
-} from 'components'
+import { Redirect } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
+import UploadImageWidget from '../UploadImageWidget'
+import PaddedContainer from '../PaddedContainer'
+import AvatarImage from '../UserAvatar/AvatarImage'
+import { useAuthorizedQuery, AuthContext } from '../authorization'
 import { updateUserMutation, getUser } from '../../../queries'
-import UserInfo from './UserInfo'
-import formFields from './formFields'
-import validationSchema from './validationSchema'
-import { UploadImageWidget } from 'components'
-import { Redirect } from '@reach/router'
 import { constructImageUrl } from '../../utils/image'
+import UserInfo from './UserInfo'
+import formFields from './utils/form-fields'
+import validationSchema from './validationSchema'
 
-const UserProfileView = ({ SEO, userSummary, classes }) => {
+const UserProfileView = ({ SEO: Seo, userSummary, classes }) => {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
 
   const { userId } = getUserTokenData()
@@ -41,7 +38,7 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
     getUser,
     { id: userId },
     {
-      onPreFetch: variables => !!variables.id,
+      onPreFetch: variables => Boolean(variables.id),
       onFetch: data => get(data, 'user.0'),
       onNoFetch: () => userSummary,
     }
@@ -53,27 +50,30 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
 
   const signupRequest = get(user, 'signupRequest', {})
 
-  const initialValues = !user
-    ? {}
-    : formFields
-        .filter(field => !field.name.includes('.') && field.name !== 'fullName')
-        .map(field => field.name)
-        .reduce(
-          (acc, key) => {
-            acc[key] = user[key]
-            return acc
-          },
-          {
-            signupRequest,
-            fullName: `${user.first_name || ''} ${user.last_name || ''}`,
-          }
-        )
+  const initialValues =
+    user === undefined || user === null
+      ? {}
+      : formFields
+          .filter(
+            field => !field.name.includes('.') && field.name !== 'fullName'
+          )
+          .map(field => field.name)
+          .reduce(
+            (acc, key) => {
+              acc[key] = user[key]
+              return acc
+            },
+            {
+              signupRequest,
+              fullName: `${user.first_name || ''} ${user.last_name || ''}`,
+            }
+          )
 
   const saveProfile = async (values, actions) => {
     const formValues = {
       ...omit(values, ['avatarChanged', 'fullName']),
-      first_name: get(values.fullName.split(' '), '0', ''),
-      last_name: get(values.fullName.split(' '), '1', ''),
+      first_name: get(values.fullName.split(' '), '0', ''), // eslint-disable-line camelcase
+      last_name: get(values.fullName.split(' '), '1', ''), // eslint-disable-line camelcase
     }
 
     try {
@@ -85,30 +85,30 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
       })
       setEditMode(false)
       return true
-    } catch (err) {
+    } catch {
       return false
     } finally {
       actions.setSubmitting(false)
     }
   }
 
-  if (isAuthInitialized && !userId) return <Redirect to="/auth" noThrow />
+  if (isAuthInitialized && !userId) return <Redirect noThrow to="/auth" />
 
   return user ? (
     <>
-      <SEO
+      <Seo
         title={`Profile | ${
           user.first_name && user.last_name
             ? `${user.first_name} ${user.last_name}`
             : user.email
         }`}
-      ></SEO>
+      />
       <PaddedContainer className={classes.root}>
         <Formik
-          initialValues={initialValues}
           enableReinitialize
-          onSubmit={saveProfile}
+          initialValues={initialValues}
           validationSchema={validationSchema}
+          onSubmit={saveProfile}
         >
           {({ values, handleSubmit, isSubmitting, setFieldValue }) => (
             <Form onSubmit={handleSubmit}>
@@ -152,8 +152,8 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
                               editMode ? (
                                 <Button
                                   color="secondary"
-                                  onClick={startImageUpload}
                                   disabled={isLoading}
+                                  onClick={startImageUpload}
                                 >
                                   {isLoading ? (
                                     <CircularProgress
@@ -164,7 +164,7 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
                                   ) : (
                                     <AccountCircle
                                       className={classes.addImageButtonIcon}
-                                    ></AccountCircle>
+                                    />
                                   )}
                                   Add image
                                 </Button>
@@ -184,15 +184,15 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
                         value={get(values, formFields[0].name)}
                         editMode={editMode}
                         size="large"
-                      ></UserInfo>
+                      />
                     </div>
                   </Grid>
 
-                  <Grid item xs></Grid>
+                  <Grid item xs />
                 </Grid>
                 <Grid container item xs={12} spacing={2}>
                   <Grid container item xs={2} direction="column">
-                    <Grid item className={classes.spacer}></Grid>
+                    <Grid item className={classes.spacer} />
                     <Grid item>
                       {Number(userId) === user.id ? (
                         <>
@@ -235,7 +235,7 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
                       name={formFields[1].name}
                       value={get(values, formFields[1].name)}
                       editMode={editMode}
-                    ></UserInfo>
+                    />
 
                     <UserInfo
                       title="Organisation"
@@ -243,19 +243,19 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
                         signupRequest,
                         'userAttributes.custom:orgName'
                       )}
-                    ></UserInfo>
+                    />
 
                     <UserInfo
                       title="Role"
                       value={get(user, 'user_roles.0.role.name')}
-                    ></UserInfo>
+                    />
 
                     <UserInfo
                       title={formFields[2].label}
                       name={formFields[2].name}
                       value={get(values, formFields[2].name)}
                       editMode={editMode}
-                    ></UserInfo>
+                    />
                   </Grid>
 
                   <Grid item xs={6}>
@@ -265,7 +265,7 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
                       value={get(values, formFields[3].name)}
                       editMode={editMode}
                       rows={4}
-                    ></UserInfo>
+                    />
 
                     <Typography
                       variant="h4"
@@ -279,10 +279,10 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
                       .slice(5, 9)
                       .map(({ name, icon: Icon, iconClass, label }) => (
                         <Grid
+                          key={name}
                           container
                           spacing={2}
                           className={classes.contactInfoRow}
-                          key={name}
                         >
                           <Grid item xs="auto">
                             <Icon
@@ -290,7 +290,7 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
                                 classes.contactIcon,
                                 classes[iconClass],
                               ])}
-                            ></Icon>
+                            />
                           </Grid>
                           <Grid item xs>
                             <div className={classes.userInfoWithIcon}>
@@ -300,7 +300,7 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
                                 value={get(values, name)}
                                 variant="light"
                                 editMode={editMode}
-                              ></UserInfo>
+                              />
                             </div>
                           </Grid>
                         </Grid>
@@ -309,6 +309,7 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
                     <div className={classes.consents}>
                       {formFields.slice(-2).map(({ name, label }) => (
                         <FormControlLabel
+                          key={name}
                           control={
                             <Field
                               name={name}
@@ -325,12 +326,11 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
                           label={
                             <Typography variant="body2">{label}</Typography>
                           }
-                          key={name}
                         />
                       ))}
                     </div>
                   </Grid>
-                  <Grid item xs></Grid>
+                  <Grid item xs />
                 </Grid>
               </Grid>
             </Form>
@@ -339,7 +339,7 @@ const UserProfileView = ({ SEO, userSummary, classes }) => {
       </PaddedContainer>
     </>
   ) : (
-    <SEO title="Profile"></SEO>
+    <Seo title="Profile" />
   )
 }
 
