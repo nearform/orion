@@ -15,6 +15,7 @@ const MuiTableCell = require('./mui/muiComponentsOverrides/MuiTableCell')
 
 const articleTypography = require('./custom/articleTypography')
 const articleStatusColor = require('./custom/articleStatusColor')
+const articleStatusLabelColor = require('./custom/articleStatusLabelColor')
 
 // const fontFamily = (exports.fontFamily = 'Lato, sans-serif')
 
@@ -228,12 +229,12 @@ const articleStatusColor = require('./custom/articleStatusColor')
 //   hidden: fade(colorDefinitions.lightGrey, 0.07),
 // }
 
-const articleStatusLabelColor = {
-  inProgress: colorDefinitions.slateGrey,
-  inReview: colorDefinitions.slateGrey,
-  published: colorDefinitions.white,
-  hidden: colorDefinitions.slateGrey,
-}
+// const articleStatusLabelColor = {
+//   inProgress: colorDefinitions.slateGrey,
+//   inReview: colorDefinitions.slateGrey,
+//   published: colorDefinitions.white,
+//   hidden: colorDefinitions.slateGrey,
+// }
 
 const articleStatusIconColor = {
   inProgress: colorDefinitions.cyan,
