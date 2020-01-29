@@ -69,7 +69,7 @@
     "gatsby-source-filesystem": "^2.0.33",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "react-test-renderer": "^16.8.6",
     "webpack-graphql-loader": "^1.0.2"
   },
@@ -98,5 +98,6 @@
     "e2e": "cypress open",
     "update-event-list": "tools/update-event-list.js",
     "analyze-bundle": "ANALYZE=true yarn build"
-  }
+  },
+  "xo": false
 }

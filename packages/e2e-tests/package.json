@@ -18,5 +18,6 @@
     "eslint-plugin-testcafe": "^0.2.1",
     "minimist": "^1.2.0",
     "testcafe": "^1.1.4"
-  }
+  },
+  "xo": false
 }
