@@ -1,8 +1,8 @@
 import { withStyles } from '@material-ui/core'
 
-import { theme } from './index'
+import { theme } from '.'
 
-export * from './index'
+export * from '.'
 
 const styles = {
   '@global': {
