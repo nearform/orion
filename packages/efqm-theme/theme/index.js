@@ -1,6 +1,9 @@
 const { fade } = require('@material-ui/core/styles/colorManipulator')
 
 const { colorDefinitions, fontFamily } = require('./variables')
+
+const palette = require('./mui/palette')
+
 // const fontFamily = (exports.fontFamily = 'Lato, sans-serif')
 
 // const colorDefinitions = {
@@ -481,30 +484,7 @@ exports.muiTheme = {
     fontWeight: 'normal',
     ...typography,
   },
-  palette: {
-    primary: {
-      main: colorDefinitions.navyBlue,
-      light: colorDefinitions.cyan,
-      dark: colorDefinitions.slateGrey,
-    },
-    secondary: {
-      main: colorDefinitions.aqua,
-      light: colorDefinitions.pearGreen,
-      dark: colorDefinitions.emeraldGreen,
-    },
-    tertiary: {
-      main: colorDefinitions.lightGrey,
-      light: colorDefinitions.paleGrey,
-      dark: colorDefinitions.midGrey,
-    },
-    background: {
-      default: colorDefinitions.white,
-      paper: colorDefinitions.white,
-      light: colorDefinitions.paleGrey,
-      dark: colorDefinitions.midGrey,
-    },
-    contrastThreshold: 1.6,
-  },
+  palette,
   shadows,
   iconLight,
   articleTypography,
