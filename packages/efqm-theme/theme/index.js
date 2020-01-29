@@ -17,6 +17,7 @@ const articleTypography = require('./custom/articleTypography')
 const articleStatusColor = require('./custom/articleStatusColor')
 const articleStatusLabelColor = require('./custom/articleStatusLabelColor')
 const articleStatusIconColor = require('./custom/articleStatusIconColor')
+const articleRateIconColor = require('./custom/articleRateIconColor')
 
 // const fontFamily = (exports.fontFamily = 'Lato, sans-serif')
 
@@ -244,10 +245,10 @@ const articleStatusIconColor = require('./custom/articleStatusIconColor')
 //   hidden: colorDefinitions.lightGrey,
 // }
 
-const articleRateIconColor = {
-  empty: colorDefinitions.lightGrey,
-  filled: colorDefinitions.yellow,
-}
+// const articleRateIconColor = {
+//   empty: colorDefinitions.lightGrey,
+//   filled: colorDefinitions.yellow,
+// }
 
 const iconLight = {
   color: colorDefinitions.lightGrey,
