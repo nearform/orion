@@ -18,6 +18,7 @@ const articleStatusColor = require('./custom/articleStatusColor')
 const articleStatusLabelColor = require('./custom/articleStatusLabelColor')
 const articleStatusIconColor = require('./custom/articleStatusIconColor')
 const articleRateIconColor = require('./custom/articleRateIconColor')
+const taxonomyColor = require('./custom/taxonomyColor')
 
 // const fontFamily = (exports.fontFamily = 'Lato, sans-serif')
 
@@ -256,12 +257,12 @@ const iconLight = {
 const articleWidgetColor = colorDefinitions.purple
 const profileSpacerBackground = colorDefinitions.purple
 
-const taxonomyColor = {
-  C1: colorDefinitions.orange,
-  C2: colorDefinitions.navyBlue,
-  C3: colorDefinitions.cyan,
-  C4: colorDefinitions.emeraldGreen,
-}
+// const taxonomyColor = {
+//   C1: colorDefinitions.orange,
+//   C2: colorDefinitions.navyBlue,
+//   C3: colorDefinitions.cyan,
+//   C4: colorDefinitions.emeraldGreen,
+// }
 
 const editorsPicks = {
   title: {
