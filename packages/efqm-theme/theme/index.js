@@ -7,6 +7,7 @@ const typography = require('./mui/typography')
 const shadows = require('./mui/shadows')
 
 const MuiButton = require('./mui/muiComponentsOverrides/MuiButton')
+const MuiListItemText = require('./mui/muiComponentsOverrides/MuiListItemText')
 
 // const fontFamily = (exports.fontFamily = 'Lato, sans-serif')
 
@@ -401,16 +402,7 @@ exports.muiTheme = {
     MuiButton,
     MuiInput: inputClasses,
     MuiInputBase: inputClasses,
-    MuiListItemText: {
-      root: { textTransform: 'uppercase' },
-      primary: {
-        color: colorDefinitions.slateGrey,
-        fontSize: 14,
-        fontWeight: 900,
-        letterSpacing: '1.77px',
-      },
-      secondary: { color: colorDefinitions.lightGrey, letterSpacing: '1.77px' },
-    },
+    MuiListItemText,
     MuiOutlinedInput: {
       root: {
         ...typography.body1,
