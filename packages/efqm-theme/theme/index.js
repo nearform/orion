@@ -256,7 +256,7 @@ const iconLight = require('./custom/iconLight')
 // const iconLight = {
 //   color: colorDefinitions.lightGrey,
 // }
-const articleWidgetColor = colorDefinitions.purple
+// const articleWidgetColor = colorDefinitions.purple
 const profileSpacerBackground = colorDefinitions.purple
 
 // const taxonomyColor = {
