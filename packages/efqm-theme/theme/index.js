@@ -1,4 +1,4 @@
-const { fade } = require('@material-ui/core/styles/colorManipulator')
+// const { fade } = require('@material-ui/core/styles/colorManipulator')
 
 const { colorDefinitions, fontFamily } = require('./variables')
 
@@ -14,6 +14,7 @@ const MuiTypography = require('./mui/muiComponentsOverrides/MuiTypography')
 const MuiTableCell = require('./mui/muiComponentsOverrides/MuiTableCell')
 
 const articleTypography = require('./custom/articleTypography')
+const articleStatusColor = require('./custom/articleStatusColor')
 
 // const fontFamily = (exports.fontFamily = 'Lato, sans-serif')
 
@@ -220,12 +221,12 @@ const articleTypography = require('./custom/articleTypography')
 //   },
 // }
 
-const articleStatusColor = {
-  inProgress: fade(colorDefinitions.cyan, 0.1),
-  inReview: fade(colorDefinitions.yellow, 0.2),
-  published: colorDefinitions.navyBlue,
-  hidden: fade(colorDefinitions.lightGrey, 0.07),
-}
+// const articleStatusColor = {
+//   inProgress: fade(colorDefinitions.cyan, 0.1),
+//   inReview: fade(colorDefinitions.yellow, 0.2),
+//   published: colorDefinitions.navyBlue,
+//   hidden: fade(colorDefinitions.lightGrey, 0.07),
+// }
 
 const articleStatusLabelColor = {
   inProgress: colorDefinitions.slateGrey,
