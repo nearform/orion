@@ -1,8 +1,6 @@
 const { fontFamily } = require('../variables')
 const palette = require('./palette')
 
-const { colorDefinitions } = require('../variables')
-
 module.exports = {
   fontFamily,
   fontWeight: 'normal',
@@ -50,7 +48,7 @@ module.exports = {
     fontFamily,
     fontSize: 14,
     letterSpacing: 'normal',
-    color: colorDefinitions.lightGrey,
+    color: palette.tertiary.main,
   },
   body2: {
     fontFamily,
@@ -64,7 +62,7 @@ module.exports = {
   },
   tableHeader: {
     fontFamily,
-    color: colorDefinitions.slateGrey,
+    color: palette.primary.dark,
     fontSize: 11,
     fontWeight: 'bold',
     letterSpacing: '1.2px',
@@ -77,7 +75,7 @@ module.exports = {
     fontFamily,
     fontSize: 14,
     letterSpacing: 'normal',
-    color: colorDefinitions.slateGrey,
+    color: palette.primary.dark,
     padding: '10px 14px',
   },
   placeholder: {

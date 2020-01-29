@@ -1,5 +1,4 @@
-const { colorDefinitions } = require('../../variables')
-
+const palette = require('../palette')
 const shadows = require('../shadows')
 const typography = require('../typography')
 
@@ -8,7 +7,7 @@ module.exports = {
     ...typography.body1,
     borderRadius: 3,
     boxShadow: shadows[1],
-    background: colorDefinitions.white,
+    background: palette.background.default,
   },
   notchedOutline: {
     border: 'none',

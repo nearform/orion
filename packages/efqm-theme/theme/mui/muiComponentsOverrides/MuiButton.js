@@ -1,4 +1,4 @@
-const { colorDefinitions } = require('../../variables')
+const palette = require('../palette')
 const shadows = require('../shadows')
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
     },
   },
   outlinedSecondary: {
-    background: colorDefinitions.white,
+    background: palette.background.default,
     border: 'none',
     '&:hover': {
       border: 'none',
