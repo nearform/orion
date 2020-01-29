@@ -5,6 +5,7 @@ const { colorDefinitions, fontFamily } = require('./variables')
 const palette = require('./mui/palette')
 const typography = require('./mui/typography')
 const shadows = require('./mui/shadows')
+const props = require('./mui/props')
 
 const MuiButton = require('./mui/muiComponentsOverrides/MuiButton')
 const MuiListItemText = require('./mui/muiComponentsOverrides/MuiListItemText')
@@ -410,14 +411,7 @@ exports.muiTheme = {
     MuiTypography,
     MuiTableCell,
   },
-  props: {
-    MuiInput: {
-      disableUnderline: true,
-    },
-    MuiPaper: {
-      elevation: 1,
-    },
-  },
+  props,
   typography,
   palette,
   shadows,
