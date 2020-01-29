@@ -19,6 +19,7 @@ const articleStatusLabelColor = require('./custom/articleStatusLabelColor')
 const articleStatusIconColor = require('./custom/articleStatusIconColor')
 const articleRateIconColor = require('./custom/articleRateIconColor')
 const taxonomyColor = require('./custom/taxonomyColor')
+const editorsPicks = require('./custom/editorsPicks')
 
 // const fontFamily = (exports.fontFamily = 'Lato, sans-serif')
 
@@ -264,40 +265,40 @@ const profileSpacerBackground = colorDefinitions.purple
 //   C4: colorDefinitions.emeraldGreen,
 // }
 
-const editorsPicks = {
-  title: {
-    textAlign: 'left',
-    fontFamily,
-    fontSize: 14,
-    fontWeight: 700,
-    letterSpacing: '-0.1px',
-    color: colorDefinitions.slateGrey,
-  },
-  date: {
-    fontFamily,
-    fontSize: 11,
-    fontWeight: 700,
-    letterSpacing: '1.23px',
-    color: colorDefinitions.purple,
-    textTransform: 'uppercase',
-  },
-  author: {
-    fontFamily,
-    fontSize: 11,
-    fontWeight: 700,
-    letterSpacing: '1.23px',
-    color: colorDefinitions.lightGrey,
-    textTransform: 'uppercase',
-  },
-  caption: {
-    fontFamily,
-    fontSize: 12,
-    fontWeight: 900,
-    letterSpacing: '2.45px',
-    color: colorDefinitions.white,
-    textTransform: 'uppercase',
-  },
-}
+// const editorsPicks = {
+//   title: {
+//     textAlign: 'left',
+//     fontFamily,
+//     fontSize: 14,
+//     fontWeight: 700,
+//     letterSpacing: '-0.1px',
+//     color: colorDefinitions.slateGrey,
+//   },
+//   date: {
+//     fontFamily,
+//     fontSize: 11,
+//     fontWeight: 700,
+//     letterSpacing: '1.23px',
+//     color: colorDefinitions.purple,
+//     textTransform: 'uppercase',
+//   },
+//   author: {
+//     fontFamily,
+//     fontSize: 11,
+//     fontWeight: 700,
+//     letterSpacing: '1.23px',
+//     color: colorDefinitions.lightGrey,
+//     textTransform: 'uppercase',
+//   },
+//   caption: {
+//     fontFamily,
+//     fontSize: 12,
+//     fontWeight: 900,
+//     letterSpacing: '2.45px',
+//     color: colorDefinitions.white,
+//     textTransform: 'uppercase',
+//   },
+// }
 
 // const typography = {
 //   h1: {
