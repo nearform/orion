@@ -2,13 +2,13 @@
 
 ## Usage
 
-Add this theme as a dependency to the package you want to use it in. Specifying the desired version number ensures yarn looks for the dependency locally rather than from the npm registry.
+Add this theme as a dependency to the package you want to use it in. Specifying the desired version number ensures yarn looks for the dependency locally rather than from the registry.
 
 ```
 yarn add gatsby-theme-acme@<version-number>
 ```
 
-Add the theme to your `gatsby-config.js`.
+Add the theme to your `gatsby-config.js` file.
 
 ```
 module.exports = {
@@ -20,7 +20,7 @@ module.exports = {
 }
 ```
 
-You can now use Material UI components with the theming specified.
+You can now use Material UI components and they'll pick up the theming rules defined within this package.
 
 ```
 import React from "react"
