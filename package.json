@@ -161,7 +161,7 @@
         }
       },
       {
-        "files": "packages/*/src/components/**/hooks/*.js",
+        "files": "packages/*/src/**/hooks/**/*.js",
         "rules": {
           "unicorn/filename-case": [
             "error",
@@ -181,37 +181,6 @@
         }
       },
       {
-        "files": "packages/*/src/hooks/**/*.js",
-        "rules": {
-          "unicorn/filename-case": [
-            "error",
-            {
-              "case": "camelCase"
-            }
-          ]
-        }
-      },
-      {
-        "files": "doesnotexist/**/*.js",
-        "rules": {
-          "quotes": [
-            "error",
-            "backtick"
-          ]
-        }
-      },
-      {
-        "files": [
-          "**/__mocks__/**/*.js",
-          "**/*.test.js",
-          "packages/*/loadershim.js"
-        ],
-        "envs": [
-          "node",
-          "jest"
-        ]
-      },
-      {
         "files": "**/cypress/**/*.js",
         "plugins": [
           "cypress"
@@ -220,22 +189,6 @@
           "node",
           "cypress/globals"
         ]
-      },
-      {
-        "files": "packages/e2e-tests/**/*.js",
-        "plugins": "testcafe",
-        "extends": [
-          "xo-react",
-          "plugin:testcafe/recommended"
-        ],
-        "envs": [
-          "es6",
-          "node",
-          "browser"
-        ],
-        "rules": {
-          "new-cap": "off"
-        }
       },
       {
         "files": "**/*.graphql",
@@ -261,7 +214,13 @@
         ]
       },
       {
-        "files": "packages/functions/**/*.test.js",
+        "files": [
+          "packages/functions/**/*.test.js",
+          "packages/permissions-tests",
+          "**/__mocks__/**/*.js",
+          "**/*.test.js",
+          "packages/*/loadershim.js"
+        ],
         "envs": [
           "es2017",
           "node",
@@ -269,12 +228,20 @@
         ]
       },
       {
-        "files": "packages/permissions-tests",
+        "files": "packages/e2e-tests/**/*.js",
+        "plugins": "testcafe",
+        "extends": [
+          "xo-react",
+          "plugin:testcafe/recommended"
+        ],
         "envs": [
-          "es2017",
+          "es6",
           "node",
-          "jest"
-        ]
+          "browser"
+        ],
+        "rules": {
+          "new-cap": "off"
+        }
       }
     ]
   }
