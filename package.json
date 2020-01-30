@@ -19,13 +19,13 @@
     "docs": "docsify serve -p 4000 docs",
     "postinstall": "npm run bootstrap -- --no-ci",
     "lint-files": "xo",
-    "lint": "npm run generate-schema && npm run lint-files",
-    "dev:lint": "npm run dev:generate-schema && npm run lint-files",
-    "lint:fix": "eslint --fix --ext .js --ext .graphql .",
+    "lint": "yarn generate-schema && yarn lint-files",
+    "dev:lint": "yarn dev:generate-schema && yarn lint-files",
+    "lint:fix": "xo --fix",
     "dev:generate-schema": "graphql get-schema --dotenv packages/knowledge-base/.env.development --output=hasura-schema.json",
     "generate-schema": "graphql get-schema --output=hasura-schema.json",
-    "start:kb": "lerna exec --scope=knowledge-base npm start",
-    "start:apps": "npm run start:kb",
+    "start:kb": "lerna exec --scope=knowledge-base yarn start",
+    "start:apps": "yarn start:kb",
     "e2e-test": "lerna run --scope=e2e-tests --stream --no-prefix e2e-test -- ",
     "dev:e2e-test": "npm run e2e-test -- ./local.js -- --screenshots-on-fails",
     "hosted:e2e-test": "npm run e2e-test -- ./hosted.js -- --screenshots-on-fails",
@@ -83,12 +83,12 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged && pretty-quick --staged --pattern '**/*.graphql'",
       "post-commit": "git update-index --again",
-      "pre-push": "npm run dev:lint"
+      "pre-push": "yarn dev:lint"
     }
   },
   "lint-staged": {
     "**.{js,graphql}": [
-      "npm run dev:generate-schema",
+      "yarn dev:generate-schema",
       "xo --fix",
       "git add"
     ]
