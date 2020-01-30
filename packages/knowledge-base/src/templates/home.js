@@ -8,18 +8,18 @@ import {
   Hidden,
   useMediaQuery,
 } from '@material-ui/core'
-import { Link as RouterLink } from '@reach/router'
+import { Link as RouterLink } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 import { PaddedContainer } from 'components'
 
-import SEO from '../components/SEO'
+import Seo from '../components/Seo'
 import EditorsPicks from '../components/list/EditorsPicks'
 import PageSection from '../components/layout/page-section'
 import PersonalizedLists from '../components/list/PersonalizedLists'
-import column from '../components/layout/flex-with-gap/column'
+import column from '../components/layout/utils/flex-with-gap/column'
 import GainKnowledgeLinks from '../components/list/gain-knowledge-links'
 import MostRecentArticles from '../components/list/most-recent-articles'
 import EventList from '../components/list/event-list'
-import row from '../components/layout/flex-with-gap/row'
+import row from '../components/layout/utils/flex-with-gap/row'
 import HeroImageWrapper from '../components/layout/hero-image-wrapper'
 
 function KnowledgeHome({ classes }) {
@@ -29,13 +29,13 @@ function KnowledgeHome({ classes }) {
 
   return (
     <Wrapper>
-      <SEO title="Knowledge Base Home Page" />
+      <Seo title="Knowledge Base Home Page" />
       <div className={classes.header}>
         <PaddedContainer className={classes.heroDescription}>
           <Grid container spacing={3} direction="column">
             <Grid item xs={12} sm={4}>
               <Typography variant="h1">
-                Gain knowledge from the world's leading organisations
+                Gain knowledge from the world&apos;s leading organisations
               </Typography>
             </Grid>
             <Grid item xs={12} sm={5}>

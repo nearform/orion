@@ -37,7 +37,7 @@ const HideButton = ({ classes, articleId, status, refetchArticle }) => {
   }
 
   return (
-    <Button onClick={onClick} className={classes.root}>
+    <Button className={classes.root} onClick={onClick}>
       {isLoading ? (
         <CircularProgress
           color="secondary"

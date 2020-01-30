@@ -61,7 +61,10 @@ const BookmarkButton = ({
         articleId,
       },
     })
-    onToggle && onToggle()
+
+    if (onToggle) {
+      onToggle()
+    }
   }
 
   const loading = bookmarking || unbookmarking
@@ -121,6 +124,7 @@ BookmarkButton.propTypes = {
   onToggle: T.func,
   compact: T.bool,
   forceShowText: T.bool,
+  className: T.string,
 }
 
 export default withStyles(theme => ({

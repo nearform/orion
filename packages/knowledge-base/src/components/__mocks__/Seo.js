@@ -1,5 +1,5 @@
 import React from 'react'
-import { SEOHeaders } from 'components'
+import { SeoHeaders } from 'components'
 const site = {
   siteMetadata: {
     title: 'EFQM Assess Base',
@@ -7,4 +7,4 @@ const site = {
     author: 'EFQM',
   },
 }
-export default props => <SEOHeaders site={site} title="Test" />
+export default () => <SeoHeaders site={site} title="Test" />

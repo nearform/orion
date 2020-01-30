@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/*eslint no-console: ["error", { allow: ["log", "error"] }] */
+/* eslint no-console: ["error", { allow: ["log", "error"] }] */
 
 const https = require('https')
 const FS = require('fs')
@@ -46,14 +46,20 @@ function fetchPage(url, results = [], page = 0) {
         // Check that response looks OK.
         const { statusCode, statusMessage, headers } = res
         if (res.statusCode !== 200) {
-          return reject(`Status error ${statusCode} ${statusMessage}`)
+          return reject(
+            new Error(`Status error ${statusCode} ${statusMessage}`)
+          )
         }
+
         const contentType = headers['content-type']
         if (!/application\/json/.test(contentType)) {
           return reject(
-            `Server responded with non-JSON content type: ${contentType}`
+            new Error(
+              `Server responded with non-JSON content type: ${contentType}`
+            )
           )
         }
+
         console.log('  page %d', ++page)
         // Read page into buffer.
         const buffer = []
@@ -61,15 +67,15 @@ function fetchPage(url, results = [], page = 0) {
         res.on('end', () => {
           // Parse page data and extract event info.
           const json = Buffer.concat(buffer).toString()
-          const { events, next_rest_url } = JSON.parse(json)
+          const { events, next_rest_url: nextRestUrl } = JSON.parse(json)
           results = results.concat(
             events.map(event => {
               const {
                 id,
                 title,
                 url,
-                start_date,
-                end_date,
+                start_date: startDate,
+                end_date: endDate,
                 venue: { url: venueLink, venue: venueText },
                 website = '',
               } = event
@@ -78,8 +84,8 @@ function fetchPage(url, results = [], page = 0) {
                 name: title.replace(/&#(\d+);/g, (m, r) =>
                   String.fromCharCode(Number(r))
                 ),
-                startTime: start_date,
-                endTime: end_date,
+                startTime: startDate,
+                endTime: endDate,
                 location: {
                   link: venueLink,
                   text: venueText,
@@ -90,8 +96,8 @@ function fetchPage(url, results = [], page = 0) {
             })
           )
           // Fetch the next page, if any; otherwise return the accumulated results.
-          if (next_rest_url) {
-            resolve(fetchPage(next_rest_url, results, page))
+          if (nextRestUrl) {
+            resolve(fetchPage(nextRestUrl, results, page))
           } else {
             resolve(results)
           }

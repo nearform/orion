@@ -39,11 +39,11 @@ const ArticlePreview = ({
           </Link>
           <div className={classes.bookmark}>
             <BookmarkButton
+              compact
               articleId={article.id}
               bookmarked={bookmarked}
-              onToggle={onBookmarkToggle}
               disabled={bookmarkDisabled}
-              compact={true}
+              onToggle={onBookmarkToggle}
             />
           </div>
         </div>
@@ -77,9 +77,12 @@ const styles = theme => ({
 
 ArticlePreview.propTypes = {
   article: T.shape({
+    id: T.string,
+    thumbnail: T.string,
     title: T.string,
     path: T.string,
-    published_at: T.string,
+    published_at: T.string, // eslint-disable-line camelcase
+    // eslint-disable-next-line camelcase
     primary_taxonomy: T.arrayOf(
       T.shape({
         taxonomy: T.shape({
@@ -88,12 +91,13 @@ ArticlePreview.propTypes = {
       })
     ),
     createdBy: T.shape({
-      first_name: T.string,
-      last_name: T.string,
+      first_name: T.string, // eslint-disable-line camelcase
+      last_name: T.string, // eslint-disable-line camelcase
     }),
   }),
   bookmarked: T.bool,
   bookmarkDisabled: T.bool,
   onBookmarkToggle: T.func,
+  classes: T.object,
 }
 export default withStyles(styles)(ArticlePreview)

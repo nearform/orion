@@ -16,7 +16,7 @@ import { AuthContext, NavLink, PaddedContainer } from 'components'
 import SecondaryNavigation from './SecondaryNavigation'
 import MobileSidebar from './MobileSidebar'
 
-function MainToolbar({ classes, dark, ...props }) {
+function MainToolbar({ classes, dark }) {
   const [showSidebar, setShowSidebar] = useState(false)
   const isSmUp = useMediaQuery('(min-width:600px)')
   const { getUserTokenData } = useContext(AuthContext)
@@ -64,7 +64,7 @@ function MainToolbar({ classes, dark, ...props }) {
 
   const navButtonClass = classnames(classes.navButton, darkClass)
 
-  // darkClass is needed on both outer container and inner padded container
+  // DarkClass is needed on both outer container and inner padded container
   // to avoid hairline gap between toolbar and main element in mobile WebKit
 
   const gradient = <div className={classes.gradient} />

@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { UserAvatar } from 'components'
-import { getUsers } from '../../../queries'
 import CloseIcon from '@material-ui/icons/Close'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import debounce from 'lodash/debounce'
-import QueryTable from '../../QueryTable'
-import { constructImageUrl } from '../../../utils/image'
-
 import {
   Typography,
   withStyles,
@@ -17,6 +13,10 @@ import {
   TableCell,
   Modal,
 } from '@material-ui/core'
+import QueryTable from '../../QueryTable'
+import { constructImageUrl } from '../../../utils/image'
+
+import { getUsers } from '../../../queries'
 
 const headers = [
   { id: 'name', label: 'Name', sortable: true },
@@ -50,8 +50,8 @@ function SelectAuthors({ classes, selectedUsers, onChange }) {
 
   const queryVariables = {}
   if (filter) {
-    //implement fuzzy search:
-    //https://docs.hasura.io/1.0/graphql/manual/queries/custom-functions.html#example-fuzzy-match-search-functions
+    // Implement fuzzy search:
+    // https://docs.hasura.io/1.0/graphql/manual/queries/custom-functions.html#example-fuzzy-match-search-functions
     queryVariables.where = {
       email: { _ilike: `%${filter}%` },
       active: { _eq: true },
@@ -63,10 +63,11 @@ function SelectAuthors({ classes, selectedUsers, onChange }) {
   }, 400)
 
   function handleClose() {
-    //todo save/draft
+    // Todo save/draft
     setModalOpen(false)
     setFilter(null)
   }
+
   return (
     <>
       <Button
@@ -79,8 +80,8 @@ function SelectAuthors({ classes, selectedUsers, onChange }) {
       </Button>
       <Modal
         style={{ outline: 'none' }}
-        onClose={handleClose}
         open={isModalOpen}
+        onClose={handleClose}
       >
         <div className={classes.modal}>
           <Typography variant="h1">Set Authors</Typography>

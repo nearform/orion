@@ -27,7 +27,7 @@ export const QuickLinkButton = withStyles(theme => ({
       [classes.menuOpen]: open,
       [classes.menuDarkContrast]: dark,
     })
-    return <Button className={className} ref={ref} {...props} />
+    return <Button ref={ref} className={className} {...props} />
   })
 )
 
@@ -41,9 +41,10 @@ const QuickLinksMenu = withStyles(theme => ({
 }))(
   React.forwardRef((props, ref) => (
     <Menu
+      ref={ref}
+      keepMounted
       elevation={0}
       getContentAnchorEl={null}
-      keepMounted
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'right',
@@ -52,7 +53,6 @@ const QuickLinksMenu = withStyles(theme => ({
         vertical: 'top',
         horizontal: 'right',
       }}
-      ref={ref}
       {...props}
     />
   ))
@@ -77,11 +77,11 @@ function QuickLinkMenu({ dark, label, children }) {
   return (
     <>
       <QuickLinkButton
+        ref={menuButtonRef}
         to="/admin"
         dark={dark}
         open={open}
         onClick={() => setOpen(!open)}
-        ref={menuButtonRef}
       >
         {label}
         <Icon

@@ -1,12 +1,13 @@
 import React from 'react'
 import TestRenderer from 'react-test-renderer'
-import ThumbnailImage from './'
+import ThumbnailImage from '.'
 
 jest.mock('efqm-theme/assets/logo-1x', () => '1x-image')
 jest.mock('efqm-theme/assets/logo-3x', () => '3x-image')
 
 describe('<ThumbnailImage />', () => {
-  let thumbnailImageWrapper, thumbnailImage
+  let thumbnailImageWrapper
+  let thumbnailImage
 
   beforeAll(() => {
     thumbnailImageWrapper = TestRenderer.create(

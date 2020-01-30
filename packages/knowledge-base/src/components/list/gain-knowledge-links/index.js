@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box, makeStyles, Typography } from '@material-ui/core'
 
-import column from '../../layout/flex-with-gap/column'
-import row from '../../layout/flex-with-gap/row'
+import column from '../../layout/utils/flex-with-gap/column'
+import row from '../../layout/utils/flex-with-gap/row'
 
 import bmwBase64 from '../../../assets/partner-logos/bmw-base-64'
 import boschBase64 from '../../../assets/partner-logos/bosch-base-64'

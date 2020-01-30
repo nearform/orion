@@ -1,8 +1,8 @@
 import React from 'react'
 import { useStaticQuery, graphql } from 'gatsby'
-import { SEOHeaders } from 'components'
+import { SeoHeaders } from 'components'
 
-function SEO(props) {
+function Seo(props) {
   // Gatsby's static queries must be a static string in a file in the gatsby app
   const { site } = useStaticQuery(
     graphql`
@@ -18,11 +18,11 @@ function SEO(props) {
     `
   )
 
-  return <SEOHeaders site={site} {...props} />
+  return <SeoHeaders site={site} {...props} />
 }
 
-const propTypes = Object.assign({}, SEOHeaders.propTypes)
+const propTypes = Object.assign({}, SeoHeaders.propTypes)
 delete propTypes.site
-SEO.propTypes = propTypes
+Seo.propTypes = propTypes
 
-export default SEO
+export default Seo

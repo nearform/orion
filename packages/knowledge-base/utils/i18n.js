@@ -10,6 +10,7 @@ const resources = {
 }
 
 export async function init() {
+  // eslint-disable-next-line import/no-named-as-default-member
   await i18n.use(initReactI18next).init({
     resources,
     lng: 'en',

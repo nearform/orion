@@ -1,8 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Button, Grid } from '@material-ui/core'
 
-const PublishedArticleButtons = ({ publishArticle }) => {
+const PublishedArticleButtons = () => {
   return (
     <Grid item xs={12}>
       <Button variant="outlined" color="secondary" type="submit">
@@ -12,8 +11,6 @@ const PublishedArticleButtons = ({ publishArticle }) => {
   )
 }
 
-PublishedArticleButtons.propTypes = {
-  publishArticle: PropTypes.func,
-}
+PublishedArticleButtons.propTypes = {}
 
 export default PublishedArticleButtons

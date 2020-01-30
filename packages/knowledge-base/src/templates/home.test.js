@@ -15,10 +15,10 @@ jest.mock('components', () => ({
     }
   },
 }))
-jest.mock('../components/SEO')
+jest.mock('../components/Seo')
 jest.mock('graphql-hooks', () => {
   return {
-    useQuery: (query, options) => {
+    useQuery: () => {
       return {
         loading: false,
         error: null,

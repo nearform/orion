@@ -50,7 +50,7 @@ function MobileSidebar({ gradient, classes, closeSidebar, ...props }) {
   }
 
   const handleSearch = () => {
-    if (searchText.length) {
+    if (searchText.length > 0) {
       navigate(`/search/${searchText}`)
       closeSidebar()
     }
@@ -82,7 +82,7 @@ function MobileSidebar({ gradient, classes, closeSidebar, ...props }) {
 
   return (
     <Drawer
-      // classes needs to be done as such in order to fix the width https://stackoverflow.com/a/45650318
+      // Classes needs to be done as such in order to fix the width https://stackoverflow.com/a/45650318
       classes={{ paper: classes.paper }}
       onClose={closeSidebar}
       {...props}
@@ -92,7 +92,7 @@ function MobileSidebar({ gradient, classes, closeSidebar, ...props }) {
         {gradient}
         <ListItem>
           <span className={classes.headerHead}>
-            <Link to="/" onClick={closeSidebar} className={classes.logo}>
+            <Link to="/" className={classes.logo} onClick={closeSidebar}>
               <Img fixed={fixed} />
             </Link>
             <IconButton className={classes.iconButton} onClick={closeSidebar}>
@@ -101,8 +101,8 @@ function MobileSidebar({ gradient, classes, closeSidebar, ...props }) {
           </span>
         </ListItem>
         <ListItem
-          className={classes.listItem}
           button
+          className={classes.listItem}
           onClick={handleLinkClick('/')}
         >
           <Button
@@ -116,8 +116,8 @@ function MobileSidebar({ gradient, classes, closeSidebar, ...props }) {
           </Button>
         </ListItem>
         <ListItem
-          className={classes.listItem}
           button
+          className={classes.listItem}
           onClick={handleLinkClick('/')}
         >
           <Button
@@ -172,8 +172,6 @@ function MobileSidebar({ gradient, classes, closeSidebar, ...props }) {
           <Input
             autoFocus
             placeholder="Search"
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
             className={classes.inputClass}
             value={searchText}
             endAdornment={
@@ -196,6 +194,8 @@ function MobileSidebar({ gradient, classes, closeSidebar, ...props }) {
                 <SearchIcon color="secondary" />
               </IconButton>
             }
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
           />
         </ListItem>
       </List>
@@ -206,8 +206,8 @@ function MobileSidebar({ gradient, classes, closeSidebar, ...props }) {
           </ListSubheader>
           {type.taxonomy_items.map(item => (
             <ListItem
-              button
               key={`list_item_${item.key}`}
+              button
               to={`/section/${item.key}`}
               component={Link}
               onClick={closeSidebar}
@@ -260,7 +260,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.primary.dark,
   },
   headerListLinks: {
-    // to override the button default class, button is required for the coloured underline of current page
+    // To override the button default class, button is required for the coloured underline of current page
     color: `${theme.palette.primary.contrastText} !important`,
     fontSize: theme.spacing(1.75),
     padding: theme.spacing(1, 0),
@@ -271,9 +271,9 @@ const styles = theme => ({
     borderRadius: '3px',
     '&>input': {
       color: theme.palette.primary.dark,
-      padding: `4px ${theme.spacing(2)}px 6px ${theme.spacing(2)}px`, //the top and bottom padding are alignment related, and text size dependant
-      lineHeight: '20px', //input box height, overriding MUI defaults
-      height: '20px', //input box height, overriding MUI defaults
+      padding: `4px ${theme.spacing(2)}px 6px ${theme.spacing(2)}px`, // The top and bottom padding are alignment related, and text size dependant
+      lineHeight: '20px', // Input box height, overriding MUI defaults
+      height: '20px', // Input box height, overriding MUI defaults
       '&::-webkit-input-placeholder': {
         ...theme.typography.h3,
         color: theme.palette.primary.dark,

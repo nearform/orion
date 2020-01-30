@@ -16,16 +16,19 @@ import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 import { Link } from 'gatsby'
-import { deleteArticleMutation } from '../../queries'
 import { useMutation } from 'graphql-hooks'
 import get from 'lodash/get'
 
 import { ArticleStatusChip, AuthContext, PaddedContainer } from 'components'
-import SEO from '../SEO'
+import {
+  deleteArticleMutation,
+  getArticlesData,
+  getUserArticlesData,
+} from '../../queries'
+import Seo from '../Seo'
 import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
 
 import QueryTable from '../QueryTable'
-import { getArticlesData, getUserArticlesData } from '../../queries'
 
 import { formatDateTime } from '../../utils/date'
 import ContentToolbar from './ContentToolbar'
@@ -74,18 +77,21 @@ const ArticleList = ({ classes, path }) => {
 
   return (
     <PaddedContainer>
-      <SEO title={pageTitle} />
+      <Seo title={pageTitle} />
       <ContentToolbar pageTitle="Content" />
       <QueryTable
         headers={headers}
         query={query}
         variables={variables}
-        orderBy={{ updated_at: 'desc' }}
+        orderBy={
+          // eslint-disable-next-line camelcase
+          { updated_at: 'desc' }
+        }
         renderTableBody={(data, refetch) => (
           <>
             {data &&
               data.article.map(article => (
-                <TableRow hover key={article.id} size="small">
+                <TableRow key={article.id} hover size="small">
                   <TableCell>{article.title}</TableCell>
                   <TableCell>
                     {isPlatformGroup && (
@@ -137,16 +143,14 @@ const ArticleList = ({ classes, path }) => {
               open={deleteDialog !== null}
               onClose={() => setDeleteDialog(null)}
             >
-              <DialogTitle id="alert-dialog-title">
-                {'Delete Article?'}
-              </DialogTitle>
+              <DialogTitle id="alert-dialog-title">Delete Article?</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
                   Are you sure you want to delete this article?
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={() => setDeleteDialog(null)} color="secondary">
+                <Button color="secondary" onClick={() => setDeleteDialog(null)}>
                   Cancel
                 </Button>
                 <Button

@@ -10,7 +10,7 @@ import AdminToolbar from './AdminToolbar'
 import UserGroups from './UserGroups'
 import GroupUsers from './GroupUsers'
 
-function AdminRoute({ SEO: Seo }) {
+function AdminRoute({ Seo }) {
   const { getUserAuth } = useContext(AuthContext)
   const [pageTitle, setPageTitle] = useState('')
 
@@ -71,7 +71,7 @@ function AdminRoute({ SEO: Seo }) {
 }
 
 AdminRoute.propTypes = {
-  SEO: T.elementType,
+  Seo: T.elementType,
 }
 
 function AdminSection({ component: AdminComponent, applyPageTitle, ...props }) {

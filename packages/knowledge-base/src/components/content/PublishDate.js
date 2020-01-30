@@ -1,8 +1,8 @@
 import React from 'react'
 import T from 'prop-types'
-import { formatDate } from '../../utils/date'
 import { withStyles, Typography } from '@material-ui/core'
 import { CalendarTodayOutlined } from '@material-ui/icons'
+import { formatDate } from '../../utils/date'
 
 const PublishDate = ({ classes, date }) => {
   return (

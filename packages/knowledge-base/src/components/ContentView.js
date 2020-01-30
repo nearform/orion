@@ -9,20 +9,20 @@ import {
   LinearProgress,
   useMediaQuery,
 } from '@material-ui/core'
-import ContentMetadata from './content/ContentMetadata'
-import ContentOptions from './content/ContentOptions'
-import FeatureArticles from './list/FeatureArticles'
-import HowToAuthenticate from './HowToAuthenticate'
-import RichText from './content/RichText'
 import {
   AuthContext,
   useAuthorizedQuery,
   PaddedContainer,
   EmbeddedVideo,
 } from 'components'
-import SEO from './SEO'
 import { getArticleDetails, getArticleSummary } from '../queries'
 import { constructImageUrl } from '../utils/image'
+import ContentMetadata from './content/ContentMetadata'
+import ContentOptions from './content/ContentOptions'
+import FeatureArticles from './list/FeatureArticles'
+import HowToAuthenticate from './HowToAuthenticate'
+import RichText from './content/RichText'
+import Seo from './Seo'
 
 function ContentView({ slug, classes, articleSummary, preview = false }) {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
@@ -45,23 +45,25 @@ function ContentView({ slug, classes, articleSummary, preview = false }) {
     { id: contentId },
     {
       onPreFetch: variables =>
-        !!variables.id && get(articleSummary, 'id') !== variables.id,
+        Boolean(variables.id) && get(articleSummary, 'id') !== variables.id,
       onFetch: data =>
         showFullArticle ? data.articleDetails : data.articleSummary,
       onNoFetch: (variables, loading) => {
         if (articleSummary) {
           return articleSummary
         }
+
         if (loading) {
           return {
             id: 0,
             title: 'Loading...',
             subtitle: '',
             authors: [],
-            taxonomy_items: [],
-            published_at: '',
+            taxonomy_items: [], // eslint-disable-line camelcase
+            published_at: '', // eslint-disable-line camelcase
           }
         }
+
         return null
       },
     }
@@ -70,7 +72,7 @@ function ContentView({ slug, classes, articleSummary, preview = false }) {
   if (!article) {
     return (
       <PaddedContainer>
-        <SEO title="Article Not Found" />
+        <Seo title="Article Not Found" />
         <h1>Not Found</h1>
         <p>Article not found</p>
       </PaddedContainer>
@@ -86,7 +88,7 @@ function ContentView({ slug, classes, articleSummary, preview = false }) {
 
   return (
     <PaddedContainer>
-      <SEO title={`${preview ? 'Preview ' : ''} ${article.title || ''}`} />
+      <Seo title={`${preview ? 'Preview ' : ''} ${article.title || ''}`} />
       <Grid container spacing={7} className={classes.mainWrapper}>
         <Grid item xs={12} sm={4} lg={3}>
           <Grid
@@ -94,7 +96,7 @@ function ContentView({ slug, classes, articleSummary, preview = false }) {
             spacing={1}
             className={classes.knowledgeTypeContainer}
           >
-            <Grid id="content-metadata" item xs>
+            <Grid item xs id="content-metadata">
               <div className={classes.spacingRight}>
                 <ContentMetadata content={article} />
               </div>
@@ -136,7 +138,7 @@ function ContentView({ slug, classes, articleSummary, preview = false }) {
 
               {showFullArticle &&
                 get(article, 'fields', [])
-                  .filter(({ value }) => !!value)
+                  .filter(({ value }) => Boolean(value))
                   .map(getFieldType)}
             </div>
           </Grid>
@@ -155,7 +157,7 @@ function ContentView({ slug, classes, articleSummary, preview = false }) {
           hideEmpty
           title="Further reading"
           articles={get(article, 'recommended_articles', []).map(
-            ({ recommended_article }) => recommended_article
+            ({ recommended_article: recommendedArticle }) => recommendedArticle
           )}
         />
       </div>
@@ -171,6 +173,8 @@ const getFieldType = (field, idx) => {
       return <div key={idx} {...field} />
     case 'embed-video-link':
       return <EmbeddedVideo key={idx} url={field.value} {...field} />
+    default:
+      return undefined
   }
 }
 

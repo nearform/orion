@@ -31,9 +31,7 @@ const ReviewArticleButtons = ({ publishArticle }) => {
           open={publishModalOpen}
           onClose={() => setPublishModalOpen(false)}
         >
-          <DialogTitle id="alert-dialog-title">
-            {'Publish Article?'}
-          </DialogTitle>
+          <DialogTitle id="alert-dialog-title">Publish Article?</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               Once published the article will be visible to all.
@@ -41,17 +39,17 @@ const ReviewArticleButtons = ({ publishArticle }) => {
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={() => setPublishModalOpen(false)}
               color="secondary"
+              onClick={() => setPublishModalOpen(false)}
             >
               Cancel
             </Button>
             <Button
+              color="primary"
               onClick={() => {
                 publishArticle()
                 setPublishModalOpen(false)
               }}
-              color="primary"
             >
               Publish
             </Button>

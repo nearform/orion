@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useQuery, useMutation } from 'graphql-hooks'
-import { Redirect } from '@reach/router'
+import { Redirect } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 import urlSlug from 'url-slug'
 import * as Yup from 'yup'
 import {
@@ -40,7 +40,7 @@ import {
 } from '../../../queries'
 
 import BoxControlLabel from '../../BoxControlLabel'
-import SEO from '../../SEO'
+import Seo from '../../Seo'
 import SelectAuthor from './SelectAuthor'
 import EditArticleButtons from './EditArticleButtons'
 import ReviewArticleButtons from './ReviewArticleButtons'
@@ -87,10 +87,10 @@ function EditArticle({ classes, articleId }) {
   )
   const articleDetails = get(articleData, 'articleDetails')
 
-  //TODO: nicer loading indication
+  // TODO: nicer loading indication
   if (!articleDetails || !taxonomyTypes) return null
 
-  //TODO: better handling of roles, redirect to a article list page?
+  // TODO: better handling of roles, redirect to a article list page?
   if (
     !(
       articleDetails.created_by_id === userId &&
@@ -98,7 +98,7 @@ function EditArticle({ classes, articleId }) {
     ) &&
     !isPlatformGroup
   ) {
-    return <Redirect to="/my-content" noThrow />
+    return <Redirect noThrow to="/my-content" />
   }
 
   const fieldsMap = articleDetails.fields.reduce((res, field) => {
@@ -122,12 +122,12 @@ function EditArticle({ classes, articleId }) {
   }
 
   async function saveArticle(values, actions) {
-    //just take taxonomy and knowledgeType out, so they are not submitted (yet)
+    // Just take taxonomy and knowledgeType out, so they are not submitted (yet)
     const {
       taxonomy,
       recommendations,
-      authors, //eslint-disable-line no-unused-vars
-      knowledgeType, //eslint-disable-line no-unused-vars
+      authors,
+      knowledgeType,
       fields,
       ...updatableFields
     } = values
@@ -137,9 +137,9 @@ function EditArticle({ classes, articleId }) {
       values.authors.map(path('author.id'))
     )
     if (addAuthors.length > 0) {
-      const addAuthorsInsert = addAuthors.map(author_id => ({
-        article_id: articleId,
-        author_id,
+      const addAuthorsInsert = addAuthors.map(authorId => ({
+        article_id: articleId, // eslint-disable-line camelcase
+        author_id: authorId, // eslint-disable-line camelcase
       }))
       mutationPromises.push(
         addArticleAuthors({ variables: { addAuthors: addAuthorsInsert } })
@@ -147,10 +147,10 @@ function EditArticle({ classes, articleId }) {
     }
 
     if (removeAuthors.length > 0) {
-      const removeAuthorsDelete = removeAuthors.map(author_id => ({
+      const removeAuthorsDelete = removeAuthors.map(authorId => ({
         _and: [
-          { article_id: { _eq: articleId } },
-          { author_id: { _eq: author_id } },
+          { article_id: { _eq: articleId } }, // eslint-disable-line camelcase
+          { author_id: { _eq: authorId } }, // eslint-disable-line camelcase
         ],
       }))
       mutationPromises.push(
@@ -159,20 +159,22 @@ function EditArticle({ classes, articleId }) {
         })
       )
     }
+
     const [addTaxonomies, removeTaxonomies] = diff(
       articleDetails.taxonomy_items.map(path('taxonomy_id')),
       Object.keys(taxonomy || {}).reduce((res, it) => {
         if (values.taxonomy[it]) {
           res.push(Number(it))
         }
+
         return res
       }, [])
     )
 
     if (addTaxonomies.length > 0) {
-      const addTaxonomiesInsert = addTaxonomies.map(taxonomy_id => ({
-        article_id: articleId,
-        taxonomy_id,
+      const addTaxonomiesInsert = addTaxonomies.map(taxonomyId => ({
+        article_id: articleId, // eslint-disable-line camelcase
+        taxonomy_id: taxonomyId, // eslint-disable-line camelcase
       }))
       mutationPromises.push(
         addArticleTaxonomies({
@@ -180,11 +182,12 @@ function EditArticle({ classes, articleId }) {
         })
       )
     }
+
     if (removeTaxonomies.length > 0) {
-      const removeTaxonomiesDelete = removeTaxonomies.map(taxonomy_id => ({
+      const removeTaxonomiesDelete = removeTaxonomies.map(taxonomyId => ({
         _and: [
-          { article_id: { _eq: articleId } },
-          { taxonomy_id: { _eq: taxonomy_id } },
+          { article_id: { _eq: articleId } }, // eslint-disable-line camelcase
+          { taxonomy_id: { _eq: taxonomyId } }, // eslint-disable-line camelcase
         ],
       }))
       mutationPromises.push(
@@ -201,9 +204,9 @@ function EditArticle({ classes, articleId }) {
 
     if (addRecommendations.length > 0) {
       const addRecommendationsInsert = addRecommendations.map(
-        recommended_id => ({
-          article_id: articleId,
-          recommended_id,
+        recommendedId => ({
+          article_id: articleId, // eslint-disable-line camelcase
+          recommended_id: recommendedId, // eslint-disable-line camelcase
         })
       )
 
@@ -216,10 +219,10 @@ function EditArticle({ classes, articleId }) {
 
     if (removeRecommendations.length > 0) {
       const removeRecommendationsDelete = removeRecommendations.map(
-        recommended_id => ({
+        recommendedId => ({
           _and: [
-            { article_id: { _eq: articleId } },
-            { recommended_id: { _eq: recommended_id } },
+            { article_id: { _eq: articleId } }, // eslint-disable-line camelcase
+            { recommended_id: { _eq: recommendedId } }, // eslint-disable-line camelcase
           ],
         })
       )
@@ -244,7 +247,7 @@ function EditArticle({ classes, articleId }) {
             ...updatableFields,
             fields: storeFields,
             path: urlSlug(`${articleId}-${updatableFields.title}`),
-            updated_at: new Date(),
+            updated_at: new Date(), // eslint-disable-line camelcase
           },
         },
       })
@@ -255,7 +258,7 @@ function EditArticle({ classes, articleId }) {
     actions.setSubmitting(false)
   }
 
-  // code block below allows for old saved video articles to contain a video description field
+  // Code block below allows for old saved video articles to contain a video description field
   if (
     articleDetails.fields.some(({ key }) => key === 'video') &&
     !articleDetails.fields.some(({ key }) => key === 'description')
@@ -270,26 +273,19 @@ function EditArticle({ classes, articleId }) {
 
   return (
     <PaddedContainer>
-      <SEO
+      <Seo
         title={
-          articleDetails.title != null
-            ? `Edit Article - ${articleDetails.title}`
-            : 'New Article'
+          articleDetails.title === null
+            ? 'New Article'
+            : `Edit Article - ${articleDetails.title}`
         }
       />
       <Formik
         initialValues={initialValues}
-        onSubmit={saveArticle}
         validationSchema={ArticleSchema}
+        onSubmit={saveArticle}
       >
-        {({
-          values,
-          dirty,
-          handleSubmit,
-          isSubmitting,
-          submitForm,
-          setFieldValue,
-        }) => {
+        {({ values, dirty, handleSubmit, submitForm, setFieldValue }) => {
           const saveButtons = (
             <>
               {articleDetails.status === 'in-progress' && (
@@ -344,7 +340,7 @@ function EditArticle({ classes, articleId }) {
                         <ArticleStatusChip status={articleDetails.status} />
                       </div>
                     </Grid>
-                    <Grid item xs={12} className={classes.spacer}></Grid>
+                    <Grid item xs={12} className={classes.spacer} />
                     {saveButtons}
                   </Grid>
 
@@ -425,16 +421,16 @@ function EditArticle({ classes, articleId }) {
                 >
                   <Grid item xs={12} lg={9}>
                     <Field
+                      fullWidth
                       name="title"
                       component={TextField}
-                      fullWidth
                       placeholder="Add Title"
                       className={classes.titleInput}
                     />
                     <Field
+                      fullWidth
                       name="subtitle"
                       component={TextField}
-                      fullWidth
                       placeholder="Add Subtitle"
                       className={classes.subtitleInput}
                     />
@@ -457,7 +453,7 @@ function EditArticle({ classes, articleId }) {
                         Summary
                       </Typography>
                       <Field
-                        name={'summary'}
+                        name="summary"
                         component={FormikRichTextEditor}
                         articleId={articleId}
                       />
@@ -474,9 +470,9 @@ function EditArticle({ classes, articleId }) {
                         {type === 'embed-video-link' ? (
                           <>
                             <Field
+                              fullWidth
                               name={`fields.${key}`}
                               component={TextField}
-                              fullWidth
                               placeholder="Paste YouTube or Vimeo URL"
                             />
                             <EmbeddedVideo
@@ -520,10 +516,10 @@ function EditArticle({ classes, articleId }) {
                         Recommendations for further reading
                       </Typography>
                       <SelectArticleRecommendations
+                        selectedArticles={values.recommendations}
                         onChange={articles =>
                           setFieldValue('recommendations', articles)
                         }
-                        selectedArticles={values.recommendations}
                       />
                     </div>
                   </Grid>

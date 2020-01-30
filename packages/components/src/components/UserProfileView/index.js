@@ -27,7 +27,7 @@ import UserInfo from './UserInfo'
 import formFields from './utils/form-fields'
 import validationSchema from './validationSchema'
 
-const UserProfileView = ({ SEO: Seo, userSummary, classes }) => {
+const UserProfileView = ({ Seo, userSummary, classes }) => {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
 
   const { userId } = getUserTokenData()
@@ -344,7 +344,7 @@ const UserProfileView = ({ SEO: Seo, userSummary, classes }) => {
 }
 
 UserProfileView.propTypes = {
-  SEO: T.elementType,
+  Seo: T.elementType,
   userSummary: T.object,
   classes: T.object.isRequired,
 }

@@ -3,12 +3,12 @@ import T from 'prop-types'
 import { makeStyles, Box } from '@material-ui/core'
 import get from 'lodash/get'
 import { useAmplifyImage } from 'components'
+import noThumbnailFallback from 'efqm-theme/assets/logo-1x'
+import { Link } from 'gatsby'
 import { formatDateAsMonthAndYear } from '../../utils/date'
 
-import noThumbnailFallback from 'efqm-theme/assets/logo-1x'
 import ThumbnailImage from '../content/thumbnail-image'
-import { Link } from 'gatsby'
-import row from '../layout/flex-with-gap/row'
+import row from '../layout/utils/flex-with-gap/row'
 
 const smallPreviewStyles = makeStyles(theme => ({
   article: {
@@ -78,7 +78,9 @@ SmallPreview.propTypes = {
   article: T.shape({
     title: T.string,
     path: T.string,
-    published_at: T.string,
+    thumbnail: T.string,
+    published_at: T.string, // eslint-disable-line camelcase
+    // eslint-disable-next-line camelcase
     primary_taxonomy: T.arrayOf(
       T.shape({
         taxonomy: T.shape({
@@ -87,10 +89,11 @@ SmallPreview.propTypes = {
       })
     ),
     createdBy: T.shape({
-      first_name: T.string,
-      last_name: T.string,
+      first_name: T.string, // eslint-disable-line camelcase
+      last_name: T.string, // eslint-disable-line camelcase
     }),
   }),
+  component: T.object,
 }
 
 export default SmallPreview

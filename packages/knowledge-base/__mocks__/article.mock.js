@@ -1,3 +1,4 @@
+/* eslint camelcase: "off" */
 export default {
   id: 7,
   thumbnail:

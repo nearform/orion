@@ -130,7 +130,7 @@
       {
         "files": [
           "packages/*/src/components/**/*.js",
-          "!packages/*/src/components/**/utils/*.js",
+          "!packages/*/src/components/**/utils/**/*.js",
           "!packages/*/src/components/**/utils.js"
         ],
         "rules": {
