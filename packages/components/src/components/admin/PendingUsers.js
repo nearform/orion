@@ -12,7 +12,7 @@ import {
 import { HowToReg, DeleteForever } from '@material-ui/icons'
 import * as Yup from 'yup'
 
-import UserFilter from '../page'
+import UserFilter from '../page/UserFilter'
 import ConfirmDialog from '../ConfirmDialog'
 import useAdminTable from '../../hooks/useAdminTable'
 import {

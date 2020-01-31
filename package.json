@@ -81,7 +81,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged && pretty-quick --staged --pattern '**/*.graphql'",
+      "pre-commit": "lint-staged && pretty-quick --staged --pattern '**/*.json'",
       "post-commit": "git update-index --again",
       "pre-push": "yarn dev:lint"
     }

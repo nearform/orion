@@ -1,8 +1,11 @@
 import { withStyles } from '@material-ui/core'
 
-import { theme } from '.'
+// If we import '.' directly, it will import this file, as defined in the package.json and not index.js
+/* eslint-disable unicorn/import-index,import/no-useless-path-segments */
+import { theme } from './index'
 
-export * from '.'
+export * from './index'
+/* eslint-enable unicorn/import-index,import/no-useless-path-segments */
 
 const styles = {
   '@global': {
