@@ -279,6 +279,12 @@ ol > li::before {
   margin-top: 90px;
 }
 
+.sidebar .app-name-link img {
+  width: 80%;
+  height: 80%;
+  margin-top: 6%;
+}
+
 .sidebar-toggle {
   margin-top: 90px;
 }

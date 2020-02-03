@@ -2,7 +2,7 @@ exports.metadata = {
   title: 'NearForm Assess Base',
   author: 'NearForm',
   description: "NearForm's Open Source Assess Base.",
-  siteUrl: 'https://neaform.github.io/orion',
+  siteUrl: 'https://nf-orion.netlify.com/#/',
   social: {
     twitter: 'nearform',
   },
