@@ -62,7 +62,7 @@ resource "aws_cloudfront_distribution" "app" {
 
     lambda_function_association {
       event_type = "viewer-request"
-      lambda_arn = "${aws_lambda_function.sub_dirs.qualified_arn}"
+      lambda_arn = "${aws_lambda_function.http_auth.qualified_arn}"
     }
 
     forwarded_values {
