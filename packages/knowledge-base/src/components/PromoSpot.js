@@ -39,7 +39,7 @@ const usePromoSpotStyles = makeStyles(theme => {
  * Placeholder function for promo-spots
  * Definitely requires refactoring for full implementation
  */
-function PromoSpot({ link, strapline, title }) {
+function PromoSpot({ strapline, title }) {
   const content = useStaticQuery(graphql`
     query {
       efqmAwards: file(name: { eq: "efqm" }) {

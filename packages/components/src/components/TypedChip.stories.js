@@ -2,21 +2,15 @@ import React from 'react'
 
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
-import { text, select, radio } from '@storybook/addon-knobs'
+import { text, select } from '@storybook/addon-knobs'
 
+import { withStyles } from '@material-ui/core'
 import _TypedChip from './TypedChip'
-import { Typography, Card, withStyles } from '@material-ui/core'
 const TypedChip = withStyles(theme => ({
   root: {
     margin: theme.spacing(1),
   },
 }))(_TypedChip)
-const Section = withStyles(theme => ({
-  root: {
-    padding: theme.spacing(1, 2),
-    margin: theme.spacing(3),
-  },
-}))(Card)
 
 storiesOf('TypedChip', module)
   .addDecorator(jsxDecorator)

@@ -29,8 +29,8 @@ async function main() {
       roles: seedData.roles,
     })
     console.log('upserted', res.insert_role.returning)
-  } catch (err) {
-    console.error('there has been a problem upserting data', err)
+  } catch (error) {
+    console.error('there has been a problem upserting data', error)
   }
 }
 

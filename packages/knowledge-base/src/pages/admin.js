@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router } from '@reach/router'
+import { Router } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 
 import { AdminRoute, ProtectedRoute } from 'components'
 

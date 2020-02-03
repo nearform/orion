@@ -3,9 +3,9 @@ import { Box, makeStyles } from '@material-ui/core'
 import T from 'prop-types'
 import EventItem from '../event-item'
 import ListTitle from '../ListTitle'
-import column from '../../layout/flex-with-gap/column'
+import column from '../../layout/utils/flex-with-gap/column'
 
-import events from './events.js'
+import events from './utils/events'
 
 const useEventListStyles = makeStyles(theme => ({
   wrapper: {
@@ -31,7 +31,7 @@ const EventList = ({ className, component = 'ul' }) => {
           .filter(e => Date.parse(e.startTime) > eventCutoff)
           .slice(0, 4)
           .map(event => (
-            <EventItem event={event} key={event.uid} />
+            <EventItem key={event.uid} event={event} />
           ))}
       </Box>
     </Box>
@@ -40,6 +40,7 @@ const EventList = ({ className, component = 'ul' }) => {
 
 EventList.propTypes = {
   component: T.string,
+  className: T.string,
 }
 
 export default EventList

@@ -18,15 +18,15 @@ function PasswordReset({ theme, classes, submit, resendCode, handleInput }) {
             </SectionTitleField>
           </Grid>
           <Grid item>
-            <InputField name="code" required onChange={handleInput}>
+            <InputField required name="code" onChange={handleInput}>
               Code
             </InputField>
           </Grid>
           <Grid item>
             <InputField
+              required
               name="password"
               type="password"
-              required
               onChange={handleInput}
             >
               New Password
@@ -35,7 +35,7 @@ function PasswordReset({ theme, classes, submit, resendCode, handleInput }) {
 
           <Grid item container alignItems="baseline" spacing={3} wrap="nowrap">
             <Grid item>
-              <Button color="secondary" onClick={resendCode} size="small">
+              <Button color="secondary" size="small" onClick={resendCode}>
                 Resend Code
               </Button>
             </Grid>

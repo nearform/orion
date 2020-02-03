@@ -1,7 +1,7 @@
 export const readableAuthors = (authorsArray = []) => {
   authorsArray = authorsArray.filter(({ author }) => {
     return (
-      // remove instances of profiles in db with no names
+      // Remove instances of profiles in db with no names
       (author.first_name && author.first_name.length) ||
       (author.last_name && author.last_name.length)
     )

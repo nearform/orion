@@ -3,10 +3,10 @@ import { ClientContext } from 'graphql-hooks'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import './src/styles/global.css'
+import './src/styles/global.css' // eslint-disable-line import/no-unassigned-import
 
 import {
-  //addTranslations,
+  // AddTranslations,
   AuthWrapper,
   RootWrapper,
   Layout,
@@ -16,7 +16,7 @@ import {
   theme,
 } from 'components'
 import awsConfig from './utils/aws-exports'
-//import * as i18n from './utils/i18n'
+// Import * as i18n from './utils/i18n'
 import AppFooter from './src/components/AppFooter'
 import MainToolbar from './src/components/MainToolbar'
 import useUserGroups from './src/hooks/useUserGroups'
@@ -27,7 +27,7 @@ const client = makeGraphQLClient(process.env.GATSBY_GRAPHQL_API)
 
 export async function onClientEntry() {
   /*
-  const i18next = await i18n.init()
+  Const i18next = await i18n.init()
   addTranslations('assessments', i18next)
   */
 }
@@ -39,6 +39,7 @@ const AuthInitializationWrapper = ({ element }) => {
       await initGraphQLClient(client, awsConfig)
       setIsAuthInitialized(true)
     }
+
     init()
   }, [])
 
@@ -51,15 +52,13 @@ const AuthInitializationWrapper = ({ element }) => {
       ThemeWrapper={ThemeWrapper}
       CssBaseline={CssBaseline}
     >
-      <AuthWrapper
-        isAuthInitialized={isAuthInitialized}
-        allowNoParentGroups={true}
-      >
+      <AuthWrapper allowNoParentGroups isAuthInitialized={isAuthInitialized}>
         {element}
       </AuthWrapper>
     </RootWrapper>
   )
 }
+
 export const wrapRootElement = ({ element }) => {
   return <AuthInitializationWrapper element={element} />
 }

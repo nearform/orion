@@ -1,9 +1,9 @@
 import get from 'lodash/get'
+import pino from 'pino'
 import graphql from '../graphql'
 import getDefaultRole from './graphql/get-default-role.graphql'
 import createUser from './graphql/create-user.graphql'
 import createUserRole from './graphql/create-user-role.graphql'
-import pino from 'pino'
 const logger = pino()
 
 export const NEW_MEMBER_ROLE_NAME = 'member'
@@ -27,15 +27,15 @@ export const handler = async event => {
 
       const userId = get(user, 'insert_user.returning.0.id')
       await graphql(createUserRole, {
-        userId: userId,
+        userId,
         roleId: role.id,
       })
       logger.info(`assigned user ${userId} role ${JSON.stringify(role)}`)
     }
 
     return event
-  } catch (e) {
-    logger.error(e)
-    throw e
+  } catch (error) {
+    logger.error(error)
+    throw error
   }
 }

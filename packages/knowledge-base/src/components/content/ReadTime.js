@@ -6,11 +6,14 @@ import { Schedule } from '@material-ui/icons'
 const getTimeToRead = fields => {
   let readTime = 0
   fields
-    .filter(({ value }) => !!value)
-    .map(field => {
+    .filter(({ value }) => Boolean(value))
+    .forEach(field => {
       switch (field.type) {
         case 'rich-text':
           readTime = Math.ceil(field.value.split(' ').length / 225)
+          break
+        default:
+          break
       }
     })
   return readTime

@@ -37,6 +37,8 @@ const ContentSignpostGrid = ({ children = [], title = null }) => {
   const { list, titleBox, wrapper } = useLinkStyles({ title })
   const isMobile = useMediaQuery('(max-width: 800px)')
 
+  // TODO: use a real key for the index... this is bad!
+  /* eslint-disable react/no-array-index-key */
   const content = (
     <>
       {title && (
@@ -51,6 +53,7 @@ const ContentSignpostGrid = ({ children = [], title = null }) => {
       </Box>
     </>
   )
+  /* eslint-enable react/no-array-index-key */
 
   return isMobile ? (
     <div>{content}</div>

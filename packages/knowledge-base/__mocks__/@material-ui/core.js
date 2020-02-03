@@ -7,7 +7,9 @@ module.exports = {
     props.component ? (
       <a href={props.to}>{props.children}</a>
     ) : (
-      <button {...props}>{props.children}</button>
+      <button type="button" {...props}>
+        {props.children}
+      </button>
     )
   ),
 }

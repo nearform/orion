@@ -29,7 +29,7 @@ function QueryTable({
   const [orderBy, setOrderBy] = useState(orderByProp)
 
   const { loading, error, data, refetch } = useQuery(query, {
-    updateData: (_, nextData) => nextData, //fixes pagination flashing
+    updateData: (_, nextData) => nextData, // Fixes pagination flashing
     variables: {
       ...variables,
       offset,
@@ -38,7 +38,8 @@ function QueryTable({
     },
   })
 
-  if (!headers.length) return <Typography>No table headers to show</Typography>
+  if (headers.length === 0)
+    return <Typography>No table headers to show</Typography>
 
   if (!data && loading) return <Typography>Loading...</Typography>
   if (error) return <Typography>Error loading data.</Typography>
@@ -57,7 +58,8 @@ function QueryTable({
                     </TableCell>
                   )
                 }
-                const columnIsOrdered = orderBy.hasOwnProperty(id)
+
+                const columnIsOrdered = Object.hasOwnProperty.call(orderBy, id)
                 return (
                   <TableCell
                     key={id}
@@ -114,6 +116,9 @@ QueryTable.propTypes = {
   pageSizes: T.arrayOf(T.number),
   renderTableBody: T.func.isRequired,
   testid: T.string,
+  orderBy: T.object,
+  query: T.string,
+  variables: T.object,
 }
 
 export default QueryTable

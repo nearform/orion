@@ -13,10 +13,10 @@ const PreviewArticleButton = ({ articleId, dirty, submitForm }) => {
           if (dirty) {
             await submitForm()
           }
+
           navigate(`/my-content/preview/${articleId}`)
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.error('Unable to save article:', e)
+        } catch (error) {
+          console.error('Unable to save article:', error)
         }
       }}
     >

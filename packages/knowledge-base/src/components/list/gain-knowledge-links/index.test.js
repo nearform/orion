@@ -1,6 +1,6 @@
 import React from 'react'
 import TestRenderer from 'react-test-renderer'
-import GainKnowledgeLinks from './'
+import GainKnowledgeLinks from '.'
 
 describe('<GainKnowledgeLinks />', () => {
   let gainKnowledgeLinksWrapper

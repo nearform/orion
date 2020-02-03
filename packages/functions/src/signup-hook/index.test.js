@@ -1,9 +1,9 @@
-import { handler, NEW_MEMBER_ROLE_NAME } from './'
 import graphql from '../graphql'
 
 import getDefaultRole from './graphql/get-default-role.graphql'
 import createUser from './graphql/create-user.graphql'
 import createUserRole from './graphql/create-user-role.graphql'
+import { handler, NEW_MEMBER_ROLE_NAME } from '.'
 jest.mock('../graphql')
 
 const originalEvent = {
@@ -22,9 +22,9 @@ const originalEvent = {
     userAttributes: {
       sub: '331fea42-48f4-4235-bd6f-70c7fdc46f27',
       'cognito:user_status': 'CONFIRMED',
-      email_verified: 'true',
-      phone_number_verified: 'false',
-      phone_number: '+11132123234',
+      email_verified: 'true', // eslint-disable-line camelcase
+      phone_number_verified: 'false', // eslint-disable-line camelcase
+      phone_number: '+11132123234', // eslint-disable-line camelcase
       email: 'simone.busoli+3@gmail.com',
     },
   },
@@ -37,6 +37,7 @@ describe('signup-hook', () => {
     const createdUser = { id: 'some-user-id' }
     graphql.mockResolvedValueOnce({ role: [role] })
     graphql.mockResolvedValueOnce({
+      // eslint-disable-next-line camelcase
       insert_user: {
         returning: [createdUser],
       },

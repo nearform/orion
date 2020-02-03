@@ -2,7 +2,7 @@ import React from 'react'
 import TestRenderer from 'react-test-renderer'
 
 import articleMock from '../../../../__mocks__/article.mock'
-import ArticleVisualSummary from './'
+import ArticleVisualSummary from '.'
 
 jest.mock('../../../utils/image', () => ({
   constructImageUrl: thumbnail => `mocked/${thumbnail}`,
@@ -12,7 +12,8 @@ const pPredicate = el => el.type === 'p'
 const aPredicate = el => el.type === 'a'
 
 describe('<ArticleVisualSummary />', () => {
-  let articleVisualSummary, link
+  let articleVisualSummary
+  let link
 
   beforeAll(() => {
     const { path, thumbnail } = articleMock

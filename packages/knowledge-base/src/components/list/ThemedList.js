@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, makeStyles } from '@material-ui/core'
+import column from '../layout/utils/flex-with-gap/column'
 import SmallPreview from './SmallPreview'
 import ListTitle from './ListTitle'
-import column from '../layout/flex-with-gap/column'
 
 const useThemedListStyles = makeStyles(theme => ({
   listLayout: {
@@ -20,7 +20,7 @@ const useThemedListStyles = makeStyles(theme => ({
 
 const ThemedList = ({ title = '', articles = [], hideEmpty }) => {
   const { listLayout } = useThemedListStyles()
-  if (hideEmpty && !articles.length) return null
+  if (hideEmpty && articles.length === 0) return null
   return (
     <Box>
       <ListTitle title={title} />
@@ -36,7 +36,7 @@ const ThemedList = ({ title = '', articles = [], hideEmpty }) => {
 ThemedList.propTypes = {
   title: PropTypes.string,
   articles: PropTypes.array,
-  classes: PropTypes.object,
+  hideEmpty: PropTypes.bool,
 }
 
 export default ThemedList

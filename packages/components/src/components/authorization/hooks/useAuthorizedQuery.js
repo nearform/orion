@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { useManualQuery } from 'graphql-hooks'
-import { AuthContext } from './AuthWrapper'
+import { AuthContext } from '../AuthWrapper'
 
 /**
  * Execute a query which requires an authorization context to succeed.
@@ -21,9 +21,9 @@ import { AuthContext } from './AuthWrapper'
  */
 export default function useAuthorizedQuery(query, variables, opts = {}) {
   const {
-    onPreFetch = variables => true,
+    onPreFetch = () => true,
     onFetch = data => data,
-    onNoFetch = variables => null,
+    onNoFetch = () => null,
     useCache,
   } = opts
 
@@ -59,6 +59,7 @@ export default function useAuthorizedQuery(query, variables, opts = {}) {
     if (onPreFetch(_variables)) {
       return _fetch({ variables: _variables })
     }
+
     return Promise.resolve()
   }
 

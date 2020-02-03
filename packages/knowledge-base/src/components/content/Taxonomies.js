@@ -1,26 +1,31 @@
 import React from 'react'
-import { navigate } from '@reach/router'
+import { navigate } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 import classnames from 'classnames'
-import TaxonomyItem from './TaxonomyItem'
-import useTaxonomies from '../../hooks/useTaxonomies'
 import { withStyles, Typography, Button, Hidden } from '@material-ui/core'
+import useTaxonomies from '../../hooks/useTaxonomies'
+import TaxonomyItem from './TaxonomyItem'
 
 const Taxonomies = ({ classes, taxonomyIds, showAll, callback }) => {
   const taxonomyTypes = useTaxonomies(taxonomyIds)
   const handleCallback = (id, active, key) => {
+    if (showAll && typeof callback === 'function') {
+      callback(id, active)
+      return
+    }
+
     if (!showAll) {
       navigate('/section/' + key)
-    } else {
-      typeof callback === 'function' && callback(id, active)
     }
   }
+
+  /* eslint-disable react/jsx-no-useless-fragment */
   return (
     <>
       {taxonomyTypes.map((type, index) => {
         return showAll || type.active ? (
           <div
-            className={classes.TaxonomyType}
             key={'taxonomy_type_' + type.name}
+            className={classes.TaxonomyType}
           >
             <Hidden xsDown implementation="css">
               <Typography
@@ -55,6 +60,7 @@ const Taxonomies = ({ classes, taxonomyIds, showAll, callback }) => {
       })}
     </>
   )
+  /* eslint-enable react/jsx-no-useless-fragment */
 }
 
 export default withStyles(theme => ({

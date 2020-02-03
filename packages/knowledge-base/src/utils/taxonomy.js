@@ -6,12 +6,13 @@ export const getTaxonomyItemByKey = (taxonomyTypes, key) =>
   )
 
 const sortTaxonomyIdsByType = (taxonomyTypes, taxonomyIds) => {
-  let sorted = []
-  for (let type of taxonomyTypes) {
+  const sorted = []
+  for (const type of taxonomyTypes) {
     sorted[type.key] = type.taxonomy_items
       .filter(item => taxonomyIds.includes(item.id))
       .map(item => item.id)
   }
+
   return sorted
 }
 
@@ -25,17 +26,19 @@ export const buildWhereClause = (
     _and: [],
   }
 
-  mainTaxonomyKey
-    ? clause._and.push({
-        taxonomy_items: { taxonomy: { key: { _ilike: mainTaxonomyKey } } },
-      })
-    : null
+  if (mainTaxonomyKey !== undefined && mainTaxonomyKey !== null) {
+    clause._and.push({
+      // eslint-disable-next-line camelcase
+      taxonomy_items: { taxonomy: { key: { _ilike: mainTaxonomyKey } } },
+    })
+  }
 
   if (selectedTaxonomyIds.length >= 1) {
     const sortedTax = sortTaxonomyIdsByType(taxonomyTypes, selectedTaxonomyIds)
-    for (let type in sortedTax) {
+    for (const type in sortedTax) {
       if (sortedTax[type].length >= 1) {
         clause._and.push({
+          // eslint-disable-next-line camelcase
           taxonomy_items: { taxonomy_id: { _in: sortedTax[type] } },
         })
       }

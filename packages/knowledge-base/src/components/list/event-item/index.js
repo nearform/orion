@@ -4,9 +4,9 @@ import moment from 'moment'
 import { Box, Button, makeStyles, Typography } from '@material-ui/core'
 import RoomIcon from '@material-ui/icons/Room'
 
-import column from '../../layout/flex-with-gap/column'
-import row from '../../layout/flex-with-gap/row'
-import { navigate } from '@reach/router'
+import { navigate } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
+import column from '../../layout/utils/flex-with-gap/column'
+import row from '../../layout/utils/flex-with-gap/row'
 
 const useEventItemStyles = makeStyles(theme => ({
   dateAndTime: {

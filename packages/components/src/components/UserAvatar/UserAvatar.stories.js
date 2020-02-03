@@ -72,8 +72,8 @@ const CollapsedAvatarsContainer = withStyles(_ => ({
       <CollapsedAvatars
         users={sampleUsers.map(({ user }) => user)}
         label="Collapsed user set"
-        onClick={isOpen => setIsOpen(isOpen)}
         isOpen={isOpen}
+        onClick={isOpen => setIsOpen(isOpen)}
       />
       {isOpen && (
         <div>

@@ -31,7 +31,7 @@ const ThumbnailImage = ({ width, height, path }) => {
 
   const { wrapper } = useThumbnailImageStyles({ width, height, src })
 
-  return <div className={wrapper} data-test-id="thumbnail-image"></div>
+  return <div className={wrapper} data-test-id="thumbnail-image" />
 }
 
 ThumbnailImage.propTypes = {

@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import classnames from 'classnames'
 import { UserAvatar, CollapsedAvatars } from 'components'
+import { withStyles, Grid, Hidden, Typography } from '@material-ui/core'
+import BookmarkButton from '../BookmarkButton'
+import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
+import { constructImageUrl } from '../../utils/image'
 import PublishDate from './PublishDate'
 import ReadTime from './ReadTime'
 import Taxonomies from './Taxonomies'
-import BookmarkButton from '../BookmarkButton'
-import { withStyles, Grid, Hidden, Typography } from '@material-ui/core'
-import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
-import { constructImageUrl } from '../../utils/image'
 
 const ContentMetadata = ({ classes, content }) => {
   const [avatarsOpen, setAvatarsOpen] = useState(false)
@@ -24,7 +24,7 @@ const ContentMetadata = ({ classes, content }) => {
 
   const knowledgeTypes = useKnowledgeTypes()
   const taxonomyIds = content.taxonomy_items.map(
-    ({ taxonomy_id }) => taxonomy_id
+    ({ taxonomy_id: taxonomyId }) => taxonomyId
   )
 
   return (
@@ -50,8 +50,8 @@ const ContentMetadata = ({ classes, content }) => {
             <CollapsedAvatars
               users={users}
               label="Multiple authors"
-              onClick={isOpen => setAvatarsOpen(isOpen)}
               isOpen={avatarsOpen}
+              onClick={isOpen => setAvatarsOpen(isOpen)}
             />
           </Hidden>
         )}

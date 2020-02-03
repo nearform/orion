@@ -10,7 +10,7 @@ export default class CustomSignUp extends authEventMixin(SignUp) {
 
   constructor(props) {
     super(props)
-    //required by the amplify SignUp component
+    // Required by the amplify SignUp component
     this.signUpFields = [
       {
         label: 'First Name',
@@ -81,6 +81,7 @@ export default class CustomSignUp extends authEventMixin(SignUp) {
       } = this
       data = { username: data, password }
     }
+
     super.changeState(state, data)
   }
 

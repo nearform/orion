@@ -1,14 +1,7 @@
 import React, { useContext } from 'react'
 import { AuthContext, PaddedContainer } from 'components'
 import { useMutation, useQuery } from 'graphql-hooks'
-import {
-  addArticleTaxonomiesMutation,
-  createArticleMutation,
-  getTaxonomyTypes,
-} from '../../queries'
-import { navigate } from '@reach/router'
-import BoxControlLabel from '../BoxControlLabel'
-import SEO from '../SEO'
+import { navigate } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 import * as Yup from 'yup'
 import { Formik, Form, Field } from 'formik'
 import { RadioGroup } from 'formik-material-ui'
@@ -23,6 +16,13 @@ import { useStaticQuery, graphql } from 'gatsby'
 import find from 'lodash/find'
 import get from 'lodash/get'
 import keyBy from 'lodash/keyBy'
+import SEO from '../SEO'
+import BoxControlLabel from '../BoxControlLabel'
+import {
+  addArticleTaxonomiesMutation,
+  createArticleMutation,
+  getTaxonomyTypes,
+} from '../../queries'
 
 const CustomRadioGroup = withStyles(theme => ({
   root: {
@@ -77,14 +77,14 @@ function CreateArticle({ classes }) {
     const taxonomyId = get(
       find(
         get(
-          find(taxonomyData, { taxonomy_items: [{ key: knowledgeType }] }),
+          find(taxonomyData, { taxonomy_items: [{ key: knowledgeType }] }), // eslint-disable-line camelcase
           'taxonomy_items'
         ),
         { key: knowledgeType }
       ),
       'id'
     )
-    //TODO: graceful error handling
+    // TODO: graceful error handling
     const {
       data: {
         insert_article: {
@@ -96,8 +96,8 @@ function CreateArticle({ classes }) {
     await addArticleTaxonomies({
       variables: {
         addTaxonomies: {
-          article_id: id,
-          taxonomy_id: taxonomyId,
+          article_id: id, // eslint-disable-line camelcase
+          taxonomy_id: taxonomyId, // eslint-disable-line camelcase
         },
       },
     })
@@ -117,7 +117,7 @@ function CreateArticle({ classes }) {
             })}
             onSubmit={handleSelectType}
           >
-            {({ handleSubmit, submitForm, submitCount, isSubmitting }) => (
+            {({ handleSubmit, submitForm, isSubmitting }) => (
               <Form onSubmit={handleSubmit}>
                 <Typography
                   color="secondary"
@@ -135,10 +135,10 @@ function CreateArticle({ classes }) {
                     <BoxControlLabel
                       key={key}
                       disabled={isSubmitting}
-                      onChange={() => setImmediate(submitForm)}
                       value={key}
                       control={<Radio />}
                       label={name}
+                      onChange={() => setImmediate(submitForm)}
                     />
                   ))}
                 </Field>

@@ -12,7 +12,7 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 import { useMutation, useQuery } from 'graphql-hooks'
 
-import ContentToolbar from './ContentToolbar'
+import get from 'lodash/get'
 import SEO from '../SEO'
 import QueryTable from '../QueryTable'
 import FeatureArticles from '../list/FeatureArticles'
@@ -25,8 +25,7 @@ import {
 
 import { formatDateTime } from '../../utils/date'
 import { getRandomRows } from '../../utils/array'
-
-import get from 'lodash/get'
+import ContentToolbar from './ContentToolbar'
 
 const headers = [
   { id: 'title', label: 'Title', sortable: true },
@@ -67,12 +66,12 @@ const EditorsPicks = ({ classes }) => {
     refetch: refetchEditorsPicks,
   } = useQuery(getEditorsPicks)
 
-  const toggleEditorPick = async (id, editors_pick) =>
-    await updateEditorsPick({
+  const toggleEditorPick = (id, editorsPick) =>
+    updateEditorsPick({
       variables: {
         id,
         changes: {
-          editors_pick,
+          editors_pick: editorsPick, // eslint-disable-line camelcase
         },
       },
     })
@@ -89,11 +88,13 @@ const EditorsPicks = ({ classes }) => {
         headers={headers}
         query={getArticlesData}
         variables={{ status: 'published' }}
-        orderBy={{ updated_at: 'desc' }}
+        orderBy={
+          { updated_at: 'desc' } // eslint-disable-line camelcase
+        }
         renderTableBody={(data, refetchArticles) =>
           data &&
           data.article.map(article => (
-            <TableRow hover key={article.id} size="small">
+            <TableRow key={article.id} hover size="small">
               <TableCell>{article.title}</TableCell>
               <TableCell>
                 {get(article, 'createdBy.first_name')}{' '}
@@ -105,12 +106,12 @@ const EditorsPicks = ({ classes }) => {
                 <Checkbox
                   color="default"
                   checked={article.editors_pick}
+                  disabled={!article.editors_pick && editorsPicks.length > 2}
                   onChange={async (event, checked) => {
                     await toggleEditorPick(article.id, checked)
                     refetchEditorsPicks()
                     refetchArticles()
                   }}
-                  disabled={!article.editors_pick && editorsPicks.length > 2}
                 />
               </TableCell>
               <TableCell align="center" padding="none">
@@ -132,7 +133,6 @@ const EditorsPicks = ({ classes }) => {
 
 EditorsPicks.propTypes = {
   classes: PropTypes.object,
-  setPageTitle: PropTypes.func,
 }
 
 const styles = theme => ({

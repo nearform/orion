@@ -1,6 +1,6 @@
 import React from 'react'
 import TestRenderer from 'react-test-renderer'
-import PageSection from './'
+import PageSection from '.'
 
 describe('<PageSection />', () => {
   let pageSectionWrapper

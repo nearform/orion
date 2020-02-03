@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import T from 'prop-types'
 import slugify from 'slugify'
-import { Link as RouterLink } from '@reach/router'
+import { Link as RouterLink } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 import { useMutation } from 'graphql-hooks'
 import { Formik, Form, Field } from 'formik'
 import {
@@ -19,14 +19,14 @@ import { TextField } from 'formik-material-ui'
 import { DeleteForever, KeyboardArrowUp } from '@material-ui/icons'
 import * as Yup from 'yup'
 
+import GroupTypeChip, { GROUP_TYPES } from '../StatusChip/GroupTypeChip'
+import ConfirmDialog from '../ConfirmDialog'
 import {
   createGroupMutation,
-  unsafe__createGroupNoParentMutation,
+  unsafe__createGroupNoParentMutation, // eslint-disable-line camelcase
   getGroups,
   deleteGroupMutation,
 } from '../../../queries'
-
-import { ConfirmDialog, GroupTypeChip, GROUP_TYPES } from 'components'
 
 import useAdminTable from '../../hooks/useAdminTable'
 
@@ -69,6 +69,7 @@ function UserGroups({ classes }) {
   // the AuthWrapper.
   // =======================================================================================
   const [createGroup] = useMutation(createGroupMutation)
+  // eslint-disable-next-line camelcase
   const [unsafe__createGroupNoParent] = useMutation(
     unsafe__createGroupNoParentMutation
   )
@@ -87,6 +88,7 @@ function UserGroups({ classes }) {
         await deleteGroup({ variables: { id } })
         refetchGroups()
       }
+
       return data.group.map(group => (
         <TableRow key={group.id} data-testid="user-groups" size="small">
           <TableCell>
@@ -106,8 +108,8 @@ function UserGroups({ classes }) {
             <ConfirmDialog
               title={`Delete group “${group.name}”?`}
               text="This group will be permanently deleted. This cannot be undone."
-              onConfirm={() => doDeleteGroup(group.id)}
               okayLabel="Delete"
+              onConfirm={() => doDeleteGroup(group.id)}
             >
               <IconButton className={classes.actionButton}>
                 <DeleteForever />
@@ -140,6 +142,7 @@ function UserGroups({ classes }) {
             } else {
               console.warn("Can't create group with no parent ID")
             }
+
             refetchGroups()
           } finally {
             setSubmitting(false)
@@ -157,37 +160,37 @@ function UserGroups({ classes }) {
               <Grid item xs={3}>
                 <InputLabel htmlFor="group-name-input">
                   <Typography
-                    variant="h4"
                     gutterBottom
+                    variant="h4"
                     className={classes.inputLabel}
                   >
                     Enter new group name
                   </Typography>
                 </InputLabel>
                 <Field
+                  fullWidth
                   id="group-name-input"
                   component={TextField}
                   name="name"
                   placeholder="name"
-                  fullWidth
                 />
               </Grid>
               <Grid item xs={3}>
                 <InputLabel htmlFor="group-type-input">
                   <Typography
-                    variant="h4"
                     gutterBottom
+                    variant="h4"
                     className={classes.inputLabel}
                   >
                     Select group type
                   </Typography>
                 </InputLabel>
                 <Field
+                  select
+                  fullWidth
                   id="group-type-input"
                   component={TextField}
-                  select
                   name="type"
-                  fullWidth
                   SelectProps={{
                     classes: {
                       root: classes.selectRoot,
@@ -222,6 +225,7 @@ function UserGroups({ classes }) {
     </>
   )
 }
+
 UserGroups.propTypes = {
   classes: T.object.isRequired,
 }

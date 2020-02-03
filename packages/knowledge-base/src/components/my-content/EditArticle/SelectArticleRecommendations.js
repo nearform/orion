@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import { getArticlesData } from '../../../queries'
 import CloseIcon from '@material-ui/icons/Close'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import { TypedChip } from 'components'
 import debounce from 'lodash/debounce'
-import QueryTable from '../../QueryTable'
 import { useStaticQuery, graphql } from 'gatsby'
 import {
   Typography,
@@ -15,6 +13,8 @@ import {
   TableCell,
 } from '@material-ui/core'
 import get from 'lodash/get'
+import QueryTable from '../../QueryTable'
+import { getArticlesData } from '../../../queries'
 
 const headers = [
   { id: 'title', label: 'Title', sortable: true },
@@ -50,12 +50,14 @@ function SelectArticleRecommendations({
   )
 
   function addArticle(article) {
+    // eslint-disable-next-line camelcase
     onChange([...selectedArticles, { recommended_article: article }])
   }
 
   function removeArticle(articleId) {
     onChange(
       selectedArticles.filter(
+        // eslint-disable-next-line camelcase
         ({ recommended_article }) => recommended_article.id !== articleId
       )
     )
@@ -65,8 +67,8 @@ function SelectArticleRecommendations({
     status: 'published',
   }
   if (filter) {
-    //implement fuzzy search:
-    //https://docs.hasura.io/1.0/graphql/manual/queries/custom-functions.html#example-fuzzy-match-search-functions
+    // Implement fuzzy search:
+    // https://docs.hasura.io/1.0/graphql/manual/queries/custom-functions.html#example-fuzzy-match-search-functions
     queryVariables.titleLike = `%${filter}%`
   }
 
@@ -76,26 +78,18 @@ function SelectArticleRecommendations({
   return (
     <>
       <div className={classes.articleList}>
-        {selectedArticles.map(({ recommended_article }) => (
+        {// eslint-disable-next-line camelcase
+        selectedArticles.map(({ recommended_article }) => (
           <TypedChip
-            key={recommended_article.id}
+            key={recommended_article.id} // eslint-disable-line camelcase
             color="primary"
-            name={recommended_article.title}
-            onDelete={() => removeArticle(recommended_article.id)}
-            type={knowledgeTypes[recommended_article.knowledge_type]}
+            name={recommended_article.title} // eslint-disable-line camelcase
+            type={knowledgeTypes[recommended_article.knowledge_type]} // eslint-disable-line camelcase
+            onDelete={() => removeArticle(recommended_article.id)} // eslint-disable-line camelcase
           />
         ))}
       </div>
-      {!isTableOpen ? (
-        <Button
-          variant="outlined"
-          color="secondary"
-          className={classes.openButton}
-          onClick={() => setTableOpen(true)}
-        >
-          Add
-        </Button>
-      ) : (
+      {isTableOpen ? (
         <div>
           <div className={classes.filter}>
             <Input
@@ -104,8 +98,8 @@ function SelectArticleRecommendations({
             />
             <Button
               color="secondary"
-              onClick={() => setTableOpen(false)}
               className={classes.closeButton}
+              onClick={() => setTableOpen(false)}
             >
               Close
               <CloseIcon />
@@ -138,8 +132,9 @@ function SelectArticleRecommendations({
                         variant="outlined"
                         disabled={
                           selectedArticles.some(
+                            // eslint-disable-next-line camelcase
                             ({ recommended_article }) =>
-                              recommended_article.id === article.id
+                              recommended_article.id === article.id // eslint-disable-line camelcase
                           ) || selectedArticles.length > 2
                         }
                         onClick={() => addArticle(article)}
@@ -153,6 +148,15 @@ function SelectArticleRecommendations({
             />
           </div>
         </div>
+      ) : (
+        <Button
+          variant="outlined"
+          color="secondary"
+          className={classes.openButton}
+          onClick={() => setTableOpen(true)}
+        >
+          Add
+        </Button>
       )}
     </>
   )

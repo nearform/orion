@@ -12,14 +12,12 @@ import {
 } from '@material-ui/core'
 import { HowToReg, ErrorOutline, Edit, DeleteForever } from '@material-ui/icons'
 import * as Yup from 'yup'
-import { ConfirmDialog, UserFilter } from 'components'
 import get from 'lodash/get'
+import UserFilter from '../page/UserFilter'
+import ConfirmDialog from '../ConfirmDialog'
 
 import UserRoleChip from '../StatusChip/UserRoleChip'
 import useAdminTable from '../../hooks/useAdminTable'
-import AdminModal from './AdminModal'
-import UserSelectPicker from './UserSelectPicker'
-
 import {
   getUsers,
   getEdittableUserFields,
@@ -31,6 +29,8 @@ import {
   deleteUserMutation,
   deleteUserRoleMutation,
 } from '../../../queries'
+import AdminModal from './AdminModal'
+import UserSelectPicker from './UserSelectPicker'
 
 const styles = theme => ({
   middle: {
@@ -63,7 +63,9 @@ const headers = [
 
 function getRelationalName(user, relation, entity) {
   const entries = user[relation]
-  return entries.length && entries[0][entity] ? entries[0][entity].name : null
+  return entries.length > 0 && entries[0][entity]
+    ? entries[0][entity].name
+    : null
 }
 
 function getStyledSignupAttr(user, key) {
@@ -92,8 +94,8 @@ function getGroupAndStatus(user, classes) {
       placement="top"
     >
       <Typography
-        variant="body2"
         noWrap
+        variant="body2"
         color={user.pending ? 'textSecondary' : 'textPrimary'}
       >
         <StatusIcon
@@ -123,11 +125,11 @@ function AllUsers({ classes, query, variables }) {
           ? await deleteUser({ variables: { userId: id } })
           : await modifyUser({
               variables: {
-                id: id,
+                id,
                 input: {
                   email: null,
-                  consent_contact: false,
-                  consent_directory: false,
+                  consent_contact: false, // eslint-disable-line camelcase
+                  consent_directory: false, // eslint-disable-line camelcase
                   title: null,
                   avatar: null,
                   biography: null,
@@ -140,6 +142,7 @@ function AllUsers({ classes, query, variables }) {
             })
         refetchUsers()
       }
+
       return data.user.map(user => (
         <TableRow key={user.id.toString()} data-testid="all-users" size="small">
           <TableCell>
@@ -168,8 +171,8 @@ function AllUsers({ classes, query, variables }) {
             <ConfirmDialog
               title={`Delete user “${user.email}”?`}
               text="This user will be permanently deleted. This cannot be undone."
-              onConfirm={() => doDeleteUser(user.id, user.pending)}
               okayLabel="Delete"
+              onConfirm={() => doDeleteUser(user.id, user.pending)}
             >
               <IconButton className={classes.actionButton}>
                 <DeleteForever />
@@ -230,6 +233,7 @@ function AllUsers({ classes, query, variables }) {
         })
       )
     }
+
     if (values.roleId) {
       const roleMutation = values.roleIsAssigned
         ? doAssignUserRole
@@ -252,11 +256,12 @@ function AllUsers({ classes, query, variables }) {
         })
       )
     }
+
     await Promise.all(mutationPromises)
     setSelected(null)
 
     // Only refetch if something changed
-    if (mutationPromises.length) {
+    if (mutationPromises.length > 0) {
       refetch()
     }
   }
@@ -267,9 +272,9 @@ function AllUsers({ classes, query, variables }) {
     return {
       userId: user ? user.id : null,
       groupId: groupId || 0,
-      groupIsAssigned: !!groupId,
+      groupIsAssigned: Boolean(groupId),
       roleId: roleId || 0,
-      roleIsAssigned: !!roleId,
+      roleIsAssigned: Boolean(roleId),
     }
   }
 
@@ -280,10 +285,10 @@ function AllUsers({ classes, query, variables }) {
         data={modalData}
         contents={modalContents}
         getTitleParts={user => ['Edit', user.email]}
-        onSave={onModalSave}
-        onClose={() => setSelected(null)}
         schema={modalSchema}
         getInitialValues={getModalInitialValues}
+        onSave={onModalSave}
+        onClose={() => setSelected(null)}
       />
       <div className={classes.userFilterWrapper}>
         <UserFilter setFilterText={setFilterText} />
@@ -295,14 +300,12 @@ function AllUsers({ classes, query, variables }) {
 
 AllUsers.defaultProps = {
   query: getUsers,
-  pageTitle: 'All Users',
   variables: {},
 }
 
 AllUsers.propTypes = {
   classes: T.object,
   query: T.string,
-  pageTitle: T.node,
   variables: T.object,
 }
 

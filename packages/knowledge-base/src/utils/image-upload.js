@@ -22,8 +22,8 @@ class AmplifyCKEUploadAdapter {
           level: 'public',
         }
       )
-      const raw_url = await Storage.get(s3Key, { level: 'public' })
-      const { origin, pathname } = new URL(raw_url)
+      const rawUrl = await Storage.get(s3Key, { level: 'public' })
+      const { origin, pathname } = new URL(rawUrl)
       return {
         default: origin + pathname,
       }

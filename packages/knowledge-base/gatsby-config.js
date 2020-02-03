@@ -1,8 +1,8 @@
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV || 'development'}`,
 })
-const upperFirst = require('lodash/upperFirst')
 const path = require('path')
+const upperFirst = require('lodash/upperFirst')
 
 const currentTheme = require('./theme')
 const { getThemePaths } = require('./utils/paths')
@@ -45,7 +45,7 @@ const plugins = [
   {
     resolve: 'gatsby-transformer-json',
     options: {
-      // uses the folder name to set the typename: qfqm-theme/articles => Articles
+      // Uses the folder name to set the typename: qfqm-theme/articles => Articles
       typeName: ({ node }) => upperFirst(path.basename(node.dir)),
     },
   },
@@ -54,6 +54,7 @@ const plugins = [
   {
     resolve: 'gatsby-plugin-manifest',
     options: {
+      /* eslint-disable camelcase */
       name: currentTheme.metadata.title,
       short_name: currentTheme.metadata.shortName,
       start_url: '/',
@@ -61,6 +62,7 @@ const plugins = [
       theme_color: '#663399',
       display: 'minimal-ui',
       icon: path.join(themeAssetsPath, 'logo.png'),
+      /* eslint-enable camelcase */
     },
   },
   'gatsby-plugin-react-helmet',
