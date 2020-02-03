@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core'
 import { fade } from '@material-ui/core/styles/colorManipulator'
@@ -28,7 +28,7 @@ const RichTextEditor = ({
   config = {},
   onChange = () => null,
 }) => {
-  const [editor, setEditor] = useState()
+  const [, setEditor] = useState()
 
   if (!CKEditor || !InlineEditor) return null
   return (
@@ -60,12 +60,12 @@ const styles = theme => ({
   '@global': {
     '.ck.ck-content': {
       backgroundColor: fade(theme.articleTypography.input.backgroundColor, 0.5),
-      // border: 0,
+      // Border: 0,
       padding: '9px 14px',
       '& > :first-child': {
         marginTop: '2px',
       },
-      // by default heading 1 maps to h2, heading 2 to h3 etc (but we've customised this to map correctly)
+      // By default heading 1 maps to h2, heading 2 to h3 etc (but we've customised this to map correctly)
       // see - https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#heading-levels
       // heading 1 and 2 reseved for title and subtitle
       '& h3': theme.articleTypography.heading3,

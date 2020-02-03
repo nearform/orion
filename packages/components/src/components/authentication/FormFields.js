@@ -48,8 +48,8 @@ const useStyles = makeStyles(theme => ({
 function FieldLabel({ required, hasError, children }) {
   return (
     <Typography
-      variant="h4"
       gutterBottom
+      variant="h4"
       color={hasError ? 'error' : 'initial'}
     >
       {children}
@@ -68,8 +68,8 @@ function ErrorMessage({ children }) {
   const classes = useStyles()
   return (
     <Typography
-      variant="h4"
       gutterBottom
+      variant="h4"
       color="error"
       className={classes.errorMessage}
     >
@@ -86,8 +86,8 @@ function InputHelperText({ children, hasError }) {
   const classes = useStyles()
   return (
     <Typography
-      variant="h4"
       gutterBottom
+      variant="h4"
       color={hasError ? 'error' : 'initial'}
       className={classes.inputHelperText}
     >
@@ -105,12 +105,12 @@ function SectionTitleField({ barColor, category, children }) {
   const { errors } = useContext(AuthFormStateContext)
   const error = errors[category]
   return (
-    <React.Fragment>
+    <>
       <SectionTitle gutterBottom barColor={barColor}>
         {children}
       </SectionTitle>
       {error && <ErrorMessage>{error}</ErrorMessage>}
-    </React.Fragment>
+    </>
   )
 }
 
@@ -142,26 +142,28 @@ function InputTextField({
   }
 
   return (
-    <React.Fragment>
-      <FieldLabel required={required} hasError={!!error}>
+    <>
+      <FieldLabel required={required} hasError={Boolean(error)}>
         {children}
       </FieldLabel>
       {helperText && (
-        <InputHelperText hasError={!!error}>{helperText}</InputHelperText>
+        <InputHelperText hasError={Boolean(error)}>
+          {helperText}
+        </InputHelperText>
       )}
       <TextField
+        fullWidth
         name={name}
         type={type}
         value={value}
         required={required}
         disabled={disabled || submitting}
-        onChange={onChange}
-        fullWidth
         className={error ? classes.fieldError : classes.fieldOK}
         inputProps={{ onKeyPress }}
+        onChange={onChange}
       />
       {error && <ErrorMessage>{error}</ErrorMessage>}
-    </React.Fragment>
+    </>
   )
 }
 
@@ -195,22 +197,25 @@ function InputSelectField({
       onChange(evt)
     }
   }
+
   const { submitting, errors } = useContext(AuthFormStateContext)
   const error = errors[name]
   return (
-    <React.Fragment>
-      <FieldLabel required={required} hasError={!!error}>
+    <>
+      <FieldLabel required={required} hasError={Boolean(error)}>
         {children}
       </FieldLabel>
       {helperText && (
-        <InputHelperText hasError={!!error}>{helperText}</InputHelperText>
+        <InputHelperText hasError={Boolean(error)}>
+          {helperText}
+        </InputHelperText>
       )}
       <Select
         name={name}
         disabled={submitting}
-        onChange={handleChange}
         value={selectValue}
         className={error ? classes.fieldError : classes.fieldOK}
+        onChange={handleChange}
         {...props}
       >
         {options.map(opt => (
@@ -220,7 +225,7 @@ function InputSelectField({
         ))}
       </Select>
       {error && <ErrorMessage>{error}</ErrorMessage>}
-    </React.Fragment>
+    </>
   )
 }
 
@@ -238,6 +243,7 @@ function InputField({ type, children, ...props }) {
   if (type === 'select') {
     return <InputSelectField {...props}>{children}</InputSelectField>
   }
+
   return (
     <InputTextField type={type} {...props}>
       {children}
@@ -256,10 +262,10 @@ function SubmitButton({ onClick, children }) {
   return (
     <div className={classes.submitWrapper}>
       <Button
+        fullWidth
         name="submit"
         color="secondary"
         variant="contained"
-        fullWidth
         onClick={onClick}
       >
         {children}

@@ -18,7 +18,7 @@ jest.mock('components', () => ({
 jest.mock('../components/SEO')
 jest.mock('graphql-hooks', () => {
   return {
-    useQuery: (query, options) => {
+    useQuery: () => {
       return {
         loading: false,
         error: null,

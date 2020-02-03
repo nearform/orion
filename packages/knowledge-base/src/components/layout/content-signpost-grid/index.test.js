@@ -1,6 +1,6 @@
 import React from 'react'
 import TestRenderer from 'react-test-renderer'
-import ContentSignpostGrid from './'
+import ContentSignpostGrid from '.'
 
 const predicates = {
   root: el => el.type === 'section',

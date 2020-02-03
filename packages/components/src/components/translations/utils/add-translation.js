@@ -1,4 +1,4 @@
-import * as theme from '../../../theme.es'
+import * as theme from '../../../../theme.es'
 const DEFAULT_NAMESPACE = 'translation'
 
 export default function addTranslations(

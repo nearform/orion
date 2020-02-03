@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/filename-case */
 import React from 'react'
 import { useStaticQuery, graphql } from 'gatsby'
 import { SEOHeaders } from 'components'

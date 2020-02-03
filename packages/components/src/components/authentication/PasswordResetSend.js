@@ -25,7 +25,7 @@ function PasswordResetSend({
             </SectionTitleField>
           </Grid>
           {message && (
-            <Grid item xs={params.xs}>
+            <Grid item xs={2}>
               <div className={classes.message}>
                 <p>{message}</p>
               </div>
@@ -33,9 +33,9 @@ function PasswordResetSend({
           )}
           <Grid item>
             <InputField
+              required
               name="username"
               type="email"
-              required
               onChange={handleInput}
             >
               Email
@@ -44,7 +44,7 @@ function PasswordResetSend({
 
           <Grid item container alignItems="baseline" spacing={3} wrap="nowrap">
             <Grid item>
-              <Button color="secondary" onClick={goToSignIn} size="small">
+              <Button color="secondary" size="small" onClick={goToSignIn}>
                 Back to sign in
               </Button>
             </Grid>

@@ -11,20 +11,17 @@ import get from 'lodash/get'
 
 import { useAuthorizedQuery, PaddedContainer } from 'components'
 
-import SEO from './SEO'
-import Taxonomies from './content/Taxonomies'
-import ArticleSummary from './content/ArticleSummary'
-import CondensedArticleSummary from './content/CondensedArticleSummary'
-
 import useTaxonomies from '../hooks/useTaxonomies'
 import useUserBookmarks from '../hooks/useUserBookmarks'
-
 import {
   getArticlesSearchResults,
   getArticlesCategoryResults,
 } from '../queries'
-
 import { getTaxonomyItemByKey, buildWhereClause } from '../utils/taxonomy'
+import SEO from './SEO'
+import Taxonomies from './content/Taxonomies'
+import ArticleSummary from './content/ArticleSummary'
+import CondensedArticleSummary from './content/CondensedArticleSummary'
 
 const PAGE_SIZE = 10
 
@@ -163,17 +160,19 @@ const ListContent = ({
       active ? [...taxonomyIds, id] : taxonomyIds.filter(item => item !== id)
     )
   }
+
   const handlePagination = dir => {
     if (isPreRendered) {
       navigate(
         `/section/${taxonomyKey}${
-          currentPage + dir !== 1 ? `/page/${currentPage + dir}` : ''
+          currentPage + dir === 1 ? '' : `/page/${currentPage + dir}`
         }`
       )
     } else {
       setCurrentPage(page => page + dir)
     }
   }
+
   const section = getTaxonomyItemByKey(taxonomyTypes, taxonomyKey)
   const sectionName = get(section, 'name', '')
   return (
@@ -206,8 +205,8 @@ const ListContent = ({
             <Grid item xs={3}>
               {isSmUp && (
                 <Taxonomies
+                  showAll
                   taxonomyIds={taxonomyIds}
-                  showAll={true}
                   callback={handleTaxonomyFilter}
                 />
               )}
@@ -216,20 +215,20 @@ const ListContent = ({
               {data.articles.map(article =>
                 isSmUp ? (
                   <ArticleSummary
+                    key={`article-${article.id}`}
                     article={article}
                     bookmarked={userBookmarks.includes(article.id)}
                     bookmarkButtonDisabled={loadingBookmarks}
                     onBookmarkToggle={fetchUserBookmarks}
-                    key={`article-${article.id}`}
                   />
                 ) : (
                   <CondensedArticleSummary
+                    key={`article-${article.id}`}
                     article={article}
                     bookmarked={userBookmarks.includes(article.id)}
                     bookmarkButtonDisabled={loadingBookmarks}
-                    onBookmarkToggle={fetchUserBookmarks}
                     filterText={term ? term : sectionName}
-                    key={`article-${article.id}`}
+                    onBookmarkToggle={fetchUserBookmarks}
                   />
                 )
               )}
@@ -242,8 +241,8 @@ const ListContent = ({
               <Button
                 variant="contained"
                 color="default"
-                onClick={() => handlePagination(-1)}
                 className={classes.prevButton}
+                onClick={() => handlePagination(-1)}
               >
                 Previous Page
               </Button>
@@ -263,6 +262,7 @@ const ListContent = ({
     </PaddedContainer>
   )
 }
+
 const StyledListContent = withStyles(theme => ({
   pageHeader: {
     borderBottom: `1px solid ${theme.palette.tertiary.light}`,
@@ -290,10 +290,10 @@ const StyledListContent = withStyles(theme => ({
     },
   },
   term: {
-    marginLeft: '0 !important', // needed to properly align with subheading
+    marginLeft: '0 !important', // Needed to properly align with subheading
   },
   headerGrid: {
-    // paddingTop: `${theme.spacing(30)} !important`,
+    // PaddingTop: `${theme.spacing(30)} !important`,
     [theme.breakpoints.down('xs')]: {
       paddingBottom: '0 !important',
       marginTop: theme.spacing(2),
@@ -338,4 +338,5 @@ const ContentListView = ({ term, taxonomy, page = 1, results }) => {
     />
   )
 }
+
 export default ContentListView

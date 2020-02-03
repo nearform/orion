@@ -32,6 +32,7 @@ const PageSection = ({ children, className, paletteColor }) => {
 PageSection.propTypes = {
   children: T.any.isRequired,
   paletteColor: T.array, // Array of keys to access a colour from the root of the palette object in theme
+  className: T.string,
 }
 
 export default PageSection

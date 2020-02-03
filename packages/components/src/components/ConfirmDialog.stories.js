@@ -2,19 +2,12 @@ import React, { useState } from 'react'
 
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
-import { text, select, radio } from '@storybook/addon-knobs'
 
-import ConfirmDialog from './ConfirmDialog'
-import {
-  Chip,
-  IconButton,
-  Typography,
-  Card,
-  withStyles,
-} from '@material-ui/core'
+import { Chip, IconButton, Card, withStyles } from '@material-ui/core'
 
 import DeleteIcon from '@material-ui/icons/DeleteForever'
 import AddIcon from '@material-ui/icons/ExposurePlus1'
+import ConfirmDialog from './ConfirmDialog'
 
 const Items = withStyles(theme => ({
   root: {
@@ -27,11 +20,9 @@ const Items = withStyles(theme => ({
   return (
     <Card className={classes.root}>
       <span>
-        {Array(itemCount + 1)
-          .fill()
-          .map((_, num) => (
-            <DeletableItem key={`item_${num + 1}`} title={`Item #${num + 1}`} />
-          ))}
+        {new Array(itemCount + 1).fill().map((_, num) => (
+          <DeletableItem key={`item_${num + 1}`} title={`Item #${num + 1}`} />
+        ))}
       </span>
 
       <ConfirmDialog
@@ -47,7 +38,7 @@ const Items = withStyles(theme => ({
   )
 })
 
-const DeletableItem = withStyles(theme => ({
+const DeletableItem = withStyles(() => ({
   root: {
     flexDirection: 'row-reverse',
   },
@@ -58,8 +49,8 @@ const DeletableItem = withStyles(theme => ({
     <ConfirmDialog
       title={`Delete "${title}"?`}
       text="This item will be permanently deleted. This action cannot be undone."
-      onConfirm={() => setIsDeleted(true)}
       okayLabel="Delete"
+      onConfirm={() => setIsDeleted(true)}
     >
       <IconButton>
         <DeleteIcon />

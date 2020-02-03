@@ -1,9 +1,9 @@
 const path = require('path')
-const currentTheme = require('./theme')
 
 const get = require('lodash/get')
 const zipWith = require('lodash/zipWith')
 const chunk = require('lodash/chunk')
+const currentTheme = require('./theme')
 const getArticlesQuery = require('./queries/get-articles')
 const getUsersQuery = require('./queries/get-users')
 const getTaxonomiesQuery = require('./queries/get-taxonomies')
@@ -11,7 +11,7 @@ const getArticlesByTaxonomyQuery = require('./queries/get-articles-by-taxonomy')
 const { config } = currentTheme
 
 exports.onPreInit = () => {
-  //add validations!
+  // Add validations!
   // const logger = console
   // try {
   //   const { validateAssessmentFiles } = require('./src/validations')
@@ -47,6 +47,7 @@ exports.createPages = async ({ graphql, actions }) => {
   if (taxonomiesQueryResults.errors) {
     throw taxonomiesQueryResults.errors
   }
+
   const taxonomies = get(taxonomiesQueryResults, 'data.orion.taxonomy', [])
 
   const articlesByTaxonomiesData = await Promise.all(
@@ -67,7 +68,7 @@ exports.createPages = async ({ graphql, actions }) => {
   )
 
   articlesByTaxonomies.forEach(results => {
-    if (!results.article.length) {
+    if (results.article.length === 0) {
       const path = `/section/${results.taxonomy.key}`
       createPage({
         path,
@@ -85,7 +86,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
     chunk(results.article, PAGE_SIZE).forEach((articles, index) => {
       const path = `/section/${results.taxonomy.key}${
-        index !== 0 ? `/page/${index + 1}` : ''
+        index === 0 ? '' : `/page/${index + 1}`
       }`
       createPage({
         path,
@@ -114,6 +115,7 @@ exports.createPages = async ({ graphql, actions }) => {
   if (articlesQueryResults.errors) {
     throw articlesQueryResults.errors
   }
+
   const publishedArticles = get(articlesQueryResults, 'data.orion.article', [])
   publishedArticles.forEach(articleSummary => {
     const path = `/content/${articleSummary.path}`
@@ -133,6 +135,7 @@ exports.createPages = async ({ graphql, actions }) => {
   if (usersQueryResults.errors) {
     throw usersQueryResults.errors
   }
+
   const users = get(usersQueryResults, 'data.orion.user', [])
   users.forEach(user => {
     const path = `/profile/${user.id}`
@@ -147,7 +150,7 @@ exports.createPages = async ({ graphql, actions }) => {
   return null
 }
 
-exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
+exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
   const config = getConfig()
   config.module.rules.push({
     test: /\.graphql?$/,

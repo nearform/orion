@@ -61,6 +61,22 @@ Shared secrets are stored in a vault. Get in touch with a team member to get acc
 1. Create a pull request and get someone to review it.
 1. Once approved, you as the author of the PR should merge it.
 
+### Linting
+
+The project uses the [xo](https://github.com/xojs/xo) linter.
+
+Be sure to install the [xo extension for your IDE](https://github.com/xojs/xo#editor-plugins).
+
+💡 VSCode users pro tip: **Enable the xo formatter and format on save options to make your life easier!** The linter only works when opening the project from the root of the the monorepo.
+
+```json
+{
+  "editor.formatOnSave": true,
+  "xo.enable": true,
+  "xo.format.enable": true
+}
+```
+
 ## Running the application
 
 Ensure you have a local `.env.development` file available.

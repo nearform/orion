@@ -18,10 +18,11 @@ import CustomForgotPassword from './CustomForgotPassword'
 export default function CustomAuthenticator({ messages = {} }) {
   const [authData, _setAuthData] = useState({})
   const setAuthData = (state, data) => {
-    if (state == 'confirmSignUp') {
+    if (state === 'confirmSignUp') {
       _setAuthData(data)
     }
   }
+
   return (
     <AuthDataContext.Provider value={{ authData, setAuthData }}>
       {/* To test a specific form in the signup process without having to go
@@ -51,4 +52,4 @@ CustomAuthenticator.propTypes = {
   messages: T.object,
 }
 
-export * from './graphql'
+export * from './utils/graphql'

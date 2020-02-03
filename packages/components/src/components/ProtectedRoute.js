@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import T from 'prop-types'
-import { Redirect } from '@reach/router'
+import { Redirect } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 
 import { AuthContext } from './authorization/AuthWrapper'
 
@@ -14,7 +14,7 @@ export default function ProtectedRoute({
     AuthContext
   )
 
-  //skip rendering if auth is not yet initialized
+  // Skip rendering if auth is not yet initialized
   if (!isAuthInitialized) {
     return null
   }
@@ -31,7 +31,7 @@ export default function ProtectedRoute({
     (allowedRole && !hasPermissions(allowedRole))
 
   if (redirect) {
-    return <Redirect to="/auth" noThrow />
+    return <Redirect noThrow to="/auth" />
   }
 
   return <Component {...props} />

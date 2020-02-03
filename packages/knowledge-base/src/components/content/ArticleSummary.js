@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import BookmarkButton from '../BookmarkButton'
-import RichText from './RichText'
-import { formatDateAsMonthAndYear } from '../../utils/date'
 import { withStyles, Typography, Box } from '@material-ui/core'
 import get from 'lodash/get'
+import BookmarkButton from '../BookmarkButton'
+import { formatDateAsMonthAndYear } from '../../utils/date'
+import RichText from './RichText'
 
 import ArticleVisualSummary from './article-visual-summary'
 
@@ -57,8 +57,8 @@ const ArticleSummary = ({
           <BookmarkButton
             articleId={article.id}
             bookmarked={bookmarked}
-            onToggle={onBookmarkToggle}
             disabled={bookmarkButtonDisabled}
+            onToggle={onBookmarkToggle}
           />
         </Box>
       </Box>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { withStyles, TextField as MUITextField } from '@material-ui/core'
+import { withStyles } from '@material-ui/core'
 import classnames from 'classnames'
 import T from 'prop-types'
 
@@ -34,15 +34,16 @@ export function getVideoObject(url) {
       }
     }
   }
+
   return null
 }
 
 const EmbeddedVideo = ({ url, classes, className }) => {
   const videoObj = getVideoObject(url)
-  if (!videoObj) return null //todo do something better, like no-video orsmth?
+  if (!videoObj) return null // Todo do something better, like no-video orsmth?
   return (
     <div className={classnames(classes.root, className)}>
-      <iframe frameBorder="0" allowFullScreen src={videoObj.embedUrl} />
+      <iframe allowFullScreen frameBorder="0" src={videoObj.embedUrl} />
     </div>
   )
 }
@@ -53,7 +54,7 @@ EmbeddedVideo.propTypes = {
   className: T.string,
 }
 
-export default withStyles(theme => ({
+export default withStyles(() => ({
   root: {
     position: 'relative',
     width: '100%',

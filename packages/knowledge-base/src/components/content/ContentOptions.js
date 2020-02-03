@@ -2,10 +2,10 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import { withStyles, Button, Grid } from '@material-ui/core'
 import { AuthContext } from 'components'
+import { Print, Edit } from '@material-ui/icons'
+import { navigate } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 import RateArticle from './RateArticle'
 import HideButton from './HideButton'
-import { Print, Edit } from '@material-ui/icons'
-import { navigate } from '@reach/router'
 
 const OptionsButton = withStyles(theme => ({
   root: {
@@ -39,8 +39,8 @@ const ContentOptions = ({ classes, articleData, refetchArticle }) => {
 
   return (
     <Grid
-      id="content-options-footer"
       container
+      id="content-options-footer"
       spacing={2}
       className={classes.wrapper}
     >
@@ -55,7 +55,7 @@ const ContentOptions = ({ classes, articleData, refetchArticle }) => {
       </Grid>
       */}
       <Grid item xs={12} sm={6} lg={12}>
-        <RateArticle id={articleData.id} content={articleData}></RateArticle>
+        <RateArticle id={articleData.id} content={articleData} />
       </Grid>
       {canShowHideArticle && (
         <Grid item xs={12} sm={6} lg={12}>

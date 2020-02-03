@@ -13,7 +13,7 @@ const RatingWidget = ({
 }) => {
   const [rateMode, setRateMode] = useState(false)
   const [userRating, setUserRating] = useState(0)
-  const disabled = disabledProp || !!userRatingProp
+  const disabled = disabledProp || Boolean(userRatingProp)
 
   const onMouseEnter = () => setRateMode(true)
   const onMouseLeave = () => setRateMode(false)

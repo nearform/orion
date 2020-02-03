@@ -11,7 +11,7 @@ export default {
       expires: Number(process.env.GATSBY_AWS_COGNITO_COOKIE_EXPIRATION) || 1,
       // OPTIONAL - Cookie secure flag
       // Either true or false, indicating if the cookie transmission requires a secure protocol (https).
-      secure: !!process.env.GATSBY_AWS_COGNITO_COOKIE_SECURE,
+      secure: Boolean(process.env.GATSBY_AWS_COGNITO_COOKIE_SECURE),
     },
   },
   Storage: {

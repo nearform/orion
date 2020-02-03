@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Router, Redirect } from '@reach/router'
+import { Router, Redirect } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 
 import CreateArticle from './CreateArticle'
 import EditArticle from './EditArticle'
@@ -27,8 +26,6 @@ const MyContentRoute = () => {
   )
 }
 
-MyContentRoute.propTypes = {
-  classes: PropTypes.object,
-}
+MyContentRoute.propTypes = {}
 
 export default MyContentRoute

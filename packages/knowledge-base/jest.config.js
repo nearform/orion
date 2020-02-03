@@ -14,5 +14,5 @@ module.exports = {
   },
   maxWorkers: 4,
   testURL: 'http://localhost',
-  setupFiles: ['<rootDir>/loadershim.js', '<rootDir>/src/setupTests.js'],
+  setupFiles: ['<rootDir>/loadershim.js', '<rootDir>/src/setup-tests.js'],
 }

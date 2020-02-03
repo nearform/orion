@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import BookmarkButton from '../BookmarkButton'
-import RichText from './RichText'
-import { formatDateAsMonthAndYear } from '../../utils/date'
 import { withStyles, Typography, Box } from '@material-ui/core'
+import BookmarkButton from '../BookmarkButton'
+import { formatDateAsMonthAndYear } from '../../utils/date'
 
-import ThumbnailImage from './thumbnail-image'
 import { constructImageUrl } from '../../utils/image'
-import { readableAuthors } from '../../utils/fixStrings'
+import { readableAuthors } from '../../utils/fix-strings'
+import ThumbnailImage from './thumbnail-image'
+import RichText from './RichText'
 
 const CondensedArticleSummary = ({
   classes,
@@ -62,11 +62,11 @@ const CondensedArticleSummary = ({
             READ MORE
           </Link>
           <BookmarkButton
+            forceShowText
             articleId={article.id}
             bookmarked={bookmarked}
-            onToggle={onBookmarkToggle}
             disabled={bookmarkButtonDisabled}
-            forceShowText={true}
+            onToggle={onBookmarkToggle}
           />
         </Box>
       </Box>

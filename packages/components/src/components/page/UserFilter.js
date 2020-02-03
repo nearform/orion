@@ -18,7 +18,7 @@ UserFilter.propTypes = {
   setFilterText: T.func,
 }
 
-const styles = theme => ({
+const styles = () => ({
   filterInput: {
     maxWidth: 318,
     margin: '0 auto 0 0',

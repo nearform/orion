@@ -32,7 +32,7 @@ const EditArticleButtons = ({ submitArticle }) => {
           onClose={() => setSubmitModalOpen(false)}
         >
           <DialogTitle id="alert-dialog-title">
-            {'Submit Article For Review?'}
+            Submit Article For Review?
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
@@ -41,15 +41,15 @@ const EditArticleButtons = ({ submitArticle }) => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setSubmitModalOpen(false)} color="secondary">
+            <Button color="secondary" onClick={() => setSubmitModalOpen(false)}>
               Cancel
             </Button>
             <Button
+              color="primary"
               onClick={() => {
                 submitArticle()
                 setSubmitModalOpen(false)
               }}
-              color="primary"
             >
               Submit for review
             </Button>

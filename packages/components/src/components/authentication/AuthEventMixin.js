@@ -52,11 +52,13 @@ const authEventMixin = Base =>
       if (!state) {
         return { errors: {} }
       }
+
       // Read auth state.
       const { error, submitting, resending } = state
       if (!error) {
         return { errors: {}, submitting, resending }
       }
+
       // Generate error categories from the error message.
       const errors = Object.keys(authErrorCategories).reduce(
         (errors, category) => {
@@ -66,6 +68,7 @@ const authEventMixin = Base =>
             // If result is a string then use as new error message, else use original message.
             errors[category] = typeof result === 'string' ? result : error
           }
+
           return errors
         },
         {}
@@ -74,6 +77,7 @@ const authEventMixin = Base =>
       if (Object.keys(errors).length === 0) {
         errors.general = error
       }
+
       return { errors, submitting, resending }
     }
 

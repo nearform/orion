@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect } from '@reach/router'
+import { Redirect } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 import { SignIn } from 'aws-amplify-react'
 import { Grid, withStyles } from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -20,7 +20,7 @@ export default class CustomSignIn extends authEventMixin(SignIn) {
   }
 
   setState(state) {
-    // aws-amplify sometimes sends a state update after the component has unmounted
+    // Aws-amplify sometimes sends a state update after the component has unmounted
     // (e.g. after a signin following a signup); check if still mounted before
     // handling to avoid warnings in console.
     if (this.mounted) {
@@ -57,7 +57,7 @@ export default class CustomSignIn extends authEventMixin(SignIn) {
 
     // If user is signed in then redirect to home page.
     if (authState === 'signedIn') {
-      return <Redirect to="/" noThrow />
+      return <Redirect noThrow to="/" />
     }
 
     // If user is just signed up then attempt an automatic login.

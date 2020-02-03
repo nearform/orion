@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/filename-case */
 import React from 'react'
 import { SEOHeaders } from 'components'
 const site = {
@@ -7,4 +8,4 @@ const site = {
     author: 'EFQM',
   },
 }
-export default props => <SEOHeaders site={site} title="Test" />
+export default () => <SEOHeaders site={site} title="Test" />

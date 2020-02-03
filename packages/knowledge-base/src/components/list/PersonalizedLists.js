@@ -4,15 +4,15 @@ import { Cache } from 'aws-amplify'
 import { useQuery, useManualQuery } from 'graphql-hooks'
 import { AuthContext } from 'components'
 import { getRandomRows } from '../../utils/array'
-import ThemedList from './ThemedList'
 import PromoSpot from '../PromoSpot'
-import ListTitle from './ListTitle'
 import {
   getRecentArticles,
   getBookmarkedArticles,
   getReadArticles,
 } from '../../queries'
 import ContentSignpostGrid from '../layout/content-signpost-grid'
+import ListTitle from './ListTitle'
+import ThemedList from './ThemedList'
 
 function PersonalizedLists() {
   const { getUserTokenData } = useContext(AuthContext)
@@ -52,36 +52,36 @@ function PersonalizedLists() {
     return <Typography>Loading...</Typography>
   }
 
-  const { recent_articles = [] } = recentData
-  const { user_bookmarks = [] } = bookmarkedData
-  const { read_articles = [] } = readData
+  const { recent_articles: recentArticles = [] } = recentData
+  const { user_bookmarks: userBookmarks = [] } = bookmarkedData
+  const { read_articles: readArticles = [] } = readData
 
-  const hasReadArticles = read_articles.length > 0
-  const readArticles = hasReadArticles
-    ? read_articles
-    : recent_articles.slice(0, 3)
+  const hasReadArticles = readArticles.length > 0
+  const lastReadArticles = hasReadArticles
+    ? readArticles
+    : recentArticles.slice(0, 3)
 
   const bookmarkedArticles =
-    user_bookmarks.length > 0
+    userBookmarks.length > 0
       ? getRandomRows(
-          user_bookmarks.map(article => article.bookmarked_article),
+          userBookmarks.map(article => article.bookmarked_article),
           3
         )
-      : recent_articles.slice(hasReadArticles ? 0 : 3, hasReadArticles ? 3 : 6)
+      : recentArticles.slice(hasReadArticles ? 0 : 3, hasReadArticles ? 3 : 6)
 
   return (
     <ContentSignpostGrid
-      title={!isMobile ? <ListTitle title="Just for you" /> : null}
+      title={isMobile ? null : <ListTitle title="Just for you" />}
     >
       <ThemedList
         hideEmpty={false}
-        title={read_articles.length > 0 ? 'Last Read' : 'Recent Articles'}
-        articles={readArticles}
+        title={readArticles.length > 0 ? 'Last Read' : 'Recent Articles'}
+        articles={lastReadArticles}
       />
       <ThemedList
         hideEmpty={false}
         title={
-          user_bookmarks.length > 0
+          userBookmarks.length > 0
             ? 'Bookmarked Articles'
             : hasReadArticles
             ? 'Recent Articles'

@@ -14,37 +14,33 @@ function getLanguageSwitcher(useTranslation) {
     const l = i18n.language || 'en'
 
     return (
-      <>
-        <Select
-          className={classes.input}
-          value={l}
-          onChange={(_, item) => i18n.changeLanguage(item.props.value)}
-          autoWidth={true}
-          IconComponent={MoreVert}
-          displayEmpty={true}
-          renderValue={() => (
-            <MenuItem className={classes.item} key={'val_' + l} value={l}>
-              <Twemoji options={{ className: classes.icon }}>
-                {translations[l].flag}
-              </Twemoji>
-              {l.toUpperCase()}
-            </MenuItem>
-          )}
-        >
-          {Object.values(translations).map(lang => (
-            <MenuItem
-              className={classes.item}
-              key={'val_' + lang.abb}
-              value={lang.abb}
-            >
-              <Twemoji options={{ className: classes.icon }}>
-                {lang.flag}
-              </Twemoji>
-              {lang.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </>
+      <Select
+        autoWidth
+        displayEmpty
+        className={classes.input}
+        value={l}
+        IconComponent={MoreVert}
+        renderValue={() => (
+          <MenuItem key={'val_' + l} className={classes.item} value={l}>
+            <Twemoji options={{ className: classes.icon }}>
+              {translations[l].flag}
+            </Twemoji>
+            {l.toUpperCase()}
+          </MenuItem>
+        )}
+        onChange={(_, item) => i18n.changeLanguage(item.props.value)}
+      >
+        {Object.values(translations).map(lang => (
+          <MenuItem
+            key={'val_' + lang.abb}
+            className={classes.item}
+            value={lang.abb}
+          >
+            <Twemoji options={{ className: classes.icon }}>{lang.flag}</Twemoji>
+            {lang.name}
+          </MenuItem>
+        ))}
+      </Select>
     )
   }
 

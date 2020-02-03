@@ -1,4 +1,4 @@
-import {} from 'dotenv/config'
+import 'dotenv/config' // eslint-disable-line import/no-unassigned-import
 import { Selector, ClientFunction } from 'testcafe'
 
 const getWindowLocation = ClientFunction(() => window.location)
