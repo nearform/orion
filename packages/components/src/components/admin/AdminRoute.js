@@ -10,7 +10,7 @@ import AdminToolbar from './AdminToolbar'
 import UserGroups from './UserGroups'
 import GroupUsers from './GroupUsers'
 
-function AdminRoute({ Seo }) {
+function AdminRoute({ SEO }) {
   const { getUserAuth } = useContext(AuthContext)
   const [pageTitle, setPageTitle] = useState('')
 
@@ -26,7 +26,7 @@ function AdminRoute({ Seo }) {
 
   return (
     <PaddedContainer>
-      {Seo && <Seo title={`${pageTitle} | Admin`} />}
+      {SEO && <SEO title={`${pageTitle} | Admin`} />}
       <AdminToolbar pageTitle={pageTitle} userCanAccess={userCanAccess} />
       <Router>
         {userCanAccess.pendingUsers && (
@@ -71,7 +71,7 @@ function AdminRoute({ Seo }) {
 }
 
 AdminRoute.propTypes = {
-  Seo: T.elementType,
+  SEO: T.elementType,
 }
 
 function AdminSection({ component: AdminComponent, applyPageTitle, ...props }) {

@@ -22,7 +22,7 @@ import ContentOptions from './content/ContentOptions'
 import FeatureArticles from './list/FeatureArticles'
 import HowToAuthenticate from './HowToAuthenticate'
 import RichText from './content/RichText'
-import Seo from './Seo'
+import SEO from './SEO'
 
 function ContentView({ slug, classes, articleSummary, preview = false }) {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
@@ -72,7 +72,7 @@ function ContentView({ slug, classes, articleSummary, preview = false }) {
   if (!article) {
     return (
       <PaddedContainer>
-        <Seo title="Article Not Found" />
+        <SEO title="Article Not Found" />
         <h1>Not Found</h1>
         <p>Article not found</p>
       </PaddedContainer>
@@ -88,7 +88,7 @@ function ContentView({ slug, classes, articleSummary, preview = false }) {
 
   return (
     <PaddedContainer>
-      <Seo title={`${preview ? 'Preview ' : ''} ${article.title || ''}`} />
+      <SEO title={`${preview ? 'Preview ' : ''} ${article.title || ''}`} />
       <Grid container spacing={7} className={classes.mainWrapper}>
         <Grid item xs={12} sm={4} lg={3}>
           <Grid

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Seo from '../components/Seo'
+import SEO from '../components/SEO'
 
 // TODO: Replace this with a basically-styled 404
 // and move it to components package
@@ -8,7 +8,7 @@ import Seo from '../components/Seo'
 export default function NotFoundPage() {
   return (
     <>
-      <Seo title="404: Not Found" />
+      <SEO title="404: Not Found" />
       <h1>Not Found</h1>
       <p>You just hit a route that doesn&#39;t exist.</p>
     </>

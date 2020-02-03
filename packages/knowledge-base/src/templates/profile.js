@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { UserProfileView } from 'components'
-import Seo from '../components/Seo'
+import SEO from '../components/SEO'
 
 export default function Profile({ pageContext }) {
   const { userSummary } = pageContext
-  return <UserProfileView Seo={Seo} userSummary={userSummary} />
+  return <UserProfileView SEO={SEO} userSummary={userSummary} />
 }

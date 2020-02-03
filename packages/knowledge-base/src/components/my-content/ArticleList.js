@@ -25,7 +25,7 @@ import {
   getArticlesData,
   getUserArticlesData,
 } from '../../queries'
-import Seo from '../Seo'
+import SEO from '../SEO'
 import useKnowledgeTypes from '../../hooks/useKnowledgeTypes'
 
 import QueryTable from '../QueryTable'
@@ -77,7 +77,7 @@ const ArticleList = ({ classes, path }) => {
 
   return (
     <PaddedContainer>
-      <Seo title={pageTitle} />
+      <SEO title={pageTitle} />
       <ContentToolbar pageTitle="Content" />
       <QueryTable
         headers={headers}

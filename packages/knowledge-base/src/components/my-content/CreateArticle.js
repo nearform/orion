@@ -16,7 +16,7 @@ import { useStaticQuery, graphql } from 'gatsby'
 import find from 'lodash/find'
 import get from 'lodash/get'
 import keyBy from 'lodash/keyBy'
-import Seo from '../Seo'
+import SEO from '../SEO'
 import BoxControlLabel from '../BoxControlLabel'
 import {
   addArticleTaxonomiesMutation,
@@ -108,7 +108,7 @@ function CreateArticle({ classes }) {
 
   return (
     <PaddedContainer>
-      <Seo title="Create Article" />
+      <SEO title="Create Article" />
       <Grid container spacing={3} className={classes.mainWrapper}>
         <Grid item xs={12}>
           <Formik

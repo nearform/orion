@@ -1,8 +1,9 @@
+/* eslint-disable unicorn/filename-case */
 import React from 'react'
 import T from 'prop-types'
 import Helmet from 'react-helmet'
 
-function SeoHeaders({ site, description, lang, meta, keywords, title }) {
+function SEOHeaders({ site, description, lang, meta, keywords, title }) {
   const metaDescription = description || site.siteMetadata.description
 
   return (
@@ -59,13 +60,13 @@ function SeoHeaders({ site, description, lang, meta, keywords, title }) {
   )
 }
 
-SeoHeaders.defaultProps = {
+SEOHeaders.defaultProps = {
   lang: 'en',
   meta: [],
   keywords: [],
 }
 
-SeoHeaders.propTypes = {
+SEOHeaders.propTypes = {
   site: T.object.isRequired,
   description: T.string,
   lang: T.string,
@@ -74,4 +75,4 @@ SeoHeaders.propTypes = {
   title: T.string.isRequired,
 }
 
-export default SeoHeaders
+export default SEOHeaders

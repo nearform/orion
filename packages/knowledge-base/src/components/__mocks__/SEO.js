@@ -1,5 +1,6 @@
+/* eslint-disable unicorn/filename-case */
 import React from 'react'
-import { SeoHeaders } from 'components'
+import { SEOHeaders } from 'components'
 const site = {
   siteMetadata: {
     title: 'EFQM Assess Base',
@@ -7,4 +8,4 @@ const site = {
     author: 'EFQM',
   },
 }
-export default () => <SeoHeaders site={site} title="Test" />
+export default () => <SEOHeaders site={site} title="Test" />

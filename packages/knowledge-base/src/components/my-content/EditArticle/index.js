@@ -40,7 +40,7 @@ import {
 } from '../../../queries'
 
 import BoxControlLabel from '../../BoxControlLabel'
-import Seo from '../../Seo'
+import SEO from '../../SEO'
 import SelectAuthor from './SelectAuthor'
 import EditArticleButtons from './EditArticleButtons'
 import ReviewArticleButtons from './ReviewArticleButtons'
@@ -273,7 +273,7 @@ function EditArticle({ classes, articleId }) {
 
   return (
     <PaddedContainer>
-      <Seo
+      <SEO
         title={
           articleDetails.title === null
             ? 'New Article'

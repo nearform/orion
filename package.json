@@ -124,6 +124,12 @@
         {
           "svg": "always"
         }
+      ],
+      "react/jsx-pascal-case": [
+        "error",
+        {
+          "allowAllCaps": true
+        }
       ]
     },
     "overrides": [

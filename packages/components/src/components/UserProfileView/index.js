@@ -27,7 +27,7 @@ import UserInfo from './UserInfo'
 import formFields from './utils/form-fields'
 import validationSchema from './validationSchema'
 
-const UserProfileView = ({ Seo, userSummary, classes }) => {
+const UserProfileView = ({ SEO, userSummary, classes }) => {
   const { isAuthInitialized, getUserTokenData } = useContext(AuthContext)
 
   const { userId } = getUserTokenData()
@@ -96,7 +96,7 @@ const UserProfileView = ({ Seo, userSummary, classes }) => {
 
   return user ? (
     <>
-      <Seo
+      <SEO
         title={`Profile | ${
           user.first_name && user.last_name
             ? `${user.first_name} ${user.last_name}`
@@ -339,12 +339,12 @@ const UserProfileView = ({ Seo, userSummary, classes }) => {
       </PaddedContainer>
     </>
   ) : (
-    <Seo title="Profile" />
+    <SEO title="Profile" />
   )
 }
 
 UserProfileView.propTypes = {
-  Seo: T.elementType,
+  SEO: T.elementType,
   userSummary: T.object,
   classes: T.object.isRequired,
 }

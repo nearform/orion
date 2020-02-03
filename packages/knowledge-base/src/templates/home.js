@@ -11,7 +11,7 @@ import {
 import { Link as RouterLink } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 import { PaddedContainer } from 'components'
 
-import Seo from '../components/Seo'
+import SEO from '../components/SEO'
 import EditorsPicks from '../components/list/EditorsPicks'
 import PageSection from '../components/layout/page-section'
 import PersonalizedLists from '../components/list/PersonalizedLists'
@@ -29,7 +29,7 @@ function KnowledgeHome({ classes }) {
 
   return (
     <Wrapper>
-      <Seo title="Knowledge Base Home Page" />
+      <SEO title="Knowledge Base Home Page" />
       <div className={classes.header}>
         <PaddedContainer className={classes.heroDescription}>
           <Grid container spacing={3} direction="column">

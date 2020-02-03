@@ -18,7 +18,7 @@ import {
   getArticlesCategoryResults,
 } from '../queries'
 import { getTaxonomyItemByKey, buildWhereClause } from '../utils/taxonomy'
-import Seo from './Seo'
+import SEO from './SEO'
 import Taxonomies from './content/Taxonomies'
 import ArticleSummary from './content/ArticleSummary'
 import CondensedArticleSummary from './content/CondensedArticleSummary'
@@ -177,7 +177,7 @@ const ListContent = ({
   const sectionName = get(section, 'name', '')
   return (
     <PaddedContainer>
-      <Seo
+      <SEO
         title={term ? `Search Results - ${term}` : `${sectionName} Section`}
       />
       <Grid container spacing={3}>

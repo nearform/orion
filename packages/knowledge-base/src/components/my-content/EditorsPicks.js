@@ -13,7 +13,7 @@ import { Link, useStaticQuery, graphql } from 'gatsby'
 import { useMutation, useQuery } from 'graphql-hooks'
 
 import get from 'lodash/get'
-import Seo from '../Seo'
+import SEO from '../SEO'
 import QueryTable from '../QueryTable'
 import FeatureArticles from '../list/FeatureArticles'
 
@@ -78,7 +78,7 @@ const EditorsPicks = ({ classes }) => {
 
   return (
     <PaddedContainer>
-      <Seo pageTitle="Editor's Picks" />
+      <SEO pageTitle="Editor's Picks" />
       <ContentToolbar pageTitle="Content" />
       <FeatureArticles
         title="Editor's Picks Preview"
