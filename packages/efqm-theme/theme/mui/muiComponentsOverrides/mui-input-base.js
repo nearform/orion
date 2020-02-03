@@ -1,3 +1,3 @@
-const inputClasses = require('../inputClasses')
+const inputClasses = require('../input-classes')
 
 module.exports = inputClasses
