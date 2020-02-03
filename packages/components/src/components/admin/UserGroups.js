@@ -23,7 +23,7 @@ import GroupTypeChip, { GROUP_TYPES } from '../StatusChip/GroupTypeChip'
 import ConfirmDialog from '../ConfirmDialog'
 import {
   createGroupMutation,
-  unsafe__createGroupNoParentMutation as unsafeCreateGroupNoParentMutation,
+  unsafe__createGroupNoParentMutation, // eslint-disable-line camelcase
   getGroups,
   deleteGroupMutation,
 } from '../../../queries'
@@ -69,8 +69,9 @@ function UserGroups({ classes }) {
   // the AuthWrapper.
   // =======================================================================================
   const [createGroup] = useMutation(createGroupMutation)
-  const [unsafeCreateGroupNoParent] = useMutation(
-    unsafeCreateGroupNoParentMutation
+  // eslint-disable-next-line camelcase
+  const [unsafe__createGroupNoParent] = useMutation(
+    unsafe__createGroupNoParentMutation
   )
   const [deleteGroup] = useMutation(deleteGroupMutation)
 
@@ -137,7 +138,7 @@ function UserGroups({ classes }) {
                 variables: { ...values, parentId },
               })
             } else if (allowNoParentGroups) {
-              await unsafeCreateGroupNoParent({ variables: values })
+              await unsafe__createGroupNoParent({ variables: values })
             } else {
               console.warn("Can't create group with no parent ID")
             }

@@ -62,7 +62,7 @@ export function AuthWrapper({
    */
   const getUserTokenData = () => {
     const data = {
-      isAuthenticated: Boolean(isAuthenticatedSync()),
+      isAuthenticated: isAuthenticatedSync(),
       isUser: hasPermissions('user'),
       isAdmin: hasPermissions('company-admin'),
       isPlatformGroup: hasPermissions('platform-admin'),
