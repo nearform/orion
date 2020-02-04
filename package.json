@@ -34,7 +34,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/orion.git"
+    "url": "git+ssh://git@github.com:nearform/orion.git"
   },
   "keywords": [],
   "author": "NearForm",
