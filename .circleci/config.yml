@@ -122,6 +122,9 @@ jobs:
       - attach_workspace:
           at: .
       - *load_envars
+      - add_ssh_keys:
+          fingerprints:
+            - "3d:81:34:f0:c0:2b:da:52:68:35:a3:c9:d7:b2:7c:d7"
       - run:
           name: Bump version, generate changelog, commit, tag, and push
           command: yarn 'ci:version'
