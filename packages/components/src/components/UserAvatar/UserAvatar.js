@@ -1,5 +1,5 @@
 import React from 'react'
-import { withStyles, makeStyles } from '@material-ui/core'
+import { withStyles } from '@material-ui/core'
 import classnames from 'classnames'
 import T from 'prop-types'
 

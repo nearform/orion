@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { withStyles, Button } from '@material-ui/core'
 import classnames from 'classnames'
 import T from 'prop-types'
@@ -9,16 +9,16 @@ import { userPropTypes } from './utils'
 
 const CollapsedAvatars = ({ users, label, onClick, isOpen, classes }) => (
   <Button
-    onClick={() => onClick(!isOpen)}
     classes={{
       root: classnames(classes.root, { [classes.isOpen]: isOpen }),
       label: classes.label,
     }}
+    onClick={() => onClick(!isOpen)}
   >
     {users.map(user => (
       <span
-        className={classes.avatarWrapper}
         key={`collapsed_user_${user.email}`}
+        className={classes.avatarWrapper}
       >
         <AvatarImage user={user} className={classes.avatarImage} />
       </span>
@@ -36,7 +36,6 @@ CollapsedAvatars.propTypes = {
   label: T.string.isRequired,
   onClick: T.func.isRequired,
   isOpen: T.bool,
-  classes: T.object.isRequired,
 }
 export default withStyles(theme => ({
   root: {

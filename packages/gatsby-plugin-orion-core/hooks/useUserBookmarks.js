@@ -1,7 +1,7 @@
 import { useContext } from 'react'
-import { getUserBookmarks } from '../queries'
 import { AuthContext, useAuthorizedQuery } from 'components'
 import get from 'lodash/get'
+import { getUserBookmarks } from '../queries'
 
 const useUserBookmarks = (fullData = false) => {
   const { getUserTokenData } = useContext(AuthContext)
@@ -15,7 +15,7 @@ const useUserBookmarks = (fullData = false) => {
     getUserBookmarks,
     { userId },
     {
-      onPreFetch: () => !!userId,
+      onPreFetch: () => Boolean(userId),
       onFetch: data =>
         fullData
           ? data

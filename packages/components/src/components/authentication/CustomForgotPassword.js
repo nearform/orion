@@ -25,7 +25,7 @@ export default class CustomForgotPassword extends authEventMixin(
     if (delivery || authData.username) {
       return (
         <PasswordResetConfirm
-          resendCode={() => super.send(event)}
+          resendCode={event => super.send(event)}
           submit={event => {
             // Trim non-numeric chars from code.
             const { inputs } = this
@@ -37,15 +37,15 @@ export default class CustomForgotPassword extends authEventMixin(
           handleInput={handleInputChange}
         />
       )
-    } else {
-      return (
-        <PasswordResetSend
-          goToSignIn={() => super.changeState('signIn')}
-          send={event => super.send(event)}
-          handleInput={handleInputChange}
-          message={this.props.message}
-        />
-      )
     }
+
+    return (
+      <PasswordResetSend
+        goToSignIn={() => super.changeState('signIn')}
+        send={event => super.send(event)}
+        handleInput={handleInputChange}
+        message={this.props.message}
+      />
+    )
   }
 }

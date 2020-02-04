@@ -3,10 +3,10 @@ import { ClientContext } from 'graphql-hooks'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import './styles/global.css'
+import './styles/global.css' // eslint-disable-line import/no-unassigned-import
 
 import {
-  //addTranslations,
+  // AddTranslations,
   AuthWrapper,
   RootWrapper,
   Layout,
@@ -15,9 +15,9 @@ import {
   initGraphQLClient,
   theme,
 } from 'components'
+import AppFooter from '../gatsby-plugin-orion-view/src/components/AppFooter'
+import MainToolbar from '../gatsby-plugin-orion-view/src/components/MainToolbar'
 import awsConfig from './utils/aws-exports'
-import AppFooter from './components/AppFooter'
-import MainToolbar from './components/MainToolbar'
 import useUserGroups from './hooks/useUserGroups'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
@@ -26,7 +26,7 @@ const client = makeGraphQLClient(process.env.GATSBY_GRAPHQL_API)
 
 export async function onClientEntry() {
   /*
-  const i18next = await i18n.init()
+  Const i18next = await i18n.init()
   addTranslations('assessments', i18next)
   */
 }
@@ -38,6 +38,7 @@ const AuthInitializationWrapper = ({ element }) => {
       await initGraphQLClient(client, awsConfig)
       setIsAuthInitialized(true)
     }
+
     init()
   }, [])
 
@@ -50,15 +51,13 @@ const AuthInitializationWrapper = ({ element }) => {
       ThemeWrapper={ThemeWrapper}
       CssBaseline={CssBaseline}
     >
-      <AuthWrapper
-        isAuthInitialized={isAuthInitialized}
-        allowNoParentGroups={true}
-      >
+      <AuthWrapper allowNoParentGroups isAuthInitialized={isAuthInitialized}>
         {element}
       </AuthWrapper>
     </RootWrapper>
   )
 }
+
 export const wrapRootElement = ({ element }) => {
   return <AuthInitializationWrapper element={element} />
 }

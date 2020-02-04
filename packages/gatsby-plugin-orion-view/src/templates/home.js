@@ -8,19 +8,18 @@ import {
   Hidden,
   useMediaQuery,
 } from '@material-ui/core'
-import { Link as RouterLink } from '@reach/router'
+import { Link as RouterLink } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 import { PaddedContainer } from 'components'
 
-import SEO from 'gatsby-plugin-orion-core/components/SEO'
-import EditorsPicks from 'gatsby-plugin-orion-core/components/list/EditorsPicks'
-import PageSection from 'gatsby-plugin-orion-core/components/layout/page-section'
-import PersonalizedLists from 'gatsby-plugin-orion-core/components/list/PersonalizedLists'
-import column from 'gatsby-plugin-orion-core/components/layout/flex-with-gap/column'
-import GainKnowledgeLinks from 'gatsby-plugin-orion-core/components/list/gain-knowledge-links'
-import MostRecentArticles from 'gatsby-plugin-orion-core/components/list/most-recent-articles'
-import EventList from 'gatsby-plugin-orion-core/components/list/event-list'
-import row from 'gatsby-plugin-orion-core/components/layout/flex-with-gap/row'
-import HeroImageWrapper from 'gatsby-plugin-orion-core/components/layout/hero-image-wrapper'
+import SEO from '../components/SEO'
+import EditorsPicks from '../components/list/EditorsPicks'
+import PageSection from '../components/layout/page-section'
+import PersonalizedLists from '../components/list/PersonalizedLists'
+import column from '../components/layout/utils/flex-with-gap/column'
+import MostRecentArticles from '../components/list/most-recent-articles'
+import EventList from '../components/list/event-list'
+import row from '../components/layout/utils/flex-with-gap/row'
+import HeroImageWrapper from '../components/layout/hero-image-wrapper'
 
 function KnowledgeHome({ classes }) {
   const Wrapper = useMediaQuery('(min-width:600px)')
@@ -35,7 +34,7 @@ function KnowledgeHome({ classes }) {
           <Grid container spacing={3} direction="column">
             <Grid item xs={12} sm={4}>
               <Typography variant="h1">
-                Gain knowledge from the world's leading organisations
+                Gain knowledge from the world&apos;s leading organisations
               </Typography>
             </Grid>
             <Grid item xs={12} sm={5}>
@@ -73,9 +72,6 @@ function KnowledgeHome({ classes }) {
         >
           <MostRecentArticles className={classes.mostRecent} />
           <EventList className={classes.eventList} />
-        </PageSection>
-        <PageSection>
-          <GainKnowledgeLinks />
         </PageSection>
       </Hidden>
     </Wrapper>

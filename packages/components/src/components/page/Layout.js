@@ -16,8 +16,6 @@ function Layout({ classes, children, darkToolbar, AppFooter, MainToolbar }) {
   )
 }
 
-const boxShadow = '0px 7px 0px rgba(143,143,143,0.5)'
-
 const styles = theme => ({
   root: {
     display: 'flex',

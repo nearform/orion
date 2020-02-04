@@ -1,3 +1,4 @@
+import pino from 'pino'
 import graphql from '../graphql'
 import {
   getUserRoles,
@@ -6,7 +7,6 @@ import {
 } from './user-roles'
 import { getUserGroup } from './user-groups'
 import getUserByCognitoId from './graphql/get-user-by-cognito-id.graphql'
-import pino from 'pino'
 const logger = pino()
 
 export const handler = async event => {
@@ -17,7 +17,7 @@ export const handler = async event => {
       cognitoId,
     })
 
-    if (!user.length) {
+    if (user.length === 0) {
       // TODO: user not found, will need to handle in some way
       return event
     }
@@ -59,8 +59,8 @@ export const handler = async event => {
     }
 
     return event
-  } catch (e) {
-    logger.error(e)
-    throw e
+  } catch (error) {
+    logger.error(error)
+    throw error
   }
 }

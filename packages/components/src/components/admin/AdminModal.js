@@ -28,7 +28,7 @@ function AdminModal({
   const [titleAction, titleTarget] = getTitleParts(selected)
 
   return (
-    <Dialog open={true} onClose={onClose}>
+    <Dialog open onClose={onClose}>
       <DialogTitle disableTypography className={classes.modalTitle}>
         <Typography variant="h4" className={classes.titleLabel}>
           {titleAction}
@@ -63,17 +63,17 @@ function AdminModal({
             </DialogContent>
             <DialogActions className={classes.modalButtons}>
               <Button
-                onClick={() => onClose()}
                 color="secondary"
                 variant="outlined"
+                onClick={() => onClose()}
               >
                 Cancel
               </Button>
               <Button
-                onClick={() => onSave(values, selected)}
                 color="secondary"
                 variant="outlined"
                 disabled={!isValid || isSubmitting || !dirty}
+                onClick={() => onSave(values, selected)}
               >
                 Apply
               </Button>
@@ -105,7 +105,6 @@ AdminModal.propTypes = {
   selected: T.any,
   data: T.object,
   contents: T.array.isRequired,
-  title: T.func,
   onSave: T.func.isRequired,
   onClose: T.func.isRequired,
   schema: T.object,

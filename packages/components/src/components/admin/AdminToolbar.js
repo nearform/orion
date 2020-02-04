@@ -10,7 +10,7 @@ import {
 
 import NavLink from '../page/NavLink'
 
-function AdminToolbar({ classes, pageTitle, userCanAccess, ...props }) {
+function AdminToolbar({ classes, pageTitle, userCanAccess }) {
   return (
     <AppBar
       position="relative"

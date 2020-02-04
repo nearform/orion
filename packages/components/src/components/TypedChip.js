@@ -9,18 +9,18 @@ function TypedChip({ type, color, name, onDelete, classes }) {
   return (
     <Chip
       data-testid="typed-chip"
-      onDelete={onDelete}
       deleteIcon={onDelete ? <ClearIcon fontSize="small" /> : null}
       classes={chipClasses}
       clickable={false}
       label={
         <>
-          <Typography className={'name'}>{name}</Typography>
+          <Typography className="name">{name}</Typography>
           <Typography variant="h4" className={typeClass} color={color}>
             {type}
           </Typography>
         </>
       }
+      onDelete={onDelete}
     />
   )
 }

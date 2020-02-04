@@ -4,7 +4,7 @@ import fetch from 'node-fetch'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import './styles/global.css'
+import './styles/global.css' // eslint-disable-line import/no-unassigned-import
 
 import {
   AuthWrapper,
@@ -13,8 +13,8 @@ import {
   ThemeWrapper,
   theme,
 } from 'components'
-import AppFooter from './components/AppFooter'
-import MainToolbar from './components/MainToolbar'
+import AppFooter from '../gatsby-plugin-orion-view/src/components/AppFooter'
+import MainToolbar from '../gatsby-plugin-orion-view/src/components/MainToolbar'
 import useUserGroups from './hooks/useUserGroups'
 
 const muiTheme = createMuiTheme(theme.muiTheme)

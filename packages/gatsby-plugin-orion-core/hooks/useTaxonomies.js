@@ -18,11 +18,11 @@ const useTaxonomies = (taxonomyData = []) => {
     }
   `)
   const taxonomyTypes = get(taxonomyQueryResult, 'orion.taxonomy_type', [])
-  const taxonomyIds = taxonomyData.filter((val, i, a) => a.indexOf(val) === i) // removes duplicates
+  const taxonomyIds = taxonomyData.filter((val, i, a) => a.indexOf(val) === i) // Removes duplicates
 
-  for (let type of taxonomyTypes) {
+  for (const type of taxonomyTypes) {
     type.active = false
-    for (let item of type.taxonomy_items) {
+    for (const item of type.taxonomy_items) {
       if (taxonomyIds.includes(item.id)) {
         item.active = true
         type.active = true

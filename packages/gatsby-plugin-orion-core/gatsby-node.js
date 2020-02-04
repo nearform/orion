@@ -1,6 +1,6 @@
 const path = require('path')
 
-exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
+exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
   const config = getConfig()
 
   config.module.rules.push({

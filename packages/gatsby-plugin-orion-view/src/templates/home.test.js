@@ -1,5 +1,5 @@
 import React from 'react'
-import { renderUnauthenticated } from '../test-utils'
+import { renderUnauthenticated } from '../../test-utils'
 import KnowledgeHome from './home'
 
 // This test file is just a shell to get @testing-library/react setup.
@@ -15,10 +15,10 @@ jest.mock('components', () => ({
     }
   },
 }))
-jest.mock('gatsby-plugin-orion-core/components/SEO')
+jest.mock('../components/SEO')
 jest.mock('graphql-hooks', () => {
   return {
-    useQuery: (query, options) => {
+    useQuery: () => {
       return {
         loading: false,
         error: null,
@@ -38,20 +38,11 @@ jest.mock('graphql-hooks', () => {
 })
 
 // These component mocks need removing and graphql data mocks creating.
-jest.mock('gatsby-plugin-orion-core/components/PromoSpot', () => () =>
-  'PromoSpot'
+jest.mock('../components/PromoSpot', () => () => 'PromoSpot')
+jest.mock('../components/list/most-recent-articles', () => () =>
+  'MostRecentArticles'
 )
-jest.mock(
-  'gatsby-plugin-orion-core/components/list/most-recent-articles',
-  () => () => 'MostRecentArticles'
-)
-jest.mock('gatsby-plugin-orion-core/components/list/event-list', () => () =>
-  'EventList'
-)
-jest.mock(
-  'gatsby-plugin-orion-core/components/list/gain-knowledge-links',
-  () => () => 'GainKnowledgeLinks'
-)
+jest.mock('../components/list/event-list', () => () => 'EventList')
 
 describe('<KnowledgeHome />', () => {
   test('Renders when not authenticated', () => {

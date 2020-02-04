@@ -69,8 +69,8 @@ function Login({
               <Button
                 data-testid="login-submit"
                 color="secondary"
-                onClick={goToReset}
                 size="small"
+                onClick={goToReset}
               >
                 Reset password
               </Button>
@@ -85,12 +85,12 @@ function Login({
             wrap="nowrap"
           >
             <Grid item>
-              <Typography variant="h4" color="textSecondary" noWrap>
+              <Typography noWrap variant="h4" color="textSecondary">
                 No account?
               </Typography>
             </Grid>
             <Grid item>
-              <Button color="secondary" onClick={goToSignUp} size="small">
+              <Button color="secondary" size="small" onClick={goToSignUp}>
                 Create account
               </Button>
             </Grid>
@@ -117,7 +117,7 @@ Login.propTypes = {
   message: T.string,
 }
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     display: 'flex',
     alignItems: 'center',

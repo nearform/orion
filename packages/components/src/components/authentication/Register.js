@@ -26,7 +26,7 @@ function Register({
             </SectionTitleField>
           </Grid>
           {message && (
-            <Grid item xs={params.xs}>
+            <Grid item xs={2}>
               <div className={classes.message}>
                 <p>{message}</p>
               </div>
@@ -35,13 +35,13 @@ function Register({
           {signUpFields.map(params => (
             <Grid key={params.key} item xs={params.xs}>
               <InputField
+                fullWidth
                 name={params.key}
                 type={params.type}
                 required={params.required}
                 options={params.options}
                 helperText={params.helperText}
                 onChange={handleInput}
-                fullWidth
               >
                 {params.label}
               </InputField>
@@ -56,12 +56,12 @@ function Register({
             wrap="nowrap"
           >
             <Grid item>
-              <Typography variant="h4" color="textSecondary" noWrap>
+              <Typography noWrap variant="h4" color="textSecondary">
                 Have an account?
               </Typography>
             </Grid>
             <Grid item>
-              <Button color="secondary" onClick={goToSignIn} size="small">
+              <Button color="secondary" size="small" onClick={goToSignIn}>
                 Sign In
               </Button>
             </Grid>

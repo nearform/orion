@@ -14,6 +14,7 @@ function loadJSONFilesFromDir(dirPath) {
     ) {
       acc[filename] = loadJSONFile(path.join(dirPath, filename))
     }
+
     return acc
   }, {})
 }

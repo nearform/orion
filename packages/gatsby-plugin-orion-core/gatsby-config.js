@@ -2,8 +2,8 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV || 'development'}`,
 })
 
-const upperFirst = require('lodash/upperFirst')
 const path = require('path')
+const upperFirst = require('lodash/upperFirst')
 const currentTheme = require('./theme')
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
     {
       resolve: 'gatsby-transformer-json',
       options: {
-        // uses the folder name to set the typename: qfqm-theme/articles => Articles
+        // Uses the folder name to set the typename: qfqm-theme/articles => Articles
         typeName: ({ node }) => upperFirst(path.basename(node.dir)),
       },
     },

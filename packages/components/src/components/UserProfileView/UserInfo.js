@@ -25,7 +25,21 @@ const UserInfo = ({
     >
       {title}
     </Typography>
-    {!editMode ? (
+    {editMode ? (
+      <Field
+        name={name}
+        render={props => (
+          <TextField
+            fullWidth
+            className={classnames([classes.value])}
+            inputProps={{ className: classes.input }}
+            rows={rows}
+            multiline={Boolean(rows)}
+            {...props}
+          />
+        )}
+      />
+    ) : (
       <Typography
         variant="body2"
         className={classnames([
@@ -35,20 +49,6 @@ const UserInfo = ({
       >
         {value}
       </Typography>
-    ) : (
-      <Field
-        name={name}
-        render={props => (
-          <TextField
-            className={classnames([classes.value])}
-            inputProps={{ className: classes.input }}
-            fullWidth
-            rows={rows}
-            multiline={!!rows}
-            {...props}
-          ></TextField>
-        )}
-      />
     )}
   </>
 )

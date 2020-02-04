@@ -1,4 +1,5 @@
-const fontFamily = (exports.fontFamily = 'Didact Gothic, sans-serif')
+const fontFamily = 'Didact Gothic, sans-serif'
+exports.fontFamily = fontFamily
 const headingFontFamily = 'Poppins, sans-serif'
 
 const headings = new Array(6)
@@ -30,7 +31,7 @@ const nearformPalette = {
 
 const shadows = [
   'none',
-  // material ui requires  25 elevations
+  // Material ui requires  25 elevations
   ...new Array(24).fill(
     '0 0 5px 0 rgba(0, 0, 0, 0.1), 0 2px 10px 0 rgba(0, 0, 0, 0.1)'
   ),
@@ -60,7 +61,7 @@ exports.muiTheme = {
     },
   },
   typography: {
-    fontFamily: fontFamily,
+    fontFamily,
     ...headings,
     button: {
       letterSpacing: 2,

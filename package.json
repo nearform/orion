@@ -18,14 +18,14 @@
     "clean": "lerna clean",
     "docs": "docsify serve -p 4000 docs",
     "postinstall": "npm run bootstrap -- --no-ci",
-    "lint-files": "eslint . --ext .js  --ext .graphql",
-    "lint": "npm run generate-schema && npm run lint-files",
-    "dev:lint": "npm run dev:generate-schema && npm run lint-files",
-    "lint:fix": "eslint --fix --ext .js --ext .graphql .",
+    "lint-files": "xo",
+    "lint": "yarn generate-schema && yarn lint-files",
+    "dev:lint": "yarn dev:generate-schema && yarn lint-files",
+    "lint:fix": "xo --fix",
     "dev:generate-schema": "graphql get-schema --dotenv packages/knowledge-base/.env.development --output=hasura-schema.json",
     "generate-schema": "graphql get-schema --output=hasura-schema.json",
-    "start:kb": "lerna exec --scope=knowledge-base npm start",
-    "start:apps": "npm run start:kb",
+    "start:kb": "lerna exec --scope=knowledge-base yarn start",
+    "start:apps": "yarn start:kb",
     "e2e-test": "lerna run --scope=e2e-tests --stream --no-prefix e2e-test -- ",
     "dev:e2e-test": "npm run e2e-test -- ./local.js -- --screenshots-on-fails",
     "hosted:e2e-test": "npm run e2e-test -- ./hosted.js -- --screenshots-on-fails",
@@ -50,17 +50,11 @@
     "commitizen": "^4.0.3",
     "docsify-cli": "^4.3.0",
     "dotenv": "^8.0.0",
-    "eslint": "^5.16.0",
-    "eslint-config-google": "^0.10.0",
-    "eslint-config-prettier": "^4.1.0",
-    "eslint-plugin-flowtype": "^2.50.3",
-    "eslint-plugin-graphql": "^3.0.3",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^22.15.1",
-    "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-prettier": "^3.0.1",
-    "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.7.0",
+    "eslint-config-xo-react": "^0.22.0",
+    "eslint-plugin-cypress": "^2.8.1",
+    "eslint-plugin-graphql": "^3.1.1",
+    "eslint-plugin-react": "^7.18.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "eslint-plugin-testcafe": "^0.2.1",
     "git-cz": "^3.3.0",
     "graphql": "^14.2.1",
@@ -68,10 +62,11 @@
     "husky": "^1.3.1",
     "lerna": "^3.16.4",
     "lint-staged": "^8.1.5",
-    "prettier": "^1.18.2",
-    "pretty-quick": "^1.10.0",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
     "start-server-and-test": "^1.10.0",
-    "url-loader": "^2.1.0"
+    "url-loader": "^2.1.0",
+    "xo": "^0.25.3"
   },
   "config": {
     "commitizen": {
@@ -86,15 +81,15 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged && pretty-quick --staged --pattern '**/*.graphql'",
+      "pre-commit": "lint-staged && pretty-quick --staged --pattern '**/*.json'",
       "post-commit": "git update-index --again",
-      "pre-push": "npm run dev:lint"
+      "pre-push": "yarn dev:lint"
     }
   },
   "lint-staged": {
     "**.{js,graphql}": [
-      "npm run dev:generate-schema",
-      "eslint --fix",
+      "yarn dev:generate-schema",
+      "xo --fix",
       "git add"
     ]
   },
@@ -102,5 +97,158 @@
     "gatsby-source-s3": "0.0.0",
     "moment": "^2.24.0",
     "react-markdown": "^4.2.2"
+  },
+  "xo": {
+    "prettier": true,
+    "extends": "xo-react",
+    "parser": "babel-eslint",
+    "envs": [
+      "es2017",
+      "browser"
+    ],
+    "extensions": [
+      "graphql"
+    ],
+    "rules": {
+      "react/prop-types": [
+        "error",
+        {
+          "skipUndeclared": true
+        }
+      ],
+      "react/boolean-prop-naming": "warn",
+      "react/require-default-props": "warn",
+      "import/extensions": [
+        "error",
+        "never",
+        {
+          "svg": "always"
+        }
+      ],
+      "react/jsx-pascal-case": [
+        "error",
+        {
+          "allowAllCaps": true
+        }
+      ]
+    },
+    "overrides": [
+      {
+        "files": [
+          "packages/*/src/components/**/*.js",
+          "!packages/*/src/components/**/utils/**/*.js",
+          "!packages/*/src/components/**/utils.js"
+        ],
+        "rules": {
+          "unicorn/filename-case": [
+            "error",
+            {
+              "case": "pascalCase"
+            }
+          ],
+          "no-console": [
+            "error",
+            {
+              "allow": [
+                "warn",
+                "error"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "files": [
+          "packages/*/src/components/**/*.stories.js",
+          "packages/*/src/components/**/*.test.js"
+        ],
+        "rules": {
+          "unicorn/filename-case": "off"
+        }
+      },
+      {
+        "files": "packages/*/**/hooks/**/*.js",
+        "rules": {
+          "unicorn/filename-case": [
+            "error",
+            {
+              "case": "camelCase"
+            }
+          ],
+          "no-console": [
+            "error",
+            {
+              "allow": [
+                "warn",
+                "error"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "files": "**/cypress/**/*.js",
+        "plugins": [
+          "cypress"
+        ],
+        "envs": [
+          "node",
+          "cypress/globals"
+        ]
+      },
+      {
+        "files": "**/*.graphql",
+        "plugins": [
+          "graphql"
+        ],
+        "rules": {
+          "graphql/template-strings": [
+            "warn",
+            {
+              "env": "literal",
+              "projectName": "orion",
+              "validators": "all"
+            }
+          ]
+        }
+      },
+      {
+        "files": "packages/functions/**/*",
+        "envs": [
+          "es2017",
+          "node"
+        ]
+      },
+      {
+        "files": [
+          "packages/functions/**/*.test.js",
+          "packages/permissions-tests",
+          "**/__mocks__/**/*.js",
+          "**/*.test.js",
+          "packages/*/loadershim.js"
+        ],
+        "envs": [
+          "es2017",
+          "node",
+          "jest"
+        ]
+      },
+      {
+        "files": "packages/e2e-tests/**/*.js",
+        "plugins": "testcafe",
+        "extends": [
+          "xo-react",
+          "plugin:testcafe/recommended"
+        ],
+        "envs": [
+          "es6",
+          "node",
+          "browser"
+        ],
+        "rules": {
+          "new-cap": "off"
+        }
+      }
+    ]
   }
 }

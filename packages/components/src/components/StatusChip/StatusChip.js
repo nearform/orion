@@ -1,5 +1,5 @@
 import React from 'react'
-import { withStyles, Chip, Typography } from '@material-ui/core'
+import { withStyles, Chip } from '@material-ui/core'
 import T from 'prop-types'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ContentView from 'gatsby-plugin-orion-core/components/ContentView'
+import ContentView from '../components/ContentView'
 
 function Content({ slug, pageContext }) {
   const { articleSummary, banner } = pageContext

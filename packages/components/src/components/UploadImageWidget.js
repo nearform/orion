@@ -10,7 +10,7 @@ import {
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import classnames from 'classnames'
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate'
-import { useImageUpload } from 'components'
+import useImageUpload from '../hooks/useImageUpload'
 
 function UploadImageWidget({
   path,
@@ -43,7 +43,7 @@ function UploadImageWidget({
 
   return (
     <>
-      <ImageInput></ImageInput>
+      <ImageInput />
       {children ? (
         typeof children === 'function' ? (
           children({ startImageUpload, isLoading, uploadProgress })
@@ -54,8 +54,8 @@ function UploadImageWidget({
         <div className={classes.root}>
           {hasImage || isLoading || alwaysShowBox ? (
             <ButtonBase
-              disabled={isLoading}
               focusRipple
+              disabled={isLoading}
               className={classnames({
                 [classes.image]: true,
                 alwaysShowBox: alwaysShowBox && !hasImage,

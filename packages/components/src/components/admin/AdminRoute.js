@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import T from 'prop-types'
-import { Router, Redirect } from '@reach/router'
+import { Router, Redirect } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 
 import { AuthContext } from '../authorization/AuthWrapper'
 import PaddedContainer from '../PaddedContainer'
@@ -11,7 +11,7 @@ import UserGroups from './UserGroups'
 import GroupUsers from './GroupUsers'
 
 function AdminRoute({ SEO }) {
-  const { getUserTokenData, getUserAuth } = useContext(AuthContext)
+  const { getUserAuth } = useContext(AuthContext)
   const [pageTitle, setPageTitle] = useState('')
 
   const canAccessPendingUsers = getUserAuth('platform-admin')

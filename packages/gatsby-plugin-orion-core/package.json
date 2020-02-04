@@ -10,8 +10,11 @@
   "dependencies": {
     "@material-ui/core": "^4.5.1",
     "@material-ui/styles": "^4.5.0",
+    "aws-amplify": "1.1.28",
     "components": "^0.1.0",
+    "dotenv": "^8.0.0",
     "efqm-theme": "^0.1.0",
+    "gatsby": "^2.18.0",
     "gatsby-plugin-create-client-paths": "^2.0.5",
     "gatsby-plugin-google-fonts": "0.0.4",
     "gatsby-plugin-manifest": "^2.2.5",
@@ -24,8 +27,12 @@
     "gatsby-transformer-json": "^2.1.11",
     "gatsby-transformer-sharp": "^2.3.6",
     "graphql-hooks": "^3.6.1",
+    "js-sha256": "^0.9.0",
     "lodash": "4.17.15",
-    "react": "^16.8.6"
+    "node-fetch": "^2.5.0",
+    "react": "^16.8.6",
+    "typography": "^0.16.19",
+    "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
     "webpack-graphql-loader": "^1.0.2"

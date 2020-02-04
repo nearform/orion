@@ -3,8 +3,6 @@ import T from 'prop-types'
 
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
-import { number } from '@storybook/addon-knobs'
-import { withStyles } from '@material-ui/core'
 
 import RatingWidget from './RatingWidget'
 
@@ -35,4 +33,4 @@ storiesOf('RatingWidget', module)
   .add('with user rating', () => (
     <Rating ratings={[1, 2, 2, 3, 5]} userRating={3} />
   ))
-  .add('disabled', () => <Rating ratings={[1, 2, 2, 3, 5]} disabled />)
+  .add('disabled', () => <Rating disabled ratings={[1, 2, 2, 3, 5]} />)

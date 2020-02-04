@@ -1,7 +1,7 @@
+const path = require('path')
+const currentTheme = require('gatsby-plugin-orion-core/theme')
 const { version } = require('./package.json')
 const { getApplicationVersion } = require('./utils/version')
-const currentTheme = require('gatsby-plugin-orion-core/theme')
-const path = require('path')
 const { getThemePaths } = require('./utils/paths')
 const { themeAssetsPath, themeKnowledgeTypes } = getThemePaths(currentTheme)
 
@@ -38,6 +38,7 @@ const plugins = [
   {
     resolve: 'gatsby-plugin-manifest',
     options: {
+      /* eslint-disable camelcase */
       name: currentTheme.metadata.title,
       short_name: currentTheme.metadata.shortName,
       start_url: '/',
@@ -45,6 +46,7 @@ const plugins = [
       theme_color: '#663399',
       display: 'minimal-ui',
       icon: path.join(themeAssetsPath, 'logo.png'),
+      /* eslint-enable camelcase */
     },
   },
   'gatsby-plugin-orion-admin',
