@@ -66,15 +66,15 @@ jobs:
         name: Install yarn deps
         command: yarn install --no-save
     - persist_to_workspace:
-        root: .
+        root: /home/circleci
         paths:
-          - .
-          - ../.ssh/known_hosts
+          - project
+          - .ssh/known_hosts
   build:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-          at: .
+          at: /home/circleci
       - *load_envars
       - run:
           name: Lint code
@@ -90,15 +90,16 @@ jobs:
             set -e
             cd packages/components
             yarn run build-storybook -- --quiet
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
+    - persist_to_workspace:
+        root: /home/circleci
+        paths:
+          - project
+          - .ssh/known_hosts
   test:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-          at: .
+          at: /home/circleci
       - *load_envars
       - *install_hasura_cli
       - run:
@@ -110,7 +111,7 @@ jobs:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-          at: .
+          at: /home/circleci
       - *load_envars
       - run:
           name: Test e2e
@@ -121,7 +122,7 @@ jobs:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-          at: .
+          at: /home/circleci
       - *load_envars
       - add_ssh_keys:
           fingerprints:
@@ -133,7 +134,7 @@ jobs:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-          at: .
+          at: /home/circleci
       - *load_envars
       - *install_awscli
       - run:
@@ -156,7 +157,7 @@ jobs:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-          at: .
+          at: /home/circleci
       - *load_envars
       - run:
           name: Create artifacts
@@ -181,7 +182,7 @@ jobs:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-          at: .
+          at: /home/circleci
       - *install_hasura_cli
       - *load_envars
       - run:
