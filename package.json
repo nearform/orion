@@ -167,7 +167,7 @@
         }
       },
       {
-        "files": "packages/*/src/**/hooks/**/*.js",
+        "files": "packages/*/**/hooks/**/*.js",
         "rules": {
           "unicorn/filename-case": [
             "error",

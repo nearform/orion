@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+}
+/* Media queries for print */
+@media print {
+    /* Hide links in top-level nav bar */
+    #main-toolbar {
+        display: none;
+    }
+    /* Hide page level nav links */
+    #secondary-navigation {
+        display: none;
+    }
+    /* Hide article content metadata */
+    #content-metadata {
+        display: none;
+    }
+    /* Hide article content options */
+    #content-options-footer {
+        display: none;
+    }
+    /* Hide page footer */
+    footer {
+        display: none;
+    }
+}

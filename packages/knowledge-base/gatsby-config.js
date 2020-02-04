@@ -1,15 +1,8 @@
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV || 'development'}`,
-})
 const path = require('path')
-const upperFirst = require('lodash/upperFirst')
-
-const currentTheme = require('./theme')
-const { getThemePaths } = require('./utils/paths')
-
+const currentTheme = require('gatsby-plugin-orion-core/theme')
 const { version } = require('./package.json')
 const { getApplicationVersion } = require('./utils/version')
-
+const { getThemePaths } = require('./utils/paths')
 const { themeAssetsPath, themeKnowledgeTypes } = getThemePaths(currentTheme)
 
 const plugins = [
@@ -24,7 +17,7 @@ const plugins = [
     resolve: 'gatsby-source-filesystem',
     options: {
       name: 'app-assets',
-      path: './src/assets',
+      path: './assets',
     },
   },
   {
@@ -43,15 +36,6 @@ const plugins = [
     },
   },
   {
-    resolve: 'gatsby-transformer-json',
-    options: {
-      // Uses the folder name to set the typename: qfqm-theme/articles => Articles
-      typeName: ({ node }) => upperFirst(path.basename(node.dir)),
-    },
-  },
-  'gatsby-plugin-sharp',
-  'gatsby-transformer-sharp',
-  {
     resolve: 'gatsby-plugin-manifest',
     options: {
       /* eslint-disable camelcase */
@@ -65,43 +49,9 @@ const plugins = [
       /* eslint-enable camelcase */
     },
   },
-  'gatsby-plugin-react-helmet',
-  {
-    resolve: 'gatsby-plugin-create-client-paths',
-    options: {
-      prefixes: [
-        '/admin/*',
-        '/auth/*',
-        '/my-content/*',
-        '/content/*',
-        '/profile/*',
-        '/section/*',
-        '/search/*',
-        '/submit/*',
-        '/management-report/*',
-      ],
-    },
-  },
-  {
-    resolve: 'gatsby-plugin-material-ui',
-  },
-  {
-    resolve: 'gatsby-plugin-google-fonts',
-    options: {
-      fonts: currentTheme.theme.googleFonts,
-    },
-  },
-  {
-    resolve: 'gatsby-source-graphql',
-    options: {
-      typeName: 'Orion',
-      fieldName: 'orion',
-      url: process.env.GATSBY_GRAPHQL_API,
-      headers: {
-        'x-hasura-admin-secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET,
-      },
-    },
-  },
+  'gatsby-plugin-orion-admin',
+  'gatsby-plugin-orion-edit',
+  'gatsby-plugin-orion-view',
 ]
 
 if (process.env.ANALYZE) {
