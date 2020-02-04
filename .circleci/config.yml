@@ -90,11 +90,11 @@ jobs:
             set -e
             cd packages/components
             yarn run build-storybook -- --quiet
-    - persist_to_workspace:
-        root: /home/circleci
-        paths:
-          - project
-          - .ssh/known_hosts
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - project
+            - .ssh/known_hosts
   test:
     <<: *deploy_environment
     steps:
