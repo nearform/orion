@@ -69,6 +69,7 @@ jobs:
         root: .
         paths:
           - .
+          - ../.ssh/known_hosts
   build:
     <<: *deploy_environment
     steps:
