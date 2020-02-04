@@ -116,15 +116,6 @@ jobs:
           command: |
             set -e
             yarn run 'ci:e2e-test'
-  version:
-    <<: *deploy_environment
-    steps:
-      - attach_workspace:
-          at: .
-      - *load_envars
-      - run:
-          name: Bump version, generate changelog, commit, tag, and push
-          command: yarn 'ci:version'
   deploy:
     <<: *deploy_environment
     steps:
@@ -213,13 +204,6 @@ workflows:
                 - e2e-test
           requires:
             - build
-      - version:
-          filters:
-            branches:
-              only:
-                - master
-          requires:
-            - test
   build-and-deploy:
     jobs:
       - setup:
