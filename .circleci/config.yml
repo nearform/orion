@@ -94,7 +94,6 @@ jobs:
           root: /home/circleci
           paths:
             - project
-            - .ssh/known_hosts
   test:
     <<: *deploy_environment
     steps:
@@ -132,6 +131,8 @@ jobs:
           # we don't want to push anything strange... reset the repo before pushing
           command: |
             git reset --hard
+            git config user.email circleci@nearform.com
+            git config user.name "CircleCI Bot 🤖"
             yarn 'ci:version'
   deploy:
     <<: *deploy_environment
