@@ -66,14 +66,17 @@ jobs:
         name: Install yarn deps
         command: yarn install --no-save
     - persist_to_workspace:
-        root: .
+        root: /home/circleci
         paths:
-          - .
+          # Build and test happens in the project directory
+          - project
+          # known_hosts is needed in the version job to push the commit+tag back to github with ssh
+          - .ssh/known_hosts
   build:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-          at: .
+          at: /home/circleci
       - *load_envars
       - run:
           name: Lint code
@@ -90,14 +93,14 @@ jobs:
             cd packages/components
             yarn run build-storybook -- --quiet
       - persist_to_workspace:
-          root: .
+          root: /home/circleci
           paths:
-            - .
+            - project
   test:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-          at: .
+          at: /home/circleci
       - *load_envars
       - *install_hasura_cli
       - run:
@@ -109,18 +112,35 @@ jobs:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-          at: .
+          at: /home/circleci
       - *load_envars
       - run:
           name: Test e2e
           command: |
             set -e
             yarn run 'ci:e2e-test'
+  version:
+    <<: *deploy_environment
+    steps:
+      - attach_workspace:
+          at: /home/circleci
+      - *load_envars
+      - add_ssh_keys:
+          fingerprints:
+            - "3d:81:34:f0:c0:2b:da:52:68:35:a3:c9:d7:b2:7c:d7"
+      - run:
+          name: Bump version, generate changelog, commit, tag, and push
+          # We don't want to push anything strange... reset the repo before pushing
+          command: |
+            git reset --hard
+            git config user.email circleci@nearform.com
+            git config user.name "CircleCI Bot 🤖"
+            yarn 'ci:version'
   deploy:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-          at: .
+          at: /home/circleci
       - *load_envars
       - *install_awscli
       - run:
@@ -143,7 +163,7 @@ jobs:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-          at: .
+          at: /home/circleci
       - *load_envars
       - run:
           name: Create artifacts
@@ -168,7 +188,7 @@ jobs:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-          at: .
+          at: /home/circleci
       - *install_hasura_cli
       - *load_envars
       - run:
@@ -204,6 +224,13 @@ workflows:
                 - e2e-test
           requires:
             - build
+      - version:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - test
   build-and-deploy:
     jobs:
       - setup:

@@ -30,11 +30,11 @@
     "dev:e2e-test": "npm run e2e-test -- ./local.js -- --screenshots-on-fails",
     "hosted:e2e-test": "npm run e2e-test -- ./hosted.js -- --screenshots-on-fails",
     "ci:e2e-test": "start-server-and-test 'start:apps' http-get://localhost:8000 'npm run e2e-test ./local.js'",
-    "ci:version": "lerna version --conventional-commits"
+    "ci:version": "lerna version --conventional-commits --yes --message 'chore(release): %s\\n[skip ci]'"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/orion.git"
+    "url": "git+ssh://git@github.com:nearform/orion.git"
   },
   "keywords": [],
   "author": "NearForm",
@@ -167,7 +167,7 @@
         }
       },
       {
-        "files": "packages/*/src/**/hooks/**/*.js",
+        "files": "packages/*/**/hooks/**/*.js",
         "rules": {
           "unicorn/filename-case": [
             "error",

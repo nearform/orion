@@ -53,6 +53,8 @@ Shared secrets are stored in a vault. Get in touch with a team member to get acc
 
    💡 Include the clubhouse story tag in your commit messages to create a link between your story and github. Clubhouse uses the form `[ch1234]` where 1234 is the story number. If using Commitizen, use the entire tag, `[ch1234]`, in the "Issues this commit closes" prompt.
 
+   ⚠️ When using `yarn commit`, when prompted for "BREAKING CHANGE", leave the prompt blank and press enter (unless you have a breaking change to report). Entering `n` or `none` will result in a new major version and a corresponding note in the changelog.
+
    🚑 _In case of emergency_ (or when rebasing), you can disable commit linting by deactivating git hooks with either of the following:
 
    - `git commit --no-verify ...`

@@ -1,6 +1,6 @@
 describe('Home Page', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:8001/')
+    cy.visit('http://localhost:8000/')
   })
 
   it('login', () => {
