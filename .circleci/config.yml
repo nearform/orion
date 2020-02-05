@@ -68,7 +68,9 @@ jobs:
     - persist_to_workspace:
         root: /home/circleci
         paths:
+          # Build and test happens in the project directory
           - project
+          # known_hosts is needed in the version job to push the commit+tag back to github with ssh
           - .ssh/known_hosts
   build:
     <<: *deploy_environment
