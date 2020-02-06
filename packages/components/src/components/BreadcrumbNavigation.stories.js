@@ -1,8 +1,8 @@
-import BreadcrumbNavigation from './BreadcrumbNavigation'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { number } from '@storybook/addon-knobs'
+import BreadcrumbNavigation from './BreadcrumbNavigation'
 
 const data = [
   {
