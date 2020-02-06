@@ -27,5 +27,7 @@ exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
     '@material-ui/core': path.resolve('../../node_modules/@material-ui/core'),
   })
 
+  config.resolve.extensions.push('.graphql')
+
   actions.replaceWebpackConfig(config)
 }

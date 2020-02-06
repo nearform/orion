@@ -68,7 +68,9 @@ jobs:
     - persist_to_workspace:
         root: /home/circleci
         paths:
+          # Build and test happens in the project directory
           - project
+          # known_hosts is needed in the version job to push the commit+tag back to github with ssh
           - .ssh/known_hosts
   build:
     <<: *deploy_environment
@@ -128,7 +130,7 @@ jobs:
             - "3d:81:34:f0:c0:2b:da:52:68:35:a3:c9:d7:b2:7c:d7"
       - run:
           name: Bump version, generate changelog, commit, tag, and push
-          # we don't want to push anything strange... reset the repo before pushing
+          # We don't want to push anything strange... reset the repo before pushing
           command: |
             git reset --hard
             git config user.email circleci@nearform.com
