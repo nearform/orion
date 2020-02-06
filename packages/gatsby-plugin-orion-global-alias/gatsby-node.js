@@ -1,29 +1,7 @@
 /* eslint-disable no-await-in-loop */
-const { dirname, join, resolve } = require('path')
-const { writeFile } = require('fs').promises
-const fg = require('fast-glob')
-
-const { name: PluginName } = require('./package.json')
-
-// The default alias name for the theme namespace.
-const Namespace = '@Orion'
-// The graphql global alias schema.
-const SchemaType = `type GlobalAliases implements Node @dontInfer {
-    id: ID!
-    namespace: String!
-    aliasName: String!
-    aliasType: String!
-    aliasPath: String!
-}`
-
-const { createContentDigest } = require(`gatsby-core-utils`)
-
-exports.createSchemaCustomization = function({ actions: { createTypes } }) {
-  createTypes(SchemaType)
-}
 
 /**
- * Test global namespace alias.
+ * Global namespace alias for Orion and Gatsby.
  * Allow components defined in separate Gatsby plugins to be loaded using
  * a global alias.
  *
@@ -50,6 +28,7 @@ exports.createSchemaCustomization = function({ actions: { createTypes } }) {
  *          edges {
  *            node {
  *              id
+ *              namespace
  *              aliasName
  *              aliasType
  *              aliasPath
@@ -68,15 +47,57 @@ exports.createSchemaCustomization = function({ actions: { createTypes } }) {
  *   returning page query data.
  *
  */
-exports.onCreateWebpackConfig = async function(
-  { getConfig, store, actions: { replaceWebpackConfig, createNode } },
-  options
-) {
-  // Read alias property from the webpack config.
-  const config = getConfig()
+
+const { dirname, join, resolve } = require('path')
+const { writeFile } = require('fs').promises
+const fg = require('fast-glob')
+
+const { name: PluginName } = require('./package.json')
+
+// The default global alias namespace.
+const Namespace = '@Orion'
+
+const SourceFileExtensions = ['.js', '.jsx', '.json']
+
+// The graphql global alias schema.
+const SchemaType = `type GlobalAliases implements Node @dontInfer {
+    id: ID!
+    aliasName: String!
+    aliasType: String!
+    aliasPath: String!
+}`
+
+const { createContentDigest } = require(`gatsby-core-utils`)
+
+/** Register the GlobalAliases graphql schema. */
+exports.createSchemaCustomization = function({ actions: { createTypes } }) {
+  createTypes(SchemaType)
+}
+
+/**
+ * A list of extended Webpack entry points. Each discovered aliased component
+ * is added as an additional entry point.
+ */
+const entry = []
+/**
+ * A map of aliased component paths, keyed by alias ID.
+ */
+const alias = {}
+/**
+ * A list of static requires for each aliased component. Used in the global
+ * lookup function.
+ */
+const requires = []
+
+/** Search registered plugins for aliased components. */
+exports.onPreBootstrap = async function(args, options) {
+  const {
+    store,
+    actions: { createNode },
+  } = args
 
   // Read the current namespace alias.
-  const { namespace = Namespace, exts = config.resolve.extensions } = options
+  const { namespace = Namespace, exts = SourceFileExtensions } = options
 
   // Read the list of configured plugins.
   const { flattenedPlugins: plugins } = store.getState()
@@ -96,13 +117,6 @@ exports.onCreateWebpackConfig = async function(
   )
   pluginPaths.push(getPluginSourcePath(sitePlugin))
 
-  // Start an extended list of entry points. Each discovered aliased component
-  // is added as an additional entry point.
-  const entry = []
-  // Generate a set of aliases by searching plugin paths for aliased components.
-  const alias = Object.assign({}, config.resolve.alias)
-  // Generate a list of static requires for each alias.
-  const requires = []
   for (const pluginPath of pluginPaths) {
     const searchPath = join(pluginPath, namespace)
     const aliasPaths = await find(searchPath, exts)
@@ -137,7 +151,6 @@ exports.onCreateWebpackConfig = async function(
           type: 'GlobalAliases',
           contentDigest: createContentDigest(aliasPath),
         },
-        namespace,
         aliasName,
         aliasType,
         aliasPath,
@@ -145,17 +158,30 @@ exports.onCreateWebpackConfig = async function(
     }
   }
 
-  // Add default main entry.
-  if (config.entry.main) {
-    entry.push(config.entry.main)
-  }
-
   alias[namespace + '$'] = await writeGlobalAlias(namespace, requires)
+}
+
+/** Update the Webpack configuration with global aliases. */
+exports.onCreateWebpackConfig = async function(args) {
+  const {
+    getConfig,
+    actions: { replaceWebpackConfig },
+  } = args
+
+  // Read alias property from the webpack config.
+  const config = getConfig()
 
   // Update the webpack config.
-  config.resolve.alias = alias
-  if (entry.length > 0) {
-    config.entry.main = entry
+  config.resolve.alias = Object.assign({}, config.resolve.alias, alias)
+
+  const _entry = entry.slice()
+  // Add default main entry.
+  if (config.entry.main) {
+    _entry.push(config.entry.main)
+  }
+
+  if (_entry.length > 0) {
+    config.entry.main = _entry
   }
 
   replaceWebpackConfig(config)
@@ -197,7 +223,7 @@ const { join } = require('path')
 const aliases = {}
 ${requires.map(r => `aliases['${r}'] = require('${r}').default`).join('\n')}
 function lookup() {
-  const args = ['${namespace}'].concat(Array.from(arguments))
+  const args = ['${namespace}'].concat(Array.from(arguments).filter(a=>!!a))
   const alias = join.apply(this,args)
   const result = aliases[alias]
   if( result ) {
