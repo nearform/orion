@@ -1,23 +1,9 @@
 import React, { useState } from 'react'
-
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
-import { text, select, radio } from '@storybook/addon-knobs'
+import { select, number } from '@storybook/addon-knobs'
 
-import { Card, withStyles } from '@material-ui/core'
-import _VerticalNavigationBar from './VerticalNavigationBar'
-
-const VerticalNavigationBar = withStyles(theme => ({
-  root: {
-    margin: theme.spacing(1),
-  },
-}))(_VerticalNavigationBar)
-const Section = withStyles(theme => ({
-  root: {
-    padding: theme.spacing(1, 2),
-    margin: theme.spacing(3),
-  },
-}))(Card)
+import VerticalNavigationBar from './VerticalNavigationBar'
 
 const linksData = [
   {
@@ -112,47 +98,42 @@ const linksData = [
   },
 ]
 
-let showSidebar
-let setShowSidebar
-
 storiesOf('VerticalNavigationBar', module)
   .addDecorator(jsxDecorator)
-  .add(
-    'Interactive',
-    () => (
-      ([showSidebar, setShowSidebar] = useState(true)),
-      (
-        <VerticalNavigationBar
-          open={showSidebar}
-          closeSidebar={() => {
-            setShowSidebar(!showSidebar)
-          }}
-          variant={select(
-            'Navbar Variant',
-            ['permanent', 'persistent'],
-            'permanent'
-          )}
-          anchor="left"
-          data={JSON.stringify(linksData)}
-          userRole={select('User Role', ['User', 'Admin'], 'Admin')}
-          path={select(
-            'Current Path',
-            [
-              '/articles',
-              '/editors-picks',
-              '/best-editors-picks',
-              '/bestest-editors-picks',
-              '/most-bestest-editors-picks',
-            ],
-            '/articles'
-          )}
-          fullyExpanded={select(
-            'Show all levels by default',
-            [false, true],
-            false
-          )}
-          depthIndent={20}
-        />
-      )
+  .add('Interactive', () => {
+    const [showSidebar, setShowSidebar] = useState(true)
+
+    return (
+      <VerticalNavigationBar
+        open={showSidebar}
+        closeSidebar={() => {
+          setShowSidebar(!showSidebar)
+        }}
+        variant={select(
+          'Navbar Variant',
+          ['permanent', 'persistent'],
+          'permanent'
+        )}
+        anchor={select('Side of Screen', ['left', 'right'], 'left')}
+        data={JSON.stringify(linksData)}
+        userRole={select('User Role', ['User', 'Admin'], 'Admin')}
+        path={select(
+          'Current Path',
+          [
+            '/articles',
+            '/editors-picks',
+            '/best-editors-picks',
+            '/bestest-editors-picks',
+            '/most-bestest-editors-picks',
+          ],
+          '/articles'
+        )}
+        isFullyExpanded={select(
+          'Show all levels by default',
+          [false, true],
+          false
+        )}
+        depthIndent={number('Level indent value in px', 20)}
+      />
     )
-  )
+  })

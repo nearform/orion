@@ -21,6 +21,7 @@
     "aws-amplify-react": "2.3.8",
     "classnames": "^2.2.6",
     "efqm-theme": "^1.0.1",
+    "fg-loadcss": "^2.1.0",
     "formik": "^1.5.4",
     "formik-material-ui": "^0.0.22",
     "graphql-hooks": "^3.6.1",
@@ -58,6 +59,8 @@
     "storybook-addon-material-ui": "^0.9.0-alpha.21"
   },
   "peerDependencies": {
+    "@reach/router": "^1.2.1",
+    "clsx": "^1.0.2",
     "gatsby": "^2.19.12"
   },
   "jest": {

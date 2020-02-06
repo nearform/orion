@@ -1,7 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { loadCSS } from 'fg-loadcss'
 import T from 'prop-types'
+// Gatsby Link doesn't work with storybook so use @reach/router https://github.com/gatsbyjs/gatsby/issues/10668
+import { Link } from '@reach/router'
 
 import {
   withStyles,
@@ -17,8 +19,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import Close from '@material-ui/icons/Close'
 
-import { NavLink } from 'components'
-
 const containsPath = (path, root) => {
   if (root.linkDestination === path) return true
   if (!root.children) return false
@@ -30,18 +30,18 @@ function VerticalNavigationBar({
   classes,
   closeSidebar,
   data = '[]',
-  variant,
-  userRole = 'User',
+  variant = 'permanent',
+  userRole,
   path,
-  fullyExpanded,
-  depthIndent,
+  isFullyExpanded = false,
+  depthIndent = 20,
   ...props
 }) {
   const [links, setLinks] = useState([])
 
   useEffect(
     function addOpenProperty(current, init = true, hitPath = false) {
-      if (fullyExpanded) return
+      if (isFullyExpanded) return
       if (init) {
         current = JSON.parse(data)
       }
@@ -52,7 +52,7 @@ function VerticalNavigationBar({
             hitPath = link.linkDestination === path
           }
 
-          link.open = !hitPath ? containsPath(path, link) : false
+          link.open = hitPath ? false : containsPath(path, link)
           addOpenProperty(link.children, false, hitPath)
         }
       })
@@ -60,7 +60,7 @@ function VerticalNavigationBar({
       if (init) setLinks(current)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [path, fullyExpanded, data]
+    [path, isFullyExpanded, data]
   )
 
   const onClickHandler = link => e => {
@@ -94,12 +94,13 @@ function VerticalNavigationBar({
           )
       )
       .map(link => (
-        <>
-          <ListItem button component={NavLink} to={link.linkDestination}>
+        <React.Fragment key={link.linkDestination}>
+          <ListItem button component={Link} to={link.linkDestination}>
             <div style={{ paddingRight: `${depth * depthIndent}px` }} />
             <Icon className={clsx(link.iconClass, classes.icons)} />
             <ListItemText primary={link.linkTitle} />
-            {link.children && !fullyExpanded && (
+            {link.children && !isFullyExpanded && (
+              // eslint-disable-next-line react/jsx-no-useless-fragment
               <>
                 {link.open ? (
                   <ExpandLess onClick={onClickHandler(link)} />
@@ -112,13 +113,13 @@ function VerticalNavigationBar({
           {link.children && (
             <Collapse
               unmountOnExit
-              in={fullyExpanded || link.open}
+              in={isFullyExpanded || link.open}
               timeout="auto"
             >
               {recursiveMap(link.children, depth + 1)}
             </Collapse>
           )}
-        </>
+        </React.Fragment>
       ))
 
   return (
@@ -147,6 +148,12 @@ function VerticalNavigationBar({
 
 VerticalNavigationBar.propTypes = {
   classes: T.object.isRequired,
+  data: T.object.isRequired,
+  variant: T.oneOf(['permanent', 'persistent']).isRequired,
+  userRole: T.oneOf(['Admin', 'User']),
+  path: T.string.isRequired,
+  isFullyExpanded: T.bool.isRequired,
+  depthIndent: T.number.isRequired,
   className: T.string,
   closeSidebar: T.func,
 }
