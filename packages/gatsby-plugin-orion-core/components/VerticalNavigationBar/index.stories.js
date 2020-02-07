@@ -7,49 +7,49 @@ import VerticalNavigationBar from '.'
 
 const linksData = [
   {
-    linkTitle: 'Quick Find',
-    linkDestination: '/quick-find',
+    label: 'Quick Find',
+    to: '/quick-find',
     iconClass: 'fas fa-search',
   },
-  { linkTitle: 'Pages', linkDestination: '/pages', iconClass: 'fas fa-file' },
+  { label: 'Pages', to: '/pages', iconClass: 'fas fa-file' },
   {
-    linkTitle: 'Admin',
-    linkDestination: '/admin',
+    label: 'Admin',
+    to: '/admin',
     iconClass: 'fas fa-user-cog',
     linkAuth: {
       role: 'Admin',
     },
   },
   {
-    linkTitle: 'Articles',
-    linkDestination: '/articles',
+    label: 'Articles',
+    to: '/articles',
     iconClass: 'fas fa-newspaper',
     children: [
       {
-        linkTitle: 'Editors Picks',
-        linkDestination: '/editors-picks',
+        label: 'Editors Picks',
+        to: '/editors-picks',
         iconClass: 'fas fa-long-arrow-alt-right',
         children: [
           {
-            linkTitle: 'Best Editors Picks',
-            linkDestination: '/best-editors-picks',
+            label: 'Best Editors Picks',
+            to: '/best-editors-picks',
             iconClass: 'fas fa-long-arrow-alt-right',
             children: [
               {
-                linkTitle: 'Bestest Editors Picks',
-                linkDestination: '/bestest-editors-picks',
+                label: 'Bestest Editors Picks',
+                to: '/bestest-editors-picks',
                 iconClass: 'fas fa-long-arrow-alt-right',
                 children: [
                   {
-                    linkTitle: 'Most Bestest Editors Picks',
-                    linkDestination: '/most-bestest-editors-picks',
+                    label: 'Most Bestest Editors Picks',
+                    to: '/most-bestest-editors-picks',
                     iconClass: 'fas fa-long-arrow-alt-right',
                   },
                 ],
               },
               {
-                linkTitle: 'Admin only best picks',
-                linkDestination: '/admin-best-picks',
+                label: 'Admin only best picks',
+                to: '/admin-best-picks',
                 iconClass: 'fas fa-user-shield',
                 linkAuth: {
                   role: 'Admin',
@@ -60,40 +60,40 @@ const linksData = [
         ],
       },
       {
-        linkTitle: 'Latest News',
-        linkDestination: '/latest-news',
+        label: 'Latest News',
+        to: '/latest-news',
         iconClass: 'fas fa-long-arrow-alt-right',
       },
       {
-        linkTitle: 'Featured',
-        linkDestination: '/featured',
+        label: 'Featured',
+        to: '/featured',
         iconClass: 'fas fa-long-arrow-alt-right',
       },
     ],
   },
   {
-    linkTitle: 'Menu',
-    linkDestination: '/Menus',
+    label: 'Menu',
+    to: '/Menus',
     iconClass: 'fas fa-map',
   },
   {
-    linkTitle: 'Categories / Tags',
-    linkDestination: '/categories',
+    label: 'Categories / Tags',
+    to: '/categories',
     iconClass: 'fas fa-tags',
   },
   {
-    linkTitle: 'Media Library',
-    linkDestination: '/media-library',
+    label: 'Media Library',
+    to: '/media-library',
     iconClass: 'fas fa-photo-video',
   },
   {
-    linkTitle: 'Users',
-    linkDestination: '/users',
+    label: 'Users',
+    to: '/users',
     iconClass: 'fas fa-user-friends',
   },
   {
-    linkTitle: 'Sign out',
-    linkDestination: '/sign-out',
+    label: 'Sign out',
+    to: '/sign-out',
     iconClass: 'fas fa-long-arrow-alt-left',
   },
 ]

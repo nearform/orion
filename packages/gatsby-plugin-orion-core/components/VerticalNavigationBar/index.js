@@ -19,7 +19,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore'
 import Close from '@material-ui/icons/Close'
 
 const containsPath = (path, root) => {
-  if (root.linkDestination === path) return true
+  if (root.to === path) return true
   if (!root.children) return false
 
   return root.children.some(child => containsPath(path, child))
@@ -48,13 +48,11 @@ function VerticalNavigationBar({
       current.forEach(link => {
         if (link.children) {
           if (!hitPath) {
-            hitPath = link.linkDestination === path
+            hitPath = link.to === path
           }
 
           link.open =
-            hitPath && link.linkDestination !== path
-              ? false
-              : containsPath(path, link)
+            hitPath && link.to !== path ? false : containsPath(path, link)
           addOpenProperty(link.children, false, hitPath)
         }
       })
@@ -96,14 +94,14 @@ function VerticalNavigationBar({
           )
       )
       .map(link => (
-        <React.Fragment key={link.linkDestination}>
-          <ListItem button component={Link} to={link.linkDestination}>
+        <React.Fragment key={link.to}>
+          <ListItem button component={Link} to={link.to}>
             <div style={{ paddingRight: `${depth * depthIndent}px` }} />
             <Icon
-              color={link.linkDestination === path ? 'action' : 'primary'}
+              color={link.to === path ? 'action' : 'primary'}
               className={link.iconClass}
             />
-            <ListItemText primary={link.linkTitle} />
+            <ListItemText primary={link.label} />
             {link.children && !isFullyExpanded && (
               // eslint-disable-next-line react/jsx-no-useless-fragment
               <>
