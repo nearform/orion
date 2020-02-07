@@ -2,7 +2,7 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 import { mount } from 'enzyme'
 import { Auth } from 'aws-amplify'
-import { Redirect } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
+import { Redirect } from '@reach/router'
 import { AuthWrapper } from './authorization/AuthWrapper'
 import ProtectedRoute from './ProtectedRoute'
 
