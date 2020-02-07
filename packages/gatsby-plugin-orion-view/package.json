@@ -49,5 +49,6 @@
   },
   "scripts": {
     "test": "jest --maxWorkers=4"
-  }
+  },
+  "xo": false
 }
