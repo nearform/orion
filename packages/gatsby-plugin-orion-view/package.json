@@ -10,7 +10,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.1",
     "@material-ui/icons": "^4.9.1",
-    "aws-amplify": "1.1.28",
+    "aws-amplify": "2.2.2",
     "classnames": "^2.2.6",
     "components": "^1.0.2",
     "efqm-theme": "^1.0.1",
