@@ -17,5 +17,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nearform/orion.git"
-  }
+  },
+  "xo": false
 }
