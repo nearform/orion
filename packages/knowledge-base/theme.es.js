@@ -1,2 +1,2 @@
-export { default } from 'efqm-theme'
-export * from 'efqm-theme'
+export { default } from '../efqm-theme'
+export * from '../efqm-theme'

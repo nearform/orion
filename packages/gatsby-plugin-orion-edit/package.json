@@ -2,13 +2,13 @@
   "name": "gatsby-plugin-orion-edit",
   "description": "Orion core edit plugin",
   "main": "index.js",
-  "version": "1.0.2",
+  "version": "2.1.0",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
   },
   "dependencies": {
-    "gatsby-plugin-orion-core": "^1.0.2"
+    "gatsby-plugin-orion-core": "^2.1.0"
   },
   "homepage": "https://www.nearform.com/",
   "keywords": [
@@ -17,5 +17,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nearform/orion.git"
-  }
+  },
+  "xo": false
 }
