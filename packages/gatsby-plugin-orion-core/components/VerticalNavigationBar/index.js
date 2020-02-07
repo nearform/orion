@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import clsx from 'clsx'
 import { loadCSS } from 'fg-loadcss'
 import T from 'prop-types'
 // Gatsby Link doesn't work with storybook so use @reach/router https://github.com/gatsbyjs/gatsby/issues/10668
@@ -52,7 +51,10 @@ function VerticalNavigationBar({
             hitPath = link.linkDestination === path
           }
 
-          link.open = hitPath ? false : containsPath(path, link)
+          link.open =
+            hitPath && link.linkDestination !== path
+              ? false
+              : containsPath(path, link)
           addOpenProperty(link.children, false, hitPath)
         }
       })
@@ -97,15 +99,24 @@ function VerticalNavigationBar({
         <React.Fragment key={link.linkDestination}>
           <ListItem button component={Link} to={link.linkDestination}>
             <div style={{ paddingRight: `${depth * depthIndent}px` }} />
-            <Icon className={clsx(link.iconClass, classes.icons)} />
+            <Icon
+              color={link.linkDestination === path ? 'action' : 'primary'}
+              className={link.iconClass}
+            />
             <ListItemText primary={link.linkTitle} />
             {link.children && !isFullyExpanded && (
               // eslint-disable-next-line react/jsx-no-useless-fragment
               <>
                 {link.open ? (
-                  <ExpandLess onClick={onClickHandler(link)} />
+                  <ExpandLess
+                    className="expand-icon"
+                    onClick={onClickHandler(link)}
+                  />
                 ) : (
-                  <ExpandMore onClick={onClickHandler(link)} />
+                  <ExpandMore
+                    className="expand-icon"
+                    onClick={onClickHandler(link)}
+                  />
                 )}
               </>
             )}
@@ -125,8 +136,6 @@ function VerticalNavigationBar({
   return (
     <Drawer
       // Classes needs to be done as such in order to fix the width https://stackoverflow.com/a/45650318
-      classes={{ paper: classes.paper }}
-      className={classes.root}
       variant={variant}
       {...props}
     >
@@ -158,12 +167,17 @@ VerticalNavigationBar.propTypes = {
   closeSidebar: T.func,
 }
 
-const styles = () => ({
-  icons: {
-    marginRight: '8px',
+const styles = theme => ({
+  headerHead: {
+    width: '100%',
+    paddingTop: '0px',
   },
-  paper: {
-    width: '60%',
+  iconButton: {
+    float: 'right',
+    padding: '4px',
+  },
+  closeSidebar: {
+    color: theme.palette.primary.contrastText,
   },
 })
 
