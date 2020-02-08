@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { loadCSS } from 'fg-loadcss'
 import T from 'prop-types'
-// Gatsby Link doesn't work with storybook so use @reach/router https://github.com/gatsbyjs/gatsby/issues/10668
-import { Link } from '@reach/router'
+import { Collapse } from '@material-ui/core'
 
-import { ListItem, ListItemText, Icon, Collapse } from '@material-ui/core'
-import ExpandLess from '@material-ui/icons/ExpandLess'
-import ExpandMore from '@material-ui/icons/ExpandMore'
+import ListItem from '../ListItem'
 
 const containsPath = (path, root) => {
   if (root.to === path) return true
@@ -59,13 +55,6 @@ function ListOfListItems({
     }
   }
 
-  useEffect(() => {
-    loadCSS(
-      'https://use.fontawesome.com/releases/v5.12.1/css/all.css',
-      document.querySelector('#font-awesome-css')
-    )
-  }, [])
-
   const recursiveMap = (
     data,
     depth // Role based permission check until people permissions check or a role hierarchy can be set
@@ -81,30 +70,22 @@ function ListOfListItems({
       )
       .map(link => (
         <React.Fragment key={link.to}>
-          <ListItem button component={Link} to={link.to} onClick={link.onClick}>
-            <div style={{ paddingRight: `${depth * depthIndent}px` }} />
-            <Icon
-              color={link.to === path ? 'action' : 'primary'}
-              className={link.iconClass}
-            />
-            <ListItemText primary={link.label} />
-            {link.children && !isFullyExpanded && (
-              // eslint-disable-next-line react/jsx-no-useless-fragment
-              <>
-                {link.open ? (
-                  <ExpandLess
-                    className="expand-icon"
-                    onClick={onClickHandler(link)}
-                  />
-                ) : (
-                  <ExpandMore
-                    className="expand-icon"
-                    onClick={onClickHandler(link)}
-                  />
-                )}
-              </>
-            )}
-          </ListItem>
+          <ListItem
+            to={link.to}
+            currentPath={path}
+            iconClass={link.iconClass}
+            isOpen={link.open}
+            handleOpen={
+              link.children && !isFullyExpanded
+                ? onClickHandler(link)
+                : undefined
+            }
+            depthLevel={depth}
+            depthIndent={depthIndent}
+            label={link.label}
+            hasActionHighlight={link.hasActionHighlight}
+            onClick={link.onClick}
+          />
           {link.children && (
             <Collapse
               unmountOnExit
