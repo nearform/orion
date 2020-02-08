@@ -14,7 +14,7 @@ const containsPath = (path, root) => {
 function ListOfListItems({
   data = [],
   userRole,
-  path,
+  currentPath,
   isFullyExpanded = false,
   depthIndent = 20,
 }) {
@@ -30,11 +30,13 @@ function ListOfListItems({
       current.forEach(link => {
         if (link.children) {
           if (!hitPath) {
-            hitPath = link.to === path
+            hitPath = link.to === currentPath
           }
 
           link.open =
-            hitPath && link.to !== path ? false : containsPath(path, link)
+            hitPath && link.to !== currentPath
+              ? false
+              : containsPath(currentPath, link)
           addOpenProperty(link.children, false, hitPath)
         }
       })
@@ -42,7 +44,7 @@ function ListOfListItems({
       if (init) setLinks(current)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [path, isFullyExpanded, data]
+    [currentPath, isFullyExpanded, data]
   )
 
   const onClickHandler = link => e => {
@@ -72,7 +74,7 @@ function ListOfListItems({
         <React.Fragment key={link.to}>
           <ListItem
             to={link.to}
-            currentPath={path}
+            currentPath={currentPath}
             iconClass={link.iconClass}
             isOpen={link.open}
             handleOpen={
@@ -104,7 +106,7 @@ function ListOfListItems({
 ListOfListItems.propTypes = {
   data: T.object.isRequired,
   userRole: T.oneOf(['Admin', 'User']),
-  path: T.string.isRequired,
+  currentPath: T.string.isRequired,
   isFullyExpanded: T.bool.isRequired,
   depthIndent: T.number.isRequired,
 }

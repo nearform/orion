@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { select, number } from '@storybook/addon-knobs'
 
-import VerticalNavigationBar from '.'
+import SideBarMenu from '.'
 
 const linksData = [
   {
@@ -98,13 +98,13 @@ const linksData = [
   },
 ]
 
-storiesOf('VerticalNavigationBar', module)
+storiesOf('SideBarMenu', module)
   .addDecorator(jsxDecorator)
   .add('Interactive', () => {
     const [showSidebar, setShowSidebar] = useState(true)
 
     return (
-      <VerticalNavigationBar
+      <SideBarMenu
         open={showSidebar}
         closeSidebar={() => {
           setShowSidebar(!showSidebar)
@@ -115,7 +115,7 @@ storiesOf('VerticalNavigationBar', module)
           'permanent'
         )}
         anchor={select('Side of Screen', ['left', 'right'], 'left')}
-        data={JSON.stringify(linksData)}
+        data={linksData}
         userRole={select('User Role', ['User', 'Admin'], 'Admin')}
         path={select(
           'Current Path',
