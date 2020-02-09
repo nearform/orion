@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import T from 'prop-types'
 import slugify from 'slugify'
-import { Link as RouterLink } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
+import { Link as RouterLink } from '@reach/router'
 import { useMutation } from 'graphql-hooks'
 import { Formik, Form, Field } from 'formik'
 import {

@@ -1,6 +1,6 @@
 import React from 'react'
 import T from 'prop-types'
-import { Link } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
+import { Link } from '@reach/router'
 import { Breadcrumbs, Typography } from '@material-ui/core'
 import ArrowRightAlt from '@material-ui/icons/ArrowRightAlt'
 
