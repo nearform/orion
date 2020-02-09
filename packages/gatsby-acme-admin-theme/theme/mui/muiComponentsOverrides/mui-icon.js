@@ -1,5 +1,5 @@
 module.exports = {
   root: {
-    overflow: 'visiable',
+    overflow: 'visible',
   },
 }
