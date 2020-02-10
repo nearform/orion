@@ -1,3 +1,3 @@
-export * from 'components/queries'
+// Export * from 'components/queries'
 export * from './taxonomy'
 export * from './articles'

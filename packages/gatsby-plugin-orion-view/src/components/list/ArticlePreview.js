@@ -3,7 +3,7 @@ import T from 'prop-types'
 import { Link } from 'gatsby'
 import { Box, withStyles } from '@material-ui/core'
 import get from 'lodash/get'
-import { formatDateAsMonthAndYear } from 'gatsby-plugin-orion-core/utils/date'
+import { formatDateAsMonthAndYear } from 'gatsby-plugin-orion-core/utils'
 import ArticleVisualSummary from '../content/article-visual-summary'
 import BookmarkButton from '../BookmarkButton'
 

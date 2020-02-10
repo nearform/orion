@@ -2,10 +2,12 @@ const currentTheme = require('gatsby-plugin-orion-core/theme')
 const get = require('lodash/get')
 const zipWith = require('lodash/zipWith')
 const chunk = require('lodash/chunk')
-const getArticlesQuery = require('gatsby-plugin-orion-core/queries/get-articles')
-const getUsersQuery = require('gatsby-plugin-orion-core/queries/get-users')
-const getTaxonomiesQuery = require('gatsby-plugin-orion-core/queries/get-taxonomies')
-const getArticlesByTaxonomyQuery = require('gatsby-plugin-orion-core/queries/get-articles-by-taxonomy')
+const {
+  getArticlesQuery,
+  getUsersQuery,
+  getTaxonomiesQuery,
+  getArticlesByTaxonomyQuery,
+} = require('gatsby-plugin-orion-core/queries')
 
 const { config } = currentTheme
 

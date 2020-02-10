@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { AuthContext } from 'components'
-import useUserBookmarks from 'gatsby-plugin-orion-core/hooks/useUserBookmarks'
+import { useUserBookmarks } from 'gatsby-plugin-orion-core/hooks'
 import ContentSignpostGrid from '../layout/content-signpost-grid'
 import ArticlePreview from './ArticlePreview'
 import ListTitle from './ListTitle'

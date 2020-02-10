@@ -25,7 +25,7 @@ import {
   getArticlesData,
   getUserArticlesData,
 } from 'gatsby-plugin-orion-core/queries'
-import useKnowledgeTypes from 'gatsby-plugin-orion-core/hooks/useKnowledgeTypes'
+import { useKnowledgeTypes } from 'gatsby-plugin-orion-core/hooks'
 import SEO from '../SEO'
 
 import QueryTable from '../QueryTable'

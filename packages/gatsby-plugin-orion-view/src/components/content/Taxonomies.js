@@ -2,7 +2,7 @@ import React from 'react'
 import { navigate } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
 import classnames from 'classnames'
 import { withStyles, Typography, Button, Hidden } from '@material-ui/core'
-import useTaxonomies from 'gatsby-plugin-orion-core/hooks/useTaxonomies'
+import { useTaxonomies } from 'gatsby-plugin-orion-core/hooks'
 import TaxonomyItem from './TaxonomyItem'
 
 const Taxonomies = ({ classes, taxonomyIds, showAll, callback }) => {

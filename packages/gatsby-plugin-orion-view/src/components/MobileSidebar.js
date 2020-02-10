@@ -20,7 +20,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import { Auth } from 'aws-amplify'
 
 import { AuthContext, NavLink } from 'components'
-import useTaxonomies from 'gatsby-plugin-orion-core/hooks/useTaxonomies'
+import { useTaxonomies } from 'gatsby-plugin-orion-core/hooks'
 
 const ENTER_KEY = 13
 

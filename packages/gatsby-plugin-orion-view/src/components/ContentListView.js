@@ -11,8 +11,7 @@ import get from 'lodash/get'
 
 import { useAuthorizedQuery, PaddedContainer } from 'components'
 
-import useTaxonomies from 'gatsby-plugin-orion-core/hooks/useTaxonomies'
-import useUserBookmarks from 'gatsby-plugin-orion-core/hooks/useUserBookmarks'
+import { useTaxonomies, useUserBookmarks } from 'gatsby-plugin-orion-core/hooks'
 import {
   getArticlesSearchResults,
   getArticlesCategoryResults,

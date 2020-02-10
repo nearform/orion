@@ -3,7 +3,7 @@ import T from 'prop-types'
 import { Box, makeStyles } from '@material-ui/core'
 import { Link } from 'gatsby'
 
-import { constructImageUrl } from 'gatsby-plugin-orion-core/utils/image'
+import { constructImageUrl } from 'gatsby-plugin-orion-core/utils'
 import ThumbnailImage from '../thumbnail-image'
 
 const useLinkStyles = makeStyles(theme => ({

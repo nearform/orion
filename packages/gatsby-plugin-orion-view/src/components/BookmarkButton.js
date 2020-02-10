@@ -15,7 +15,7 @@ import {
   addUserBookmarkMutation,
   deleteUserBookmarkMutation,
 } from 'gatsby-plugin-orion-core/queries'
-import useBookmarkData from 'gatsby-plugin-orion-core/hooks/useBookmarkData'
+import { useBookmarkData } from 'gatsby-plugin-orion-core/hooks'
 
 const BookmarkButton = ({
   articleId,

@@ -12,8 +12,7 @@ import {
 import Icon from '@material-ui/core/Icon'
 import SearchIcon from '@material-ui/icons/Search'
 import { AuthContext } from 'components'
-import useTaxonomies from 'gatsby-plugin-orion-core/hooks/useTaxonomies'
-import usePrevious from 'gatsby-plugin-orion-core/hooks/usePrevious'
+import { useTaxonomies, usePrevious } from 'gatsby-plugin-orion-core/hooks'
 import QuickLinksMenu, {
   QuickLinksMenuItem,
   QuickLinkButton,
