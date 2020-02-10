@@ -16,7 +16,7 @@ import get from 'lodash/get'
 import omit from 'lodash/omit'
 import { Formik, Form, Field } from 'formik'
 import { fieldToCheckbox } from 'formik-material-ui'
-import { Redirect } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
+import { Redirect } from '@reach/router'
 import { updateUserMutation, getUser } from '../../../queries'
 import UploadImageWidget from '../UploadImageWidget'
 import PaddedContainer from '../PaddedContainer'

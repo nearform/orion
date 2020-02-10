@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import T from 'prop-types'
-import { Redirect } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
+import { Redirect } from '@reach/router'
 
 import { AuthContext } from './authorization/AuthWrapper'
 
