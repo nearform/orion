@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import T from 'prop-types'
 
 import { List, Paper } from '@material-ui/core'
@@ -13,12 +13,37 @@ function VerticalNavigationMenu({
   depthIndent = 20,
   ...props
 }) {
+  const [modifiedData, setModifiedData] = useState(
+    JSON.parse(JSON.stringify(data))
+  )
+
+  useEffect(
+    function addIcon(current, init = true) {
+      if (init) {
+        current = modifiedData
+      }
+
+      current.forEach(link => {
+        link.iconClass = 'fas fa-long-arrow-alt-right'
+
+        if (link.children) {
+          addIcon(link.children, false)
+        }
+      })
+      if (init) {
+        setModifiedData(JSON.parse(JSON.stringify(modifiedData)))
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [data]
+  )
+
   return (
     <Paper {...props}>
       <List>
         <ListOfListItems
           isFullyExpanded
-          data={data}
+          data={modifiedData}
           userRole={userRole}
           currentPath={path}
           depthIndent={depthIndent}

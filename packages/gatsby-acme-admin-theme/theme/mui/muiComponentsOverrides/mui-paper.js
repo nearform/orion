@@ -1,19 +1,18 @@
-const { fade } = require('@material-ui/core/styles/colorManipulator')
 const palette = require('../palette')
 
 module.exports = {
-  paper: {
+  root: {
     '& .MuiListItemText-root': {
-      color: palette.background.default,
+      color: palette.primary.main,
     },
     '& .MuiListItem-root': {
       color: palette.tertiary.main,
-      backgroundColor: palette.secondary.main,
+      backgroundColor: palette.background.dark,
       '& > .MuiIcon-colorPrimary': {
-        color: palette.tertiary.main,
+        color: palette.background.dark,
       },
       '& > .MuiIcon-colorAction': {
-        color: palette.action.main,
+        color: palette.tertiary.main,
       },
       '& > .MuiIcon-root': {
         marginRight: '8px',
@@ -21,11 +20,6 @@ module.exports = {
       '& > .expand-icon': {
         height: '32px',
         width: '32px',
-      },
-    },
-    '& .MuiListItem-button': {
-      '&:hover': {
-        backgroundColor: fade(palette.secondary.main, 0.85),
       },
     },
     width: '40%',

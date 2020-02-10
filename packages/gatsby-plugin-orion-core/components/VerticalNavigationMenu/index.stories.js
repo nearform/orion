@@ -9,9 +9,12 @@ const linksData = [
   {
     label: 'Quick Find',
     to: '/quick-find',
-    iconClass: 'fas fa-search',
   },
-  { label: 'Pages', to: '/pages', iconClass: 'fas fa-file' },
+  { label: 'Pages', to: '/pages' },
+  {
+    label: 'Articles',
+    to: '/articles',
+  },
 ]
 
 storiesOf('VerticalNavigationMenu', module)
@@ -22,13 +25,7 @@ storiesOf('VerticalNavigationMenu', module)
       userRole={select('User Role', ['User', 'Admin'], 'Admin')}
       path={select(
         'Current Path',
-        [
-          '/articles',
-          '/editors-picks',
-          '/best-editors-picks',
-          '/bestest-editors-picks',
-          '/most-bestest-editors-picks',
-        ],
+        ['/articles', '/quick-find', '/pages', '/other'],
         '/articles'
       )}
       depthIndent={number('Level indent value in px', 20)}
