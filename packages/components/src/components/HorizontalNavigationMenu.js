@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { loadCSS } from 'fg-loadcss'
 import clsx from 'clsx'
 import { Link } from '@reach/router'
@@ -155,5 +156,20 @@ const styles = () => ({
 const StyledHorizontalNavigationMenu = withStyles(styles)(
   HorizontalNavigationMenu
 )
+
+const menuItemShape = {
+  label: PropTypes.string,
+  to: PropTypes.string,
+  leftIconClass: PropTypes.string,
+  rightIconClass: PropTypes.string,
+}
+
+const menuItemNode = PropTypes.shape(menuItemShape)
+menuItemShape.children = PropTypes.arrayOf(menuItemNode)
+
+StyledHorizontalNavigationMenu.propTypes = {
+  data: PropTypes.objectOf(menuItemNode),
+  childIndicatorIcon: PropTypes.string,
+}
 
 export default StyledHorizontalNavigationMenu
