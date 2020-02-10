@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import T from 'prop-types'
-import { Router, Redirect } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
+import { Router, Redirect } from '@reach/router'
 
 import { AuthContext } from '../authorization/AuthWrapper'
 import PaddedContainer from '../PaddedContainer'
