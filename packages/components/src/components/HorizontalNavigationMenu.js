@@ -7,7 +7,13 @@ import { Button, Menu, MenuItem, Icon, withStyles } from '@material-ui/core'
 import NestedMenuItem from 'material-ui-nested-menu-item'
 
 // Renders either a MenuItem or NestedMenuItem depending if the current item has children
-const ChildItem = ({ item, parentOpen, ChildIndicatorIcon, classes }) => {
+const ChildItem = ({
+  item,
+  parentOpen,
+  ChildIndicatorIcon,
+  classes,
+  userRole,
+}) => {
   const hasChildren = item.children !== undefined && item.children.length > 0
 
   const itemContent = (
@@ -42,13 +48,14 @@ const ChildItem = ({ item, parentOpen, ChildIndicatorIcon, classes }) => {
       parentMenuOpen={parentOpen}
       rightIcon={null}
     >
-      {item.children.map(child => (
+      {item.children.filter(authorizedForUserRole(userRole)).map(child => (
         <ChildItem
           key={`${child.label}-${child.to}`}
           item={child}
           parentOpen={parentOpen}
           classes={classes}
           ChildIndicatorIcon={ChildIndicatorIcon}
+          userRole={userRole}
         />
       ))}
     </NestedMenuItem>
@@ -60,7 +67,7 @@ const ChildItem = ({ item, parentOpen, ChildIndicatorIcon, classes }) => {
 }
 
 // Renders a root menu item, wrapped in a button
-const RootItem = ({ item, ChildIndicatorIcon, classes }) => {
+const RootItem = ({ item, ChildIndicatorIcon, classes, userRole }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const hasChildren = item.children !== undefined && item.children.length > 0
 
@@ -71,13 +78,14 @@ const RootItem = ({ item, ChildIndicatorIcon, classes }) => {
       open={Boolean(anchorEl)}
       onClose={() => setAnchorEl(null)}
     >
-      {item.children.map(child => (
+      {item.children.filter(authorizedForUserRole(userRole)).map(child => (
         <ChildItem
           key={`${child.label}-${child.to}`}
           parentOpen={Boolean(anchorEl)}
           item={child}
           ChildIndicatorIcon={ChildIndicatorIcon}
           classes={classes}
+          userRole={userRole}
         />
       ))}
     </Menu>
@@ -111,9 +119,25 @@ const RootItem = ({ item, ChildIndicatorIcon, classes }) => {
   )
 }
 
+function authorizedForUserRole(userRole) {
+  return authorized
+  function authorized(item) {
+    if (item.authRole === undefined) {
+      return true
+    }
+
+    if (item.authRole === userRole) {
+      return true
+    }
+
+    return false
+  }
+}
+
 const HorizontalNavigationMenu = ({
   data,
   childIndicatorIcon = 'fas fa-caret-right',
+  userRole,
   classes,
 }) => {
   useEffect(() => {
@@ -128,14 +152,17 @@ const HorizontalNavigationMenu = ({
       className={clsx(childIndicatorIcon, classes.childIndicatorIcons)}
     />
   )
-  return data.map(item => (
-    <RootItem
-      key={item.label}
-      item={item}
-      ChildIndicatorIcon={ChildIndicatorIcon}
-      classes={classes}
-    />
-  ))
+  return data
+    .filter(authorizedForUserRole(userRole))
+    .map(item => (
+      <RootItem
+        key={item.label}
+        item={item}
+        ChildIndicatorIcon={ChildIndicatorIcon}
+        classes={classes}
+        userRole={userRole}
+      />
+    ))
 }
 
 const styles = () => ({
@@ -162,13 +189,14 @@ const menuItemShape = {
   to: PropTypes.string,
   leftIconClass: PropTypes.string,
   rightIconClass: PropTypes.string,
+  authRole: PropTypes.string,
 }
 
 const menuItemNode = PropTypes.shape(menuItemShape)
 menuItemShape.children = PropTypes.arrayOf(menuItemNode)
 
 StyledHorizontalNavigationMenu.propTypes = {
-  data: PropTypes.objectOf(menuItemNode),
+  data: PropTypes.objectOf(menuItemNode).isRequired,
   childIndicatorIcon: PropTypes.string,
 }
 

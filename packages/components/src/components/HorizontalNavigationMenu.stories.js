@@ -11,6 +11,12 @@ const menuData = [
     leftIconClass: 'fas fa-book',
     children: [
       {
+        label: 'Manage',
+        to: '/admin/manage-articles',
+        leftIconClass: 'fas fa-cogs',
+        authRole: 'Admin',
+      },
+      {
         label: 'Article 1',
         to: '/articles/aritcle-1',
         leftIconClass: 'fas fa-file-alt',
@@ -50,6 +56,7 @@ const menuData = [
   {
     label: 'Admin',
     rightIconClass: 'fas fa-lock-open',
+    authRole: 'Admin',
     children: [
       { label: 'Manage Users', to: '/admin/users' },
       { label: 'Manage Content', to: 'admin/content' },
@@ -67,7 +74,6 @@ storiesOf('HorizontalNavigationMenu', module)
     return (
       <HorizontalNavigationMenu
         childIndicatorIcon={text('Child Indicator Icon', 'fas fa-caret-right')}
-        data={object('Menu Data', menuData)}
         userRole={select('User Role', ['User', 'Admin'], 'Admin')}
         path={select(
           'Current Path',
@@ -80,6 +86,7 @@ storiesOf('HorizontalNavigationMenu', module)
           ],
           '/articles'
         )}
+        data={object('Menu Data', menuData)}
       />
     )
   })
