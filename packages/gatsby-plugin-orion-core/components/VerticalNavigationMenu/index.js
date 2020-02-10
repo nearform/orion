@@ -39,7 +39,7 @@ function VerticalNavigationMenu({
   )
 
   return (
-    <Paper {...props}>
+    <Paper elevation={0} {...props}>
       <List>
         <ListOfListItems
           isFullyExpanded
