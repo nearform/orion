@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/nearform/orion/compare/v2.1.0...v2.2.0) (2020-02-10)
+
+
+### Bug Fixes
+
+* 🐛 Styling typo ([8e054a7](https://github.com/nearform/orion/commit/8e054a73222971ffb5e783cc1be3edb4969181cc))
+
+
+### Features
+
+* 🎸 Created Vertical Navbar ([c9d2792](https://github.com/nearform/orion/commit/c9d2792b74ba51e056cd4344992612600815c414)), closes [#208](https://github.com/nearform/orion/issues/208)
+* 🎸 Set up basic acme admin theme ([eabc91b](https://github.com/nearform/orion/commit/eabc91b685e3352ee502c281b6b9011622a43c8f))
+* 🎸 Set up storybook in core package ([732adca](https://github.com/nearform/orion/commit/732adca74698e1f06c40a3eb48cc81245d1183af))
+
+
+
+
+
 # [2.1.0](https://github.com/nearform/orion/compare/v2.0.0...v2.1.0) (2020-02-07)
 
 
