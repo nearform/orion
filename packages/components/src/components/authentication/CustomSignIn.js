@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect } from '@reach/router' // eslint-disable-line import/no-extraneous-dependencies
+import { Redirect } from '@reach/router'
 import { SignIn } from 'aws-amplify-react'
 import { Grid, withStyles } from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
