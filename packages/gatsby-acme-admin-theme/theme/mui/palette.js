@@ -2,9 +2,12 @@ const { colorDefinitions } = require('../variables')
 
 module.exports = {
   primary: {
-    main: colorDefinitions.darkSlateBlue,
+    main: colorDefinitions.purpleishBlue,
   },
   secondary: {
+    main: colorDefinitions.darkSlateBlue,
+  },
+  action: {
     main: colorDefinitions.accessibleGreen,
   },
   tertiary: {
@@ -13,5 +16,6 @@ module.exports = {
   background: {
     default: colorDefinitions.white,
     paper: colorDefinitions.white,
+    dark: colorDefinitions.lighterGrey,
   },
 }
