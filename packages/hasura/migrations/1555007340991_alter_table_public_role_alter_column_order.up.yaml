@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."role" ALTER COLUMN "order" SET NOT NULL;
-  type: run_sql

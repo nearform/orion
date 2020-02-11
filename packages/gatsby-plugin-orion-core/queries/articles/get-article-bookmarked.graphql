@@ -1,9 +1,0 @@
-query getArticleBookmarked($articleId: Int!, $userId: Int!) {
-  bookmarked_aggregate: user_bookmarks_aggregate(
-    where: { article_id: { _eq: $articleId }, user_id: { _eq: $userId } }
-  ) {
-    aggregate {
-      count
-    }
-  }
-}

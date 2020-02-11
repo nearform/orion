@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."user_group" DROP CONSTRAINT "user_group_user_id_fkey"
-  type: run_sql

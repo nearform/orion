@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."article" ADD COLUMN "banner" text NULL
-  type: run_sql

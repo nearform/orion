@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."article_category" DROP CONSTRAINT "article_category_category_id_fkey"
-  type: run_sql

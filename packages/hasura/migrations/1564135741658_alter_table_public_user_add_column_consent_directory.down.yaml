@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."user" DROP COLUMN "consent_directory"
-  type: run_sql

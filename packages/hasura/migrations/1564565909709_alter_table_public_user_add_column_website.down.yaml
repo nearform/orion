@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."user" DROP COLUMN "website"
-  type: run_sql

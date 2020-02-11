@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/nearform/orion/compare/v2.3.0...v2.4.0) (2020-02-11)
+
+
+### Features
+
+* 🎸 create acme-admin, acme-edit, and acme-view sites ([950eaf5](https://github.com/nearform/orion/commit/950eaf55a88a5f24807317a368bff85bae512513))
+
+
+
+
+
+# [2.3.0](https://github.com/nearform/orion/compare/v2.2.0...v2.3.0) (2020-02-10)
+
+
+### Features
+
+* 🎸 abstract table component ([dbfc907](https://github.com/nearform/orion/commit/dbfc9071af1aa97162f98547cefdbd3dd273375c))
+
+
+
+
+
+# [2.2.0](https://github.com/nearform/orion/compare/v2.1.0...v2.2.0) (2020-02-10)
+
+
+### Features
+
+* 🎸 Created Vertical Navbar ([c9d2792](https://github.com/nearform/orion/commit/c9d2792b74ba51e056cd4344992612600815c414)), closes [#208](https://github.com/nearform/orion/issues/208)
+* 🎸 Set up basic acme admin theme ([eabc91b](https://github.com/nearform/orion/commit/eabc91b685e3352ee502c281b6b9011622a43c8f))
+
+
+
+
+
 # [2.1.0](https://github.com/nearform/orion/compare/v2.0.0...v2.1.0) (2020-02-07)
 
 

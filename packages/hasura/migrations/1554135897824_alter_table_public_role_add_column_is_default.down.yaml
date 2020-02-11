@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."role" DROP COLUMN "is_default"
-  type: run_sql

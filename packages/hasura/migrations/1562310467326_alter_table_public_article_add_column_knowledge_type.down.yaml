@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."article" DROP COLUMN "knowledge_type"
-  type: run_sql

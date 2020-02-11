@@ -1,6 +1,0 @@
-- args:
-    relationship: categories
-    table:
-      name: category_group
-      schema: public
-  type: drop_relationship

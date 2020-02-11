@@ -1,8 +1,0 @@
-mutation addArticleTaxonomies($addTaxonomies:[article_taxonomy_insert_input!]!) {
-   insert_article_taxonomy(objects: $addTaxonomies) {
-    returning {
-      taxonomy_id
-      article_id
-    }
-  }
-}
