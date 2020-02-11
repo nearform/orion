@@ -19,7 +19,7 @@
     "docs": "docsify serve -p 4000 docs",
     "postinstall": "npm run bootstrap -- --no-ci",
     "lint-files": "xo",
-    "lint": "yarn generate-schema && yarn lint-files",
+    "lint": "yarn lint-files",
     "dev:lint": "yarn dev:generate-schema && yarn lint-files",
     "lint:fix": "xo --fix",
     "dev:generate-schema": "graphql get-schema --dotenv packages/knowledge-base/.env.development --output=hasura-schema.json",
