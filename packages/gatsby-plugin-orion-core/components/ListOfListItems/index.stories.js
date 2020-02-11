@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { select, number } from '@storybook/addon-knobs'
 
-import VerticalNavigationBar from '.'
+import ListOfListItems from '.'
 
 const linksData = [
   {
     label: 'Quick Find',
     to: '/quick-find',
     iconClass: 'fas fa-search',
+    onClick: () => {
+      // eslint-disable-next-line no-alert
+      alert('Hello! I am an alert box triggered by onClick!!')
+    },
   },
   { label: 'Pages', to: '/pages', iconClass: 'fas fa-file' },
   {
@@ -18,6 +22,10 @@ const linksData = [
     iconClass: 'fas fa-user-cog',
     linkAuth: {
       role: 'Admin',
+    },
+    onClick: () => {
+      // eslint-disable-next-line no-alert
+      alert('Hello! I am an alert box triggered by onClick!!')
     },
   },
   {
@@ -98,42 +106,28 @@ const linksData = [
   },
 ]
 
-storiesOf('VerticalNavigationBar', module)
+storiesOf('ListOfListItems', module)
   .addDecorator(jsxDecorator)
-  .add('Interactive', () => {
-    const [showSidebar, setShowSidebar] = useState(true)
-
-    return (
-      <VerticalNavigationBar
-        open={showSidebar}
-        closeSidebar={() => {
-          setShowSidebar(!showSidebar)
-        }}
-        variant={select(
-          'Navbar Variant',
-          ['permanent', 'persistent'],
-          'permanent'
-        )}
-        anchor={select('Side of Screen', ['left', 'right'], 'left')}
-        data={JSON.stringify(linksData)}
-        userRole={select('User Role', ['User', 'Admin'], 'Admin')}
-        path={select(
-          'Current Path',
-          [
-            '/articles',
-            '/editors-picks',
-            '/best-editors-picks',
-            '/bestest-editors-picks',
-            '/most-bestest-editors-picks',
-          ],
-          '/articles'
-        )}
-        isFullyExpanded={select(
-          'Show all levels by default',
-          [false, true],
-          false
-        )}
-        depthIndent={number('Level indent value in px', 20)}
-      />
-    )
-  })
+  .add('Interactive', () => (
+    <ListOfListItems
+      data={linksData}
+      userRole={select('User Role', ['User', 'Admin'], 'Admin')}
+      path={select(
+        'Current Path',
+        [
+          '/articles',
+          '/editors-picks',
+          '/best-editors-picks',
+          '/bestest-editors-picks',
+          '/most-bestest-editors-picks',
+        ],
+        '/articles'
+      )}
+      isFullyExpanded={select(
+        'Show all levels by default',
+        [false, true],
+        false
+      )}
+      depthIndent={number('Level indent value in px', 20)}
+    />
+  ))

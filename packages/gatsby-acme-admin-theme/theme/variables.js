@@ -5,5 +5,6 @@ exports.colorDefinitions = {
   purpleishBlue: '#5a49ff',
   accessibleGreen: '#2aa77b',
   lightGrey: '#9cafc3',
+  lighterGrey: '#f7fafc',
   white: '#ffffff',
 }
