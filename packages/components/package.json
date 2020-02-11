@@ -35,12 +35,15 @@
     "yup": "^0.27.0"
   },
   "devDependencies": {
+    "@storybook/addon-knobs": "^5.3.12",
+    "@storybook/react": "^5.3.12",
     "@types/react": "^16.8.14",
     "babel-jest": "^24.6.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "jest": "^24.6.0",
-    "react-test-renderer": "^16.12.0"
+    "react-test-renderer": "^16.12.0",
+    "storybook-addon-jsx": "^7.1.14"
   },
   "peerDependencies": {
     "@reach/router": "^1.2.1",
