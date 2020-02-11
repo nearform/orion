@@ -81,13 +81,9 @@
   },
   "scripts": {
     "commit": "cd .. && yarn commit",
-    "build": "gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "artifact:create": "tar -zcf $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz public",
-    "artifact:name": "echo $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz",
-    "e2e": "cypress open",
     "analyze-bundle": "ANALYZE=true yarn build"
   },
   "xo": false

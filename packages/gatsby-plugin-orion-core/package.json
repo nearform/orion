@@ -7,9 +7,6 @@
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
   },
-  "scripts": {
-    "storybook": "start-storybook -p 6006"
-  },
   "dependencies": {
     "@material-ui/core": "^4.9.1",
     "@material-ui/icons": "^4.9.1",
@@ -41,19 +38,9 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
-    "@babel/preset-react": "^7.0.0",
     "@storybook/addon-knobs": "^5.3.12",
-    "@storybook/addon-links": "^5.3.12",
-    "@storybook/addon-storyshots": "^5.3.12",
-    "@storybook/addon-viewport": "^5.3.12",
-    "@storybook/addons": "^5.3.12",
     "@storybook/react": "^5.3.12",
-    "babel-loader": "^8.0.5",
-    "storybook-addon-jsx": "^7.1.14",
-    "storybook-addon-material-ui": "^0.9.0-alpha.21",
-    "webpack-graphql-loader": "^1.0.2"
+    "storybook-addon-jsx": "^7.1.14"
   },
   "peerDependencies": {
     "@reach/router": "^1.2.1",

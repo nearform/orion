@@ -1,4 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."article" ADD COLUMN "editors_pick" boolean NOT NULL
-      DEFAULT FALSE
-  type: run_sql

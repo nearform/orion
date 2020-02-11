@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."user" ADD COLUMN "consent_contact" boolean NOT NULL DEFAULT true
-  type: run_sql

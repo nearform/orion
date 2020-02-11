@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."user" ADD COLUMN "avatar" text NULL
-  type: run_sql

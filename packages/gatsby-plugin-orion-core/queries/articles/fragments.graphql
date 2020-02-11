@@ -1,8 +1,0 @@
-fragment rating on article_rating_aggregate {
-  aggregate {
-    count
-    avg {
-      rating
-    }
-  }
-}
