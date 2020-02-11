@@ -5,7 +5,7 @@
       schema: public
     using:
       foreign_key_constraint_on:
-        column: permissions_id
+        column: permission_set
         table:
           name: orion_role_permissions
           schema: public

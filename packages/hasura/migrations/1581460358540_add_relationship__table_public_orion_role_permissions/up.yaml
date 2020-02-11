@@ -4,5 +4,5 @@
       name: orion_role_permissions
       schema: public
     using:
-      foreign_key_constraint_on: permissions_id
+      foreign_key_constraint_on: permission_set
   type: create_object_relationship

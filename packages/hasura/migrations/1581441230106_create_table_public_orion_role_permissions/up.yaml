@@ -1,6 +1,7 @@
 - args:
     sql: CREATE TABLE "public"."orion_role_permissions"("role_id" integer NOT NULL,
-      "permissions_id" integer NOT NULL, PRIMARY KEY ("role_id","permissions_id")
+      "permission_set" text NOT NULL, "create" boolean NOT NULL, "read" boolean NOT NULL,
+      "update" boolean NOT NULL, "delete" boolean NOT NULL, PRIMARY KEY ("role_id","permission_set")
       );
   type: run_sql
 - args:

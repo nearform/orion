@@ -1,4 +1,4 @@
 - args:
     sql: "\n          alter table \"public\".\"orion_role_permissions\" drop constraint
-      \"orion_role_permissions_permissions_id_fkey\"\n      "
+      \"orion_role_permissions_permission_set_fkey\"\n      "
   type: run_sql

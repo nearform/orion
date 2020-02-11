@@ -1,7 +1,6 @@
 - args:
-    sql: CREATE TABLE "public"."orion_permissions"("id" serial NOT NULL, "permission_set"
-      text NOT NULL, "create" boolean NOT NULL, "read" boolean NOT NULL, "update"
-      boolean NOT NULL, "delete" boolean NOT NULL, PRIMARY KEY ("id") , UNIQUE ("id"));
+    sql: CREATE TABLE "public"."orion_permissions"("permission_set"
+      text NOT NULL, PRIMARY KEY ("permission_set") , UNIQUE ("permission_set"));
   type: run_sql
 - args:
     name: orion_permissions
