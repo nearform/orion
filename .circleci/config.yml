@@ -255,7 +255,7 @@ workflows:
 #      - apply-hasura-migrations:
 #          requires:
 #            - setup
-      - build:
+      - build
 #          requires:
 #            - apply-hasura-migrations
       - test:
