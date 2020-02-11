@@ -1,5 +1,0 @@
-- args:
-    name: roles
-    new_name: user_roles
-    table: user
-  type: rename_relationship

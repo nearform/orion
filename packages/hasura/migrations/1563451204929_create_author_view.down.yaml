@@ -1,9 +1,0 @@
-- args:
-    relationship: author
-    table:
-      name: article_author
-      schema: public
-  type: drop_relationship
-- args:
-    sql: DROP VIEW "public"."author"
-  type: run_sql

@@ -1,6 +1,0 @@
-- args:
-    role: platform-admin
-    table:
-      name: user
-      schema: public
-  type: drop_update_permission

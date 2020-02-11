@@ -1,9 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."taxonomy"
-      ADD COLUMN "key" text NULL UNIQUE
-  type: run_sql
-
-- args:
-    sql: ALTER TABLE "public"."taxonomy_type"
-      ADD COLUMN "key" text NULL UNIQUE
-  type: run_sql

@@ -126,7 +126,7 @@ resource "aws_cloudwatch_dashboard" "monitoring_alarms_dashboard" {
                 "view": "timeSeries",
                 "stacked": false,
                 "metrics": [
-                    [ "AWS/CloudFront", "Requests", "Region", "Global", "DistributionId", "${aws_cloudfront_distribution.app.id}" ]
+                    [ "AWS/CloudFront", "Requests", "Region", "Global", "DistributionId", "${aws_cloudfront_distribution.view_app.id}" ]
                 ],
                 "region": "us-east-1",
                 "title": "Requests (sum)",
@@ -151,11 +151,11 @@ resource "aws_cloudwatch_dashboard" "monitoring_alarms_dashboard" {
                 "view": "timeSeries",
                 "stacked": false,
                 "metrics": [
-                    [ "AWS/CloudFront", "TotalErrorRate", "Region", "Global", "DistributionId", "${aws_cloudfront_distribution.app.id}" ],
+                    [ "AWS/CloudFront", "TotalErrorRate", "Region", "Global", "DistributionId", "${aws_cloudfront_distribution.view_app.id}" ],
                     [ ".", "4xxErrorRate", ".", ".", ".", ".", { "label": "Total4xxErrors" } ],
                     [ ".", "5xxErrorRate", ".", ".", ".", ".", { "label": "Total5xxErrors" } ],
                     [ { "expression": "(m4+m5+m6)/m7*100", "label": "5xxErrorByLambdaEdge", "id": "e1" } ],
-                    [ "AWS/CloudFront", "LambdaExecutionError", "Region", "Global", "DistributionId", "${aws_cloudfront_distribution.app.id}", { "id": "m4", "stat": "Sum", "visible": false } ],
+                    [ "AWS/CloudFront", "LambdaExecutionError", "Region", "Global", "DistributionId", "${aws_cloudfront_distribution.view_app.id}", { "id": "m4", "stat": "Sum", "visible": false } ],
                     [ ".", "LambdaValidationError", ".", ".", ".", ".", { "id": "m5", "stat": "Sum", "visible": false } ],
                     [ ".", "LambdaLimitExceededErrors", ".", ".", ".", ".", { "id": "m6", "stat": "Sum", "visible": false } ],
                     [ ".", "Requests", ".", ".", ".", ".", { "id": "m7", "stat": "Sum", "visible": false } ]

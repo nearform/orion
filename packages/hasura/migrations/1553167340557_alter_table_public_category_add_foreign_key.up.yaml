@@ -1,4 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."category" ADD FOREIGN KEY ("group_id") REFERENCES "public"."category_group"
-      ("id")
-  type: run_sql
