@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."article" DROP COLUMN "editors_pick"
-  type: run_sql

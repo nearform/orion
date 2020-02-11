@@ -1,8 +1,0 @@
-- args:
-    sql: CREATE TABLE "public"."group_role"("id" serial NOT NULL, "group_id" integer
-      NOT NULL, "role_id" integer NOT NULL, PRIMARY KEY ("id") );
-  type: run_sql
-- args:
-    name: group_role
-    schema: public
-  type: add_existing_table_or_view

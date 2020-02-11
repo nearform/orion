@@ -1,15 +1,13 @@
 {
   "name": "components",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "",
   "keywords": [],
   "author": "NearForm",
   "license": "ISC",
   "scripts": {
     "commit": "cd .. && yarn commit",
-    "test": "jest --passWithNoTests",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "test": "jest --passWithNoTests"
   },
   "dependencies": {
     "@aws-amplify/ui": "1.1.3",
@@ -37,25 +35,15 @@
     "yup": "^0.27.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
-    "@babel/preset-react": "^7.0.0",
     "@storybook/addon-knobs": "^5.3.12",
-    "@storybook/addon-links": "^5.3.12",
-    "@storybook/addon-storyshots": "^5.3.12",
-    "@storybook/addon-viewport": "^5.3.12",
-    "@storybook/addons": "^5.3.12",
     "@storybook/react": "^5.3.12",
     "@types/react": "^16.8.14",
     "babel-jest": "^24.6.0",
-    "babel-loader": "^8.0.5",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "jest": "^24.6.0",
     "react-test-renderer": "^16.12.0",
-    "storybook-addon-jsx": "^7.1.14",
-    "storybook-addon-material-ui": "^0.9.0-alpha.21"
+    "storybook-addon-jsx": "^7.1.14"
   },
   "peerDependencies": {
     "@reach/router": "^1.2.1",
