@@ -1,3 +1,0 @@
-- args:
-    sql: alter table "public"."orion_content" drop constraint "orion_content_pkey";
-  type: run_sql

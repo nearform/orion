@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."orion_content" ADD COLUMN "id" serial NOT NULL UNIQUE;
-  type: run_sql

@@ -1,9 +1,0 @@
-- args:
-    sql: CREATE TABLE "public"."orion_role_permissions"("id" serial NOT NULL, "permission_set"
-      text NOT NULL, "create" boolean NOT NULL, "read" boolean NOT NULL, "update"
-      boolean NOT NULL, "delete" boolean NOT NULL, PRIMARY KEY ("id") , UNIQUE ("id"));
-  type: run_sql
-- args:
-    name: orion_role_permissions
-    schema: public
-  type: add_existing_table_or_view

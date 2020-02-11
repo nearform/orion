@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."orion_content" DROP COLUMN "date_modified";
-  type: run_sql

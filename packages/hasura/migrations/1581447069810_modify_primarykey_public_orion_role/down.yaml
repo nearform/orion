@@ -1,3 +1,0 @@
-- sql: "alter table \"public\".\"orion_role\"\n    add constraint \"orion_role_pkey\"
-    \n    primary key ( \"id\" );"
-  type: run_sql

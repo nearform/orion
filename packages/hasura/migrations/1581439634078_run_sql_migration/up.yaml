@@ -2,7 +2,7 @@
     cascade: false
     sql: |-
       CREATE TABLE orion_group (
-          id        integer primary key,
+          id        integer PRIMARY KEY DEFAULT nextval('serial'),
           parents   integer[],
           name      text
       );

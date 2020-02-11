@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."orion_role" DROP COLUMN "id";
-  type: run_sql

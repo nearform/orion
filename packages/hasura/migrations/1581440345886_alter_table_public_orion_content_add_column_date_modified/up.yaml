@@ -1,4 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."orion_content" ADD COLUMN "date_modified" date NOT
-      NULL;
-  type: run_sql

@@ -1,4 +1,0 @@
-- args:
-    sql: "alter table \"public\".\"orion_group\"\n    add constraint \"orion_group_pkey\"
-      \n    primary key ( \"id\" );"
-  type: run_sql

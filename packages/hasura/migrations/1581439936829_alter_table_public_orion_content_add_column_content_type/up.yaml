@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."orion_content" ADD COLUMN "content_type" text NOT NULL;
-  type: run_sql

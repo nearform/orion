@@ -1,3 +1,0 @@
-- args:
-    sql: alter table "public"."orion_role" drop constraint "orion_role_pkey";
-  type: run_sql

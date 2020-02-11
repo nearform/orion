@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."orion_content" DROP COLUMN "hero_img";
-  type: run_sql

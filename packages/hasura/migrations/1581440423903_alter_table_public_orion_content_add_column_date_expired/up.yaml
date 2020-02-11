@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."orion_content" ADD COLUMN "date_expired" date NULL;
-  type: run_sql
