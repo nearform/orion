@@ -23,6 +23,9 @@ module.exports = {
         width: '32px',
       },
     },
+    '& .close-button': {
+      color: palette.tertiary.main,
+    },
     '& .MuiListItem-button': {
       '&:hover': {
         backgroundColor: fade(palette.secondary.main, 0.85),

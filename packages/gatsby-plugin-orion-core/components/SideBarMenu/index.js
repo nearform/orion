@@ -30,7 +30,7 @@ function SideBarMenu({
           <ListItem>
             <span className={classes.headerHead}>
               <IconButton className={classes.iconButton} onClick={closeSidebar}>
-                <Close className={classes.closeSidebar} />
+                <Close className="close-button" />
               </IconButton>
             </span>
           </ListItem>
@@ -58,7 +58,7 @@ SideBarMenu.propTypes = {
   closeSidebar: T.func,
 }
 
-const styles = theme => ({
+const styles = () => ({
   headerHead: {
     width: '100%',
     paddingTop: '0px',
@@ -66,9 +66,6 @@ const styles = theme => ({
   iconButton: {
     float: 'right',
     padding: '4px',
-  },
-  closeSidebar: {
-    color: theme.palette.primary.contrastText,
   },
 })
 
