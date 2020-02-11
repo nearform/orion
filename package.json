@@ -18,11 +18,11 @@
     "clean": "lerna clean",
     "docs": "docsify serve -p 4000 docs",
     "postinstall": "npm run bootstrap -- --no-ci",
-    "lint-files": "xo",
+    "lint-files": "xo --ignore **/*.graphql",
     "lint": "yarn lint-files",
     "dev:lint": "yarn dev:generate-schema && yarn lint-files",
     "lint:fix": "xo --fix",
-    "dev:generate-schema": "graphql get-schema --dotenv packages/knowledge-base/.env.development --output=hasura-schema.json",
+    "dev:generate-schema": "graphql get-schema --dotenv packages/acme-view/.env.development --output=hasura-schema.json",
     "generate-schema": "graphql get-schema --output=hasura-schema.json",
     "start:admin": "lerna exec --scope=acme-admin yarn start",
     "start:edit": "lerna exec --scope=acme-edit yarn start",
@@ -211,6 +211,22 @@
           "node",
           "cypress/globals"
         ]
+      },
+      {
+        "files": "**/*.graphql",
+        "plugins": [
+          "graphql"
+        ],
+        "rules": {
+          "graphql/template-strings": [
+            "warn",
+            {
+              "env": "literal",
+              "projectName": "orion",
+              "validators": "all"
+            }
+          ]
+        }
       },
       {
         "files": "packages/functions/**/*",
