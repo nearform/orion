@@ -1,0 +1,9 @@
+- args:
+    sql: CREATE TABLE "public"."orion_role_permissions"("role_id" integer NOT NULL,
+      "permissions_id" integer NOT NULL, PRIMARY KEY ("role_id","permissions_id")
+      );
+  type: run_sql
+- args:
+    name: orion_role_permissions
+    schema: public
+  type: add_existing_table_or_view

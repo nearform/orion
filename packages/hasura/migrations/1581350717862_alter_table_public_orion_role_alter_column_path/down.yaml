@@ -1,0 +1,9 @@
+- args:
+    sql: ALTER TABLE "public"."orion_role" ALTER COLUMN "path" TYPE ARRAY;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."orion_role"."path" IS E'null'
+  type: run_sql
+- args:
+    sql: alter table "public"."orion_role" rename column "parents" to "path";
+  type: run_sql

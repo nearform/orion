@@ -1,0 +1,6 @@
+- args:
+    sql: "\n           alter table \"public\".\"orion_user\"\n           add constraint
+      \"orion_user_group_id_fkey\"\n           foreign key (\"group_id\")\n           references
+      \"public\".\"orion_group\"\n           (\"id\") on update set null on delete
+      set null;\n      "
+  type: run_sql

@@ -1,0 +1,9 @@
+- args:
+    sql: ALTER TABLE "public"."orion_role" ALTER COLUMN "path" TYPE _int4;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."orion_role"."path" IS E''
+  type: run_sql
+- args:
+    sql: alter table "public"."orion_role" rename column "path" to "parents";
+  type: run_sql

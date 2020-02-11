@@ -1,0 +1,12 @@
+- args:
+    name: orion_role_permissions
+    table:
+      name: orion_permissions
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: permissions_id
+        table:
+          name: orion_role_permissions
+          schema: public
+  type: create_array_relationship

@@ -1,0 +1,13 @@
+- args:
+    cascade: false
+    sql: |-
+      CREATE TABLE orion_group (
+          id        integer primary key,
+          path      integer[],
+          name      text
+      );
+  type: run_sql
+- args:
+    name: orion_group
+    schema: public
+  type: add_existing_table_or_view

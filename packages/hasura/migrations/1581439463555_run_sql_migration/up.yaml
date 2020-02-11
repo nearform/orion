@@ -1,0 +1,13 @@
+- args:
+    cascade: false
+    sql: |-
+      CREATE TABLE orion_content (
+          id        integer primary key,
+          parents   integer[],
+          path      text
+      );
+  type: run_sql
+- args:
+    name: orion_content
+    schema: public
+  type: add_existing_table_or_view
