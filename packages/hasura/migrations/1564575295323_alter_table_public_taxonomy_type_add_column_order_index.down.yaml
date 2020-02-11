@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."taxonomy_type" DROP COLUMN "order_index"
-  type: run_sql

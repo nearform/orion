@@ -1,4 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."article_category" ADD FOREIGN KEY ("category_id") REFERENCES
-      "public"."category" ("id")
-  type: run_sql

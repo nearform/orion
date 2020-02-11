@@ -1,4 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."article" ADD FOREIGN KEY ("visible_to") REFERENCES
-      "public"."role" ("id")
-  type: run_sql

@@ -1,8 +1,0 @@
-mutation addArticleAuthors($addAuthors: [article_author_insert_input!]!) {
-  insert_article_author(objects: $addAuthors) {
-    returning {
-      author_id
-      article_id
-    }
-  }
-}

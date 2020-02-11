@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."user" ADD COLUMN "signupRequest" jsonb NULL
-  type: run_sql
