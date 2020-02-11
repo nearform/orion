@@ -18,7 +18,7 @@
     "clean": "lerna clean",
     "docs": "docsify serve -p 4000 docs",
     "postinstall": "npm run bootstrap -- --no-ci",
-    "lint-files": "xo --ignore **/*.graphql",
+    "lint-files": "xo --ignore **/*.graphql --ignore packages/knowledge-base/**/*",
     "lint": "yarn lint-files",
     "dev:lint": "yarn dev:generate-schema && yarn lint-files",
     "lint:fix": "xo --fix",

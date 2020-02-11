@@ -222,7 +222,6 @@ workflows:
               ignore:
                 - staging
                 - production
-                - jackmurdoch/ch302/create-fresh-orion-sites
       - build:
           requires:
             - setup
@@ -251,14 +250,13 @@ workflows:
               only:
                 - staging
                 - production
-                - jackmurdoch/ch302/create-fresh-orion-sites
-#      - apply-hasura-migrations:
-#          requires:
-#            - setup
+      - apply-hasura-migrations:
+          requires:
+            - setup
       - build:
           requires:
             - setup
-#            - apply-hasura-migrations
+            - apply-hasura-migrations
       - test:
           requires:
             - build
