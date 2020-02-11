@@ -213,22 +213,6 @@
         ]
       },
       {
-        "files": "**/*.graphql",
-        "plugins": [
-          "graphql"
-        ],
-        "rules": {
-          "graphql/template-strings": [
-            "warn",
-            {
-              "env": "literal",
-              "projectName": "orion",
-              "validators": "all"
-            }
-          ]
-        }
-      },
-      {
         "files": "packages/functions/**/*",
         "envs": [
           "es2017",
