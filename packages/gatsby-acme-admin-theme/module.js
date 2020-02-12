@@ -15,9 +15,10 @@ const styles = {
     },
     a: {
       textDecoration: 'none',
+      color: theme.muiTheme.palette.action.main,
       '&:hover': {
         textDecoration: 'underline',
-        textDecorationColor: theme.muiTheme.palette.secondary.main,
+        textDecorationColor: theme.muiTheme.palette.action.main,
       },
     },
   },
