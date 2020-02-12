@@ -42,7 +42,6 @@ const ChildItem = ({
 
   return hasChildren ? (
     <NestedMenuItem
-      to={item.to}
       // NestedMenuItem accepts a component property, but for now it is not used
       // Instead we render everything in the label
       label={
@@ -72,7 +71,7 @@ const ChildItem = ({
       ))}
     </NestedMenuItem>
   ) : (
-    <MenuItem component={Link} to={item.to}>
+    <MenuItem component={Link} to={item.to || '#'}>
       {itemContent}
     </MenuItem>
   )

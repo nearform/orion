@@ -8,6 +8,24 @@ import HorizontalNavigationMenu from './HorizontalNavigationMenu'
 
 const menuData = [
   {
+    label: 'About',
+    children: [
+      { label: 'About Acme', to: '/about/acme' },
+      { label: 'Our History', to: '/about/history' },
+      {
+        label: 'Our Team',
+        to: '/about/our-team',
+        children: [
+          { label: 'Our Board', to: '/about/team/our-board' },
+          { label: 'Management', to: '/about/team/management' },
+          { label: 'Careers', to: '/about/team/careers' },
+          { label: 'Graduates', to: '/about/team/graduates' },
+        ],
+      },
+      { label: 'Our Policies', to: '/about/policies' },
+    ],
+  },
+  {
     label: 'Articles',
     leftIconClass: 'fas fa-book',
     children: [
@@ -56,11 +74,19 @@ const menuData = [
   },
   {
     label: 'Admin',
-    rightIconClass: 'fas fa-lock-open',
+    leftIconClass: 'fas fa-user-shield',
     authRole: 'Admin',
     children: [
-      { label: 'Manage Users', to: '/admin/users' },
-      { label: 'Manage Content', to: 'admin/content' },
+      {
+        label: 'Manage Users',
+        to: '/admin/users',
+        rightIconClass: 'fas fa-users',
+      },
+      {
+        label: 'Manage Content',
+        to: 'admin/content',
+        rightIconClass: 'fas fa-sliders-h',
+      },
     ],
   },
   {
