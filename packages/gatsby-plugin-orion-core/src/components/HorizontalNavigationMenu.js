@@ -95,6 +95,7 @@ const RootItem = ({
     <Menu
       anchorEl={anchorEl}
       open={Boolean(anchorEl)}
+      anchorOrigin={{ vertical: 'bottom' }}
       onClose={() => setAnchorEl(null)}
     >
       {item.children.filter(authorizedForUserRole(userRole)).map(child => (
