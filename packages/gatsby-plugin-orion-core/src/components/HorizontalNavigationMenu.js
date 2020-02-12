@@ -96,7 +96,7 @@ const RootItem = ({ item, ChildIndicatorIcon, classes, userRole }) => {
       <Button
         aria-controls="simple-menu"
         aria-haspopup="true"
-        component={hasChildren ? undefined : Link}
+        component={hasChildren ? 'button' : Link}
         to={hasChildren ? undefined : item.to}
         onClick={hasChildren ? e => setAnchorEl(e.currentTarget) : undefined}
       >
@@ -156,7 +156,7 @@ const HorizontalNavigationMenu = ({
     .filter(authorizedForUserRole(userRole))
     .map(item => (
       <RootItem
-        key={item.label}
+        key={`${item.label}-${item.to}`}
         item={item}
         ChildIndicatorIcon={ChildIndicatorIcon}
         classes={classes}
@@ -196,7 +196,7 @@ const menuItemNode = PropTypes.shape(menuItemShape)
 menuItemShape.children = PropTypes.arrayOf(menuItemNode)
 
 StyledHorizontalNavigationMenu.propTypes = {
-  data: PropTypes.objectOf(menuItemNode).isRequired,
+  data: PropTypes.arrayOf(menuItemNode).isRequired,
   childIndicatorIcon: PropTypes.string,
 }
 

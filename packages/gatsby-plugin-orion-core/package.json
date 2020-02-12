@@ -8,7 +8,8 @@
     "url": "https://github.com/nearform/orion/issues"
   },
   "scripts": {
-    "storybook": "start-storybook -p 6006"
+    "storybook": "start-storybook -p 6006",
+    "test": "jest"
   },
   "dependencies": {
     "@material-ui/core": "^4.9.1",
@@ -41,8 +42,8 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.0.0",
     "@storybook/addon-knobs": "^5.3.12",
     "@storybook/addon-links": "^5.3.12",
@@ -50,7 +51,12 @@
     "@storybook/addon-viewport": "^5.3.12",
     "@storybook/addons": "^5.3.12",
     "@storybook/react": "^5.3.12",
+    "@testing-library/jest-dom": "^5.1.1",
+    "@testing-library/react": "^9.4.0",
+    "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.5",
+    "babel-preset-gatsby": "^0.2.29",
+    "jest": "^25.1.0",
     "storybook-addon-jsx": "^7.1.14",
     "storybook-addon-material-ui": "^0.9.0-alpha.21",
     "webpack-graphql-loader": "^1.0.2"
