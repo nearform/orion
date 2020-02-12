@@ -8,6 +8,7 @@ storiesOf('typography', module)
   .add('Interactive', () => {
     return (
       <div>
+        <link rel="stylesheet" href="https://use.typekit.net/bsj0ebg.css" />
         <Typography variant="h1">Heading 1</Typography>
         <Typography variant="h2">Heading 2</Typography>
         <Typography variant="h3">Heading 3</Typography>
