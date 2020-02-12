@@ -40,12 +40,14 @@ const ChildItem = ({
     </>
   )
 
+  const to = item.to === undefined ? '#' : item.to
+
   return hasChildren ? (
     <NestedMenuItem
       // NestedMenuItem accepts a component property, but for now it is not used
       // Instead we render everything in the label
       label={
-        <Link to={item.to || '#'}>
+        <Link to={to}>
           {itemContent}
           <Icon
             fontSize="inherit"
@@ -71,7 +73,7 @@ const ChildItem = ({
       ))}
     </NestedMenuItem>
   ) : (
-    <MenuItem component={Link} to={item.to || '#'}>
+    <MenuItem component={Link} to={to}>
       {itemContent}
     </MenuItem>
   )
