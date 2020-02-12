@@ -1,3 +1,0 @@
-- args:
-    sql: DROP TABLE "public"."article_rating"
-  type: run_sql

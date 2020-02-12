@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."user" DROP COLUMN "twitter"
-  type: run_sql

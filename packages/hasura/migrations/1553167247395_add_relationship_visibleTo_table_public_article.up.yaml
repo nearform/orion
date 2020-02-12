@@ -1,8 +1,0 @@
-- args:
-    name: visibleTo
-    table:
-      name: article
-      schema: public
-    using:
-      foreign_key_constraint_on: visible_to
-  type: create_object_relationship

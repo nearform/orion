@@ -44,7 +44,9 @@ get_envars: &get_envars
         echo "export HASURA_GRAPHQL_ENDPOINT=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ENDPOINT --with-decryption --query Parameters[0].Value --output=text)" >> .env
         echo "export HASURA_GRAPHQL_ADMIN_SECRET=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ADMIN_SECRET --with-decryption --query Parameters[0].Value --output=text)" >> .env
         echo "export ARTIFACTS_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/s3_deploy_artifacts --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
+        echo "export ADMIN_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/admin_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
+        echo "export EDIT_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/edit_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
+        echo "export VIEW_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/view_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
         echo "export STORYBOOK_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/storybook_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
 
 
@@ -90,7 +92,6 @@ jobs:
           name: Build storybook bundle
           command: |
             set -e
-            cd packages/components
             yarn run build-storybook -- --quiet
       - persist_to_workspace:
           root: /home/circleci
@@ -144,11 +145,17 @@ jobs:
       - *load_envars
       - *install_awscli
       - run:
-          name: Deploy knowledge-base bundle to S3
-          command: aws s3 sync packages/knowledge-base/public ${APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+          name: Deploy acme-admin bundle to S3
+          command: aws s3 sync packages/acme-admin/public ${ADMIN_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+      - run:
+          name: Deploy acme-edit bundle to S3
+          command: aws s3 sync packages/acme-edit/public ${EDIT_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+      - run:
+          name: Deploy acme-view bundle to S3
+          command: aws s3 sync packages/acme-view/public ${VIEW_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
       - run:
           name: Deploy storybook bundle to S3
-          command: aws s3 sync packages/components/storybook-static ${STORYBOOK_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+          command: aws s3 sync storybook-static ${STORYBOOK_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
       - run:
           name: Deploy jwt-enrichment-hook Lambda function
           command: |
@@ -175,12 +182,16 @@ jobs:
             echo 'export ENRICHMENT_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-enrichment-hook --silent`"' >> $BASH_ENV
             echo 'export SIGNUP_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-signup-hook --silent`"' >> $BASH_ENV
             echo 'export HASURA_ARTIFACT="packages/`cd packages/hasura && npm run artifact:name --silent`"' >> $BASH_ENV
-            echo 'export APP_ARTIFACT="packages/knowledge-base/`cd packages/knowledge-base && npm run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export ADMIN_APP_ARTIFACT="packages/acme-admin/`cd packages/acme-admin && npm run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export EDIT_APP_ARTIFACT="packages/acme-edit/`cd packages/acme-edit && npm run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export VIEW_APP_ARTIFACT="packages/acme-view/`cd packages/acme-view && npm run artifact:name --silent`"' >> $BASH_ENV
       - *install_awscli
       - run:
           name: Copy artifacts to S3 bucket
           command: |
-            aws s3 cp ${APP_ARTIFACT} ${ARTIFACTS_BUCKET}
+            aws s3 cp ${ADMIN_APP_ARTIFACT} ${ARTIFACTS_BUCKET}
+            aws s3 cp ${EDIT_APP_ARTIFACT} ${ARTIFACTS_BUCKET}
+            aws s3 cp ${VIEW_APP_ARTIFACT} ${ARTIFACTS_BUCKET}
             aws s3 cp ${ENRICHMENT_ARTIFACT} ${ARTIFACTS_BUCKET}
             aws s3 cp ${SIGNUP_ARTIFACT} ${ARTIFACTS_BUCKET}
             aws s3 cp ${HASURA_ARTIFACT} ${ARTIFACTS_BUCKET}
@@ -244,6 +255,7 @@ workflows:
             - setup
       - build:
           requires:
+            - setup
             - apply-hasura-migrations
       - test:
           requires:

@@ -1,6 +1,0 @@
-- args:
-    role: public
-    table:
-      name: user_bookmarks
-      schema: public
-  type: drop_delete_permission
