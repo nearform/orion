@@ -78,7 +78,11 @@ storiesOf('HorizontalNavigationMenu', module)
           <HorizontalNavigationMenu
             childIndicatorIcon={text(
               'Child Indicator Icon',
-              'fas fa-caret-right'
+              'fas fa-chevron-right'
+            )}
+            dropDownIndicatorIcon={text(
+              'Drop Down Indicator Icon',
+              'fas fa-chevron-down'
             )}
             userRole={select('User Role', ['User', 'Admin'], 'Admin')}
             path={select(

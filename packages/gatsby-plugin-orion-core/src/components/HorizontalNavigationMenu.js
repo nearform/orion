@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import { loadCSS } from 'fg-loadcss'
 import clsx from 'clsx'
 import { Link } from '@reach/router'
-import { Button, Menu, MenuItem, Icon, withStyles } from '@material-ui/core'
+import { Button, Menu, MenuItem, Icon } from '@material-ui/core'
 import NestedMenuItem from 'material-ui-nested-menu-item'
 
 // Renders either a MenuItem or NestedMenuItem depending if the current item has children
 const ChildItem = ({
   item,
   parentOpen,
-  ChildIndicatorIcon,
+  childIndicatorIcon,
   classes,
   userRole,
 }) => {
@@ -21,14 +21,20 @@ const ChildItem = ({
       {item.leftIconClass && (
         <Icon
           fontSize="inherit"
-          className={clsx(item.leftIconClass, classes.icons)}
+          className={clsx(
+            item.leftIconClass,
+            'horizontal-navigation-menu-label-icon'
+          )}
         />
       )}
       {item.label}
       {item.rightIconClass && (
         <Icon
           fontSize="inherit"
-          className={clsx(item.rightIconClass, classes.icons)}
+          className={clsx(
+            item.rightIconClass,
+            'horizontal-navigation-menu-label-icon'
+          )}
         />
       )}
     </>
@@ -40,9 +46,15 @@ const ChildItem = ({
       // NestedMenuItem accepts a component property, but for now it is not used
       // Instead we render everything in the label
       label={
-        <Link to={item.to || '#'} className={clsx(classes.links)}>
+        <Link to={item.to || '#'}>
           {itemContent}
-          {ChildIndicatorIcon}
+          <Icon
+            fontSize="inherit"
+            className={clsx(
+              childIndicatorIcon,
+              'horizontal-navigation-menu-indicator-icon'
+            )}
+          />
         </Link>
       }
       parentMenuOpen={parentOpen}
@@ -54,7 +66,7 @@ const ChildItem = ({
           item={child}
           parentOpen={parentOpen}
           classes={classes}
-          ChildIndicatorIcon={ChildIndicatorIcon}
+          childIndicatorIcon={childIndicatorIcon}
           userRole={userRole}
         />
       ))}
@@ -67,7 +79,13 @@ const ChildItem = ({
 }
 
 // Renders a root menu item, wrapped in a button
-const RootItem = ({ item, ChildIndicatorIcon, classes, userRole }) => {
+const RootItem = ({
+  item,
+  childIndicatorIcon,
+  dropDownIndicatorIcon,
+  classes,
+  userRole,
+}) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const hasChildren = item.children !== undefined && item.children.length > 0
 
@@ -83,7 +101,7 @@ const RootItem = ({ item, ChildIndicatorIcon, classes, userRole }) => {
           key={`${child.label}-${child.to}`}
           parentOpen={Boolean(anchorEl)}
           item={child}
-          ChildIndicatorIcon={ChildIndicatorIcon}
+          childIndicatorIcon={childIndicatorIcon}
           classes={classes}
           userRole={userRole}
         />
@@ -103,14 +121,29 @@ const RootItem = ({ item, ChildIndicatorIcon, classes, userRole }) => {
         {item.leftIconClass && (
           <Icon
             fontSize="inherit"
-            className={clsx(item.leftIconClass, classes.icons)}
+            className={clsx(
+              item.leftIconClass,
+              'horizontal-navigation-menu-label-icon'
+            )}
           />
         )}
         {item.label}
         {item.rightIconClass && (
           <Icon
             fontSize="inherit"
-            className={clsx(item.rightIconClass, classes.icons)}
+            className={clsx(
+              item.rightIconClass,
+              'horizontal-navigation-menu-label-icon'
+            )}
+          />
+        )}
+        {hasChildren && (
+          <Icon
+            fontSize="inherit"
+            className={clsx(
+              dropDownIndicatorIcon,
+              'horizontal-navigation-menu-indicator-icon'
+            )}
           />
         )}
       </Button>
@@ -136,7 +169,8 @@ function authorizedForUserRole(userRole) {
 
 const HorizontalNavigationMenu = ({
   data,
-  childIndicatorIcon = 'fas fa-caret-right',
+  dropDownIndicatorIcon = 'fas fa-chevron-down',
+  childIndicatorIcon = 'fas fa-chevron-right',
   userRole,
   classes,
 }) => {
@@ -146,44 +180,23 @@ const HorizontalNavigationMenu = ({
       document.querySelector('#font-awesome-css')
     )
   }, [])
-  const ChildIndicatorIcon = (
-    <Icon
-      fontSize="inherit"
-      className={clsx(childIndicatorIcon, classes.childIndicatorIcons)}
-    />
-  )
+
   return data
     .filter(authorizedForUserRole(userRole))
     .map(item => (
       <RootItem
         key={`${item.label}-${item.to}`}
         item={item}
-        ChildIndicatorIcon={ChildIndicatorIcon}
+        childIndicatorIcon={childIndicatorIcon}
+        dropDownIndicatorIcon={dropDownIndicatorIcon}
         classes={classes}
         userRole={userRole}
       />
     ))
 }
 
-const styles = () => ({
-  childIndicatorIcons: {
-    marginLeft: '8px',
-    marginRight: '0',
-  },
-  icons: {
-    marginLeft: '8px',
-    marginRight: '8px',
-  },
-  links: {
-    textDecoration: 'none',
-    color: 'inherit',
-  },
-})
-
-const StyledHorizontalNavigationMenu = withStyles(styles)(
-  HorizontalNavigationMenu
-)
-
+// There is a circular dependency: children can have children
+// Define PropTypes OTHER than children
 const menuItemShape = {
   label: PropTypes.string,
   to: PropTypes.string,
@@ -191,13 +204,14 @@ const menuItemShape = {
   rightIconClass: PropTypes.string,
   authRole: PropTypes.string,
 }
-
 const menuItemNode = PropTypes.shape(menuItemShape)
+
+// Create the circular child PropType
 menuItemShape.children = PropTypes.arrayOf(menuItemNode)
 
-StyledHorizontalNavigationMenu.propTypes = {
+HorizontalNavigationMenu.propTypes = {
   data: PropTypes.arrayOf(menuItemNode).isRequired,
   childIndicatorIcon: PropTypes.string,
 }
 
-export default StyledHorizontalNavigationMenu
+export default HorizontalNavigationMenu
