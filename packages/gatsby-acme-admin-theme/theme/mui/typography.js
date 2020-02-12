@@ -31,7 +31,10 @@ module.exports = {
     fontSize: '16px',
     fontWeight: 'bold',
   },
-  p: {
+  body1: {
     fontSize: '16px',
+    '& p:first-of-type': {
+      fontSize: '21px',
+    },
   },
 }

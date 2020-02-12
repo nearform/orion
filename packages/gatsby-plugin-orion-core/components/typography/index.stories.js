@@ -14,7 +14,10 @@ storiesOf('typography', module)
         <Typography variant="h3">Heading 3</Typography>
         <Typography variant="h4">Heading 4</Typography>
         <Typography variant="h5">Heading 5</Typography>
-        <Typography variant="p">body </Typography>
+        <Typography variant="body1">
+          <p>First Body</p>
+          <p>Body</p>
+        </Typography>
       </div>
     )
   })
