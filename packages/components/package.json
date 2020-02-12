@@ -6,8 +6,7 @@
   "author": "NearForm",
   "license": "ISC",
   "scripts": {
-    "commit": "cd .. && yarn commit",
-    "test": "jest --passWithNoTests"
+    "commit": "cd .. && yarn commit"
   },
   "dependencies": {
     "@aws-amplify/ui": "1.1.3",
