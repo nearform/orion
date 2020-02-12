@@ -13,14 +13,6 @@ const styles = {
       overflowY: 'scroll',
       fontFamily: theme.fontFamily,
     },
-    a: {
-      textDecoration: 'none',
-      color: theme.muiTheme.palette.action.main,
-      '&:hover': {
-        textDecoration: 'underline',
-        textDecorationColor: theme.muiTheme.palette.action.main,
-      },
-    },
   },
 }
 

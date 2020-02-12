@@ -36,5 +36,13 @@ module.exports = {
     '& p:first-of-type': {
       fontSize: '21px',
     },
+    '& a': {
+      textDecoration: 'none',
+      color: palette.action.main,
+      '&:hover': {
+        textDecoration: 'underline',
+        textDecorationColor: palette.action.main,
+      },
+    },
   },
 }

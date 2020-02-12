@@ -17,6 +17,7 @@ storiesOf('typography', module)
         <Typography variant="body1">
           <p>First Body</p>
           <p>Body</p>
+          <a to="/">This is a link</a>
         </Typography>
       </div>
     )
