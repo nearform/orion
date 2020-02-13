@@ -29,7 +29,7 @@ function Footer({ classes, Img, socialIcons = [], logo }) {
             </Grid>
             <Grid item xs={12} className="social-logos">
               {socialIcons.map(({ logo, url }) => (
-                <a key={url} href={url}>
+                <a key={url} href={url} data-testid={url}>
                   <Img src={logo} />
                 </a>
               ))}
