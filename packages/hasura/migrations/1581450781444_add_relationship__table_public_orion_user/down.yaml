@@ -1,0 +1,6 @@
+- args:
+    relationship: orion_role
+    table:
+      name: orion_user
+      schema: public
+  type: drop_relationship

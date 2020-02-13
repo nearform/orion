@@ -1,0 +1,8 @@
+- args:
+    sql: CREATE TABLE "public"."orion_permissions"("permission_set"
+      text NOT NULL, PRIMARY KEY ("permission_set") , UNIQUE ("permission_set"));
+  type: run_sql
+- args:
+    name: orion_permissions
+    schema: public
+  type: add_existing_table_or_view
