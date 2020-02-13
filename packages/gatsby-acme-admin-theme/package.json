@@ -1,6 +1,6 @@
 {
   "name": "acme-admin-theme",
-  "version": "2.5.0",
+  "version": "2.8.0",
   "main": "index.js",
   "module": "module.js",
   "dependencies": {
