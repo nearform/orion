@@ -13,5 +13,8 @@ module.exports = {
         marginRight: '0',
       },
     },
+    '& .MuiButton-root': {
+      textTransform: 'none',
+    },
   },
 }

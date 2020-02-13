@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/nearform/orion/compare/v2.6.0...v2.7.0) (2020-02-13)
+
+
+### Bug Fixes
+
+* 🐛 menus drop down from the bottom and no all caps ([3338520](https://github.com/nearform/orion/commit/33385201849aabd767d0f318744ad13e87a31efa))
+
+
+### Features
+
+* 🎸 add proptypes ([1377b60](https://github.com/nearform/orion/commit/1377b6079374469af748f9ef81c8b3f1980c989b))
+* 🎸 filter menu items that require a role ([b68db5d](https://github.com/nearform/orion/commit/b68db5d2bbeaca25b8eb32fe9b80a7decdc21deb))
+* 🎸 horizontal navigation menu ([da98a12](https://github.com/nearform/orion/commit/da98a1279e9a2730961fff6567e559e8f4d10577))
+* 🎸 style horizontal navigation menu ([ba03b7a](https://github.com/nearform/orion/commit/ba03b7af91691c5b123455e48f92d2c599b6f424))
+
+
+
+
+
+# [2.6.0](https://github.com/nearform/orion/compare/v2.5.0...v2.6.0) (2020-02-13)
+
+
+### Features
+
+* 🎸 New data model ([601e833](https://github.com/nearform/orion/commit/601e833611786c4cb86b41176f12c4beb649d39d))
+
+
+
+
+
 # [2.5.0](https://github.com/nearform/orion/compare/v2.4.0...v2.5.0) (2020-02-11)
 
 
