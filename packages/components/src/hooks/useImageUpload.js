@@ -22,10 +22,12 @@ function useImageUpload({
     if (!file || !file.name) {
       return
     }
+
     const ext = file.name.split('.').pop()
     if (valueCache) {
       await Storage.remove(valueCache)
     }
+
     const { key: s3Key } = await Storage.put(
       generateFileName
         ? `${path}/${sha256(`${file.name}${Date.now()}`)}.${ext}`
@@ -39,21 +41,21 @@ function useImageUpload({
         level: 'public',
       }
     )
-    setValueCache(s3Key) //set the cached s3 key
-    setUploadProgress(0) //remove the progress bar
-    onChange(s3Key) //trigger onchange event
+    setValueCache(s3Key) // Set the cached s3 key
+    setUploadProgress(0) // Remove the progress bar
+    onChange(s3Key) // Trigger onchange event
   }
 
-  const hasImage = !!valueCache
-  const isLoading = !!uploadProgress
+  const hasImage = Boolean(valueCache)
+  const isLoading = Boolean(uploadProgress)
 
   const startImageUpload = () =>
     inputFieldRef.current && inputFieldRef.current.click()
 
   const ImageInput = () => (
     <input
-      accept="image/*"
       ref={inputFieldRef}
+      accept="image/*"
       type="file"
       style={{ display: 'none' }}
       onChange={event => handleFileUpload(event.target.files[0])}

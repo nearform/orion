@@ -70,4 +70,4 @@ End-to-end tests using TestCafe. Requires environment variables to run, see
 [the Quick Start Guide](/docs/quick-start#2-configure). For more details see [the Tests docs](/docs/tests#end-to-end-tests).
 
 [logo-img]: docs/images/Accel_Logo_Orion.svg
-[docs]: https://nearform.github.io/orion
+[docs]: https://nf-orion.netlify.com/#/

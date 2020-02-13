@@ -11,7 +11,7 @@ import UserGroups from './UserGroups'
 import GroupUsers from './GroupUsers'
 
 function AdminRoute({ SEO }) {
-  const { getUserTokenData, getUserAuth } = useContext(AuthContext)
+  const { getUserAuth } = useContext(AuthContext)
   const [pageTitle, setPageTitle] = useState('')
 
   const canAccessPendingUsers = getUserAuth('platform-admin')

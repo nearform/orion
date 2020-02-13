@@ -1,6 +1,6 @@
 {
   "name": "e2e-tests",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "",
   "main": "local.js",
   "scripts": {
@@ -18,5 +18,6 @@
     "eslint-plugin-testcafe": "^0.2.1",
     "minimist": "^1.2.0",
     "testcafe": "^1.1.4"
-  }
+  },
+  "xo": false
 }

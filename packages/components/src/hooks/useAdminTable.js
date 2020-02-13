@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
 
-import AdminTable from '../components/admin/AdminTable'
 import { useQuery } from 'graphql-hooks'
+import AdminTable from '../components/admin/AdminTable'
 
 const defaultOptions = {
   pageSizes: [10, 20, 50],
@@ -29,7 +29,7 @@ export default function useAdminTable({
   })
 
   const { loading, error, data, refetch } = useQuery(query, {
-    updateData: (data, nextData) => nextData, //fixes pagination flashing
+    updateData: (data, nextData) => nextData, // Fixes pagination flashing
     variables: {
       ...variables,
       offset,
@@ -38,8 +38,8 @@ export default function useAdminTable({
     },
   })
 
-  //TODO: better loading indicator for refetching, paginating
-  //example: https://codesandbox.io/s/material-demo-be724
+  // TODO: better loading indicator for refetching, paginating
+  // example: https://codesandbox.io/s/material-demo-be724
   const loadingMsg = loading && !data && 'Loading table...'
   const errorMsg = error && 'Error loading table.'
   const table = !(loading && !data) && !error && (

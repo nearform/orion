@@ -34,7 +34,7 @@ export default function AdminTable({
   const handleChangeOrderBy = property =>
     setOrderBy({ [property]: toggleOrder(orderBy[property]) })
 
-  if (!headers.length) return 'No table headers to show'
+  if (headers.length === 0) return 'No table headers to show'
   return (
     <Paper>
       <Table>
@@ -48,7 +48,11 @@ export default function AdminTable({
                   </TableCell>
                 )
               }
-              const columnIsOrdered = orderBy.hasOwnProperty(header.id)
+
+              const columnIsOrdered = Object.prototype.hasOwnProperty.call(
+                orderBy,
+                header.id
+              )
               return (
                 <TableCell
                   key={header.id}
@@ -59,7 +63,7 @@ export default function AdminTable({
                     <TableSortLabel
                       active={columnIsOrdered}
                       direction={orderBy[header.id]}
-                      onClick={e => handleChangeOrderBy(header.id)}
+                      onClick={() => handleChangeOrderBy(header.id)}
                     >
                       {header.label}
                     </TableSortLabel>
@@ -86,10 +90,6 @@ export default function AdminTable({
       </Table>
     </Paper>
   )
-}
-
-AdminTable.defaultProps = {
-  orderBy: { id: 'asc' },
 }
 
 AdminTable.propTypes = {

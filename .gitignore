@@ -79,5 +79,6 @@ packages/app
 .*.swp
 
 packages/efqm-theme/assets/social/LinkedIn.png
-packages/knowledge-base/src/assets/social/Twitter.png
-packages/knowledge-base/src/assets/social/YouTube.png
+packages/knowledge-base/assets/social/Twitter.png
+packages/knowledge-base/assets/social/YouTube.png
+storybook-static

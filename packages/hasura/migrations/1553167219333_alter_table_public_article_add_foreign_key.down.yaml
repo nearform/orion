@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."article" DROP CONSTRAINT "article_visible_to_fkey"
-  type: run_sql

@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/filename-case */
 import React from 'react'
 import T from 'prop-types'
 import Helmet from 'react-helmet'

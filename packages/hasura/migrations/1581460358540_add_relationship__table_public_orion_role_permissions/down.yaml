@@ -1,0 +1,6 @@
+- args:
+    relationship: orion_permission
+    table:
+      name: orion_role_permissions
+      schema: public
+  type: drop_relationship

@@ -44,12 +44,12 @@ async function getDeleteMutations() {
 
   return schema.__schema.mutationType.fields
     .map(f => f.name)
-    .filter(name => /^delete/.test(name))
+    .filter(name => name.startsWith('delete'))
     .sort((a, b) => b.length - a.length)
 }
 
 async function deleteAllData(deleteMutations) {
-  return await adminClient.request(`
+  return adminClient.request(`
     mutation deleteAllData {
       ${deleteMutations
         .map(
@@ -180,7 +180,7 @@ async function createUser(client, variables) {
 }
 
 async function getUser(client, userId) {
-  const { user_by_pk } = await client.request(
+  const { user_by_pk: userByPk } = await client.request(
     `
   query getUser($id: Int!) {
     user_by_pk(id: $id) {
@@ -202,7 +202,7 @@ async function getUser(client, userId) {
     { id: userId }
   )
 
-  return user_by_pk
+  return userByPk
 }
 
 async function addUserToGroup(client, variables) {

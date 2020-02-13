@@ -63,7 +63,7 @@ describe('ProtectedRoute', () => {
 
     const wrapper = mount(
       <AuthWrapper isAuthInitialized>
-        <ProtectedRoute component={SecretComponent} allowedRole={'admin'} />
+        <ProtectedRoute component={SecretComponent} allowedRole="admin" />
       </AuthWrapper>
     )
 
@@ -90,7 +90,7 @@ describe('ProtectedRoute', () => {
 
     const wrapper = mount(
       <AuthWrapper isAuthInitialized>
-        <ProtectedRoute component={SecretComponent} allowedRole={'admin'} />
+        <ProtectedRoute component={SecretComponent} allowedRole="admin" />
       </AuthWrapper>
     )
 

@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import T from 'prop-types'
-import { withStyles, Grid, Button, Typography } from '@material-ui/core'
-import { useTheme } from '@material-ui/styles'
+import { withStyles, Grid, Button } from '@material-ui/core'
 import EmailIcon from '@material-ui/icons/Email'
 import { AuthFormStateContext } from './AuthEventMixin'
 
@@ -62,8 +61,8 @@ function RegisterConfirm({
                     <Button
                       data-testid="login-submit"
                       color="secondary"
-                      onClick={resend}
                       size="small"
+                      onClick={resend}
                     >
                       Resend Code
                     </Button>
@@ -74,11 +73,11 @@ function RegisterConfirm({
           </Grid>
           <Grid item xs={8}>
             <InputField
+              required
               name="username"
               type="email"
-              required
               disabled={!username}
-              value={username !== null ? username : undefined}
+              value={username === null ? undefined : username}
               onChange={handleInput}
             >
               Email
@@ -86,8 +85,8 @@ function RegisterConfirm({
           </Grid>
           <Grid item xs={5}>
             <InputField
-              name="code"
               required
+              name="code"
               onChange={handleInput}
               onEnterKey={confirm}
             >
@@ -97,7 +96,7 @@ function RegisterConfirm({
 
           <Grid item container alignItems="baseline" spacing={3} wrap="nowrap">
             <Grid item>
-              <Button color="secondary" onClick={goToSignIn} size="small">
+              <Button color="secondary" size="small" onClick={goToSignIn}>
                 Back to sign in
               </Button>
             </Grid>

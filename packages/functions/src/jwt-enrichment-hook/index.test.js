@@ -1,6 +1,6 @@
-import { handler } from './'
 import graphql from '../graphql'
 import getUserByCognitoId from './graphql/get-user-by-cognito-id.graphql'
+import { handler } from '.'
 
 jest.mock('../graphql')
 
@@ -17,10 +17,10 @@ const originalEvent = {
   request: {
     userAttributes: {
       sub: '9d712c67-d424-433d-82fb-a0d950f4ebbd',
-      email_verified: 'true',
+      email_verified: 'true', // eslint-disable-line camelcase
       'cognito:user_status': 'CONFIRMED',
-      phone_number_verified: 'false',
-      phone_number: '+13424234',
+      phone_number_verified: 'false', // eslint-disable-line camelcase
+      phone_number: '+13424234', // eslint-disable-line camelcase
       email: 'simone.busoli+3@gmail.com',
     },
     groupConfiguration: {
@@ -49,6 +49,7 @@ const oneUserWithGroupFromDb = groupType =>
     user: [
       {
         id: 'some id',
+        // eslint-disable-next-line camelcase
         user_groups: [
           {
             group: {
@@ -67,6 +68,7 @@ const oneUserWithGroupAndRoleFromDb = (groupType, roleName) =>
     user: [
       {
         id: 'some id',
+        // eslint-disable-next-line camelcase
         user_groups: [
           {
             group: {
@@ -76,6 +78,7 @@ const oneUserWithGroupAndRoleFromDb = (groupType, roleName) =>
             },
           },
         ],
+        // eslint-disable-next-line camelcase
         user_roles: [
           {
             role: {

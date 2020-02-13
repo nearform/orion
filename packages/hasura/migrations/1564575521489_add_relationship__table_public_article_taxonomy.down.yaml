@@ -1,6 +1,0 @@
-- args:
-    relationship: taxonomy
-    table:
-      name: article_taxonomy
-      schema: public
-  type: drop_relationship

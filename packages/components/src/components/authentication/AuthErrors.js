@@ -2,16 +2,19 @@ function passwordValidationErrors(err) {
   if (/need to be filled.*password/i.test(err)) {
     return 'Password is required'
   }
+
   let r = /value at 'password' failed to satisfy constraint: member(.*)/i.exec(
     err
   )
   if (r) {
     return 'Password' + r[1]
   }
+
   r = /password (?:did|does) not conform with policy: (.*)/i.exec(err)
   if (r) {
     return r[1]
   }
+
   return false
 }
 
@@ -21,14 +24,17 @@ const authErrors = {
     password: error => /password/i.test(error),
   },
   signUp: {
+    // eslint-disable-next-line camelcase
     given_name: err =>
       /need to be filled.*first name/i.test(err) && 'First name is required',
+    // eslint-disable-next-line camelcase
     family_name: err =>
       /need to be filled.*last name/i.test(err) && 'Last name is required',
     username: err => {
       if (/need to be filled.*email/i.test(err)) {
         return 'Email is required'
       }
+
       return /username|an account with the given email already exists/i.test(
         err
       )
@@ -52,6 +58,7 @@ const authErrors = {
       if (/username.*client id combination not found/i.test(error)) {
         return 'Email not found'
       }
+
       return /user/i.test(error) && 'Email is required'
     },
     code: error => /code/i.test(error),

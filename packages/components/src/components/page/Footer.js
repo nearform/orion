@@ -15,7 +15,7 @@ function NewsletterSignup({ classes, hidden = false }) {
   const { t } = useTranslation()
   return hidden ? null : (
     <Grid item xs={12} sm={4}>
-      <Typography variant="h4" gutterBottom>
+      <Typography gutterBottom variant="h4">
         {t('subscribe to our newsletter')}
       </Typography>
       <Typography gutterBottom variant="body2">
@@ -42,10 +42,10 @@ NewsletterSignup.propTypes = {
   hidden: T.bool,
 }
 
-function Footer({ classes, theme, content, Img }) {
+function Footer({ classes, content, Img }) {
   const {
     site: {
-      siteMetadata: { author, social, version },
+      siteMetadata: { author, social },
     },
     socialIcons,
     largeLogo: {
@@ -58,7 +58,7 @@ function Footer({ classes, theme, content, Img }) {
       <PaddedContainer>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={8}>
-            <Typography variant="h4" gutterBottom>
+            <Typography gutterBottom variant="h4">
               {t('Get in touch')}
             </Typography>
             <Typography component="div" variant="body2">
@@ -79,7 +79,7 @@ function Footer({ classes, theme, content, Img }) {
               </div>
             </Typography>
           </Grid>
-          <NewsletterSignup classes={classes} hidden />
+          <NewsletterSignup hidden classes={classes} />
         </Grid>
         <div className={classes.socialAndLogo}>
           {social.map(([name, url]) => {
@@ -108,7 +108,7 @@ function Footer({ classes, theme, content, Img }) {
           <br />
         </Hidden>
         <Hidden xsDown implementation="css">
-          <Grid container spacing={1} justify={'center'}>
+          <Grid container spacing={1} justify="center">
             <Grid item>
               <Typography display="inline" variant="body2">
                 © EFQM
@@ -127,7 +127,7 @@ function Footer({ classes, theme, content, Img }) {
           </Grid>
         </Hidden>
         <Hidden smUp implementation="css">
-          <Grid container spacing={3} justify={'flex-start'}>
+          <Grid container spacing={3} justify="flex-start">
             <Grid item xs={12}>
               <Typography display="inline" variant="body2">
                 © EFQM
@@ -181,7 +181,6 @@ const styles = theme => ({
 
 Footer.propTypes = {
   classes: T.object,
-  theme: T.object,
   content: T.object.isRequired,
   Img: T.elementType,
 }

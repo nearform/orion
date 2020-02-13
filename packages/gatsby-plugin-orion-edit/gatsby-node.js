@@ -1,0 +1,3 @@
+exports.onPreInit = () => {
+  // Noop placeholder
+}

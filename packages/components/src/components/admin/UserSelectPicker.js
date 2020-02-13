@@ -9,7 +9,6 @@ function UserSelectPicker({
   classes,
   values,
   handleChange,
-  selected: user,
   data,
   label,
   entityKey,
@@ -25,15 +24,12 @@ function UserSelectPicker({
         </Typography>
       </InputLabel>
       <Field
-        id={inputId}
         fullWidth
         select
+        id={inputId}
         component={TextField}
         name={fieldName}
         value={values[fieldName]}
-        onChange={() => {
-          handleChange(fieldName)
-        }}
         margin="dense"
         SelectProps={{
           classes: {
@@ -42,6 +38,9 @@ function UserSelectPicker({
             icon: classes.selectIcon,
           },
           IconComponent: KeyboardArrowUp,
+        }}
+        onChange={() => {
+          handleChange(fieldName)
         }}
       >
         {(emptyLabel || !values[fieldName]) && (

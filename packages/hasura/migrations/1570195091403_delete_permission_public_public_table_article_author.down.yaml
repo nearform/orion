@@ -1,8 +1,0 @@
-- args:
-    permission:
-      filter: {}
-    role: public
-    table:
-      name: article_author
-      schema: public
-  type: create_delete_permission

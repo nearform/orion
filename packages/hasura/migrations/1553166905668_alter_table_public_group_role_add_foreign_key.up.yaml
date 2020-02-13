@@ -1,4 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."group_role" ADD FOREIGN KEY ("role_id") REFERENCES
-      "public"."role" ("id")
-  type: run_sql

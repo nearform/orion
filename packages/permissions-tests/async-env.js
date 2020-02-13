@@ -1,4 +1,4 @@
-require('dotenv/config')
+require('dotenv').config()
 
 const keyRegExp = /^PERMISSIONS_TESTS_/
 

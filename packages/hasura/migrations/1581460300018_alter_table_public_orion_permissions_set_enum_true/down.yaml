@@ -1,0 +1,6 @@
+- args:
+    is_enum: false
+    table:
+      name: orion_permissions
+      schema: public
+  type: set_table_is_enum

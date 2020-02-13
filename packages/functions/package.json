@@ -1,6 +1,6 @@
 {
   "name": "functions",
-  "version": "0.1.0",
+  "version": "2.4.0",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -25,13 +25,14 @@
     "webpack-cli": "^3.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-inline-import": "^3.0.0",
     "jest": "^24.8.0",
-    "react-test-renderer": "^16.8.6"
-  }
+    "react-test-renderer": "^16.12.0"
+  },
+  "xo": false
 }
