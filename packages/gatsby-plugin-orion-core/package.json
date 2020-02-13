@@ -8,7 +8,6 @@
     "url": "https://github.com/nearform/orion/issues"
   },
   "scripts": {
-    "storybook": "start-storybook -p 6006",
     "test": "jest",
     "commit": "cd .. && yarn commit"
   },
@@ -54,8 +53,7 @@
     "babel-loader": "^8.0.5",
     "babel-preset-gatsby": "^0.2.29",
     "jest": "^25.1.0",
-    "storybook-addon-jsx": "^7.1.14",
-    "storybook-addon-material-ui": "^0.9.0-alpha.21"
+    "storybook-addon-jsx": "^7.1.14"
   },
   "peerDependencies": {
     "@reach/router": "^1.2.1",
