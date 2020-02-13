@@ -1,0 +1,10 @@
+- args:
+    sql: CREATE TABLE "public"."orion_user"("id" serial NOT NULL, "cognito_id" uuid
+      NOT NULL, "given_name" text NOT NULL, "email" text NOT NULL, "title" text, "avatar"
+      text, "bio" text, "role_id" integer NOT NULL, "group_id" integer NOT NULL, PRIMARY
+      KEY ("id") , UNIQUE ("id"), UNIQUE ("cognito_id"));
+  type: run_sql
+- args:
+    name: orion_user
+    schema: public
+  type: add_existing_table_or_view

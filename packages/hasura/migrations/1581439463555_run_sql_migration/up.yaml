@@ -1,0 +1,22 @@
+- args:
+    cascade: false
+    sql: |-
+      CREATE TABLE orion_content (
+          id               integer PRIMARY KEY DEFAULT nextval('serial'),
+          parents          integer[] NULL,
+          path             text NOT NULL,
+          content_type     text NOT NULL,
+          title            text NOT NULL,
+          subtitle         text NULL,
+          hero_img         text NULL,
+          date_created     date NOT NULL,
+          date_modified    date NOT NULL,
+          date_published   date NULL,
+          date_expired     date NULL,
+          content          text NULL
+      );
+  type: run_sql
+- args:
+    name: orion_content
+    schema: public
+  type: add_existing_table_or_view
