@@ -45,4 +45,7 @@ module.exports = {
       },
     },
   },
+  body2: {
+    fontSize: '14px',
+  },
 }
