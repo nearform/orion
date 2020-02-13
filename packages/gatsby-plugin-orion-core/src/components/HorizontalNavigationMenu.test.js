@@ -42,16 +42,19 @@ function renderFirstChildren(menuRenderResult) {
 
 describe('root menu items', () => {
   test('renders links if no children', () => {
-    expect.assertions(3)
+    expect.assertions(5)
 
     const { getByText } = renderMenu()
 
+    // TODO: test url here and elsewhere
     const linkA = getByText('rootA').closest('a')
     const linkB = getByText('rootB').closest('a')
     const linkC = getByText('rootC').closest('a')
 
     expect(linkA).toBeInTheDocument()
+    expect(linkA).toHaveAttribute('href', '/rootA')
     expect(linkB).toBeInTheDocument()
+    expect(linkB).toHaveAttribute('href', '/rootB')
     expect(linkC).not.toBeInTheDocument()
   })
 
@@ -60,13 +63,13 @@ describe('root menu items', () => {
 
     const { getByText } = renderMenu()
 
-    const linkA = getByText('rootA').closest('button')
-    const linkB = getByText('rootB').closest('button')
-    const linkC = getByText('rootC').closest('button')
+    const buttonA = getByText('rootA').closest('button')
+    const buttonB = getByText('rootB').closest('button')
+    const buttonC = getByText('rootC').closest('button')
 
-    expect(linkA).not.toBeInTheDocument()
-    expect(linkB).not.toBeInTheDocument()
-    expect(linkC).toBeInTheDocument()
+    expect(buttonA).not.toBeInTheDocument()
+    expect(buttonB).not.toBeInTheDocument()
+    expect(buttonC).toBeInTheDocument()
   })
 
   test('clicking with children displays submenu', async () => {
@@ -122,7 +125,9 @@ describe('root menu items', () => {
 
   test('down indicator defaults to chevron', () => {
     const renderResult = renderMenu()
-    const spans = renderResult.getByText('rootC').querySelectorAll('span')
+    const spans = renderResult
+      .getByText('rootC')
+      .querySelectorAll('span.material-icons')
 
     expect(spans).toHaveLength(1)
     expect(spans[0]).toHaveClass('fa-chevron-down')
@@ -137,7 +142,9 @@ describe('root menu items', () => {
         dropDownIndicatorIcon="test-class"
       />
     )
-    const spans = renderResult.getByText('rootC').querySelectorAll('span')
+    const spans = renderResult
+      .getByText('rootC')
+      .querySelectorAll('span.material-icons')
 
     expect(spans).toHaveLength(1)
     expect(spans[0]).toHaveClass('test-class')
@@ -163,9 +170,9 @@ describe('child menu items', () => {
     expect.assertions(4)
 
     const renderResult = await renderMenu()
-    await renderFirstChildren(renderResult)
+    const [, childB] = await renderFirstChildren(renderResult)
 
-    fireEvent.mouseEnter(renderResult.getByText('childB'))
+    fireEvent.mouseEnter(childB)
 
     const [childBA, childBB] = await waitForElement(() => [
       renderResult.getByText('childBA'),
@@ -230,7 +237,7 @@ describe('child menu items', () => {
 
     const renderResult = renderMenu()
     const [, childB] = await renderFirstChildren(renderResult)
-    const spans = childB.querySelectorAll('span')
+    const spans = childB.querySelectorAll('span.material-icons')
 
     expect(spans).toHaveLength(1)
     expect(spans[0]).toHaveClass('fa-chevron-right')
@@ -246,7 +253,7 @@ describe('child menu items', () => {
       />
     )
     const [, childB] = await renderFirstChildren(renderResult)
-    const spans = childB.querySelectorAll('span')
+    const spans = childB.querySelectorAll('span.material-icons')
 
     expect(spans).toHaveLength(1)
     expect(spans[0]).toHaveClass('test-class')
