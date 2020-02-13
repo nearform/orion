@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0](https://github.com/nearform/orion/compare/v2.7.0...v2.8.0) (2020-02-13)
+
+
+### Bug Fixes
+
+* 🐛 Fixed first paragraph styling issue ([1da2c9c](https://github.com/nearform/orion/commit/1da2c9c8708bd0aca1b16c5ab0367999b67cba0b))
+* 🐛 fixed link styling ([856a9f6](https://github.com/nearform/orion/commit/856a9f6584ea926912d31ca56985b649c85ab84d))
+
+
+### Features
+
+* 🎸 Created Footer ([155e428](https://github.com/nearform/orion/commit/155e428898f406e5d8e8515c7eb5236332c545bf)), closes [#284](https://github.com/nearform/orion/issues/284)
+
+
+
+
+
 # [2.7.0](https://github.com/nearform/orion/compare/v2.6.0...v2.7.0) (2020-02-13)
 
 
