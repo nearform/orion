@@ -1,9 +1,8 @@
+import DataTable from '.'
 import React, { useMemo, useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { number } from '@storybook/addon-knobs'
-import ArticleStatusChip from './StatusChip/ArticleStatusChip'
-import DataTable from './DataTable'
 
 const columns = [
   {
@@ -41,7 +40,6 @@ const columns = [
     sortable: false,
     align: 'left',
     minWidth: 150,
-    render: status => <ArticleStatusChip status={status} />,
   },
 ]
 

@@ -1,4 +1,5 @@
 const palette = require('./palette')
+const { fade } = require('@material-ui/core/styles/colorManipulator')
 
 module.exports = {
   fontFamily: `'Titillium Web', sans-serif`,
@@ -29,6 +30,11 @@ module.exports = {
   h5: {
     color: palette.secondary.main,
     fontSize: '16px',
+    fontWeight: 'bold',
+  },
+  h6: {
+    color: fade(palette.secondary.main, 0.6),
+    fontSize: '14px',
     fontWeight: 'bold',
   },
   body1: {

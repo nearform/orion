@@ -11,6 +11,8 @@ const typography = require('./mui/typography')
 
 // Custom class related themes
 const footer = require('./custom/footer')
+const searchInput = require('./custom/search-input')
+const secondaryAppBar = require('./custom/secondary-app-bar')
 
 exports.muiTheme = {
   overrides: {
@@ -24,6 +26,8 @@ exports.muiTheme = {
   palette,
   typography,
   footer: { footer },
+  searchInput,
+  secondaryAppBar,
 }
 
 exports.googleFonts = ['Titillium Web:400,700,900']
