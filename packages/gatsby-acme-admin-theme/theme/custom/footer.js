@@ -30,4 +30,7 @@ module.exports = {
       margin: '30px 8px 30px',
     },
   },
+  '& .greeting': {
+    fontWeight: 'bold',
+  },
 }

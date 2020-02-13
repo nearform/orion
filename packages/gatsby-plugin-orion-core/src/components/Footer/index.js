@@ -10,7 +10,7 @@ function Footer({ classes, Img, socialIcons = [], logo }) {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography gutterBottom variant="body2">
-              <strong>Get in touch</strong>
+              <p className="greeting">Get in touch</p>
             </Typography>
           </Grid>
           <Grid item xs={8}>
