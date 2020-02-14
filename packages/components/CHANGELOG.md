@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0](https://github.com/nearform/orion/compare/v2.8.0...v2.9.0) (2020-02-13)
+
+
+### Features
+
+* 🎸 secondary app bar component, search input component ([e4b5149](https://github.com/nearform/orion/commit/e4b514948d1a4b38e8f4fd14e30371412900d690))
+
+
+
+
+
 # [2.8.0](https://github.com/nearform/orion/compare/v2.7.0...v2.8.0) (2020-02-13)
 
 **Note:** Version bump only for package components
