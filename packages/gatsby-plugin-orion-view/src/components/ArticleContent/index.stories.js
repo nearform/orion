@@ -12,6 +12,8 @@ const defaultContent = `# Heading 1
 
 Body text - first paragraph.
 
+> Block quote
+
 Body text with _italics_, *bold* text and a [link](https://orion.nearform.com/).
 
 * Bulleted list
@@ -53,4 +55,8 @@ storiesOf('ArticleContent', module)
         </div>
       </div>
     )
+  }, {
+    knobs: {
+      escapeHTML: false
+    }
   })
