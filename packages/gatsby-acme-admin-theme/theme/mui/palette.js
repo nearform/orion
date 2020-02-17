@@ -9,6 +9,7 @@ module.exports = {
   },
   action: {
     main: colorDefinitions.accessibleGreen,
+    light: colorDefinitions.brighterGreen,
   },
   tertiary: {
     main: colorDefinitions.lightGrey,
