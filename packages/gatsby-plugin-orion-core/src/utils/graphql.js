@@ -22,25 +22,22 @@ function setAuthorization(client, session) {
  * Refresh the JWT token after a session timeout.
  */
 const refreshToken = debounce(
-  client =>
-    new Promise((resolve, reject) => {
-      const refresh = async () => {
-        const user = await Auth.currentAuthenticatedUser()
-        const { refreshToken } = await Auth.currentSession()
+  async client => {
+    const user = await Auth.currentAuthenticatedUser()
+    const { refreshToken } = await Auth.currentSession()
 
-        user.refreshSession(refreshToken, (err, session) => {
-          const bearer = setAuthorization(client, session)
+    return new Promise((resolve, reject) => {
+      user.refreshSession(refreshToken, (err, session) => {
+        const bearer = setAuthorization(client, session)
 
-          if (err) {
-            reject(err)
-          } else {
-            resolve(bearer)
-          }
-        })
-      }
-
-      refresh()
-    }),
+        if (err) {
+          reject(err)
+        } else {
+          resolve(bearer)
+        }
+      })
+    })
+  },
   3000,
   { leading: true }
 )
