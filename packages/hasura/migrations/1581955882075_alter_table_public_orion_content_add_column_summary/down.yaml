@@ -1,0 +1,3 @@
+- args:
+    sql: ALTER TABLE "public"."orion_content" DROP COLUMN "summary";
+  type: run_sql

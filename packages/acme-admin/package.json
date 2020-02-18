@@ -2,7 +2,7 @@
   "name": "acme-admin",
   "private": true,
   "description": "The Orion powered administration site for Acme Insurance",
-  "version": "2.9.0",
+  "version": "2.11.0",
   "author": "NearForm",
   "dependencies": {
     "gatsby": "^2.19.18",
