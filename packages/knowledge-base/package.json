@@ -2,7 +2,7 @@
   "name": "knowledge-base",
   "private": true,
   "description": "The Gatsby-powered engine of the goto knowledge base",
-  "version": "2.9.0",
+  "version": "2.10.0",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
@@ -29,7 +29,7 @@
     "gatsby-plugin-orion-admin": "^2.9.0",
     "gatsby-plugin-orion-core": "^2.9.0",
     "gatsby-plugin-orion-edit": "^2.9.0",
-    "gatsby-plugin-orion-view": "^2.9.0",
+    "gatsby-plugin-orion-view": "^2.10.0",
     "graphql": "^14.3.0",
     "graphql-hooks": "^3.6.1",
     "i18next": "^15.1.0",
