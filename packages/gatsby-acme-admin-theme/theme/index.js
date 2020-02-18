@@ -4,6 +4,8 @@ const MuiDrawer = require('./mui/muiComponentsOverrides/mui-drawer')
 const MuiPaper = require('./mui/muiComponentsOverrides/mui-paper')
 const MuiAppBar = require('./mui/muiComponentsOverrides/mui-app-bar')
 const MuiMenu = require('./mui/muiComponentsOverrides/mui-menu')
+const MuiButton = require('./mui/muiComponentsOverrides/mui-button')
+const MuiInput = require('./mui/muiComponentsOverrides/mui-input')
 
 // Section below are theme key word specific overrides https://material-ui.com/customization/default-theme/
 const palette = require('./mui/palette')
@@ -24,6 +26,8 @@ exports.muiTheme = {
     MuiPaper,
     MuiAppBar,
     MuiMenu,
+    MuiButton,
+    MuiInput,
   },
   palette,
   typography,
