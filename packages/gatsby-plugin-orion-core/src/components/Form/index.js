@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import { Grid } from '@material-ui/core'
 
-import { InputField, SubmitButton } from './FormFields'
+import { InputField, SubmitButton } from '../FormFields'
 
 function Form({
   formFields = [],
@@ -12,6 +12,8 @@ function Form({
   onSubmit,
   handleInput,
 }) {
+  const hasError = Boolean(formFields.filter(field => field.error))
+
   return (
     <div>
       <div>
@@ -28,6 +30,7 @@ function Form({
                 required={params.required}
                 options={params.options}
                 helperText={params.helperText}
+                error={params.error}
                 onChange={handleInput}
               >
                 {params.label}
@@ -45,7 +48,9 @@ function Form({
           >
             <Grid item>{SubmitText}</Grid>
             <Grid item>
-              <SubmitButton onClick={onSubmit}>{submitButtonText}</SubmitButton>
+              <SubmitButton hasError={hasError} onClick={onSubmit}>
+                {submitButtonText}
+              </SubmitButton>
             </Grid>
           </Grid>
         </Grid>

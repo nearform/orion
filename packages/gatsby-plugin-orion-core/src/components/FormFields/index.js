@@ -1,8 +1,7 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import T from 'prop-types'
 import {
   Button,
-  CircularProgress,
   MenuItem,
   Select,
   TextField,
@@ -10,38 +9,11 @@ import {
   makeStyles,
 } from '@material-ui/core'
 
-// Import SectionTitle from '../page/SectionTitle'
-// import { AuthFormStateContext } from './AuthEventMixin'
-
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  buttonProgress: {
-    color: theme.palette.primary.dark,
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12,
-  },
-  errorMessage: {
-    textTransform: 'none',
-    marginTop: '0.5em',
-  },
-  fieldOK: {
-    border: 'none',
-  },
-  fieldError: {
-    border: `1.5pt solid ${theme.palette.error.main}`,
-  },
-  inputHelperText: {
-    'font-size': '14px',
-    //   FontFamily: `'Titillium Web', sans-serif`,
-    //   color: '#2e2e2e',
-    //   fontWeight: 'normal',
-    // },
+  input: {
+    '& > .MuiInput-root.Mui-error': {
+      borderColor: `${theme.palette.error.main} !important`,
+    },
   },
 }))
 
@@ -69,7 +41,7 @@ function ErrorMessage({ children }) {
   return (
     <Typography
       gutterBottom
-      variant="h4"
+      variant="body2"
       color="error"
       className={classes.errorMessage}
     >
@@ -83,13 +55,11 @@ ErrorMessage.propTypes = {
 }
 
 function InputHelperText({ children, hasError }) {
-  const classes = useStyles()
   return (
     <Typography
       gutterBottom
       variant="body2"
       color={hasError ? 'error' : 'initial'}
-      className={classes.inputHelperText}
     >
       {children}
     </Typography>
@@ -101,26 +71,6 @@ InputHelperText.propTypes = {
   hasError: T.bool,
 }
 
-function SectionTitleField({ barColor, category, children }) {
-  return
-  const { errors } = useContext(AuthFormStateContext)
-  const error = errors[category]
-  return (
-    <>
-      <SectionTitle gutterBottom barColor={barColor}>
-        {children}
-      </SectionTitle>
-      {error && <ErrorMessage>{error}</ErrorMessage>}
-    </>
-  )
-}
-
-SectionTitleField.propTypes = {
-  barColor: T.string,
-  category: T.string,
-  children: T.node.isRequired,
-}
-
 function InputTextField({
   name,
   type,
@@ -130,14 +80,10 @@ function InputTextField({
   disabled,
   onChange,
   onEnterKey,
+  error = false,
   children,
 }) {
   const classes = useStyles()
-  let submitting
-  const errors = {}
-  // Console.log(errors, name)
-  // Const { submitting, errors } = useContext(AuthFormStateContext)
-  const error = errors[name]
 
   const onKeyPress = e => {
     if (e.key === 'Enter' && onEnterKey) {
@@ -161,8 +107,9 @@ function InputTextField({
         type={type}
         value={value}
         required={required}
-        disabled={disabled || submitting}
-        className={error ? classes.fieldError : classes.fieldOK}
+        disabled={disabled}
+        className={classes.input}
+        error={Boolean(error)}
         inputProps={{ onKeyPress }}
         onChange={onChange}
       />
@@ -181,6 +128,7 @@ InputTextField.propTypes = {
   onChange: T.func,
   onEnterKey: T.func,
   children: T.node.isRequired,
+  error: T.string,
 }
 
 function InputSelectField({
@@ -191,6 +139,7 @@ function InputSelectField({
   value = '',
   children,
   helperText,
+  error = false,
   ...props
 }) {
   const classes = useStyles()
@@ -202,10 +151,6 @@ function InputSelectField({
     }
   }
 
-  // Const { submitting, errors } = useContext(AuthFormStateContext)
-  let submitting
-  const errors = {}
-  const error = errors[name]
   return (
     <>
       <FieldLabel required={required} hasError={Boolean(error)}>
@@ -218,7 +163,6 @@ function InputSelectField({
       )}
       <Select
         name={name}
-        disabled={submitting}
         value={selectValue}
         className={error ? classes.fieldError : classes.fieldOK}
         onChange={handleChange}
@@ -243,6 +187,7 @@ InputSelectField.propTypes = {
   required: T.bool,
   onChange: T.func,
   children: T.node.isRequired,
+  error: T.string.isRequired,
 }
 
 function InputField({ type, children, ...props }) {
@@ -250,7 +195,6 @@ function InputField({ type, children, ...props }) {
     return <InputSelectField {...props}>{children}</InputSelectField>
   }
 
-  console.log(props)
   return (
     <InputTextField type={type} {...props}>
       {children}
@@ -263,32 +207,25 @@ InputField.propTypes = {
   children: T.node.isRequired,
 }
 
-function SubmitButton({ onClick, children }) {
-  const classes = useStyles()
-  // Const { submitting } = useContext(AuthFormStateContext)
-  let submitting
-  let errors
+function SubmitButton({ onClick, children, hasError }) {
   return (
-    <div>
-      <Button
-        fullWidth
-        name="submit"
-        variant="contained"
-        color="primary"
-        onClick={onClick}
-      >
-        {children}
-      </Button>
-      {submitting && (
-        <CircularProgress size={24} className={classes.buttonProgress} />
-      )}
-    </div>
+    <Button
+      fullWidth
+      name="submit"
+      variant="contained"
+      color="primary"
+      disabled={hasError}
+      onClick={onClick}
+    >
+      {children}
+    </Button>
   )
 }
 
 SubmitButton.propTypes = {
   onClick: T.func.isRequired,
   children: T.node.isRequired,
+  hasError: T.bool,
 }
 
-export { SectionTitleField, InputField, SubmitButton }
+export { InputField, SubmitButton }

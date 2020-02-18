@@ -19,4 +19,7 @@ module.exports = {
     paper: colorDefinitions.white,
     dark: colorDefinitions.lighterGrey,
   },
+  error: {
+    main: colorDefinitions.error,
+  },
 }

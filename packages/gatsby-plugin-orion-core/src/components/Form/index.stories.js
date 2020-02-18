@@ -30,6 +30,7 @@ storiesOf('Form', module)
           required: true,
           type: 'email',
           xs: 12,
+          error: 'This is an error',
         },
         {
           label: 'Password',

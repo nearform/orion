@@ -8,4 +8,5 @@ exports.colorDefinitions = {
   lightGrey: '#9cafc3',
   lighterGrey: '#f7fafc',
   white: '#ffffff',
+  error: '#f44336',
 }
