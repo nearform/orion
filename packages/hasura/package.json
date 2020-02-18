@@ -13,7 +13,7 @@
     "artifact:name": "echo $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz"
   },
   "devDependencies": {
-    "env-cmd": "^8.0.2",
+    "env-cmd": "^10.1.0",
     "graphql-request": "^1.8.2"
   },
   "xo": false
