@@ -17,10 +17,5 @@ const data = [
 storiesOf('SecondaryAppBar', module)
   .addDecorator(jsxDecorator)
   .add('Default', () => {
-    return (
-      <SecondaryAppBar
-        data={data}
-        onSearch={value => console.log(`You searched for "${value}"`)}
-      />
-    )
+    return <SecondaryAppBar data={data} onSearch={() => {}} />
   })

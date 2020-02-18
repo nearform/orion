@@ -1,5 +1,5 @@
 import BreadcrumbNavigation from '../BreadcrumbNavigation'
-import PaddedContainer from '../PaddedContainer'
+import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
 import SearchInput from '../SearchInput'
 import React from 'react'
 import T from 'prop-types'
