@@ -6,6 +6,7 @@ module.exports = {
   root: {
     display: 'flex',
     flexDirection: 'column',
+    maxWidth: 208,
   },
   author: {
     display: 'flex',

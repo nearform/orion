@@ -10,7 +10,7 @@ function SearchInput({ classes, onSearch }) {
     <div className={classes.root}>
       <input
         className={classes.input}
-        placeholder="Search Acme"
+        placeholder="Search"
         value={value}
         onChange={event => setValue(event.target.value)}
       />

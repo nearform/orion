@@ -6,7 +6,9 @@ module.exports = {
   plugins: [
     {
       resolve: 'gatsby-plugin-orion-view',
-      options: {},
+      options: {
+        theme: require.resolve('acme-admin-theme'),
+      },
     },
   ],
 }

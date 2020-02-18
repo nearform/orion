@@ -4,10 +4,10 @@ import { debounce, get } from 'lodash'
 
 /**
  * Setup JWT authorization for a graphql client.
- * 
+ *
  * @param client    A graphql client.
  * @param session   The current active amplify session.
- * 
+ *
  * @return A bearer token header.
  */
 function setAuthorization(client, session) {
@@ -22,27 +22,32 @@ function setAuthorization(client, session) {
  * Refresh the JWT token after a session timeout.
  */
 const refreshToken = debounce(
-  client => new Promise(async (resolve, reject) => {
-    const user = await Auth.currentAuthenticatedUser()
-    const { refreshToken } = await Auth.currentSession()
+  client =>
+    new Promise((resolve, reject) => {
+      const refresh = async () => {
+        const user = await Auth.currentAuthenticatedUser()
+        const { refreshToken } = await Auth.currentSession()
 
-    user.refreshSession(refreshToken, (err, session) => {
-      const bearer = setAuthorization(client, session)
-      
-      if (err) {
-        reject(err)
-      } else {
-        resolve(bearer)
+        user.refreshSession(refreshToken, (err, session) => {
+          const bearer = setAuthorization(client, session)
+
+          if (err) {
+            reject(err)
+          } else {
+            resolve(bearer)
+          }
+        })
       }
-    })
-  }),
+
+      refresh()
+    }),
   3000,
   { leading: true }
 )
 
 /**
  * Make a graphql client.
- * 
+ *
  * @param url   An endpoint URL.
  */
 function makeGraphQLClient(url) {
@@ -51,7 +56,7 @@ function makeGraphQLClient(url) {
     fetch: async (resource, init) => {
       const result = await fetch(resource, init)
       const json = await result.clone().json()
-      
+
       if (get(json, 'errors[0].extensions.code') === 'invalid-jwt') {
         const bearer = await refreshToken(client)
 
@@ -69,7 +74,7 @@ function makeGraphQLClient(url) {
 
 /**
  * Initialize a graphql client.
- * 
+ *
  * @param client  A client as returned by makeGraphQLClient.
  */
 async function initGraphQLClient(client) {
@@ -78,12 +83,13 @@ async function initGraphQLClient(client) {
       identityPoolId: process.env.GATSBY_AWS_COGNITO_IDENTITY_POOL_ID,
       region: process.env.GATSBY_AWS_REGION,
       userPoolId: process.env.GATSBY_AWS_COGNITO_USER_POOL_ID,
-      userPoolWebClientId: process.env.GATSBY_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID,
+      userPoolWebClientId:
+        process.env.GATSBY_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID,
       cookieStorage: {
         domain: window.location.hostname,
         path: '/',
         expires: Number(process.env.GATSBY_AWS_COGNITO_COOKIE_EXPIRATION) || 1,
-        secure: !!process.env.GATSBY_AWS_COGNITO_COOKIE_SECURE,
+        secure: Boolean(process.env.GATSBY_AWS_COGNITO_COOKIE_SECURE),
       },
     },
     Storage: {
@@ -104,7 +110,7 @@ async function initGraphQLClient(client) {
     const user = await Auth.currentAuthenticatedUser()
 
     setAuthorization(client, user.signInUserSession)
-  } catch (e) { }
+  } catch (_error) {}
 }
 
 export { makeGraphQLClient, initGraphQLClient }

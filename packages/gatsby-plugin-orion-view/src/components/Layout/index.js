@@ -1,6 +1,7 @@
 import React from 'react'
 import T from 'prop-types'
 import Footer from 'gatsby-plugin-orion-core/src/components/Footer'
+import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
 import SecondaryAppBar from 'gatsby-plugin-orion-core/src/components/SecondaryAppBar'
 import { withStyles } from '@material-ui/core'
 
@@ -31,14 +32,14 @@ const socialIcons = [
 
 const Img = ({ ...props }) => <img {...props} />
 
-function Layout({ children, classes }) {
+function Layout({ children, classes, parents }) {
   return (
     <div className={classes.root}>
       <header>
-        <SecondaryAppBar data={[]} onSearch={() => {}} />
+        <SecondaryAppBar data={parents} onSearch={() => {}} />
       </header>
       <main>
-        {children}
+        <PaddedContainer>{children}</PaddedContainer>
       </main>
       <footer>
         <Footer socialIcons={socialIcons} logo={logo} Img={Img} />
@@ -48,7 +49,14 @@ function Layout({ children, classes }) {
 }
 
 Layout.propTypes = {
+  children: T.node,
   classes: T.object,
+  parents: T.arrayOf(
+    T.shape({
+      title: T.string.isRequired,
+      to: T.string.isRequired,
+    })
+  ).isRequired,
 }
 
 const styles = theme => ({ ...theme.layout })

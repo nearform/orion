@@ -9,6 +9,7 @@ module.exports = {
   },
   input: {
     ...typography.h6,
+    backgroundColor: palette.background.dark,
     border: '1px solid',
     borderColor: palette.tertiary.main,
     borderBottomLeftRadius: 4,
@@ -18,9 +19,9 @@ module.exports = {
     padding: 8,
     outline: 0,
     paddingLeft: 12,
-    '&:placeholder': {
+    '&::placeholder': {
       ...typography.h6,
-    }
+    },
   },
   button: {
     backgroundColor: palette.action.main,

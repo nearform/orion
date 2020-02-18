@@ -1,47 +1,32 @@
 const get = require('lodash/get')
-
-const getContentQuery = `{
-  orion {
-    orion_content(order_by: {date_published: asc}) {
-      title
-      summary
-      subtitle
-      date_created
-      date_expired
-      path
-      id
-      content
-      content_type
-      date_modified
-      date_published
-      hero_img
-      parents
-      status
-    }
-  }
-}`
+const getArticlesQuery = require('./queries/get-articles')
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-  const contentResults = await graphql(getContentQuery)
+  const articleResults = await graphql(getArticlesQuery)
 
-  if (contentResults.errors) {
-    throw contentResults.errors
+  if (articleResults.errors) {
+    throw articleResults.errors
   }
-  
-  const publishedContent = get(
-    contentResults,
-    'data.orion.orion_content',
-    []
-  )
 
-  publishedContent.forEach(content => {
+  const publishedArticles = get(articleResults, 'data.orion.orion_content', [])
+
+  createPage({
+    path: '/',
+    matchPath: '/',
+    component: require.resolve('./src/templates/home.js'),
+    context: {
+      articles: publishedArticles,
+    },
+  })
+
+  publishedArticles.forEach(article => {
     createPage({
-      path: content.path,
-      matchPath: content.path,
-      component: require.resolve('./src/templates/content.js'),
+      path: article.path,
+      matchPath: article.path,
+      component: require.resolve('./src/templates/article.js'),
       context: {
-        content
+        article,
       },
     })
   })
