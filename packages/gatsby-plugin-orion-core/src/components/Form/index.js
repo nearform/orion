@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import T from 'prop-types'
 import { Grid } from '@material-ui/core'
 
@@ -10,9 +10,23 @@ function Form({
   Title,
   SubmitText,
   onSubmit,
-  handleInput,
 }) {
-  const hasError = Boolean(formFields.filter(field => field.error))
+  const hasError = formFields.filter(field => field.error).length
+
+  const [paramValues, setParamValues] = useState(
+    new Array(formFields.length).fill('')
+  )
+
+  const handleInput = i => e =>
+    setParamValues([
+      ...paramValues.slice(0, i),
+      e.target.value,
+      ...paramValues.slice(i + 1),
+    ])
+
+  const handleOnSubmit = () => {
+    onSubmit(paramValues.map((value, i) => ({ ...formFields[i], value })))
+  }
 
   return (
     <div>
@@ -21,7 +35,7 @@ function Form({
           <Grid item xs={12}>
             {Title}
           </Grid>
-          {formFields.map(params => (
+          {formFields.map((params, i) => (
             <Grid key={params.key} item xs={params.xs}>
               <InputField
                 fullWidth
@@ -31,7 +45,8 @@ function Form({
                 options={params.options}
                 helperText={params.helperText}
                 error={params.error}
-                onChange={handleInput}
+                value={paramValues[i]}
+                onChange={handleInput(i)}
               >
                 {params.label}
               </InputField>
@@ -48,7 +63,7 @@ function Form({
           >
             <Grid item>{SubmitText}</Grid>
             <Grid item>
-              <SubmitButton hasError={hasError} onClick={onSubmit}>
+              <SubmitButton hasError={hasError} onClick={handleOnSubmit}>
                 {submitButtonText}
               </SubmitButton>
             </Grid>
@@ -63,7 +78,6 @@ Form.propTypes = {
   formFields: T.arrayOf(T.object),
   submitButtonText: T.string,
   onSubmit: T.func.isRequired,
-  handleInput: T.func.isRequired,
   Title: T.object,
   SubmitText: T.object,
 }

@@ -51,6 +51,32 @@ storiesOf('Form', module)
       }
     />
   ))
+  .add('Login Error', () => (
+    <Form
+      formFields={[
+        {
+          label: 'Please enter your username',
+          key: 'username',
+          type: 'email',
+          xs: 12,
+          error: 'This is an error!',
+        },
+        {
+          label: 'Please enter your password',
+          key: 'password',
+          type: 'password',
+          xs: 12,
+        },
+      ]}
+      Title={<Typography variant="h3">Sign in to your account</Typography>}
+      submitButtonText="Sign in"
+      submitText={
+        <Typography noWrap variant="h6" color="textSecondary">
+          No account? <a>Create account</a>
+        </Typography>
+      }
+    />
+  ))
   .add('Login', () => (
     <Form
       formFields={[
@@ -74,5 +100,7 @@ storiesOf('Form', module)
           No account? <a>Create account</a>
         </Typography>
       }
+      // eslint-disable-next-line no-console
+      onSubmit={e => console.log(e)}
     />
   ))
