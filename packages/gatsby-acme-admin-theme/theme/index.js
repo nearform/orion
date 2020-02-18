@@ -10,6 +10,7 @@ const palette = require('./mui/palette')
 const typography = require('./mui/typography')
 
 // Custom class related themes
+const articleMetadata = require('./custom/article-metadata')
 const footer = require('./custom/footer')
 const searchInput = require('./custom/search-input')
 const secondaryAppBar = require('./custom/secondary-app-bar')
@@ -25,6 +26,7 @@ exports.muiTheme = {
   },
   palette,
   typography,
+  articleMetadata,
   footer: { footer },
   searchInput,
   secondaryAppBar,
