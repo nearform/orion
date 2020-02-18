@@ -24,9 +24,9 @@ function Form({
       ...paramValues.slice(i + 1),
     ])
 
-  const handleOnSubmit = () => {
+  const handleOnSubmit = () =>
+    onSubmit &&
     onSubmit(paramValues.map((value, i) => ({ ...formFields[i], value })))
-  }
 
   return (
     <div>
