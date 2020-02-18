@@ -4,7 +4,7 @@ import { jsxDecorator } from 'storybook-addon-jsx'
 import { select, text, object } from '@storybook/addon-knobs'
 import { AppBar, Toolbar } from '@material-ui/core'
 
-import HorizontalNavigationMenu from './'
+import HorizontalNavigationMenu from '.'
 
 const menuData = [
   {
