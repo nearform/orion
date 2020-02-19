@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0](https://github.com/nearform/orion/compare/v2.10.0...v2.11.0) (2020-02-18)
+
+**Note:** Version bump only for package gatsby-plugin-orion-admin
+
+
+
+
+
 # [2.9.0](https://github.com/nearform/orion/compare/v2.8.0...v2.9.0) (2020-02-13)
 
 **Note:** Version bump only for package gatsby-plugin-orion-admin

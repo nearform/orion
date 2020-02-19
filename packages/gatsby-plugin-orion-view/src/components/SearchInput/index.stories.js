@@ -7,8 +7,6 @@ storiesOf('SearchInput', module)
   .addDecorator(jsxDecorator)
   .add('Default', () => (
     <div style={{ width: 256 }}>
-      <SearchInput
-        onSearch={value => console.log(`You searched for "${value}"`)}
-      />
+      <SearchInput onSearch={() => {}} />
     </div>
   ))

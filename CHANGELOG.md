@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0](https://github.com/nearform/orion/compare/v2.10.0...v2.11.0) (2020-02-18)
+
+
+### Features
+
+* 🎸 article content view component ([509533b](https://github.com/nearform/orion/commit/509533bcccae15249ed8b58798eb38383629b223))
+
+
+
+
+
+# [2.10.0](https://github.com/nearform/orion/compare/v2.9.1...v2.10.0) (2020-02-18)
+
+
+### Features
+
+* 🎸 article metadata component ([ab35468](https://github.com/nearform/orion/commit/ab3546806e076fe8c1525f578b87e208d816950b))
+
+
+
+
+
+## [2.9.1](https://github.com/nearform/orion/compare/v2.9.0...v2.9.1) (2020-02-17)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
 # [2.9.0](https://github.com/nearform/orion/compare/v2.8.0...v2.9.0) (2020-02-13)
 
 
