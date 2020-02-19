@@ -1,0 +1,10 @@
+- args:
+    sql: CREATE TABLE "public"."orion_page"("id" serial NOT NULL, "parent" integer,
+      "path" text NOT NULL, "layout" text NOT NULL, "title" text NOT NULL, "created"
+      timestamptz NOT NULL DEFAULT now(), "modified" timestamptz, "published" timestamptz,
+      "expires" timestamptz, "show_in_menu" boolean NOT NULL, PRIMARY KEY ("id") );
+  type: run_sql
+- args:
+    name: orion_page
+    schema: public
+  type: add_existing_table_or_view

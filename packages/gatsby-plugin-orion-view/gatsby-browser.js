@@ -1,5 +1,15 @@
 import React from 'react'
 import Layout from './src/components/Layout'
+import ComponentProvider from './src/components/ComponentProvider'
+import LayoutProvider from './src/components/LayoutProvider'
+
+export const wrapRootElement = ({ element }) => (
+  <LayoutProvider>
+    <ComponentProvider>
+      {element}
+    </ComponentProvider>
+  </LayoutProvider>
+)
 
 export const wrapPageElement = ({ element, props: { pageContext } }) => {
   const { article } = pageContext

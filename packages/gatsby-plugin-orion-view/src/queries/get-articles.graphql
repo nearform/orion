@@ -1,7 +1,0 @@
-query getArticles {
-  orion_content {
-    id
-    path
-    title
-  }
-}
