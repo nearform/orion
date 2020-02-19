@@ -36,6 +36,14 @@ module.exports = {
     color: fade(palette.secondary.main, 0.6),
     fontSize: '14px',
     fontWeight: 'bold',
+    '& a': {
+      textDecoration: 'none',
+      color: palette.action.main,
+      '&:hover': {
+        textDecoration: 'underline',
+        textDecorationColor: palette.action.main,
+      },
+    },
   },
   body1: {
     fontSize: '16px',
