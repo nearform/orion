@@ -2,9 +2,10 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { select, text, object } from '@storybook/addon-knobs'
-import { AppBar, Toolbar } from '@material-ui/core'
 
-import HorizontalNavigationMenu from './HorizontalNavigationMenu'
+import acmeLogo from './acme-logo.png'
+
+import AppBar from './AppBar'
 
 const menuData = [
   {
@@ -95,25 +96,23 @@ const menuData = [
   },
 ]
 
-storiesOf('HorizontalNavigationMenu', module)
+storiesOf('AppBar', module)
   .addDecorator(jsxDecorator)
   .add('Interactive', () => {
     return (
-      <AppBar>
-        <Toolbar>
-          <HorizontalNavigationMenu
-            childIndicatorIcon={text(
-              'Child Indicator Icon',
-              'fas fa-chevron-right'
-            )}
-            dropDownIndicatorIcon={text(
-              'Drop Down Indicator Icon',
-              'fas fa-chevron-down'
-            )}
-            userRole={select('User Role', ['User', 'Admin'], 'Admin')}
-            data={object('Menu Data', menuData)}
-          />
-        </Toolbar>
-      </AppBar>
+      <AppBar
+        brandImageSrc={acmeLogo}
+        brandTo={text('Brand to', '/home')}
+        childIndicatorIcon={text(
+          'Child Indicator Icon',
+          'fas fa-chevron-right'
+        )}
+        dropDownIndicatorIcon={text(
+          'Drop Down Indicator Icon',
+          'fas fa-chevron-down'
+        )}
+        userRole={select('User Role', ['User', 'Admin'], 'Admin')}
+        menuData={object('Menu Data', menuData)}
+      />
     )
   })
