@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="93" height="25" viewBox="0 0 93 25">
+    <g fill="#FFF" fill-rule="evenodd">
+        <text font-family="Forza-Bold, Forza" font-size="24" font-weight="bold">
+            <tspan x="26.22" y="19">Acme</tspan>
+        </text>
+        <path fill-rule="nonzero" d="M18.604 9.677h-7.845L12.265.47a.405.405 0 0 0-.228-.435.392.392 0 0 0-.47.115L.087 14.666a.408.408 0 0 0-.048.427c.065.14.204.23.357.23H8.24L6.734 24.53c-.03.181.064.36.229.435a.392.392 0 0 0 .47-.115l11.48-14.517a.408.408 0 0 0 .048-.427.395.395 0 0 0-.357-.229z"/>
+    </g>
+</svg>

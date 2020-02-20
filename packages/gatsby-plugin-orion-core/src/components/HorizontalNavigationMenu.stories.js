@@ -111,17 +111,6 @@ storiesOf('HorizontalNavigationMenu', module)
               'fas fa-chevron-down'
             )}
             userRole={select('User Role', ['User', 'Admin'], 'Admin')}
-            path={select(
-              'Current Path',
-              [
-                '/articles',
-                '/editors-picks',
-                '/best-editors-picks',
-                '/bestest-editors-picks',
-                '/most-bestest-editors-picks',
-              ],
-              '/articles'
-            )}
             data={object('Menu Data', menuData)}
           />
         </Toolbar>

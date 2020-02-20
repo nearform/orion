@@ -1,5 +1,5 @@
-const { fade } = require('@material-ui/core/styles/colorManipulator')
 const { colorDefinitions } = require('../variables')
+const { fade } = require('@material-ui/core/styles/colorManipulator')
 
 module.exports = {
   inProgress: fade(colorDefinitions.cyan, 0.1),

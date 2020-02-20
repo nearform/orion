@@ -3,6 +3,96 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0](https://github.com/nearform/orion/compare/v2.12.0...v2.13.0) (2020-02-20)
+
+
+### Features
+
+* 🎸 add AppBar component ([385cac7](https://github.com/nearform/orion/commit/385cac73367c1d3c7eb2d9813f9462eafef9c536))
+* 🎸 make app bar brand logo image set by theme css ([cada92a](https://github.com/nearform/orion/commit/cada92a9cb7ed1df268caf8049248f9c3e20aea4))
+
+
+
+
+
+# [2.12.0](https://github.com/nearform/orion/compare/v2.11.0...v2.12.0) (2020-02-19)
+
+
+### Bug Fixes
+
+* 🐛 Fixed footer bottom text styling ([5c9e034](https://github.com/nearform/orion/commit/5c9e03438c15ff20980e7a3433527456fac2bfa5))
+* 🐛 Handle no onsubmit given ([5045e0b](https://github.com/nearform/orion/commit/5045e0bac2cc78bcb4893ca299485978eda1277b))
+
+
+### Features
+
+* 🎸 Added error handling ([e0f4fa8](https://github.com/nearform/orion/commit/e0f4fa889db59f580aefc1228ced3eb69ec03526)), closes [#317](https://github.com/nearform/orion/issues/317)
+* 🎸 Added input state update and form submitting ([d3cc58a](https://github.com/nearform/orion/commit/d3cc58a835f3f0af4f1f5e741e83275e18155a6b))
+* 🎸 Basic Form setup ([a238add](https://github.com/nearform/orion/commit/a238adde957572c10ea2238e24ea787e98e1b374))
+
+
+
+
+
+# [2.11.0](https://github.com/nearform/orion/compare/v2.10.0...v2.11.0) (2020-02-18)
+
+
+### Features
+
+* 🎸 article content view component ([509533b](https://github.com/nearform/orion/commit/509533bcccae15249ed8b58798eb38383629b223))
+
+
+
+
+
+# [2.10.0](https://github.com/nearform/orion/compare/v2.9.1...v2.10.0) (2020-02-18)
+
+
+### Features
+
+* 🎸 article metadata component ([ab35468](https://github.com/nearform/orion/commit/ab3546806e076fe8c1525f578b87e208d816950b))
+
+
+
+
+
+## [2.9.1](https://github.com/nearform/orion/compare/v2.9.0...v2.9.1) (2020-02-17)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
+# [2.9.0](https://github.com/nearform/orion/compare/v2.8.0...v2.9.0) (2020-02-13)
+
+
+### Features
+
+* 🎸 secondary app bar component, search input component ([e4b5149](https://github.com/nearform/orion/commit/e4b514948d1a4b38e8f4fd14e30371412900d690))
+
+
+
+
+
+# [2.8.0](https://github.com/nearform/orion/compare/v2.7.0...v2.8.0) (2020-02-13)
+
+
+### Bug Fixes
+
+* 🐛 Fixed first paragraph styling issue ([1da2c9c](https://github.com/nearform/orion/commit/1da2c9c8708bd0aca1b16c5ab0367999b67cba0b))
+* 🐛 fixed link styling ([856a9f6](https://github.com/nearform/orion/commit/856a9f6584ea926912d31ca56985b649c85ab84d))
+* 🐛 Import font ([a9fc16c](https://github.com/nearform/orion/commit/a9fc16c3674e9b915efa509d20593a21d30e9cbc))
+
+
+### Features
+
+* 🎸 Created Footer ([155e428](https://github.com/nearform/orion/commit/155e428898f406e5d8e8515c7eb5236332c545bf)), closes [#284](https://github.com/nearform/orion/issues/284)
+
+
+
+
+
 # [2.7.0](https://github.com/nearform/orion/compare/v2.6.0...v2.7.0) (2020-02-13)
 
 
