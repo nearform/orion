@@ -17,23 +17,22 @@ const AppBar = ({
   dropDownIndicatorIcon,
   childIndicatorIcon,
   userRole,
-  brandImageSrc,
   brandTo,
 }) => {
   return (
     <MuiAppBar>
       <Toolbar>
-        {brandImageSrc && (
-          <Button
-            edge="start"
-            component={Link}
-            color="inherit"
-            aria-label="menu"
-            to={brandTo ? brandTo : '#'}
-          >
-            <img alt="brand logo" src={brandImageSrc} className="brand-logo" />
-          </Button>
-        )}
+        <Button
+          edge="start"
+          component={Link}
+          color="inherit"
+          aria-label="menu"
+          to={brandTo ? brandTo : '#'}
+          className="brand-logo"
+          data-testid="brand-logo-button"
+        >
+          <div />
+        </Button>
         {menuData && (
           <HorizontalNavigationMenu
             data={menuData}
@@ -84,7 +83,6 @@ AppBar.propTypes = {
   dropDownIndicatorIcon: PropTypes.string,
   childIndicatorIcon: PropTypes.string,
   userRole: PropTypes.string,
-  brandImageSrc: PropTypes.string,
   brandTo: PropTypes.string,
 }
 
@@ -93,7 +91,6 @@ AppBar.defaultProps = {
   dropDownIndicatorIcon: 'fas fa-chevron-down',
   childIndicatorIcon: 'fas fa-chevron-right',
   userRole: undefined,
-  brandImageSrc: undefined,
   brandTo: undefined,
 }
 

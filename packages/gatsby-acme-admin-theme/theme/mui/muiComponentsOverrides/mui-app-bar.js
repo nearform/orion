@@ -1,4 +1,5 @@
 const palette = require('../palette')
+const logoImage = require('../../../assets/acme-logo.png')
 
 module.exports = {
   root: {
@@ -41,6 +42,10 @@ module.exports = {
     },
     '& .brand-logo': {
       height: '32px',
+      width: '90px',
+      backgroundImage: `url('${logoImage}')`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'contain',
     },
   },
 }

@@ -62,33 +62,22 @@ describe('root menu items', () => {
     })
   })
 
-  test('renders brand logo image if src defined', () => {
-    expect.assertions(2)
+  test('renders brand logo button with to url', () => {
+    expect.assertions(3)
 
-    const { getByAltText } = render(<AppBar brandImageSrc="src1" />)
+    const { getByTestId } = render(<AppBar brandTo="/dest1" />)
 
-    const img = getByAltText('brand logo')
-    expect(img).toBeInTheDocument()
-    expect(img).toHaveAttribute('src', 'src1')
-  })
-
-  test('sets the href attribute when rendering the brand logo image', () => {
-    expect.assertions(2)
-
-    const { getByAltText } = render(
-      <AppBar brandImageSrc="src1" brandTo="/dest1" />
-    )
-
-    const brandLink = getByAltText('brand logo').closest('a')
-    expect(brandLink).toBeInTheDocument()
-    expect(brandLink).toHaveAttribute('href', '/dest1')
+    const logoButton = getByTestId('brand-logo-button')
+    expect(logoButton).toBeInTheDocument()
+    expect(logoButton).toHaveClass('brand-logo')
+    expect(logoButton).toHaveAttribute('href', '/dest1')
   })
 
   // This should be tested in another component and mocked here
   test('renders language selector', () => {
     expect.assertions(2)
 
-    const { getByRole } = render(<AppBar brandImageSrc="src1" />)
+    const { getByRole } = render(<AppBar />)
 
     const enMenuItem = getByRole('menuitem')
     expect(enMenuItem).toBeInTheDocument()

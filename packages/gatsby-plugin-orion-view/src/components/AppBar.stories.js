@@ -3,8 +3,6 @@ import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { select, text, object } from '@storybook/addon-knobs'
 
-import acmeLogo from './acme-logo.png'
-
 import AppBar from './AppBar'
 
 const menuData = [
@@ -101,7 +99,6 @@ storiesOf('AppBar', module)
   .add('Interactive', () => {
     return (
       <AppBar
-        brandImageSrc={acmeLogo}
         brandTo={text('Brand to', '/home')}
         childIndicatorIcon={text(
           'Child Indicator Icon',
