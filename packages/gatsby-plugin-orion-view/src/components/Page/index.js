@@ -48,11 +48,22 @@ function PageProvider({ location, pageContext }) {
       blocks[block] = []
     }
 
-    blocks[block].push(<Component key={id} page={page} {...props} />)
+    blocks[block].push((
+      <Component
+        {...props}
+        key={id}
+        loading={loading}
+        page={page}
+      />
+    ))
   }
 
   return (
-    <Layout page={page} {...blocks} />
+    <Layout
+      {...blocks}
+      loading={loading}
+      page={page}
+    />
   )
 }
 
