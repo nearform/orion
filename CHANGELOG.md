@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0](https://github.com/nearform/orion/compare/v2.12.0...v2.13.0) (2020-02-20)
+
+
+### Features
+
+* 🎸 add AppBar component ([385cac7](https://github.com/nearform/orion/commit/385cac73367c1d3c7eb2d9813f9462eafef9c536))
+* 🎸 make app bar brand logo image set by theme css ([cada92a](https://github.com/nearform/orion/commit/cada92a9cb7ed1df268caf8049248f9c3e20aea4))
+
+
+
+
+
 # [2.12.0](https://github.com/nearform/orion/compare/v2.11.0...v2.12.0) (2020-02-19)
 
 
