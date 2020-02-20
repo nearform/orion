@@ -17,4 +17,12 @@ module.exports = {
       backgroundColor: fade(palette.action.main, 0.85),
     },
   },
+  containedSecondary: {
+    backgroundColor: palette.background.default,
+    color: palette.action.main,
+    '&:hover': {
+      color: fade(palette.action.main, 0.8),
+      backgroundColor: palette.background.default,
+    },
+  },
 }
