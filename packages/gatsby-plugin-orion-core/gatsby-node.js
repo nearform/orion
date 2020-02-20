@@ -19,5 +19,7 @@ exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
     ],
   })
 
+  config.resolve.extensions.push('.graphql')
+
   actions.replaceWebpackConfig(config)
 }

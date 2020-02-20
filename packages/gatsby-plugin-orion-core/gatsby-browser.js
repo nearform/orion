@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import AuthWrapper from './src/components/AuthWrapper'
-import RootWrapper from './src/components/RootWrapper'
-import { createMuiTheme } from '@material-ui/core/styles'
+import { ClientContext } from 'graphql-hooks'
 import { initGraphQLClient, makeGraphQLClient } from './src/utils/graphql'
 
-import ThemeWrapper, { theme } from 'acme-admin-theme'
-
 const client = makeGraphQLClient(process.env.GATSBY_GRAPHQL_API)
-const muiTheme = createMuiTheme(theme.muiTheme)
 
 const AuthInitWrapper = ({ element }) => {
   const [isAuthInitialized, setIsAuthInitialized] = useState(false)
@@ -22,14 +18,14 @@ const AuthInitWrapper = ({ element }) => {
   }, [])
 
   return (
-    <RootWrapper client={client} theme={muiTheme} ThemeWrapper={ThemeWrapper}>
+    <ClientContext.Provider value={client}>
       <AuthWrapper allowNoParentGroups isAuthInitialized={isAuthInitialized}>
         {element}
       </AuthWrapper>
-    </RootWrapper>
+    </ClientContext.Provider>
   )
 }
 
 export const wrapRootElement = ({ element }) => (
-  <AuthInitWrapper element={element} />
+  <AuthInitWrapper client={client} element={element} />
 )

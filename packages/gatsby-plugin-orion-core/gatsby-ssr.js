@@ -1,24 +1,19 @@
 import React from 'react'
-import AuthWrapper from 'gatsby-plugin-orion-core/src/components/AuthWrapper'
-import RootWrapper from 'gatsby-plugin-orion-core/src/components/RootWrapper'
+import AuthWrapper from './src/components/AuthWrapper'
 import fetch from 'node-fetch'
+import { ClientContext } from 'graphql-hooks'
 import { GraphQLClient } from 'graphql-hooks'
-import { createMuiTheme } from '@material-ui/core/styles'
-
-import ThemeWrapper, { theme } from 'acme-admin-theme'
 
 const client = new GraphQLClient({
   url: process.env.GATSBY_GRAPHQL_API,
   fetch,
 })
 
-const muiTheme = createMuiTheme(theme.muiTheme)
-
 const AuthInitWrapper = ({ element }) => {
   return (
-    <RootWrapper client={client} theme={muiTheme} ThemeWrapper={ThemeWrapper}>
+    <ClientContext.Provider value={client}>
       <AuthWrapper>{element}</AuthWrapper>
-    </RootWrapper>
+    </ClientContext.Provider>
   )
 }
 

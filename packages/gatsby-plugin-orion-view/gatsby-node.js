@@ -1,5 +1,5 @@
-const get = require('lodash/get')
 const getPagesQuery = require('./queries/get-pages')
+const pageComponent = require.resolve('./src/components/Page')
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -9,13 +9,22 @@ exports.createPages = async ({ graphql, actions }) => {
     throw pagesResults.errors
   }
 
-  const publishedPages = get(pagesResults, 'data.orion.orion_page', [])
+  createPage({
+    path: '/_not_found',
+    matchPath: '/*',
+    component: pageComponent,
+    context: {
+      page: null,
+    },
+  })
 
-  publishedPages.forEach(page => {
+  pagesResults.data.orion.orion_page.forEach(page => {
+    const suffix = page.path === '/' ? '' : page.path[page.path.length - 1] === '/' ? '*' : '/*'
+
     createPage({
       path: page.path,
-      matchPath: page.path,
-      component: require.resolve('./src/components/PageView'),
+      matchPath: `${page.path}${suffix}`,
+      component: pageComponent,
       context: {
         page: page,
       },

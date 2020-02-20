@@ -3,10 +3,5 @@ require('dotenv').config({
 })
 
 module.exports = {
-  plugins: [
-    {
-      resolve: 'gatsby-plugin-orion-view',
-      options: {},
-    },
-  ],
+  plugins: ['gatsby-plugin-orion-view'],
 }

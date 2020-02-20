@@ -1,16 +1,23 @@
 module.exports = `{
   orion {
     orion_page(where: {
-      _and: {
-        published: { _is_null: false },
-        expires: { _is_null: true }
-      }
+      published: { _lt: "now()" },
+      expires: { _is_null: true }
     }) {
+      ancestry {
+        ancestor {
+          id
+          path
+          title
+        }
+        direct
+      }
       authors {
         user {
-          title
-          given_name
           avatar
+          given_name
+          id
+          title
         }
       }
       contents {
@@ -19,10 +26,13 @@ module.exports = `{
         id
         props
       }
-      parent {
-        id
-        path
-        title
+      descendants {
+        descendant {
+          id
+          path
+          title
+        }
+        direct
       }
       tags {
         tag {

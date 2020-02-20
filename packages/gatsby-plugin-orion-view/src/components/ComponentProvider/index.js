@@ -1,53 +1,26 @@
-import React, { createContext, useContext, useMemo, useState } from 'react'
+import React, { createContext, useContext } from 'react'
 import T from 'prop-types'
 
-import ArticleContent from '../ArticleContent/wrap'
-import ListChildren from '../ListChildren'
-import ArticleMetadata from '../ArticleMetadata/wrap'
+const ComponentContext = createContext({})
 
-const components = {
-  article_content: ArticleContent,
-  article_metadata: ArticleMetadata,
-  list_children: ListChildren,
-}
-
-const ComponentContext = createContext({
-  get: () => {},
-})
-
-function ComponentProvider({ children }) {
-  const [available, setAvailable] = useState(components)
-
-  const value = useMemo(() => ({
-    get: name => {
-      if (available[name] === undefined) {
-        throw new Error(`Component "${name}" not found`)
-      }
-
-      return available[name]
-    },
-  }), [available])
-
+function ComponentProvider({
+  children,
+  components = {}
+}) {
   return (
-    <ComponentContext.Provider value={value}>
+    <ComponentContext.Provider value={components}>
       {children}
     </ComponentContext.Provider>
   )
 }
 
 ComponentProvider.propTypes = {
-  children: T.element,
+  children: T.node.isRequired,
+  components: T.object,
 }
 
-export function useComponents(names) {
-  const { get } = useContext(ComponentContext)
-  const found = {}
-
-  for (const name of names) {
-    found[name] = get(name)
-  }
-
-  return found
+export function useComponents() {
+  return useContext(ComponentContext)
 }
 
 export default ComponentProvider
