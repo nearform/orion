@@ -3,7 +3,7 @@ const MuiIcon = require('./mui/muiComponentsOverrides/mui-icon')
 const MuiDrawer = require('./mui/muiComponentsOverrides/mui-drawer')
 const MuiPaper = require('./mui/muiComponentsOverrides/mui-paper')
 const MuiAppBar = require('./mui/muiComponentsOverrides/mui-app-bar')
-const MuiMenu = require('./mui/muiComponentsOverrides/mui-menu')
+const MuiPopover = require('./mui/muiComponentsOverrides/mui-popover')
 const MuiButton = require('./mui/muiComponentsOverrides/mui-button')
 const MuiInput = require('./mui/muiComponentsOverrides/mui-input')
 
@@ -25,7 +25,7 @@ exports.muiTheme = {
     MuiDrawer,
     MuiPaper,
     MuiAppBar,
-    MuiMenu,
+    MuiPopover,
     MuiButton,
     MuiInput,
   },
