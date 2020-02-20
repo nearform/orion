@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0](https://github.com/nearform/orion/compare/v2.11.0...v2.12.0) (2020-02-19)
+
+
+### Features
+
+* 🎸 Added error handling ([e0f4fa8](https://github.com/nearform/orion/commit/e0f4fa889db59f580aefc1228ced3eb69ec03526)), closes [#317](https://github.com/nearform/orion/issues/317)
+* 🎸 Basic Form setup ([a238add](https://github.com/nearform/orion/commit/a238adde957572c10ea2238e24ea787e98e1b374))
+
+
+
+
+
 # [2.11.0](https://github.com/nearform/orion/compare/v2.10.0...v2.11.0) (2020-02-18)
 
 

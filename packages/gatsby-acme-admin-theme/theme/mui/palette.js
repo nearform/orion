@@ -9,6 +9,7 @@ module.exports = {
   },
   action: {
     main: colorDefinitions.accessibleGreen,
+    light: colorDefinitions.brighterGreen,
   },
   tertiary: {
     main: colorDefinitions.lightGrey,
@@ -17,5 +18,8 @@ module.exports = {
     default: colorDefinitions.white,
     paper: colorDefinitions.white,
     dark: colorDefinitions.lighterGrey,
+  },
+  error: {
+    main: colorDefinitions.error,
   },
 }
