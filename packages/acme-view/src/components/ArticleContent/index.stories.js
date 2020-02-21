@@ -36,27 +36,31 @@ This paragraph has some \`inline code\`.
 
 storiesOf('ArticleContent', module)
   .addDecorator(jsxDecorator)
-  .add('Interactive', () => {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <div style={{ maxWidth: 640 }}>
-          <ArticleContent
-            content={text('Content', defaultContent)}
-            image={text(
-              'Image URL',
-              'https://images.unsplash.com/photo-1509225770129-fbcf8a696c0b'
-            )}
-            subtitle={text('Subtitle', 'This is a subtitle')}
-            title={text(
-              'Title',
-              '2020 sparks a year of new innovations for Orion and their user base'
-            )}
-          />
+  .add(
+    'Interactive',
+    () => {
+      return (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ maxWidth: 640 }}>
+            <ArticleContent
+              content={text('Content', defaultContent)}
+              image={text(
+                'Image URL',
+                'https://images.unsplash.com/photo-1509225770129-fbcf8a696c0b'
+              )}
+              subtitle={text('Subtitle', 'This is a subtitle')}
+              title={text(
+                'Title',
+                '2020 sparks a year of new innovations for Orion and their user base'
+              )}
+            />
+          </div>
         </div>
-      </div>
-    )
-  }, {
-    knobs: {
-      escapeHTML: false
+      )
+    },
+    {
+      knobs: {
+        escapeHTML: false,
+      },
     }
-  })
+  )

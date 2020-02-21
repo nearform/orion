@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0](https://github.com/nearform/orion/compare/v2.12.0...v2.13.0) (2020-02-20)
+
+
+### Features
+
+* 🎸 add AppBar component ([385cac7](https://github.com/nearform/orion/commit/385cac73367c1d3c7eb2d9813f9462eafef9c536))
+
+
+
+
+
+# [2.12.0](https://github.com/nearform/orion/compare/v2.11.0...v2.12.0) (2020-02-19)
+
+
+### Bug Fixes
+
+* 🐛 Fixed footer bottom text styling ([5c9e034](https://github.com/nearform/orion/commit/5c9e03438c15ff20980e7a3433527456fac2bfa5))
+* 🐛 Handle no onsubmit given ([5045e0b](https://github.com/nearform/orion/commit/5045e0bac2cc78bcb4893ca299485978eda1277b))
+
+
+### Features
+
+* 🎸 Added error handling ([e0f4fa8](https://github.com/nearform/orion/commit/e0f4fa889db59f580aefc1228ced3eb69ec03526)), closes [#317](https://github.com/nearform/orion/issues/317)
+* 🎸 Added input state update and form submitting ([d3cc58a](https://github.com/nearform/orion/commit/d3cc58a835f3f0af4f1f5e741e83275e18155a6b))
+* 🎸 Basic Form setup ([a238add](https://github.com/nearform/orion/commit/a238adde957572c10ea2238e24ea787e98e1b374))
+
+
+
+
+
 # [2.11.0](https://github.com/nearform/orion/compare/v2.10.0...v2.11.0) (2020-02-18)
 
 

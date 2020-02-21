@@ -2,9 +2,6 @@ import React from 'react'
 import { render, fireEvent, waitForElement } from '@testing-library/react'
 import HorizontalNavigationMenu from '.'
 
-// Prevent errors loading the reach router Links
-// jest.mock(`@reach/router/lib/utils`)
-
 let menuData
 
 beforeEach(() => {
