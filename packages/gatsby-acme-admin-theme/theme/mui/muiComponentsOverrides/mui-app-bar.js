@@ -16,6 +16,7 @@ module.exports = {
     },
     '& .MuiButton-root': {
       textTransform: 'none',
+      boxShadow: 'none',
     },
     '& .language-switcher': {
       backgroundColor: palette.background.paper,
@@ -25,6 +26,9 @@ module.exports = {
       borderRadius: '4px',
       '& .MuiSelect-icon': {
         fill: palette.secondary.main,
+      },
+      '& .MuiSelect-select:focus': {
+        backgroundColor: 'transparent',
       },
     },
     '& .language-switcher-item': {
@@ -41,11 +45,13 @@ module.exports = {
       height: '18px',
     },
     '& .brand-logo': {
-      height: '32px',
+      height: '40px',
       width: '90px',
+      paddingTop: 0,
+      paddingBottom: 0,
       backgroundImage: `url('${logoImage}')`,
       backgroundRepeat: 'no-repeat',
-      backgroundSize: 'contain',
+      backgroundSize: 'auto 100%',
     },
   },
 }
