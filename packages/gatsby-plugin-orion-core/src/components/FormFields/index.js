@@ -95,8 +95,6 @@ function InputTextField({
     }
   }
 
-  console.log(error, 'error')
-  console.log(theme.typography.h1, 'sdlhjgfhjasd')
   return (
     <>
       <FieldLabel required={required} hasError={Boolean(error)}>
@@ -139,6 +137,8 @@ InputTextField.propTypes = {
   onEnterKey: T.func,
   children: T.node.isRequired,
   error: T.string,
+  theme: T.shape({ typography: T.object }),
+  inputTypographyVariant: T.string,
 }
 
 function InputSelectField({
@@ -200,8 +200,7 @@ InputSelectField.propTypes = {
   error: T.string.isRequired,
 }
 
-let InputField = ({ type, children, ...props }) => {
-  console.log(props)
+const InputField = withTheme(({ type, children, ...props }) => {
   if (type === 'select') {
     return <InputSelectField {...props}>{children}</InputSelectField>
   }
@@ -211,7 +210,7 @@ let InputField = ({ type, children, ...props }) => {
       {children}
     </InputTextField>
   )
-}
+})
 
 InputField.propTypes = {
   type: T.string,
@@ -239,7 +238,4 @@ SubmitButton.propTypes = {
   hasError: T.bool,
 }
 
-InputField = withTheme(InputField)
-
 export { InputField, SubmitButton }
-// Export default withStyles(styles, { withTheme: true })(AssessmentPillars)

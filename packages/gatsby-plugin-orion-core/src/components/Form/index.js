@@ -1,17 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import T from 'prop-types'
-import { Grid, TextField, Button } from '@material-ui/core'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Grid, Button } from '@material-ui/core'
+import { Formik, Form, Field } from 'formik'
 
-import { InputField, SubmitButton } from '../FormFields'
+import { InputField } from '../FormFields'
 
-function MyForm({
-  formFields = [],
-  submitButtonText,
-  title,
-  SubmitComponent,
-  onSubmit,
-}) {
+function MyForm({ formFields = [], title, SubmitComponent, onSubmit }) {
   const values = formFields.reduce((a, field) => {
     a[field.name] = ''
     return a
@@ -74,7 +68,6 @@ function MyForm({
                       </Grid>
                     )
                   )}
-
                   {SubmitComponent ? (
                     <SubmitComponent disabled={!isValid} />
                   ) : (
