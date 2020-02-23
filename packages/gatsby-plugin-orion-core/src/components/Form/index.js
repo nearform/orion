@@ -9,34 +9,13 @@ function MyForm({
   formFields = [],
   submitButtonText,
   title,
-  SubmitText,
+  SubmitComponent,
   onSubmit,
 }) {
-  const hasError = formFields.filter(field => field.error).length
-
-  const [paramValues, setParamValues] = useState(
-    new Array(formFields.length).fill('')
-  )
-
   const values = formFields.reduce((a, field) => {
     a[field.name] = ''
     return a
   }, {})
-
-  const handleInput = i => e =>
-    setParamValues([
-      ...paramValues.slice(0, i),
-      e.target.value,
-      ...paramValues.slice(i + 1),
-    ])
-
-  const handleOnSubmit = () =>
-    onSubmit &&
-    onSubmit(paramValues.map((value, i) => ({ ...formFields[i], value })))
-
-  const submit = data => {
-    console.log(data)
-  }
 
   return (
     <Grid container spacing={2} justify="center">
@@ -44,7 +23,7 @@ function MyForm({
         {title}
       </Grid>
       <Grid item xs={12}>
-        <Formik initialValues={values} onSubmit={submit}>
+        <Formik initialValues={values} onSubmit={onSubmit}>
           {props => {
             const {
               values,
@@ -54,12 +33,10 @@ function MyForm({
               isValid,
               setFieldTouched,
               handleSubmit,
-              validateField,
             } = props
 
             const change = name => e => {
               e.persist()
-              console.log(values)
               handleChange(e)
               setFieldTouched(name, true, false)
             }
@@ -98,15 +75,18 @@ function MyForm({
                     )
                   )}
 
-                  <Button
-                    fullWidth
-                    type="submit"
-                    variant="raised"
-                    color="primary"
-                    disabled={!isValid}
-                  >
-                    Submit
-                  </Button>
+                  {SubmitComponent ? (
+                    <SubmitComponent disabled={!isValid} />
+                  ) : (
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      disabled={!isValid}
+                    >
+                      Submit
+                    </Button>
+                  )}
                 </Grid>
               </form>
             )
@@ -114,51 +94,6 @@ function MyForm({
         </Formik>
       </Grid>
     </Grid>
-  )
-  return (
-    <div>
-      <div>
-        <Grid container spacing={3} justify="center">
-          <Grid item xs={12}>
-            {title}
-          </Grid>
-          {formFields.map((params, i) => (
-            <Grid key={params.key} item xs={params.xs}>
-              <InputField
-                fullWidth
-                name={params.key}
-                type={params.type}
-                required={params.required}
-                options={params.options}
-                helperText={params.helperText}
-                error={params.error}
-                value={paramValues[i]}
-                onChange={handleInput(i)}
-              >
-                {params.label}
-              </InputField>
-            </Grid>
-          ))}
-          <Grid
-            item
-            container
-            alignItems="baseline"
-            xs={12}
-            spacing={1}
-            wrap="nowrap"
-            justify="space-between"
-          >
-            <Grid item>{SubmitText}</Grid>{' '}
-            {/*   change this to submit component that takes a onSubmit prop   */}
-            <Grid item>
-              <SubmitButton hasError={hasError} onClick={handleOnSubmit}>
-                {submitButtonText}
-              </SubmitButton>
-            </Grid>
-          </Grid>
-        </Grid>
-      </div>
-    </div>
   )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
-import { Typography } from '@material-ui/core'
+import { Typography, Button } from '@material-ui/core'
 
 import Form from '.'
 
@@ -154,7 +154,12 @@ storiesOf('Form', module)
           No account? <a>Create account</a>
         </Typography>
       }
+      SubmitComponent={props => (
+        <Button type="submit" variant="contained" color="primary" {...props}>
+          Custom Submit
+        </Button>
+      )}
       // eslint-disable-next-line no-console
-      onSubmit={e => console.log(e)}
+      onSubmit={e => console.log(e, 'fsdhjbkafsdl')}
     />
   ))
