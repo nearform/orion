@@ -111,6 +111,7 @@ storiesOf('Form', module)
           label: 'Please enter your username',
           name: 'username',
           type: 'email',
+          inputTypographyVariant: 'h1',
           xs: 6,
         },
         {
@@ -123,12 +124,10 @@ storiesOf('Form', module)
           label: 'Please enter your username',
           name: 'email',
           type: 'email',
-          validate: (
-            values,
-            props /* only available when using withFormik */
-          ) => {
+          placeholder: 'Email',
+          validate: values => {
             let errors
-            // console.log('jherhreb')
+
             if (!values) {
               errors = 'Required'
             } else if (

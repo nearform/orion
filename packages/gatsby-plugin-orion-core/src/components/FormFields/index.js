@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
   makeStyles,
+  withTheme,
 } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
@@ -82,6 +83,9 @@ function InputTextField({
   onEnterKey,
   error = false,
   children,
+  theme,
+  inputTypographyVariant,
+  ...props
 }) {
   const classes = useStyles()
 
@@ -91,6 +95,8 @@ function InputTextField({
     }
   }
 
+  console.log(error, 'error')
+  console.log(theme.typography.h1, 'sdlhjgfhjasd')
   return (
     <>
       <FieldLabel required={required} hasError={Boolean(error)}>
@@ -110,10 +116,14 @@ function InputTextField({
         disabled={disabled}
         className={classes.input}
         error={Boolean(error)}
-        inputProps={{ onKeyPress }}
+        inputProps={{
+          onKeyPress,
+          style: theme.typography[inputTypographyVariant || 'body'],
+        }}
         onChange={onChange}
+        {...props}
       />
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {error && <ErrorMessage>{error} Thst</ErrorMessage>}
     </>
   )
 }
@@ -190,7 +200,8 @@ InputSelectField.propTypes = {
   error: T.string.isRequired,
 }
 
-function InputField({ type, children, ...props }) {
+let InputField = ({ type, children, ...props }) => {
+  console.log(props)
   if (type === 'select') {
     return <InputSelectField {...props}>{children}</InputSelectField>
   }
@@ -228,4 +239,7 @@ SubmitButton.propTypes = {
   hasError: T.bool,
 }
 
+InputField = withTheme(InputField)
+
 export { InputField, SubmitButton }
+// Export default withStyles(styles, { withTheme: true })(AssessmentPillars)

@@ -67,30 +67,36 @@ function MyForm({
             return (
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={2} justify="center">
-                  {formFields.map(({ name, ...formField }) => (
-                    <Grid key={name} item xs={formField.xs || 12}>
-                      <Field
-                        value={values[name]}
-                        name={name}
-                        validate={formField.validate}
-                        onChange={change(name)}
-                      >
-                        {({ field }) => (
-                          <TextField
-                            fullWidth
-                            id="email"
-                            helperText={touched[name] ? errors[name] : ''}
-                            error={touched[name] && Boolean(errors[name])}
-                            label="Email"
-                            {...field}
-                          />
-                        )}
-                      </Field>
-                    </Grid>
-                  ))}
-                  <button type="button" onClick={() => validateField('email')}>
-                    Check Username
-                  </button>
+                  {formFields.map(
+                    ({
+                      name,
+                      xs,
+                      validate,
+                      label,
+                      inputTypographyVariant,
+                      ...formField
+                    }) => (
+                      <Grid key={name} item xs={xs || 12}>
+                        <Field
+                          value={values[name]}
+                          name={name}
+                          validate={validate}
+                          onChange={change(name)}
+                        >
+                          {({ field }) => (
+                            <InputField
+                              fullWidth
+                              helperText={label}
+                              error={touched[name] && Boolean(errors[name])}
+                              inputTypographyVariant={inputTypographyVariant}
+                              {...field}
+                              {...formField}
+                            />
+                          )}
+                        </Field>
+                      </Grid>
+                    )
+                  )}
 
                   <Button
                     fullWidth
