@@ -42,7 +42,7 @@ storiesOf('Form', module)
             'Must include an uppercase character, a number and a symbol',
         },
       ]}
-      Title={<Typography variant="h3">Create a new account</Typography>}
+      title={<Typography variant="h3">Create a new account</Typography>}
       submitButtonText="Create account"
       submitText={
         <Typography noWrap variant="h6" color="textSecondary">
@@ -68,7 +68,7 @@ storiesOf('Form', module)
           xs: 12,
         },
       ]}
-      Title={<Typography variant="h3">Sign in to your account</Typography>}
+      title={<Typography variant="h3">Sign in to your account</Typography>}
       submitButtonText="Sign in"
       submitText={
         <Typography noWrap variant="h6" color="textSecondary">
@@ -93,7 +93,62 @@ storiesOf('Form', module)
           xs: 12,
         },
       ]}
-      Title={<Typography variant="h3">Sign in to your account</Typography>}
+      title={<Typography variant="h3">Sign in to your account</Typography>}
+      submitButtonText="Sign in"
+      submitText={
+        <Typography noWrap variant="h6" color="textSecondary">
+          No account? <a>Create account</a>
+        </Typography>
+      }
+      // eslint-disable-next-line no-console
+      onSubmit={e => console.log(e)}
+    />
+  ))
+  .add('Article Edit', () => (
+    <Form
+      formFields={[
+        {
+          label: 'Please enter your username',
+          name: 'username',
+          type: 'email',
+          xs: 6,
+        },
+        {
+          label: 'Please enter your password',
+          name: 'password',
+          type: 'password',
+          xs: 6,
+        },
+        {
+          label: 'Please enter your username',
+          name: 'email',
+          type: 'email',
+          validate: (
+            values,
+            props /* only available when using withFormik */
+          ) => {
+            let errors
+            // console.log('jherhreb')
+            if (!values) {
+              errors = 'Required'
+            } else if (
+              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values)
+            ) {
+              errors = 'Invalid email address'
+            }
+
+            return errors
+          },
+          xs: 12,
+        },
+        {
+          label: 'Please enter your password',
+          name: 'name',
+          type: 'password',
+          xs: 12,
+        },
+      ]}
+      title={<Typography variant="h3">Sign in to your account</Typography>}
       submitButtonText="Sign in"
       submitText={
         <Typography noWrap variant="h6" color="textSecondary">
