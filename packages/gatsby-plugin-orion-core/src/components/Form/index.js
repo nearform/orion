@@ -64,7 +64,7 @@ function MyForm({
                             <InputField
                               fullWidth
                               helperText={label}
-                              error={touched[name] && Boolean(errors[name])}
+                              error={touched[name] && errors[name]}
                               inputTypographyVariant={inputTypographyVariant}
                               {...field}
                               {...formField}

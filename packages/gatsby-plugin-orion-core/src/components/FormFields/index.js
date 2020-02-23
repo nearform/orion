@@ -123,7 +123,7 @@ function InputTextField({
         onChange={onChange}
         {...props}
       />
-      {error && <ErrorMessage>{error} Thst</ErrorMessage>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </>
   )
 }
