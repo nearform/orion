@@ -51,7 +51,7 @@ function MyForm({ formFields = [], title, SubmitComponent, onSubmit }) {
                         <Field
                           value={values[name]}
                           name={name}
-                          validate={validate}
+                          validate={validate ? e => validate(e, values) : null}
                           onChange={change(name)}
                         >
                           {({ field }) => (

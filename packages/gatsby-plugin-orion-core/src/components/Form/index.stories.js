@@ -118,6 +118,7 @@ storiesOf('Form', module)
           label: 'Please enter your password',
           name: 'password',
           type: 'password',
+          validate: v => (v.length < 5 ? 'Password too short' : null),
           xs: 6,
         },
         {
@@ -125,18 +126,18 @@ storiesOf('Form', module)
           name: 'email',
           type: 'email',
           placeholder: 'Email',
-          validate: values => {
-            let errors
+          validate: value => {
+            let error
 
-            if (!values) {
-              errors = 'Required'
+            if (!value) {
+              error = 'Required'
             } else if (
-              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values)
+              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
             ) {
-              errors = 'Invalid email address'
+              error = 'Invalid email address'
             }
 
-            return errors
+            return error
           },
           xs: 12,
         },
@@ -144,6 +145,8 @@ storiesOf('Form', module)
           label: 'Please enter your password',
           name: 'name',
           type: 'password',
+          validate: (value, values) =>
+            value === values.password ? null : 'Passwords do not match',
           xs: 12,
         },
       ]}
@@ -159,7 +162,7 @@ storiesOf('Form', module)
           Custom Submit
         </Button>
       )}
-      // eslint-disable-next-line no-console
-      onSubmit={e => console.log(e, 'fsdhjbkafsdl')}
+      // eslint-disable-next-line no-alert
+      onSubmit={e => alert(JSON.stringify(e, null, 2))}
     />
   ))
