@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0](https://github.com/nearform/orion/compare/v2.13.1...v2.14.0) (2020-02-24)
+
+
+### Bug Fixes
+
+* 🐛 Error message not appearing ([881a5a8](https://github.com/nearform/orion/commit/881a5a8622e5c8385f8b00e8d58217f39b43f36b))
+
+
+### Features
+
+* 🎸 Added an argument for all form values to validate ([ac5f6a0](https://github.com/nearform/orion/commit/ac5f6a0a71cce1f394a995bf0845d20415fd6865))
+* 🎸 Added custom Submit Component ([a3cc089](https://github.com/nearform/orion/commit/a3cc089ad0506e6ab058febc2bc6a0e5385e8331))
+* 🎸 Added typography variant option to form ([f13bdc4](https://github.com/nearform/orion/commit/f13bdc4f2c4412eb5f0b56816893d0e4e71c5952))
+* 🎸 Article edit page ([85c36a1](https://github.com/nearform/orion/commit/85c36a12fb296477ed4bf558de636a0e691a04a3))
+* 🎸 Basic UploadButton added ([e2029a8](https://github.com/nearform/orion/commit/e2029a8741cf7f26ee52a1ea9a47395d6a3289fd))
+* 🎸 Created Sign in component for orion-view ([f0e0b32](https://github.com/nearform/orion/commit/f0e0b32d840b0aed4c3e8bbdcf9412153bb09b86))
+* 🎸 Finished form for artifle creation ([b9b9b63](https://github.com/nearform/orion/commit/b9b9b63b2bc49cfca6374d79444c16c014ea4d51))
+* 🎸 Setup Formik ([530c006](https://github.com/nearform/orion/commit/530c006505097ae0e248055b3e17a4cfcaf71f53))
+
+
+
+
+
 # [2.13.0](https://github.com/nearform/orion/compare/v2.12.0...v2.13.0) (2020-02-20)
 
 

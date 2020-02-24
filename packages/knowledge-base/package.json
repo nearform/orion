@@ -2,7 +2,7 @@
   "name": "knowledge-base",
   "private": true,
   "description": "The Gatsby-powered engine of the goto knowledge base",
-  "version": "2.13.0",
+  "version": "2.14.0",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"

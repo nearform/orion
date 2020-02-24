@@ -1,85 +1,123 @@
-import React, { useState } from 'react'
+import React from 'react'
 import T from 'prop-types'
-import { Grid } from '@material-ui/core'
+import { Grid, Button, withStyles } from '@material-ui/core'
+import { Formik, Field } from 'formik'
 
-import { InputField, SubmitButton } from '../FormFields'
+import { InputField } from '../FormFields'
 
-function Form({
-  formFields = [],
-  submitButtonText,
-  Title,
-  SubmitText,
-  onSubmit,
-}) {
-  const hasError = formFields.filter(field => field.error).length
-
-  const [paramValues, setParamValues] = useState(
-    new Array(formFields.length).fill('')
-  )
-
-  const handleInput = i => e =>
-    setParamValues([
-      ...paramValues.slice(0, i),
-      e.target.value,
-      ...paramValues.slice(i + 1),
-    ])
-
-  const handleOnSubmit = () =>
-    onSubmit &&
-    onSubmit(paramValues.map((value, i) => ({ ...formFields[i], value })))
+function Form({ classes, formFields = [], title, SubmitComponent, onSubmit }) {
+  const values = formFields.reduce((a, field) => {
+    a[field.name] = ''
+    return a
+  }, {})
 
   return (
-    <div>
-      <div>
-        <Grid container spacing={3} justify="center">
-          <Grid item xs={12}>
-            {Title}
-          </Grid>
-          {formFields.map((params, i) => (
-            <Grid key={params.key} item xs={params.xs}>
-              <InputField
-                fullWidth
-                name={params.key}
-                type={params.type}
-                required={params.required}
-                options={params.options}
-                helperText={params.helperText}
-                error={params.error}
-                value={paramValues[i]}
-                onChange={handleInput(i)}
-              >
-                {params.label}
-              </InputField>
-            </Grid>
-          ))}
-          <Grid
-            item
-            container
-            alignItems="baseline"
-            xs={12}
-            spacing={1}
-            wrap="nowrap"
-            justify="space-between"
-          >
-            <Grid item>{SubmitText}</Grid>
-            <Grid item>
-              <SubmitButton hasError={hasError} onClick={handleOnSubmit}>
-                {submitButtonText}
-              </SubmitButton>
-            </Grid>
-          </Grid>
-        </Grid>
-      </div>
-    </div>
+    <Grid container spacing={2} justify="center">
+      <Grid item xs={12}>
+        {title}
+      </Grid>
+      <Grid item xs={12}>
+        <Formik initialValues={values} onSubmit={onSubmit}>
+          {props => {
+            const {
+              // Lines below are props that come from Formik therefore no prop-types needed
+              // eslint-disable-next-line react/prop-types
+              values,
+              // eslint-disable-next-line react/prop-types
+              errors,
+              // eslint-disable-next-line react/prop-types
+              touched,
+              // eslint-disable-next-line react/prop-types
+              handleChange,
+              // eslint-disable-next-line react/prop-types
+              isValid,
+              // eslint-disable-next-line react/prop-types
+              setFieldTouched,
+              // eslint-disable-next-line react/prop-types
+              handleSubmit,
+            } = props
+
+            const change = name => e => {
+              e.persist()
+              handleChange(e)
+              setFieldTouched(name, true, false)
+            }
+
+            return (
+              <form onSubmit={handleSubmit}>
+                <Grid container spacing={2} justify="center">
+                  {formFields.map(
+                    ({ name, xs, validate, label, ...formField }) => (
+                      <Grid key={name} item xs={xs || 12}>
+                        <Field
+                          value={values[name]}
+                          name={name}
+                          validate={validate ? e => validate(e, values) : null}
+                          onChange={change(name)}
+                        >
+                          {({ field }) => (
+                            <InputField
+                              fullWidth
+                              error={touched[name] && errors[name]}
+                              {...field}
+                              {...formField}
+                            >
+                              {label}
+                            </InputField>
+                          )}
+                        </Field>
+                      </Grid>
+                    )
+                  )}
+                  {SubmitComponent ? (
+                    <SubmitComponent
+                      disabled={!isValid}
+                      className={classes.submit}
+                    />
+                  ) : (
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      disabled={!isValid}
+                    >
+                      Submit
+                    </Button>
+                  )}
+                </Grid>
+              </form>
+            )
+          }}
+        </Formik>
+      </Grid>
+    </Grid>
   )
 }
 
 Form.propTypes = {
-  formFields: T.arrayOf(T.object),
-  submitButtonText: T.string,
+  formFields({ formFields }) {
+    if (formFields.filter(({ name }) => name).length !== formFields.length) {
+      return new Error(
+        'Invalid prop, every object in the form fields array requires a name property'
+      )
+    }
+
+    if (
+      formFields
+        .map(({ name }) => name)
+        .some((name, i, arr) => arr.indexOf(name) !== i)
+    ) {
+      return new Error(
+        'Invalid prop, every name property in form fields MUST be unique'
+      )
+    }
+  },
+  SubmitComponent: T.func,
   onSubmit: T.func.isRequired,
-  Title: T.object,
-  SubmitText: T.object,
+  title: T.object,
+  classes: T.object,
 }
 
-export default Form
+const styles = theme => ({ ...theme.form })
+
+export default withStyles(styles, { withTheme: true })(Form)

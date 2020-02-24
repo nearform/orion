@@ -2,7 +2,7 @@
   "name": "acme-edit",
   "private": true,
   "description": "The Orion powered content editing site for Acme Insurance",
-  "version": "2.13.0",
+  "version": "2.14.0",
   "author": "NearForm",
   "dependencies": {
     "gatsby": "^2.19.18",
