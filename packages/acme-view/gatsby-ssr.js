@@ -18,7 +18,7 @@ export const wrapPageElement = ({ element }) => (
         <ThemeWrapper>
           {element}
         </ThemeWrapper>
-      </ThemeProvider>>
+      </ThemeProvider>
       </ComponentProvider>
   </LayoutProvider>
 )
