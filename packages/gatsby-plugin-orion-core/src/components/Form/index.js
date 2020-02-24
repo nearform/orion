@@ -1,17 +1,11 @@
 import React from 'react'
 import T from 'prop-types'
 import { Grid, Button, withStyles } from '@material-ui/core'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Field } from 'formik'
 
 import { InputField } from '../FormFields'
 
-function MyForm({
-  classes,
-  formFields = [],
-  title,
-  SubmitComponent,
-  onSubmit,
-}) {
+function Form({ classes, formFields = [], title, SubmitComponent, onSubmit }) {
   const values = formFields.reduce((a, field) => {
     a[field.name] = ''
     return a
@@ -26,12 +20,20 @@ function MyForm({
         <Formik initialValues={values} onSubmit={onSubmit}>
           {props => {
             const {
+              // Lines below are props that come from Formik therefore no prop-types needed
+              // eslint-disable-next-line react/prop-types
               values,
+              // eslint-disable-next-line react/prop-types
               errors,
+              // eslint-disable-next-line react/prop-types
               touched,
+              // eslint-disable-next-line react/prop-types
               handleChange,
+              // eslint-disable-next-line react/prop-types
               isValid,
+              // eslint-disable-next-line react/prop-types
               setFieldTouched,
+              // eslint-disable-next-line react/prop-types
               handleSubmit,
             } = props
 
@@ -93,13 +95,29 @@ function MyForm({
 }
 
 Form.propTypes = {
-  formFields: T.arrayOf(T.object), // Make a validator that each name/key should be unique
-  submitButtonText: T.string,
+  formFields({ formFields }) {
+    if (formFields.filter(({ name }) => name).length !== formFields.length) {
+      return new Error(
+        'Invalid prop, every object in the form fields array requires a name property'
+      )
+    }
+
+    if (
+      formFields
+        .map(({ name }) => name)
+        .some((name, i, arr) => arr.indexOf(name) !== i)
+    ) {
+      return new Error(
+        'Invalid prop, every name property in form fields MUST be unique'
+      )
+    }
+  },
+  SubmitComponent: T.func,
   onSubmit: T.func.isRequired,
   title: T.object,
-  SubmitText: T.object,
+  classes: T.object,
 }
 
 const styles = theme => ({ ...theme.form })
 
-export default withStyles(styles, { withTheme: true })(MyForm)
+export default withStyles(styles, { withTheme: true })(Form)

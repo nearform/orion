@@ -20,7 +20,6 @@ const UserLogin = () => (
       },
     ]}
     title={<Typography variant="h3">Sign in to your account</Typography>}
-    submitButtonText="Sign in"
     SubmitComponent={({ disabled, ...props }) => (
       <Grid
         container

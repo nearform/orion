@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
+import { object } from '@storybook/addon-knobs'
 import { Typography, Button } from '@material-ui/core'
 
 import Form from '.'
@@ -12,29 +13,28 @@ storiesOf('Form', module)
       formFields={[
         {
           label: 'First Name',
-          key: 'given_name',
+          name: 'given_name',
           required: true,
           type: 'text',
           xs: 6,
         },
         {
           label: 'Last Name',
-          key: 'family_name',
+          name: 'family_name',
           required: true,
           type: 'text',
           xs: 6,
         },
         {
           label: 'Email',
-          key: 'username',
+          name: 'username',
           required: true,
           type: 'email',
           xs: 12,
-          error: 'This is an error',
         },
         {
           label: 'Password',
-          key: 'password',
+          name: 'password',
           required: true,
           type: 'password',
           xs: 12,
@@ -43,12 +43,6 @@ storiesOf('Form', module)
         },
       ]}
       title={<Typography variant="h3">Create a new account</Typography>}
-      submitButtonText="Create account"
-      submitText={
-        <Typography noWrap variant="h6" color="textSecondary">
-          Have an account? <a>Sign in</a>
-        </Typography>
-      }
     />
   ))
   .add('Login Error', () => (
@@ -56,25 +50,19 @@ storiesOf('Form', module)
       formFields={[
         {
           label: 'Please enter your username',
-          key: 'username',
+          name: 'username',
           type: 'email',
           xs: 12,
           error: 'This is an error!',
         },
         {
           label: 'Please enter your password',
-          key: 'password',
+          name: 'password',
           type: 'password',
           xs: 12,
         },
       ]}
       title={<Typography variant="h3">Sign in to your account</Typography>}
-      submitButtonText="Sign in"
-      submitText={
-        <Typography noWrap variant="h6" color="textSecondary">
-          No account? <a>Create account</a>
-        </Typography>
-      }
     />
   ))
   .add('Login', () => (
@@ -82,13 +70,13 @@ storiesOf('Form', module)
       formFields={[
         {
           label: 'Please enter your username',
-          key: 'username',
+          name: 'username',
           type: 'email',
           xs: 12,
         },
         {
           label: 'Please enter your password',
-          key: 'password',
+          name: 'password',
           type: 'password',
           xs: 12,
         },
@@ -106,13 +94,16 @@ storiesOf('Form', module)
   ))
   .add('Article Edit', () => (
     <Form
-      formFields={[
+      formFields={object('Form Fields', [
         {
           label: 'Please enter your username',
           name: 'username',
-          type: 'email',
+          multiline: true,
+          required: true,
+          rows: 10,
           inputTypographyVariant: 'h1',
           xs: 6,
+          placeholder: 'addTitle',
         },
         {
           label: 'Please enter your password',
@@ -125,6 +116,7 @@ storiesOf('Form', module)
           label: 'Please enter your username',
           name: 'email',
           type: 'email',
+          inputTypographyVariant: 'h2',
           placeholder: 'Email',
           validate: value => {
             let error
@@ -143,20 +135,14 @@ storiesOf('Form', module)
         },
         {
           label: 'Please enter your password',
-          name: 'name',
+          name: 'confirmPassword',
           type: 'password',
           validate: (value, values) =>
             value === values.password ? null : 'Passwords do not match',
           xs: 12,
         },
-      ]}
+      ])}
       title={<Typography variant="h3">Sign in to your account</Typography>}
-      submitButtonText="Sign in"
-      submitText={
-        <Typography noWrap variant="h6" color="textSecondary">
-          No account? <a>Create account</a>
-        </Typography>
-      }
       SubmitComponent={props => (
         <Button type="submit" variant="contained" color="primary" {...props}>
           Custom Submit

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Button, Typography } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 
 import { Form } from 'gatsby-plugin-orion-core'
 
@@ -37,31 +37,17 @@ const UserLogin = () => (
         multiline: true,
       },
     ]}
+    // TODO Submit component below with the 3 buttons when available
     SubmitComponent={({ disabled, ...props }) => (
-      <Grid
-        container
-        direction="row"
-        justify="space-between"
-        alignItems="center"
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={disabled}
         {...props}
       >
-        <Grid>
-          <Typography noWrap variant="h6" color="textSecondary">
-            Have an account? <a>Sign in</a>
-          </Typography>
-        </Grid>
-        <Grid>&nbsp;</Grid>
-        <Grid>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            disabled={disabled}
-          >
-            Create account
-          </Button>
-        </Grid>
-      </Grid>
+        Create article
+      </Button>
     )}
     // TODO: change below to handle submit
     // eslint-disable-next-line no-alert

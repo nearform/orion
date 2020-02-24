@@ -2,8 +2,8 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 
-import Form from '.'
+import UserLogin from '.'
 
 storiesOf('User Login', module)
   .addDecorator(jsxDecorator)
-  .add('default', () => <Form />)
+  .add('default', () => <UserLogin />)
