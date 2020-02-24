@@ -1,7 +1,7 @@
 {
   "name": "gatsby-theme-acme",
   "description": "Gatsby Material UI theme for ACME",
-  "version": "2.0.0",
+  "version": "2.14.1",
   "main": "gatsby-config.js",
   "dependencies": {
     "@material-ui/core": "^4.9.3",

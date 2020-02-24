@@ -2,7 +2,7 @@
   "name": "gatsby-plugin-orion-core",
   "description": "Orion core core plugin",
   "main": "index.js",
-  "version": "2.14.0",
+  "version": "2.14.1",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
@@ -16,9 +16,9 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "^4.9.0",
     "aws-amplify": "2.2.5",
-    "components": "^2.9.0",
+    "components": "^2.14.1",
     "dotenv": "^8.2.0",
-    "efqm-theme": "^2.9.0",
+    "efqm-theme": "^2.14.1",
     "fg-loadcss": "^2.1.0",
     "formik": "^2.1.4",
     "gatsby": "^2.19.18",
