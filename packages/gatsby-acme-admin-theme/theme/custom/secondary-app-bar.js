@@ -4,7 +4,7 @@ const typography = require('../mui/typography')
 module.exports = {
   root: {
     backgroundColor: palette.background.dark,
-    padding: 8,
+    padding: '8px 0',
     width: '100%',
     '& a': {
       ...typography.h5,

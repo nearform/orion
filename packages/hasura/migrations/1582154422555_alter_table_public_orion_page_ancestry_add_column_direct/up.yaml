@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "public"."orion_page_ancestry" ADD COLUMN "direct" boolean NOT
+      NULL DEFAULT false;
+  type: run_sql

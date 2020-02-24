@@ -1,8 +1,8 @@
-import DataTable from '.'
 import React, { useMemo, useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { number } from '@storybook/addon-knobs'
+import DataTable from '.'
 
 const columns = [
   {
