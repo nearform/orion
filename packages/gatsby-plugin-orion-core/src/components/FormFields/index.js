@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
 import {
-  Button,
   MenuItem,
   Select,
   TextField,
@@ -217,25 +216,4 @@ InputField.propTypes = {
   children: T.node.isRequired,
 }
 
-function SubmitButton({ onClick, children, hasError }) {
-  return (
-    <Button
-      fullWidth
-      name="submit"
-      variant="contained"
-      color="primary"
-      disabled={hasError}
-      onClick={onClick}
-    >
-      {children}
-    </Button>
-  )
-}
-
-SubmitButton.propTypes = {
-  onClick: T.func.isRequired,
-  children: T.node.isRequired,
-  hasError: T.bool,
-}
-
-export { InputField, SubmitButton }
+export { InputField }
