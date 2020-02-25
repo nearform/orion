@@ -8,7 +8,7 @@ import {
   AppBar as MuiAppBar,
   Toolbar,
 } from '@material-ui/core'
-import MoreVert from '@material-ui/icons/MoreVert'
+import MoreVert from '@material-ui/icons'
 import Twemoji from 'react-twemoji'
 import HorizontalNavigationMenu from 'gatsby-plugin-orion-core/src/components/HorizontalNavigationMenu'
 
