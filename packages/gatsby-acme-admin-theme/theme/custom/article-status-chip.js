@@ -23,27 +23,3 @@ module.exports = {
     iconColor: colorDefinitions.lightGrey,
   },
 }
-
-// //icon color
-// module.exports = {
-//   inProgress: colorDefinitions.cyan,
-//   inReview: colorDefinitions.slateGrey,
-//   published: colorDefinitions.white,
-//   hidden: colorDefinitions.lightGrey,
-// }
-
-// // chip color
-// module.exports = {
-//   inProgress: fade(colorDefinitions.cyan, 0.1),
-//   inReview: fade(colorDefinitions.yellow, 0.2),
-//   published: colorDefinitions.navyBlue,
-//   hidden: fade(colorDefinitions.lightGrey, 0.07),
-// }
-
-// // label color
-// module.exports = {
-//   inProgress: colorDefinitions.slateGrey,
-//   inReview: colorDefinitions.slateGrey,
-//   published: colorDefinitions.white,
-//   hidden: colorDefinitions.slateGrey,
-// }
