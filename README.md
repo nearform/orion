@@ -3,7 +3,44 @@
 [![CircleCI](https://circleci.com/gh/nearform/orion.svg?style=svg&circle-token=0ce58bd80ab2db1fd16b1eca28dba58c62588a74)](https://circleci.com/gh/nearform/orion)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
-This repository is a collection of packages that can be used as a foundation for a statically built, GraphQL-driven knowledge platform.
+Orion is a bespoke CMS development kit, offering developers packages and capabilities that accelerate the process in developing content-driven solutions.
+
+## Tech Stack
+
+Bundlers and Package Managers
+  * Webpack (https://webpack.js.org/)
+  * Lerna (https://github.com/lerna/lerna)
+  * Yarn (https://yarnpkg.com/lang/en/)
+  
+Languages and Frameworks
+  * JavaScript (https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+  * React (https://reactjs.org/)
+  * Gatsby (https://www.gatsbyjs.org/)
+  * Material-UI (https://material-ui.com/)
+  
+Datastore and Languages
+  * Hasura (https://hasura.io/)
+  * GraphQL (https://graphql.org/)
+  * PostgreSQL (https://www.postgresql.org/)
+
+Linting
+  * XO (https://github.com/xojs/xo)
+  * Prettier (https://prettier.io/)
+
+Testing
+  * Jest (https://jestjs.io/)
+  * React Testing Library
+  * Cypress
+
+CI and Deployment
+  * CircleCI (https://circleci.com)
+  * Github Actions (https://help.github.com/en/actions)
+
+Logging and Debugging
+  * LogLevel (https://github.com/pimterry/loglevel)
+  * Default Node.js Debugging for Chrome (https://medium.com/the-node-js-collection/debugging-node-js-with-google-chrome-4965b5f910f4)
+
+
 
 ## Installation
 
@@ -44,21 +81,6 @@ This folder contains the migrations and scripts necessary to run them.
   [saluki](https://github.com/nearform/saluki) for its CSS-in-JS modular
   approach with sane defaults similar in concept to [tailwind](https://tailwindcss.com/docs/what-is-tailwind/)
 
-### [./packages/knowledge-base](./packages/knowledge-base)
-
-- a static build enabled app based on [gatsby](https://www.gatsbyjs.org)
-- Gatsby uses [graphql](https://graphql.org/) to fetch data from the API
-- exports commonjs logic and config
-
-### [./packages/nearform-theme](./packages/nearform-theme)
-
-### [./packages/efqm-theme](./packages/efqm-theme)
-
-- branding customizations
-- material-ui themes
-- wrapper components to apply common styles to the application
-- theme configuration
-- assets
 
 ### [./packages/functions](./packages/functions)
 
