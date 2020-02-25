@@ -7,16 +7,26 @@
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
   },
-  "dependencies": {
-    "gatsby-plugin-orion-core": "^2.14.1"
-  },
   "homepage": "https://www.nearform.com/",
   "keywords": [
     "gatsby"
   ],
+  "dependencies": {
+    "@material-ui/core": "^4.9.4",
+    "gatsby-plugin-orion-core": "^2.14.1",
+    "prop-types": "^15.7.2"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nearform/orion.git"
   },
-  "xo": false
+  "xo": false,
+  "devDependencies": {
+    "@storybook/addon-knobs": "^5.3.12",
+    "@storybook/react": "^5.3.12",
+    "storybook-addon-jsx": "^7.1.14"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0"
+  }
 }
