@@ -1,9 +1,0 @@
-mutation addUserGroup($userId: Int!, $groupId: Int!) {
-  update_user(where: { id: { _eq: $userId } }, _set: { pending: false }) {
-    affected_rows
-  }
-
-  insert_user_group(objects: { user_id: $userId, group_id: $groupId }) {
-    affected_rows
-  }
-}
