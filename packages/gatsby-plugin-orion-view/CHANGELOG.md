@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.15.0](https://github.com/nearform/orion/compare/v2.14.1...v2.15.0) (2020-02-25)
+
+
+### Bug Fixes
+
+* 🐛 Applied ArticleEditButtons to ArticleEditForm ([1dd79de](https://github.com/nearform/orion/commit/1dd79dec85cd93d43dd242ef42805765add95a43))
+
+
+### Features
+
+* 🎸 Created Article Edit buttons ([8d4f3a2](https://github.com/nearform/orion/commit/8d4f3a24176e2736facc0ff2a8d20a9343d5afac))
+
+
+
+
+
 ## [2.14.1](https://github.com/nearform/orion/compare/v2.14.0...v2.14.1) (2020-02-24)
 
 **Note:** Version bump only for package gatsby-plugin-orion-view
