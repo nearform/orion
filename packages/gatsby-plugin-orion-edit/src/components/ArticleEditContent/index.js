@@ -1,7 +1,8 @@
 import React from 'react'
-import { Button } from '@material-ui/core'
 
 import { Form } from 'gatsby-plugin-orion-core'
+
+import ArticleEditButtons from '../ArticleEditButtons'
 
 const UserLogin = () => (
   <Form
@@ -38,16 +39,15 @@ const UserLogin = () => (
       },
     ]}
     // TODO Submit component below with the 3 buttons when available
-    SubmitComponent={({ disabled, ...props }) => (
-      <Button
+    SubmitComponent={({ disabled, onSubmit, ...props }) => (
+      <ArticleEditButtons
         type="submit"
         variant="contained"
         color="primary"
         disabled={disabled}
+        onPublish={onSubmit}
         {...props}
-      >
-        Create article
-      </Button>
+      />
     )}
     // TODO: change below to handle submit
     // eslint-disable-next-line no-alert
