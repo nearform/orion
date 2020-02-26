@@ -16,6 +16,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "^4.9.0",
     "aws-amplify": "2.2.2",
+    "classnames": "^2.2.6",
     "components": "^2.9.0",
     "dotenv": "^8.0.0",
     "efqm-theme": "^2.9.0",

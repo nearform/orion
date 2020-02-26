@@ -95,7 +95,7 @@ function UploadImageWidget({
           ) : (
             <Button
               variant="contained"
-              className={classes.addPhotoButton}
+              className="add-photo-button"
               onClick={startImageUpload}
             >
               <AddPhotoIcon className={classes.addPhotoIcon} />
@@ -122,31 +122,31 @@ UploadImageWidget.propTypes = {
 
 export default withStyles(theme => ({
   image: {
-    position: 'relative',
-    height: 0,
-    paddingTop: '50%',
-    width: '100%',
-    color: 'transparent',
-    '&:hover, &$focusVisible, &.alwaysShowBox': {
-      zIndex: 1,
-      color: theme.palette.common.white,
-      '& $imageBackdrop': {
-        opacity: 0.4,
-      },
-      '& $imageTitle': {
-        opacity: 1,
-      },
-    },
+    // Position: 'relative',
+    // height: 0,
+    // paddingTop: '50%',
+    // width: '100%',
+    // color: 'transparent',
+    // '&:hover, &$focusVisible, &.alwaysShowBox': {
+    //   zIndex: 1,
+    //   color: theme.palette.common.white,
+    //   '& $imageBackdrop': {
+    //     opacity: 0.4,
+    //   },
+    //   '& $imageTitle': {
+    //     opacity: 1,
+    //   },
+    // },
   },
   imageButton: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // Position: 'absolute',
+    // left: 0,
+    // right: 0,
+    // top: 0,
+    // bottom: 0,
+    // display: 'flex',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   imageSrc: {
     position: 'absolute',
@@ -182,9 +182,9 @@ export default withStyles(theme => ({
     width: '60px !important',
   },
   addPhotoButton: {
-    ...theme.articleTypography.articleEditButton,
-    padding: theme.spacing(1, 3),
-    borderRadius: theme.spacing(0.5),
+    // ...theme.articleTypography.articleEditButton,
+    // padding: theme.spacing(1, 3),
+    // borderRadius: theme.spacing(0.5),
   },
   addPhotoIcon: {
     marginRight: theme.spacing(1),

@@ -10,6 +10,10 @@ module.exports = {
     radius: '4px',
     padding: '1px 20px',
     minWidth: '125px',
+    '&.add-photo-button': {
+      color: palette.action.main,
+      backgroundColor: palette.background.default,
+    },
   },
   containedPrimary: {
     backgroundColor: palette.action.light,

@@ -34,23 +34,26 @@ function useImageUpload({
         : `${path}.${ext}`,
       file,
       {
-        progressCallback({ loaded, total }) {
-          const currentProgress = (loaded / total) * 100
-          setUploadProgress(currentProgress)
-        },
+        progressCallback,
         level: 'public',
       }
     )
     setValueCache(s3Key) // Set the cached s3 key
     setUploadProgress(0) // Remove the progress bar
     onChange(s3Key) // Trigger onchange event
+
+    function progressCallback({ loaded, total }) {
+      const currentProgress = (loaded / total) * 100
+      setUploadProgress(currentProgress)
+    }
   }
 
   const hasImage = Boolean(valueCache)
   const isLoading = Boolean(uploadProgress)
 
-  const startImageUpload = () =>
-    inputFieldRef.current && inputFieldRef.current.click()
+  function startImageUpload() {
+    return inputFieldRef.current && inputFieldRef.current.click()
+  }
 
   const ImageInput = () => (
     <input
