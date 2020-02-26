@@ -2,7 +2,7 @@
   "name": "gatsby-plugin-orion-core",
   "description": "Orion core core plugin",
   "main": "index.js",
-  "version": "2.14.1",
+  "version": "2.15.1",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
@@ -49,8 +49,8 @@
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
-    "@storybook/addon-knobs": "^5.3.13",
     "@storybook/addon-actions": "^5.3.13",
+    "@storybook/addon-knobs": "^5.3.13",
     "@storybook/react": "^5.3.13",
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.4.0",

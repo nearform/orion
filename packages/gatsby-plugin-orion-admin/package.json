@@ -2,13 +2,13 @@
   "name": "gatsby-plugin-orion-admin",
   "description": "Orion core admin plugin",
   "main": "index.js",
-  "version": "2.14.1",
+  "version": "2.15.1",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
   },
   "dependencies": {
-    "gatsby-plugin-orion-core": "^2.14.1"
+    "gatsby-plugin-orion-core": "^2.15.1"
   },
   "homepage": "https://www.nearform.com/",
   "keywords": [

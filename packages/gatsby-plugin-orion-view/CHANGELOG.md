@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.1](https://github.com/nearform/orion/compare/v2.15.0...v2.15.1) (2020-02-26)
+
+
+### Bug Fixes
+
+* 🐛 Clean up dependency references ([ac8e596](https://github.com/nearform/orion/commit/ac8e59656b4a231445ea400409ef3279a48c6c27))
+* 🐛 Fix linting errors with prior merges ([f0b6fd9](https://github.com/nearform/orion/commit/f0b6fd93776a931dc7d674b57558674bacddc69b))
+* 🐛 Re-Add module.js to gatsby-theme-acme ([9eef49f](https://github.com/nearform/orion/commit/9eef49fe4ede6013a0322dd63bbc6a2914351b65))
+
+
+
+
+
 # [2.15.0](https://github.com/nearform/orion/compare/v2.14.1...v2.15.0) (2020-02-25)
 
 
