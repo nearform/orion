@@ -40,7 +40,8 @@
     "react": "^16.12.0",
     "typography": "^0.16.19",
     "typography-theme-wordpress-2016": "^0.16.19",
-    "webpack-graphql-loader": "^1.0.2"
+    "webpack-graphql-loader": "^1.0.2",
+    "material-ui-nested-menu-item": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
