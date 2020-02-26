@@ -1,5 +1,5 @@
 {
-  "name": "acme-admin-theme",
+  "name": "gatsby-theme-acme",
   "version": "2.14.1",
   "main": "index.js",
   "module": "module.js",

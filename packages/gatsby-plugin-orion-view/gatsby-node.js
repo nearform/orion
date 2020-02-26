@@ -12,7 +12,7 @@ exports.createPages = async ({ graphql, actions }) => {
   createPage({
     path: '/_not_found',
     matchPath: '/*',
-    component: pageComponent,
+    component: pageComponent || '',
     context: {
       page: null,
     },

@@ -1,5 +1,5 @@
 import React from 'react'
-import ThemeWrapper, { theme } from 'acme-admin-theme'
+import ThemeWrapper, { theme } from 'gatsby-theme-acme'
 import { ComponentProvider, LayoutProvider } from 'gatsby-plugin-orion-view'
 import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
