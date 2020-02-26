@@ -35,9 +35,9 @@ const Img = ({ ...props }) => <img alt="social" {...props} />
 function Layout({ children, classes, page }) {
   const parents = page.ancestry.map(({ ancestor }) => ({
     title: ancestor.title,
-    to: ancestor.path
+    to: ancestor.path,
   }))
-  
+
   return (
     <div className={classes.root}>
       <header>

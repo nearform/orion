@@ -1,5 +1,5 @@
 import BreadcrumbNavigation from '../BreadcrumbNavigation'
-import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
+import PaddedContainer from '../PaddedContainer'
 import SearchInput from '../SearchInput'
 import React from 'react'
 import T from 'prop-types'
@@ -33,6 +33,12 @@ SecondaryAppBar.propTypes = {
     })
   ),
   onSearch: T.func,
+}
+
+SecondaryAppBar.defaultProps = {
+  classes: undefined,
+  data: [],
+  onSearch: undefined,
 }
 
 export default withStyles(styles, { withTheme: true })(SecondaryAppBar)

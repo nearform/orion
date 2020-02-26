@@ -5,9 +5,7 @@ import LayoutProvider from './src/components/LayoutProvider'
 export const wrapRootElement = ({ element }) => {
   return (
     <LayoutProvider>
-      <ComponentProvider>
-        {element}
-      </ComponentProvider>
+      <ComponentProvider>{element}</ComponentProvider>
     </LayoutProvider>
   )
 }

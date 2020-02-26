@@ -7,9 +7,7 @@ function ListChildren({ page }) {
 
   const render = ({ descendant: { id, path, title } }) => (
     <li key={id}>
-      <Link to={path}>
-        {title}
-      </Link>
+      <Link to={path}>{title}</Link>
     </li>
   )
 
@@ -18,17 +16,13 @@ function ListChildren({ page }) {
       {children.length > 0 && (
         <li>
           Direct children
-          <ul>
-            {children.map(render)}
-          </ul>
+          <ul>{children.map(render)}</ul>
         </li>
       )}
       {descendants.length > 0 && (
         <li>
           Other descendants
-          <ul>
-            {descendants.map(render)}
-          </ul>
+          <ul>{descendants.map(render)}</ul>
         </li>
       )}
     </ul>

@@ -17,6 +17,7 @@ Languages and Frameworks
   * React (https://reactjs.org/)
   * Gatsby (https://www.gatsbyjs.org/)
   * Material-UI (https://material-ui.com/)
+  * Styled Components (https://www.styled-components.com/)
   
 Datastore and Languages
   * Hasura (https://hasura.io/)
@@ -64,32 +65,74 @@ To get started quickly, check out these useful links:
 
 The application is stored in a [lerna](https://github.com/lerna/lerna) monorepo.
 
+Some packages are marked as `Legacy Package`. This marking indicates that they have been brought over from a previous
+client-based project as part of transitioning that project into the Orion Accelerator and that those packages are potentially
+subject to significant change, rename, and/or deletion as the Orion project further develops.
+
 ### [./.circleci](./.circleci)
 
 CircleCI [project](https://circleci.com/gh/nearform/orion) continuous integration configuration.
 
+### [./.storybook](./.storybook)
+
+Storybook [project](https://orion-storybook.nearform.com) configuration
+
+### [./docs](./docs)
+
+**Legacy Directory**
+
+Documentation related to the client-project from which Orion originated. Does contain some useful docs related to technologies used.
+
+### [./packages/e2e-tests](./packages/e2e-tests)
+
+**Legacy Package**
+
+End-to-end tests using TestCafe. Requires environment variables to run, see
+[the Quick Start Guide](/docs/quick-start#2-configure). For more details see [the Tests docs](/docs/tests#end-to-end-tests).
+
+### [./packages/functions](./packages/functions)
+
+**Legacy Package**
+
+- lambda serverless functions used to interact with AWS Cognito and Hasura
+
+### [./packages/gatsby-acme-admin-theme](./packages/gatsby-acme-admin-theme)
+
+Contains all styling (CSS) and unique-client assets (such as logo images) for the Orion demo project `Acme`.
+
+### [./packages/gatsby-plugin-orion-admin](./packages/gatsby-plugin-orion-admin)
+
+Contains all components and functionality related to the creation and management of users, groups, roles,
+and role-permissions for Orion projects.
+
+### [./packages/gatsby-plugin-orion-core](./packages/gatsby-plugin-orion-core)
+
+Core components shared by all Orion packages, such as user login and registration.
+
+### [./packages/gatsby-plugin-orion-edit](./packages/gatsby-plugin-orion-edit)
+
+All components and functionality related to the creation and management of page, article, and other content
+for Orion projects.
+
+### [./packages/gatsby-plugin-orion-view](./packages/gatsby-plugin-orion-view)
+
+All components and functionality related to the viewing of page, article, and other content for Orion projects.
+
 ### [./packages/hasura](./packages/hasura)
+
+**Legacy Package**
 
 The application follows a serverless application model, where the only API used by the frontend is exposed through GraphQL via [Hasura](https://hasura.io).
 
 This folder contains the migrations and scripts necessary to run them.
 
-### [./packages/components](./packages/components)
+### [./scripts](./scripts)
 
-- a component library based on [styled-components](https://www.styled-components.com/)
-- a design system with a `ThemeProvider` approach to theming and using
-  [saluki](https://github.com/nearform/saluki) for its CSS-in-JS modular
-  approach with sane defaults similar in concept to [tailwind](https://tailwindcss.com/docs/what-is-tailwind/)
+A single script designed to overcome a GatsbyJS bug that can sometimes cause CircleCi builds to fail due to out-of-memory errors
 
+### [./terraform](./terraform)
 
-### [./packages/functions](./packages/functions)
-
-- lambda serverless functions used to interact with AWS Cognito and Hasura
-
-### [./packages/e2e-tests](./packages/e2e-tests)
-
-End-to-end tests using TestCafe. Requires environment variables to run, see
-[the Quick Start Guide](/docs/quick-start#2-configure). For more details see [the Tests docs](/docs/tests#end-to-end-tests).
+Terraform AWS configuration
 
 [logo-img]: docs/images/Accel_Logo_Orion.svg
 [docs]: https://nf-orion.netlify.com/#/

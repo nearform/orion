@@ -1,36 +1,7 @@
-# gatsby-theme-acme
+## TRANSLATIONS
 
-## Usage
+* Uses the react-i18next library
 
-Add this theme as a dependency to the package you want to use it in. Specifying the desired version number ensures yarn looks for the dependency locally rather than from the registry.
+* To add a new translation, first add the language two letter ICO abbreviation, full name, and flag ([Twemoji](https://twitter.github.io/twemoji/2/test/preview.html)) to ./config.js Doing so will automatically add the language to the language switcher that shows in the main toolbar.
 
-```
-yarn add gatsby-theme-acme@<version-number>
-```
-
-Add the theme to your `gatsby-config.js` file.
-
-```
-module.exports = {
-  ...
-  plugins: [
-    `gatsby-theme-acme`,
-    ...
-  ],
-}
-```
-
-You can now use Material UI components and they'll pick up the theming rules defined within this package.
-
-```
-import React from "react"
-import { Button } from "@material-ui/core"
-
-const PrimaryButton = ({ label, action }) => (
-  <Button onClick={action} variant="contained" color="primary">
-    {label}
-  </Button>
-)
-
-export default PrimaryButton
-```
+* WARNING: All translations are case and spacing sensitive. You must match translations EXACTLY. Any playing around with casing in the code WILL break translations until the right casing is also added to translation files

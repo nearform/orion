@@ -107,7 +107,9 @@ async function initGraphQLClient(client) {
     const user = await Auth.currentAuthenticatedUser()
 
     setAuthorization(client, user.signInUserSession)
-  } catch (_error) {}
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export { makeGraphQLClient, initGraphQLClient }

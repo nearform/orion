@@ -52,7 +52,7 @@ const extractTokenPayload = dataKey => {
 
 function AuthWrapper({
   isAuthInitialized,
-  allowNoParentGroups = false,
+  hasNoParentGroups = false,
   children,
 }) {
   const [userGroups, setUserGroups] = useState([])
@@ -121,7 +121,7 @@ function AuthWrapper({
   const getUserBaseRole = () => {
     try {
       return extractTokenPayload(HASURA_DEFAULT_ROLE_KEY)
-    } catch (_error) {
+    } catch {
       return 'public'
     }
   }
@@ -136,7 +136,7 @@ function AuthWrapper({
       const taxonomyQueryResult = userGroups
       const groupId = extractTokenPayload(HASURA_GROUP_ID)
       return find(taxonomyQueryResult.raw_salmon.group, { id: groupId })
-    } catch (_error) {
+    } catch {
       return undefined
     }
   }
@@ -163,7 +163,7 @@ function AuthWrapper({
     hasPermissions,
     isAuthenticatedSync,
     setUserGroups,
-    allowNoParentGroups,
+    hasNoParentGroups,
   }
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
@@ -171,8 +171,14 @@ function AuthWrapper({
 
 AuthWrapper.propTypes = {
   isAuthInitialized: T.bool,
-  allowNoParentGroups: T.bool,
+  hasNoParentGroups: T.bool,
   children: T.node,
+}
+
+AuthWrapper.defaultProps = {
+  isAuthInitialized: false,
+  hasNoParentGroups: false,
+  children: undefined,
 }
 
 export default AuthWrapper

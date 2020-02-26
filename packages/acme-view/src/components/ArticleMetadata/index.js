@@ -42,4 +42,8 @@ ArticleMetadata.propTypes = {
   section: T.string.isRequired,
 }
 
+ArticleMetadata.defaultProps = {
+  classes: undefined,
+}
+
 export default withStyles(styles, { withTheme: true })(ArticleMetadata)

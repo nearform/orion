@@ -56,4 +56,10 @@ ArticleContent.propTypes = {
   title: T.string.isRequired,
 }
 
+ArticleContent.defaultProps = {
+  classes: undefined,
+  image: '',
+  subtitle: '',
+}
+
 export default withStyles(styles, { withTheme: true })(ArticleContent)
