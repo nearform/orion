@@ -5,24 +5,22 @@ import {
   CircularProgress,
   Button,
   Typography,
-  withStyles,
 } from '@material-ui/core'
-import { fade } from '@material-ui/core/styles/colorManipulator'
 import classnames from 'classnames'
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate'
 import useImageUpload from '../hooks/useImageUpload'
 
-function UploadImageWidget({
+const UploadImage = ({
   path,
   value,
-  aspectRatio = 0.5,
+  aspectRatio,
   onChange,
-  onUpload = () => {},
+  onUpload,
   alwaysShowBox,
-  classes,
   children,
   generateFileName,
-}) {
+  classes, // eslint-disable-line react/prop-types
+}) => {
   const {
     ImageInput,
     startImageUpload,
@@ -41,6 +39,8 @@ function UploadImageWidget({
     onUpload(imageURL)
   }, [imageURL, onUpload])
 
+  const imageStyles = { backgroundImage: `url(${imageURL})` }
+
   return (
     <>
       <ImageInput />
@@ -56,37 +56,39 @@ function UploadImageWidget({
             <ButtonBase
               focusRipple
               disabled={isLoading}
-              className={classnames({
-                [classes.image]: true,
-                alwaysShowBox: alwaysShowBox && !hasImage,
-              })}
+              className={classnames(
+                {
+                  alwaysShowBox: alwaysShowBox && !hasImage,
+                },
+                'upload-image-base'
+              )}
               style={{ paddingTop: `${aspectRatio * 100}%` }}
               focusVisibleClassName={classes.focusVisible}
               onClick={startImageUpload}
             >
               <span
-                className={classes.imageSrc}
-                style={{
-                  backgroundImage: `url(${imageURL})`,
-                }}
+                className="upload-image-src"
+                style={imageStyles}
+                data-testid={imageURL}
               />
 
-              <span className={classes.imageBackdrop} />
-              <span className={classes.imageButton}>
+              <span className="upload-image-backdrop" />
+              <span className="upload-image-button">
                 <Typography
                   component="span"
                   className={classnames(
                     classes.imageTitle,
-                    classes.addPhotoButton
+                    classes.addPhotoButton,
+                    'upload-image-typography'
                   )}
                 >
-                  <AddPhotoIcon className={classes.addPhotoIcon} />
+                  <AddPhotoIcon />
                   {hasImage ? 'Replace' : 'Upload Image'}
                 </Typography>
                 {isLoading && (
                   <CircularProgress
                     variant="determinate"
-                    className={classes.progress}
+                    className="upload-image-progress"
                     value={uploadProgress}
                   />
                 )}
@@ -98,7 +100,7 @@ function UploadImageWidget({
               className="add-photo-button"
               onClick={startImageUpload}
             >
-              <AddPhotoIcon className={classes.addPhotoIcon} />
+              <AddPhotoIcon />
               Upload Image
             </Button>
           )}
@@ -108,86 +110,25 @@ function UploadImageWidget({
   )
 }
 
-UploadImageWidget.propTypes = {
+UploadImage.propTypes = {
   path: T.string.isRequired,
   children: T.func,
   value: T.string,
   onChange: T.func,
   onUpload: T.func,
-  classes: T.object.isRequired,
   aspectRatio: T.number,
   alwaysShowBox: T.bool,
   generateFileName: T.bool,
 }
 
-export default withStyles(theme => ({
-  image: {
-    // Position: 'relative',
-    // height: 0,
-    // paddingTop: '50%',
-    // width: '100%',
-    // color: 'transparent',
-    // '&:hover, &$focusVisible, &.alwaysShowBox': {
-    //   zIndex: 1,
-    //   color: theme.palette.common.white,
-    //   '& $imageBackdrop': {
-    //     opacity: 0.4,
-    //   },
-    //   '& $imageTitle': {
-    //     opacity: 1,
-    //   },
-    // },
-  },
-  imageButton: {
-    // Position: 'absolute',
-    // left: 0,
-    // right: 0,
-    // top: 0,
-    // bottom: 0,
-    // display: 'flex',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  },
-  imageSrc: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center center',
-    backgroundColor: fade(theme.palette.common.black, 0.5),
-  },
-  imageBackdrop: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    backgroundColor: theme.palette.common.black,
-    opacity: 0,
-    transition: theme.transitions.create('opacity'),
-  },
-  imageTitle: {
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-    opacity: 0,
-    transition: theme.transitions.create('opacity'),
-  },
-  progress: {
-    position: 'absolute',
-    left: 'calc(50% - 30px)',
-    height: '60px !important',
-    width: '60px !important',
-  },
-  addPhotoButton: {
-    // ...theme.articleTypography.articleEditButton,
-    // padding: theme.spacing(1, 3),
-    // borderRadius: theme.spacing(0.5),
-  },
-  addPhotoIcon: {
-    marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(-1),
-  },
-}))(UploadImageWidget)
+UploadImage.defaultProps = {
+  children: undefined,
+  value: undefined,
+  onChange: undefined,
+  onUpload: () => {},
+  aspectRatio: 0.5,
+  alwaysShowBox: false,
+  generateFileName: false,
+}
+
+export default UploadImage

@@ -246,7 +246,8 @@
         "envs": [
           "es2017",
           "node",
-          "jest"
+          "jest",
+          "browser"
         ]
       },
       {
