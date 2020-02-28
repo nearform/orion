@@ -3,6 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.1](https://github.com/nearform/orion/compare/v2.15.0...v2.15.1) (2020-02-26)
+
+
+### Bug Fixes
+
+* 🐛 Add missing dependency ([7436fe1](https://github.com/nearform/orion/commit/7436fe1b9511541c477cac1ea381377f3f0a6e78))
+* 🐛 Added a dependency from components to orion-core ([82fe452](https://github.com/nearform/orion/commit/82fe45293d081970206d58e1d7442b774559a39c))
+* 🐛 Clean up dependency references ([ac8e596](https://github.com/nearform/orion/commit/ac8e59656b4a231445ea400409ef3279a48c6c27))
+* 🐛 Dependency and code fixes for linting ([7ba5c56](https://github.com/nearform/orion/commit/7ba5c56aa0a1799e8633db6a231a735303aa099a))
+* 🐛 Fix bad reference to component ([3a1ecba](https://github.com/nearform/orion/commit/3a1ecbab3a48ee10b84af9ba7a5dc2946b754c8f))
+* 🐛 Fix linting errors with prior merges ([f0b6fd9](https://github.com/nearform/orion/commit/f0b6fd93776a931dc7d674b57558674bacddc69b))
+* 🐛 Fixed storybook reference to themes ([2b7c43b](https://github.com/nearform/orion/commit/2b7c43b890178f9bc8048ecceec5c56fd8688946))
+* 🐛 More dependency fixes from components to orion-core ([9894dc7](https://github.com/nearform/orion/commit/9894dc78879765078216cae91f4bee4f4756f209))
+* 🐛 Re-Add module.js to gatsby-theme-acme ([9eef49f](https://github.com/nearform/orion/commit/9eef49fe4ede6013a0322dd63bbc6a2914351b65))
+
+
+
+
+
+# [2.15.0](https://github.com/nearform/orion/compare/v2.14.1...v2.15.0) (2020-02-25)
+
+
+### Bug Fixes
+
+* 🐛 Applied ArticleEditButtons to ArticleEditForm ([1dd79de](https://github.com/nearform/orion/commit/1dd79dec85cd93d43dd242ef42805765add95a43))
+
+
+### Features
+
+* 🎸 Created Article Edit buttons ([8d4f3a2](https://github.com/nearform/orion/commit/8d4f3a24176e2736facc0ff2a8d20a9343d5afac))
+
+
+
+
+
+## [2.14.1](https://github.com/nearform/orion/compare/v2.14.0...v2.14.1) (2020-02-24)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
+# [2.14.0](https://github.com/nearform/orion/compare/v2.13.1...v2.14.0) (2020-02-24)
+
+
+### Bug Fixes
+
+* 🐛 Error message not appearing ([881a5a8](https://github.com/nearform/orion/commit/881a5a8622e5c8385f8b00e8d58217f39b43f36b))
+
+
+### Features
+
+* 🎸 Added an argument for all form values to validate ([ac5f6a0](https://github.com/nearform/orion/commit/ac5f6a0a71cce1f394a995bf0845d20415fd6865))
+* 🎸 Added custom Submit Component ([a3cc089](https://github.com/nearform/orion/commit/a3cc089ad0506e6ab058febc2bc6a0e5385e8331))
+* 🎸 Added typography variant option to form ([f13bdc4](https://github.com/nearform/orion/commit/f13bdc4f2c4412eb5f0b56816893d0e4e71c5952))
+* 🎸 Article edit page ([85c36a1](https://github.com/nearform/orion/commit/85c36a12fb296477ed4bf558de636a0e691a04a3))
+* 🎸 Basic UploadButton added ([e2029a8](https://github.com/nearform/orion/commit/e2029a8741cf7f26ee52a1ea9a47395d6a3289fd))
+* 🎸 Created Sign in component for orion-view ([f0e0b32](https://github.com/nearform/orion/commit/f0e0b32d840b0aed4c3e8bbdcf9412153bb09b86))
+* 🎸 Created user registration component for orion-view ([fa5e719](https://github.com/nearform/orion/commit/fa5e719de12429e969712d9731e213a96cd705cf))
+* 🎸 Finished form for artifle creation ([b9b9b63](https://github.com/nearform/orion/commit/b9b9b63b2bc49cfca6374d79444c16c014ea4d51))
+* 🎸 Setup Formik ([530c006](https://github.com/nearform/orion/commit/530c006505097ae0e248055b3e17a4cfcaf71f53))
+
+
+
+
+
 ## [2.13.1](https://github.com/nearform/orion/compare/v2.13.0...v2.13.1) (2020-02-21)
 
 

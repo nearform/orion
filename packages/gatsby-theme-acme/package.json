@@ -1,11 +1,15 @@
 {
   "name": "gatsby-theme-acme",
-  "description": "Gatsby Material UI theme for ACME",
-  "version": "2.0.0",
-  "main": "gatsby-config.js",
+  "version": "2.15.1",
+  "main": "index.js",
+  "module": "module.js",
   "dependencies": {
-    "@material-ui/core": "^4.9.0",
-    "gatsby-theme-material-ui": "^1.0.8"
+    "@material-ui/core": "^4.9.3",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "scripts": {
+    "commit": "cd .. && yarn commit"
   },
   "xo": false
 }

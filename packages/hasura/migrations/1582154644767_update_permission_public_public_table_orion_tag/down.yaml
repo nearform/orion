@@ -1,0 +1,6 @@
+- args:
+    role: public
+    table:
+      name: orion_tag
+      schema: public
+  type: drop_select_permission
