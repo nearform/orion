@@ -129,7 +129,7 @@ describe('selecting an image for upload', () => {
 
     const renderResults = selectImage({
       path: 'path/to/file',
-      generateFileName: false,
+      isAutoFileNameEnabled: false,
     })
     await waitForUploadedImage(renderResults)
 

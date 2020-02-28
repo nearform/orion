@@ -98,7 +98,7 @@ storiesOf('UploadImage', module)
   .add('Interactive', () => {
     return (
       <AwsStorage>
-        <UploadImage />
+        <UploadImage path="" />
       </AwsStorage>
     )
   })

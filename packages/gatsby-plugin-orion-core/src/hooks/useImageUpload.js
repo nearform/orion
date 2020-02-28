@@ -7,7 +7,7 @@ function useImageUpload({
   path,
   onChange = () => null,
   value,
-  generateFileName = true,
+  isAutoFileNameEnabled = true,
 }) {
   const inputFieldRef = useRef()
   const [uploadProgress, setUploadProgress] = useState(0)
@@ -29,7 +29,7 @@ function useImageUpload({
     }
 
     const { key: s3Key } = await Storage.put(
-      generateFileName
+      isAutoFileNameEnabled
         ? `${path}/${sha256(`${file.name}${Date.now()}`)}.${ext}`
         : `${path}.${ext}`,
       file,

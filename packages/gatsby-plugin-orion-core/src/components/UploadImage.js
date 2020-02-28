@@ -16,10 +16,9 @@ const UploadImage = ({
   aspectRatio,
   onChange,
   onUpload,
-  alwaysShowBox,
+  isBoxAlwaysShown,
   children,
-  generateFileName,
-  classes, // eslint-disable-line react/prop-types
+  isAutoFileNameEnabled,
 }) => {
   const {
     ImageInput,
@@ -32,7 +31,7 @@ const UploadImage = ({
     path,
     onChange,
     value,
-    generateFileName,
+    isAutoFileNameEnabled,
   })
 
   useEffect(() => {
@@ -50,61 +49,49 @@ const UploadImage = ({
         ) : (
           children
         )
-      ) : (
-        <div className={classes.root}>
-          {hasImage || isLoading || alwaysShowBox ? (
-            <ButtonBase
-              focusRipple
-              disabled={isLoading}
-              className={classnames(
-                {
-                  alwaysShowBox: alwaysShowBox && !hasImage,
-                },
-                'upload-image-base'
-              )}
-              style={{ paddingTop: `${aspectRatio * 100}%` }}
-              focusVisibleClassName={classes.focusVisible}
-              onClick={startImageUpload}
-            >
-              <span
-                className="upload-image-src"
-                style={imageStyles}
-                data-testid={imageURL}
-              />
-
-              <span className="upload-image-backdrop" />
-              <span className="upload-image-button">
-                <Typography
-                  component="span"
-                  className={classnames(
-                    classes.imageTitle,
-                    classes.addPhotoButton,
-                    'upload-image-typography'
-                  )}
-                >
-                  <AddPhotoIcon />
-                  {hasImage ? 'Replace' : 'Upload Image'}
-                </Typography>
-                {isLoading && (
-                  <CircularProgress
-                    variant="determinate"
-                    className="upload-image-progress"
-                    value={uploadProgress}
-                  />
-                )}
-              </span>
-            </ButtonBase>
-          ) : (
-            <Button
-              variant="contained"
-              className="add-photo-button"
-              onClick={startImageUpload}
-            >
-              <AddPhotoIcon />
-              Upload Image
-            </Button>
+      ) : hasImage || isLoading || isBoxAlwaysShown ? (
+        <ButtonBase
+          focusRipple
+          disabled={isLoading}
+          className={classnames(
+            {
+              alwaysShowBox: isBoxAlwaysShown && !hasImage,
+            },
+            'upload-image-base'
           )}
-        </div>
+          style={{ paddingTop: `${aspectRatio * 100}%` }}
+          onClick={startImageUpload}
+        >
+          <span
+            className="upload-image-src"
+            style={imageStyles}
+            data-testid={imageURL}
+          />
+
+          <span className="upload-image-backdrop" />
+          <span className="upload-image-button">
+            <Typography component="span" className="upload-image-typography">
+              <AddPhotoIcon />
+              {hasImage ? 'Replace' : 'Upload Image'}
+            </Typography>
+            {isLoading && (
+              <CircularProgress
+                variant="determinate"
+                className="upload-image-progress"
+                value={uploadProgress}
+              />
+            )}
+          </span>
+        </ButtonBase>
+      ) : (
+        <Button
+          variant="contained"
+          className="add-photo-button"
+          onClick={startImageUpload}
+        >
+          <AddPhotoIcon />
+          Upload Image
+        </Button>
       )}
     </>
   )
@@ -117,8 +104,8 @@ UploadImage.propTypes = {
   onChange: T.func,
   onUpload: T.func,
   aspectRatio: T.number,
-  alwaysShowBox: T.bool,
-  generateFileName: T.bool,
+  isBoxAlwaysShown: T.bool,
+  isAutoFileNameEnabled: T.bool,
 }
 
 UploadImage.defaultProps = {
@@ -127,8 +114,8 @@ UploadImage.defaultProps = {
   onChange: undefined,
   onUpload: () => {},
   aspectRatio: 0.5,
-  alwaysShowBox: false,
-  generateFileName: false,
+  isBoxAlwaysShown: false,
+  isAutoFileNameEnabled: true,
 }
 
 export default UploadImage
