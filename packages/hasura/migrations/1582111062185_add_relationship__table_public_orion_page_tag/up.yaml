@@ -1,0 +1,8 @@
+- args:
+    name: page
+    table:
+      name: orion_page_tag
+      schema: public
+    using:
+      foreign_key_constraint_on: page_id
+  type: create_object_relationship

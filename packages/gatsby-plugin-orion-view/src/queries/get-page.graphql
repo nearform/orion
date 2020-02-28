@@ -1,0 +1,55 @@
+query getPage($path: String!) {
+  orion_page(where: {
+    path: { _eq: $path },
+    published: { _lt: "now()" },
+    _or: [
+      { expires: { _is_null: true }},
+      { expires: { _gt: "now()" }}
+    ]
+  }) {
+    ancestry {
+      ancestor {
+        id
+        path
+        title
+      }
+      direct
+    }
+    authors {
+      user {
+        avatar
+        given_name
+        id
+        title
+      }
+    }
+    contents {
+      block
+      component
+      id
+      props
+    }
+    descendants {
+      descendant {
+        id
+        path
+        title
+      }
+      direct
+    }
+    tags {
+      tag {
+        hidden
+        tag
+      }
+    }
+    created
+    id
+    layout
+    modified
+    path
+    published
+    show_in_menu
+    title
+  }
+}

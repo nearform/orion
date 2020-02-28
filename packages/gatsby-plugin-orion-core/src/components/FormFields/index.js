@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
 import {
-  Button,
   MenuItem,
   Select,
   TextField,
   Typography,
   makeStyles,
+  withTheme,
 } from '@material-ui/core'
+import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate'
+
+import UploadButton from '../UploadButton'
 
 const useStyles = makeStyles(theme => ({
   input: {
@@ -82,6 +85,9 @@ function InputTextField({
   onEnterKey,
   error = false,
   children,
+  theme,
+  inputTypographyVariant,
+  ...props
 }) {
   const classes = useStyles()
 
@@ -110,8 +116,12 @@ function InputTextField({
         disabled={disabled}
         className={classes.input}
         error={Boolean(error)}
-        inputProps={{ onKeyPress }}
+        inputProps={{
+          onKeyPress,
+          style: theme.typography[inputTypographyVariant || 'body'],
+        }}
         onChange={onChange}
+        {...props}
       />
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </>
@@ -129,6 +139,8 @@ InputTextField.propTypes = {
   onEnterKey: T.func,
   children: T.node.isRequired,
   error: T.string,
+  theme: T.shape({ typography: T.object }),
+  inputTypographyVariant: T.string,
 }
 
 function InputSelectField({
@@ -190,42 +202,33 @@ InputSelectField.propTypes = {
   error: T.string.isRequired,
 }
 
-function InputField({ type, children, ...props }) {
+const UploadImageInputField = () => (
+  <UploadButton
+    startIcon={<AddPhotoAlternateIcon />}
+    variant="contained"
+    color="secondary"
+  >
+    Upload Image
+  </UploadButton>
+)
+
+const InputField = withTheme(({ type, children, ...props }) => {
   if (type === 'select') {
     return <InputSelectField {...props}>{children}</InputSelectField>
   }
+
+  if (type === 'image') return <UploadImageInputField {...props} />
 
   return (
     <InputTextField type={type} {...props}>
       {children}
     </InputTextField>
   )
-}
+})
 
 InputField.propTypes = {
   type: T.string,
   children: T.node.isRequired,
 }
 
-function SubmitButton({ onClick, children, hasError }) {
-  return (
-    <Button
-      fullWidth
-      name="submit"
-      variant="contained"
-      color="primary"
-      disabled={hasError}
-      onClick={onClick}
-    >
-      {children}
-    </Button>
-  )
-}
-
-SubmitButton.propTypes = {
-  onClick: T.func.isRequired,
-  children: T.node.isRequired,
-  hasError: T.bool,
-}
-
-export { InputField, SubmitButton }
+export { InputField }

@@ -9,8 +9,8 @@ function Footer({ classes, Img, socialIcons = [], logo }) {
       <PaddedContainer>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Typography gutterBottom variant="body2">
-              <p className="greeting">Get in touch</p>
+            <Typography gutterBottom variant="body2" className="greeting1">
+              Get in touch
             </Typography>
           </Grid>
           <Grid item xs={8}>
@@ -38,17 +38,17 @@ function Footer({ classes, Img, socialIcons = [], logo }) {
         </Grid>
         <Grid container spacing={1} justify="center" className="terms">
           <Grid item>
-            <Typography display="inline" variant="body1" className="t">
+            <Typography display="inline" variant="body1">
               © Acme Insurance
             </Typography>
           </Grid>
           <Grid item>
-            <Typography display="inline" variant="body1" className="t">
+            <Typography display="inline" variant="body1">
               Terms of Use
             </Typography>
           </Grid>
           <Grid item>
-            <Typography display="inline" variant="body1" className="t">
+            <Typography display="inline" variant="body1">
               Privacy Statement
             </Typography>
           </Grid>

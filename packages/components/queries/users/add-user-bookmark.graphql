@@ -1,5 +1,0 @@
-mutation addUserBookmark($userId: Int!, $articleId: Int!) {
-  insert_user_bookmarks(objects: { article_id: $articleId, user_id: $userId }) {
-    affected_rows
-  }
-}
