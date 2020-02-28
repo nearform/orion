@@ -5,24 +5,43 @@ import { find, get } from 'lodash'
 
 const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
-const CUSTOM_CLAIMS_NAMESPACE = 'x-raw-salmon-claims'
-const CUSTOM_CLAIMS_CONTRIBUTOR_KEY = 'x-assess-base-contributor'
-const CUSTOM_CLAIMS_ASSESSOR_KEY = 'x-assess-base-assessor'
-const HASURA_DEFAULT_ROLE_KEY = 'x-hasura-default-role'
+const CUSTOM_CLAIMS_NAMESPACE = 'x-orion-claims'
 const HASURA_USER_ID = 'x-hasura-user-id'
 const HASURA_GROUP_ID = 'x-hasura-group-id'
-const ROLES_PERMISSIONS = {
-  public: 0,
-  'non-member': 0,
-  user: 1,
-  member: 1,
-  'company-admin': 3,
-  'partner-admin': 7,
-  'platform-admin': 15,
-  admin: 31,
-}
 
 export const AuthContext = createContext({ isAuthInitialized: false })
+
+const comparePerms = (userSet, reqString, divider) => {
+  const reqSet = reqString.split(divider)
+  const val = reqSet.reduce((acc, curr) =>
+    userSet[curr] === true ? acc++ : acc
+  )
+  return divider === '&' ? val === reqSet.length : val > 0
+}
+
+// Use: checkPerms({user: 'create&read&update&delete', page: 'read|update' }, true)
+const checkPerms = (permReqs, all = true) => {
+  const user = {}
+  const roles = {}
+  let hasPerms = false
+  if (user.role !== null && roles.keys(user.role)) {
+    const userPerms = roles[user.role]
+    for (const permSet in permReqs) {
+      if (roles[0].keys(permSet)) {
+        hasPerms = comparePerms(
+          userPerms[permSet],
+          permReqs[permSet],
+          permReqs[permSet].includes('&') ? '&' : '|'
+        )
+        if (hasPerms !== all) {
+          break
+        }
+      }
+    }
+  }
+
+  return hasPerms
+}
 
 const isAuthenticatedSync = () => isBrowser && Boolean(Auth.user)
 
@@ -50,11 +69,7 @@ const extractTokenPayload = dataKey => {
   return claims[dataKey] || null
 }
 
-function AuthWrapper({
-  isAuthInitialized,
-  hasNoParentGroups = false,
-  children,
-}) {
+function AuthWrapper({ isAuthInitialized, children }) {
   const [userGroups, setUserGroups] = useState([])
 
   /**
@@ -65,12 +80,6 @@ function AuthWrapper({
   const getUserTokenData = () => {
     const data = {
       isAuthenticated: Boolean(isAuthenticatedSync()),
-      isUser: hasPermissions('user'),
-      isAdmin: hasPermissions('company-admin'),
-      isPlatformGroup: hasPermissions('platform-admin'),
-      isContributor:
-        extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY) || false,
-      isAssessor: extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY) || false,
       userId: extractTokenPayload(HASURA_USER_ID),
       groupId: extractTokenPayload(HASURA_GROUP_ID),
       role: getUserRole(),
@@ -85,18 +94,11 @@ function AuthWrapper({
    * @param {string} reqRole The minimum role-level at which the permission check is allowed to return true
    * @return {boolean} Whether or not the current user qualifies for the permission-role checked
    */
-  const getUserAuth = reqRole => {
+  const getUserAuth = permReqs => {
     if (!isAuthenticatedSync()) return false
-    if (!reqRole || reqRole === undefined) return true
+    if (!permReqs || permReqs === undefined) return true
 
-    switch (reqRole.toLowerCase()) {
-      case 'contributor':
-        return extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY)
-      case 'assessor':
-        return extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY)
-      default:
-        return hasPermissions(reqRole.toLowerCase())
-    }
+    return checkPerms(permReqs)
   }
 
   /**
@@ -120,7 +122,7 @@ function AuthWrapper({
    */
   const getUserBaseRole = () => {
     try {
-      return extractTokenPayload(HASURA_DEFAULT_ROLE_KEY)
+      return extractTokenPayload(CUSTOM_CLAIMS_NAMESPACE)
     } catch {
       return 'public'
     }
@@ -141,29 +143,13 @@ function AuthWrapper({
     }
   }
 
-  /**
-   * Checks permission level of user against required permission level
-   *
-   * @param {string} reqRole The permission level required
-   * @return {boolean} Whether or not the user has the required permission level
-   */
-  const hasPermissions = reqRole => {
-    const role = getUserRole()
-    return (
-      (ROLES_PERMISSIONS[role] & ROLES_PERMISSIONS[reqRole]) ===
-      ROLES_PERMISSIONS[reqRole]
-    )
-  }
-
   const auth = {
     isAuthInitialized,
     getUserTokenData,
     getUserAuth,
     getUserRole,
-    hasPermissions,
     isAuthenticatedSync,
     setUserGroups,
-    hasNoParentGroups,
   }
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
@@ -171,13 +157,11 @@ function AuthWrapper({
 
 AuthWrapper.propTypes = {
   isAuthInitialized: T.bool,
-  hasNoParentGroups: T.bool,
   children: T.node,
 }
 
 AuthWrapper.defaultProps = {
   isAuthInitialized: false,
-  hasNoParentGroups: false,
   children: undefined,
 }
 

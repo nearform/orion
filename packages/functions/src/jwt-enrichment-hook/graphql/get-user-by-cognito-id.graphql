@@ -1,19 +1,20 @@
 query getUserByCognitoId($cognitoId: String!) {
-  user(limit: 1, where: { cognito_id: { _eq: $cognitoId } }) {
+  orionUser: orion_user(limit: 1, where: { cognito_id: { _eq: $cognitoId } }) {
     id
-    user_roles {
-      role {
-        id
-        name
-        order
+    orionRole: orion_role {
+      id
+      name
+      orionRolePermissions: orion_role_permissions {
+        create
+        read
+        update
+        delete
+        permission_set
       }
     }
-    user_groups {
-      group {
-        id
-        name
-        type
-      }
+    orionGroup: orion_group {
+      id
+      name
     }
   }
 }
