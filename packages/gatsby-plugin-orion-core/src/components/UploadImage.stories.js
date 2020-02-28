@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
-// Import { select, text, object } from '@storybook/addon-knobs'
+import { text } from '@storybook/addon-knobs'
 import Amplify, { Auth } from 'aws-amplify'
 import UploadImage from './UploadImage'
 
@@ -98,7 +98,7 @@ storiesOf('UploadImage', module)
   .add('Interactive', () => {
     return (
       <AwsStorage>
-        <UploadImage path="" />
+        <UploadImage path={text('Path', 'path/to/storage')} />
       </AwsStorage>
     )
   })
