@@ -28,16 +28,15 @@ function useImageUpload({
       await Storage.remove(valueCache)
     }
 
-    const { key: s3Key } = await Storage.put(
-      isAutoFileNameEnabled
-        ? `${path}/${sha256(`${file.name}${Date.now()}`)}.${ext}`
-        : `${path}.${ext}`,
-      file,
-      {
-        progressCallback,
-        level: 'public',
-      }
-    )
+    const fileName = isAutoFileNameEnabled
+      ? `${path}/${sha256(`${file.name}${Date.now()}`)}.${ext}`
+      : `${path}.${ext}`
+
+    const { key: s3Key } = await Storage.put(fileName, file, {
+      progressCallback,
+      level: 'public',
+    })
+
     setValueCache(s3Key) // Set the cached s3 key
     setUploadProgress(0) // Remove the progress bar
     onChange(s3Key) // Trigger onchange event

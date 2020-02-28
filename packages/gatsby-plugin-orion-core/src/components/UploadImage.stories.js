@@ -6,7 +6,6 @@ import Amplify, { Auth } from 'aws-amplify'
 import UploadImage from './UploadImage'
 
 const AwsStorage = ({ children }) => {
-  console.log('Bucket:', process.env.STORYBOOK_AWS_S3_BUCKET) // eslint-disable-line no-console
   useEffect(() => {
     Amplify.configure({
       Auth: {

@@ -38,7 +38,8 @@ const UploadImage = ({
     onUpload(imageURL)
   }, [imageURL, onUpload])
 
-  const imageStyles = { backgroundImage: `url(${imageURL})` }
+  const imageStyles =
+    imageURL === null ? {} : { backgroundImage: `url(${imageURL})` }
 
   return (
     <>
