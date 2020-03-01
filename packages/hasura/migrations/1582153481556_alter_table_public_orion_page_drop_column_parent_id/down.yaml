@@ -1,0 +1,6 @@
+- args:
+    sql: ALTER TABLE "public"."orion_page" ADD COLUMN "parent_id" int4
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."orion_page" ALTER COLUMN "parent_id" DROP NOT NULL
+  type: run_sql

@@ -1,0 +1,12 @@
+- args:
+    name: descendants
+    table:
+      name: orion_page
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: ancestor_id
+        table:
+          name: orion_page_ancestry
+          schema: public
+  type: create_array_relationship

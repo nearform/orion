@@ -1,0 +1,13 @@
+- args:
+    name: parent_relationship
+    table:
+      name: orion_page
+      schema: public
+    using:
+      manual_configuration:
+        column_mapping:
+          parent: id
+        remote_table:
+          name: orion_page
+          schema: public
+  type: create_object_relationship

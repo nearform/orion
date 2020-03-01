@@ -1,0 +1,10 @@
+- args:
+    sql: CREATE TABLE "public"."orion_page_content"("id" serial NOT NULL, "page_id"
+      integer NOT NULL, "block" text NOT NULL, "component" text NOT NULL, "props"
+      jsonb NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("page_id") REFERENCES "public"."orion_page"("id")
+      ON UPDATE restrict ON DELETE restrict);
+  type: run_sql
+- args:
+    name: orion_page_content
+    schema: public
+  type: add_existing_table_or_view
