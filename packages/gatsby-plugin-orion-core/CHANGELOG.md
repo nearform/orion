@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.1](https://github.com/nearform/orion/compare/v2.15.0...v2.15.1) (2020-02-26)
+
+
+### Bug Fixes
+
+* 🐛 Add missing dependency ([7436fe1](https://github.com/nearform/orion/commit/7436fe1b9511541c477cac1ea381377f3f0a6e78))
+* 🐛 Added a dependency from components to orion-core ([82fe452](https://github.com/nearform/orion/commit/82fe45293d081970206d58e1d7442b774559a39c))
+* 🐛 Clean up dependency references ([ac8e596](https://github.com/nearform/orion/commit/ac8e59656b4a231445ea400409ef3279a48c6c27))
+* 🐛 Fix bad reference to component ([3a1ecba](https://github.com/nearform/orion/commit/3a1ecbab3a48ee10b84af9ba7a5dc2946b754c8f))
+* 🐛 Fix linting errors with prior merges ([f0b6fd9](https://github.com/nearform/orion/commit/f0b6fd93776a931dc7d674b57558674bacddc69b))
+* 🐛 More dependency fixes from components to orion-core ([9894dc7](https://github.com/nearform/orion/commit/9894dc78879765078216cae91f4bee4f4756f209))
+
+
+
+
+
 ## [2.14.1](https://github.com/nearform/orion/compare/v2.14.0...v2.14.1) (2020-02-24)
 
 **Note:** Version bump only for package gatsby-plugin-orion-core
