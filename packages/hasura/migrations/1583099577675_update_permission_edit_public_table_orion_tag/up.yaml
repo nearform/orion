@@ -1,0 +1,16 @@
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - tag
+      - hidden
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: edit
+    table:
+      name: orion_tag
+      schema: public
+  type: create_insert_permission

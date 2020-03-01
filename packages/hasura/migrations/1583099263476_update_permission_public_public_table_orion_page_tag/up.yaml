@@ -1,0 +1,19 @@
+- args:
+    role: public
+    table:
+      name: orion_page_tag
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - page_id
+      - tag_id
+      computed_fields: []
+      filter: {}
+    role: public
+    table:
+      name: orion_page_tag
+      schema: public
+  type: create_select_permission

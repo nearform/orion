@@ -1,0 +1,13 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - hidden
+      - tag
+      filter: {}
+      limit: null
+    role: edit
+    table:
+      name: orion_tag
+      schema: public
+  type: create_select_permission

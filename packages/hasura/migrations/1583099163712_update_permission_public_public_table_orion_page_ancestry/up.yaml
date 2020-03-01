@@ -1,0 +1,20 @@
+- args:
+    role: public
+    table:
+      name: orion_page_ancestry
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - page_id
+      - ancestor_id
+      - direct
+      computed_fields: []
+      filter: {}
+    role: public
+    table:
+      name: orion_page_ancestry
+      schema: public
+  type: create_select_permission
