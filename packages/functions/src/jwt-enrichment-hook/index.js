@@ -26,11 +26,17 @@ export const handler = async event => {
         claimsToAddOrOverride: {
           'https://hasura.io/jwt/claims': JSON.stringify({
             'x-hasura-user-id': user.id.toString(),
-            'x-hasura-user-role': user.orionRole.name,
-            'x-hasura-user-role-permissions': createNumericRolePermissions(
+            'x-hasura-role': process.env.HASURA_ROLE,
+            'x-hasura-default-role': process.env.HASURA_ROLE,
+            'x-hasura-allowed-roles': ['public', 'edit', 'admin'],
+            'x-hasura-group-id': user.orionGroup.id.toString(),
+          }),
+          'x-orion-claims': JSON.stringify({
+            'x-orion-user-role-permissions': createNumericRolePermissions(
               user.orionRole.orionRolePermissions
             ),
-            'x-hasura-group-id': user.orionGroup.id.toString(),
+            'x-orion-user-role': user.orionRole.name,
+            'x-orion-user-group': user.orionGroup.name,
           }),
         },
       },

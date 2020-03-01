@@ -19,6 +19,13 @@ const permissions = {
   },
 }
 
+/**
+ * Converts a permission set from an object into a boolean-encoded integer for easy
+ * storage and permission-checking
+ *
+ * @param {object} permSets Role Permissions in format as fetched from GraphQL
+ * @return {number} Role permissions
+ */
 const createNumericRolePermissions = permSets => {
   const numericPerms = permSets.reduce((acc, curr) => {
     for (const key in curr) {
@@ -33,34 +40,7 @@ const createNumericRolePermissions = permSets => {
   return numericPerms
 }
 
-const comparePerms = (userSet, reqString, divider) => {
-  const reqSet = reqString.split(divider)
-  const val = reqSet.reduce((acc, curr) =>
-    userSet[curr] === true ? acc++ : acc
-  )
-  return divider === '&' ? val === reqSet.length : val > 0
-}
-
-// Use: checkPerms({user: 'create&read&update&delete', page: 'read|update' }, true)
-const checkPermissions = (userPerms, permReqs, all = true) => {
-  let hasPerms = false
-  for (const permSet in permReqs) {
-    if (permissions.keys.includes(permSet)) {
-      hasPerms = comparePerms(
-        userPerms,
-        permReqs[permSet],
-        permReqs[permSet].includes('&') ? '&' : '|'
-      )
-      if (hasPerms !== all) {
-        break
-      }
-    }
-  }
-
-  return hasPerms
-}
-
 export default {
+  permissions,
   createNumericRolePermissions,
-  checkPermissions,
 }
