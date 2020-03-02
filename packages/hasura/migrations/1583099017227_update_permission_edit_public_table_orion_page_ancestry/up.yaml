@@ -1,0 +1,14 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - direct
+      - ancestor_id
+      - page_id
+      filter: {}
+      limit: null
+    role: edit
+    table:
+      name: orion_page_ancestry
+      schema: public
+  type: create_select_permission

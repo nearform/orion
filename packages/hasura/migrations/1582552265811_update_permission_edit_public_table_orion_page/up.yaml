@@ -1,0 +1,22 @@
+- args:
+    permission:
+      columns:
+      - show_in_menu
+      - id
+      - layout
+      - path
+      - title
+      - created
+      - expires
+      - modified
+      - published
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: edit
+    table:
+      name: orion_page
+      schema: public
+  type: create_update_permission

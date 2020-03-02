@@ -1,0 +1,16 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - parents
+      - name
+      filter:
+        id:
+          _eq: X-Hasura-Group-Id
+      limit: null
+    role: public
+    table:
+      name: orion_group
+      schema: public
+  type: create_select_permission

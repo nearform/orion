@@ -1,0 +1,21 @@
+- args:
+    role: public
+    table:
+      name: orion_page_content
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - block
+      - component
+      - id
+      - props
+      computed_fields: []
+      filter: {}
+    role: public
+    table:
+      name: orion_page_content
+      schema: public
+  type: create_select_permission
