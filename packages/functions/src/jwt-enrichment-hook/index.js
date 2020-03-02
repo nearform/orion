@@ -25,18 +25,19 @@ export const handler = async event => {
       claimsOverrideDetails: {
         claimsToAddOrOverride: {
           'https://hasura.io/jwt/claims': JSON.stringify({
-            'x-hasura-user-id': user.id.toString(),
-            'x-hasura-role': process.env.HASURA_ROLE,
-            'x-hasura-default-role': process.env.HASURA_ROLE,
-            'x-hasura-allowed-roles': ['public', 'edit', 'admin'],
-            'x-hasura-group-id': user.orionGroup.id.toString(),
+            'X-Hasura-User-Id': user.id.toString(),
+            'X-Hasura-Role-Id': user.orionRole.id.toString(),
+            'X-Hasura-Role': process.env.HASURA_ROLE,
+            'X-Hasura-Default-Role': process.env.HASURA_ROLE,
+            'X-Hasura-Allowed-Roles': ['public', 'edit', 'admin'],
+            'X-Hasura-Group-Id': user.orionGroup.id.toString(),
           }),
-          'x-orion-claims': JSON.stringify({
-            'x-orion-user-role-permissions': createNumericRolePermissions(
+          'X-Orion-Claims': JSON.stringify({
+            'X-Orion-User-Role-Permissions': createNumericRolePermissions(
               user.orionRole.orionRolePermissions
             ),
-            'x-orion-user-role': user.orionRole.name,
-            'x-orion-user-group': user.orionGroup.name,
+            'X-Orion-User-Role': user.orionRole.name,
+            'X-Orion-User-Group': user.orionGroup.name,
           }),
         },
       },

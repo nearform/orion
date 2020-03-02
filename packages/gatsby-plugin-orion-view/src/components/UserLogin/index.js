@@ -1,7 +1,14 @@
 import React from 'react'
+import { Redirect } from '@reach/router'
 import { Grid, Button, Typography } from '@material-ui/core'
+import { Auth } from 'aws-amplify'
 
 import { Form } from 'gatsby-plugin-orion-core'
+
+const handleLogin = ({ username, password }) => {
+  Auth.signIn({ username, password })
+  return <Redirect noThrow to="/" />
+}
 
 const UserLogin = () => (
   <Form
@@ -46,9 +53,7 @@ const UserLogin = () => (
         </Grid>
       </Grid>
     )}
-    // TODO: change below to handle sign in
-    // eslint-disable-next-line no-alert
-    onSubmit={e => alert(JSON.stringify(e, null, 2))}
+    onSubmit={handleLogin}
   />
 )
 

@@ -59,6 +59,10 @@ Layout.propTypes = {
   page: T.object.isRequired,
 }
 
+Layout.defaultProps = {
+  classes: undefined,
+}
+
 const styles = theme => ({ ...theme.layout })
 
 export default withStyles(styles, { withTheme: true })(Layout)

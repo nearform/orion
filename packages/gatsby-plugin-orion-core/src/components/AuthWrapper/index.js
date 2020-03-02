@@ -1,27 +1,37 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext } from 'react'
 import T from 'prop-types'
 import { Auth } from 'aws-amplify'
 import { permissions } from '../../utils/permissions'
 
 const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
-const CUSTOM_CLAIMS_NAMESPACE = 'x-orion-claims'
+const CUSTOM_CLAIMS_NAMESPACE = 'X-Orion-Claims'
 
 export const AuthContext = createContext()
 
-const isAuthenticatedSync = () => isBrowser && Boolean(Auth.user)
+/**
+ * A user object exists within a browser window
+ *
+ * @return {boolean}
+ */
+const isAuthenticated = () => isBrowser && Boolean(Auth.user)
 
+/**
+ * Extracts data from aws-amplify provided JWT
+ *
+ * @return {object} JWT namespace data
+ */
 const extractTokenPayload = () => {
-  const tokenPayload = isAuthenticatedSync()
+  const tokenPayload = isAuthenticated()
     ? Auth.user.signInUserSession.idToken.payload
-    : null
+    : undefined
 
   return tokenPayload
     ? {
         ...JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE]),
         ...JSON.parse(tokenPayload[CUSTOM_CLAIMS_NAMESPACE]),
       }
-    : null
+    : undefined
 }
 
 /**
@@ -45,16 +55,10 @@ const comparePerms = (permSet, userPerms, reqString) => {
 }
 
 function AuthWrapper({ children }) {
-  const [userId, setUserId] = useState(0)
-  const [userRole, setUserRole] = useState('Guest')
-  const [userPermissions, setUserPermissions] = useState(0)
-  const [userGroupId, setUserGroupId] = useState(0)
-  const [userGroup, setUserGroup] = useState('none')
   /**
    * Check a user's permissions against required permissions for an action
    * Intended to be called before performing any permission-restricted action
    *
-   * @param {number} userPerms Allowed permissions for user
    * @param {object} permReqs Required permissions object allowing check against multiple
    *                          permission sets and application of and/or logic. In the format
    *                          of: {permSet: 'perm&perm&perm'} or {permSet: 'perm|perm|perm'}
@@ -63,11 +67,13 @@ function AuthWrapper({ children }) {
    *                      False, only one permission set must pass for function to return True
    * @return {boolean} True if permission checks pass, False otherwise
    */
-  const checkPermissions = (userPerms, permReqs, all = true) => {
+  const checkPermissions = (permReqs, all = true) => {
+    const { permissions } = getUserTokenData()
+
     let hasPerms = false
     for (const permSet in permReqs) {
       if (permissions.keys.includes(permSet)) {
-        hasPerms = comparePerms(permSet, userPerms, permReqs[permSet])
+        hasPerms = comparePerms(permSet, permissions, permReqs[permSet])
         if (hasPerms !== all) {
           break
         }
@@ -77,29 +83,33 @@ function AuthWrapper({ children }) {
     return hasPerms
   }
 
+  /**
+   * Get user data from the aws-amplify provided JWT token
+   *
+   * @return {object} The user object for a logged-in user
+   */
   const getUserTokenData = () => {
     const claims = extractTokenPayload()
-    setUserId(claims[`x-hasura-user-id`])
-    setUserRole(claims[`x-orion-user-role`])
-    setUserPermissions(claims[`x-orion-user-role-permissions`])
-    setUserGroupId(claims[`x-hasura-group-id`])
-    setUserGroup(claims[`x-orion-user-group`])
-
-    return {
-      userId,
-      userRole,
-      userPermissions,
-      userGroupId,
-      userGroup,
-    }
+    return claims === undefined
+      ? {
+          id: 0,
+          roleId: 0,
+          role: ``,
+          permissions: 0,
+          groupId: 0,
+          group: ``,
+        }
+      : {
+          id: claims[`X-Hasura-User-Id`],
+          roleId: claims[`X-Orion-Role-Id`],
+          role: claims[`X-Orion-Role`],
+          permissions: claims[`X-Orion-User-Role-Permissions`],
+          groupId: claims[`X-Hasura-Group-Id`],
+          group: claims[`X-Orion-User-Group`],
+        }
   }
 
   const auth = {
-    userId,
-    userRole,
-    userPermissions,
-    userGroupId,
-    userGroup,
     getUserTokenData,
     checkPermissions,
   }

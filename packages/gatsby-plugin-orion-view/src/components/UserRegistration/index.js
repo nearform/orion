@@ -1,14 +1,28 @@
 import React from 'react'
 import { Grid, Button, Typography } from '@material-ui/core'
+import { Auth } from 'aws-amplify'
 
 import { Form } from 'gatsby-plugin-orion-core'
 
-const UserLogin = () => (
+const handleRegister = ({ username, password, givenName }) => {
+  Auth.signUp({
+    username,
+    password,
+    attributes: {
+      email: username,
+      givenName,
+    },
+  }).then(({ username, password }) => {
+    Auth.signIn({ username, password })
+  })
+}
+
+const UserRegistration = () => (
   <Form
     formFields={[
       {
         label: 'Given name',
-        name: 'given_name',
+        name: 'givenName',
         type: 'text',
         xs: 12,
       },
@@ -33,7 +47,7 @@ const UserLogin = () => (
           if (!value) {
             error = 'Required'
           } else if (
-            !/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Z\d@$!%*#?&]{1,}$/i.test(
+            `!/^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Zd@$!%*#?&]{1,}$/i`.test(
               value
             )
           ) {
@@ -71,10 +85,8 @@ const UserLogin = () => (
         </Grid>
       </Grid>
     )}
-    // TODO: change below to handle sign in
-    // eslint-disable-next-line no-alert
-    onSubmit={e => alert(JSON.stringify(e, null, 2))}
+    onSubmit={handleRegister}
   />
 )
 
-export default UserLogin
+export default UserRegistration

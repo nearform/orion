@@ -40,7 +40,4 @@ const createNumericRolePermissions = permSets => {
   return numericPerms
 }
 
-export default {
-  permissions,
-  createNumericRolePermissions,
-}
+export { permissions, createNumericRolePermissions }
