@@ -122,14 +122,14 @@ const sampleMenuData = [
 
 const Img = ({ ...props }) => <img alt="social" {...props} />
 
-function Layout({ children, page }) {
+function Layout({ children, classes, page }) {
   const parents = page.ancestry.map(({ ancestor }) => ({
     title: ancestor.title,
     to: ancestor.path,
   }))
 
   return (
-    <div>
+    <div className={classes.root}>
       <header>
         <AppBar
           brandTo="/home"
@@ -152,7 +152,12 @@ function Layout({ children, page }) {
 
 Layout.propTypes = {
   children: T.node.isRequired,
+  classes: T.object,
   page: T.object.isRequired,
+}
+
+Layout.defaultProps = {
+  classes: undefined,
 }
 
 const styles = theme => ({ ...theme.layout })
