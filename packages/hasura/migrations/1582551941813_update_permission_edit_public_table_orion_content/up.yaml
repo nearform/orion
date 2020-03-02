@@ -1,0 +1,28 @@
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - parents
+      - path
+      - content_type
+      - title
+      - subtitle
+      - hero_img
+      - date_created
+      - date_modified
+      - date_published
+      - date_expired
+      - content
+      - id
+      - summary
+      - status
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: edit
+    table:
+      name: orion_content
+      schema: public
+  type: create_insert_permission
