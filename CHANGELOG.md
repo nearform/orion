@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.17.0](https://github.com/nearform/orion/compare/v2.16.0...v2.17.0) (2020-03-02)
+
+
+### Bug Fixes
+
+* 🐛 Re-add classes to Layout ([0a82b32](https://github.com/nearform/orion/commit/0a82b320f7ca5241e7cdac1ff167e023d17bb2df))
+
+
+### Features
+
+* 🎸 Add primary app bar and apply theme ([84c539e](https://github.com/nearform/orion/commit/84c539ea29f745f31daa794d0046935d7d234a8c))
+
+
+
+
+
 # [2.16.0](https://github.com/nearform/orion/compare/v2.15.1...v2.16.0) (2020-03-01)
 
 
