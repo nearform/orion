@@ -37,7 +37,7 @@ const UserLogin = () => (
       >
         <Grid>
           <Typography noWrap variant="h6" color="textSecondary">
-            No account? <a>Create account</a>
+            No account? <a href="/registration">Create account</a>
           </Typography>
         </Grid>
         <Grid>&nbsp;</Grid>

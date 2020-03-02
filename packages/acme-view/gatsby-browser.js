@@ -4,7 +4,6 @@ import { ComponentProvider, LayoutProvider } from 'gatsby-plugin-orion-view'
 import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
-
 import { components } from './src/components'
 import { layouts } from './src/layouts'
 

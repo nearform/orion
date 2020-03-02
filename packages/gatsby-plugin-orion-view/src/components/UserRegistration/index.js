@@ -47,7 +47,7 @@ const UserRegistration = () => (
           if (!value) {
             error = 'Required'
           } else if (
-            `!/^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Zd@$!%*#?&]{1,}$/i`.test(
+            !/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Z\d@$!%*#?&]{1,}$/i.test(
               value
             )
           ) {
@@ -69,7 +69,7 @@ const UserRegistration = () => (
       >
         <Grid>
           <Typography noWrap variant="h6" color="textSecondary">
-            Have an account? <a>Sign in</a>
+            Have an account? <a href="/login">Sign in</a>
           </Typography>
         </Grid>
         <Grid>&nbsp;</Grid>
