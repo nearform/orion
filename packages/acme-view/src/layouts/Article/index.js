@@ -1,4 +1,5 @@
 import React from 'react'
+import T from 'prop-types'
 import Layout from '../../components/Layout'
 import { Grid } from '@material-ui/core'
 
@@ -15,6 +16,12 @@ function ArticleLayout({ content, metadata, page }) {
       </Grid>
     </Layout>
   )
+}
+
+ArticleLayout.propTypes = {
+  content: T.node.isRequired,
+  metadata: T.node.isRequired,
+  page: T.object.isRequired,
 }
 
 export default ArticleLayout

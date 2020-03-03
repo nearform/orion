@@ -8,6 +8,7 @@
     "url": "https://github.com/nearform/orion/issues"
   },
   "dependencies": {
+    "acme-admin-theme": "^2.14.1",
     "gatsby-plugin-orion-core": "^2.14.1"
   },
   "homepage": "https://www.nearform.com/",

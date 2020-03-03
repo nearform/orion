@@ -1,9 +1,10 @@
 import React from 'react'
-import ArticleMetadata from '.'
+import T from 'prop-types'
+import InnerArticleMetadata from '.'
 
-export default function ({ page, readTime }) {
+function ArticleMetadata({ page, readTime }) {
   return (
-    <ArticleMetadata
+    <InnerArticleMetadata
       author={{
         title: page.authors[0].user.title,
         name: page.authors[0].user.given_name,
@@ -15,3 +16,10 @@ export default function ({ page, readTime }) {
     />
   )
 }
+
+ArticleMetadata.propTypes = {
+  page: T.object.isRequired,
+  readTime: T.number.isRequired,
+}
+
+export default ArticleMetadata

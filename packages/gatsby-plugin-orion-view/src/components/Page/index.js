@@ -1,18 +1,16 @@
 import React from 'react'
 import getPageQuery from '../../queries/get-page'
-import { useComponents } from '../ComponentProvider'
-import { useLayouts } from '../LayoutProvider'
+import { useComponents } from 'gatsby-plugin-orion-core'
 import { useQuery } from 'graphql-hooks'
 
 function PageProvider({ location, pageContext }) {
+  const { components, layouts } = useComponents()
+
   const { data, loading } = useQuery(getPageQuery, {
     variables: {
       path: location.pathname,
     },
   })
-
-  const components = useComponents()
-  const layouts = useLayouts()
 
   if (loading && pageContext.page === null) {
     return (

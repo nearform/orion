@@ -1,12 +1,21 @@
 import React from 'react'
-import ArticleContent from '.'
+import T from 'prop-types'
+import InnerArticleContent from '.'
 
-export default function ({ page, image, content }) {
+function ArticleContent({ page, image, content }) {
   return (
-    <ArticleContent
+    <InnerArticleContent
       content={content}
       title={page.title}
       image={image}
     />
   )
 }
+
+ArticleContent.propTypes = {
+  content: T.string.isRequired,
+  image: T.string.isRequired,
+  page: T.object.isRequired,
+}
+
+export default ArticleContent

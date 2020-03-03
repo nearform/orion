@@ -1,4 +1,5 @@
 import React from 'react'
+import T from 'prop-types'
 import { Link } from '@reach/router'
 
 function ListChildren({ page }) {
@@ -33,6 +34,10 @@ function ListChildren({ page }) {
       )}
     </ul>
   )
+}
+
+ListChildren.propTypes = {
+  page: T.object.isRequired,
 }
 
 export default ListChildren

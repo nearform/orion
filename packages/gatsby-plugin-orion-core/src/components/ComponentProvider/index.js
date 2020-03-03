@@ -1,14 +1,20 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useMemo } from 'react'
 import T from 'prop-types'
 
-const ComponentContext = createContext({})
+const ComponentContext = createContext({
+  components: {},
+  layouts: {},
+})
 
 function ComponentProvider({
   children,
-  components = {}
+  components = {},
+  layouts = {},
 }) {
+  const value = useMemo(() => ({ components, layouts }), [components, layouts])
+  
   return (
-    <ComponentContext.Provider value={components}>
+    <ComponentContext.Provider value={value}>
       {children}
     </ComponentContext.Provider>
   )
@@ -17,6 +23,7 @@ function ComponentProvider({
 ComponentProvider.propTypes = {
   children: T.node.isRequired,
   components: T.object,
+  layouts: T.object,
 }
 
 export function useComponents() {

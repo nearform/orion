@@ -1,13 +1,10 @@
 import React from 'react'
-import ComponentProvider from './src/components/ComponentProvider'
-import LayoutProvider from './src/components/LayoutProvider'
+import { ComponentProvider } from 'gatsby-plugin-orion-core'
 
 export const wrapRootElement = ({ element }) => {
   return (
-    <LayoutProvider>
-      <ComponentProvider>
-        {element}
-      </ComponentProvider>
-    </LayoutProvider>
+    <ComponentProvider>
+      {element}
+    </ComponentProvider>
   )
 }
