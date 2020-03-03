@@ -5,6 +5,7 @@ import {
   CircularProgress,
   Button,
   Typography,
+  Box,
 } from '@material-ui/core'
 import classnames from 'classnames'
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate'
@@ -42,7 +43,7 @@ const UploadImage = ({
     imageURL === null ? {} : { backgroundImage: `url(${imageURL})` }
 
   return (
-    <>
+    <Box className="upload-image-box">
       <ImageInput />
       {children ? (
         typeof children === 'function' ? (
@@ -94,7 +95,7 @@ const UploadImage = ({
           Upload Image
         </Button>
       )}
-    </>
+    </Box>
   )
 }
 

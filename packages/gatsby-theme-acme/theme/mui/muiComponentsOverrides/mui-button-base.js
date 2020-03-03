@@ -2,8 +2,6 @@ const theme = require('@material-ui/core/styles/defaultTheme').default
 const { fade } = require('@material-ui/core/styles/colorManipulator')
 const palette = require('../palette')
 
-console.log('THEME:', theme)
-
 module.exports = {
   root: {
     '&.upload-image-base': {
@@ -52,8 +50,6 @@ module.exports = {
         alignItems: 'center',
         justifyContent: 'center',
         color: palette.action.main,
-        // TODO: how to set the background color without covering the image?
-        // BackgroundColor: palette.background.default,
         '& .upload-image-typography': {
           // TODO: pickup the article typography from???
           // ...theme.articleTypography.articleEditButton,
@@ -63,6 +59,7 @@ module.exports = {
           display: 'flex',
           alignItems: 'center',
           opacity: 0,
+          backgroundColor: palette.background.default,
           transition: theme.transitions.create('opacity'),
           '& .MuiSvgIcon-root': {
             marginRight: theme.spacing(1),
