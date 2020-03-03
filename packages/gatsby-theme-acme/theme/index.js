@@ -21,6 +21,7 @@ const layout = require('./custom/layout')
 const searchInput = require('./custom/search-input')
 const secondaryAppBar = require('./custom/secondary-app-bar')
 const form = require('./custom/form')
+const articleStatusChip = require('./custom/article-status-chip')
 
 exports.muiTheme = {
   overrides: {
@@ -44,6 +45,7 @@ exports.muiTheme = {
   searchInput,
   secondaryAppBar,
   form,
+  articleStatusChip,
 }
 
 exports.googleFonts = ['Titillium Web:400,700,900']

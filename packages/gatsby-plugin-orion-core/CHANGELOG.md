@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.16.0](https://github.com/nearform/orion/compare/v2.15.1...v2.16.0) (2020-03-01)
+
+
+### Features
+
+* 🎸 Created article status and author component ([212839d](https://github.com/nearform/orion/commit/212839def0885dc5783e66904ebe09cf7c49aea0)), closes [#341](https://github.com/nearform/orion/issues/341)
+* 🎸 Created article status chips ([e1dcdac](https://github.com/nearform/orion/commit/e1dcdaca830a22cfff67ab54973ffb5ad031e736))
+
+
+
+
+
 ## [2.15.1](https://github.com/nearform/orion/compare/v2.15.0...v2.15.1) (2020-02-26)
 
 

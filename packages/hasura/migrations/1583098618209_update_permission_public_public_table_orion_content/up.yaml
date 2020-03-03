@@ -1,0 +1,39 @@
+- args:
+    role: public
+    table:
+      name: orion_content
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - date_created
+      - date_expired
+      - date_modified
+      - date_published
+      - id
+      - parents
+      - content
+      - content_type
+      - hero_img
+      - path
+      - status
+      - subtitle
+      - summary
+      - title
+      computed_fields: []
+      filter:
+        _and:
+        - date_published:
+            _lte: now()
+        - _or:
+          - date_expired:
+              _is_null: true
+          - date_expired:
+              _gt: now()
+    role: public
+    table:
+      name: orion_content
+      schema: public
+  type: create_select_permission

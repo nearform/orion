@@ -17,6 +17,7 @@ const styles = {
       fontFamily: theme.fontFamily,
     },
   },
+  ...theme,
 }
 
 export default withStyles(styles)(({ children }) => children)
