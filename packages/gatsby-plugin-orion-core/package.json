@@ -2,7 +2,7 @@
   "name": "gatsby-plugin-orion-core",
   "description": "Orion core core plugin",
   "main": "index.js",
-  "version": "2.14.1",
+  "version": "2.16.0",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
@@ -16,11 +16,11 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "^4.9.0",
     "aws-amplify": "2.2.5",
-    "components": "^2.14.1",
+    "aws-amplify-react": "3.1.6",
     "dotenv": "^8.2.0",
-    "efqm-theme": "^2.14.1",
     "fg-loadcss": "^2.1.0",
     "formik": "^2.1.4",
+    "formik-material-ui": "^0.0.22",
     "gatsby": "^2.19.18",
     "gatsby-image": "^2.2.41",
     "gatsby-plugin-create-client-paths": "^2.1.22",
@@ -37,16 +37,19 @@
     "graphql-hooks": "^4.4.2",
     "js-sha256": "^0.9.0",
     "lodash": "4.17.15",
+    "material-ui-nested-menu-item": "^1.0.2",
     "node-fetch": "^2.6.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "typography": "^0.16.19",
-    "typography-theme-wordpress-2016": "^0.16.19"
+    "typography-theme-wordpress-2016": "^0.16.19",
+    "webpack-graphql-loader": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
+    "@storybook/addon-actions": "^5.3.13",
     "@storybook/addon-knobs": "^5.3.13",
     "@storybook/react": "^5.3.13",
     "@testing-library/jest-dom": "^5.1.1",

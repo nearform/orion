@@ -19,7 +19,7 @@ const AuthInitWrapper = ({ element }) => {
 
   return (
     <ClientContext.Provider value={client}>
-      <AuthWrapper allowNoParentGroups isAuthInitialized={isAuthInitialized}>
+      <AuthWrapper hasNoParentGroups isAuthInitialized={isAuthInitialized}>
         {element}
       </AuthWrapper>
     </ClientContext.Provider>

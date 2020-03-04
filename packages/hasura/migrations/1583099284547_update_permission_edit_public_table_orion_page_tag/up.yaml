@@ -1,0 +1,13 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - page_id
+      - tag_id
+      filter: {}
+      limit: null
+    role: edit
+    table:
+      name: orion_page_tag
+      schema: public
+  type: create_select_permission

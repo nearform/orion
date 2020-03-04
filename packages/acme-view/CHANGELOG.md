@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.17.0](https://github.com/nearform/orion/compare/v2.16.0...v2.17.0) (2020-03-02)
+
+
+### Bug Fixes
+
+* 🐛 Re-add classes to Layout ([0a82b32](https://github.com/nearform/orion/commit/0a82b320f7ca5241e7cdac1ff167e023d17bb2df))
+
+
+### Features
+
+* 🎸 Add primary app bar and apply theme ([84c539e](https://github.com/nearform/orion/commit/84c539ea29f745f31daa794d0046935d7d234a8c))
+
+
+
+
+
+# [2.16.0](https://github.com/nearform/orion/compare/v2.15.1...v2.16.0) (2020-03-01)
+
+**Note:** Version bump only for package acme-view
+
+
+
+
+
+## [2.15.1](https://github.com/nearform/orion/compare/v2.15.0...v2.15.1) (2020-02-26)
+
+
+### Bug Fixes
+
+* 🐛 Dependency and code fixes for linting ([7ba5c56](https://github.com/nearform/orion/commit/7ba5c56aa0a1799e8633db6a231a735303aa099a))
+* 🐛 Re-Add module.js to gatsby-theme-acme ([9eef49f](https://github.com/nearform/orion/commit/9eef49fe4ede6013a0322dd63bbc6a2914351b65))
+
+
+
+
+
 ## [2.14.1](https://github.com/nearform/orion/compare/v2.14.0...v2.14.1) (2020-02-24)
 
 **Note:** Version bump only for package acme-view

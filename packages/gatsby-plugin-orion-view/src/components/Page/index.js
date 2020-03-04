@@ -13,19 +13,14 @@ function PageProvider({ location, pageContext }) {
   })
 
   if (loading && pageContext.page === null) {
-    return (
-      <h1>Loading</h1>
-    )
+    return <h1>Loading</h1>
   }
 
-  const page = data && data.orion_page.length === 1 ? data.orion_page[0] : pageContext.page
+  const page =
+    data && data.orion_page.length === 1 ? data.orion_page[0] : pageContext.page
 
   if (!page) {
-    return (
-      <h1>
-        Error
-      </h1>
-    )
+    return <h1>Error</h1>
   }
 
   const blocks = {}
@@ -46,23 +41,12 @@ function PageProvider({ location, pageContext }) {
       blocks[block] = []
     }
 
-    blocks[block].push((
-      <Component
-        {...props}
-        key={id}
-        loading={loading}
-        page={page}
-      />
-    ))
+    blocks[block].push(
+      <Component {...props} key={id} loading={loading} page={page} />
+    )
   }
 
-  return (
-    <Layout
-      {...blocks}
-      loading={loading}
-      page={page}
-    />
-  )
+  return <Layout {...blocks} loading={loading} page={page} />
 }
 
 export default PageProvider

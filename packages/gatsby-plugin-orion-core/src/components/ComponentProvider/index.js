@@ -26,6 +26,10 @@ ComponentProvider.propTypes = {
   layouts: T.object,
 }
 
+ComponentProvider.defaultProps = {
+  components: undefined,
+}
+
 export function useComponents() {
   return useContext(ComponentContext)
 }

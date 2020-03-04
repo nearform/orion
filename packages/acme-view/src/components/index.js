@@ -1,5 +1,5 @@
-import ArticleContent from './ArticleContent/wrap'
-import ArticleMetadata from './ArticleMetadata/wrap'
+import ArticleContent from './ArticleContent/Wrap'
+import ArticleMetadata from './ArticleMetadata/Wrap'
 import ListChildren from './ListChildren'
 
 export const components = {

@@ -12,21 +12,22 @@ exports.createPages = async ({ graphql, actions }) => {
   createPage({
     path: '/_not_found',
     matchPath: '/*',
-    component: pageComponent,
+    component: pageComponent || '',
     context: {
       page: null,
     },
   })
 
   pagesResults.data.orion.orion_page.forEach(page => {
-    const suffix = page.path === '/' ? '' : page.path[page.path.length - 1] === '/' ? '*' : '/*'
+    const pathSyntax = page.path[page.path.length - 1] === '/' ? '*' : '/*'
+    const suffix = page.path === '/' ? '' : pathSyntax
 
     createPage({
       path: page.path,
       matchPath: `${page.path}${suffix}`,
       component: pageComponent,
       context: {
-        page: page,
+        page,
       },
     })
   })

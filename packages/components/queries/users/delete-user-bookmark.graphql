@@ -1,7 +1,0 @@
-mutation deleteUserBookmark($userId: Int!, $articleId: Int!) {
-  delete_user_bookmarks(
-    where: { user_id: { _eq: $userId }, article_id: { _eq: $articleId } }
-  ) {
-    affected_rows
-  }
-}

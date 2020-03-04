@@ -37,4 +37,10 @@ SecondaryAppBar.propTypes = {
   disablePadding: T.bool,
 }
 
+SecondaryAppBar.defaultProps = {
+  classes: undefined,
+  data: [],
+  onSearch: undefined,
+}
+
 export default withStyles(styles, { withTheme: true })(SecondaryAppBar)

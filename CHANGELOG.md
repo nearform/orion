@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.17.0](https://github.com/nearform/orion/compare/v2.16.0...v2.17.0) (2020-03-02)
+
+
+### Bug Fixes
+
+* 🐛 Re-add classes to Layout ([0a82b32](https://github.com/nearform/orion/commit/0a82b320f7ca5241e7cdac1ff167e023d17bb2df))
+
+
+### Features
+
+* 🎸 Add primary app bar and apply theme ([84c539e](https://github.com/nearform/orion/commit/84c539ea29f745f31daa794d0046935d7d234a8c))
+
+
+
+
+
+# [2.16.0](https://github.com/nearform/orion/compare/v2.15.1...v2.16.0) (2020-03-01)
+
+
+### Features
+
+* 🎸 Created article status and author component ([212839d](https://github.com/nearform/orion/commit/212839def0885dc5783e66904ebe09cf7c49aea0)), closes [#341](https://github.com/nearform/orion/issues/341)
+* 🎸 Created article status chips ([e1dcdac](https://github.com/nearform/orion/commit/e1dcdaca830a22cfff67ab54973ffb5ad031e736))
+
+
+
+
+
+## [2.15.1](https://github.com/nearform/orion/compare/v2.15.0...v2.15.1) (2020-02-26)
+
+
+### Bug Fixes
+
+* 🐛 Add missing dependency ([7436fe1](https://github.com/nearform/orion/commit/7436fe1b9511541c477cac1ea381377f3f0a6e78))
+* 🐛 Added a dependency from components to orion-core ([82fe452](https://github.com/nearform/orion/commit/82fe45293d081970206d58e1d7442b774559a39c))
+* 🐛 Clean up dependency references ([ac8e596](https://github.com/nearform/orion/commit/ac8e59656b4a231445ea400409ef3279a48c6c27))
+* 🐛 Dependency and code fixes for linting ([7ba5c56](https://github.com/nearform/orion/commit/7ba5c56aa0a1799e8633db6a231a735303aa099a))
+* 🐛 Fix bad reference to component ([3a1ecba](https://github.com/nearform/orion/commit/3a1ecbab3a48ee10b84af9ba7a5dc2946b754c8f))
+* 🐛 Fix linting errors with prior merges ([f0b6fd9](https://github.com/nearform/orion/commit/f0b6fd93776a931dc7d674b57558674bacddc69b))
+* 🐛 Fixed storybook reference to themes ([2b7c43b](https://github.com/nearform/orion/commit/2b7c43b890178f9bc8048ecceec5c56fd8688946))
+* 🐛 More dependency fixes from components to orion-core ([9894dc7](https://github.com/nearform/orion/commit/9894dc78879765078216cae91f4bee4f4756f209))
+* 🐛 Re-Add module.js to gatsby-theme-acme ([9eef49f](https://github.com/nearform/orion/commit/9eef49fe4ede6013a0322dd63bbc6a2914351b65))
+
+
+
+
+
+# [2.15.0](https://github.com/nearform/orion/compare/v2.14.1...v2.15.0) (2020-02-25)
+
+
+### Bug Fixes
+
+* 🐛 Applied ArticleEditButtons to ArticleEditForm ([1dd79de](https://github.com/nearform/orion/commit/1dd79dec85cd93d43dd242ef42805765add95a43))
+
+
+### Features
+
+* 🎸 Created Article Edit buttons ([8d4f3a2](https://github.com/nearform/orion/commit/8d4f3a24176e2736facc0ff2a8d20a9343d5afac))
+
+
+
+
+
 ## [2.14.1](https://github.com/nearform/orion/compare/v2.14.0...v2.14.1) (2020-02-24)
 
 **Note:** Version bump only for package orion
