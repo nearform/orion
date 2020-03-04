@@ -6,8 +6,12 @@ import { Auth } from 'aws-amplify'
 import { Form } from 'gatsby-plugin-orion-core'
 
 const handleLogin = ({ username, password }) => {
+  /* eslint-disable no-console */
   Auth.signIn({ username, password })
+    .then(data => console.log(data))
+    .catch(error => console.log(error))
   return <Redirect noThrow to="/" />
+  /* eslint-enable no-console */
 }
 
 const UserLogin = () => (

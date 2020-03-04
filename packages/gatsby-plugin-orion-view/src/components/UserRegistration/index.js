@@ -10,7 +10,9 @@ const handleRegister = ({ username, password, givenName }) => {
     password,
     attributes: {
       email: username,
-      givenName,
+      // AWS expects an underscore-separated variable, so must disable camelcase check
+      // eslint-disable-next-line camelcase
+      given_name: givenName,
     },
   }).then(({ username, password }) => {
     Auth.signIn({ username, password })
