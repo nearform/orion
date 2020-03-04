@@ -2,7 +2,7 @@ module.exports = `{
   orion {
     orion_page(
       where: {
-        published: {_lt: "now()"},
+        published: {_lte: "now()"},
         expires: {_is_null: true},
         show_in_menu: {_eq: true},
         path: { _neq: "/" }
