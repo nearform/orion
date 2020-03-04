@@ -2,6 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import Footer from 'gatsby-plugin-orion-core/src/components/Footer'
 import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
+import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
 import SecondaryAppBar from 'gatsby-plugin-orion-core/src/components/SecondaryAppBar'
 import { withStyles } from '@material-ui/core'
 
@@ -41,7 +42,10 @@ function Layout({ children, classes, page }) {
   return (
     <div className={classes.root}>
       <header>
-        <SecondaryAppBar data={parents} onSearch={() => {}} />
+        <SecondaryAppBar
+          action={<SearchInput onSearch={() => {}} />}
+          data={parents}
+        />
       </header>
       <main>
         <PaddedContainer>{children}</PaddedContainer>

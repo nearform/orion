@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useReducer, useState } from 'react'
 import T from 'prop-types'
 import getPageQuery from '../queries/get-page'
+import getPagesQuery from '../queries/get-pages'
 import savePageMutation from '../queries/save-page'
-import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
-import SecondaryAppBar from 'gatsby-plugin-orion-core/src/components/SecondaryAppBar'
+import Layout from '../components/Layout'
 import { Button, FormControl, Input, InputLabel, MenuItem, Select } from '@material-ui/core'
 import { useComponents } from 'gatsby-plugin-orion-core'
 import { useMutation, useQuery } from 'graphql-hooks'
@@ -119,21 +119,50 @@ function getInput(block, prop, value, type, dispatch) {
   }
 }
 
+function LayoutWrapper({ action, breadcrumbs, children, path }) {
+  const { data } = useQuery(getPagesQuery)
+  
+  const pages = useMemo(() => {
+    if (!data) {
+      return []
+    }
+
+    const map = page => {
+      const children = data.orion_page.filter(descendant => descendant.ancestry.find(ancestor => ancestor.ancestor.id === page.id && ancestor.direct)).map(map)
+      
+      return {
+        label: page.title,
+        to: `/pages/${page.id}`,
+        iconClass: children.length === 0 ? 'fas fa-long-arrow-alt-right' : 'fas fa-file',
+        children: children.length === 0 ? undefined : children,
+      }
+    }
+
+    return data.orion_page.filter(page => page.ancestry.length === 0).map(map)
+  }, [data])
+
+  return (
+    <Layout action={action} breadcrumbs={breadcrumbs} data={pages} path={path}>
+      {children}
+    </Layout>
+  )
+}
+
 export default function ({ id }) {
   const { components, layouts } = useComponents()
   const [page, dispatch] = useReducer(reducer, null)
   const [savePage] = useMutation(savePageMutation)
   const [preview, setPreview] = useState(false)
 
-  const Layout = page === null ? undefined : layouts[page.layout]
+  const PageLayout = page === null ? undefined : layouts[page.layout]
   const filterReserved = key => ['page'].indexOf(key) === -1
-  const blocks = page === null ? [] : Object.keys(Layout.propTypes).filter(filterReserved)
+  const blocks = page === null ? [] : Object.keys(PageLayout.propTypes).filter(filterReserved)
 
   const previewLayoutProps = {}
 
   const isValid = useMemo(() => {
     if (
-      !Layout ||
+      !PageLayout ||
       !page ||
       !page.title ||
       !page.path ||
@@ -166,7 +195,7 @@ export default function ({ id }) {
     }
 
     return true
-  }, [Layout, blocks, components, layouts, page])
+  }, [PageLayout, blocks, components, layouts, page])
 
   const { data, loading, refetch } = useQuery(getPageQuery, {
     variables: { id }
@@ -179,6 +208,8 @@ export default function ({ id }) {
       for (const { ancestor } of page.ancestry) {
         breadcrumbs.push({ title: ancestor.title, to: `/pages/${ancestor.id}` })
       }
+
+      breadcrumbs.push({ title: page.title, to: `/pages/${page.id}` })
     }
 
     return breadcrumbs
@@ -243,19 +274,43 @@ export default function ({ id }) {
     )
   })
 
+  const actions = (
+    <>
+      <Button onClick={() => setPreview(true)}>
+        Preview
+      </Button>
+      <Button disabled={!isValid} color="primary" onClick={async () => {
+        await savePage({
+          variables: {
+            id: page.id,
+            layout: page.layout,
+            path: page.path,
+            published: page.published,
+            showInMenu: page.show_in_menu,
+            title: page.title,
+            contents: page.contents
+          }
+        })
+
+        refetch()
+      }}>
+        Save
+      </Button>
+    </>
+  )
+
   return (
     <>
-      <SecondaryAppBar data={breadcrumbs} onSearch={() => { }} />
       {preview && (
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'white' }}>
-          <Layout page={page} {...previewLayoutProps} />
+          <PageLayout page={page} {...previewLayoutProps} />
           <Button onClick={() => setPreview(false)}>
             Hide
           </Button>
         </div>
       )}
       {!preview && (
-        <PaddedContainer>
+        <LayoutWrapper action={actions} breadcrumbs={breadcrumbs} path={`/pages/${id}`}>
           <FormControl fullWidth>
             <InputLabel>
               Title
@@ -281,27 +336,7 @@ export default function ({ id }) {
             </Select>
           </FormControl>
           {editor}
-          <Button disabled={!isValid} color="primary" onClick={async () => {
-            await savePage({
-              variables: {
-                id: page.id,
-                layout: page.layout,
-                path: page.path,
-                published: page.published,
-                showInMenu: page.show_in_menu,
-                title: page.title,
-                contents: page.contents
-              }
-            })
-
-            refetch()
-          }}>
-            Save
-          </Button>
-          <Button onClick={() => setPreview(true)}>
-            Preview
-          </Button>
-        </PaddedContainer>
+        </LayoutWrapper>
       )}
     </>
   )

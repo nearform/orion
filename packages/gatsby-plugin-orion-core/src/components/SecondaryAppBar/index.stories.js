@@ -1,4 +1,5 @@
 import React from 'react'
+import SearchInput from '../SearchInput'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import SecondaryAppBar from '.'
@@ -17,5 +18,10 @@ const data = [
 storiesOf('SecondaryAppBar', module)
   .addDecorator(jsxDecorator)
   .add('Default', () => {
-    return <SecondaryAppBar data={data} onSearch={() => {}} />
+    return (
+      <SecondaryAppBar
+        action={<SearchInput onSearch={() => {}} />}
+        data={data}
+      />
+    )
   })

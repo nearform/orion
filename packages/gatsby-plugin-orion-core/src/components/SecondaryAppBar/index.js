@@ -1,23 +1,24 @@
 import BreadcrumbNavigation from '../BreadcrumbNavigation'
 import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
-import SearchInput from '../SearchInput'
 import React from 'react'
 import T from 'prop-types'
 import { Grid, withStyles } from '@material-ui/core'
 
-function SecondaryAppBar({ classes, data, onSearch }) {
+function SecondaryAppBar({ action, classes, data, disablePadding = false }) {
+  const Wrap = disablePadding ? React.Fragment : PaddedContainer
+
   return (
     <div className={classes.root}>
-      <PaddedContainer>
+      <Wrap>
         <Grid container>
           <Grid container item xs={9} alignItems="center">
             <BreadcrumbNavigation data={data} />
           </Grid>
-          <Grid item xs={3}>
-            <SearchInput onSearch={onSearch} />
+          <Grid container item xs={3} alignItems="center" justify="flex-end">
+            {action}
           </Grid>
         </Grid>
-      </PaddedContainer>
+      </Wrap>
     </div>
   )
 }
@@ -25,6 +26,7 @@ function SecondaryAppBar({ classes, data, onSearch }) {
 const styles = theme => ({ ...theme.secondaryAppBar })
 
 SecondaryAppBar.propTypes = {
+  action: T.node.isRequired,
   classes: T.object,
   data: T.arrayOf(
     T.shape({
@@ -32,7 +34,7 @@ SecondaryAppBar.propTypes = {
       to: T.string,
     })
   ),
-  onSearch: T.func,
+  disablePadding: T.bool,
 }
 
 export default withStyles(styles, { withTheme: true })(SecondaryAppBar)
