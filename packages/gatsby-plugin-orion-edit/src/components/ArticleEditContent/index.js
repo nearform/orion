@@ -22,6 +22,7 @@ const UserLogin = () => (
       {
         name: 'image',
         type: 'image',
+        path: 'articles',
       },
       {
         label: 'Article Summary',
