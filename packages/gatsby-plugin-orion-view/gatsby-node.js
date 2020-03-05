@@ -20,16 +20,23 @@ exports.createPages = async ({ graphql, actions }) => {
     },
   })
 
+  const childMap = ({ descendant }) => {
+    const children =
+      descendant.descendants && descendant.descendants.length > 0
+        ? descendant.descendants.map(childMap)
+        : []
+    return {
+      label: descendant.title,
+      to: descendant.path,
+      children,
+    }
+  }
+
   const menu = menuResults.data.orion.orion_page.map(item => {
     return {
       label: item.title,
       to: item.path,
-      children: item.descendants.map(({ descendant }) => {
-        return {
-          label: descendant.title,
-          to: descendant.path,
-        }
-      }),
+      children: item.descendants.map(childMap),
     }
   })
 

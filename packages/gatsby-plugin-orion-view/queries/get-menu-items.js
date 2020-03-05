@@ -1,24 +1,35 @@
 module.exports = `{
   orion {
-    orion_page(
-      where: {
+    orion_page(where: {
+      _and: {
         published: {_lte: "now()"},
-        expires: {_is_null: true},
         show_in_menu: {_eq: true},
-        path: { _neq: "/" }
+        path: {_neq: "/"}
+      },
+      _or: [
+        { expires: { _is_null: true } },
+        { expires: { _gte: "now()" } }
+      ],
+      _not: {
+        ancestry: {}
       }
-    ) {
-      descendants {
+    }) {
+      descendants(where: {_and: {direct: {_eq: true}, descendant: {show_in_menu: {_eq: true}}}}) {
         descendant {
           id
           path
           title
+          descendants(where: {_and: {direct: {_eq: true}, descendant: {show_in_menu: {_eq: true}}}}) {
+            descendant {
+              id
+              path
+              title
+            }
+          }
         }
-        direct
       }
       id
       path
-      show_in_menu
       title
     }
   }
