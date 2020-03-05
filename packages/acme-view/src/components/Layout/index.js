@@ -43,7 +43,7 @@ function Layout({ children, classes, page, menu }) {
     <div className={classes.root}>
       <header>
         <AppBar
-          brandTo="/home"
+          brandTo="/"
           childIndicatorIcon="fas fa-chevron-right"
           dropDownIndicatorIcon="fas fa-chevron-down"
           userRole="User"
@@ -65,7 +65,7 @@ Layout.propTypes = {
   children: T.node.isRequired,
   classes: T.object,
   page: T.object.isRequired,
-  menu: T.object.isRequired,
+  menu: T.array.isRequired,
 }
 
 Layout.defaultProps = {
