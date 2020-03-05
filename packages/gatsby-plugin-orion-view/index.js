@@ -1,1 +1,4 @@
-export { default as ViewComponentProvider, useViewComponents } from './src/components/ViewComponentProvider'
+export {
+  default as ViewComponentProvider,
+  useViewComponents,
+} from './src/components/ViewComponentProvider'

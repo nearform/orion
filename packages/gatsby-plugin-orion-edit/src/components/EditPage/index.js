@@ -4,8 +4,15 @@ import getPagesQuery from '../../queries/get-pages'
 import updatePageMutation from '../../queries/update-page'
 import ArticleEditButtons from '../ArticleEditButtons'
 import Layout from '../Layout'
-import { FormControl, Input, InputLabel, MenuItem, Select } from '@material-ui/core'
+import {
+  FormControl,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@material-ui/core'
 import { useEditComponents } from '../EditComponentProvider'
+import { useLocation } from '@reach/router'
 import { useMutation, useQuery } from 'graphql-hooks'
 
 function reducer(page, action) {
@@ -47,8 +54,8 @@ function reducer(page, action) {
             block: action.block,
             component: action.component,
             props: {},
-          }
-        ]
+          },
+        ],
       }
 
     case 'props':
@@ -60,48 +67,51 @@ function reducer(page, action) {
               ...content,
               props: action.props,
             }
-          } else {
-            return content
           }
+
+          return content
         }),
       }
 
     default:
-      throw new Error()
+      throw new Error('Invalid action')
   }
 }
 
 function EditPage({ initialState, onSave }) {
-  const { components, layouts } = useEditComponents()
+  const { components, layouts, PreviewWrapper } = useEditComponents()
   const [page, dispatch] = useReducer(reducer, initialState)
   const [createPage] = useMutation(createPageMutation)
   const [updatePage] = useMutation(updatePageMutation)
   const [preview, setPreview] = useState(false)
   const { data } = useQuery(getPagesQuery)
-  
+  const location = useLocation()
+
   const pages = useMemo(() => {
     if (!data) {
       return []
     }
 
     const map = page => {
-      const filter = descendant => descendant.ancestry.find(ancestor => {
-        return ancestor.ancestor.id === page.id && ancestor.direct
-      })
+      const filter = descendant =>
+        descendant.ancestry.find(ancestor => {
+          return ancestor.ancestor.id === page.id && ancestor.direct
+        })
 
       const children = [
         {
           label: 'Add page',
           iconClass: 'fas fa-plus',
-          to: `/pages/${page.id}/create`
+          to: `/pages/${page.id}/create`,
         },
         ...data.orion_page.filter(filter).map(map),
       ]
-      
+
       return {
         label: page.title,
         to: `/pages/${page.id}/edit`,
-        iconClass: children.length === 0 ? 'fas fa-long-arrow-alt-right' : 'fas fa-file',
+        iconClass:
+          children.length === 0 ? 'fas fa-long-arrow-alt-right' : 'fas fa-file',
         children: children.length === 0 ? undefined : children,
       }
     }
@@ -110,7 +120,7 @@ function EditPage({ initialState, onSave }) {
       {
         label: 'Add page',
         iconClass: 'fas fa-plus',
-        to: `/pages/create`
+        to: `/pages/create`,
       },
       ...data.orion_page.filter(page => page.ancestry.length === 0).map(map),
     ]
@@ -139,6 +149,7 @@ function EditPage({ initialState, onSave }) {
           title: page.title,
           contents: page.contents.map(content => ({
             ...content,
+            // eslint-disable-next-line camelcase
             page_id: page.id,
           })),
         },
@@ -155,6 +166,7 @@ function EditPage({ initialState, onSave }) {
           title: page.title,
           contents: page.contents,
           ancestry: page.ancestry.map(({ ancestor, direct }) => ({
+            // eslint-disable-next-line camelcase
             ancestor_id: ancestor.id,
             direct,
           })),
@@ -175,10 +187,16 @@ function EditPage({ initialState, onSave }) {
     const breadcrumbs = []
 
     for (const { ancestor } of page.ancestry) {
-      breadcrumbs.push({ title: ancestor.title, to: `/pages/${ancestor.id}/edit` })
+      breadcrumbs.push({
+        title: ancestor.title,
+        to: `/pages/${ancestor.id}/edit`,
+      })
     }
 
-    breadcrumbs.push({ title: page.title, to: `/pages/${page.id}/edit` })
+    breadcrumbs.push({
+      title: page.title,
+      to: `/pages/${page.id}/edit`,
+    })
 
     return breadcrumbs
   }, [page])
@@ -189,20 +207,22 @@ function EditPage({ initialState, onSave }) {
     let editor = null
 
     if (content) {
-      const { editor: Editor, preview: Component } = components[content.component]
+      const { editor: Editor, preview: Component } = components[
+        content.component
+      ]
 
-      previewLayoutProps[block] = (
-        <Component {...content.props} page={page} />
-      )
+      previewLayoutProps[block] = <Component {...content.props} page={page} />
 
       editor = (
         <Editor
           props={content.props}
-          onChange={props => dispatch({
-            type: 'props',
-            block,
-            props
-          })}
+          onChange={props =>
+            dispatch({
+              type: 'props',
+              block,
+              props,
+            })
+          }
         />
       )
     }
@@ -210,16 +230,16 @@ function EditPage({ initialState, onSave }) {
     editLayoutProps[block] = (
       <div key={block}>
         <FormControl fullWidth>
-          <InputLabel shrink>
-            Component
-          </InputLabel>
+          <InputLabel shrink>Component</InputLabel>
           <Select
             value={content === undefined ? '' : content.component}
-            onChange={event => dispatch({ 
-              type: 'component',
-              block,
-              component: event.target.value
-            })}
+            onChange={event =>
+              dispatch({
+                type: 'component',
+                block,
+                component: event.target.value,
+              })
+            }
           >
             {Object.keys(components).map(component => (
               <MenuItem key={component} value={component}>
@@ -236,7 +256,7 @@ function EditPage({ initialState, onSave }) {
   const actions = (
     <ArticleEditButtons
       isEditing={!preview}
-      publishDisabled={!!page.published}
+      publishDisabled={Boolean(page.published)}
       toggleEdit={() => setPreview(!preview)}
       onPublish={handlePublish}
       onSave={handleSave}
@@ -248,30 +268,41 @@ function EditPage({ initialState, onSave }) {
       action={actions}
       breadcrumbs={breadcrumbs}
       data={pages}
-      path={`/pages/${page.id}/edit`}
+      path={location.pathname}
     >
       {preview && PageLayout !== undefined && (
-        <PageLayout page={page} {...previewLayoutProps} />
+        <PreviewWrapper props={{ pageContext: { page } }}>
+          <PageLayout page={page} {...previewLayoutProps} />
+        </PreviewWrapper>
       )}
       {!preview && (
         <>
           <FormControl fullWidth>
-            <InputLabel shrink>
-              Title
-          </InputLabel>
-            <Input value={page.title} onChange={event => dispatch({ type: 'title', title: event.target.value })} />
+            <InputLabel shrink>Title</InputLabel>
+            <Input
+              value={page.title}
+              onChange={event =>
+                dispatch({ type: 'title', title: event.target.value })
+              }
+            />
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel shrink>
-              Path
-          </InputLabel>
-            <Input value={page.path} onChange={event => dispatch({ type: 'path', path: event.target.value })} />
+            <InputLabel shrink>Path</InputLabel>
+            <Input
+              value={page.path}
+              onChange={event =>
+                dispatch({ type: 'path', path: event.target.value })
+              }
+            />
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel shrink>
-              Layout
-          </InputLabel>
-            <Select value={page.layout} onChange={event => dispatch({ type: 'layout', layout: event.target.value })}>
+            <InputLabel shrink>Layout</InputLabel>
+            <Select
+              value={page.layout}
+              onChange={event =>
+                dispatch({ type: 'layout', layout: event.target.value })
+              }
+            >
               {Object.keys(layouts).map(layout => (
                 <MenuItem key={layout} label="Layout" value={layout}>
                   {layout}
@@ -279,9 +310,7 @@ function EditPage({ initialState, onSave }) {
               ))}
             </Select>
           </FormControl>
-          {PageLayout !== undefined && (
-            <PageLayout {...editLayoutProps} />
-          )}
+          {PageLayout !== undefined && <PageLayout {...editLayoutProps} />}
         </>
       )}
     </Layout>

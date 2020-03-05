@@ -1,5 +1,5 @@
 import BreadcrumbNavigation from '../BreadcrumbNavigation'
-import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
+import PaddedContainer from '../PaddedContainer'
 import React from 'react'
 import T from 'prop-types'
 import { Grid, withStyles } from '@material-ui/core'
@@ -32,13 +32,11 @@ SecondaryAppBar.propTypes = {
       to: T.string,
     })
   ),
-  disablePadding: T.bool,
 }
 
 SecondaryAppBar.defaultProps = {
   classes: undefined,
   data: [],
-  onSearch: undefined,
 }
 
 export default withStyles(styles, { withTheme: true })(SecondaryAppBar)

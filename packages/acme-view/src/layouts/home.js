@@ -2,9 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 
 function HomeLayout({ main }) {
-  return (
-    <div>{main}</div>
-  )
+  return <div>{main}</div>
 }
 
 HomeLayout.propTypes = {

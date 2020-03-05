@@ -1,22 +1,20 @@
 import React from 'react'
 import ThemeWrapper, { theme } from 'gatsby-theme-acme'
-import { ViewComponentProvider } from 'gatsby-plugin-orion-view'
 import { CssBaseline } from '@material-ui/core'
+import { EditComponentProvider } from 'gatsby-plugin-orion-edit'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 
-import viewComponents from 'acme-view/src/components'
-import viewLayouts from 'acme-view/src/layouts'
+import components from './src/components'
+import layouts from './src/layouts'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
 
 export const wrapPageElement = ({ element }) => (
-  <ViewComponentProvider components={viewComponents} layouts={viewLayouts}>
+  <EditComponentProvider components={components} layouts={layouts}>
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
-      <ThemeWrapper>
-        {element}
-      </ThemeWrapper>
+      <ThemeWrapper>{element}</ThemeWrapper>
     </ThemeProvider>
-  </ViewComponentProvider>
+  </EditComponentProvider>
 )

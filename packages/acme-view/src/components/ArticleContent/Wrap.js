@@ -3,7 +3,9 @@ import T from 'prop-types'
 import InnerArticleContent from '.'
 
 function ArticleContent({ page, image, content }) {
-  return <InnerArticleContent content={content} title={page.title} image={image} />
+  return (
+    <InnerArticleContent content={content} title={page.title} image={image} />
+  )
 }
 
 ArticleContent.propTypes = {

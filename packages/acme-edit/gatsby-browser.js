@@ -14,9 +14,7 @@ export const wrapPageElement = ({ element }) => (
   <EditComponentProvider components={components} layouts={layouts}>
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
-      <ThemeWrapper>
-        {element}
-      </ThemeWrapper>
+      <ThemeWrapper>{element}</ThemeWrapper>
     </ThemeProvider>
   </EditComponentProvider>
 )
