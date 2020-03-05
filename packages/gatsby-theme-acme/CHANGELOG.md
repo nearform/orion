@@ -35,7 +35,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [2.14.1](https://github.com/nearform/orion/compare/v2.14.0...v2.14.1) (2020-02-24)
 
-**Note:** Version bump only for package acme-admin-theme
+**Note:** Version bump only for package gatsby-theme-acme
 
 
 
@@ -157,7 +157,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [2.5.0](https://github.com/nearform/orion/compare/v2.4.0...v2.5.0) (2020-02-11)
 
-**Note:** Version bump only for package acme-admin-theme
+**Note:** Version bump only for package gatsby-theme-acme
 
 
 

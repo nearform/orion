@@ -7,12 +7,14 @@ import {
   Select,
   AppBar as MuiAppBar,
   Toolbar,
+  withStyles,
 } from '@material-ui/core'
 import MoreVert from '@material-ui/icons/MoreVert'
 import Twemoji from 'react-twemoji'
 import HorizontalNavigationMenu from 'gatsby-plugin-orion-core/src/components/HorizontalNavigationMenu'
 
 const AppBar = ({
+  classes,
   menuData,
   dropDownIndicatorIcon,
   childIndicatorIcon,
@@ -20,7 +22,7 @@ const AppBar = ({
   brandTo,
 }) => {
   return (
-    <MuiAppBar>
+    <MuiAppBar classes={{ root: classes.root }} position="static">
       <Toolbar>
         <Button
           edge="start"
@@ -48,7 +50,7 @@ const AppBar = ({
           className="language-switcher"
           value="en"
           IconComponent={MoreVert}
-          MenuProps={{ className: 'language-switcher-menu' }}
+          MenuProps={{ className: `${classes.popover} language-switcher-menu` }}
           renderValue={() => (
             <MenuItem value="en" className="language-switcher-item">
               <Twemoji
@@ -78,7 +80,10 @@ const AppBar = ({
   )
 }
 
+const styles = theme => ({ ...theme.appBar, ...theme.horizontalMenu })
+
 AppBar.propTypes = {
+  classes: PropTypes.object,
   menuData: PropTypes.array,
   dropDownIndicatorIcon: PropTypes.string,
   childIndicatorIcon: PropTypes.string,
@@ -94,4 +99,4 @@ AppBar.defaultProps = {
   brandTo: undefined,
 }
 
-export default AppBar
+export default withStyles(styles, { withTheme: true })(AppBar)

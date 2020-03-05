@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { loadCSS } from 'fg-loadcss'
 import clsx from 'clsx'
 import { Link } from '@reach/router'
-import { Button, Menu, MenuItem, Icon } from '@material-ui/core'
+import { Button, Menu, MenuItem, Icon, withStyles } from '@material-ui/core'
 import NestedMenuItem from 'material-ui-nested-menu-item'
 
 const HorizontalNavigationMenu = ({
+  classes,
   data,
   dropDownIndicatorIcon = 'fas fa-chevron-down',
   childIndicatorIcon = 'fas fa-chevron-right',
@@ -24,6 +25,7 @@ const HorizontalNavigationMenu = ({
     .map(item => (
       <RootItem
         key={`${item.label}-${item.to}`}
+        classes={classes}
         item={item}
         childIndicatorIcon={childIndicatorIcon}
         dropDownIndicatorIcon={dropDownIndicatorIcon}
@@ -47,14 +49,18 @@ const menuItemNode = PropTypes.shape(menuItemShape)
 menuItemShape.children = PropTypes.arrayOf(menuItemNode)
 
 HorizontalNavigationMenu.propTypes = {
+  classes: PropTypes.object,
   data: PropTypes.arrayOf(menuItemNode).isRequired,
   childIndicatorIcon: PropTypes.string,
 }
 
-export default HorizontalNavigationMenu
+const styles = theme => ({ ...theme.horizontalMenu })
+
+export default withStyles(styles, { withTheme: true })(HorizontalNavigationMenu)
 
 // Renders a root menu item, wrapped in a button
 const RootItem = ({
+  classes,
   item,
   childIndicatorIcon,
   dropDownIndicatorIcon,
@@ -67,6 +73,7 @@ const RootItem = ({
     // Wrap any children in a Menu
     <Menu
       anchorEl={anchorEl}
+      className={classes.popover}
       open={Boolean(anchorEl)}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       getContentAnchorEl={null}
@@ -133,7 +140,7 @@ const RootItem = ({
 // see: https://material-ui.com/guides/composition/#caveat-with-refs
 // and https://github.com/mui-org/material-ui/issues/15903
 const ChildItem = forwardRef(
-  ({ item, parentOpen, childIndicatorIcon, userRole }, ref) => {
+  ({ classes, item, parentOpen, childIndicatorIcon, userRole }, ref) => {
     const hasChildren = item.children !== undefined && item.children.length > 0
 
     const itemContent = (

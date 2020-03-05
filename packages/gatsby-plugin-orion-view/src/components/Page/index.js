@@ -1,10 +1,10 @@
 import React from 'react'
 import getPageQuery from '../../queries/get-page'
-import { useComponents } from 'gatsby-plugin-orion-core'
+import { useViewComponents } from '../ViewComponentProvider'
 import { useQuery } from 'graphql-hooks'
 
 function PageProvider({ location, pageContext }) {
-  const { components, layouts } = useComponents()
+  const { components, layouts } = useViewComponents()
 
   const { data, loading } = useQuery(getPageQuery, {
     variables: {

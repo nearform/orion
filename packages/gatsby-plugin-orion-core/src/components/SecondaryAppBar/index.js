@@ -4,12 +4,10 @@ import React from 'react'
 import T from 'prop-types'
 import { Grid, withStyles } from '@material-ui/core'
 
-function SecondaryAppBar({ action, classes, data, disablePadding = false }) {
-  const Wrap = disablePadding ? React.Fragment : PaddedContainer
-
+function SecondaryAppBar({ action, classes, data }) {
   return (
     <div className={classes.root}>
-      <Wrap>
+      <PaddedContainer>
         <Grid container>
           <Grid container item xs={9} alignItems="center">
             <BreadcrumbNavigation data={data} />
@@ -18,7 +16,7 @@ function SecondaryAppBar({ action, classes, data, disablePadding = false }) {
             {action}
           </Grid>
         </Grid>
-      </Wrap>
+      </PaddedContainer>
     </div>
   )
 }

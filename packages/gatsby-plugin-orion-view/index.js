@@ -1,1 +1,1 @@
-export { ComponentProvider } from 'gatsby-plugin-orion-core'
+export { default as ViewComponentProvider, useViewComponents } from './src/components/ViewComponentProvider'

@@ -1,0 +1,23 @@
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - show_in_menu
+      - id
+      - layout
+      - path
+      - title
+      - created
+      - expires
+      - modified
+      - published
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: public
+    table:
+      name: orion_page
+      schema: public
+  type: create_insert_permission

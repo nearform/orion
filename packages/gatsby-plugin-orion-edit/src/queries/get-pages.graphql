@@ -1,7 +1,5 @@
 query getPages {
-  orion_page(where: {
-    show_in_menu: { _eq: true }
-  }) {
+  orion_page {
     ancestry {
       ancestor {
         id
