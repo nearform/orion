@@ -2,7 +2,7 @@
   "name": "gatsby-plugin-orion-core",
   "description": "Orion core core plugin",
   "main": "index.js",
-  "version": "2.16.0",
+  "version": "2.18.0",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
