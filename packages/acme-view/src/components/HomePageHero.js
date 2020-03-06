@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import SearchBar from './SearchForm'
+import SearchBar from 'gatsby-plugin-orion-core/src/components/SearchInput'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -21,6 +21,9 @@ const useStyles = makeStyles(theme => {
         '& > .MuiGrid-item > .MuiGrid-item': {
           maxWidth: '40%',
           margin: '0 auto',
+          '& > .MuiGrid-item ~ .MuiGrid-item': {
+            width: '400px',
+          },
         },
         '& .MuiTypography-h1': {
           color: theme.palette.common.white,
@@ -33,6 +36,7 @@ const useStyles = makeStyles(theme => {
           textAlign: 'center',
           marginBottom: 24,
           padding: '0 20%',
+          fontFamily: theme.typography.fontFamily,
         },
       }
     },
@@ -67,7 +71,7 @@ const HomePageHero = ({ imageSrc }) => {
             </Typography>
           </Grid>
           <Grid item>
-            <SearchBar />
+            <SearchBar placeholderText="Search Acme" />
           </Grid>
         </Grid>
       </Grid>
