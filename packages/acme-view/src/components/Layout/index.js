@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import T from 'prop-types'
 import Footer from 'gatsby-plugin-orion-core/src/components/Footer'
 import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
@@ -124,10 +124,16 @@ const sampleMenuData = [
 const Img = ({ ...props }) => <img alt="social" {...props} />
 
 function Layout({ children, classes, page }) {
-  const parents = page.ancestry.map(({ ancestor }) => ({
-    title: ancestor.title,
-    to: ancestor.path,
-  }))
+  const parents = useMemo(() => {
+    if (!page) {
+      return []
+    }
+
+    return page.ancestry.map(({ ancestor }) => ({
+      title: ancestor.title,
+      to: ancestor.path,
+    }))
+  }, [page])
 
   return (
     <div className={classes.root}>
@@ -157,7 +163,7 @@ function Layout({ children, classes, page }) {
 Layout.propTypes = {
   children: T.node.isRequired,
   classes: T.object,
-  page: T.object.isRequired,
+  page: T.object,
 }
 
 Layout.defaultProps = {
