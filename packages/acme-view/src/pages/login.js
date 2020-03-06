@@ -1,11 +1,11 @@
 import React from 'react'
 import Layout from '../components/Layout'
-import UserLogin from 'gatsby-plugin-orion-view/src/components/UserLogin'
+import UserAuthentication from 'gatsby-plugin-orion-view/src/components/UserAuthentication'
 import { withStyles } from '@material-ui/core'
 
 const Login = () => (
   <Layout page={{ ancestry: [] }}>
-    <UserLogin />
+    <UserAuthentication />
   </Layout>
 )
 

@@ -28,4 +28,9 @@ SearchInput.propTypes = {
   onSearch: T.func,
 }
 
+SearchInput.defaultProps = {
+  classes: undefined,
+  onSearch: undefined,
+}
+
 export default withStyles(styles, { withTheme: true })(SearchInput)
