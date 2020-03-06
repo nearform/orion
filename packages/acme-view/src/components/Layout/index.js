@@ -11,7 +11,7 @@ import facebook from 'gatsby-plugin-orion-core/src/assets/social/logo-fb.svg'
 import youtube from 'gatsby-plugin-orion-core/src/assets/social/logo-youtube.svg'
 import twitter from 'gatsby-plugin-orion-core/src/assets/social/logo-twitter.svg'
 import linkedin from 'gatsby-plugin-orion-core/src/assets/social/logo-linkedin.svg'
-import logo from 'gatsby-plugin-orion-core/src/assets/logo.svg'
+import Logo from 'gatsby-plugin-orion-core/src/assets/logo.inline.svg'
 
 const socialIcons = [
   {
@@ -53,7 +53,7 @@ function Layout({ children, classes, menu, page }) {
       <header>
         <AppBar
           brandTo="/"
-          logo={logo}
+          Logo={Logo}
           childIndicatorIcon="fas fa-chevron-right"
           dropDownIndicatorIcon="fas fa-chevron-down"
           userRole="User"
@@ -68,7 +68,7 @@ function Layout({ children, classes, menu, page }) {
       </header>
       <main>{children}</main>
       <footer>
-        <Footer socialIcons={socialIcons} logo={logo} Img={Img} />
+        <Footer socialIcons={socialIcons} Logo={Logo} Img={Img} />
       </footer>
     </div>
   )
@@ -83,6 +83,7 @@ Layout.propTypes = {
 
 Layout.defaultProps = {
   classes: undefined,
+  page: undefined,
 }
 
 const styles = theme => ({ ...theme.layout })

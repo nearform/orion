@@ -18,14 +18,14 @@ const AppBar = ({
   dropDownIndicatorIcon,
   childIndicatorIcon,
   userRole,
-  logo,
+  Logo,
   brandTo,
 }) => {
   return (
     <MuiAppBar position="static">
       <Toolbar>
         <Grid container alignItems="center">
-          {logo && (
+          {Logo && (
             <Grid item xs={2}>
               <Button
                 edge="start"
@@ -36,7 +36,8 @@ const AppBar = ({
                 className="brand-logo"
                 data-testid="brand-logo-button"
               >
-                <img src={logo} alt="Acme" />
+                <Logo width="107" />
+                {/* <img src={logo} alt="Acme" /> */}
               </Button>
             </Grid>
           )}
@@ -113,7 +114,7 @@ AppBar.propTypes = {
   childIndicatorIcon: PropTypes.string,
   userRole: PropTypes.string,
   brandTo: PropTypes.string,
-  logo: PropTypes.string,
+  Logo: PropTypes.element,
 }
 
 AppBar.defaultProps = {
@@ -122,7 +123,7 @@ AppBar.defaultProps = {
   childIndicatorIcon: 'fas fa-chevron-right',
   userRole: undefined,
   brandTo: undefined,
-  logo: undefined,
+  Logo: undefined,
 }
 
 export default AppBar
