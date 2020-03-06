@@ -13,6 +13,8 @@
   ],
   "dependencies": {
     "@material-ui/core": "^4.9.4",
+    "react-markdown": "^4.3.1",
+    "react-mde": "^8.0.2",
     "gatsby-plugin-orion-core": "^2.20.0",
     "prop-types": "^15.7.2"
   },
