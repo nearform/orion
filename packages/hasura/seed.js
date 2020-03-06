@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { GraphQLClient } = require('graphql-request')
 const seedData = require('./seed-data')
 
