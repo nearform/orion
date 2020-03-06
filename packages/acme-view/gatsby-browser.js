@@ -16,10 +16,7 @@ export const wrapPageElement = ({ element, props }) => (
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
       <ThemeWrapper>
-        <Layout
-          menu={props.pageContext.menu}
-          page={props.pageContext.page}
-        >
+        <Layout menu={props.pageContext.menu} page={props.pageContext.page}>
           {element}
         </Layout>
       </ThemeWrapper>
