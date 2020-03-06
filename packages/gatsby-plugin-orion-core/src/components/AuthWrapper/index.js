@@ -1,184 +1,120 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext } from 'react'
 import T from 'prop-types'
 import { Auth } from 'aws-amplify'
-import { find, get } from 'lodash'
+import { permissions } from '../../utils/permissions'
 
 const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
-const CUSTOM_CLAIMS_NAMESPACE = 'x-raw-salmon-claims'
-const CUSTOM_CLAIMS_CONTRIBUTOR_KEY = 'x-assess-base-contributor'
-const CUSTOM_CLAIMS_ASSESSOR_KEY = 'x-assess-base-assessor'
-const HASURA_DEFAULT_ROLE_KEY = 'x-hasura-default-role'
-const HASURA_USER_ID = 'x-hasura-user-id'
-const HASURA_GROUP_ID = 'x-hasura-group-id'
-const ROLES_PERMISSIONS = {
-  public: 0,
-  'non-member': 0,
-  user: 1,
-  member: 1,
-  'company-admin': 3,
-  'partner-admin': 7,
-  'platform-admin': 15,
-  admin: 31,
+const CUSTOM_CLAIMS_NAMESPACE = 'X-Orion-Claims'
+
+export const AuthContext = createContext()
+
+/**
+ * A user object exists within a browser window
+ *
+ * @return {boolean}
+ */
+const isAuthenticated = () => isBrowser && Boolean(Auth.user)
+
+/**
+ * Extracts data from aws-amplify provided JWT
+ *
+ * @return {object} JWT namespace data
+ */
+const extractTokenPayload = () => {
+  const tokenPayload = isAuthenticated()
+    ? Auth.user.signInUserSession.idToken.payload
+    : undefined
+
+  return tokenPayload
+    ? {
+        ...JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE]),
+        ...JSON.parse(tokenPayload[CUSTOM_CLAIMS_NAMESPACE]),
+      }
+    : undefined
 }
 
-export const AuthContext = createContext({ isAuthInitialized: false })
-
-const isAuthenticatedSync = () => isBrowser && Boolean(Auth.user)
-
-const extractTokenPayload = dataKey => {
-  if (!Auth.user) {
-    return null
-  }
-
-  const tokenPayload = get(Auth, 'user.signInUserSession.idToken.payload')
-
-  if (!tokenPayload) {
-    return null
-  }
-
-  const claims =
-    CUSTOM_CLAIMS_NAMESPACE in tokenPayload
-      ? {
-          ...JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE]),
-          ...JSON.parse(tokenPayload[CUSTOM_CLAIMS_NAMESPACE]),
-        }
-      : {
-          ...JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE]),
-        }
-
-  return claims[dataKey] || null
+/**
+ * Compares a given permission set against the given required permissions
+ * Intended to be used only as a private function by the local checkPermissions function
+ *
+ * @param {string} permSet Permission set to compare
+ * @param {number} userPerms Allowed permissions for user
+ * @param {string} reqString Required permissions, separated by & or |
+ * @return {boolean} True if permission checks pass, False otherwise
+ */
+const comparePerms = (permSet, userPerms, reqString) => {
+  const divider = reqString.includes('|') ? '|' : '&'
+  const reqSet = reqString.split(divider)
+  const val = reqSet.reduce((acc, curr) => acc + permissions[permSet][curr])
+  return divider === '|' ? (val & userPerms) > 0 : (val & userPerms) === val
 }
 
-function AuthWrapper({
-  isAuthInitialized,
-  hasNoParentGroups = false,
-  children,
-}) {
-  const [userGroups, setUserGroups] = useState([])
+function AuthWrapper({ children }) {
+  /**
+   * Check a user's permissions against required permissions for an action
+   * Intended to be called before performing any permission-restricted action
+   *
+   * @param {object} permReqs Required permissions object allowing check against multiple
+   *                          permission sets and application of and/or logic. In the format
+   *                          of: {permSet: 'perm&perm&perm'} or {permSet: 'perm|perm|perm'}
+   *                          Example: {user: 'create&read&update&delete', page: 'read|update' }
+   * @param {boolean} all If True, all permission sets must pass for function to return True. If
+   *                      False, only one permission set must pass for function to return True
+   * @return {boolean} True if permission checks pass, False otherwise
+   */
+  const checkPermissions = (permReqs, all = true) => {
+    const { permissions } = getUserTokenData()
+
+    let hasPerms = false
+    for (const permSet in permReqs) {
+      if (permissions.keys.includes(permSet)) {
+        hasPerms = comparePerms(permSet, permissions, permReqs[permSet])
+        if (hasPerms !== all) {
+          break
+        }
+      }
+    }
+
+    return hasPerms
+  }
 
   /**
-   * Returns an object detailing a user's permissions
+   * Get user data from the aws-amplify provided JWT token
    *
-   * @return {object} The current user's permissions
+   * @return {object} The user object for a logged-in user
    */
   const getUserTokenData = () => {
-    const data = {
-      isAuthenticated: Boolean(isAuthenticatedSync()),
-      isUser: hasPermissions('user'),
-      isAdmin: hasPermissions('company-admin'),
-      isPlatformGroup: hasPermissions('platform-admin'),
-      isContributor:
-        extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY) || false,
-      isAssessor: extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY) || false,
-      userId: extractTokenPayload(HASURA_USER_ID),
-      groupId: extractTokenPayload(HASURA_GROUP_ID),
-      role: getUserRole(),
-    }
-
-    return data
-  }
-
-  /**
-   * Checks a user's role against the minimum role level required
-   *
-   * @param {string} reqRole The minimum role-level at which the permission check is allowed to return true
-   * @return {boolean} Whether or not the current user qualifies for the permission-role checked
-   */
-  const getUserAuth = reqRole => {
-    if (!isAuthenticatedSync()) return false
-    if (!reqRole || reqRole === undefined) return true
-
-    switch (reqRole.toLowerCase()) {
-      case 'contributor':
-        return extractTokenPayload(CUSTOM_CLAIMS_CONTRIBUTOR_KEY)
-      case 'assessor':
-        return extractTokenPayload(CUSTOM_CLAIMS_ASSESSOR_KEY)
-      default:
-        return hasPermissions(reqRole.toLowerCase())
-    }
-  }
-
-  /**
-   * Finds the current user's role and appends the group to the role if necessary
-   *
-   * @return {string} The user's role, with appended group if necessary
-   */
-  const getUserRole = () => {
-    if (!isAuthenticatedSync()) return 'public'
-    const baseRole = getUserBaseRole()
-    const group = getUserGroup()
-    return group !== undefined && baseRole === 'admin'
-      ? `${group.type}-${baseRole}`
-      : baseRole
-  }
-
-  /**
-   * Get the base user role from the Hasura JWT Token
-   *
-   * @return {string} The user's role, without appended group
-   */
-  const getUserBaseRole = () => {
-    try {
-      return extractTokenPayload(HASURA_DEFAULT_ROLE_KEY)
-    } catch {
-      return 'public'
-    }
-  }
-
-  /**
-   * Get the default user group
-   *
-   * @return {object} The user's group: {id, type, name}
-   */
-  const getUserGroup = () => {
-    try {
-      const taxonomyQueryResult = userGroups
-      const groupId = extractTokenPayload(HASURA_GROUP_ID)
-      return find(taxonomyQueryResult.raw_salmon.group, { id: groupId })
-    } catch {
-      return undefined
-    }
-  }
-
-  /**
-   * Checks permission level of user against required permission level
-   *
-   * @param {string} reqRole The permission level required
-   * @return {boolean} Whether or not the user has the required permission level
-   */
-  const hasPermissions = reqRole => {
-    const role = getUserRole()
-    return (
-      (ROLES_PERMISSIONS[role] & ROLES_PERMISSIONS[reqRole]) ===
-      ROLES_PERMISSIONS[reqRole]
-    )
+    const claims = extractTokenPayload()
+    return claims === undefined
+      ? {
+          id: 0,
+          roleId: 0,
+          role: ``,
+          permissions: 0,
+          groupId: 0,
+          group: ``,
+        }
+      : {
+          id: claims[`X-Hasura-User-Id`],
+          roleId: claims[`X-Orion-Role-Id`],
+          role: claims[`X-Orion-Role`],
+          permissions: claims[`X-Orion-User-Role-Permissions`],
+          groupId: claims[`X-Hasura-Group-Id`],
+          group: claims[`X-Orion-User-Group`],
+        }
   }
 
   const auth = {
-    isAuthInitialized,
     getUserTokenData,
-    getUserAuth,
-    getUserRole,
-    hasPermissions,
-    isAuthenticatedSync,
-    setUserGroups,
-    hasNoParentGroups,
+    checkPermissions,
   }
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
 }
 
 AuthWrapper.propTypes = {
-  isAuthInitialized: T.bool,
-  hasNoParentGroups: T.bool,
-  children: T.node,
-}
-
-AuthWrapper.defaultProps = {
-  isAuthInitialized: false,
-  hasNoParentGroups: false,
-  children: undefined,
+  children: T.node.isRequired,
 }
 
 export default AuthWrapper
