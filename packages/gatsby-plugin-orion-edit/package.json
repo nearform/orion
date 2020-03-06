@@ -2,7 +2,7 @@
   "name": "gatsby-plugin-orion-edit",
   "description": "Orion core edit plugin",
   "main": "index.js",
-  "version": "2.16.0",
+  "version": "2.21.0",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
@@ -13,8 +13,10 @@
   ],
   "dependencies": {
     "@material-ui/core": "^4.9.4",
-    "gatsby-plugin-orion-core": "^2.16.0",
-    "prop-types": "^15.7.2"
+    "gatsby-plugin-orion-core": "^2.20.0",
+    "prop-types": "^15.7.2",
+    "react-markdown": "^4.3.1",
+    "react-mde": "^8.0.2"
   },
   "repository": {
     "type": "git",

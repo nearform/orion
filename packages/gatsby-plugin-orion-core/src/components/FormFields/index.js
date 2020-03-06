@@ -8,9 +8,8 @@ import {
   makeStyles,
   withTheme,
 } from '@material-ui/core'
-import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate'
 
-import UploadButton from '../UploadButton'
+import UploadImage from '../UploadImage'
 
 const useStyles = makeStyles(theme => ({
   input: {
@@ -202,22 +201,12 @@ InputSelectField.propTypes = {
   error: T.string.isRequired,
 }
 
-const UploadImageInputField = () => (
-  <UploadButton
-    startIcon={<AddPhotoAlternateIcon />}
-    variant="contained"
-    color="secondary"
-  >
-    Upload Image
-  </UploadButton>
-)
-
 const InputField = withTheme(({ type, children, ...props }) => {
   if (type === 'select') {
     return <InputSelectField {...props}>{children}</InputSelectField>
   }
 
-  if (type === 'image') return <UploadImageInputField {...props} />
+  if (type === 'image') return <UploadImage {...props} />
 
   return (
     <InputTextField type={type} {...props}>
