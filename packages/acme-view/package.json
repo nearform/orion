@@ -33,8 +33,16 @@
     "react-twemoji": "^0.2.3",
     "storybook-addon-jsx": "^7.1.14"
   },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.1.1",
+    "@testing-library/react": "^9.4.0",
+    "jest": "^25.1.0",
+    "babel-jest": "^25.1.0",
+    "babel-preset-gatsby": "^0.2.29"
+  },
   "license": "ISC",
   "scripts": {
+    "test": "jest",
     "commit": "cd .. && yarn commit",
     "build": "gatsby build",
     "develop": "gatsby develop",
