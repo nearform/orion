@@ -3,6 +3,7 @@ const MuiIcon = require('./mui/muiComponentsOverrides/mui-icon')
 const MuiDrawer = require('./mui/muiComponentsOverrides/mui-drawer')
 const MuiPaper = require('./mui/muiComponentsOverrides/mui-paper')
 const MuiButton = require('./mui/muiComponentsOverrides/mui-button')
+const MuiButtonBase = require('./mui/muiComponentsOverrides/mui-button-base')
 const MuiInput = require('./mui/muiComponentsOverrides/mui-input')
 const MuiGrid = require('./mui/muiComponentsOverrides/mui-grid')
 
@@ -29,6 +30,7 @@ exports.muiTheme = {
     MuiDrawer,
     MuiPaper,
     MuiButton,
+    MuiButtonBase,
     MuiInput,
     MuiGrid,
   },

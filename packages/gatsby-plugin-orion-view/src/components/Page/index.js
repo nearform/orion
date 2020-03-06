@@ -46,7 +46,9 @@ function PageProvider({ location, pageContext }) {
     )
   }
 
-  return <Layout {...blocks} loading={loading} page={page} />
+  return (
+    <Layout {...blocks} loading={loading} page={page} menu={pageContext.menu} />
+  )
 }
 
 export default PageProvider
