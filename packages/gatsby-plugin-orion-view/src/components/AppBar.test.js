@@ -28,6 +28,7 @@ describe('root menu items', () => {
 
     const { getByTestId } = render(
       <AppBar
+        logo="abc"
         menuData={['menu data']}
         dropDownIndicatorIcon="drop"
         childIndicatorIcon="child"
@@ -65,7 +66,7 @@ describe('root menu items', () => {
   test('renders brand logo button with to url', () => {
     expect.assertions(3)
 
-    const { getByTestId } = render(<AppBar brandTo="/dest1" />)
+    const { getByTestId } = render(<AppBar logo="abc" brandTo="/dest1" />)
 
     const logoButton = getByTestId('brand-logo-button')
     expect(logoButton).toBeInTheDocument()
