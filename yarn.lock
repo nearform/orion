@@ -7131,7 +7131,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.5:
+classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -12480,6 +12480,14 @@ hastscript@^5.0.0:
     hast-util-parse-selector "^2.0.0"
     property-information "^5.0.0"
     space-separated-tokens "^1.0.0"
+
+hasura-cli@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/hasura-cli/-/hasura-cli-1.1.0.tgz#a095e94c654d30354d8979602b8c0047c7b8a9e1"
+  integrity sha512-D1qXoYydx9Mgq7VQdCmOOvTlYhd1RcjQtn4s7pN1wb5w1ORIcDFLm1rS3w97bsx7wPRotIl0reyhc3+FDq+FFg==
+  dependencies:
+    axios "^0.19.0"
+    chalk "^2.4.2"
 
 he@^1.2.0:
   version "1.2.0"
