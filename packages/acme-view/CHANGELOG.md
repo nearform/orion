@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.20.0](https://github.com/nearform/orion/compare/v2.19.0...v2.20.0) (2020-03-06)
+
+
+### Features
+
+* 🎸 336 AppBar Menu on Actual Data ([a55d3e4](https://github.com/nearform/orion/commit/a55d3e47709cb724dfd4206212e8fe1787adf47a))
+
+
+
+
+
 # [2.19.0](https://github.com/nearform/orion/compare/v2.18.0...v2.19.0) (2020-03-06)
 
 
