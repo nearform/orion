@@ -1,8 +1,14 @@
 const palette = require('../palette')
-const logoImage = require('../../../assets/acme-logo.png')
 
 module.exports = {
   root: {
+    '& .nested-menu-item': {
+      height: 'auto',
+    },
+    '& .MuiToolbar-root > .MuiGrid-root': {
+      maxWidth: 1440,
+      margin: '0 auto',
+    },
     '& .MuiButton-label': {
       color: palette.background.default,
       '& .horizontal-navigation-menu-label-icon': {
@@ -49,9 +55,9 @@ module.exports = {
       width: '90px',
       paddingTop: 0,
       paddingBottom: 0,
-      backgroundImage: `url('${logoImage}')`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'auto 100%',
+    },
+    '& .brand-logo img': {
+      width: '100%',
     },
   },
 }

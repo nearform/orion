@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.22.0](https://github.com/nearform/orion/compare/v2.21.0...v2.22.0) (2020-03-06)
+
+
+### Features
+
+* 🎸 336 - Article components ([6421621](https://github.com/nearform/orion/commit/6421621e1055f77c6b083654f75128808081544c))
+
+
+
+
+
+# [2.20.0](https://github.com/nearform/orion/compare/v2.19.0...v2.20.0) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-orion-core
+
+
+
+
+
+# [2.19.0](https://github.com/nearform/orion/compare/v2.18.0...v2.19.0) (2020-03-06)
+
+
+### Features
+
+* 🎸 improve styling of homepage hero ([a010690](https://github.com/nearform/orion/commit/a010690faaaa58b1f0adc69f6f03b717a4547396))
+
+
+
+
+
+# [2.18.0](https://github.com/nearform/orion/compare/v2.17.0...v2.18.0) (2020-03-05)
+
+
+### Features
+
+* 🎸 upload image button ([e0ad7a8](https://github.com/nearform/orion/commit/e0ad7a8eafbe1dcd293d187495beffd413cefafc))
+
+
+
+
+
 # [2.16.0](https://github.com/nearform/orion/compare/v2.15.1...v2.16.0) (2020-03-01)
 
 

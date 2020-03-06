@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.22.0](https://github.com/nearform/orion/compare/v2.21.0...v2.22.0) (2020-03-06)
+
+
+### Features
+
+* 🎸 336 - Article components ([6421621](https://github.com/nearform/orion/commit/6421621e1055f77c6b083654f75128808081544c))
+
+
+
+
+
+# [2.21.0](https://github.com/nearform/orion/compare/v2.20.0...v2.21.0) (2020-03-06)
+
+
+### Features
+
+* 🎸 331 Markdown Editor Component ([6550d9e](https://github.com/nearform/orion/commit/6550d9eb65d5427ddab7391805dc785cba3d2638))
+
+
+
+
+
+# [2.20.0](https://github.com/nearform/orion/compare/v2.19.0...v2.20.0) (2020-03-06)
+
+
+### Features
+
+* 🎸 336 AppBar Menu on Actual Data ([a55d3e4](https://github.com/nearform/orion/commit/a55d3e47709cb724dfd4206212e8fe1787adf47a))
+
+
+
+
+
+# [2.19.0](https://github.com/nearform/orion/compare/v2.18.0...v2.19.0) (2020-03-06)
+
+
+### Features
+
+* 🎸 add hero image to home page ([a03e95f](https://github.com/nearform/orion/commit/a03e95f4e61c36d66526ac1ad780ceae2202656b))
+* 🎸 homepage hero with mock search bar ([79acf8b](https://github.com/nearform/orion/commit/79acf8b3bea1da15467c9565308fa24ccab5935b))
+* 🎸 improve styling of homepage hero ([a010690](https://github.com/nearform/orion/commit/a010690faaaa58b1f0adc69f6f03b717a4547396))
+
+
+
+
+
+# [2.18.0](https://github.com/nearform/orion/compare/v2.17.0...v2.18.0) (2020-03-05)
+
+
+### Features
+
+* 🎸 upload image button ([e0ad7a8](https://github.com/nearform/orion/commit/e0ad7a8eafbe1dcd293d187495beffd413cefafc))
+
+
+
+
+
 # [2.17.0](https://github.com/nearform/orion/compare/v2.16.0...v2.17.0) (2020-03-02)
 
 
