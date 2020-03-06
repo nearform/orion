@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => {
   }
 })
 
-const HomePageHero = ({ imageSrc }) => {
+const Hero = ({ imageSrc }) => {
   const classes = useStyles({ imageSrc })
   return (
     <Grid
@@ -79,4 +79,4 @@ const HomePageHero = ({ imageSrc }) => {
   )
 }
 
-export default HomePageHero
+export default Hero

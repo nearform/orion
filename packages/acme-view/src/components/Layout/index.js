@@ -1,7 +1,6 @@
 import React from 'react'
 import T from 'prop-types'
 import Footer from 'gatsby-plugin-orion-core/src/components/Footer'
-import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
 import AppBar from 'gatsby-plugin-orion-view/src/components/AppBar'
 import SecondaryAppBar from 'gatsby-plugin-orion-core/src/components/SecondaryAppBar'
 import { withStyles } from '@material-ui/core'
@@ -33,7 +32,7 @@ const socialIcons = [
 
 const Img = ({ ...props }) => <img alt="social" {...props} />
 
-function Layout({ children, classes, page, menu }) {
+function Layout({ children, classes, page, menu, suppressSecondaryAppBar }) {
   const parents = page.ancestry.map(({ ancestor }) => ({
     title: ancestor.title,
     to: ancestor.path,
@@ -50,11 +49,11 @@ function Layout({ children, classes, page, menu }) {
           userRole="User"
           menuData={menu}
         />
-        <SecondaryAppBar data={parents} onSearch={() => {}} />
+        {suppressSecondaryAppBar !== true && (
+          <SecondaryAppBar data={parents} onSearch={() => {}} />
+        )}
       </header>
-      <main>
-        <PaddedContainer>{children}</PaddedContainer>
-      </main>
+      <main>{children}</main>
       <footer>
         <Footer socialIcons={socialIcons} logo={logo} Img={Img} />
       </footer>
@@ -67,6 +66,7 @@ Layout.propTypes = {
   classes: T.object,
   page: T.object.isRequired,
   menu: T.array.isRequired,
+  suppressSecondaryAppBar: T.bool,
 }
 
 Layout.defaultProps = {

@@ -22,7 +22,7 @@ const AppBar = ({
   brandTo,
 }) => {
   return (
-    <MuiAppBar>
+    <MuiAppBar position="static">
       <Toolbar>
         <Grid container alignItems="center">
           {logo && (
