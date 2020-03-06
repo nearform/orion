@@ -3,6 +3,7 @@ const palette = require('../palette')
 
 module.exports = {
   paper: {
+    backgroundColor: palette.secondary.main,
     '& .MuiListItemText-root': {
       color: palette.background.default,
     },

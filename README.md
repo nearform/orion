@@ -96,7 +96,7 @@ End-to-end tests using TestCafe. Requires environment variables to run, see
 
 - lambda serverless functions used to interact with AWS Cognito and Hasura
 
-### [./packages/gatsby-acme-admin-theme](./packages/gatsby-acme-admin-theme)
+### [./packages/gatsby-gatsby-theme-acme](./packages/gatsby-gatsby-theme-acme)
 
 Contains all styling (CSS) and unique-client assets (such as logo images) for the Orion demo project `Acme`.
 

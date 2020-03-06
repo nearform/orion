@@ -1,55 +1,72 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Redirect } from '@reach/router'
+import { Auth } from 'aws-amplify'
 import { Grid, Button, Typography } from '@material-ui/core'
 
 import { Form } from 'gatsby-plugin-orion-core'
 
-const UserLogin = () => (
-  <Form
-    formFields={[
-      {
-        label: 'Please enter your username',
-        name: 'username',
-        type: 'email',
-        xs: 12,
-      },
-      {
-        label: 'Please enter your password',
-        name: 'password',
-        type: 'password',
-        xs: 12,
-      },
-    ]}
-    title={<Typography variant="h3">Sign in to your account</Typography>}
-    SubmitComponent={({ disabled, ...props }) => (
-      <Grid
-        container
-        direction="row"
-        justify="space-between"
-        alignItems="center"
-        {...props}
-      >
-        <Grid>
-          <Typography noWrap variant="h6" color="textSecondary">
-            No account? <a>Create account</a>
-          </Typography>
-        </Grid>
-        <Grid>&nbsp;</Grid>
-        <Grid>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            disabled={disabled}
+const UserLogin = ({ setAuthStage }) => {
+  const [errors, setErrors] = useState()
+  const handleLogin = ({ username, password }) => {
+    Auth.signIn({ username, password })
+      .then(() => <Redirect noThrow to="/" />)
+      .catch(error =>
+        setErrors(`${error.code} ${error.name}: ${error.message}`)
+      )
+  }
+
+  return (
+    <Form
+      formFields={[
+        {
+          label: 'Please enter your username',
+          name: 'username',
+          type: 'email',
+          xs: 12,
+        },
+        {
+          label: 'Please enter your password',
+          name: 'password',
+          type: 'password',
+          xs: 12,
+        },
+      ]}
+      title={<Typography variant="h3">Sign in to your account</Typography>}
+      SubmitComponent={({ disabled, ...props }) => (
+        <>
+          <div>{errors}</div>
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="center"
+            {...props}
           >
-            Sign In
-          </Button>
-        </Grid>
-      </Grid>
-    )}
-    // TODO: change below to handle sign in
-    // eslint-disable-next-line no-alert
-    onSubmit={e => alert(JSON.stringify(e, null, 2))}
-  />
-)
+            <Grid>
+              <Typography noWrap variant="h6" color="textSecondary">
+                No account?
+                <Button onClick={() => setAuthStage('register')}>
+                  Create account
+                </Button>
+              </Typography>
+            </Grid>
+            <Grid>&nbsp;</Grid>
+            <Grid>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={disabled}
+              >
+                Sign In
+              </Button>
+            </Grid>
+          </Grid>
+        </>
+      )}
+      onSubmit={handleLogin}
+    />
+  )
+}
 
 export default UserLogin

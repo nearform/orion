@@ -1,0 +1,19 @@
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - id
+      - page_id
+      - props
+      - block
+      - component
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: edit
+    table:
+      name: orion_page_content
+      schema: public
+  type: create_insert_permission

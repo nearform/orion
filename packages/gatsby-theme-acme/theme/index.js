@@ -5,6 +5,7 @@ const MuiPaper = require('./mui/muiComponentsOverrides/mui-paper')
 const MuiAppBar = require('./mui/muiComponentsOverrides/mui-app-bar')
 const MuiPopover = require('./mui/muiComponentsOverrides/mui-popover')
 const MuiButton = require('./mui/muiComponentsOverrides/mui-button')
+const MuiButtonBase = require('./mui/muiComponentsOverrides/mui-button-base')
 const MuiInput = require('./mui/muiComponentsOverrides/mui-input')
 const MuiGrid = require('./mui/muiComponentsOverrides/mui-grid')
 
@@ -20,6 +21,8 @@ const layout = require('./custom/layout')
 const searchInput = require('./custom/search-input')
 const secondaryAppBar = require('./custom/secondary-app-bar')
 const form = require('./custom/form')
+const articleStatusChip = require('./custom/article-status-chip')
+const articleList = require('./custom/article-list')
 
 exports.muiTheme = {
   overrides: {
@@ -30,6 +33,7 @@ exports.muiTheme = {
     MuiAppBar,
     MuiPopover,
     MuiButton,
+    MuiButtonBase,
     MuiInput,
     MuiGrid,
   },
@@ -42,6 +46,8 @@ exports.muiTheme = {
   searchInput,
   secondaryAppBar,
   form,
+  articleStatusChip,
+  articleList,
 }
 
 exports.googleFonts = ['Titillium Web:400,700,900']

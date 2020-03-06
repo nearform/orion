@@ -3,6 +3,65 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.23.0](https://github.com/nearform/orion/compare/v2.22.0...v2.23.0) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-orion-edit
+
+
+
+
+
+# [2.22.0](https://github.com/nearform/orion/compare/v2.21.0...v2.22.0) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-orion-edit
+
+
+
+
+
+# [2.21.0](https://github.com/nearform/orion/compare/v2.20.0...v2.21.0) (2020-03-06)
+
+
+### Features
+
+* 🎸 331 Markdown Editor Component ([6550d9e](https://github.com/nearform/orion/commit/6550d9eb65d5427ddab7391805dc785cba3d2638))
+
+
+
+
+
+# [2.20.0](https://github.com/nearform/orion/compare/v2.19.0...v2.20.0) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-orion-edit
+
+
+
+
+
+# [2.19.0](https://github.com/nearform/orion/compare/v2.18.0...v2.19.0) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-orion-edit
+
+
+
+
+
+# [2.18.0](https://github.com/nearform/orion/compare/v2.17.0...v2.18.0) (2020-03-05)
+
+**Note:** Version bump only for package gatsby-plugin-orion-edit
+
+
+
+
+
+# [2.16.0](https://github.com/nearform/orion/compare/v2.15.1...v2.16.0) (2020-03-01)
+
+**Note:** Version bump only for package gatsby-plugin-orion-edit
+
+
+
+
+
 ## [2.15.1](https://github.com/nearform/orion/compare/v2.15.0...v2.15.1) (2020-02-26)
 
 **Note:** Version bump only for package gatsby-plugin-orion-edit

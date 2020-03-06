@@ -1,0 +1,31 @@
+mutation createPage(
+  $layout: String!,
+  $path: String!,
+  $published: timestamptz,
+  $showInMenu: Boolean!,
+  $title: String!,
+  $ancestry: [orion_page_ancestry_insert_input!]!,
+  $contents: [orion_page_content_insert_input!]!
+) {
+  insert_orion_page(
+    objects: [
+      {
+        layout: $layout,
+        path: $path,
+        published: $published,
+        show_in_menu: $showInMenu,
+        title: $title,
+        ancestry: {
+          data: $ancestry
+        },
+        contents: {
+          data: $contents
+        }
+      }
+  	]
+  ) {
+    returning {
+      id
+    }
+  }
+}

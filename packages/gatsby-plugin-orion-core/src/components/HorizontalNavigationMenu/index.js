@@ -3,8 +3,14 @@ import PropTypes from 'prop-types'
 import { loadCSS } from 'fg-loadcss'
 import clsx from 'clsx'
 import { Link } from '@reach/router'
-import { Button, Menu, MenuItem, Icon } from '@material-ui/core'
-import NestedMenuItem from 'material-ui-nested-menu-item'
+import {
+  Button,
+  Menu,
+  MenuItem,
+  Icon,
+  ClickAwayListener,
+} from '@material-ui/core'
+import NestedMenuItem from '../NestedMenuItem'
 
 const HorizontalNavigationMenu = ({
   data,
@@ -70,6 +76,11 @@ const RootItem = ({
       open={Boolean(anchorEl)}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       getContentAnchorEl={null}
+      PaperProps={{
+        style: {
+          height: 'auto',
+        },
+      }}
       onClose={() => setAnchorEl(null)}
     >
       {item.children.filter(authorizedForUserRole(userRole)).map(child => (
@@ -86,42 +97,44 @@ const RootItem = ({
 
   return (
     <>
-      <Button
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        component={hasChildren ? 'button' : Link}
-        to={hasChildren ? undefined : item.to}
-        onClick={hasChildren ? e => setAnchorEl(e.currentTarget) : undefined}
-      >
-        {item.leftIconClass && (
-          <Icon
-            fontSize="inherit"
-            className={clsx(
-              item.leftIconClass,
-              'horizontal-navigation-menu-label-icon'
-            )}
-          />
-        )}
-        {item.label}
-        {item.rightIconClass && (
-          <Icon
-            fontSize="inherit"
-            className={clsx(
-              item.rightIconClass,
-              'horizontal-navigation-menu-label-icon'
-            )}
-          />
-        )}
-        {hasChildren && (
-          <Icon
-            fontSize="inherit"
-            className={clsx(
-              dropDownIndicatorIcon,
-              'horizontal-navigation-menu-indicator-icon'
-            )}
-          />
-        )}
-      </Button>
+      <ClickAwayListener onClickAway={() => setAnchorEl(null)}>
+        <Button
+          aria-controls="simple-menu"
+          aria-haspopup="true"
+          component={hasChildren ? 'button' : Link}
+          to={hasChildren ? undefined : item.to}
+          onClick={hasChildren ? e => setAnchorEl(e.currentTarget) : undefined}
+        >
+          {item.leftIconClass && (
+            <Icon
+              fontSize="inherit"
+              className={clsx(
+                item.leftIconClass,
+                'horizontal-navigation-menu-label-icon'
+              )}
+            />
+          )}
+          {item.label}
+          {item.rightIconClass && (
+            <Icon
+              fontSize="inherit"
+              className={clsx(
+                item.rightIconClass,
+                'horizontal-navigation-menu-label-icon'
+              )}
+            />
+          )}
+          {hasChildren && (
+            <Icon
+              fontSize="inherit"
+              className={clsx(
+                dropDownIndicatorIcon,
+                'horizontal-navigation-menu-indicator-icon'
+              )}
+            />
+          )}
+        </Button>
+      </ClickAwayListener>
       {childItems}
     </>
   )
@@ -178,6 +191,17 @@ const ChildItem = forwardRef(
             />
           </Link>
         }
+        className="nested-menu-item"
+        MenuProps={{
+          anchorOrigin: { vertical: 'top', horizontal: 'right' },
+          transformOrigin: { vertical: 'top', horizontal: 'left' },
+          anchorPosition: { left: 0, top: 100 },
+          PaperProps: {
+            style: {
+              height: 'auto',
+            },
+          },
+        }}
         parentMenuOpen={parentOpen}
         rightIcon={null}
       >

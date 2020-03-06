@@ -1,8 +1,8 @@
-import ArticleLayout from './Article'
-import HomeLayout from './Home'
-import SectionLayout from './Section'
+import ArticleLayout from './article'
+import HomeLayout from './home'
+import SectionLayout from './section'
 
-export const layouts = {
+export default {
   article: ArticleLayout,
   home: HomeLayout,
   section: SectionLayout,

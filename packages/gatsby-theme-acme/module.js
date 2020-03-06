@@ -9,7 +9,7 @@ export * from './index'
 
 const styles = {
   '@global': {
-    'html, body, body > div, body > div > div': {
+    'html, body, body > div:first-child, body > div:first-child > div:first-child': {
       height: '100%',
     },
     body: {
@@ -17,6 +17,7 @@ const styles = {
       fontFamily: theme.fontFamily,
     },
   },
+  ...theme,
 }
 
 export default withStyles(styles)(({ children }) => children)

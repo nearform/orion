@@ -1,0 +1,34 @@
+- args:
+    role: public
+    table:
+      name: orion_page
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - created
+      - expires
+      - id
+      - layout
+      - modified
+      - path
+      - published
+      - show_in_menu
+      - title
+      computed_fields: []
+      filter:
+        _and:
+        - published:
+            _lte: now()
+        - _or:
+          - expires:
+              _is_null: true
+          - expires:
+              _gt: now()
+    role: public
+    table:
+      name: orion_page
+      schema: public
+  type: create_select_permission

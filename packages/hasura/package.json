@@ -2,7 +2,7 @@
   "name": "hasura",
   "private": true,
   "description": "Orion database",
-  "version": "2.14.1",
+  "version": "2.23.0",
   "author": "NearForm",
   "scripts": {
     "commit": "cd .. && yarn commit",
@@ -14,7 +14,8 @@
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
-    "graphql-request": "^1.8.2"
+    "graphql-request": "^1.8.2",
+    "hasura-cli": "^1.1.0"
   },
   "xo": false
 }

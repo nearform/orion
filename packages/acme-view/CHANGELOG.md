@@ -3,6 +3,91 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.23.0](https://github.com/nearform/orion/compare/v2.22.0...v2.23.0) (2020-03-06)
+
+
+### Bug Fixes
+
+* 🐛 fix login/registration page rendering ([c2c78f7](https://github.com/nearform/orion/commit/c2c78f7c01c70b626f21fe6edabd4f2a0b2b503f))
+* 🐛 Footer and fonts ([e8c63a4](https://github.com/nearform/orion/commit/e8c63a49b8fca52a5089171f3d4eff9a68c3e445))
+* 🐛 Resolve merge conflict ([563e13b](https://github.com/nearform/orion/commit/563e13bf86347c0303d711eb9c7b512619e48671))
+
+
+### Features
+
+* 🎸 Authorization ([d2610fe](https://github.com/nearform/orion/commit/d2610fe5b8b9dbc58a0ae20eee2acb5c96c06342))
+* 🎸 homepage layout with components ([cfb6c16](https://github.com/nearform/orion/commit/cfb6c165ad001c715029c68259eb0a0a97d71b32))
+* 🎸 User Registration / Login / Permissions ([fe89a9e](https://github.com/nearform/orion/commit/fe89a9e91df3b03bcf67c129bb9e7b3069b5dd9d))
+* 🎸 User Registration, Login, and Permission Management ([58f8515](https://github.com/nearform/orion/commit/58f8515166581258bbf942ee7192fe9fd78557e6))
+
+
+
+
+
+# [2.22.0](https://github.com/nearform/orion/compare/v2.21.0...v2.22.0) (2020-03-06)
+
+**Note:** Version bump only for package acme-view
+
+
+
+
+
+# [2.20.0](https://github.com/nearform/orion/compare/v2.19.0...v2.20.0) (2020-03-06)
+
+
+### Features
+
+* 🎸 336 AppBar Menu on Actual Data ([a55d3e4](https://github.com/nearform/orion/commit/a55d3e47709cb724dfd4206212e8fe1787adf47a))
+
+
+
+
+
+# [2.19.0](https://github.com/nearform/orion/compare/v2.18.0...v2.19.0) (2020-03-06)
+
+
+### Features
+
+* 🎸 add hero image to home page ([a03e95f](https://github.com/nearform/orion/commit/a03e95f4e61c36d66526ac1ad780ceae2202656b))
+* 🎸 homepage hero with mock search bar ([79acf8b](https://github.com/nearform/orion/commit/79acf8b3bea1da15467c9565308fa24ccab5935b))
+* 🎸 improve styling of homepage hero ([a010690](https://github.com/nearform/orion/commit/a010690faaaa58b1f0adc69f6f03b717a4547396))
+
+
+
+
+
+# [2.18.0](https://github.com/nearform/orion/compare/v2.17.0...v2.18.0) (2020-03-05)
+
+**Note:** Version bump only for package acme-view
+
+
+
+
+
+# [2.17.0](https://github.com/nearform/orion/compare/v2.16.0...v2.17.0) (2020-03-02)
+
+
+### Bug Fixes
+
+* 🐛 Re-add classes to Layout ([0a82b32](https://github.com/nearform/orion/commit/0a82b320f7ca5241e7cdac1ff167e023d17bb2df))
+
+
+### Features
+
+* 🎸 Add primary app bar and apply theme ([84c539e](https://github.com/nearform/orion/commit/84c539ea29f745f31daa794d0046935d7d234a8c))
+
+
+
+
+
+# [2.16.0](https://github.com/nearform/orion/compare/v2.15.1...v2.16.0) (2020-03-01)
+
+**Note:** Version bump only for package acme-view
+
+
+
+
+
 ## [2.15.1](https://github.com/nearform/orion/compare/v2.15.0...v2.15.1) (2020-02-26)
 
 

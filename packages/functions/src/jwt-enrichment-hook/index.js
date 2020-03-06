@@ -1,66 +1,50 @@
-import pino from 'pino'
 import graphql from '../graphql'
-import {
-  getUserRoles,
-  selectDefaultRoleName,
-  PUBLIC_ROLE_NAME,
-} from './user-roles'
-import { getUserGroup } from './user-groups'
 import getUserByCognitoId from './graphql/get-user-by-cognito-id.graphql'
-const logger = pino()
+import getGuestRole from './graphql/get-guest-role.graphql'
+import { createNumericRolePermissions } from '../../../gatsby-plugin-orion-core/src/utils/permissions'
 
 export const handler = async event => {
   try {
     const cognitoId = event.request.userAttributes.sub
-
-    let { user } = await graphql(getUserByCognitoId, {
+    const { orionUser } = await graphql(getUserByCognitoId, {
       cognitoId,
     })
-
-    if (user.length === 0) {
-      // TODO: user not found, will need to handle in some way
-      return event
+    const { guestRole } = await graphql(getGuestRole)
+    const guestUser = {
+      id: 0,
+      ...guestRole[0],
+      orionGroup: {
+        id: 0,
+        name: 'none',
+      },
     }
 
-    user = user[0]
+    const user = orionUser.length === 1 ? orionUser[0] : guestUser
 
-    const userGroup = getUserGroup(user)
-
-    if (userGroup) {
-      const userRoles = getUserRoles(user)
-      const defaultRoleName = selectDefaultRoleName(userRoles, userGroup)
-
-      event.response = {
-        claimsOverrideDetails: {
-          claimsToAddOrOverride: {
-            'https://hasura.io/jwt/claims': JSON.stringify({
-              'x-hasura-allowed-roles': [defaultRoleName],
-              'x-hasura-default-role': defaultRoleName,
-              'x-hasura-user-id': user.id.toString(),
-              'x-hasura-group-id': userGroup.id.toString(),
-            }),
-          },
+    event.response = {
+      claimsOverrideDetails: {
+        claimsToAddOrOverride: {
+          'https://hasura.io/jwt/claims': JSON.stringify({
+            'X-Hasura-User-Id': user.id.toString(),
+            'X-Hasura-Role-Id': user.orionRole.id.toString(),
+            'X-Hasura-Role': process.env.HASURA_ROLE,
+            'X-Hasura-Default-Role': process.env.HASURA_ROLE,
+            'X-Hasura-Allowed-Roles': ['public', 'edit', 'admin'],
+            'X-Hasura-Group-Id': user.orionGroup.id.toString(),
+          }),
+          'X-Orion-Claims': JSON.stringify({
+            'X-Orion-User-Role-Permissions': createNumericRolePermissions(
+              user.orionRole.orionRolePermissions
+            ),
+            'X-Orion-User-Role': user.orionRole.name,
+            'X-Orion-User-Group': user.orionGroup.name,
+          }),
         },
-      }
-    } else {
-      logger.info(`user ${cognitoId} doesn't belong to any groups`)
-
-      event.response = {
-        claimsOverrideDetails: {
-          claimsToAddOrOverride: {
-            'https://hasura.io/jwt/claims': JSON.stringify({
-              'x-hasura-allowed-roles': [PUBLIC_ROLE_NAME],
-              'x-hasura-default-role': PUBLIC_ROLE_NAME,
-              'x-hasura-user-id': user.id.toString(),
-            }),
-          },
-        },
-      }
+      },
     }
 
     return event
   } catch (error) {
-    logger.error(error)
     throw error
   }
 }

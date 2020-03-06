@@ -31,6 +31,7 @@ module.exports = {
     borderBottomLeftRadius: 0,
     borderLeft: 0,
     borderTopLeftRadius: 0,
+    boxShadow: 'none',
     color: palette.background.default,
     height: '100%',
     padding: 4,

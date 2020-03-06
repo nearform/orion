@@ -9,7 +9,7 @@ module.exports = {
     color: palette.secondary.main,
     fontSize: '32px',
     fontWeight: 'bold',
-    fontFamily: 'Clarendon',
+    fontFamily: 'clarendon-urw',
   },
   h2: {
     fontSize: '24px',
@@ -19,13 +19,13 @@ module.exports = {
     color: palette.secondary.main,
     fontSize: '21px',
     fontWeight: 'bold',
-    fontFamily: 'Clarendon',
+    fontFamily: 'clarendon-urw',
   },
   h4: {
     color: palette.secondary.main,
     fontSize: '18px',
     fontWeight: 'bold',
-    fontFamily: 'Clarendon',
+    fontFamily: 'clarendon-urw',
   },
   h5: {
     color: palette.secondary.main,

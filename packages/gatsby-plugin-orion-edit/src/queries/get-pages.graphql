@@ -1,0 +1,12 @@
+query getPages {
+  orion_page {
+    ancestry {
+      ancestor {
+        id
+      }
+      direct
+    }
+    id
+    title
+  }
+}
