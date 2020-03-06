@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.23.0](https://github.com/nearform/orion/compare/v2.22.0...v2.23.0) (2020-03-06)
+
+
+### Bug Fixes
+
+* 🐛 Footer and fonts ([e8c63a4](https://github.com/nearform/orion/commit/e8c63a49b8fca52a5089171f3d4eff9a68c3e445))
+* 🐛 Header central ([ab4e623](https://github.com/nearform/orion/commit/ab4e623467a5e64c11801298ee05f9b4690bd7d0))
+
+
+### Features
+
+* 🎸 homepage layout with components ([cfb6c16](https://github.com/nearform/orion/commit/cfb6c165ad001c715029c68259eb0a0a97d71b32))
+
+
+
+
+
 # [2.22.0](https://github.com/nearform/orion/compare/v2.21.0...v2.22.0) (2020-03-06)
 
 

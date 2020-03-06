@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.23.0](https://github.com/nearform/orion/compare/v2.22.0...v2.23.0) (2020-03-06)
+
+
+### Bug Fixes
+
+* 🐛 Footer and fonts ([e8c63a4](https://github.com/nearform/orion/commit/e8c63a49b8fca52a5089171f3d4eff9a68c3e445))
+* 🐛 Resolve merge conflict ([563e13b](https://github.com/nearform/orion/commit/563e13bf86347c0303d711eb9c7b512619e48671))
+
+
+### Features
+
+* 🎸 Auth work ([023220f](https://github.com/nearform/orion/commit/023220ff007be0866cdc06fcfd0cc9e8b8a05801))
+* 🎸 Authorization ([d2610fe](https://github.com/nearform/orion/commit/d2610fe5b8b9dbc58a0ae20eee2acb5c96c06342))
+* 🎸 User Registration / Login / Permissions ([cb20a2c](https://github.com/nearform/orion/commit/cb20a2ceb546a9c5b04513a214ed7c60694ca529))
+* 🎸 User Registration / Login / Permissions ([fe89a9e](https://github.com/nearform/orion/commit/fe89a9e91df3b03bcf67c129bb9e7b3069b5dd9d))
+* 🎸 User Registration, Login, and Permission Management ([58f8515](https://github.com/nearform/orion/commit/58f8515166581258bbf942ee7192fe9fd78557e6))
+
+
+
+
+
 # [2.22.0](https://github.com/nearform/orion/compare/v2.21.0...v2.22.0) (2020-03-06)
 
 

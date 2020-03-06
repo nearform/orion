@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.23.0](https://github.com/nearform/orion/compare/v2.22.0...v2.23.0) (2020-03-06)
+
+
+### Bug Fixes
+
+* 🐛 Resolve merge conflict ([563e13b](https://github.com/nearform/orion/commit/563e13bf86347c0303d711eb9c7b512619e48671))
+
+
+### Features
+
+* 🎸 Authorization ([d2610fe](https://github.com/nearform/orion/commit/d2610fe5b8b9dbc58a0ae20eee2acb5c96c06342))
+
+
+
+
+
 # [2.22.0](https://github.com/nearform/orion/compare/v2.21.0...v2.22.0) (2020-03-06)
 
 **Note:** Version bump only for package acme-edit
