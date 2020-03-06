@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.19.0](https://github.com/nearform/orion/compare/v2.18.0...v2.19.0) (2020-03-06)
+
+
+### Features
+
+* 🎸 add hero image to home page ([a03e95f](https://github.com/nearform/orion/commit/a03e95f4e61c36d66526ac1ad780ceae2202656b))
+* 🎸 homepage hero with mock search bar ([79acf8b](https://github.com/nearform/orion/commit/79acf8b3bea1da15467c9565308fa24ccab5935b))
+* 🎸 improve styling of homepage hero ([a010690](https://github.com/nearform/orion/commit/a010690faaaa58b1f0adc69f6f03b717a4547396))
+
+
+
+
+
 # [2.18.0](https://github.com/nearform/orion/compare/v2.17.0...v2.18.0) (2020-03-05)
 
 **Note:** Version bump only for package acme-view

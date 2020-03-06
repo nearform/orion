@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.19.0](https://github.com/nearform/orion/compare/v2.18.0...v2.19.0) (2020-03-06)
+
+
+### Features
+
+* 🎸 improve styling of homepage hero ([a010690](https://github.com/nearform/orion/commit/a010690faaaa58b1f0adc69f6f03b717a4547396))
+
+
+
+
+
 # [2.18.0](https://github.com/nearform/orion/compare/v2.17.0...v2.18.0) (2020-03-05)
 
 
