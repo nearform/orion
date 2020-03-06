@@ -36,11 +36,10 @@ function LayoutSelect({ onSelect }) {
 
   return (
     <div>
-      <Typography variant="h2">
-        Choose layout
-      </Typography>
+      <Typography variant="h2">Choose layout</Typography>
       <Typography variant="body1">
-        Before we get started on adding some content, lets select a layout for our new page.
+        Before we get started on adding some content, lets select a layout for
+        our new page.
       </Typography>
       <div className={classes.layouts}>
         {Object.entries(layouts).map(([key, layout]) => {
@@ -51,9 +50,7 @@ function LayoutSelect({ onSelect }) {
               <div className={classes.example}>
                 <Example />
               </div>
-              <div className={classes.name}>
-                {layout.name}
-              </div>
+              <div className={classes.name}>{layout.name}</div>
               <Button
                 variant="contained"
                 color="primary"
@@ -70,7 +67,7 @@ function LayoutSelect({ onSelect }) {
 }
 
 LayoutSelect.propTypes = {
-  onSelect: T.func.isRequired, 
+  onSelect: T.func.isRequired,
 }
 
 export default LayoutSelect

@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.grey['300'],
     margin: '2%',
     borderRadius: 8,
-  }
+  },
 }))
 
 export function ArticleExample() {
