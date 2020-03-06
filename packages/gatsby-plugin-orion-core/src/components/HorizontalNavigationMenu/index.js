@@ -12,12 +12,6 @@ import {
 } from '@material-ui/core'
 import NestedMenuItem from '../NestedMenuItem'
 
-const auto = {
-  style: {
-    height: 'auto',
-  },
-}
-
 const HorizontalNavigationMenu = ({
   data,
   dropDownIndicatorIcon = 'fas fa-chevron-down',
@@ -201,8 +195,7 @@ const ChildItem = forwardRef(
         MenuProps={{
           anchorOrigin: { vertical: 'top', horizontal: 'right' },
           transformOrigin: { vertical: 'top', horizontal: 'left' },
-          anchorPosition: { top: 100 },
-          // AnchorReference: 'anchorPosition',
+          anchorPosition: { left: 0, top: 100 },
           PaperProps: {
             style: {
               height: 'auto',
@@ -230,7 +223,6 @@ const ChildItem = forwardRef(
         ref={ref}
         component={Link}
         to={to}
-        classes={auto}
       >
         {itemContent}
       </MenuItem>

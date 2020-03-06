@@ -8,26 +8,26 @@ module.exports = {
     paddingTop: '28px',
   },
   '& .MuiGrid-root': {
-    '&:first-of-type': {
-      paddingBottom: 0,
-    },
     '&:second-of-type': {
       marginBottom: '88px',
     },
     '& .social-logos': {
-      float: 'right',
       '& > a': {
-        margin: '12px',
-        float: 'right',
+        display: 'block',
       },
     },
-    '& .logo': {
-      float: 'right',
-    },
+  },
+  '& .logo': {
+    display: 'block',
+    width: 110,
   },
   '& .terms': {
     '& > .MuiGrid-root': {
       margin: '30px 8px 30px',
+    },
+    '& a': {
+      color: palette.background.default,
+      textDecoration: 'none',
     },
   },
   '& .greeting': {

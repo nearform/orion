@@ -14,20 +14,20 @@ import logo from 'gatsby-plugin-orion-core/src/assets/logo.svg'
 
 const socialIcons = [
   {
-    logo: linkedin,
-    url: 'https://www.linkedin.com/company/nearform',
-  },
-  {
-    logo: twitter,
-    url: 'https://twitter.com/NearForm',
+    logo: facebook,
+    url: 'https://www.facebook.com/NearFormLtd/',
   },
   {
     logo: youtube,
     url: 'https://www.youtube.com/channel/UCp2Tsbjd3P8itnBHUNHi82A',
   },
   {
-    logo: facebook,
-    url: 'https://www.facebook.com/NearFormLtd/',
+    logo: twitter,
+    url: 'https://twitter.com/NearForm',
+  },
+  {
+    logo: linkedin,
+    url: 'https://www.linkedin.com/company/nearform',
   },
 ]
 
