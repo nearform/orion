@@ -11,15 +11,6 @@ exports.createPages = async ({ graphql, actions }) => {
     throw pagesResults.errors
   }
 
-  createPage({
-    path: '/_not_found',
-    matchPath: '/*',
-    component: pageComponent || '',
-    context: {
-      page: null,
-    },
-  })
-
   const childMap = ({ descendant }) => {
     const children =
       descendant.descendants && descendant.descendants.length > 0
@@ -38,6 +29,16 @@ exports.createPages = async ({ graphql, actions }) => {
       to: item.path,
       children: item.descendants.map(childMap),
     }
+  })
+
+  createPage({
+    path: '/_not_found',
+    matchPath: '/*',
+    component: pageComponent,
+    context: {
+      page: null,
+      menu,
+    },
   })
 
   pagesResults.data.orion.orion_page.forEach(page => {

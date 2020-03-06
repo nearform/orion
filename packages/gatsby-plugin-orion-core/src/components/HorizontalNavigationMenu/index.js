@@ -19,7 +19,6 @@ const auto = {
 }
 
 const HorizontalNavigationMenu = ({
-  classes,
   data,
   dropDownIndicatorIcon = 'fas fa-chevron-down',
   childIndicatorIcon = 'fas fa-chevron-right',
@@ -37,7 +36,6 @@ const HorizontalNavigationMenu = ({
     .map(item => (
       <RootItem
         key={`${item.label}-${item.to}`}
-        classes={classes}
         item={item}
         childIndicatorIcon={childIndicatorIcon}
         dropDownIndicatorIcon={dropDownIndicatorIcon}
@@ -61,18 +59,14 @@ const menuItemNode = PropTypes.shape(menuItemShape)
 menuItemShape.children = PropTypes.arrayOf(menuItemNode)
 
 HorizontalNavigationMenu.propTypes = {
-  classes: PropTypes.object,
   data: PropTypes.arrayOf(menuItemNode).isRequired,
   childIndicatorIcon: PropTypes.string,
 }
 
-const styles = theme => ({ ...theme.horizontalMenu })
-
-export default withStyles(styles, { withTheme: true })(HorizontalNavigationMenu)
+export default HorizontalNavigationMenu
 
 // Renders a root menu item, wrapped in a button
 const RootItem = ({
-  classes,
   item,
   childIndicatorIcon,
   dropDownIndicatorIcon,
@@ -85,7 +79,6 @@ const RootItem = ({
     // Wrap any children in a Menu
     <Menu
       anchorEl={anchorEl}
-      className={classes.popover}
       open={Boolean(anchorEl)}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       getContentAnchorEl={null}

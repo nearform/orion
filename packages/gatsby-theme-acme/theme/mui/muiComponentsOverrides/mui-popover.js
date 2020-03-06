@@ -1,7 +1,7 @@
-const palette = require('../mui/palette')
+const palette = require('../palette')
 
 module.exports = {
-  popover: {
+  root: {
     '&.language-switcher-menu .MuiMenu-paper': {
       backgroundColor: palette.background.default,
       width: 'auto',

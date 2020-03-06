@@ -8,14 +8,12 @@ import {
   Select,
   AppBar as MuiAppBar,
   Toolbar,
-  withStyles,
 } from '@material-ui/core'
 import MoreVert from '@material-ui/icons/MoreVert'
 import Twemoji from 'react-twemoji'
 import HorizontalNavigationMenu from 'gatsby-plugin-orion-core/src/components/HorizontalNavigationMenu'
 
 const AppBar = ({
-  classes,
   menuData,
   dropDownIndicatorIcon,
   childIndicatorIcon,
@@ -24,7 +22,7 @@ const AppBar = ({
   brandTo,
 }) => {
   return (
-    <MuiAppBar classes={{ root: classes.root }} position="static">
+    <MuiAppBar position="static">
       <Toolbar>
         <Grid container alignItems="center">
           {logo && (
@@ -109,10 +107,7 @@ const AppBar = ({
   )
 }
 
-const styles = theme => ({ ...theme.appBar, ...theme.horizontalMenu })
-
 AppBar.propTypes = {
-  classes: PropTypes.object,
   menuData: PropTypes.array,
   dropDownIndicatorIcon: PropTypes.string,
   childIndicatorIcon: PropTypes.string,
@@ -130,4 +125,4 @@ AppBar.defaultProps = {
   logo: undefined,
 }
 
-export default withStyles(styles, { withTheme: true })(AppBar)
+export default AppBar
