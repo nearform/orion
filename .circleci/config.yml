@@ -222,7 +222,6 @@ workflows:
               ignore:
                 - staging
                 - production
-                - fix/staging-deploy
       - build:
           requires:
             - setup
@@ -251,7 +250,6 @@ workflows:
               only:
                 - staging
                 - production
-                - fix/staging-deploy
       - apply-hasura-migrations:
           requires:
             - setup
