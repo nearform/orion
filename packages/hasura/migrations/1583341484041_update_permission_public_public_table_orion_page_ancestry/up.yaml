@@ -1,0 +1,16 @@
+- args:
+    permission:
+      columns:
+      - direct
+      - ancestor_id
+      - page_id
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: public
+    table:
+      name: orion_page_ancestry
+      schema: public
+  type: create_update_permission

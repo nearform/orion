@@ -1,0 +1,18 @@
+- args:
+    permission:
+      columns:
+      - id
+      - page_id
+      - props
+      - block
+      - component
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: public
+    table:
+      name: orion_page_content
+      schema: public
+  type: create_update_permission

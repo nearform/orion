@@ -1,0 +1,15 @@
+- args:
+    permission:
+      columns:
+      - page_id
+      - user_id
+      filter: {}
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: public
+    table:
+      name: orion_page_author
+      schema: public
+  type: create_update_permission

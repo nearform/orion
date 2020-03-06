@@ -21,17 +21,28 @@ function Footer({ classes, Img, socialIcons = [], logo }) {
               <div>C14 W5X</div>
             </Typography>
           </Grid>
-          <Grid container item xs={4}>
-            <Grid item xs={12}>
-              <a href="/" className="logo">
-                <Img src={logo} />
-              </a>
+          <Grid container item xs={4} justify="flex-end">
+            <Grid container item xs={12} justify="flex-end">
+              <Grid item component="a" href="/">
+                <img src={logo} alt="Logo" className="logo" />
+              </Grid>
             </Grid>
-            <Grid item xs={12} className="social-logos">
+            <Grid
+              container
+              item
+              direction="row"
+              xs={12}
+              spacing={6}
+              className="social-logos"
+              alignItems="center"
+              justify="flex-end"
+            >
               {socialIcons.map(({ logo, url }) => (
-                <a key={url} href={url} data-testid={url}>
-                  <Img src={logo} />
-                </a>
+                <Grid key={`sl-${url}`} item>
+                  <a key={url} href={url} data-testid={url}>
+                    <Img src={logo} />
+                  </a>
+                </Grid>
               ))}
             </Grid>
           </Grid>
@@ -43,12 +54,22 @@ function Footer({ classes, Img, socialIcons = [], logo }) {
             </Typography>
           </Grid>
           <Grid item>
-            <Typography display="inline" variant="body1">
+            <Typography
+              display="inline"
+              variant="body1"
+              component="a"
+              href="/terms"
+            >
               Terms of Use
             </Typography>
           </Grid>
           <Grid item>
-            <Typography display="inline" variant="body1">
+            <Typography
+              display="inline"
+              variant="body1"
+              component="a"
+              href="/privacy"
+            >
               Privacy Statement
             </Typography>
           </Grid>
@@ -62,9 +83,15 @@ const styles = theme => ({ ...theme.footer })
 
 Footer.propTypes = {
   classes: T.object,
-  Img: T.elementType,
+  Img: T.elementType.isRequired,
   socialIcons: T.arrayOf(T.object),
   logo: T.string,
+}
+
+Footer.defaultProps = {
+  classes: {},
+  socialIcons: [],
+  logo: '',
 }
 
 export default withStyles(styles, { withTheme: true })(Footer)

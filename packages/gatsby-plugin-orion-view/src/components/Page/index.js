@@ -1,18 +1,16 @@
 import React from 'react'
 import getPageQuery from '../../queries/get-page'
-import { useComponents } from '../ComponentProvider'
-import { useLayouts } from '../LayoutProvider'
+import { useViewComponents } from '../ViewComponentProvider'
 import { useQuery } from 'graphql-hooks'
 
 function PageProvider({ location, pageContext }) {
+  const { components, layouts } = useViewComponents()
+
   const { data, loading } = useQuery(getPageQuery, {
     variables: {
       path: location.pathname,
     },
   })
-
-  const components = useComponents()
-  const layouts = useLayouts()
 
   if (loading && pageContext.page === null) {
     return <h1>Loading</h1>
@@ -48,9 +46,7 @@ function PageProvider({ location, pageContext }) {
     )
   }
 
-  return (
-    <Layout {...blocks} loading={loading} page={page} menu={pageContext.menu} />
-  )
+  return <Layout {...blocks} loading={loading} page={page} />
 }
 
 export default PageProvider

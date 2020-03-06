@@ -1,0 +1,42 @@
+mutation updatePage(
+  $id: Int,
+  $layout: String!,
+  $path: String!,
+  $published: timestamptz,
+  $showInMenu: Boolean!,
+  $title: String!,
+  $contents: [orion_page_content_insert_input!]!
+) {
+  delete_orion_page_content(
+    where: {
+      page: {
+        id: { _eq: $id }
+      }
+    }
+  ) {
+    affected_rows
+  }
+
+  update_orion_page(
+    where: {
+      id: { _eq: $id }
+    },
+    _set: {
+      layout: $layout,
+      path: $path,
+      published: $published,
+      show_in_menu: $showInMenu,
+      title: $title
+    }
+  ) {
+    returning {
+      id
+    }
+  }
+
+  insert_orion_page_content(
+    objects: $contents
+  ) {
+    affected_rows
+  }
+}
