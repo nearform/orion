@@ -6,8 +6,12 @@ module.exports = {
     '& .nested-menu-item': {
       height: 'auto',
     },
+    '& .MuiToolbar-root': {
+      maxWidth: 1120,
+      margin: '0 auto',
+      width: '100%',
+    },
     '& .MuiToolbar-root > .MuiGrid-root': {
-      maxWidth: 1440,
       margin: '0 auto',
     },
     '& .MuiButton-label': {
