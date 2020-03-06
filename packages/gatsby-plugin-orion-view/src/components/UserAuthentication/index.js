@@ -5,11 +5,11 @@ import UserRegistrationConfirm from '../UserRegistrationConfirm'
 import UserLogin from '../UserLogin'
 
 const UserAuthentication = () => {
+  const [authStage, setAuthStage] = useState('login')
+  const [username, setUsername] = useState()
   const [authState, setAuthState] = useState(
     <UserLogin setAuthStage={setAuthStage} />
   )
-  const [authStage, setAuthStage] = useState('login')
-  const [username, setUsername] = useState()
 
   useEffect(() => {
     if (authStage === 'register') {
