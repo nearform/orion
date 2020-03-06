@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormControl, Input, InputLabel } from '@material-ui/core'
+import { Checkbox, FormControl, Input, InputLabel } from '@material-ui/core'
 
 export default function createPropEditor(componentProps) {
   const PropEditor = ({ props, onChange }) => {
@@ -8,6 +8,20 @@ export default function createPropEditor(componentProps) {
       const value = props[componentProp]
 
       let input = null
+
+      if (type === 'boolean') {
+        input = (
+          <Checkbox
+            checked={value}
+            onChange={event =>
+              onChange({
+                ...props,
+                [componentProp]: event.target.checked,
+              })
+            }
+          />
+        )
+      }
 
       if (type === 'string') {
         input = (

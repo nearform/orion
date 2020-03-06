@@ -15,6 +15,35 @@ export default {
     }),
     preview: components.ArticleContent,
   },
+  ArticleList: {
+    editor: createPropEditor({
+      title: {
+        required: false,
+        type: 'string',
+      },
+      type: {
+        required: true,
+        type: 'string',
+      },
+      clipImage: {
+        required: true,
+        type: 'boolean',
+      },
+      suppressImage: {
+        required: true,
+        type: 'boolean',
+      },
+      suppressSummary: {
+        required: true,
+        type: 'boolean',
+      },
+      withFeatured: {
+        required: true,
+        type: 'boolean',
+      },
+    }),
+    preview: components.ArticleList,
+  },
   ArticleMetadata: {
     editor: createPropEditor({
       readTime: {
@@ -23,6 +52,10 @@ export default {
       },
     }),
     preview: components.ArticleMetadata,
+  },
+  Hero: {
+    editor: createPropEditor({}),
+    preview: components.Hero,
   },
   ListChildren: {
     editor: createPropEditor({}),

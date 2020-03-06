@@ -5,6 +5,7 @@ import AppBar from 'gatsby-plugin-orion-view/src/components/AppBar'
 import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
 import SecondaryAppBar from 'gatsby-plugin-orion-core/src/components/SecondaryAppBar'
 import { withStyles } from '@material-ui/core'
+import { useLocation } from '@reach/router'
 
 import facebook from 'gatsby-plugin-orion-core/src/assets/social/logo-fb.svg'
 import youtube from 'gatsby-plugin-orion-core/src/assets/social/logo-youtube.svg'
@@ -33,7 +34,9 @@ const socialIcons = [
 
 const Img = ({ ...props }) => <img alt="social" {...props} />
 
-function Layout({ children, classes, menu, page, suppressSecondaryAppBar }) {
+function Layout({ children, classes, menu, page }) {
+  const location = useLocation()
+
   const parents = useMemo(() => {
     if (!page) {
       return []
@@ -56,7 +59,7 @@ function Layout({ children, classes, menu, page, suppressSecondaryAppBar }) {
           userRole="User"
           menuData={menu}
         />
-        {suppressSecondaryAppBar !== true && (
+        {location.pathname !== '/' && (
           <SecondaryAppBar
             action={<SearchInput onSearch={() => {}} />}
             data={parents}
@@ -76,7 +79,6 @@ Layout.propTypes = {
   classes: T.object,
   page: T.object,
   menu: T.array.isRequired,
-  suppressSecondaryAppBar: T.bool,
 }
 
 Layout.defaultProps = {

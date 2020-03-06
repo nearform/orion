@@ -12,7 +12,7 @@ export default {
     preview: layouts.article,
   },
   home: {
-    blocks: ['main'],
+    blocks: ['hero', 'one', 'two', 'three', 'four'],
     editor: layouts.home,
     example: HomeExample,
     name: 'Home page',
