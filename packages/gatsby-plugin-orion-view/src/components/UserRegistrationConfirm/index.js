@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
-import { Redirect } from '@reach/router'
-import { Auth } from 'aws-amplify'
 import { Grid, Button, Typography } from '@material-ui/core'
+import { Auth } from 'aws-amplify'
 
 import { Form } from 'gatsby-plugin-orion-core'
 
-const UserLogin = ({ setAuthStage }) => {
+const UserRegistrationConfirm = ({ setAuthStage, username }) => {
   const [errors, setErrors] = useState()
-  const handleLogin = ({ username, password }) => {
-    Auth.signIn({ username, password })
-      .then(() => <Redirect noThrow to="/" />)
+  const handleConfirm = ({ confirmCode }) => {
+    Auth.confirmSignUp(username, confirmCode)
+      .then(() => {
+        setErrors(`Registration Successful. Please Login`)
+        setAuthStage('login')
+      })
       .catch(error =>
         setErrors(`${error.code} ${error.name}: ${error.message}`)
       )
@@ -19,19 +21,13 @@ const UserLogin = ({ setAuthStage }) => {
     <Form
       formFields={[
         {
-          label: 'Please enter your username',
-          name: 'username',
-          type: 'email',
-          xs: 12,
-        },
-        {
-          label: 'Please enter your password',
-          name: 'password',
-          type: 'password',
+          label: 'Confirmation Code',
+          name: 'confirmCode',
+          type: 'text',
           xs: 12,
         },
       ]}
-      title={<Typography variant="h3">Sign in to your account</Typography>}
+      title={<Typography variant="h3">Confirm Your Account</Typography>}
       SubmitComponent={({ disabled, ...props }) => (
         <>
           <div>{errors}</div>
@@ -42,14 +38,6 @@ const UserLogin = ({ setAuthStage }) => {
             alignItems="center"
             {...props}
           >
-            <Grid>
-              <Typography noWrap variant="h6" color="textSecondary">
-                No account?
-                <Button onClick={() => setAuthStage('register')}>
-                  Create account
-                </Button>
-              </Typography>
-            </Grid>
             <Grid>&nbsp;</Grid>
             <Grid>
               <Button
@@ -58,15 +46,16 @@ const UserLogin = ({ setAuthStage }) => {
                 color="primary"
                 disabled={disabled}
               >
-                Sign In
+                Confirm account
               </Button>
             </Grid>
+            <Grid>&nbsp;</Grid>
           </Grid>
         </>
       )}
-      onSubmit={handleLogin}
+      onSubmit={handleConfirm}
     />
   )
 }
 
-export default UserLogin
+export default UserRegistrationConfirm

@@ -1,0 +1,6 @@
+query getRoleByName($roleName) {
+  role(where: { name: { _eq: $roleName } }) {
+    id
+    name
+  }
+}
