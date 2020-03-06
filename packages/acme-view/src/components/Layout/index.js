@@ -141,7 +141,8 @@ function Layout({ children, classes, page }) {
         <SecondaryAppBar data={parents} onSearch={() => {}} />
       </header>
       <main>
-        <PaddedContainer>{children}</PaddedContainer>
+        {children}
+        {/* <PaddedContainer>{children}</PaddedContainer> */}
       </main>
       <footer>
         <Footer socialIcons={socialIcons} logo={logo} Img={Img} />
