@@ -13,32 +13,33 @@ import MoreVert from '@material-ui/icons/MoreVert'
 import Twemoji from 'react-twemoji'
 import HorizontalNavigationMenu from 'gatsby-plugin-orion-core/src/components/HorizontalNavigationMenu'
 
-import Logo from 'gatsby-theme-acme/assets/acme-logo.svg'
-
 const AppBar = ({
   menuData,
   dropDownIndicatorIcon,
   childIndicatorIcon,
   userRole,
+  logo,
   brandTo,
 }) => {
   return (
     <MuiAppBar>
       <Toolbar>
         <Grid container alignItems="center">
-          <Grid item xs={2}>
-            <Button
-              edge="start"
-              component={Link}
-              color="inherit"
-              aria-label="menu"
-              to={brandTo ? brandTo : '#'}
-              className="brand-logo"
-              data-testid="brand-logo-button"
-            >
-              <img src={Logo} alt="Acme" />
-            </Button>
-          </Grid>
+          {logo && (
+            <Grid item xs={2}>
+              <Button
+                edge="start"
+                component={Link}
+                color="inherit"
+                aria-label="menu"
+                to={brandTo ? brandTo : '#'}
+                className="brand-logo"
+                data-testid="brand-logo-button"
+              >
+                <img src={logo} alt="Acme" />
+              </Button>
+            </Grid>
+          )}
           <Grid container item xs={8} alignItems="center">
             {menuData && (
               <Grid item>
@@ -69,11 +70,6 @@ const AppBar = ({
                   style: {
                     height: 'auto',
                   },
-                },
-              }}
-              PaperProps={{
-                style: {
-                  height: 'auto',
                 },
               }}
               renderValue={() => (
@@ -117,6 +113,7 @@ AppBar.propTypes = {
   childIndicatorIcon: PropTypes.string,
   userRole: PropTypes.string,
   brandTo: PropTypes.string,
+  logo: PropTypes.string,
 }
 
 AppBar.defaultProps = {
@@ -125,6 +122,7 @@ AppBar.defaultProps = {
   childIndicatorIcon: 'fas fa-chevron-right',
   userRole: undefined,
   brandTo: undefined,
+  logo: undefined,
 }
 
 export default AppBar

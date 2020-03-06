@@ -44,6 +44,7 @@ function Layout({ children, classes, page, menu }) {
       <header>
         <AppBar
           brandTo="/"
+          logo={logo}
           childIndicatorIcon="fas fa-chevron-right"
           dropDownIndicatorIcon="fas fa-chevron-down"
           userRole="User"
