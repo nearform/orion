@@ -10,13 +10,13 @@ exports.createPages = async ({ actions }) => {
   createPage({
     path: '/_pages_create_root',
     matchPath: '/pages/create',
-    component: require.resolve('./src/templates/create-root-page')
+    component: require.resolve('./src/templates/create-root-page'),
   })
 
   createPage({
     path: '/_pages_create',
     matchPath: '/pages/:id/create',
-    component: require.resolve('./src/templates/create-page')
+    component: require.resolve('./src/templates/create-page'),
   })
 
   return null

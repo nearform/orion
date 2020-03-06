@@ -6,13 +6,9 @@ const ViewComponentContext = createContext({
   layouts: {},
 })
 
-function ViewComponentProvider({
-  children,
-  components = {},
-  layouts = {},
-}) {
+function ViewComponentProvider({ children, components = {}, layouts = {} }) {
   const value = useMemo(() => ({ components, layouts }), [components, layouts])
-  
+
   return (
     <ViewComponentContext.Provider value={value}>
       {children}

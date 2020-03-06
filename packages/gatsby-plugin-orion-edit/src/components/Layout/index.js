@@ -3,7 +3,7 @@ import BreadcrumbNavigation from 'gatsby-plugin-orion-core/src/components/Breadc
 import SideBarMenu from 'gatsby-plugin-orion-core/src/components/SideBarMenu'
 import { withStyles } from '@material-ui/core'
 
-function Layout({ action, breadcrumbs, children, classes, data, path }) {  
+function Layout({ action, breadcrumbs, children, classes, data, path }) {
   return (
     <div className={classes.root}>
       <SideBarMenu
@@ -19,9 +19,7 @@ function Layout({ action, breadcrumbs, children, classes, data, path }) {
           <BreadcrumbNavigation data={breadcrumbs} />
           <div>{action}</div>
         </div>
-        <div className={classes.editor}>
-          {children}
-        </div>
+        <div className={classes.editor}>{children}</div>
       </div>
     </div>
   )
@@ -39,7 +37,7 @@ const styles = theme => ({
     '& ul': {
       height: '100%',
       padding: 0,
-    }
+    },
   },
   editor: {
     padding: 16,

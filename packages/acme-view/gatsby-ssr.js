@@ -11,15 +11,13 @@ import layouts from './src/layouts'
 
 const muiTheme = createMuiTheme(theme.muiTheme)
 
-export const wrapPageElement = ({ element, props }) => {
+export const wrapPageElement = ({ element, props }) => (
   <ViewComponentProvider components={components} layouts={layouts}>
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
       <ThemeWrapper>
-        <Layout page={props.pageContext.page}>
-          {element}
-        </Layout>
+        <Layout page={props.pageContext.page}>{element}</Layout>
       </ThemeWrapper>
     </ThemeProvider>
   </ViewComponentProvider>
-}
+)

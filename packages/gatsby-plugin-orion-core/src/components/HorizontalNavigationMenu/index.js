@@ -140,7 +140,7 @@ const RootItem = ({
 // see: https://material-ui.com/guides/composition/#caveat-with-refs
 // and https://github.com/mui-org/material-ui/issues/15903
 const ChildItem = forwardRef(
-  ({ classes, item, parentOpen, childIndicatorIcon, userRole }, ref) => {
+  ({ item, parentOpen, childIndicatorIcon, userRole }, ref) => {
     const hasChildren = item.children !== undefined && item.children.length > 0
 
     const itemContent = (

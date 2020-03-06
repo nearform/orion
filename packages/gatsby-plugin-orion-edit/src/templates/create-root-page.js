@@ -9,8 +9,7 @@ export default function() {
     ancestry: [],
     authors: [],
     contents: [],
-    // eslint-disable-next-line camelcase
-    show_in_menu: true,
+    show_in_menu: true, // eslint-disable-line camelcase
   }
 
   return (

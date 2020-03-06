@@ -2,7 +2,7 @@ import React from 'react'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
 
 export default function createPropEditor(componentProps) {
-  return function PropEditor({ props, onChange }) {
+  const PropEditor = ({ props, onChange }) => {
     return Object.keys(componentProps).map(componentProp => {
       const { required, type } = componentProps[componentProp]
       const value = props[componentProp]
@@ -12,28 +12,32 @@ export default function createPropEditor(componentProps) {
       if (type === 'string') {
         input = (
           <Input
-            multiline 
-            rowsMax={5} 
-            value={value} 
+            multiline
+            rowsMax={5}
+            value={value}
             required={required}
-            onChange={event => onChange({
-              ...props,
-              [componentProp]: event.target.value,
-            })}
+            onChange={event =>
+              onChange({
+                ...props,
+                [componentProp]: event.target.value,
+              })
+            }
           />
         )
       }
 
       if (type === 'number') {
         input = (
-          <Input 
+          <Input
             type="number"
             value={value}
             required={required}
-            onChange={event => onChange({ 
-              ...props,
-              [componentProp]: Number(event.target.value),
-            })}
+            onChange={event =>
+              onChange({
+                ...props,
+                [componentProp]: Number(event.target.value),
+              })
+            }
           />
         )
       }
@@ -41,13 +45,13 @@ export default function createPropEditor(componentProps) {
       return (
         <div key={componentProp}>
           <FormControl fullWidth>
-            <InputLabel shrink>
-              {componentProp}
-            </InputLabel>
+            <InputLabel shrink>{componentProp}</InputLabel>
             {input}
           </FormControl>
         </div>
       )
     })
   }
+
+  return PropEditor
 }

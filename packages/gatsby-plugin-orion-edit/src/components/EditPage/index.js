@@ -149,8 +149,7 @@ function EditPage({ initialState, onSave }) {
           title: page.title,
           contents: page.contents.map(content => ({
             ...content,
-            // eslint-disable-next-line camelcase
-            page_id: page.id,
+            page_id: page.id, // eslint-disable-line camelcase
           })),
         },
       })
@@ -166,8 +165,7 @@ function EditPage({ initialState, onSave }) {
           title: page.title,
           contents: page.contents,
           ancestry: page.ancestry.map(({ ancestor, direct }) => ({
-            // eslint-disable-next-line camelcase
-            ancestor_id: ancestor.id,
+            ancestor_id: ancestor.id, // eslint-disable-line camelcase
             direct,
           })),
         },
