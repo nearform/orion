@@ -2,6 +2,7 @@ const palette = require('../palette')
 
 module.exports = {
   root: {
+    boxShadow: 'none',
     '& .nested-menu-item': {
       height: 'auto',
     },

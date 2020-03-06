@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react'
 import T from 'prop-types'
 import Footer from 'gatsby-plugin-orion-core/src/components/Footer'
-import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
 import AppBar from 'gatsby-plugin-orion-view/src/components/AppBar'
 import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
 import SecondaryAppBar from 'gatsby-plugin-orion-core/src/components/SecondaryAppBar'
@@ -34,7 +33,7 @@ const socialIcons = [
 
 const Img = ({ ...props }) => <img alt="social" {...props} />
 
-function Layout({ children, classes, menu, page }) {
+function Layout({ children, classes, menu, page, suppressSecondaryAppBar }) {
   const parents = useMemo(() => {
     if (!page) {
       return []
@@ -57,14 +56,14 @@ function Layout({ children, classes, menu, page }) {
           userRole="User"
           menuData={menu}
         />
-        <SecondaryAppBar
-          action={<SearchInput onSearch={() => {}} />}
-          data={parents}
-        />
+        {suppressSecondaryAppBar !== true && (
+          <SecondaryAppBar
+            action={<SearchInput onSearch={() => {}} />}
+            data={parents}
+          />
+        )}
       </header>
-      <main>
-        <PaddedContainer>{children}</PaddedContainer>
-      </main>
+      <main>{children}</main>
       <footer>
         <Footer socialIcons={socialIcons} logo={logo} Img={Img} />
       </footer>
@@ -77,6 +76,7 @@ Layout.propTypes = {
   classes: T.object,
   page: T.object,
   menu: T.array.isRequired,
+  suppressSecondaryAppBar: T.bool,
 }
 
 Layout.defaultProps = {
