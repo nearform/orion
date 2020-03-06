@@ -4,6 +4,7 @@ import getPagesQuery from '../../queries/get-pages'
 import updatePageMutation from '../../queries/update-page'
 import ArticleEditButtons from '../ArticleEditButtons'
 import Layout from '../Layout'
+import LayoutSelect from '../LayoutSelect'
 import {
   FormControl,
   Input,
@@ -128,7 +129,8 @@ function EditPage({ initialState, onSave }) {
 
   const layout = layouts[page.layout]
   const blocks = layout === undefined ? [] : layout.blocks
-  const PageLayout = layout === undefined ? undefined : layout.preview
+  const EditorLayout = layout === undefined ? undefined : layout.editor
+  const PreviewLayout = layout === undefined ? undefined : layout.preview
 
   const editLayoutProps = {}
   const previewLayoutProps = {}
@@ -268,12 +270,17 @@ function EditPage({ initialState, onSave }) {
       data={pages}
       path={location.pathname}
     >
-      {preview && PageLayout !== undefined && (
+      {preview && PreviewLayout !== undefined && (
         <PreviewWrapper props={{ pageContext: { page } }}>
-          <PageLayout page={page} {...previewLayoutProps} />
+          <PreviewLayout page={page} {...previewLayoutProps} />
         </PreviewWrapper>
       )}
-      {!preview && (
+      {!preview && EditorLayout === undefined && (
+        <LayoutSelect
+          onSelect={layout => dispatch({ type: 'layout', layout })}
+        />
+      )}
+      {!preview && EditorLayout !== undefined && (
         <>
           <FormControl fullWidth>
             <InputLabel shrink>Title</InputLabel>
@@ -293,22 +300,7 @@ function EditPage({ initialState, onSave }) {
               }
             />
           </FormControl>
-          <FormControl fullWidth>
-            <InputLabel shrink>Layout</InputLabel>
-            <Select
-              value={page.layout}
-              onChange={event =>
-                dispatch({ type: 'layout', layout: event.target.value })
-              }
-            >
-              {Object.keys(layouts).map(layout => (
-                <MenuItem key={layout} label="Layout" value={layout}>
-                  {layout}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          {PageLayout !== undefined && <PageLayout {...editLayoutProps} />}
+          {EditorLayout !== undefined && <EditorLayout {...editLayoutProps} />}
         </>
       )}
     </Layout>
