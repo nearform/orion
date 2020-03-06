@@ -44,14 +44,10 @@ const extractTokenPayload = () => {
  * @return {boolean} True if permission checks pass, False otherwise
  */
 const comparePerms = (permSet, userPerms, reqString) => {
-  const divider = reqString.includes('&') ? '&' : '|'
+  const divider = reqString.includes('|') ? '|' : '&'
   const reqSet = reqString.split(divider)
-  const val = reqSet.reduce((acc, curr) =>
-    (userPerms & permissions[permSet][curr]) === permissions[permSet][curr]
-      ? acc++
-      : acc
-  )
-  return divider === '&' ? val === reqSet.length : val > 0
+  const val = reqSet.reduce((acc, curr) => acc + permissions[permSet][curr])
+  return divider === '|' ? (val & userPerms) > 0 : (val & userPerms) === val
 }
 
 function AuthWrapper({ children }) {
