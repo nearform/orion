@@ -118,6 +118,13 @@ Form.propTypes = {
   classes: T.object,
 }
 
+Form.defaultProps = {
+  formFields: () => {},
+  SubmitComponent: () => {},
+  title: {},
+  classes: {},
+}
+
 const styles = theme => ({ ...theme.form })
 
 export default withStyles(styles, { withTheme: true })(Form)

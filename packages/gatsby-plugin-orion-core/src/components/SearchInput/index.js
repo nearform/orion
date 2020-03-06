@@ -35,4 +35,9 @@ SearchInput.defaultProps = {
   classes: {},
 }
 
+SearchInput.defaultProps = {
+  classes: undefined,
+  onSearch: undefined,
+}
+
 export default withStyles(styles, { withTheme: true })(SearchInput)
