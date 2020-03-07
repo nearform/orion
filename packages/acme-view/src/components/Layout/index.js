@@ -83,6 +83,7 @@ Layout.propTypes = {
 
 Layout.defaultProps = {
   classes: undefined,
+  page: undefined,
 }
 
 const styles = theme => ({ ...theme.layout })
