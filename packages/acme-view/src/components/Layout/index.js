@@ -3,7 +3,7 @@ import T from 'prop-types'
 import Footer from 'gatsby-plugin-orion-core/src/components/Footer'
 import AppBar from 'gatsby-plugin-orion-view/src/components/AppBar'
 import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
-import SecondaryAppBar from 'gatsby-plugin-orion-core/src/components/SecondaryAppBar'
+import SecondaryAppBar from 'gatsby-plugin-orion-view/src/components/SecondaryAppBar'
 import { withStyles } from '@material-ui/core'
 import { useLocation } from '@reach/router'
 
@@ -83,6 +83,7 @@ Layout.propTypes = {
 
 Layout.defaultProps = {
   classes: undefined,
+  page: undefined,
 }
 
 const styles = theme => ({ ...theme.layout })

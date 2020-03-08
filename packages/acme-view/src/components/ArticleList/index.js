@@ -1,5 +1,5 @@
 import React from 'react'
-import ArticleList from 'gatsby-plugin-orion-core/src/components/ArticleList'
+import ArticleList from 'gatsby-plugin-orion-view/ArticleList'
 
 const mockArticles = [
   {
