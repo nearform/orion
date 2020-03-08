@@ -1,17 +1,19 @@
-query getArticleList($tag: String!) {
-  orion_page(where: {
-    _and: [
-      layout: { _eq: "article" }
-      published: { _lte: "now()" }
-      tags {
-        tag: { _eq: $tag }
-      }
-    ],
-    _or: [
-      { expires: { _is_null: true }},
-      { expires: { _gt: "now()" }}
-    ]
-  })
+query getArticleList($filters: orion_page_bool_exp, $limit: Int) {
+  orion_page(
+    where: {
+      _and: [
+        { layout: { _eq: "article" } },
+        { published: { _lte: "now()" } },
+        $filters
+      ],
+      _or: [
+        { expires: { _is_null: true }},
+        { expires: { _gt: "now()" }}
+      ]
+    },
+    order_by: {published: desc_nulls_last},
+    limit: $limit,
+  )
   {
     authors {
       user {
@@ -19,8 +21,7 @@ query getArticleList($tag: String!) {
       }
     }
     contents(where: {
-      block: { _in: ["list_image", "summary"] }
-      ]}
+      block: { _in: ["listImage", "summary"] }
     }) {
       block
       component
