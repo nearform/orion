@@ -43,16 +43,9 @@ resource "aws_cloudfront_distribution" "edit_app" {
 
   custom_error_response {
     error_caching_min_ttl = 0
-    error_code            = 403
-    response_code         = 404
-    response_page_path    = "${var.cf_not_found_path}"
-  }
-
-  custom_error_response {
-    error_caching_min_ttl = 0
     error_code            = 404
-    response_code         = 404
-    response_page_path    = "${var.cf_not_found_path}"
+    response_code         = 200
+    response_page_path    = "/index.html"
   }
 
   default_cache_behavior {
@@ -62,7 +55,7 @@ resource "aws_cloudfront_distribution" "edit_app" {
 
     lambda_function_association {
       event_type = "viewer-request"
-      lambda_arn = "${aws_lambda_function.http_auth.qualified_arn}"
+      lambda_arn = "${aws_lambda_function.sub_dirs_basic_auth.qualified_arn}"
     }
 
     forwarded_values {
