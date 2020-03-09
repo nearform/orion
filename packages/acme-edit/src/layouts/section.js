@@ -1,4 +1,5 @@
 import React from 'react'
+import layouts from 'acme-view/src/layouts'
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
@@ -21,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export function SectionExample() {
+function SectionExample() {
   const classes = useStyles()
 
   return (
@@ -30,4 +31,12 @@ export function SectionExample() {
       <div className={classes.main} />
     </div>
   )
+}
+
+export default {
+  blocks: ['main'],
+  editor: layouts.section,
+  example: SectionExample,
+  name: 'Section overview',
+  preview: layouts.section,
 }

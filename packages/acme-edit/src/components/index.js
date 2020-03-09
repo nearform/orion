@@ -4,12 +4,12 @@ import { createPropEditor } from 'gatsby-plugin-orion-edit'
 export default {
   ArticleContent: {
     editor: createPropEditor({
-      content: {
-        required: true,
-        type: 'string',
-      },
       image: {
         required: false,
+        type: 'string',
+      },
+      content: {
+        required: true,
         type: 'string',
       },
     }),

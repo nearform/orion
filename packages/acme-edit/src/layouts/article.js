@@ -1,4 +1,5 @@
 import React from 'react'
+import layouts from 'acme-view/src/layouts'
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
@@ -33,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export function ArticleExample() {
+function ArticleExample() {
   const classes = useStyles()
 
   return (
@@ -45,4 +46,12 @@ export function ArticleExample() {
       </div>
     </div>
   )
+}
+
+export default {
+  blocks: ['summary', 'content', 'metadata'],
+  editor: layouts.article,
+  example: ArticleExample,
+  name: 'Simple article',
+  preview: layouts.article,
 }

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.1](https://github.com/nearform/orion/compare/v2.24.0...v2.24.1) (2020-03-09)
+
+
+### Bug Fixes
+
+* 🐛 login and registration layout fix ([4edaef1](https://github.com/nearform/orion/commit/4edaef1df12c5aaeebd493e52ff139058d642690))
+
+
+
+
+
 # [2.24.0](https://github.com/nearform/orion/compare/v2.23.1...v2.24.0) (2020-03-09)
 
 
