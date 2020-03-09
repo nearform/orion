@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { text, boolean, select } from '@storybook/addon-knobs'
 
-import PaddedContainer from '../PaddedContainer'
+import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
 import ArticleList from '.'
 
 const mockArticles = [

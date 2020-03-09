@@ -26,6 +26,7 @@
     "gatsby-source-filesystem": "^2.1.48",
     "gatsby-theme-acme": "^2.23.0",
     "gatsby-transformer-sharp": "^2.3.14",
+    "graphql-hooks": "^4.4.2",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",

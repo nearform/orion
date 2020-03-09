@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchInput from '../SearchInput'
+import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import SecondaryAppBar from '.'
