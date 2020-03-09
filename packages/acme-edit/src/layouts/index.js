@@ -5,7 +5,7 @@ import layouts from 'acme-view/src/layouts'
 
 export default {
   article: {
-    blocks: ['content', 'metadata'],
+    blocks: ['summary', 'content', 'metadata'],
     editor: layouts.article,
     example: ArticleExample,
     name: 'Simple article',

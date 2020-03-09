@@ -7,7 +7,13 @@ export default function() {
     title: 'New page',
     path: '',
     ancestry: [],
-    authors: [],
+    authors: [
+      {
+        user: {
+          id: 1,
+        },
+      },
+    ],
     contents: [],
     show_in_menu: true, // eslint-disable-line camelcase
   }

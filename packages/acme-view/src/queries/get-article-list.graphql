@@ -4,14 +4,16 @@ query getArticleList($filters: orion_page_bool_exp, $limit: Int) {
       _and: [
         { layout: { _eq: "article" } },
         { published: { _lte: "now()" } },
-        $filters
+        {
+          _or: [
+            { expires: { _is_null: true }},
+            { expires: { _gt: "now()" }}
+          ]
+        },
+        $filters,
       ],
-      _or: [
-        { expires: { _is_null: true }},
-        { expires: { _gt: "now()" }}
-      ]
     },
-    order_by: {published: desc_nulls_last},
+    order_by: { published: desc_nulls_last },
     limit: $limit,
   )
   {
@@ -21,7 +23,7 @@ query getArticleList($filters: orion_page_bool_exp, $limit: Int) {
       }
     }
     contents(where: {
-      block: { _in: ["listImage", "summary"] }
+      block: { _in: ["content", "summary"] }
     }) {
       block
       component

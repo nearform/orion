@@ -29,9 +29,11 @@ export default function ArticleList({
             case 'summary':
               summary = content.props.content
               break
-            case 'listImage':
+
+            case 'content':
               image = content.props.image
               break
+
             default:
           }
         })

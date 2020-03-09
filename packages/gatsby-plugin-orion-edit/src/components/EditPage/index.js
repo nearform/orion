@@ -170,6 +170,9 @@ function EditPage({ initialState, onSave }) {
             ancestor_id: ancestor.id, // eslint-disable-line camelcase
             direct,
           })),
+          authors: page.authors.map(({ user }) => ({
+            user_id: user.id, // eslint-disable-line camelcase
+          })),
         },
       })
 
