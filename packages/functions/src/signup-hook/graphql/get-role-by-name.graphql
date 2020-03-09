@@ -1,5 +1,5 @@
-query getRoleByName($roleName) {
-  role(where: { name: { _eq: $roleName } }) {
+query getRoleByName($roleName: String!) {
+  orion_role(where: { name: { _eq: $roleName } }) {
     id
     name
   }

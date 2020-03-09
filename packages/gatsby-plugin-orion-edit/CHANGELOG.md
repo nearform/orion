@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.25.0](https://github.com/nearform/orion/compare/v2.24.1...v2.25.0) (2020-03-09)
+
+
+### Features
+
+* 🎸 toggle show_in_menu in page editor, other improvements ([a82c05b](https://github.com/nearform/orion/commit/a82c05bc88b7eda8142efeb7d0f20a64899aa19c))
+
+
+
+
+
 ## [2.24.1](https://github.com/nearform/orion/compare/v2.24.0...v2.24.1) (2020-03-09)
 
 **Note:** Version bump only for package gatsby-plugin-orion-edit
