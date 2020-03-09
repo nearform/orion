@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import AppBar from 'gatsby-plugin-orion-view/src/components/AppBar'
 import { useQuery } from 'graphql-hooks'
 
@@ -13,45 +13,45 @@ export default function AcmeAppBar({
   menuData,
   location,
 }) {
+  const [menu, setMenu] = useState(menuData)
   const { data, loading, refetch } = useQuery(getMenuQuery)
 
   useEffect(() => {
     refetch()
   }, [location, refetch])
 
-  const menu = useMemo(() => {
-    if (loading) {
-      return menuData
-    }
+  useEffect(() => {
+    if (!loading) {
+      const menuParents = []
+      data.orion_page.forEach(item => {
+        const index =
+          item.ancestry.length > 0 ? item.ancestry[0].ancestor_id : 0
+        if (menuParents[index] === undefined) {
+          menuParents[index] = []
+        }
 
-    const menuParents = []
-    data.orion_page.forEach(item => {
-      const index = item.ancestry.length > 0 ? item.ancestry[0].ancestor_id : 0
-      if (menuParents[index] === undefined) {
-        menuParents[index] = []
+        menuParents[index].push(item)
+      })
+
+      const mapChildren = children => {
+        return children.map(item =>
+          menuParents[item.id] === undefined
+            ? {
+                label: item.title,
+                to: item.path,
+                children: [],
+              }
+            : {
+                label: item.title,
+                to: item.path,
+                children: mapChildren(menuParents[item.id]),
+              }
+        )
       }
 
-      menuParents[index].push(item)
-    })
-
-    const mapChildren = children => {
-      return children.map(item =>
-        menuParents[item.id] === undefined
-          ? {
-              label: item.title,
-              to: item.path,
-              children: [],
-            }
-          : {
-              label: item.title,
-              to: item.path,
-              children: mapChildren(menuParents[item.id]),
-            }
-      )
+      setMenu(mapChildren(menuParents[0]))
     }
-
-    return mapChildren(menuParents[0])
-  }, [menuData, data, loading])
+  }, [data, loading])
 
   return (
     <AppBar
