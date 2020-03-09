@@ -114,6 +114,7 @@
   },
   "dependencies": {
     "gatsby-source-s3": "0.0.0",
+    "loglevel": "^1.6.7",
     "moment": "^2.24.0",
     "react-markdown": "^4.2.2"
   },
