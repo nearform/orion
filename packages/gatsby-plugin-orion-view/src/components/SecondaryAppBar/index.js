@@ -1,5 +1,5 @@
-import BreadcrumbNavigation from '../BreadcrumbNavigation'
-import PaddedContainer from '../PaddedContainer'
+import BreadcrumbNavigation from 'gatsby-plugin-orion-core/src/components/BreadcrumbNavigation'
+import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
 import React from 'react'
 import T from 'prop-types'
 import { Grid, withStyles } from '@material-ui/core'

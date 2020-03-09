@@ -169,7 +169,7 @@ const optionsProps = T.shape({
 
 GridArticleItem.propTypes = {
   article: T.shape({
-    id: T.string,
+    id: T.number,
     image: T.string,
     title: T.string,
     summary: T.string,
@@ -187,7 +187,7 @@ GridArticleItem.defaultProps = {
   type: 'grid',
 }
 
-function ArticleList({ title, type = 'grid', options = {}, articles }) {
+function ArticleList({ articles, title, type = 'grid', options = {} }) {
   const containerProps = {
     spacing: type === 'highlights' ? 0 : 4,
   }
@@ -217,16 +217,18 @@ function ArticleList({ title, type = 'grid', options = {}, articles }) {
 }
 
 ArticleList.propTypes = {
+  articles: T.array.isRequired,
   title: T.string,
   type: T.oneOf(['grid', 'rows', 'highlights']),
   options: optionsProps,
-  articles: T.array.isRequired,
+  variables: T.object,
 }
 
 ArticleList.defaultProps = {
   title: undefined,
   type: 'grid',
   options: {},
+  variables: undefined,
 }
 
 export default ArticleList
