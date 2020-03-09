@@ -1,5 +1,5 @@
 query getGuestRole {
-  orionRole: orion_role(limit: 1, where: { name: { _eq: 'Guest' } }) {
+  orionRole: orion_role(limit: 1, where: { name: { _eq: "Guest" } }) {
     id
     name
     orionRolePermissions: orion_role_permissions {

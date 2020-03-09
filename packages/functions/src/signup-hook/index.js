@@ -6,7 +6,8 @@ export const handler = async event => {
   try {
     if (event.triggerSource === 'PostConfirmation_ConfirmSignUp') {
       const roleData = await graphql(getRoleByName, { roleName: 'Member' })
-      const role = roleData.length > 0 ? roleData[0] : { id: 0 }
+      const role =
+        roleData.orion_role.length > 0 ? roleData.orion_role[0] : { id: 0 }
 
       await graphql(createUser, {
         cognitoId: event.request.userAttributes.sub,
