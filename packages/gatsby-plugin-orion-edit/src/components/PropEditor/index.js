@@ -1,8 +1,23 @@
 import React from 'react'
-import { Checkbox, FormControl, Input, InputLabel } from '@material-ui/core'
+import {
+  FormControl,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+  makeStyles,
+} from '@material-ui/core'
+
+const useStyles = makeStyles(theme => ({
+  input: {
+    marginBottom: theme.spacing(1),
+  },
+}))
 
 export default function createPropEditor(componentProps) {
   const PropEditor = ({ props, onChange }) => {
+    const classes = useStyles()
+
     return Object.keys(componentProps).map(componentProp => {
       const { required, type } = componentProps[componentProp]
       const value = props[componentProp]
@@ -11,17 +26,18 @@ export default function createPropEditor(componentProps) {
 
       if (type === 'boolean') {
         input = (
-          <div>
-            <Checkbox
-              checked={value}
-              onChange={event =>
-                onChange({
-                  ...props,
-                  [componentProp]: event.target.checked,
-                })
-              }
-            />
-          </div>
+          <Select
+            value={value}
+            onChange={event =>
+              onChange({
+                ...props,
+                [componentProp]: event.target.value,
+              })
+            }
+          >
+            <MenuItem value>Yes</MenuItem>
+            <MenuItem value={false}>No</MenuItem>
+          </Select>
         )
       }
 
@@ -60,7 +76,7 @@ export default function createPropEditor(componentProps) {
 
       return (
         <div key={componentProp}>
-          <FormControl fullWidth>
+          <FormControl fullWidth className={classes.input}>
             <InputLabel shrink>{componentProp}</InputLabel>
             {input}
           </FormControl>
