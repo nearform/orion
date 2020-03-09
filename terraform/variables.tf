@@ -40,10 +40,6 @@ variable "cf_wildcard_domain_name" {
   description = "Domain name used for SSL"
 }
 
-variable "cf_not_found_path" {
-  description = "Path to 404 html page"
-}
-
 variable "ci_user_name" {
   description = "IAM user name for CI"
 }

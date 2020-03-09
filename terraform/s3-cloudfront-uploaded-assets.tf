@@ -51,16 +51,9 @@ resource "aws_cloudfront_distribution" "uploaded_assets" {
 
   custom_error_response {
     error_caching_min_ttl = 0
-    error_code            = 403
-    response_code         = 404
-    response_page_path    = "${var.cf_not_found_path}"
-  }
-
-  custom_error_response {
-    error_caching_min_ttl = 0
     error_code            = 404
-    response_code         = 404
-    response_page_path    = "${var.cf_not_found_path}"
+    response_code         = 200
+    response_page_path    = "/index.html"
   }
 
   default_cache_behavior {
