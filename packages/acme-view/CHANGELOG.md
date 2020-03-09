@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.24.0](https://github.com/nearform/orion/compare/v2.23.1...v2.24.0) (2020-03-09)
+
+
+### Bug Fixes
+
+* 🐛 Including dependencies for linter ([f029557](https://github.com/nearform/orion/commit/f029557dd3db629db9e799e7a7ea253941f3e010))
+
+
+### Features
+
+* 🎸 Articles from ArticleData ([6555f9f](https://github.com/nearform/orion/commit/6555f9fbefe2601e1c26405612cf7e49eae2c1d7))
+* 🎸 move article query to components so storybook can mock ([9479e64](https://github.com/nearform/orion/commit/9479e64eb99ca020fbf3ee29e3d8dda3927ab35c))
+
+
+
+
+
 ## [2.23.1](https://github.com/nearform/orion/compare/v2.23.0...v2.23.1) (2020-03-06)
 
 **Note:** Version bump only for package acme-view
