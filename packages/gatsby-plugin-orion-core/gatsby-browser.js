@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import awsConfig from './utils/aws-exports'
 import AuthWrapper from './src/components/AuthWrapper'
 import { ClientContext } from 'graphql-hooks'
-import { initGraphQLClient, makeGraphQLClient } from './src/utils/graphql'
+import { initGraphQLClient, makeGraphQLClient } from './utils/graphql'
 
 const client = makeGraphQLClient(process.env.GATSBY_GRAPHQL_API)
 
@@ -10,7 +11,7 @@ const AuthInitWrapper = ({ element }) => {
 
   useEffect(() => {
     const init = async () => {
-      await initGraphQLClient(client)
+      await initGraphQLClient(client, awsConfig)
       setIsAuthInitialized(true)
     }
 
@@ -19,9 +20,7 @@ const AuthInitWrapper = ({ element }) => {
 
   return (
     <ClientContext.Provider value={client}>
-      <AuthWrapper hasNoParentGroups isAuthInitialized={isAuthInitialized}>
-        {element}
-      </AuthWrapper>
+      <AuthWrapper isAuthInitialized={isAuthInitialized}>{element}</AuthWrapper>
     </ClientContext.Provider>
   )
 }

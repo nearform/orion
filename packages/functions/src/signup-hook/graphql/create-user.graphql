@@ -5,7 +5,7 @@ mutation createUser(
   $roleId: Int!
   $groupId: Int!
 ) {
-  insert_user(
+  insert_orion_user(
     objects: {
       cognito_id: $cognitoId
       email: $email
