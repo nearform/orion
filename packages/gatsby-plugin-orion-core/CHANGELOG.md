@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.24.0](https://github.com/nearform/orion/compare/v2.23.1...v2.24.0) (2020-03-09)
+
+
+### Bug Fixes
+
+* 🐛 Remove empty test files ([39e3e86](https://github.com/nearform/orion/commit/39e3e86ac8b392d66ef0772ec4f7dbb9a4a6c596))
+
+
+
+
+
 ## [2.23.1](https://github.com/nearform/orion/compare/v2.23.0...v2.23.1) (2020-03-06)
 
 **Note:** Version bump only for package gatsby-plugin-orion-core

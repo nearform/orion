@@ -1,14 +1,11 @@
 import React from 'react'
-import Layout from '../components/Layout'
+import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
 import UserAuthentication from 'gatsby-plugin-orion-view/src/components/UserAuthentication'
-import { withStyles } from '@material-ui/core'
 
 const Login = () => (
-  <Layout page={{ ancestry: [] }}>
+  <PaddedContainer>
     <UserAuthentication />
-  </Layout>
+  </PaddedContainer>
 )
 
-const styles = theme => ({ ...theme.layout })
-
-export default withStyles(styles, { withTheme: true })(Login)
+export default Login
