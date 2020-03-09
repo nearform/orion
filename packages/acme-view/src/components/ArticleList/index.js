@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react'
-import ArticleList from 'gatsby-plugin-orion-view/src/components/ArticleList'
+import InnerArticleList from 'gatsby-plugin-orion-view/src/components/ArticleList'
 import { useQuery } from 'graphql-hooks'
 
 import getArticleListQuery from '../../queries/get-article-list'
 
-export default function({
+export default function ArticleList({
   title,
   withFeatured,
   suppressImage,
@@ -49,7 +49,7 @@ export default function({
   }, [data, loading])
 
   return (
-    <ArticleList
+    <InnerArticleList
       articles={articles}
       title={title}
       type={type}
