@@ -4,9 +4,6 @@ import { Link } from '@reach/router'
 import { makeStyles, Grid, Typography } from '@material-ui/core'
 import { format } from 'date-fns'
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
-import { useQuery } from 'graphql-hooks'
-
-import getArticleList from '../../queries/get-article-list'
 
 const gridItemStyles = makeStyles(theme => {
   return { ...theme.articleList.gridItem }
@@ -190,47 +187,10 @@ GridArticleItem.defaultProps = {
   type: 'grid',
 }
 
-function ArticleList({ title, type = 'grid', options = {}, variables = {} }) {
+function ArticleList({ articles, title, type = 'grid', options = {} }) {
   const containerProps = {
     spacing: type === 'highlights' ? 0 : 4,
   }
-
-  const { data, loading } = useQuery(getArticleList, variables)
-
-  if (loading) {
-    return <h1>Loading</h1>
-  }
-
-  if (!data || data.orion_page.length === 0) {
-    return <h1>No Results</h1>
-  }
-
-  const articles = data.orion_page.map(item => {
-    let image = 'https://loremflickr.com/600/335'
-    let summary = 'Placeholder Summary'
-    if (item.contents.length > 0) {
-      item.contents.forEach(content => {
-        switch (content.block) {
-          case 'summary':
-            summary = content.props.content
-            break
-          case 'listImage':
-            image = content.props.image
-            break
-          default:
-        }
-      })
-    }
-
-    return {
-      id: item.id,
-      image,
-      title: item.title,
-      summary,
-      path: item.path,
-      published: item.published,
-    }
-  })
 
   return (
     <>
@@ -257,6 +217,7 @@ function ArticleList({ title, type = 'grid', options = {}, variables = {} }) {
 }
 
 ArticleList.propTypes = {
+  articles: T.array.isRequired,
   title: T.string,
   type: T.oneOf(['grid', 'rows', 'highlights']),
   options: optionsProps,
