@@ -11,15 +11,17 @@ export default function createPropEditor(componentProps) {
 
       if (type === 'boolean') {
         input = (
-          <Checkbox
-            checked={value}
-            onChange={event =>
-              onChange({
-                ...props,
-                [componentProp]: event.target.checked,
-              })
-            }
-          />
+          <div>
+            <Checkbox
+              checked={value}
+              onChange={event =>
+                onChange({
+                  ...props,
+                  [componentProp]: event.target.checked,
+                })
+              }
+            />
+          </div>
         )
       }
 
