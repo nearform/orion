@@ -11,25 +11,33 @@ exports.createPages = async ({ graphql, actions }) => {
     throw pagesResults.errors
   }
 
-  const childMap = ({ descendant }) => {
-    const children =
-      descendant.descendants && descendant.descendants.length > 0
-        ? descendant.descendants.map(childMap)
-        : []
-    return {
-      label: descendant.title,
-      to: descendant.path,
-      children,
+  const menuParents = []
+  menuResults.data.orion.orion_page.forEach(item => {
+    const index = item.ancestry.length > 0 ? item.ancestry[0].ancestor_id : 0
+    if (menuParents[index] === undefined) {
+      menuParents[index] = []
     }
+
+    menuParents[index].push(item)
+  })
+
+  const mapChildren = children => {
+    return children.map(item =>
+      menuParents[item.id] === undefined
+        ? {
+            label: item.title,
+            to: item.path,
+            children: [],
+          }
+        : {
+            label: item.title,
+            to: item.path,
+            children: mapChildren(menuParents[item.id]),
+          }
+    )
   }
 
-  const menu = menuResults.data.orion.orion_page.map(item => {
-    return {
-      label: item.title,
-      to: item.path,
-      children: item.descendants.map(childMap),
-    }
-  })
+  const menu = mapChildren(menuParents[0])
 
   createPage({
     path: '/_not_found',
