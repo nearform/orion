@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.1](https://github.com/nearform/orion/compare/v2.24.0...v2.24.1) (2020-03-09)
+
+
+### Bug Fixes
+
+* 🐛 Allow menu structure to be infinitely nested ([81914c2](https://github.com/nearform/orion/commit/81914c21834e27c26dae7bbd2f7c58569a92902f))
+* 🐛 Remove empty test files ([562b4dc](https://github.com/nearform/orion/commit/562b4dc4fc1c7be7b3ffec9749f4a804f0144130))
+* 🐛 Remove empty test files ([3d7565a](https://github.com/nearform/orion/commit/3d7565a3883f818de9d8d7fdce9dfa0edcc48408))
+
+
+
+
+
 # [2.24.0](https://github.com/nearform/orion/compare/v2.23.1...v2.24.0) (2020-03-09)
 
 
