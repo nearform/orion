@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useEffect } from 'react'
 import AppBar from 'gatsby-plugin-orion-view/src/components/AppBar'
 import { useQuery } from 'graphql-hooks'
 
@@ -10,34 +10,29 @@ export default function AcmeAppBar({
   childIndicatorIcon,
   dropDownIndicatorIcon,
   userRole,
+  menuData,
   location,
 }) {
-  const { data, loading } = useQuery(getMenuQuery, {
-    useCache: false,
-  })
-  /*
-    Commented-out console-log statements
-    console.log(location)
-    console.log(data)
-    console.log(cacheHit)
-  */
-  const menuData = useMemo(() => {
+  const { data, loading, refetch } = useQuery(getMenuQuery)
+
+  useEffect(() => {
+    refetch()
+  }, [location, refetch])
+
+  const menu = useMemo(() => {
+    if (loading) {
+      return menuData
+    }
+
     const menuParents = []
-    if (location) {
-      if (loading || data.orion_page.length === 0) {
-        return []
+    data.orion_page.forEach(item => {
+      const index = item.ancestry.length > 0 ? item.ancestry[0].ancestor_id : 0
+      if (menuParents[index] === undefined) {
+        menuParents[index] = []
       }
 
-      data.orion_page.forEach(item => {
-        const index =
-          item.ancestry.length > 0 ? item.ancestry[0].ancestor_id : 0
-        if (menuParents[index] === undefined) {
-          menuParents[index] = []
-        }
-
-        menuParents[index].push(item)
-      })
-    }
+      menuParents[index].push(item)
+    })
 
     const mapChildren = children => {
       return children.map(item =>
@@ -56,7 +51,7 @@ export default function AcmeAppBar({
     }
 
     return mapChildren(menuParents[0])
-  }, [data, loading, location])
+  }, [menuData, data, loading])
 
   return (
     <AppBar
@@ -65,7 +60,7 @@ export default function AcmeAppBar({
       childIndicatorIcon={childIndicatorIcon}
       dropDownIndicatorIcon={dropDownIndicatorIcon}
       userRole={userRole}
-      menuData={menuData}
+      menuData={menu}
     />
   )
 }
