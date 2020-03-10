@@ -97,8 +97,8 @@ function AuthWrapper({ children, isAuthInitialized }) {
         }
       : {
           id: claims[`X-Hasura-User-Id`],
-          roleId: claims[`X-Orion-Role-Id`],
-          role: claims[`X-Orion-Role`],
+          roleId: claims[`X-Hasura-Role-Id`],
+          role: claims[`X-Orion-User-Role`],
           permissions: claims[`X-Orion-User-Role-Permissions`],
           groupId: claims[`X-Hasura-Group-Id`],
           group: claims[`X-Orion-User-Group`],

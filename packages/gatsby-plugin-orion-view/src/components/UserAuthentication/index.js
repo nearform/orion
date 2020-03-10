@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Redirect } from '@reach/router'
 
 import UserRegistration from '../UserRegistration'
 import UserRegistrationConfirm from '../UserRegistrationConfirm'
@@ -12,22 +13,28 @@ const UserAuthentication = () => {
   )
 
   useEffect(() => {
-    if (authStage === 'register') {
-      setAuthState(
-        <UserRegistration
-          setAuthStage={setAuthStage}
-          setUsername={setUsername}
-        />
-      )
-    } else if (authStage === 'confirm') {
-      setAuthState(
-        <UserRegistrationConfirm
-          setAuthStage={setAuthStage}
-          username={username}
-        />
-      )
-    } else {
-      setAuthState(<UserLogin setAuthStage={setAuthStage} />)
+    switch (authStage) {
+      case 'register':
+        setAuthState(
+          <UserRegistration
+            setAuthStage={setAuthStage}
+            setUsername={setUsername}
+          />
+        )
+        break
+      case 'confirm':
+        setAuthState(
+          <UserRegistrationConfirm
+            setAuthStage={setAuthStage}
+            username={username}
+          />
+        )
+        break
+      case 'loggedIn':
+        setAuthState(<Redirect nothrow to="/" />)
+        break
+      default:
+        setAuthState(<UserLogin setAuthStage={setAuthStage} />)
     }
   }, [authStage, username])
 
