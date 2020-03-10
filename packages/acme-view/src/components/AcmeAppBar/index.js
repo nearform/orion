@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import AppBar from 'gatsby-plugin-orion-view/src/components/AppBar'
 import { useQuery } from 'graphql-hooks'
 
+import { AuthContext } from 'gatsby-plugin-orion-core/src/components/AuthWrapper'
 import getMenuQuery from '../../queries/get-nested-menu.graphql'
 
 export default function AcmeAppBar({
@@ -15,6 +16,7 @@ export default function AcmeAppBar({
 }) {
   const [menu, setMenu] = useState(menuData)
   const { data, loading, refetch } = useQuery(getMenuQuery)
+  const auth = useContext(AuthContext)
 
   useEffect(() => {
     refetch()
@@ -51,7 +53,7 @@ export default function AcmeAppBar({
 
       setMenu(mapChildren(menuParents[0]))
     }
-  }, [data, loading])
+  }, [auth, data, loading])
 
   return (
     <AppBar

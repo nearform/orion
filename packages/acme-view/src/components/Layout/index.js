@@ -79,12 +79,13 @@ Layout.propTypes = {
   children: T.node.isRequired,
   classes: T.object,
   page: T.object,
-  menu: T.array.isRequired,
+  menu: T.array,
 }
 
 Layout.defaultProps = {
   classes: undefined,
   page: undefined,
+  menu: undefined,
 }
 
 const styles = theme => ({ ...theme.layout })

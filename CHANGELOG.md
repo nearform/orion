@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.26.0](https://github.com/nearform/orion/compare/v2.25.0...v2.26.0) (2020-03-10)
+
+
+### Bug Fixes
+
+* 🐛 Bugfix for building with awsConfig ([54c74e9](https://github.com/nearform/orion/commit/54c74e908dd433797d081db68716294d27cc0baf))
+* 🐛 Build error due to included config referencing window ([6a9982c](https://github.com/nearform/orion/commit/6a9982c282880b557178ca1f83a5f91fa9794939))
+* 🐛 Fixing all Lambda bugs ([dd6d8c4](https://github.com/nearform/orion/commit/dd6d8c4aa61934c2112b55de8239f9db1e0f8697))
+* 🐛 Lambda Functions fix ([38b7c2d](https://github.com/nearform/orion/commit/38b7c2d7ce00e46c0867b59dbcb1806339e41d67))
+
+
+### Features
+
+* 🎸 AppBar dynamically loads menu ([ccbed46](https://github.com/nearform/orion/commit/ccbed46a740cee201a3c5a591eb2a2ee1f7cb78a))
+* 🎸 Improve menu with useState ([1e5cb5e](https://github.com/nearform/orion/commit/1e5cb5e02da7367c13d5222290008d6d44c355db))
+* 🎸 WIP - Dynamic menu loading ([ff402df](https://github.com/nearform/orion/commit/ff402df7e9ac9c08cc09b34648f7d00500581203))
+
+
+
+
+
 # [2.25.0](https://github.com/nearform/orion/compare/v2.24.1...v2.25.0) (2020-03-09)
 
 

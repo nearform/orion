@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.26.0](https://github.com/nearform/orion/compare/v2.25.0...v2.26.0) (2020-03-10)
+
+
+### Bug Fixes
+
+* 🐛 Fixing all Lambda bugs ([dd6d8c4](https://github.com/nearform/orion/commit/dd6d8c4aa61934c2112b55de8239f9db1e0f8697))
+* 🐛 Lambda Functions fix ([38b7c2d](https://github.com/nearform/orion/commit/38b7c2d7ce00e46c0867b59dbcb1806339e41d67))
+
+
+
+
+
 # [2.24.0](https://github.com/nearform/orion/compare/v2.23.1...v2.24.0) (2020-03-09)
 
 
