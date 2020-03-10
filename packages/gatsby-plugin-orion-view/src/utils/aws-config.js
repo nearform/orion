@@ -4,17 +4,6 @@ export default {
     region: process.env.GATSBY_AWS_REGION,
     userPoolId: process.env.GATSBY_AWS_COGNITO_USER_POOL_ID,
     userPoolWebClientId: process.env.GATSBY_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID,
-    cookieStorage: {
-      // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-      domain: window.location.hostname,
-      // OPTIONAL - Cookie path
-      path: '/',
-      // OPTIONAL - Cookie expiration in days
-      expires: Number(process.env.GATSBY_AWS_COGNITO_COOKIE_EXPIRATION) || 1,
-      // OPTIONAL - Cookie secure flag
-      // Either true or false, indicating if the cookie transmission requires a secure protocol (https).
-      secure: Boolean(process.env.GATSBY_AWS_COGNITO_COOKIE_SECURE),
-    },
   },
   Storage: {
     AWSS3: {

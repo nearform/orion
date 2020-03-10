@@ -8,10 +8,7 @@ import UserRegistrationConfirm from '../UserRegistrationConfirm'
 import UserLogin from '../UserLogin'
 
 const UserAuthentication = () => {
-  if (typeof window !== 'undefined') {
-    Amplify.configure(awsConfig)
-  }
-
+  Amplify.configure(awsConfig)
   const [authStage, setAuthStage] = useState('login')
   const [username, setUsername] = useState()
   const [authState, setAuthState] = useState(
