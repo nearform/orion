@@ -23,6 +23,7 @@ const listCommands = [
 
 const MarkdownEditor = ({ content = '', onChange = () => {}, classes }) => {
   const [selectedTab, setSelectedTab] = useState('write')
+
   return (
     <div className={classes.container}>
       <ReactMde
