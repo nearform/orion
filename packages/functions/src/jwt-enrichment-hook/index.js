@@ -6,23 +6,20 @@ import { createNumericRolePermissions } from '../../../gatsby-plugin-orion-core/
 export const handler = async event => {
   try {
     const cognitoId = event.request.userAttributes.sub
-    const { orionUserData } = await graphql(getUserByCognitoId, {
+    const { orionUser } = await graphql(getUserByCognitoId, {
       cognitoId,
     })
-    const { guestRole } = await graphql(getGuestRole)
+    const { orionRole } = await graphql(getGuestRole)
     const guestUser = {
       id: 0,
-      ...guestRole.orionRole[0],
+      ...orionRole[0],
       orionGroup: {
         id: 0,
         name: 'none',
       },
     }
 
-    const user =
-      orionUserData.orionUser.length === 1
-        ? orionUserData.orionUser[0]
-        : guestUser
+    const user = orionUser.length === 1 ? orionUser[0] : guestUser
 
     /*
      * NOTE: X-Hasura-Role and X-Hasura-Default-Role manually set to admin. Change later.
