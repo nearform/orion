@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.27.0](https://github.com/nearform/orion/compare/v2.26.0...v2.27.0) (2020-03-10)
+
+
+### Features
+
+* 🎸 integrate markdown editor ([78beb1a](https://github.com/nearform/orion/commit/78beb1ad4f8b47c8ed86114c5f0afc4312533efd))
+
+
+
+
+
 # [2.26.0](https://github.com/nearform/orion/compare/v2.25.0...v2.26.0) (2020-03-10)
 
 **Note:** Version bump only for package gatsby-plugin-orion-edit
