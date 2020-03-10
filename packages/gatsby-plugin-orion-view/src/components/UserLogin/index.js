@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import Amplify, { Auth } from 'aws-amplify'
-import awsConfig from 'gatsby-plugin-orion-core/utils/aws-exports'
+import { Auth } from 'aws-amplify'
+
 import { Grid, Button, Typography } from '@material-ui/core'
 
 import { Form } from 'gatsby-plugin-orion-core'
 
 const UserLogin = ({ setAuthStage }) => {
-  Amplify.configure(awsConfig)
   const [errors, setErrors] = useState()
   const handleLogin = ({ username, password }) => {
     Auth.signIn({ username, password })
