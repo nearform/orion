@@ -7,7 +7,7 @@ export default {
       image: {
         label: 'Image',
         required: false,
-        type: 'text',
+        type: 'string',
       },
       content: {
         label: 'Content',
