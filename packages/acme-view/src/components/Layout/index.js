@@ -5,7 +5,6 @@ import AcmeAppBar from '../AcmeAppBar'
 import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
 import SecondaryAppBar from 'gatsby-plugin-orion-view/src/components/SecondaryAppBar'
 import { withStyles } from '@material-ui/core'
-import { useLocation } from '@reach/router'
 
 import facebook from 'gatsby-plugin-orion-core/src/assets/social/logo-fb.svg'
 import youtube from 'gatsby-plugin-orion-core/src/assets/social/logo-youtube.svg'
@@ -35,8 +34,6 @@ const socialIcons = [
 const Img = ({ ...props }) => <img alt="social" {...props} />
 
 function Layout({ children, classes, menu, page }) {
-  const location = useLocation()
-
   const parents = useMemo(() => {
     if (!page) {
       return []
@@ -58,9 +55,9 @@ function Layout({ children, classes, menu, page }) {
           dropDownIndicatorIcon="fas fa-chevron-down"
           userRole="User"
           menuData={menu}
-          location={location.pathname}
+          location={page.path}
         />
-        {location.pathname !== '/' && (
+        {page.path !== '/' && (
           <SecondaryAppBar
             action={<SearchInput onSearch={() => {}} />}
             data={parents}

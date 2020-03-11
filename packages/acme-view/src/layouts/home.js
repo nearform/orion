@@ -1,18 +1,9 @@
 import React from 'react'
+import T from 'prop-types'
 import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
-  hero: {
-    margin: '-32px 0 32px 0',
-    '& > div': {
-      maxWidth: '100%',
-      padding: '100px 0',
-      '& > div': {
-        padding: '0 !important',
-      },
-    },
-  },
   section: {
     padding: 32,
     '&:nth-child(2)': {
@@ -26,7 +17,7 @@ function HomeLayout({ hero, one, two, three, four }) {
 
   return (
     <>
-      <div className={classes.hero}>{hero}</div>
+      <div>{hero}</div>
       <div className={classes.content}>
         <div className={classes.section}>
           <PaddedContainer>{one}</PaddedContainer>
@@ -43,6 +34,14 @@ function HomeLayout({ hero, one, two, three, four }) {
       </div>
     </>
   )
+}
+
+HomeLayout.propTypes = {
+  hero: T.node.isRequired,
+  one: T.node.isRequired,
+  two: T.node.isRequired,
+  three: T.node.isRequired,
+  four: T.node.isRequired,
 }
 
 export default HomeLayout
