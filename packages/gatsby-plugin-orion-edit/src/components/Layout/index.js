@@ -19,35 +19,41 @@ function Layout({ action, breadcrumbs, children, classes, data, path }) {
           <BreadcrumbNavigation data={breadcrumbs} />
           <div>{action}</div>
         </div>
-        <div className={classes.editor}>{children}</div>
+        <div>{children}</div>
       </div>
     </div>
   )
 }
 
+const drawerWidth = 318
+
 const styles = theme => ({
   content: {
-    marginLeft: 318,
+    marginLeft: drawerWidth,
+    marginTop: 62,
   },
   drawer: {
-    width: 318,
+    width: drawerWidth,
     '& > div': {
-      width: 318,
+      width: drawerWidth,
     },
     '& ul': {
       height: '100%',
       padding: 0,
     },
   },
-  editor: {
-    padding: 16,
-  },
   menu: {
     alignItems: 'center',
     backgroundColor: theme.palette.background.dark,
+    boxShadow: theme.shadows[2],
     display: 'flex',
     justifyContent: 'space-between',
+    left: drawerWidth,
     padding: '16px 32px',
+    position: 'fixed',
+    top: 0,
+    width: `calc(100% - ${drawerWidth}px)`,
+    zIndex: theme.zIndex.appBar,
     '& a': {
       ...theme.typography.h5,
       color: theme.palette.action.main,
