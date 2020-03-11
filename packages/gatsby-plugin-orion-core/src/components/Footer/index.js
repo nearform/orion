@@ -1,6 +1,7 @@
 import React from 'react'
 import T from 'prop-types'
 import { withStyles, Grid, Typography } from '@material-ui/core'
+import { Link } from '@reach/router'
 import PaddedContainer from '../PaddedContainer'
 
 function Footer({ classes, Img, socialIcons = [], Logo }) {
@@ -23,7 +24,7 @@ function Footer({ classes, Img, socialIcons = [], Logo }) {
           </Grid>
           <Grid container item xs={4} justify="flex-end">
             <Grid container item xs={12} justify="flex-end">
-              <Grid item component="a" href="/">
+              <Grid item component={Link} to="/">
                 <Logo width="107" />
               </Grid>
             </Grid>
@@ -57,8 +58,8 @@ function Footer({ classes, Img, socialIcons = [], Logo }) {
             <Typography
               display="inline"
               variant="body1"
-              component="a"
-              href="/terms"
+              component={Link}
+              to="/terms"
             >
               Terms of Use
             </Typography>
@@ -67,8 +68,8 @@ function Footer({ classes, Img, socialIcons = [], Logo }) {
             <Typography
               display="inline"
               variant="body1"
-              component="a"
-              href="/privacy"
+              component={Link}
+              to="/privacy"
             >
               Privacy Statement
             </Typography>

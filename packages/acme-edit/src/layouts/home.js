@@ -1,4 +1,5 @@
 import React from 'react'
+import layouts from 'acme-view/src/layouts'
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
@@ -21,13 +22,24 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export function HomeExample() {
+function HomeExample() {
   const classes = useStyles()
 
   return (
     <div className={classes.root}>
       <div className={classes.head} />
       <div className={classes.main} />
+      <div className={classes.main} />
+      <div className={classes.main} />
+      <div className={classes.main} />
     </div>
   )
+}
+
+export default {
+  blocks: ['hero', 'one', 'two', 'three', 'four'],
+  editor: layouts.home,
+  example: HomeExample,
+  name: 'Home page',
+  preview: layouts.home,
 }

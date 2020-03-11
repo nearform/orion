@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.27.0](https://github.com/nearform/orion/compare/v2.26.0...v2.27.0) (2020-03-10)
+
+**Note:** Version bump only for package acme-view
+
+
+
+
+
+# [2.26.0](https://github.com/nearform/orion/compare/v2.25.0...v2.26.0) (2020-03-10)
+
+
+### Bug Fixes
+
+* 🐛 Bugfix for building with awsConfig ([54c74e9](https://github.com/nearform/orion/commit/54c74e908dd433797d081db68716294d27cc0baf))
+* 🐛 Fixing all Lambda bugs ([dd6d8c4](https://github.com/nearform/orion/commit/dd6d8c4aa61934c2112b55de8239f9db1e0f8697))
+
+
+### Features
+
+* 🎸 AppBar dynamically loads menu ([ccbed46](https://github.com/nearform/orion/commit/ccbed46a740cee201a3c5a591eb2a2ee1f7cb78a))
+* 🎸 Improve menu with useState ([1e5cb5e](https://github.com/nearform/orion/commit/1e5cb5e02da7367c13d5222290008d6d44c355db))
+* 🎸 WIP - Dynamic menu loading ([ff402df](https://github.com/nearform/orion/commit/ff402df7e9ac9c08cc09b34648f7d00500581203))
+
+
+
+
+
+## [2.24.1](https://github.com/nearform/orion/compare/v2.24.0...v2.24.1) (2020-03-09)
+
+
+### Bug Fixes
+
+* 🐛 login and registration layout fix ([4edaef1](https://github.com/nearform/orion/commit/4edaef1df12c5aaeebd493e52ff139058d642690))
+
+
+
+
+
+# [2.24.0](https://github.com/nearform/orion/compare/v2.23.1...v2.24.0) (2020-03-09)
+
+
+### Bug Fixes
+
+* 🐛 Including dependencies for linter ([f029557](https://github.com/nearform/orion/commit/f029557dd3db629db9e799e7a7ea253941f3e010))
+
+
+### Features
+
+* 🎸 Articles from ArticleData ([6555f9f](https://github.com/nearform/orion/commit/6555f9fbefe2601e1c26405612cf7e49eae2c1d7))
+* 🎸 move article query to components so storybook can mock ([9479e64](https://github.com/nearform/orion/commit/9479e64eb99ca020fbf3ee29e3d8dda3927ab35c))
+
+
+
+
+
+## [2.23.1](https://github.com/nearform/orion/compare/v2.23.0...v2.23.1) (2020-03-06)
+
+**Note:** Version bump only for package acme-view
+
+
+
+
+
 # [2.23.0](https://github.com/nearform/orion/compare/v2.22.0...v2.23.0) (2020-03-06)
 
 

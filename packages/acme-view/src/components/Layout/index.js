@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
 import T from 'prop-types'
 import Footer from 'gatsby-plugin-orion-core/src/components/Footer'
-import AppBar from 'gatsby-plugin-orion-view/src/components/AppBar'
+import AcmeAppBar from '../AcmeAppBar'
 import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
-import SecondaryAppBar from 'gatsby-plugin-orion-core/src/components/SecondaryAppBar'
+import SecondaryAppBar from 'gatsby-plugin-orion-view/src/components/SecondaryAppBar'
 import { withStyles } from '@material-ui/core'
 import { useLocation } from '@reach/router'
 
@@ -51,13 +51,14 @@ function Layout({ children, classes, menu, page }) {
   return (
     <div className={classes.root}>
       <header>
-        <AppBar
+        <AcmeAppBar
           brandTo="/"
           Logo={Logo}
           childIndicatorIcon="fas fa-chevron-right"
           dropDownIndicatorIcon="fas fa-chevron-down"
           userRole="User"
           menuData={menu}
+          location={location.pathname}
         />
         {location.pathname !== '/' && (
           <SecondaryAppBar
@@ -78,12 +79,13 @@ Layout.propTypes = {
   children: T.node.isRequired,
   classes: T.object,
   page: T.object,
-  menu: T.array.isRequired,
+  menu: T.array,
 }
 
 Layout.defaultProps = {
   classes: undefined,
   page: undefined,
+  menu: undefined,
 }
 
 const styles = theme => ({ ...theme.layout })

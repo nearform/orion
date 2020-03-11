@@ -1,0 +1,6 @@
+- args:
+    sql: ALTER TABLE "public"."orion_user" ALTER COLUMN "cognito_id" TYPE uuid;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."orion_user"."cognito_id" IS E'null'
+  type: run_sql

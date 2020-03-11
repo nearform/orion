@@ -9,10 +9,10 @@ export const handler = async event => {
     const { orionUser } = await graphql(getUserByCognitoId, {
       cognitoId,
     })
-    const { guestRole } = await graphql(getGuestRole)
+    const { orionRole } = await graphql(getGuestRole)
     const guestUser = {
       id: 0,
-      ...guestRole[0],
+      ...orionRole[0],
       orionGroup: {
         id: 0,
         name: 'none',
@@ -21,14 +21,17 @@ export const handler = async event => {
 
     const user = orionUser.length === 1 ? orionUser[0] : guestUser
 
+    /*
+     * NOTE: X-Hasura-Role and X-Hasura-Default-Role manually set to admin. Change later.
+     */
     event.response = {
       claimsOverrideDetails: {
         claimsToAddOrOverride: {
           'https://hasura.io/jwt/claims': JSON.stringify({
             'X-Hasura-User-Id': user.id.toString(),
             'X-Hasura-Role-Id': user.orionRole.id.toString(),
-            'X-Hasura-Role': process.env.HASURA_ROLE,
-            'X-Hasura-Default-Role': process.env.HASURA_ROLE,
+            'X-Hasura-Role': 'admin',
+            'X-Hasura-Default-Role': 'admin',
             'X-Hasura-Allowed-Roles': ['public', 'edit', 'admin'],
             'X-Hasura-Group-Id': user.orionGroup.id.toString(),
           }),

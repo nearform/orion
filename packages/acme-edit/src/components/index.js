@@ -4,13 +4,15 @@ import { createPropEditor } from 'gatsby-plugin-orion-edit'
 export default {
   ArticleContent: {
     editor: createPropEditor({
-      content: {
-        required: true,
-        type: 'string',
-      },
       image: {
+        label: 'Image',
         required: false,
         type: 'string',
+      },
+      content: {
+        label: 'Content',
+        required: true,
+        type: 'markdown',
       },
     }),
     preview: components.ArticleContent,
@@ -18,26 +20,33 @@ export default {
   ArticleList: {
     editor: createPropEditor({
       title: {
+        label: 'Title',
         required: false,
         type: 'string',
       },
       type: {
+        label: 'Type',
+        options: ['highlights', 'grid', 'rows'],
         required: true,
-        type: 'string',
+        type: 'select',
       },
       clipImage: {
+        label: 'Clip image?',
         required: true,
         type: 'boolean',
       },
       suppressImage: {
+        label: 'Suppress image?',
         required: true,
         type: 'boolean',
       },
       suppressSummary: {
+        label: 'Suppress summary?',
         required: true,
         type: 'boolean',
       },
       withFeatured: {
+        label: 'With featured?',
         required: true,
         type: 'boolean',
       },
@@ -47,6 +56,7 @@ export default {
   ArticleMetadata: {
     editor: createPropEditor({
       readTime: {
+        label: 'Read time',
         required: true,
         type: 'number',
       },

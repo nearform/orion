@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.27.0](https://github.com/nearform/orion/compare/v2.26.0...v2.27.0) (2020-03-10)
+
+
+### Features
+
+* 🎸 integrate markdown editor ([78beb1a](https://github.com/nearform/orion/commit/78beb1ad4f8b47c8ed86114c5f0afc4312533efd))
+
+
+
+
+
+# [2.26.0](https://github.com/nearform/orion/compare/v2.25.0...v2.26.0) (2020-03-10)
+
+**Note:** Version bump only for package acme-edit
+
+
+
+
+
+# [2.25.0](https://github.com/nearform/orion/compare/v2.24.1...v2.25.0) (2020-03-09)
+
+
+### Features
+
+* 🎸 toggle show_in_menu in page editor, other improvements ([a82c05b](https://github.com/nearform/orion/commit/a82c05bc88b7eda8142efeb7d0f20a64899aa19c))
+
+
+
+
+
+## [2.24.1](https://github.com/nearform/orion/compare/v2.24.0...v2.24.1) (2020-03-09)
+
+**Note:** Version bump only for package acme-edit
+
+
+
+
+
+# [2.24.0](https://github.com/nearform/orion/compare/v2.23.1...v2.24.0) (2020-03-09)
+
+
+### Features
+
+* 🎸 move article query to components so storybook can mock ([9479e64](https://github.com/nearform/orion/commit/9479e64eb99ca020fbf3ee29e3d8dda3927ab35c))
+
+
+
+
+
+## [2.23.1](https://github.com/nearform/orion/compare/v2.23.0...v2.23.1) (2020-03-06)
+
+**Note:** Version bump only for package acme-edit
+
+
+
+
+
 # [2.23.0](https://github.com/nearform/orion/compare/v2.22.0...v2.23.0) (2020-03-06)
 
 

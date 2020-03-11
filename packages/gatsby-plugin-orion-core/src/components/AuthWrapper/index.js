@@ -7,7 +7,7 @@ const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
 const CUSTOM_CLAIMS_NAMESPACE = 'X-Orion-Claims'
 
-export const AuthContext = createContext()
+export const AuthContext = createContext({ isAuthInitialized: false })
 
 /**
  * A user object exists within a browser window
@@ -50,7 +50,7 @@ const comparePerms = (permSet, userPerms, reqString) => {
   return divider === '|' ? (val & userPerms) > 0 : (val & userPerms) === val
 }
 
-function AuthWrapper({ children }) {
+function AuthWrapper({ children, isAuthInitialized }) {
   /**
    * Check a user's permissions against required permissions for an action
    * Intended to be called before performing any permission-restricted action
@@ -97,8 +97,8 @@ function AuthWrapper({ children }) {
         }
       : {
           id: claims[`X-Hasura-User-Id`],
-          roleId: claims[`X-Orion-Role-Id`],
-          role: claims[`X-Orion-Role`],
+          roleId: claims[`X-Hasura-Role-Id`],
+          role: claims[`X-Orion-User-Role`],
           permissions: claims[`X-Orion-User-Role-Permissions`],
           groupId: claims[`X-Hasura-Group-Id`],
           group: claims[`X-Orion-User-Group`],
@@ -106,6 +106,7 @@ function AuthWrapper({ children }) {
   }
 
   const auth = {
+    isAuthInitialized,
     getUserTokenData,
     checkPermissions,
   }
@@ -115,6 +116,7 @@ function AuthWrapper({ children }) {
 
 AuthWrapper.propTypes = {
   children: T.node.isRequired,
+  isAuthInitialized: T.bool.isRequired,
 }
 
 export default AuthWrapper

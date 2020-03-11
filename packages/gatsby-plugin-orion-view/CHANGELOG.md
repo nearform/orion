@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.27.0](https://github.com/nearform/orion/compare/v2.26.0...v2.27.0) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
+# [2.26.0](https://github.com/nearform/orion/compare/v2.25.0...v2.26.0) (2020-03-10)
+
+
+### Bug Fixes
+
+* 🐛 Bugfix for building with awsConfig ([54c74e9](https://github.com/nearform/orion/commit/54c74e908dd433797d081db68716294d27cc0baf))
+* 🐛 Build error due to included config referencing window ([6a9982c](https://github.com/nearform/orion/commit/6a9982c282880b557178ca1f83a5f91fa9794939))
+* 🐛 Fixing all Lambda bugs ([dd6d8c4](https://github.com/nearform/orion/commit/dd6d8c4aa61934c2112b55de8239f9db1e0f8697))
+* 🐛 Lambda Functions fix ([38b7c2d](https://github.com/nearform/orion/commit/38b7c2d7ce00e46c0867b59dbcb1806339e41d67))
+
+
+
+
+
+## [2.24.1](https://github.com/nearform/orion/compare/v2.24.0...v2.24.1) (2020-03-09)
+
+
+### Bug Fixes
+
+* 🐛 Allow menu structure to be infinitely nested ([81914c2](https://github.com/nearform/orion/commit/81914c21834e27c26dae7bbd2f7c58569a92902f))
+* 🐛 Remove empty test files ([562b4dc](https://github.com/nearform/orion/commit/562b4dc4fc1c7be7b3ffec9749f4a804f0144130))
+* 🐛 Remove empty test files ([3d7565a](https://github.com/nearform/orion/commit/3d7565a3883f818de9d8d7fdce9dfa0edcc48408))
+
+
+
+
+
+# [2.24.0](https://github.com/nearform/orion/compare/v2.23.1...v2.24.0) (2020-03-09)
+
+
+### Bug Fixes
+
+* 🐛 Remove empty test files ([39e3e86](https://github.com/nearform/orion/commit/39e3e86ac8b392d66ef0772ec4f7dbb9a4a6c596))
+
+
+### Features
+
+* 🎸 Articles from ArticleData ([6555f9f](https://github.com/nearform/orion/commit/6555f9fbefe2601e1c26405612cf7e49eae2c1d7))
+* 🎸 move article query to components so storybook can mock ([9479e64](https://github.com/nearform/orion/commit/9479e64eb99ca020fbf3ee29e3d8dda3927ab35c))
+
+
+
+
+
+## [2.23.1](https://github.com/nearform/orion/compare/v2.23.0...v2.23.1) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
 # [2.23.0](https://github.com/nearform/orion/compare/v2.22.0...v2.23.0) (2020-03-06)
 
 

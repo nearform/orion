@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Redirect } from '@reach/router'
 import { Auth } from 'aws-amplify'
+
 import { Grid, Button, Typography } from '@material-ui/core'
 
 import { Form } from 'gatsby-plugin-orion-core'
@@ -9,7 +9,9 @@ const UserLogin = ({ setAuthStage }) => {
   const [errors, setErrors] = useState()
   const handleLogin = ({ username, password }) => {
     Auth.signIn({ username, password })
-      .then(() => <Redirect noThrow to="/" />)
+      .then(() => {
+        setAuthStage('loggedIn')
+      })
       .catch(error =>
         setErrors(`${error.code} ${error.name}: ${error.message}`)
       )

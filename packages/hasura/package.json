@@ -2,18 +2,18 @@
   "name": "hasura",
   "private": true,
   "description": "Orion database",
-  "version": "2.23.0",
+  "version": "2.26.0",
   "author": "NearForm",
   "scripts": {
     "commit": "cd .. && yarn commit",
     "console": "env-cmd -f .env hasura console",
     "migrate": "env-cmd -f .env hasura migrate",
-    "seed": "env-cmd -f .env node ./seed.js",
+    "seed": "node ./seed.js",
     "artifact:create": "cd .. && tar -zcf $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz hasura",
     "artifact:name": "echo $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz"
   },
   "devDependencies": {
-    "env-cmd": "^10.1.0",
+    "dotenv": "^8.2.0",
     "graphql-request": "^1.8.2",
     "hasura-cli": "^1.1.0"
   },

@@ -3,6 +3,94 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.27.0](https://github.com/nearform/orion/compare/v2.26.0...v2.27.0) (2020-03-10)
+
+
+### Bug Fixes
+
+* 🐛 use reach router links in footer ([169c456](https://github.com/nearform/orion/commit/169c456a45fcfa66aa2da4201fce67e28931ca95))
+
+
+### Features
+
+* 🎸 integrate markdown editor ([78beb1a](https://github.com/nearform/orion/commit/78beb1ad4f8b47c8ed86114c5f0afc4312533efd))
+
+
+
+
+
+# [2.26.0](https://github.com/nearform/orion/compare/v2.25.0...v2.26.0) (2020-03-10)
+
+
+### Bug Fixes
+
+* 🐛 Bugfix for building with awsConfig ([54c74e9](https://github.com/nearform/orion/commit/54c74e908dd433797d081db68716294d27cc0baf))
+* 🐛 Build error due to included config referencing window ([6a9982c](https://github.com/nearform/orion/commit/6a9982c282880b557178ca1f83a5f91fa9794939))
+* 🐛 Fixing all Lambda bugs ([dd6d8c4](https://github.com/nearform/orion/commit/dd6d8c4aa61934c2112b55de8239f9db1e0f8697))
+* 🐛 Lambda Functions fix ([38b7c2d](https://github.com/nearform/orion/commit/38b7c2d7ce00e46c0867b59dbcb1806339e41d67))
+
+
+### Features
+
+* 🎸 AppBar dynamically loads menu ([ccbed46](https://github.com/nearform/orion/commit/ccbed46a740cee201a3c5a591eb2a2ee1f7cb78a))
+* 🎸 Improve menu with useState ([1e5cb5e](https://github.com/nearform/orion/commit/1e5cb5e02da7367c13d5222290008d6d44c355db))
+* 🎸 WIP - Dynamic menu loading ([ff402df](https://github.com/nearform/orion/commit/ff402df7e9ac9c08cc09b34648f7d00500581203))
+
+
+
+
+
+# [2.25.0](https://github.com/nearform/orion/compare/v2.24.1...v2.25.0) (2020-03-09)
+
+
+### Features
+
+* 🎸 toggle show_in_menu in page editor, other improvements ([a82c05b](https://github.com/nearform/orion/commit/a82c05bc88b7eda8142efeb7d0f20a64899aa19c))
+
+
+
+
+
+## [2.24.1](https://github.com/nearform/orion/compare/v2.24.0...v2.24.1) (2020-03-09)
+
+
+### Bug Fixes
+
+* 🐛 Allow menu structure to be infinitely nested ([81914c2](https://github.com/nearform/orion/commit/81914c21834e27c26dae7bbd2f7c58569a92902f))
+* 🐛 login and registration layout fix ([4edaef1](https://github.com/nearform/orion/commit/4edaef1df12c5aaeebd493e52ff139058d642690))
+* 🐛 Remove empty test files ([562b4dc](https://github.com/nearform/orion/commit/562b4dc4fc1c7be7b3ffec9749f4a804f0144130))
+* 🐛 Remove empty test files ([3d7565a](https://github.com/nearform/orion/commit/3d7565a3883f818de9d8d7fdce9dfa0edcc48408))
+
+
+
+
+
+# [2.24.0](https://github.com/nearform/orion/compare/v2.23.1...v2.24.0) (2020-03-09)
+
+
+### Bug Fixes
+
+* 🐛 Including dependencies for linter ([f029557](https://github.com/nearform/orion/commit/f029557dd3db629db9e799e7a7ea253941f3e010))
+* 🐛 Remove empty test files ([39e3e86](https://github.com/nearform/orion/commit/39e3e86ac8b392d66ef0772ec4f7dbb9a4a6c596))
+
+
+### Features
+
+* 🎸 Articles from ArticleData ([6555f9f](https://github.com/nearform/orion/commit/6555f9fbefe2601e1c26405612cf7e49eae2c1d7))
+* 🎸 move article query to components so storybook can mock ([9479e64](https://github.com/nearform/orion/commit/9479e64eb99ca020fbf3ee29e3d8dda3927ab35c))
+
+
+
+
+
+## [2.23.1](https://github.com/nearform/orion/compare/v2.23.0...v2.23.1) (2020-03-06)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
 # [2.23.0](https://github.com/nearform/orion/compare/v2.22.0...v2.23.0) (2020-03-06)
 
 

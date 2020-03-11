@@ -33,13 +33,16 @@ EditComponentProvider.propTypes = {
   children: T.node.isRequired,
   components: T.objectOf(
     T.shape({
-      blocks: T.arrayOf(T.string.isRequired).isRequired,
+      editor: T.elementType.isRequired,
       preview: T.elementType,
     })
   ).isRequired,
   layouts: T.objectOf(
     T.shape({
+      blocks: T.arrayOf(T.string.isRequired).isRequired,
       editor: T.elementType.isRequired,
+      example: T.elementType,
+      name: T.string.isRequired,
       preview: T.elementType,
     })
   ).isRequired,

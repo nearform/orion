@@ -1,33 +1,50 @@
 import React from 'react'
-import { Checkbox, FormControl, Input, InputLabel } from '@material-ui/core'
+import MarkdownEditor from '../MarkdownEditor/MarkdownEditor'
+import {
+  FormControl,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+  makeStyles,
+} from '@material-ui/core'
+
+const useStyles = makeStyles(theme => ({
+  input: {
+    marginBottom: theme.spacing(1),
+  },
+}))
 
 export default function createPropEditor(componentProps) {
   const PropEditor = ({ props, onChange }) => {
+    const classes = useStyles()
+
     return Object.keys(componentProps).map(componentProp => {
-      const { required, type } = componentProps[componentProp]
+      const { label, options, required, type } = componentProps[componentProp]
       const value = props[componentProp]
 
       let input = null
 
       if (type === 'boolean') {
         input = (
-          <Checkbox
-            checked={value}
+          <Select
+            value={value}
             onChange={event =>
               onChange({
                 ...props,
-                [componentProp]: event.target.checked,
+                [componentProp]: event.target.value,
               })
             }
-          />
+          >
+            <MenuItem value>Yes</MenuItem>
+            <MenuItem value={false}>No</MenuItem>
+          </Select>
         )
       }
 
       if (type === 'string') {
         input = (
           <Input
-            multiline
-            rowsMax={5}
             value={value}
             required={required}
             onChange={event =>
@@ -56,10 +73,44 @@ export default function createPropEditor(componentProps) {
         )
       }
 
+      if (type === 'markdown') {
+        input = (
+          <MarkdownEditor
+            content={value}
+            onChange={value =>
+              onChange({
+                ...props,
+                [componentProp]: value,
+              })
+            }
+          />
+        )
+      }
+
+      if (type === 'select') {
+        input = (
+          <Select
+            value={value}
+            onChange={event =>
+              onChange({
+                ...props,
+                [componentProp]: event.target.value,
+              })
+            }
+          >
+            {options.map(option => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        )
+      }
+
       return (
         <div key={componentProp}>
-          <FormControl fullWidth>
-            <InputLabel shrink>{componentProp}</InputLabel>
+          <FormControl fullWidth className={classes.input}>
+            <InputLabel shrink>{label || componentProp}</InputLabel>
             {input}
           </FormControl>
         </div>
