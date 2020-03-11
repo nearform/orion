@@ -12,7 +12,11 @@ import layouts from './src/layouts'
 const muiTheme = createMuiTheme(theme.muiTheme)
 
 export const wrapPageElement = ({ element }) => (
-  <EditComponentProvider components={components} layouts={layouts} wrapper={Layout}>
+  <EditComponentProvider
+    components={components}
+    layouts={layouts}
+    wrapper={Layout}
+  >
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
       <ThemeWrapper>{element}</ThemeWrapper>
