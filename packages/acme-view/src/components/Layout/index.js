@@ -4,6 +4,7 @@ import Footer from 'gatsby-plugin-orion-core/src/components/Footer'
 import AcmeAppBar from '../AcmeAppBar'
 import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
 import SecondaryAppBar from 'gatsby-plugin-orion-view/src/components/SecondaryAppBar'
+import { useLocation } from '@reach/router'
 import { withStyles } from '@material-ui/core'
 
 import facebook from 'gatsby-plugin-orion-core/src/assets/social/logo-fb.svg'
@@ -34,6 +35,8 @@ const socialIcons = [
 const Img = ({ ...props }) => <img alt="social" {...props} />
 
 function Layout({ children, classes, menu, page }) {
+  const location = useLocation()
+
   const parents = useMemo(() => {
     if (!page) {
       return []
