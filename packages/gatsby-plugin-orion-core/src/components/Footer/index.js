@@ -4,7 +4,7 @@ import { withStyles, Grid, Typography } from '@material-ui/core'
 import { Link } from '@reach/router'
 import PaddedContainer from '../PaddedContainer'
 
-function Footer({ classes, Img, socialIcons = [], logo }) {
+function Footer({ classes, Img, socialIcons = [], Logo }) {
   return (
     <div className={classes.footer}>
       <PaddedContainer>
@@ -25,7 +25,7 @@ function Footer({ classes, Img, socialIcons = [], logo }) {
           <Grid container item xs={4} justify="flex-end">
             <Grid container item xs={12} justify="flex-end">
               <Grid item component={Link} to="/">
-                <img src={logo} alt="Logo" className="logo" />
+                <Logo width="107" />
               </Grid>
             </Grid>
             <Grid
@@ -86,13 +86,13 @@ Footer.propTypes = {
   classes: T.object,
   Img: T.elementType.isRequired,
   socialIcons: T.arrayOf(T.object),
-  logo: T.string,
+  Logo: T.element,
 }
 
 Footer.defaultProps = {
   classes: {},
   socialIcons: [],
-  logo: '',
+  Logo: undefined,
 }
 
 export default withStyles(styles, { withTheme: true })(Footer)
