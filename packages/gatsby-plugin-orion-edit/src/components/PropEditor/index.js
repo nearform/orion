@@ -19,9 +19,12 @@ export default function createPropEditor(componentProps) {
   const PropEditor = ({ page, props, onChange }) => {
     const classes = useStyles()
 
-    const handleChange = useCallback((prop, value) => {
-      onChange({ ...props, [prop]: value }, page)
-    }, [onChange, page, props])
+    const handleChange = useCallback(
+      (prop, value) => {
+        onChange({ ...props, [prop]: value }, page)
+      },
+      [onChange, page, props]
+    )
 
     return Object.keys(componentProps).map(componentProp => {
       const { label, options, required, type } = componentProps[componentProp]
@@ -46,7 +49,9 @@ export default function createPropEditor(componentProps) {
           <Input
             value={value}
             required={required}
-            onChange={event => handleChange(componentProp, event.target.value)}
+            onChange={event => {
+              handleChange(componentProp, event.target.value)
+            }}
           />
         )
       }
@@ -57,7 +62,9 @@ export default function createPropEditor(componentProps) {
             type="number"
             value={value}
             required={required}
-            onChange={event => handleChange(componentProp, Number(event.target.value))}
+            onChange={event => {
+              handleChange(componentProp, Number(event.target.value))
+            }}
           />
         )
       }
@@ -66,7 +73,9 @@ export default function createPropEditor(componentProps) {
         input = (
           <MarkdownEditor
             content={value}
-            onChange={value => handleChange(componentProp, value)}
+            onChange={value => {
+              handleChange(componentProp, value)
+            }}
           />
         )
       }

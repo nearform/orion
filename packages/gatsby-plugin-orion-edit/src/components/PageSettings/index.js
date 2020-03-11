@@ -38,7 +38,15 @@ function PageSettings({ open, onCancel, onSave, page }) {
     setTitle(page.title)
 
     onCancel()
-  }, [page, onCancel, setLayout, setPath, setPublished, setShowInMenu, setTitle])
+  }, [
+    page,
+    onCancel,
+    setLayout,
+    setPath,
+    setPublished,
+    setShowInMenu,
+    setTitle,
+  ])
 
   const handleSave = useCallback(() => {
     onSave({
@@ -53,13 +61,14 @@ function PageSettings({ open, onCancel, onSave, page }) {
 
   return (
     <Dialog open={open} onClose={handleCancel}>
-      <DialogTitle>
-        Page settings
-      </DialogTitle>
+      <DialogTitle>Page settings</DialogTitle>
       <DialogContent>
-      <FormControl fullWidth className={classes.input}>
+        <FormControl fullWidth className={classes.input}>
           <InputLabel shrink>Title</InputLabel>
-          <Input value={title} onChange={event => setTitle(event.target.value)} />
+          <Input
+            value={title}
+            onChange={event => setTitle(event.target.value)}
+          />
         </FormControl>
         <FormControl fullWidth className={classes.input}>
           <InputLabel shrink>Path</InputLabel>
@@ -67,23 +76,34 @@ function PageSettings({ open, onCancel, onSave, page }) {
         </FormControl>
         <FormControl fullWidth className={classes.input}>
           <InputLabel shrink>Show in menu</InputLabel>
-          <Select value={showInMenu} onChange={event => setShowInMenu(event.target.value)}>
+          <Select
+            value={showInMenu}
+            onChange={event => setShowInMenu(event.target.value)}
+          >
             <MenuItem value>Yes</MenuItem>
             <MenuItem value={false}>No</MenuItem>
           </Select>
         </FormControl>
         <FormControl fullWidth className={classes.input}>
           <InputLabel shrink>Published</InputLabel>
-          <Select value={published} onChange={event => setPublished(event.target.value)}>
+          <Select
+            value={published}
+            onChange={event => setPublished(event.target.value)}
+          >
             <MenuItem value>Yes</MenuItem>
             <MenuItem value={false}>No</MenuItem>
           </Select>
         </FormControl>
         <FormControl fullWidth className={classes.input}>
           <InputLabel shrink>Layout</InputLabel>
-          <Select value={layout} onChange={event => setLayout(event.target.value)}>
+          <Select
+            value={layout}
+            onChange={event => setLayout(event.target.value)}
+          >
             {Object.entries(layouts).map(([key, { name }]) => (
-              <MenuItem key={key} value={key}>{name}</MenuItem>
+              <MenuItem key={key} value={key}>
+                {name}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
