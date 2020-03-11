@@ -13,6 +13,7 @@ import {
   makeStyles,
 } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
+import clsx from 'clsx'
 import { useEditComponents } from '../EditComponentProvider'
 
 const useStyles = makeStyles(theme => ({
@@ -20,24 +21,24 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     minHeight: 150,
     minWidth: 150,
+    position: 'relative',
     width: '100%',
     '&:hover': {
-      position: 'relative',
       '& $button': {
         display: 'block',
       },
-      '&:after': {
-        backgroundColor: theme.palette.grey['300'],
-        content: '""',
-        opacity: 0.3,
-        pointerEvents: 'none',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-      },
-    }
+    },
+    '&:hover:after, &$empty:after': {
+      backgroundColor: theme.palette.grey['300'],
+      content: '""',
+      opacity: 0.3,
+      pointerEvents: 'none',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+    },
   },
   button: {
     display: 'none',
@@ -45,6 +46,11 @@ const useStyles = makeStyles(theme => ({
     right: theme.spacing(1),
     top: theme.spacing(1),
     zIndex: 1,
+  },
+  empty: {
+    '& $button': {
+      display: 'block',
+    },
   },
   input: {
     marginBottom: theme.spacing(1),
@@ -65,28 +71,44 @@ function EditComponent({ component, onSave, page, props = {} }) {
     setCurrentPage(page)
     setCurrentProps(props)
     setShowSettings(false)
-  }, [component, page, props, setCurrentComponent, setCurrentPage, setCurrentProps])
+  }, [
+    component,
+    page,
+    props,
+    setCurrentComponent,
+    setCurrentPage,
+    setCurrentProps,
+  ])
 
-  const handleComponentChange = useCallback(event => {
-    setCurrentComponent(event.target.value)
-    setCurrentProps({})
-  }, [setCurrentComponent, setCurrentProps])
+  const handleComponentChange = useCallback(
+    event => {
+      setCurrentComponent(event.target.value)
+      setCurrentProps({})
+    },
+    [setCurrentComponent, setCurrentProps]
+  )
 
-  const handleSettingsChange = useCallback((props, page) => {
-    setCurrentPage(page)
-    setCurrentProps(props)
-  }, [setCurrentPage, setCurrentProps])
+  const handleSettingsChange = useCallback(
+    (props, page) => {
+      setCurrentPage(page)
+      setCurrentProps(props)
+    },
+    [setCurrentPage, setCurrentProps]
+  )
 
   const handleSave = useCallback(() => {
     setShowSettings(false)
     onSave(currentComponent, currentProps, currentPage)
   }, [currentComponent, currentPage, currentProps, onSave])
 
-  const handleEditorChange = useCallback((props, page) => {
-    setCurrentPage(page)
-    setCurrentProps(props)
-    onSave(currentComponent, props, page)
-  }, [currentComponent, onSave, setCurrentPage, setCurrentProps])
+  const handleEditorChange = useCallback(
+    (props, page) => {
+      setCurrentPage(page)
+      setCurrentProps(props)
+      onSave(currentComponent, props, page)
+    },
+    [currentComponent, onSave, setCurrentPage, setCurrentProps]
+  )
 
   const config = components[component]
   const currentConfig = components[currentComponent]
@@ -95,7 +117,12 @@ function EditComponent({ component, onSave, page, props = {} }) {
   const PreviewEditor = config ? config.editor : undefined
 
   return (
-    <div className={classes.root}>
+    <div
+      className={clsx(
+        classes.root,
+        PreviewEditor === undefined && classes.empty
+      )}
+    >
       <Fab
         className={classes.button}
         color="primary"
@@ -105,21 +132,14 @@ function EditComponent({ component, onSave, page, props = {} }) {
         <EditIcon />
       </Fab>
       {PreviewEditor !== undefined && (
-        <PreviewEditor
-          {...props}
-          page={page}
-          onChange={handleEditorChange}
-        />
+        <PreviewEditor {...props} page={page} onChange={handleEditorChange} />
       )}
       <Dialog open={showSettings} onClose={handleCancel}>
         <DialogTitle>Component settings</DialogTitle>
         <DialogContent>
           <FormControl fullWidth className={classes.input}>
             <InputLabel shrink>Component</InputLabel>
-            <Select
-              value={currentComponent}
-              onChange={handleComponentChange}
-            >
+            <Select value={currentComponent} onChange={handleComponentChange}>
               {Object.keys(components).map(component => (
                 <MenuItem key={component} value={component}>
                   {component}

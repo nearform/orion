@@ -27,7 +27,7 @@ function reducer(page, { type, ...payload }) {
       return {
         ...page,
         layout: payload.layout,
-        contents: [],
+        contents: payload.contents,
       }
 
     case 'component':
@@ -134,7 +134,7 @@ function EditPage({ initialState, onSave }) {
   }, [data])
 
   const layout = layouts[page.layout]
-  const blocks = layout === undefined ? [] : layout.blocks
+  const blocks = layout === undefined ? {} : layout.blocks
   const EditorLayout = layout === undefined ? undefined : layout.editor
 
   const editLayoutProps = {}
@@ -184,10 +184,30 @@ function EditPage({ initialState, onSave }) {
     onSave(result)
   }, [createPage, onSave, page, updatePage])
 
-  const handleSaveSettings = useCallback(page => {
-    setShowSettings(false)
-    dispatch({ type: 'settings', ...page })
-  }, [dispatch, setShowSettings])
+  const handleLayoutSelect = useCallback(
+    layout => {
+      const { blocks } = layouts[layout]
+
+      dispatch({
+        type: 'layout',
+        layout,
+        contents: Object.entries(blocks).map(([key, block]) => ({
+          block: key,
+          component: block.defaultComponent,
+          props: {},
+        })),
+      })
+    },
+    [layouts, dispatch]
+  )
+
+  const handleSaveSettings = useCallback(
+    page => {
+      setShowSettings(false)
+      dispatch({ type: 'settings', ...page })
+    },
+    [dispatch, setShowSettings]
+  )
 
   const breadcrumbs = useMemo(() => {
     const breadcrumbs = []
@@ -207,21 +227,24 @@ function EditPage({ initialState, onSave }) {
     return breadcrumbs
   }, [page])
 
-  for (const block of blocks) {
-    const content = page.contents.find(content => content.block === block)
+  for (const [key, block] of Object.entries(blocks)) {
+    const content = page.contents.find(content => content.block === key)
 
-    editLayoutProps[block] = (
+    editLayoutProps[key] = (
       <EditComponent
+        block={block}
         component={content === undefined ? undefined : content.component}
         page={page}
         props={content === undefined ? undefined : content.props}
-        onSave={(component, props, page) => dispatch({
-          type: 'component',
-          page,
-          block,
-          component,
-          props,
-        })}
+        onSave={(component, props, page) =>
+          dispatch({
+            type: 'component',
+            block: key,
+            page,
+            component,
+            props,
+          })
+        }
       />
     )
   }
@@ -247,9 +270,7 @@ function EditPage({ initialState, onSave }) {
         onSave={handleSaveSettings}
       />
       {EditorLayout === undefined && (
-        <LayoutSelect
-          onSelect={layout => dispatch({ type: 'layout', layout })}
-        />
+        <LayoutSelect onSelect={handleLayoutSelect} />
       )}
       {EditorLayout !== undefined && (
         <div className={classes.editor}>
