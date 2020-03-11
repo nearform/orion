@@ -55,9 +55,9 @@ function Layout({ children, classes, menu, page }) {
           dropDownIndicatorIcon="fas fa-chevron-down"
           userRole="User"
           menuData={menu}
-          location={page.path}
+          location={location.pathname}
         />
-        {page.layout !== 'home' && (
+        {(page === null || page.layout !== 'home') && (
           <SecondaryAppBar
             action={<SearchInput onSearch={() => {}} />}
             data={parents}
