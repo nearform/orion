@@ -1,9 +1,13 @@
-import React from 'react'
+import Example from '../../assets/layout2.inline.svg'
 import layouts from 'acme-view/src/layouts'
 
 export default {
-  blocks: ['main'],
+  blocks: {
+    main: {
+      defaultComponent: 'ArticleList',
+    },
+  },
   editor: layouts.section,
-  example: React.Fragment,
+  example: Example,
   name: 'Section overview',
 }

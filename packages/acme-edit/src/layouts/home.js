@@ -1,10 +1,25 @@
-import React from 'react'
+import Example from '../../assets/layout1.inline.svg'
 import layouts from 'acme-view/src/layouts'
-import { makeStyles } from '@material-ui/core'
 
 export default {
-  blocks: ['hero', 'one', 'two', 'three', 'four'],
+  blocks: {
+    hero: {
+      defaultComponent: 'Hero',
+    },
+    one: {
+      defaultComponent: 'ArticleList',
+    },
+    two: {
+      defaultComponent: 'ArticleList',
+    },
+    three: {
+      defaultComponent: 'ArticleList',
+    },
+    four: {
+      defaultComponent: 'ArticleList',
+    },
+  },
   editor: layouts.home,
-  example: React.Fragment,
+  example: Example,
   name: 'Home page',
 }

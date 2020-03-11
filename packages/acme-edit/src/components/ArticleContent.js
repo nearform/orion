@@ -1,15 +1,6 @@
 import React from 'react'
-import {
-  Input,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-  makeStyles,
-} from '@material-ui/core'
-import ReactMarkdown from 'react-markdown'
+import { Input, makeStyles } from '@material-ui/core'
+import MarkdownEditor from 'gatsby-plugin-orion-edit/src/components/MarkdownEditor/MarkdownEditor'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
 
 const useStyles = makeStyles(theme => ({
@@ -99,22 +90,6 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const renderers = {
-  heading: ({ level, children }) => (
-    <Typography variant={`h${level}`}>{children}</Typography>
-  ),
-  paragraph: ({ children }) => (
-    <Typography variant="body1">{children}</Typography>
-  ),
-  table: ({ children }) => <Table>{children}</Table>,
-  tableHead: ({ children }) => <TableHead>{children}</TableHead>,
-  tableBody: ({ children }) => <TableBody>{children}</TableBody>,
-  tableRow: ({ children }) => <TableRow>{children}</TableRow>,
-  tableCell: ({ align, children }) => (
-    <TableCell align={align || 'left'}>{children}</TableCell>
-  ),
-}
-
 function ArticleContentEditor({ content, image, onChange, page, subtitle }) {
   const classes = useStyles()
 
@@ -125,7 +100,10 @@ function ArticleContentEditor({ content, image, onChange, page, subtitle }) {
         className={classes.title}
         value={page.title}
         onChange={event => {
-          onChange({ content, image, subtitle }, { ...page, title: event.target.value })
+          onChange(
+            { content, image, subtitle },
+            { ...page, title: event.target.value }
+          )
         }}
       />
       <Input
@@ -138,7 +116,12 @@ function ArticleContentEditor({ content, image, onChange, page, subtitle }) {
       />
       {image && <img alt={page.title} src={image} className={classes.image} />}
       <div className={classes.content}>
-        <ReactMarkdown renderers={renderers} source={content} />
+        <MarkdownEditor
+          content={content}
+          onChange={value => {
+            onChange({ content: value, image, subtitle }, page)
+          }}
+        />
       </div>
     </div>
   )

@@ -1,10 +1,16 @@
-import React from 'react'
+import Example from '../../assets/layout3.inline.svg'
 import layouts from 'acme-view/src/layouts'
-import { makeStyles } from '@material-ui/core'
 
 export default {
-  blocks: ['summary', 'content', 'metadata'],
+  blocks: {
+    metadata: {
+      defaultComponent: 'ArticleMetadata',
+    },
+    content: {
+      defaultComponent: 'ArticleContent',
+    },
+  },
   editor: layouts.article,
-  example: React.Fragment,
+  example: Example,
   name: 'Simple article',
 }

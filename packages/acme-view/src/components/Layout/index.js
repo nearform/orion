@@ -57,7 +57,7 @@ function Layout({ children, classes, menu, page }) {
           menuData={menu}
           location={page.path}
         />
-        {page.path !== '/' && (
+        {page.layout !== 'home' && (
           <SecondaryAppBar
             action={<SearchInput onSearch={() => {}} />}
             data={parents}
