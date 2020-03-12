@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   root: {
+    backgroundColor: '#2f4756',
     display: 'flex',
     height: '100%',
     overflow: 'hidden',
@@ -25,7 +26,6 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
   },
   main: {
-    backgroundColor: '#2f4756',
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
@@ -33,9 +33,9 @@ const useStyles = makeStyles(theme => ({
     zIndex: 1,
   },
   side: {
-    backgroundColor: '#2f4756',
     overflowY: 'scroll',
-    paddingTop: 62,
+    marginBottom: theme.spacing(1),
+    marginTop: 62,
     width: drawerWidth,
     '& > div': {
       width: drawerWidth,
@@ -67,7 +67,7 @@ function Layout({ action, breadcrumbs, children, data, path }) {
   return (
     <div className={classes.root}>
       <div className={classes.side}>
-        <SideBarMenu isFullyExpanded data={data} depthIndent={20} path={path} />
+        <SideBarMenu data={data} depthIndent={20} path={path} />
       </div>
       <div className={classes.main}>
         <div className={classes.top}>

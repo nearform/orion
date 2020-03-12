@@ -83,7 +83,7 @@ function EditPage({ initialState, onSave }) {
 
       const children = []
 
-      if (page.layout !== 'article') {
+      if (layouts[page.layout].allowChildren) {
         children.push({
           label: 'Add page',
           iconClass: 'fas fa-plus',
@@ -102,10 +102,10 @@ function EditPage({ initialState, onSave }) {
         label: page.title,
         to: `/pages/${page.id}/edit`,
         iconClass:
-          children.length === 0
-            ? 'fas fa-long-arrow-alt-right'
-            : page.path === '/'
+          page.path === '/'
             ? 'fas fa-home'
+            : children.length === 0
+            ? 'fas fa-long-arrow-alt-right'
             : 'fas fa-file',
         children: children.length === 0 ? undefined : children,
       }
@@ -122,7 +122,7 @@ function EditPage({ initialState, onSave }) {
         .map(map)
         .sort(sort),
     ]
-  }, [data])
+  }, [data, layouts])
 
   const layout = layouts[page.layout]
   const blocks = layout === undefined ? {} : layout.blocks

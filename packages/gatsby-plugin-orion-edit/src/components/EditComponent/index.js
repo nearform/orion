@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     '&:hover': {
       '& $button': {
-        display: 'block',
+        display: 'flex',
       },
     },
     '&:hover:after, &$empty:after': {
@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   },
   empty: {
     '& $button': {
-      display: 'block',
+      display: 'flex',
     },
   },
   input: {
