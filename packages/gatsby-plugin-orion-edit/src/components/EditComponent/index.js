@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     '&:hover:after, &$empty:after': {
       backgroundColor: theme.palette.grey['300'],
       content: '""',
-      opacity: 0.3,
+      opacity: 0.1,
       pointerEvents: 'none',
       position: 'absolute',
       top: 0,
@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function EditComponent({ component, onSave, page, props = {} }) {
+function EditComponent({ component, isEditing, onSave, page, props = {} }) {
   const classes = useStyles()
   const { components } = useEditComponents()
 
@@ -113,57 +113,72 @@ function EditComponent({ component, onSave, page, props = {} }) {
   const config = components[component]
   const currentConfig = components[currentComponent]
 
-  const SettingsEditor = currentConfig ? currentConfig.settings : undefined
+  const PreviewComponent = config ? config.preview : undefined
   const PreviewEditor = config ? config.editor : undefined
+  const SettingsEditor = currentConfig ? currentConfig.settings : undefined
 
   return (
-    <div
-      className={clsx(
-        classes.root,
-        PreviewEditor === undefined && classes.empty
-      )}
-    >
-      <Fab
-        className={classes.button}
-        color="primary"
-        size="small"
-        onClick={() => setShowSettings(true)}
-      >
-        <EditIcon />
-      </Fab>
-      {PreviewEditor !== undefined && (
-        <PreviewEditor {...props} page={page} onChange={handleEditorChange} />
-      )}
-      <Dialog open={showSettings} onClose={handleCancel}>
-        <DialogTitle>Component settings</DialogTitle>
-        <DialogContent>
-          <FormControl fullWidth className={classes.input}>
-            <InputLabel shrink>Component</InputLabel>
-            <Select value={currentComponent} onChange={handleComponentChange}>
-              {Object.keys(components).map(component => (
-                <MenuItem key={component} value={component}>
-                  {component}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          {SettingsEditor !== undefined && (
-            <SettingsEditor
-              props={currentProps}
-              onChange={handleSettingsChange}
+    <>
+      {isEditing && (
+        <div
+          className={clsx(
+            classes.root,
+            PreviewEditor === undefined && classes.empty
+          )}
+        >
+          <Fab
+            className={classes.button}
+            color="primary"
+            size="small"
+            onClick={() => setShowSettings(true)}
+          >
+            <EditIcon />
+          </Fab>
+          {PreviewEditor !== undefined && (
+            <PreviewEditor
+              {...props}
+              page={page}
+              onChange={handleEditorChange}
             />
           )}
-        </DialogContent>
-        <DialogActions>
-          <Button variant="contained" onClick={handleCancel}>
-            Cancel
-          </Button>
-          <Button variant="contained" color="primary" onClick={handleSave}>
-            Apply
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+          <Dialog open={showSettings} onClose={handleCancel}>
+            <DialogTitle>Component settings</DialogTitle>
+            <DialogContent>
+              <FormControl fullWidth className={classes.input}>
+                <InputLabel shrink>Component</InputLabel>
+                <Select
+                  value={currentComponent}
+                  onChange={handleComponentChange}
+                >
+                  {Object.keys(components).map(component => (
+                    <MenuItem key={component} value={component}>
+                      {component}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              {SettingsEditor !== undefined && (
+                <SettingsEditor
+                  props={currentProps}
+                  onChange={handleSettingsChange}
+                />
+              )}
+            </DialogContent>
+            <DialogActions>
+              <Button variant="contained" onClick={handleCancel}>
+                Cancel
+              </Button>
+              <Button variant="contained" color="primary" onClick={handleSave}>
+                Apply
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      )}
+      {!isEditing && PreviewComponent !== undefined && (
+        <PreviewComponent {...props} page={page} />
+      )}
+    </>
   )
 }
 

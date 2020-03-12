@@ -1,6 +1,7 @@
 import React from 'react'
-import { Input, makeStyles } from '@material-ui/core'
+import ArticleContent from 'acme-view/src/components/ArticleContent/Wrap'
 import MarkdownEditor from 'gatsby-plugin-orion-edit/src/components/MarkdownEditor/MarkdownEditor'
+import { Input, makeStyles } from '@material-ui/core'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
 
 const useStyles = makeStyles(theme => ({
@@ -129,6 +130,7 @@ function ArticleContentEditor({ content, image, onChange, page, subtitle }) {
 
 export default {
   editor: ArticleContentEditor,
+  preview: ArticleContent,
   settings: createPropEditor({
     subtitle: {
       label: 'Subtitle',

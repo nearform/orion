@@ -1,7 +1,8 @@
-import components from 'acme-view/src/components'
+import ListChildren from 'acme-view/src/components/ListChildren'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
 
 export default {
-  editor: components.ListChildren,
+  editor: ListChildren,
+  preview: ListChildren,
   settings: createPropEditor({}),
 }
