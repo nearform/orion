@@ -39,13 +39,14 @@ EditComponentProvider.propTypes = {
   ).isRequired,
   layouts: T.objectOf(
     T.shape({
+      allowChildren: T.bool.isRequired,
       blocks: T.objectOf(
         T.shape({
           defaultComponent: T.string,
         })
       ).isRequired,
       editor: T.elementType.isRequired,
-      example: T.elementType,
+      example: T.elementType.isRequired,
       name: T.string.isRequired,
     })
   ).isRequired,

@@ -2,6 +2,7 @@ import Example from '../assets/layout1.inline.svg'
 import layouts from 'acme-view/src/layouts'
 
 export default {
+  allowChildren: false,
   blocks: {
     hero: {
       defaultComponent: 'Hero',
