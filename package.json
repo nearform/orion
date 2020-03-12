@@ -35,8 +35,8 @@
     "hosted:e2e-test": "npm run e2e-test -- ./hosted.js -- --screenshots-on-fails",
     "ci:e2e-test": "start-server-and-test 'start:apps' http-get://localhost:8000 'npm run e2e-test ./local.js'",
     "ci:version": "lerna version --conventional-commits --yes --message \"$(echo \"chore(release): %s\\n\\n[skip ci]\")\"",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "start-storybook -s .storybook/public -p 6006",
+    "build-storybook": "build-storybook -s .storybook/public"
   },
   "repository": {
     "type": "git",
