@@ -17,5 +17,8 @@
     "graphql-request": "^1.8.2",
     "hasura-cli": "^1.1.0"
   },
-  "xo": false
+  "xo": false,
+  "dependencies": {
+    "env-cmd": "^10.1.0"
+  }
 }

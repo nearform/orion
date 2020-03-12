@@ -23,6 +23,7 @@ const secondaryAppBar = require('./custom/secondary-app-bar')
 const form = require('./custom/form')
 const articleStatusChip = require('./custom/article-status-chip')
 const articleList = require('./custom/article-list')
+const seoMetadata = require('./custom/seo-metadata')
 
 exports.muiTheme = {
   overrides: {
@@ -48,6 +49,7 @@ exports.muiTheme = {
   form,
   articleStatusChip,
   articleList,
+  seoMetadata,
 }
 
 exports.googleFonts = ['Titillium Web:400,700,900']
