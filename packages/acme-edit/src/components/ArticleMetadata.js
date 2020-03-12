@@ -1,8 +1,9 @@
-import components from 'acme-view/src/components'
+import ArticleMetadata from 'acme-view/src/components/ArticleMetadata/Wrap'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
 
 export default {
-  editor: components.ArticleMetadata,
+  editor: ArticleMetadata,
+  preview: ArticleMetadata,
   settings: createPropEditor({
     readTime: {
       label: 'Read time',

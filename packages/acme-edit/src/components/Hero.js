@@ -1,8 +1,9 @@
-import components from 'acme-view/src/components'
+import Hero from 'acme-view/src/components/Hero/Wrap'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
 
 export default {
-  editor: components.Hero,
+  editor: Hero,
+  preview: Hero,
   settings: createPropEditor({
     image: {
       label: 'Image',

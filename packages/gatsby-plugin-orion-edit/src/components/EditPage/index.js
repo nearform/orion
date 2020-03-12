@@ -7,7 +7,6 @@ import EditComponent from '../EditComponent'
 import Layout from '../Layout'
 import LayoutSelect from '../LayoutSelect'
 import PageSettings from '../PageSettings'
-import { makeStyles } from '@material-ui/core'
 import { useEditComponents } from '../EditComponentProvider'
 import { useLocation } from '@reach/router'
 import { useMutation, useQuery } from 'graphql-hooks'
@@ -49,23 +48,15 @@ function reducer(page, { type, ...payload }) {
   }
 }
 
-const useStyles = makeStyles(theme => ({
-  editor: {
-    boxShadow: theme.shadows[5],
-    margin: theme.spacing(3),
-    marginTop: 86,
-  },
-}))
-
 function EditPage({ initialState, onSave }) {
   const { layouts, wrapper: Wrapper } = useEditComponents()
   const [page, dispatch] = useReducer(reducer, initialState)
   const [createPage] = useMutation(createPageMutation)
   const [updatePage] = useMutation(updatePageMutation)
+  const [isEditing, setIsEditing] = useState(true)
   const [showSettings, setShowSettings] = useState(false)
   const { data } = useQuery(getPagesQuery)
   const location = useLocation()
-  const classes = useStyles()
 
   const pages = useMemo(() => {
     if (!data) {
@@ -234,6 +225,7 @@ function EditPage({ initialState, onSave }) {
       <EditComponent
         block={block}
         component={content === undefined ? undefined : content.component}
+        isEditing={isEditing}
         page={page}
         props={content === undefined ? undefined : content.props}
         onSave={(component, props, page) =>
@@ -251,6 +243,9 @@ function EditPage({ initialState, onSave }) {
 
   const actions = (
     <ArticleEditButtons
+      isEditing={isEditing}
+      onEdit={() => setIsEditing(true)}
+      onPreview={() => setIsEditing(false)}
       onSave={handleSave}
       onSettings={() => setShowSettings(true)}
     />
@@ -273,11 +268,9 @@ function EditPage({ initialState, onSave }) {
         <LayoutSelect onSelect={handleLayoutSelect} />
       )}
       {EditorLayout !== undefined && (
-        <div className={classes.editor}>
-          <Wrapper page={page}>
-            <EditorLayout {...editLayoutProps} />
-          </Wrapper>
-        </div>
+        <Wrapper page={page}>
+          <EditorLayout {...editLayoutProps} />
+        </Wrapper>
       )}
     </Layout>
   )

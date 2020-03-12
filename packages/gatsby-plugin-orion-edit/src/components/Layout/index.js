@@ -1,38 +1,41 @@
 import React from 'react'
 import BreadcrumbNavigation from 'gatsby-plugin-orion-core/src/components/BreadcrumbNavigation'
 import SideBarMenu from 'gatsby-plugin-orion-core/src/components/SideBarMenu'
-import { withStyles } from '@material-ui/core'
-
-function Layout({ action, breadcrumbs, children, classes, data, path }) {
-  return (
-    <div className={classes.root}>
-      <SideBarMenu
-        isFullyExpanded
-        data={data}
-        depthIndent={20}
-        path={path}
-        variant="permanent"
-        className={classes.drawer}
-      />
-      <div className={classes.content}>
-        <div className={classes.menu}>
-          <BreadcrumbNavigation data={breadcrumbs} />
-          <div>{action}</div>
-        </div>
-        <div>{children}</div>
-      </div>
-    </div>
-  )
-}
+import { makeStyles } from '@material-ui/core'
 
 const drawerWidth = 318
 
-const styles = theme => ({
-  content: {
-    marginLeft: drawerWidth,
-    marginTop: 62,
+const useStyles = makeStyles(theme => ({
+  '@global': {
+    body: {
+      overflowY: 'hidden',
+    },
   },
-  drawer: {
+  root: {
+    display: 'flex',
+    height: '100%',
+    overflow: 'hidden',
+  },
+  content: {
+    backgroundColor: theme.palette.common.white,
+    boxShadow: theme.shadows[3],
+    flex: 1,
+    margin: theme.spacing(0, 1, 1, 0),
+    overflowY: 'scroll',
+    position: 'relative',
+  },
+  main: {
+    backgroundColor: '#2f4756',
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    marginLeft: -17,
+    zIndex: 1,
+  },
+  side: {
+    backgroundColor: '#2f4756',
+    overflowY: 'scroll',
+    paddingTop: 62,
     width: drawerWidth,
     '& > div': {
       width: drawerWidth,
@@ -42,27 +45,39 @@ const styles = theme => ({
       padding: 0,
     },
   },
-  menu: {
+  top: {
     alignItems: 'center',
-    backgroundColor: theme.palette.background.dark,
-    boxShadow: theme.shadows[2],
     display: 'flex',
     justifyContent: 'space-between',
-    left: drawerWidth,
     padding: '16px 32px',
-    position: 'fixed',
-    top: 0,
-    width: `calc(100% - ${drawerWidth}px)`,
-    zIndex: theme.zIndex.appBar,
     '& a': {
       ...theme.typography.h5,
-      color: theme.palette.action.main,
+      color: theme.palette.common.white,
       fontSize: '16px',
     },
     '& svg': {
       color: theme.palette.tertiary.main,
     },
   },
-})
+}))
 
-export default withStyles(styles)(Layout)
+function Layout({ action, breadcrumbs, children, data, path }) {
+  const classes = useStyles()
+
+  return (
+    <div className={classes.root}>
+      <div className={classes.side}>
+        <SideBarMenu isFullyExpanded data={data} depthIndent={20} path={path} />
+      </div>
+      <div className={classes.main}>
+        <div className={classes.top}>
+          <BreadcrumbNavigation data={breadcrumbs} />
+          <div>{action}</div>
+        </div>
+        <div className={classes.content}>{children}</div>
+      </div>
+    </div>
+  )
+}
+
+export default Layout

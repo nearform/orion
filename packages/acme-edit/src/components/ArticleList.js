@@ -1,8 +1,9 @@
-import components from 'acme-view/src/components'
+import ArticleList from 'acme-view/src/components/ArticleList'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
 
 export default {
-  editor: components.ArticleList,
+  editor: ArticleList,
+  preview: ArticleList,
   settings: createPropEditor({
     title: {
       label: 'Title',
