@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.28.0](https://github.com/nearform/orion/compare/v2.27.1...v2.28.0) (2020-03-13)
+
+
+### Features
+
+* 🎸 improved editor experience ([f07c44b](https://github.com/nearform/orion/commit/f07c44bc4922f0c2a17cccb079b806ea4619e03e))
+
+
+
+
+
 ## [2.27.1](https://github.com/nearform/orion/compare/v2.27.0...v2.27.1) (2020-03-11)
 
 **Note:** Version bump only for package acme-view
