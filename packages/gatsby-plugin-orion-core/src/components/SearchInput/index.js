@@ -130,7 +130,7 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: fade(theme.palette.action.main, 0.8),
     },
   },
-}))
+})
 
 function SearchInput({
   onSearch,
