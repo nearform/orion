@@ -4,42 +4,40 @@ import { Button, Grid } from '@material-ui/core'
 
 const ArticleEditButtons = ({
   isEditing,
-  toggleEdit,
+  onEdit,
+  onPreview,
   onSave,
-  onPublish,
-  publishDisabled,
-  ...props
+  onSettings,
 }) => (
-  <Grid container spacing={2} {...props}>
+  <Grid container spacing={2}>
     <Grid item>
-      <Button variant="contained" color="secondary" onClick={toggleEdit}>
-        {isEditing ? 'Preview' : 'Edit'}
-      </Button>
-    </Grid>
-    <Grid item>
-      <Button variant="contained" color="secondary" onClick={onSave}>
-        Save
+      <Button variant="contained" color="secondary" onClick={onSettings}>
+        Page settings
       </Button>
     </Grid>
     <Grid item>
       <Button
         variant="contained"
-        color="primary"
-        disabled={publishDisabled}
-        onClick={onPublish}
+        color="secondary"
+        onClick={() => (isEditing ? onPreview() : onEdit())}
       >
-        Publish
+        {isEditing ? 'Preview' : 'Edit'}
+      </Button>
+    </Grid>
+    <Grid item>
+      <Button variant="contained" color="primary" onClick={onSave}>
+        Save
       </Button>
     </Grid>
   </Grid>
 )
 
 ArticleEditButtons.propTypes = {
-  publishDisabled: T.bool,
-  isEditing: T.bool,
-  toggleEdit: T.func,
+  isEditing: T.bool.isRequired,
+  onEdit: T.func,
+  onPreview: T.func,
   onSave: T.func,
-  onPublish: T.func,
+  onSettings: T.func,
 }
 
 export default ArticleEditButtons

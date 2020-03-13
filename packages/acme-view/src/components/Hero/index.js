@@ -12,11 +12,10 @@ const useStyles = makeStyles(theme => {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         backgroundColor: theme.palette.primary.main,
-        maxWidth: '1440px',
         margin: '0 auto',
         '& > .MuiGrid-item': {
           flex: 1,
-          padding: '24vh 0',
+          padding: '12vh 0',
         },
         '& > .MuiGrid-item > .MuiGrid-item': {
           maxWidth: '40%',
@@ -43,8 +42,9 @@ const useStyles = makeStyles(theme => {
   }
 })
 
-const Hero = ({ imageSrc }) => {
+const Hero = ({ imageSrc, onSearch, subtitle, title }) => {
   const classes = useStyles({ imageSrc })
+
   return (
     <Grid
       container
@@ -63,15 +63,14 @@ const Hero = ({ imageSrc }) => {
         >
           <Grid item>
             <Typography gutterBottom variant="h1" color="secondary">
-              Accelerating the insurance industry
+              {title}
             </Typography>
             <Typography gutterBottom variant="h3" color="secondary">
-              The new accelerator for insurance from the team who brought you
-              Orion
+              {subtitle}
             </Typography>
           </Grid>
           <Grid item>
-            <SearchBar placeholderText="Search Acme" />
+            <SearchBar placeholderText="Search Acme" onSearch={onSearch} />
           </Grid>
         </Grid>
       </Grid>

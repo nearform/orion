@@ -22,6 +22,7 @@ export default function({ id }) {
         {
           ancestor: {
             id,
+            path: data.orion_page[0].path,
             title: data.orion_page[0].title,
           },
         },
@@ -34,6 +35,7 @@ export default function({ id }) {
         },
       ],
       contents: [],
+      descendants: [],
       show_in_menu: true, // eslint-disable-line camelcase
     }
   }, [data, id, loading])

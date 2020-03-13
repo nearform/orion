@@ -4,8 +4,8 @@ import Footer from 'gatsby-plugin-orion-core/src/components/Footer'
 import AcmeAppBar from '../AcmeAppBar'
 import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
 import SecondaryAppBar from 'gatsby-plugin-orion-view/src/components/SecondaryAppBar'
-import { withStyles } from '@material-ui/core'
 import { useLocation } from '@reach/router'
+import { withStyles } from '@material-ui/core'
 
 import facebook from 'gatsby-plugin-orion-core/src/assets/social/logo-fb.svg'
 import youtube from 'gatsby-plugin-orion-core/src/assets/social/logo-youtube.svg'
@@ -60,7 +60,7 @@ function Layout({ children, classes, menu, page }) {
           menuData={menu}
           location={location.pathname}
         />
-        {location.pathname !== '/' && (
+        {(!page || page.layout !== 'home') && (
           <SecondaryAppBar
             action={<SearchInput onSearch={() => {}} />}
             data={parents}

@@ -1,85 +1,46 @@
-import React, { useMemo, useReducer, useState } from 'react'
+import React, { useCallback, useMemo, useReducer, useState } from 'react'
 import createPageMutation from '../../queries/create-page'
 import getPagesQuery from '../../queries/get-pages'
 import updatePageMutation from '../../queries/update-page'
 import ArticleEditButtons from '../ArticleEditButtons'
+import EditComponent from '../EditComponent'
 import Layout from '../Layout'
 import LayoutSelect from '../LayoutSelect'
-import {
-  Divider,
-  FormControl,
-  Input,
-  InputLabel,
-  MenuItem,
-  Select,
-  makeStyles,
-} from '@material-ui/core'
+import PageSettings from '../PageSettings'
 import { useEditComponents } from '../EditComponentProvider'
 import { useLocation } from '@reach/router'
 import { useMutation, useQuery } from 'graphql-hooks'
 
-function reducer(page, action) {
-  switch (action.type) {
+function reducer(page, { type, ...payload }) {
+  switch (type) {
     case 'load':
-      return action.page
+      return payload.page
 
-    case 'title':
+    case 'settings':
       return {
         ...page,
-        title: action.title,
-      }
-
-    case 'path':
-      return {
-        ...page,
-        path: action.path,
+        ...payload,
       }
 
     case 'layout':
       return {
         ...page,
-        layout: action.layout,
-        contents: [],
-      }
-
-    case 'publish':
-      return {
-        ...page,
-        published: new Date(),
-      }
-
-    case 'show_in_menu':
-      return {
-        ...page,
-        show_in_menu: action.value, // eslint-disable-line camelcase
+        layout: payload.layout,
+        contents: payload.contents,
       }
 
     case 'component':
       return {
         ...page,
+        ...payload.page,
         contents: [
-          ...page.contents.filter(content => content.block !== action.block),
+          ...page.contents.filter(content => content.block !== payload.block),
           {
-            block: action.block,
-            component: action.component,
-            props: {},
+            block: payload.block,
+            component: payload.component,
+            props: payload.props,
           },
         ],
-      }
-
-    case 'props':
-      return {
-        ...page,
-        contents: page.contents.map(content => {
-          if (content.block === action.block) {
-            return {
-              ...content,
-              props: action.props,
-            }
-          }
-
-          return content
-        }),
       }
 
     default:
@@ -87,24 +48,15 @@ function reducer(page, action) {
   }
 }
 
-const useStyles = makeStyles(theme => ({
-  divider: {
-    margin: theme.spacing(3, 2, 4),
-  },
-  input: {
-    marginBottom: theme.spacing(1),
-  },
-}))
-
 function EditPage({ initialState, onSave }) {
-  const { components, layouts, PreviewWrapper } = useEditComponents()
+  const { layouts, wrapper: Wrapper } = useEditComponents()
   const [page, dispatch] = useReducer(reducer, initialState)
   const [createPage] = useMutation(createPageMutation)
   const [updatePage] = useMutation(updatePageMutation)
-  const [preview, setPreview] = useState(false)
+  const [isEditing, setIsEditing] = useState(true)
+  const [showSettings, setShowSettings] = useState(false)
   const { data } = useQuery(getPagesQuery)
   const location = useLocation()
-  const classes = useStyles()
 
   const pages = useMemo(() => {
     if (!data) {
@@ -131,7 +83,7 @@ function EditPage({ initialState, onSave }) {
 
       const children = []
 
-      if (page.layout !== 'article') {
+      if (layouts[page.layout].allowChildren) {
         children.push({
           label: 'Add page',
           iconClass: 'fas fa-plus',
@@ -150,10 +102,10 @@ function EditPage({ initialState, onSave }) {
         label: page.title,
         to: `/pages/${page.id}/edit`,
         iconClass:
-          children.length === 0
-            ? 'fas fa-long-arrow-alt-right'
-            : page.path === '/'
+          page.path === '/'
             ? 'fas fa-home'
+            : children.length === 0
+            ? 'fas fa-long-arrow-alt-right'
             : 'fas fa-file',
         children: children.length === 0 ? undefined : children,
       }
@@ -170,19 +122,15 @@ function EditPage({ initialState, onSave }) {
         .map(map)
         .sort(sort),
     ]
-  }, [data])
+  }, [data, layouts])
 
   const layout = layouts[page.layout]
-  const blocks = layout === undefined ? [] : layout.blocks
+  const blocks = layout === undefined ? {} : layout.blocks
   const EditorLayout = layout === undefined ? undefined : layout.editor
-  const PreviewLayout = layout === undefined ? undefined : layout.preview
 
   const editLayoutProps = {}
-  const previewLayoutProps = {}
 
-  const handleSave = async (publish = false) => {
-    const published = publish ? new Date().toISOString() : page.published
-
+  const handleSave = useCallback(async () => {
     let result
 
     if (page.id) {
@@ -191,7 +139,7 @@ function EditPage({ initialState, onSave }) {
           id: page.id,
           layout: page.layout,
           path: page.path,
-          published,
+          published: page.published,
           showInMenu: page.show_in_menu,
           title: page.title,
           contents: page.contents.map(content => ({
@@ -207,7 +155,7 @@ function EditPage({ initialState, onSave }) {
         variables: {
           layout: page.layout,
           path: page.path,
-          published,
+          published: page.published,
           showInMenu: page.show_in_menu,
           title: page.title,
           contents: page.contents,
@@ -225,11 +173,32 @@ function EditPage({ initialState, onSave }) {
     }
 
     onSave(result)
-  }
+  }, [createPage, onSave, page, updatePage])
 
-  const handlePublish = () => {
-    handleSave(true)
-  }
+  const handleLayoutSelect = useCallback(
+    layout => {
+      const { blocks } = layouts[layout]
+
+      dispatch({
+        type: 'layout',
+        layout,
+        contents: Object.entries(blocks).map(([key, block]) => ({
+          block: key,
+          component: block.defaultComponent,
+          props: {},
+        })),
+      })
+    },
+    [layouts, dispatch]
+  )
+
+  const handleSaveSettings = useCallback(
+    page => {
+      setShowSettings(false)
+      dispatch({ type: 'settings', ...page })
+    },
+    [dispatch, setShowSettings]
+  )
 
   const breadcrumbs = useMemo(() => {
     const breadcrumbs = []
@@ -249,65 +218,36 @@ function EditPage({ initialState, onSave }) {
     return breadcrumbs
   }, [page])
 
-  for (const block of blocks) {
-    const content = page.contents.find(content => content.block === block)
+  for (const [key, block] of Object.entries(blocks)) {
+    const content = page.contents.find(content => content.block === key)
 
-    let editor = null
-
-    if (content) {
-      const { editor: Editor, preview: Component } = components[
-        content.component
-      ]
-
-      previewLayoutProps[block] = <Component {...content.props} page={page} />
-
-      editor = (
-        <Editor
-          props={content.props}
-          onChange={props =>
-            dispatch({
-              type: 'props',
-              block,
-              props,
-            })
-          }
-        />
-      )
-    }
-
-    editLayoutProps[block] = (
-      <div key={block}>
-        <FormControl fullWidth className={classes.input}>
-          <InputLabel shrink>Component</InputLabel>
-          <Select
-            value={content === undefined ? '' : content.component}
-            onChange={event =>
-              dispatch({
-                type: 'component',
-                block,
-                component: event.target.value,
-              })
-            }
-          >
-            {Object.keys(components).map(component => (
-              <MenuItem key={component} value={component}>
-                {component}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        {editor}
-      </div>
+    editLayoutProps[key] = (
+      <EditComponent
+        block={block}
+        component={content === undefined ? undefined : content.component}
+        isEditing={isEditing}
+        page={page}
+        props={content === undefined ? undefined : content.props}
+        onSave={(component, props, page) =>
+          dispatch({
+            type: 'component',
+            block: key,
+            page,
+            component,
+            props,
+          })
+        }
+      />
     )
   }
 
   const actions = (
     <ArticleEditButtons
-      isEditing={!preview}
-      publishDisabled={Boolean(page.published)}
-      toggleEdit={() => setPreview(!preview)}
-      onPublish={handlePublish}
+      isEditing={isEditing}
+      onEdit={() => setIsEditing(true)}
+      onPreview={() => setIsEditing(false)}
       onSave={handleSave}
+      onSettings={() => setShowSettings(true)}
     />
   )
 
@@ -318,54 +258,19 @@ function EditPage({ initialState, onSave }) {
       data={pages}
       path={location.pathname}
     >
-      {preview && PreviewLayout !== undefined && (
-        <PreviewWrapper props={{ pageContext: { page } }}>
-          <PreviewLayout page={page} {...previewLayoutProps} />
-        </PreviewWrapper>
+      <PageSettings
+        open={showSettings}
+        page={page}
+        onCancel={() => setShowSettings(false)}
+        onSave={handleSaveSettings}
+      />
+      {EditorLayout === undefined && (
+        <LayoutSelect onSelect={handleLayoutSelect} />
       )}
-      {!preview && EditorLayout === undefined && (
-        <LayoutSelect
-          onSelect={layout => dispatch({ type: 'layout', layout })}
-        />
-      )}
-      {!preview && EditorLayout !== undefined && (
-        <>
-          <FormControl fullWidth className={classes.input}>
-            <InputLabel shrink>Title</InputLabel>
-            <Input
-              value={page.title}
-              onChange={event =>
-                dispatch({ type: 'title', title: event.target.value })
-              }
-            />
-          </FormControl>
-          <FormControl fullWidth className={classes.input}>
-            <InputLabel shrink>Path</InputLabel>
-            <Input
-              value={page.path}
-              onChange={event =>
-                dispatch({ type: 'path', path: event.target.value })
-              }
-            />
-          </FormControl>
-          <FormControl fullWidth className={classes.input}>
-            <InputLabel shrink>Show in menu</InputLabel>
-            <Select
-              value={page.show_in_menu}
-              onChange={event =>
-                dispatch({
-                  type: 'show_in_menu',
-                  value: event.target.value,
-                })
-              }
-            >
-              <MenuItem value>Yes</MenuItem>
-              <MenuItem value={false}>No</MenuItem>
-            </Select>
-          </FormControl>
-          <Divider variant="middle" className={classes.divider} />
-          {EditorLayout !== undefined && <EditorLayout {...editLayoutProps} />}
-        </>
+      {EditorLayout !== undefined && (
+        <Wrapper page={page}>
+          <EditorLayout {...editLayoutProps} />
+        </Wrapper>
       )}
     </Layout>
   )

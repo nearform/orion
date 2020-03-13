@@ -15,6 +15,7 @@ export default function() {
       },
     ],
     contents: [],
+    descendants: [],
     show_in_menu: true, // eslint-disable-line camelcase
   }
 
