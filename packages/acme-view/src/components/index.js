@@ -1,7 +1,7 @@
 import ArticleContent from './ArticleContent/Wrap'
 import ArticleList from './ArticleList'
 import ArticleMetadata from './ArticleMetadata/Wrap'
-import Hero from './Hero'
+import Hero from './Hero/Wrap'
 import ListChildren from './ListChildren'
 
 export default {

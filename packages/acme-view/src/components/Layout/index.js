@@ -4,14 +4,14 @@ import Footer from 'gatsby-plugin-orion-core/src/components/Footer'
 import AcmeAppBar from '../AcmeAppBar'
 import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
 import SecondaryAppBar from 'gatsby-plugin-orion-view/src/components/SecondaryAppBar'
-import { withStyles } from '@material-ui/core'
 import { useLocation } from '@reach/router'
+import { withStyles } from '@material-ui/core'
 
 import facebook from 'gatsby-plugin-orion-core/src/assets/social/logo-fb.svg'
 import youtube from 'gatsby-plugin-orion-core/src/assets/social/logo-youtube.svg'
 import twitter from 'gatsby-plugin-orion-core/src/assets/social/logo-twitter.svg'
 import linkedin from 'gatsby-plugin-orion-core/src/assets/social/logo-linkedin.svg'
-import logo from 'gatsby-plugin-orion-core/src/assets/logo.svg'
+import Logo from 'gatsby-plugin-orion-core/src/assets/logo.inline.svg'
 
 const socialIcons = [
   {
@@ -53,14 +53,14 @@ function Layout({ children, classes, menu, page }) {
       <header>
         <AcmeAppBar
           brandTo="/"
-          logo={logo}
+          Logo={Logo}
           childIndicatorIcon="fas fa-chevron-right"
           dropDownIndicatorIcon="fas fa-chevron-down"
           userRole="User"
           menuData={menu}
           location={location.pathname}
         />
-        {location.pathname !== '/' && (
+        {(!page || page.layout !== 'home') && (
           <SecondaryAppBar
             action={<SearchInput onSearch={() => {}} />}
             data={parents}
@@ -69,7 +69,7 @@ function Layout({ children, classes, menu, page }) {
       </header>
       <main>{children}</main>
       <footer>
-        <Footer socialIcons={socialIcons} logo={logo} Img={Img} />
+        <Footer socialIcons={socialIcons} Logo={Logo} Img={Img} />
       </footer>
     </div>
   )

@@ -4,22 +4,22 @@ import T from 'prop-types'
 const EditComponentContext = createContext({
   components: {},
   layouts: {},
-  PreviewWrapper: React.Fragment,
+  wrapper: React.Fragment,
 })
 
 function EditComponentProvider({
   children,
   components = {},
   layouts = {},
-  PreviewWrapper = React.Fragment,
+  wrapper = React.Fragment,
 }) {
   const value = useMemo(
     () => ({
       components,
       layouts,
-      PreviewWrapper,
+      wrapper,
     }),
-    [components, layouts, PreviewWrapper]
+    [components, layouts, wrapper]
   )
 
   return (
@@ -33,17 +33,24 @@ EditComponentProvider.propTypes = {
   children: T.node.isRequired,
   components: T.objectOf(
     T.shape({
-      blocks: T.arrayOf(T.string.isRequired).isRequired,
-      preview: T.elementType,
+      editor: T.elementType.isRequired,
+      settings: T.elementType.isRequired,
     })
   ).isRequired,
   layouts: T.objectOf(
     T.shape({
+      allowChildren: T.bool.isRequired,
+      blocks: T.objectOf(
+        T.shape({
+          defaultComponent: T.string,
+        })
+      ).isRequired,
       editor: T.elementType.isRequired,
-      preview: T.elementType,
+      example: T.elementType.isRequired,
+      name: T.string.isRequired,
     })
   ).isRequired,
-  PreviewWrapper: T.elementType,
+  wrapper: T.elementType,
 }
 
 export function useEditComponents() {

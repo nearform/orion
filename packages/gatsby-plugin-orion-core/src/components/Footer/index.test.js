@@ -26,6 +26,7 @@ test('Renders social media icon links', async () => {
   const { getByTestId } = render(
     <Footer
       socialIcons={socialIcons}
+      Logo={() => <div />}
       Img={({ ...props }) => <img {...props} />}
     />
   )

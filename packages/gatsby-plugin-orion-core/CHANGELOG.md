@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.28.0](https://github.com/nearform/orion/compare/v2.27.1...v2.28.0) (2020-03-13)
+
+
+### Features
+
+* 🎸 new layout, preview mode ([9657bcf](https://github.com/nearform/orion/commit/9657bcfb80fc4e55fc9589c7425b59d091f050ef))
+
+
+
+
+
+## [2.27.1](https://github.com/nearform/orion/compare/v2.27.0...v2.27.1) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-orion-core
+
+
+
+
+
+# [2.27.0](https://github.com/nearform/orion/compare/v2.26.0...v2.27.0) (2020-03-10)
+
+
+### Bug Fixes
+
+* 🐛 use reach router links in footer ([169c456](https://github.com/nearform/orion/commit/169c456a45fcfa66aa2da4201fce67e28931ca95))
+
+
+
+
+
 # [2.26.0](https://github.com/nearform/orion/compare/v2.25.0...v2.26.0) (2020-03-10)
 
 

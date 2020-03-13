@@ -4,6 +4,12 @@ import { Button, Typography, makeStyles } from '@material-ui/core'
 import { useEditComponents } from '../EditComponentProvider'
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(4),
+  },
+  p: {
+    padding: theme.spacing(2, 0, 4),
+  },
   layouts: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -19,9 +25,6 @@ const useStyles = makeStyles(theme => ({
   },
   example: {
     boxShadow: theme.shadows[2],
-    width: 128,
-    height: 150,
-    overflow: 'hidden',
   },
   name: {
     color: theme.palette.primary.main,
@@ -35,9 +38,9 @@ function LayoutSelect({ onSelect }) {
   const classes = useStyles()
 
   return (
-    <div>
+    <div className={classes.root}>
       <Typography variant="h2">Choose layout</Typography>
-      <Typography variant="body1">
+      <Typography variant="body1" className={classes.p}>
         Before we get started on adding some content, lets select a layout for
         our new page.
       </Typography>
@@ -47,9 +50,7 @@ function LayoutSelect({ onSelect }) {
 
           return (
             <div key={key} className={classes.layout}>
-              <div className={classes.example}>
-                <Example />
-              </div>
+              <Example className={classes.example} />
               <div className={classes.name}>{layout.name}</div>
               <Button
                 variant="contained"

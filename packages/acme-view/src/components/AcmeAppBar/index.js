@@ -7,7 +7,7 @@ import getMenuQuery from '../../queries/get-nested-menu.graphql'
 
 export default function AcmeAppBar({
   brandTo,
-  logo,
+  Logo,
   childIndicatorIcon,
   dropDownIndicatorIcon,
   userRole,
@@ -58,7 +58,7 @@ export default function AcmeAppBar({
   return (
     <AppBar
       brandTo={brandTo}
-      logo={logo}
+      Logo={Logo}
       childIndicatorIcon={childIndicatorIcon}
       dropDownIndicatorIcon={dropDownIndicatorIcon}
       userRole={userRole}

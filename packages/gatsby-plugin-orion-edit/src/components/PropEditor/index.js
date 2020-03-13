@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import MarkdownEditor from '../MarkdownEditor/MarkdownEditor'
 import {
   FormControl,
   Input,
@@ -15,11 +16,18 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function createPropEditor(componentProps) {
-  const PropEditor = ({ props, onChange }) => {
+  const PropEditor = ({ page, props, onChange }) => {
     const classes = useStyles()
 
+    const handleChange = useCallback(
+      (prop, value) => {
+        onChange({ ...props, [prop]: value }, page)
+      },
+      [onChange, page, props]
+    )
+
     return Object.keys(componentProps).map(componentProp => {
-      const { required, type } = componentProps[componentProp]
+      const { label, options, required, type } = componentProps[componentProp]
       const value = props[componentProp]
 
       let input = null
@@ -28,12 +36,7 @@ export default function createPropEditor(componentProps) {
         input = (
           <Select
             value={value}
-            onChange={event =>
-              onChange({
-                ...props,
-                [componentProp]: event.target.value,
-              })
-            }
+            onChange={event => handleChange(componentProp, event.target.value)}
           >
             <MenuItem value>Yes</MenuItem>
             <MenuItem value={false}>No</MenuItem>
@@ -44,16 +47,11 @@ export default function createPropEditor(componentProps) {
       if (type === 'string') {
         input = (
           <Input
-            multiline
-            rowsMax={5}
             value={value}
             required={required}
-            onChange={event =>
-              onChange({
-                ...props,
-                [componentProp]: event.target.value,
-              })
-            }
+            onChange={event => {
+              handleChange(componentProp, event.target.value)
+            }}
           />
         )
       }
@@ -64,20 +62,43 @@ export default function createPropEditor(componentProps) {
             type="number"
             value={value}
             required={required}
-            onChange={event =>
-              onChange({
-                ...props,
-                [componentProp]: Number(event.target.value),
-              })
-            }
+            onChange={event => {
+              handleChange(componentProp, Number(event.target.value))
+            }}
           />
+        )
+      }
+
+      if (type === 'markdown') {
+        input = (
+          <MarkdownEditor
+            content={value}
+            onChange={value => {
+              handleChange(componentProp, value)
+            }}
+          />
+        )
+      }
+
+      if (type === 'select') {
+        input = (
+          <Select
+            value={value}
+            onChange={event => handleChange(componentProp, event.target.value)}
+          >
+            {options.map(option => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
         )
       }
 
       return (
         <div key={componentProp}>
           <FormControl fullWidth className={classes.input}>
-            <InputLabel shrink>{componentProp}</InputLabel>
+            <InputLabel shrink>{label || componentProp}</InputLabel>
             {input}
           </FormControl>
         </div>

@@ -1,64 +1,13 @@
-import components from 'acme-view/src/components'
-import { createPropEditor } from 'gatsby-plugin-orion-edit'
+import ArticleContent from './ArticleContent'
+import ArticleList from './ArticleList'
+import ArticleMetadata from './ArticleMetadata'
+import Hero from './Hero'
+import ListChildren from './ListChildren'
 
 export default {
-  ArticleContent: {
-    editor: createPropEditor({
-      image: {
-        required: false,
-        type: 'string',
-      },
-      content: {
-        required: true,
-        type: 'string',
-      },
-    }),
-    preview: components.ArticleContent,
-  },
-  ArticleList: {
-    editor: createPropEditor({
-      title: {
-        required: false,
-        type: 'string',
-      },
-      type: {
-        required: true,
-        type: 'string',
-      },
-      clipImage: {
-        required: true,
-        type: 'boolean',
-      },
-      suppressImage: {
-        required: true,
-        type: 'boolean',
-      },
-      suppressSummary: {
-        required: true,
-        type: 'boolean',
-      },
-      withFeatured: {
-        required: true,
-        type: 'boolean',
-      },
-    }),
-    preview: components.ArticleList,
-  },
-  ArticleMetadata: {
-    editor: createPropEditor({
-      readTime: {
-        required: true,
-        type: 'number',
-      },
-    }),
-    preview: components.ArticleMetadata,
-  },
-  Hero: {
-    editor: createPropEditor({}),
-    preview: components.Hero,
-  },
-  ListChildren: {
-    editor: createPropEditor({}),
-    preview: components.ListChildren,
-  },
+  ArticleContent,
+  ArticleList,
+  ArticleMetadata,
+  Hero,
+  ListChildren,
 }
