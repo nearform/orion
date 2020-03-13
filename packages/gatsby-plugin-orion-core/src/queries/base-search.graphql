@@ -1,0 +1,34 @@
+query baseSearch($term: String!, $limit: Int, $offset: Int) {
+  results: orion_page(
+    limit: $limit
+    offset: $offset
+    where: {
+    _or: [
+      {
+        title: { _ilike: $term }
+      },
+      {
+        authors: {
+          user: {
+            given_name: { _ilike: $term }
+          }
+        }
+      },
+      {
+        tags: {
+          tag: {
+            tag: { _ilike: $term }
+          }
+        }
+      }
+    ],
+    _and: {
+      published: { _lte: "now()" },
+      expires: { _is_null: true }
+    }
+  }) {
+    id
+    title
+    path
+  }
+}
