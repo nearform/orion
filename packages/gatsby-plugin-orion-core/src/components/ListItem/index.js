@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { loadCSS } from 'fg-loadcss'
+import React from 'react'
 import T from 'prop-types'
 // Gatsby Link doesn't work with storybook so use @reach/router https://github.com/gatsbyjs/gatsby/issues/10668
 import { Link } from '@reach/router'
@@ -20,14 +19,6 @@ function CustomListItem({
   depthIndent,
   hasActionHighlight, // Force Action color styling
 }) {
-  useEffect(() => {
-    // Needs to be Moved to a page template at some point
-    loadCSS(
-      'https://use.fontawesome.com/releases/v5.12.1/css/all.css',
-      document.querySelector('#font-awesome-css')
-    )
-  }, [])
-
   return (
     <ListItem
       button

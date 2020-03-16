@@ -1,30 +1,32 @@
-import React, { useState, useEffect, forwardRef } from 'react'
+import React, { useState, forwardRef } from 'react'
 import PropTypes from 'prop-types'
-import { loadCSS } from 'fg-loadcss'
-import clsx from 'clsx'
 import { Link } from '@reach/router'
 import {
   Button,
   Menu,
-  MenuItem,
   Icon,
   ClickAwayListener,
+  makeStyles,
 } from '@material-ui/core'
 import NestedMenuItem from '../NestedMenuItem'
+
+const useStyles = makeStyles(theme => ({
+  item: {
+    '& a, & button, & svg': {
+      color: theme.palette.common.white,
+    },
+  },
+  menu: {
+    backgroundColor: theme.palette.primary.main,
+  },
+}))
 
 const HorizontalNavigationMenu = ({
   data,
   dropDownIndicatorIcon = 'fas fa-chevron-down',
-  childIndicatorIcon = 'fas fa-chevron-right',
+  childIndicatorIcon = 'fas fa-caret-right',
   userRole,
 }) => {
-  useEffect(() => {
-    loadCSS(
-      'https://use.fontawesome.com/releases/v5.12.1/css/all.css',
-      document.querySelector('#font-awesome-css')
-    )
-  }, [])
-
   return data
     .filter(authorizedForUserRole(userRole))
     .map(item => (
@@ -67,25 +69,23 @@ const RootItem = ({
   userRole,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null)
+  const classes = useStyles()
   const hasChildren = item.children !== undefined && item.children.length > 0
 
   const childItems = hasChildren ? (
     // Wrap any children in a Menu
     <Menu
       anchorEl={anchorEl}
+      classes={{ paper: classes.menu }}
       open={Boolean(anchorEl)}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       getContentAnchorEl={null}
-      PaperProps={{
-        style: {
-          height: 'auto',
-        },
-      }}
       onClose={() => setAnchorEl(null)}
     >
       {item.children.filter(authorizedForUserRole(userRole)).map(child => (
         <ChildItem
           key={`${child.label}-${child.to}`}
+          classes={classes}
           parentOpen={Boolean(anchorEl)}
           item={child}
           childIndicatorIcon={childIndicatorIcon}
@@ -106,32 +106,14 @@ const RootItem = ({
           onClick={hasChildren ? e => setAnchorEl(e.currentTarget) : undefined}
         >
           {item.leftIconClass && (
-            <Icon
-              fontSize="inherit"
-              className={clsx(
-                item.leftIconClass,
-                'horizontal-navigation-menu-label-icon'
-              )}
-            />
+            <Icon fontSize="inherit" className={item.leftIconClass} />
           )}
           {item.label}
           {item.rightIconClass && (
-            <Icon
-              fontSize="inherit"
-              className={clsx(
-                item.rightIconClass,
-                'horizontal-navigation-menu-label-icon'
-              )}
-            />
+            <Icon fontSize="inherit" className={item.rightIconClass} />
           )}
           {hasChildren && (
-            <Icon
-              fontSize="inherit"
-              className={clsx(
-                dropDownIndicatorIcon,
-                'horizontal-navigation-menu-indicator-icon'
-              )}
-            />
+            <Icon fontSize="inherit" className={dropDownIndicatorIcon} />
           )}
         </Button>
       </ClickAwayListener>
@@ -146,70 +128,41 @@ const RootItem = ({
 // see: https://material-ui.com/guides/composition/#caveat-with-refs
 // and https://github.com/mui-org/material-ui/issues/15903
 const ChildItem = forwardRef(
-  ({ item, parentOpen, childIndicatorIcon, userRole }, ref) => {
-    const hasChildren = item.children !== undefined && item.children.length > 0
-
+  ({ classes, item, parentOpen, childIndicatorIcon, userRole }, ref) => {
     const itemContent = (
       <>
         {item.leftIconClass && (
-          <Icon
-            fontSize="inherit"
-            className={clsx(
-              item.leftIconClass,
-              'horizontal-navigation-menu-label-icon'
-            )}
-          />
+          <Icon fontSize="inherit" className={item.leftIconClass} />
         )}
         {item.label}
         {item.rightIconClass && (
-          <Icon
-            fontSize="inherit"
-            className={clsx(
-              item.rightIconClass,
-              'horizontal-navigation-menu-label-icon'
-            )}
-          />
+          <Icon fontSize="inherit" className={item.rightIconClass} />
         )}
       </>
     )
 
     const to = item.to === undefined ? '#' : item.to
 
-    return hasChildren ? (
+    return (
       <NestedMenuItem
         // NestedMenuItem accepts a component property, but for now it is not used
         // Instead we render everything in the label
-        label={
-          <Link to={to}>
-            {itemContent}
-            <Icon
-              fontSize="inherit"
-              className={clsx(
-                childIndicatorIcon,
-                'horizontal-navigation-menu-indicator-icon'
-              )}
-            />
-          </Link>
-        }
-        className="nested-menu-item"
+        label={<Link to={to}>{itemContent}</Link>}
+        className={classes.item}
         MenuProps={{
           anchorOrigin: { vertical: 'top', horizontal: 'right' },
+          classes: { paper: classes.menu },
           transformOrigin: { vertical: 'top', horizontal: 'left' },
           anchorPosition: { left: 0, top: 100 },
-          PaperProps: {
-            style: {
-              height: 'auto',
-            },
-          },
         }}
         parentMenuOpen={parentOpen}
-        rightIcon={null}
       >
         {item.children.filter(authorizedForUserRole(userRole)).map(child => (
           <ChildItem
             key={`${child.label}-${child.to}`}
-            // Forward the ref down to all children on intermediate nodes
             ref={ref}
+            // Forward the ref down to all children on intermediate nodes
+            classes={classes}
             item={child}
             parentOpen={parentOpen}
             childIndicatorIcon={childIndicatorIcon}
@@ -217,15 +170,6 @@ const ChildItem = forwardRef(
           />
         ))}
       </NestedMenuItem>
-    ) : (
-      <MenuItem
-        // The ref needs to be passed to the reach-router Link on leaf nodes
-        ref={ref}
-        component={Link}
-        to={to}
-      >
-        {itemContent}
-      </MenuItem>
     )
   }
 )

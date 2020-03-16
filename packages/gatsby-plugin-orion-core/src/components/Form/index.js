@@ -1,11 +1,17 @@
 import React from 'react'
 import T from 'prop-types'
-import { Grid, Button, withStyles } from '@material-ui/core'
+import { Grid, Button, makeStyles } from '@material-ui/core'
 import { Formik, Field } from 'formik'
-
 import { InputField } from '../FormFields'
 
-function Form({ classes, formFields = [], title, SubmitComponent, onSubmit }) {
+const useStyles = makeStyles(() => ({
+  submit: {
+    margin: '8px',
+  },
+}))
+
+function Form({ formFields = [], title, SubmitComponent, onSubmit }) {
+  const classes = useStyles()
   const values = formFields.reduce((a, field) => {
     a[field.name] = ''
     return a
@@ -115,16 +121,12 @@ Form.propTypes = {
   SubmitComponent: T.func,
   onSubmit: T.func.isRequired,
   title: T.object,
-  classes: T.object,
 }
 
 Form.defaultProps = {
   formFields: () => {},
   SubmitComponent: () => {},
   title: {},
-  classes: {},
 }
 
-const styles = theme => ({ ...theme.form })
-
-export default withStyles(styles, { withTheme: true })(Form)
+export default Form

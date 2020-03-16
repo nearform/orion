@@ -1,6 +1,6 @@
-const { colorDefinitions } = require('../variables')
+import { colorDefinitions } from '../variables'
 
-module.exports = {
+export default {
   primary: {
     main: colorDefinitions.purpleishBlue,
   },

@@ -25,9 +25,6 @@ const useStyles = makeStyles(theme => ({
         width: '32px',
       },
     },
-    '& .close-button': {
-      color: theme.palette.tertiary.main,
-    },
     '& .MuiListItem-button': {
       '&:hover': {
         backgroundColor: fade(theme.palette.secondary.main, 0.85),
@@ -62,7 +59,7 @@ SideBarMenu.propTypes = {
   data: T.array.isRequired,
   userRole: T.oneOf(['Admin', 'User']),
   path: T.string.isRequired,
-  isFullyExpanded: T.bool.isRequired,
+  isFullyExpanded: T.bool,
   depthIndent: T.number.isRequired,
 }
 

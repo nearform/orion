@@ -33,6 +33,7 @@
     "gatsby-plugin-sharp": "^2.4.5",
     "gatsby-plugin-webpack-bundle-analyzer": "^1.0.5",
     "gatsby-source-graphql": "^2.1.33",
+    "gatsby-theme-acme": "^2.28.0",
     "gatsby-transformer-json": "^2.2.26",
     "gatsby-transformer-sharp": "^2.3.14",
     "graphql-hooks": "^4.4.2",

@@ -1,6 +1,6 @@
-const { fontFamily } = require('../typography')
+import { fontFamily } from '../typography'
 
-module.exports = {
+export default {
   sizeSmall: {
     height: '18px',
   },

@@ -1,7 +1,6 @@
 import React from 'react'
 import T from 'prop-types'
-import { Grid, Typography, withStyles } from '@material-ui/core'
-
+import { Grid, Typography } from '@material-ui/core'
 import ArticleStatusChip from '../ArticleStatusChip'
 
 const Form = ({ author, articleStatus }) => (
@@ -31,6 +30,4 @@ Form.propTypes = {
   author: T.string,
 }
 
-const styles = theme => ({ ...theme.form })
-
-export default withStyles(styles, { withTheme: true })(Form)
+export default Form

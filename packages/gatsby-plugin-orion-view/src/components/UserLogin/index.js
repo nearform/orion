@@ -42,6 +42,7 @@ const UserLogin = ({ setAuthStage }) => {
             direction="row"
             justify="space-between"
             alignItems="center"
+            spacing={1}
             {...props}
           >
             <Grid>
