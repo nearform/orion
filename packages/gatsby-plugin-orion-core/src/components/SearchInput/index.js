@@ -1,19 +1,143 @@
 import React, { useState, useEffect } from 'react'
 import T from 'prop-types'
-import { Button, Grid, Typography, Paper, withStyles } from '@material-ui/core'
+import { Button, Grid, Typography, Paper, makeStyles } from '@material-ui/core'
 import Search from '@material-ui/icons/Search'
 import { Link } from '@reach/router'
 import { useManualQuery } from 'graphql-hooks'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 
 import baseQuery from '../../queries/base-search.graphql'
 import useDebounce from '../../hooks/useDebounce'
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    width: '100%',
+    position: 'relative',
+    '&:before': {
+      content: '""',
+      position: 'fixed',
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      pointerEvents: 'none',
+      transition: 'all 0.2s ease',
+    },
+    '&.focused': {
+      '&& input': {
+        position: 'relative',
+        zIndex: 1,
+        transform: 'scale(1.03)',
+        transition: 'all 0.2s ease',
+      },
+      '&& button': {
+        transform: 'scale(1.03)',
+        transition: 'all 0.2s ease',
+      },
+      '&:before': {
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        transition: 'all 0.3s ease',
+      },
+      '&& .results.visible': {
+        maxHeight: 240,
+        transition: 'all 0.2s ease 0.2s',
+      },
+      '&& .no-results.visible': {
+        maxHeight: 60,
+        transition: 'all 0.2s ease 0.2s',
+      },
+    },
+    '& .results': {
+      position: 'absolute',
+      left: -4,
+      right: 0,
+      top: 40,
+      background: theme.palette.background.paper,
+      width: 'calc(100% + 4px)',
+      transition: 'all 0.2s ease',
+      maxHeight: 0,
+      overflow: 'hidden',
+      zIndex: 1,
+      '& .MuiTypography-h5': {
+        padding: '12px 8px',
+        display: 'block',
+        textDecoration: 'none',
+      },
+      '& .MuiTypography-h5.results-label': {
+        borderBottomWidth: 1,
+        borderBottomColor: theme.palette.tertiary.main,
+        borderBottomStyle: 'solid',
+        color: theme.palette.tertiary.main,
+        margin: '0 0 4px 8px',
+        width: 'calc(100% - 32px)',
+        padding: '4px 0 8px',
+      },
+    },
+    '& .no-results': {
+      position: 'absolute',
+      left: -4,
+      right: 0,
+      top: 40,
+      background: theme.palette.background.paper,
+      width: 'calc(100% + 4px)',
+      transition: 'all 0.2s ease',
+      maxHeight: 0,
+      overflow: 'hidden',
+      zIndex: 1,
+      '& .MuiTypography-h5': {
+        padding: '12px 8px',
+        display: 'block',
+        textDecoration: 'none',
+      },
+    },
+  },
+  input: {
+    ...theme.typography.h6,
+    backgroundColor: theme.palette.background.dark,
+    border: '1px solid',
+    borderColor: theme.palette.tertiary.main,
+    borderBottomLeftRadius: 4,
+    borderRight: 0,
+    borderTopLeftRadius: 4,
+    flex: 1,
+    padding: 8,
+    outline: 0,
+    paddingLeft: 12,
+    transition: 'all 0.2s ease 0.2s',
+    '&::placeholder': {
+      ...theme.typography.h6,
+    },
+  },
+  button: {
+    backgroundColor: theme.palette.action.main,
+    border: '1px solid',
+    borderColor: theme.palette.tertiary.main,
+    borderRadius: 4,
+    borderBottomLeftRadius: 0,
+    borderLeft: 0,
+    borderTopLeftRadius: 0,
+    boxShadow: 'none',
+    color: theme.palette.background.default,
+    height: '100%',
+    padding: 4,
+    minWidth: 32,
+    minHeight: 35,
+    transition: 'all 0.2s ease 0.2s',
+    zIndex: 2,
+    '&:hover': {
+      backgroundColor: fade(theme.palette.action.main, 0.8),
+    },
+  },
+}))
+
 function SearchInput({
-  classes,
   onSearch,
   placeholderText,
   query = baseQuery,
 }) {
+  const classes = useStyles()
   const [state, setState] = useState({
     term: '',
     searched: false,
@@ -110,10 +234,7 @@ function SearchInput({
   )
 }
 
-const styles = theme => ({ ...theme.searchInput })
-
 SearchInput.propTypes = {
-  classes: T.object,
   onSearch: T.func,
   placeholderText: T.string,
   query: T.string,
@@ -122,13 +243,7 @@ SearchInput.propTypes = {
 SearchInput.defaultProps = {
   placeholderText: 'Search',
   onSearch: () => undefined,
-  classes: {},
   query: undefined,
 }
 
-SearchInput.defaultProps = {
-  classes: undefined,
-  onSearch: undefined,
-}
-
-export default withStyles(styles, { withTheme: true })(SearchInput)
+export default SearchInput

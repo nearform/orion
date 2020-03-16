@@ -1,7 +1,7 @@
-const palette = require('../palette')
-const typography = require('../typography')
+import palette from '../palette'
+import typography from '../typography'
 
-module.exports = {
+export default {
   root: {
     ...typography.body1,
     border: `solid 1px ${palette.tertiary.main}`,

@@ -7,6 +7,9 @@ const drawerWidth = 318
 
 const useStyles = makeStyles(theme => ({
   '@global': {
+    'html, body, body > div:first-child, body > div:first-child > div:first-child': {
+      height: '100%',
+    },
     body: {
       overflowY: 'hidden',
     },

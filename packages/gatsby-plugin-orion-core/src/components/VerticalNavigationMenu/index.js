@@ -6,7 +6,6 @@ import { List, Paper } from '@material-ui/core'
 import ListOfListItems from '../ListOfListItems'
 
 function VerticalNavigationMenu({
-  classes,
   data = [],
   userRole,
   path,
@@ -54,7 +53,6 @@ function VerticalNavigationMenu({
 }
 
 VerticalNavigationMenu.propTypes = {
-  classes: T.object.isRequired,
   data: T.object.isRequired,
   variant: T.oneOf(['permanent', 'persistent']).isRequired,
   userRole: T.oneOf(['Admin', 'User']),

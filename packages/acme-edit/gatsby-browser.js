@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from 'acme-view/src/components/Layout'
-import ThemeWrapper, { theme } from 'gatsby-theme-acme'
+import theme from 'gatsby-theme-acme'
 import { CssBaseline } from '@material-ui/core'
 import { EditComponentProvider } from 'gatsby-plugin-orion-edit'
 import { ThemeProvider } from '@material-ui/styles'
@@ -9,7 +9,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import components from './src/components'
 import layouts from './src/layouts'
 
-const muiTheme = createMuiTheme(theme.muiTheme)
+const muiTheme = createMuiTheme(theme)
 
 export const wrapPageElement = ({ element }) => (
   <EditComponentProvider
@@ -19,7 +19,7 @@ export const wrapPageElement = ({ element }) => (
   >
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
-      <ThemeWrapper>{element}</ThemeWrapper>
+      {element}
     </ThemeProvider>
   </EditComponentProvider>
 )

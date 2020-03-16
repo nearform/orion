@@ -141,7 +141,7 @@ function EditComponent({ component, isEditing, onSave, page, props = {} }) {
               onChange={handleEditorChange}
             />
           )}
-          <Dialog open={showSettings} onClose={handleCancel}>
+          <Dialog fullWidth open={showSettings} onClose={handleCancel}>
             <DialogTitle>Component settings</DialogTitle>
             <DialogContent>
               <FormControl fullWidth className={classes.input}>

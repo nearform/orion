@@ -52,6 +52,7 @@ const Hero = ({ imageSrc, onSearch, subtitle, title }) => {
       alignItems="center"
       className={classes.root}
       m="auto"
+      spacing={1}
     >
       <Grid item>
         <Grid
@@ -60,6 +61,7 @@ const Hero = ({ imageSrc, onSearch, subtitle, title }) => {
           alignItems="center"
           justify="center"
           direction="column"
+          spacing={1}
         >
           <Grid item>
             <Typography gutterBottom variant="h1" color="secondary">
