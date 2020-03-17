@@ -91,10 +91,11 @@ const NestedMenuItem = React.forwardRef(
           {label}
           {Children.count(children) > 0 && <ArrowRight />}
         </MenuItem>
-        {Children.count(children) > 0 && (
+        {open && Children.count(children) > 0 && (
           <Menu
             disableAutoFocus
             disableEnforceFocus
+            hideBackdrop
             anchorEl={menuItemRef.current}
             anchorOrigin={{
               vertical: 'top',

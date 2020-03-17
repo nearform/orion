@@ -107,7 +107,7 @@ const RootItem = ({ item, userRole }) => {
   )
 }
 
-// Renders either a MenuItem or NestedMenuItem depending if the current item has children
+// Renders a NestedMenuItem
 //
 // We have to forward the ref recursively to children
 // see: https://material-ui.com/guides/composition/#caveat-with-refs
@@ -137,7 +137,6 @@ const ChildItem = forwardRef(({ classes, item, parentOpen, userRole }, ref) => {
         anchorOrigin: { vertical: 'top', horizontal: 'right' },
         classes: { paper: classes.menu },
         transformOrigin: { vertical: 'top', horizontal: 'left' },
-        anchorPosition: { left: 0, top: 100 },
       }}
       parentMenuOpen={parentOpen}
     >
