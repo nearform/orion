@@ -9,6 +9,7 @@ import {
   makeStyles,
 } from '@material-ui/core'
 import NestedMenuItem from '../NestedMenuItem'
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 
 const useStyles = makeStyles(theme => ({
   item: {
@@ -21,20 +22,13 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const HorizontalNavigationMenu = ({
-  data,
-  dropDownIndicatorIcon = 'fas fa-chevron-down',
-  childIndicatorIcon = 'fas fa-caret-right',
-  userRole,
-}) => {
+const HorizontalNavigationMenu = ({ data, userRole }) => {
   return data
-    .filter(authorizedForUserRole(userRole))
+    .filter(isAuthorizedForUserRole(userRole))
     .map(item => (
       <RootItem
         key={`${item.label}-${item.to}`}
         item={item}
-        childIndicatorIcon={childIndicatorIcon}
-        dropDownIndicatorIcon={dropDownIndicatorIcon}
         userRole={userRole}
       />
     ))
@@ -56,18 +50,12 @@ menuItemShape.children = PropTypes.arrayOf(menuItemNode)
 
 HorizontalNavigationMenu.propTypes = {
   data: PropTypes.arrayOf(menuItemNode).isRequired,
-  childIndicatorIcon: PropTypes.string,
 }
 
 export default HorizontalNavigationMenu
 
 // Renders a root menu item, wrapped in a button
-const RootItem = ({
-  item,
-  childIndicatorIcon,
-  dropDownIndicatorIcon,
-  userRole,
-}) => {
+const RootItem = ({ item, userRole }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const classes = useStyles()
   const hasChildren = item.children !== undefined && item.children.length > 0
@@ -82,13 +70,12 @@ const RootItem = ({
       getContentAnchorEl={null}
       onClose={() => setAnchorEl(null)}
     >
-      {item.children.filter(authorizedForUserRole(userRole)).map(child => (
+      {item.children.filter(isAuthorizedForUserRole(userRole)).map(child => (
         <ChildItem
           key={`${child.label}-${child.to}`}
           classes={classes}
           parentOpen={Boolean(anchorEl)}
           item={child}
-          childIndicatorIcon={childIndicatorIcon}
           userRole={userRole}
         />
       ))}
@@ -112,9 +99,7 @@ const RootItem = ({
           {item.rightIconClass && (
             <Icon fontSize="inherit" className={item.rightIconClass} />
           )}
-          {hasChildren && (
-            <Icon fontSize="inherit" className={dropDownIndicatorIcon} />
-          )}
+          {hasChildren && <ArrowDropDown />}
         </Button>
       </ClickAwayListener>
       {childItems}
@@ -127,37 +112,37 @@ const RootItem = ({
 // We have to forward the ref recursively to children
 // see: https://material-ui.com/guides/composition/#caveat-with-refs
 // and https://github.com/mui-org/material-ui/issues/15903
-const ChildItem = forwardRef(
-  ({ classes, item, parentOpen, childIndicatorIcon, userRole }, ref) => {
-    const itemContent = (
-      <>
-        {item.leftIconClass && (
-          <Icon fontSize="inherit" className={item.leftIconClass} />
-        )}
-        {item.label}
-        {item.rightIconClass && (
-          <Icon fontSize="inherit" className={item.rightIconClass} />
-        )}
-      </>
-    )
+const ChildItem = forwardRef(({ classes, item, parentOpen, userRole }, ref) => {
+  const itemContent = (
+    <>
+      {item.leftIconClass && (
+        <Icon fontSize="inherit" className={item.leftIconClass} />
+      )}
+      {item.label}
+      {item.rightIconClass && (
+        <Icon fontSize="inherit" className={item.rightIconClass} />
+      )}
+    </>
+  )
 
-    const to = item.to === undefined ? '#' : item.to
+  const to = item.to === undefined ? '#' : item.to
 
-    return (
-      <NestedMenuItem
-        // NestedMenuItem accepts a component property, but for now it is not used
-        // Instead we render everything in the label
-        label={<Link to={to}>{itemContent}</Link>}
-        className={classes.item}
-        MenuProps={{
-          anchorOrigin: { vertical: 'top', horizontal: 'right' },
-          classes: { paper: classes.menu },
-          transformOrigin: { vertical: 'top', horizontal: 'left' },
-          anchorPosition: { left: 0, top: 100 },
-        }}
-        parentMenuOpen={parentOpen}
-      >
-        {item.children.filter(authorizedForUserRole(userRole)).map(child => (
+  return (
+    <NestedMenuItem
+      // NestedMenuItem accepts a component property, but for now it is not used
+      // Instead we render everything in the label
+      label={<Link to={to}>{itemContent}</Link>}
+      className={classes.item}
+      MenuProps={{
+        anchorOrigin: { vertical: 'top', horizontal: 'right' },
+        classes: { paper: classes.menu },
+        transformOrigin: { vertical: 'top', horizontal: 'left' },
+        anchorPosition: { left: 0, top: 100 },
+      }}
+      parentMenuOpen={parentOpen}
+    >
+      {item.children !== undefined &&
+        item.children.filter(isAuthorizedForUserRole(userRole)).map(child => (
           <ChildItem
             key={`${child.label}-${child.to}`}
             ref={ref}
@@ -165,18 +150,15 @@ const ChildItem = forwardRef(
             classes={classes}
             item={child}
             parentOpen={parentOpen}
-            childIndicatorIcon={childIndicatorIcon}
             userRole={userRole}
           />
         ))}
-      </NestedMenuItem>
-    )
-  }
-)
+    </NestedMenuItem>
+  )
+})
 
-function authorizedForUserRole(userRole) {
-  return authorized
-  function authorized(item) {
+function isAuthorizedForUserRole(userRole) {
+  return item => {
     if (item.authRole === undefined) {
       return true
     }
