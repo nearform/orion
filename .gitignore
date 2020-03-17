@@ -66,6 +66,7 @@ typings/
 .env
 .env.staging
 .env.production
+.env.development
 
 # custom
 build/
