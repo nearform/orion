@@ -27,23 +27,21 @@ function PageProvider({ location, pageContext }) {
   const Layout = layouts[page.layout]
 
   if (Layout === undefined) {
-    throw new Error(`Layout "${page.layout}" could not be found`)
+    return null
   }
 
   for (const { block, component, id, props } of page.contents) {
     const Component = components[component]
 
-    if (Component === undefined) {
-      throw new Error(`Component "${component}" could not be found`)
-    }
-
     if (blocks[block] === undefined) {
       blocks[block] = []
     }
 
-    blocks[block].push(
-      <Component {...props} key={id} loading={loading} page={page} />
-    )
+    if (Component !== undefined) {
+      blocks[block].push(
+        <Component {...props} key={id} loading={loading} page={page} />
+      )
+    }
   }
 
   return <Layout {...blocks} loading={loading} page={page} />

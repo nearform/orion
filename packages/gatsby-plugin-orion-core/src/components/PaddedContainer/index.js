@@ -1,19 +1,11 @@
 import React from 'react'
 import T from 'prop-types'
-import { withStyles } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 import clsx from 'clsx'
 
-function PaddedContainer({ classes, className, ...props }) {
-  return <div className={clsx(classes.root, className)} {...props} />
-}
-
-PaddedContainer.propTypes = {
-  classes: T.object.isRequired,
-  className: T.string,
-}
-
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
+    width: '100%',
     [theme.breakpoints.up('xs')]: {
       padding: theme.spacing(0, 2),
     },
@@ -25,6 +17,16 @@ const styles = theme => ({
       maxWidth: 1120,
     },
   },
-})
+}))
 
-export default withStyles(styles)(PaddedContainer)
+function PaddedContainer({ className, ...props }) {
+  const classes = useStyles()
+
+  return <div className={clsx(classes.root, className)} {...props} />
+}
+
+PaddedContainer.propTypes = {
+  className: T.string,
+}
+
+export default PaddedContainer

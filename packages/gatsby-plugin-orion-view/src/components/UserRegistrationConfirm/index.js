@@ -36,6 +36,7 @@ const UserRegistrationConfirm = ({ setAuthStage, username }) => {
             direction="row"
             justify="space-between"
             alignItems="center"
+            spacing={1}
             {...props}
           >
             <Grid>&nbsp;</Grid>

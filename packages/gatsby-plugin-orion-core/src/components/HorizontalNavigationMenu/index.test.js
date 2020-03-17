@@ -119,33 +119,6 @@ describe('root menu items', () => {
     expect(spans[0]).toHaveClass('test-class1')
     expect(spans[1]).toHaveClass('test-class2')
   })
-
-  test('down indicator defaults to chevron', () => {
-    const renderResult = renderMenu()
-    const spans = renderResult
-      .getByText('rootC')
-      .querySelectorAll('span.material-icons')
-
-    expect(spans).toHaveLength(1)
-    expect(spans[0]).toHaveClass('fa-chevron-down')
-  })
-
-  test('down indicator can be set', async () => {
-    expect.assertions(2)
-
-    const renderResult = render(
-      <HorizontalNavigationMenu
-        data={menuData}
-        dropDownIndicatorIcon="test-class"
-      />
-    )
-    const spans = renderResult
-      .getByText('rootC')
-      .querySelectorAll('span.material-icons')
-
-    expect(spans).toHaveLength(1)
-    expect(spans[0]).toHaveClass('test-class')
-  })
 })
 
 describe('child menu items', () => {
@@ -227,32 +200,5 @@ describe('child menu items', () => {
     expect(spans).toHaveLength(2)
     expect(spans[0]).toHaveClass('test-class1')
     expect(spans[1]).toHaveClass('test-class2')
-  })
-
-  test('children indicator defaults to chevron', async () => {
-    expect.assertions(2)
-
-    const renderResult = renderMenu()
-    const [, childB] = await renderFirstChildren(renderResult)
-    const spans = childB.querySelectorAll('span.material-icons')
-
-    expect(spans).toHaveLength(1)
-    expect(spans[0]).toHaveClass('fa-chevron-right')
-  })
-
-  test('down indicator can be set', async () => {
-    expect.assertions(2)
-
-    const renderResult = render(
-      <HorizontalNavigationMenu
-        data={menuData}
-        childIndicatorIcon="test-class"
-      />
-    )
-    const [, childB] = await renderFirstChildren(renderResult)
-    const spans = childB.querySelectorAll('span.material-icons')
-
-    expect(spans).toHaveLength(1)
-    expect(spans[0]).toHaveClass('test-class')
   })
 })
