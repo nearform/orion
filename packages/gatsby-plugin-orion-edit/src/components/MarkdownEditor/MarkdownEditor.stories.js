@@ -4,23 +4,27 @@ import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { text } from '@storybook/addon-knobs'
 
-import { Container, withStyles } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 import MarkdownEditor from './MarkdownEditor'
 
-const Section = withStyles(theme => ({
+const value = text('Content', 'Example text')
+
+const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(2),
     margin: theme.spacing(3),
     width: '80%',
   },
-}))(Container)
-
-const value = text('Content', 'Example text')
+}))
 
 storiesOf('MarkdownEditor', module)
   .addDecorator(jsxDecorator)
-  .add('Interactive', () => (
-    <Section>
-      <MarkdownEditor content={value} onChange={() => {}} />
-    </Section>
-  ))
+  .add('Interactive', () => {
+    const classes = useStyles()
+
+    return (
+      <div className={classes.root}>
+        <MarkdownEditor content={value} onChange={() => {}} />
+      </div>
+    )
+  })

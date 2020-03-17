@@ -1,7 +1,9 @@
 import React from 'react'
-import { Chip, withStyles } from '@material-ui/core'
+import { Chip, makeStyles } from '@material-ui/core'
 import T from 'prop-types'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
+import { fade } from '@material-ui/core/styles/colorManipulator'
+import { colorDefinitions } from 'gatsby-theme-acme/variables'
 
 export const articleStatusMap = {
   'in-progress': {
@@ -19,7 +21,45 @@ export const articleStatusMap = {
   },
 }
 
-function ArticleStatusChip({ status, classes }) {
+const useStyles = makeStyles(() => {
+  const articleColors = {
+    inProgress: {
+      labelColor: colorDefinitions.slateGrey,
+      chipColor: fade(colorDefinitions.cyan, 0.1),
+      iconColor: colorDefinitions.cyan,
+    },
+    inReview: {
+      labelColor: colorDefinitions.slateGrey,
+      chipColor: fade(colorDefinitions.yellow, 0.2),
+      iconColor: colorDefinitions.slateGrey,
+    },
+    published: {
+      labelColor: colorDefinitions.white,
+      chipColor: colorDefinitions.navyBlue,
+      iconColor: colorDefinitions.white,
+    },
+    hidden: {
+      labelColor: colorDefinitions.slateGrey,
+      chipColor: fade(colorDefinitions.lightGrey, 0.07),
+      iconColor: colorDefinitions.lightGrey,
+    },
+  }
+
+  return {
+    root: {
+      backgroundColor: props => articleColors[props.status].chipColor,
+    },
+    label: {
+      color: props => articleColors[props.status].labelColor,
+    },
+    icon: {
+      color: props => articleColors[props.status].iconColor,
+    },
+  }
+})
+
+function ArticleStatusChip({ status }) {
+  const classes = useStyles()
   const { label, Icon } = articleStatusMap[status]
 
   return (
@@ -35,43 +75,6 @@ function ArticleStatusChip({ status, classes }) {
 
 ArticleStatusChip.propTypes = {
   status: T.oneOf(Object.keys(articleStatusMap)).isRequired,
-  classes: T.object,
 }
 
-const styles = theme => {
-  const articleColors = {
-    'in-progress': {
-      ...(theme.articleStatusChip && theme.articleStatusChip.inProgress
-        ? theme.articleStatusChip.inProgress
-        : {}),
-    },
-    'in-review': {
-      ...(theme.articleStatusChip && theme.articleStatusChip.inReview
-        ? theme.articleStatusChip.inReview
-        : {}),
-    },
-    published: {
-      ...(theme.articleStatusChip && theme.articleStatusChip.published
-        ? theme.articleStatusChip.published
-        : {}),
-    },
-    hidden: {
-      ...(theme.articleStatusChip && theme.articleStatusChip.hidden
-        ? theme.articleStatusChip.hidden
-        : {}),
-    },
-  }
-  return {
-    root: {
-      backgroundColor: props => articleColors[props.status].chipColor,
-    },
-    label: {
-      color: props => articleColors[props.status].labelColor,
-    },
-    icon: {
-      color: props => articleColors[props.status].iconColor,
-    },
-  }
-}
-
-export default withStyles(styles)(ArticleStatusChip)
+export default ArticleStatusChip

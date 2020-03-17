@@ -1,38 +1,34 @@
-import React, { useState, useEffect, forwardRef } from 'react'
+import React, { useState, forwardRef } from 'react'
 import PropTypes from 'prop-types'
-import { loadCSS } from 'fg-loadcss'
-import clsx from 'clsx'
 import { Link } from '@reach/router'
 import {
   Button,
   Menu,
-  MenuItem,
   Icon,
   ClickAwayListener,
+  makeStyles,
 } from '@material-ui/core'
 import NestedMenuItem from '../NestedMenuItem'
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 
-const HorizontalNavigationMenu = ({
-  data,
-  dropDownIndicatorIcon = 'fas fa-chevron-down',
-  childIndicatorIcon = 'fas fa-chevron-right',
-  userRole,
-}) => {
-  useEffect(() => {
-    loadCSS(
-      'https://use.fontawesome.com/releases/v5.12.1/css/all.css',
-      document.querySelector('#font-awesome-css')
-    )
-  }, [])
+const useStyles = makeStyles(theme => ({
+  item: {
+    '& a, & button, & svg': {
+      color: theme.palette.common.white,
+    },
+  },
+  menu: {
+    backgroundColor: theme.palette.primary.main,
+  },
+}))
 
+const HorizontalNavigationMenu = ({ data, userRole }) => {
   return data
-    .filter(authorizedForUserRole(userRole))
+    .filter(isAuthorizedForUserRole(userRole))
     .map(item => (
       <RootItem
         key={`${item.label}-${item.to}`}
         item={item}
-        childIndicatorIcon={childIndicatorIcon}
-        dropDownIndicatorIcon={dropDownIndicatorIcon}
         userRole={userRole}
       />
     ))
@@ -54,41 +50,32 @@ menuItemShape.children = PropTypes.arrayOf(menuItemNode)
 
 HorizontalNavigationMenu.propTypes = {
   data: PropTypes.arrayOf(menuItemNode).isRequired,
-  childIndicatorIcon: PropTypes.string,
 }
 
 export default HorizontalNavigationMenu
 
 // Renders a root menu item, wrapped in a button
-const RootItem = ({
-  item,
-  childIndicatorIcon,
-  dropDownIndicatorIcon,
-  userRole,
-}) => {
+const RootItem = ({ item, userRole }) => {
   const [anchorEl, setAnchorEl] = useState(null)
+  const classes = useStyles()
   const hasChildren = item.children !== undefined && item.children.length > 0
 
   const childItems = hasChildren ? (
     // Wrap any children in a Menu
     <Menu
       anchorEl={anchorEl}
+      classes={{ paper: classes.menu }}
       open={Boolean(anchorEl)}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       getContentAnchorEl={null}
-      PaperProps={{
-        style: {
-          height: 'auto',
-        },
-      }}
       onClose={() => setAnchorEl(null)}
     >
-      {item.children.filter(authorizedForUserRole(userRole)).map(child => (
+      {item.children.filter(isAuthorizedForUserRole(userRole)).map(child => (
         <ChildItem
           key={`${child.label}-${child.to}`}
+          classes={classes}
           parentOpen={Boolean(anchorEl)}
           item={child}
-          childIndicatorIcon={childIndicatorIcon}
           userRole={userRole}
         />
       ))}
@@ -106,33 +93,13 @@ const RootItem = ({
           onClick={hasChildren ? e => setAnchorEl(e.currentTarget) : undefined}
         >
           {item.leftIconClass && (
-            <Icon
-              fontSize="inherit"
-              className={clsx(
-                item.leftIconClass,
-                'horizontal-navigation-menu-label-icon'
-              )}
-            />
+            <Icon fontSize="inherit" className={item.leftIconClass} />
           )}
           {item.label}
           {item.rightIconClass && (
-            <Icon
-              fontSize="inherit"
-              className={clsx(
-                item.rightIconClass,
-                'horizontal-navigation-menu-label-icon'
-              )}
-            />
+            <Icon fontSize="inherit" className={item.rightIconClass} />
           )}
-          {hasChildren && (
-            <Icon
-              fontSize="inherit"
-              className={clsx(
-                dropDownIndicatorIcon,
-                'horizontal-navigation-menu-indicator-icon'
-              )}
-            />
-          )}
+          {hasChildren && <ArrowDropDown />}
         </Button>
       </ClickAwayListener>
       {childItems}
@@ -140,99 +107,57 @@ const RootItem = ({
   )
 }
 
-// Renders either a MenuItem or NestedMenuItem depending if the current item has children
+// Renders a NestedMenuItem
 //
 // We have to forward the ref recursively to children
 // see: https://material-ui.com/guides/composition/#caveat-with-refs
 // and https://github.com/mui-org/material-ui/issues/15903
-const ChildItem = forwardRef(
-  ({ item, parentOpen, childIndicatorIcon, userRole }, ref) => {
-    const hasChildren = item.children !== undefined && item.children.length > 0
+const ChildItem = forwardRef(({ classes, item, parentOpen, userRole }, ref) => {
+  const itemContent = (
+    <>
+      {item.leftIconClass && (
+        <Icon fontSize="inherit" className={item.leftIconClass} />
+      )}
+      {item.label}
+      {item.rightIconClass && (
+        <Icon fontSize="inherit" className={item.rightIconClass} />
+      )}
+    </>
+  )
 
-    const itemContent = (
-      <>
-        {item.leftIconClass && (
-          <Icon
-            fontSize="inherit"
-            className={clsx(
-              item.leftIconClass,
-              'horizontal-navigation-menu-label-icon'
-            )}
-          />
-        )}
-        {item.label}
-        {item.rightIconClass && (
-          <Icon
-            fontSize="inherit"
-            className={clsx(
-              item.rightIconClass,
-              'horizontal-navigation-menu-label-icon'
-            )}
-          />
-        )}
-      </>
-    )
+  const to = item.to === undefined ? '#' : item.to
 
-    const to = item.to === undefined ? '#' : item.to
-
-    return hasChildren ? (
-      <NestedMenuItem
-        // NestedMenuItem accepts a component property, but for now it is not used
-        // Instead we render everything in the label
-        label={
-          <Link to={to}>
-            {itemContent}
-            <Icon
-              fontSize="inherit"
-              className={clsx(
-                childIndicatorIcon,
-                'horizontal-navigation-menu-indicator-icon'
-              )}
-            />
-          </Link>
-        }
-        className="nested-menu-item"
-        MenuProps={{
-          anchorOrigin: { vertical: 'top', horizontal: 'right' },
-          transformOrigin: { vertical: 'top', horizontal: 'left' },
-          anchorPosition: { left: 0, top: 100 },
-          PaperProps: {
-            style: {
-              height: 'auto',
-            },
-          },
-        }}
-        parentMenuOpen={parentOpen}
-        rightIcon={null}
-      >
-        {item.children.filter(authorizedForUserRole(userRole)).map(child => (
+  return (
+    <NestedMenuItem
+      // NestedMenuItem accepts a component property, but for now it is not used
+      // Instead we render everything in the label
+      label={<Link to={to}>{itemContent}</Link>}
+      className={classes.item}
+      MenuProps={{
+        anchorOrigin: { vertical: 'top', horizontal: 'right' },
+        classes: { paper: classes.menu },
+        transformOrigin: { vertical: 'top', horizontal: 'left' },
+      }}
+      parentMenuOpen={parentOpen}
+    >
+      {item.children !== undefined &&
+        item.children.filter(isAuthorizedForUserRole(userRole)).map(child => (
           <ChildItem
             key={`${child.label}-${child.to}`}
-            // Forward the ref down to all children on intermediate nodes
             ref={ref}
+            // Forward the ref down to all children on intermediate nodes
+            classes={classes}
             item={child}
             parentOpen={parentOpen}
-            childIndicatorIcon={childIndicatorIcon}
             userRole={userRole}
           />
         ))}
-      </NestedMenuItem>
-    ) : (
-      <MenuItem
-        // The ref needs to be passed to the reach-router Link on leaf nodes
-        ref={ref}
-        component={Link}
-        to={to}
-      >
-        {itemContent}
-      </MenuItem>
-    )
-  }
-)
+    </NestedMenuItem>
+  )
+})
 
-function authorizedForUserRole(userRole) {
-  return authorized
-  function authorized(item) {
+function isAuthorizedForUserRole(userRole) {
+  return item => {
     if (item.authRole === undefined) {
       return true
     }

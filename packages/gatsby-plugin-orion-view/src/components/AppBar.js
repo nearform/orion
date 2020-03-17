@@ -2,16 +2,53 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from '@reach/router'
 import {
-  Grid,
   Button,
-  MenuItem,
-  Select,
   AppBar as MuiAppBar,
   Toolbar,
+  makeStyles,
 } from '@material-ui/core'
-import MoreVert from '@material-ui/icons/MoreVert'
-import Twemoji from 'react-twemoji'
 import HorizontalNavigationMenu from 'gatsby-plugin-orion-core/src/components/HorizontalNavigationMenu'
+import LanguageSelector from './LanguageSelector'
+import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    boxShadow: 'none',
+    '& .MuiButton-root': {
+      textTransform: 'none',
+      boxShadow: 'none',
+      '& .MuiButton-label': {
+        color: theme.palette.background.default,
+        textTransform: 'capitalize',
+      },
+      '& .MuiIcon-root': {
+        marginLeft: 8,
+      },
+    },
+  },
+  logo: {
+    height: 40,
+    width: 90,
+    marginLeft: -8,
+    padding: 0,
+    '& img': {
+      width: '100%',
+    },
+  },
+  container: {
+    alignItems: 'center',
+    display: 'flex',
+  },
+  menu: {
+    alignItems: 'center',
+    display: 'flex',
+    margin: theme.spacing(0, 1),
+  },
+  toolbar: {
+    justifyContent: 'space-between',
+    padding: 0,
+  },
+}))
 
 const AppBar = ({
   menuData,
@@ -21,89 +58,40 @@ const AppBar = ({
   Logo,
   brandTo,
 }) => {
+  const classes = useStyles()
+
   return (
-    <MuiAppBar position="static">
-      <Toolbar>
-        <Grid container alignItems="center">
+    <MuiAppBar position="static" className={classes.root}>
+      <PaddedContainer>
+        <Toolbar className={classes.toolbar}>
           {Logo && (
-            <Grid item xs={2}>
-              <Button
-                edge="start"
-                component={Link}
-                color="inherit"
-                aria-label="menu"
-                to={brandTo ? brandTo : '#'}
-                className="brand-logo"
-                data-testid="brand-logo-button"
-              >
-                <Logo width="107" />
-                {/* <img src={logo} alt="Acme" /> */}
-              </Button>
-            </Grid>
+            <Button
+              edge="start"
+              component={Link}
+              color="inherit"
+              aria-label="menu"
+              to={brandTo ? brandTo : '#'}
+              className={classes.logo}
+              data-testid="brand-logo-button"
+            >
+              <Logo width="107" />
+            </Button>
           )}
-          <Grid container item xs={8} alignItems="center">
-            {menuData && (
-              <Grid item>
+          <div className={classes.container}>
+            <div className={classes.menu}>
+              {menuData && (
                 <HorizontalNavigationMenu
                   data={menuData}
                   dropDownIndicatorIcon={dropDownIndicatorIcon}
                   childIndicatorIcon={childIndicatorIcon}
                   userRole={userRole}
                 />
-              </Grid>
-            )}
-          </Grid>
-          <Grid container item xs={2} alignItems="center" justify="flex-end">
-            <Select
-              autoWidth
-              displayEmpty
-              disableUnderline
-              className="language-switcher"
-              value="en"
-              IconComponent={MoreVert}
-              MenuProps={{
-                className: 'language-switcher-menu',
-                anchorOrigin: {
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                },
-                PaperProps: {
-                  style: {
-                    height: 'auto',
-                  },
-                },
-              }}
-              renderValue={() => (
-                <MenuItem value="en" className="language-switcher-item">
-                  <Twemoji
-                    options={{
-                      className: 'language-switcher-icon',
-                    }}
-                  >
-                    <span role="img" aria-label="EN">
-                      🇬🇧
-                    </span>
-                  </Twemoji>
-                  EN
-                </MenuItem>
               )}
-            >
-              <MenuItem value="en" className="language-switcher-item">
-                <Twemoji
-                  options={{
-                    className: 'language-switcher-icon',
-                  }}
-                >
-                  <span role="img" aria-label="English">
-                    🇬🇧
-                  </span>
-                </Twemoji>
-                English
-              </MenuItem>
-            </Select>
-          </Grid>
-        </Grid>
-      </Toolbar>
+            </div>
+            <LanguageSelector />
+          </div>
+        </Toolbar>
+      </PaddedContainer>
     </MuiAppBar>
   )
 }
@@ -114,7 +102,7 @@ AppBar.propTypes = {
   childIndicatorIcon: PropTypes.string,
   userRole: PropTypes.string,
   brandTo: PropTypes.string,
-  Logo: PropTypes.element,
+  Logo: PropTypes.elementType,
 }
 
 AppBar.defaultProps = {

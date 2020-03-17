@@ -1,7 +1,7 @@
-const palette = require('./palette')
-const { fade } = require('@material-ui/core/styles/colorManipulator')
+import palette from './palette'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 
-module.exports = {
+export default {
   fontFamily: `'Titillium Web', sans-serif`,
   color: palette.primary.dark,
   fontWeight: 'normal',
