@@ -116,6 +116,9 @@ function AuthWrapper({ children, authState }) {
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
 }
 
+// Wrap with aws-amplify Authenticator so that the authState is passed as a prop.
+// Setting the hideDefault to true removes any aws-amplify components.
+// See: https://aws-amplify.github.io/docs/js/authentication#customize-your-own-components
 const AwsAuthWrapper = props => (
   <Authenticator hideDefault>
     <AuthWrapper {...props} />
