@@ -7,7 +7,7 @@ import {
   TableHead,
   TableRow,
   Typography,
-  withStyles,
+  makeStyles,
 } from '@material-ui/core'
 import ReactMarkdown from 'react-markdown'
 
@@ -27,7 +27,96 @@ const renderers = {
   ),
 }
 
-function ArticleContent({ classes, content, image, subtitle, title }) {
+const useStyles = makeStyles(theme => ({
+  content: {
+    '& h1': {
+      ...theme.typography.h1,
+      marginBottom: 16,
+    },
+    '& h2': {
+      ...theme.typography.h2,
+      marginBottom: 16,
+    },
+    '& h3': {
+      ...theme.typography.h3,
+      marginBottom: 16,
+    },
+    '& h4': {
+      ...theme.typography.h4,
+      marginBottom: 16,
+    },
+    '& h5': {
+      ...theme.typography.h5,
+      marginBottom: 16,
+    },
+    '& p': {
+      ...theme.typography.body1,
+      fontSize: '16px',
+      lineHeight: '22px',
+      marginBottom: 16,
+      '&:first-of-type': {
+        fontSize: '21px',
+        lineHeight: '28px',
+      },
+    },
+    '& li': {
+      ...theme.typography.body1,
+      fontSize: '16px',
+      lineHeight: '22px',
+      marginBottom: 16,
+    },
+    '& blockquote': {
+      ...theme.typography.body1,
+      alignItems: 'flex-start',
+      display: 'flex',
+      fontSize: '16px !important',
+      fontStyle: 'italic',
+      margin: 0,
+      '&:before': {
+        backgroundColor: theme.palette.secondary.main,
+        borderRadius: 8,
+        content: '""',
+        display: 'block',
+        height: 33,
+        marginLeft: 16,
+        marginRight: 16,
+        width: 8,
+      },
+      '& *': {
+        fontSize: '16px !important',
+      },
+    },
+    '& ol': {
+      counterReset: 'ol',
+      listStyle: 'none',
+      marginLeft: 16,
+      padding: 0,
+      '& li': {
+        counterIncrement: 'ol',
+        '&:before': {
+          content: 'counter(ol) "."',
+          marginRight: 16,
+        },
+      },
+    },
+  },
+  image: {
+    width: '100%',
+    marginBottom: 16,
+  },
+  title: {
+    ...theme.typography.h1,
+    marginBottom: 16,
+  },
+  subtitle: {
+    ...theme.typography.h2,
+    marginBottom: 16,
+  },
+}))
+
+function ArticleContent({ content, image, subtitle, title }) {
+  const classes = useStyles()
+
   return (
     <div className={classes.root}>
       <Typography variant="h1" className={classes.title}>
@@ -46,10 +135,7 @@ function ArticleContent({ classes, content, image, subtitle, title }) {
   )
 }
 
-const styles = theme => ({ ...theme.articleContent })
-
 ArticleContent.propTypes = {
-  classes: T.object,
   content: T.string.isRequired,
   image: T.string,
   subtitle: T.string,
@@ -57,9 +143,8 @@ ArticleContent.propTypes = {
 }
 
 ArticleContent.defaultProps = {
-  classes: undefined,
   image: '',
   subtitle: '',
 }
 
-export default withStyles(styles, { withTheme: true })(ArticleContent)
+export default ArticleContent

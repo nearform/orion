@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.28.2](https://github.com/nearform/orion/compare/v2.28.1...v2.28.2) (2020-03-18)
+
+
+### Bug Fixes
+
+* 🐛 authorization persistance via cookie ([ac03e1c](https://github.com/nearform/orion/commit/ac03e1c7d92c5eaec1cb6642ebfc41a83fadf9db))
+
+
+
+
+
+## [2.28.1](https://github.com/nearform/orion/compare/v2.28.0...v2.28.1) (2020-03-17)
+
+**Note:** Version bump only for package acme-edit
+
+
+
+
+
+# [2.28.0](https://github.com/nearform/orion/compare/v2.27.1...v2.28.0) (2020-03-13)
+
+
+### Features
+
+* 🎸 improved editor experience ([f07c44b](https://github.com/nearform/orion/commit/f07c44bc4922f0c2a17cccb079b806ea4619e03e))
+* 🎸 new layout, preview mode ([9657bcf](https://github.com/nearform/orion/commit/9657bcfb80fc4e55fc9589c7425b59d091f050ef))
+* 🎸 use collapse on editor menus, layout improvements ([0611cb3](https://github.com/nearform/orion/commit/0611cb3cb45764da6e993db63e967f9344849f5f))
+
+
+
+
+
 ## [2.27.1](https://github.com/nearform/orion/compare/v2.27.0...v2.27.1) (2020-03-11)
 
 **Note:** Version bump only for package acme-edit

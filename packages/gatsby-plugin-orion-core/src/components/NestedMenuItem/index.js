@@ -1,163 +1,120 @@
-import React, { useState, useRef, useImperativeHandle } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
+import React, {
+  Children,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react'
+import { Menu, MenuItem, makeStyles } from '@material-ui/core'
 import ArrowRight from '@material-ui/icons/ArrowRight'
 import clsx from 'clsx'
 
-const TRANSPARENT = 'rgba(0,0,0,0)'
-const useMenuItemStyles = makeStyles(theme => ({
-  root: props => ({
-    backgroundColor: props.open ? theme.palette.action.hover : TRANSPARENT,
-  }),
+const TRANSPARENT = 'rgba(0, 0, 0, 0)'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    backgroundColor: ({ open }) =>
+      open ? theme.palette.action.hover : TRANSPARENT,
+    textTransform: 'capitalize',
+  },
+  menu: {
+    pointerEvents: 'none',
+  },
 }))
 
-const NestedMenuItem = React.forwardRef(function(props, ref) {
-  const {
-    parentMenuOpen,
-    label,
-    rightIcon = <ArrowRight />,
-    children,
-    className,
-    tabIndex: tabIndexProp,
-    MenuProps = {},
-    ContainerProps: ContainerPropsProp = {},
-    ...MenuItemProps
-  } = props
+const NestedMenuItem = React.forwardRef(
+  (
+    {
+      parentMenuOpen,
+      label,
+      children,
+      className,
+      disabled,
+      tabIndex,
+      MenuProps = {},
+      ContainerProps: { ref: containerRefProp, ...ContainerProps } = {},
+      ...MenuItemProps
+    },
+    ref
+  ) => {
+    const menuItemRef = useRef(null)
+    const containerRef = useRef(null)
 
-  const { ref: containerRefProp, ...ContainerProps } = ContainerPropsProp
+    const [isSubMenuOpen, setIsSubMenuOpen] = useState(false)
 
-  const menuItemRef = useRef(null)
-  useImperativeHandle(ref, () => menuItemRef.current)
+    useImperativeHandle(ref, () => menuItemRef.current)
+    useImperativeHandle(containerRefProp, () => containerRef.current)
 
-  const containerRef = useRef(null)
-  useImperativeHandle(containerRefProp, () => containerRef.current)
+    const handleMouseEnter = useCallback(
+      event => {
+        setIsSubMenuOpen(true)
 
-  const menuContainerRef = useRef(null)
+        if (ContainerProps.onMouseEnter) {
+          ContainerProps.onMouseEnter(event)
+        }
+      },
+      [setIsSubMenuOpen, ContainerProps]
+    )
 
-  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false)
+    const handleMouseLeave = useCallback(
+      event => {
+        setIsSubMenuOpen(false)
 
-  const handleMouseEnter = event => {
-    setIsSubMenuOpen(true)
+        if (ContainerProps.onMouseLeave) {
+          ContainerProps.onMouseLeave(event)
+        }
+      },
+      [setIsSubMenuOpen, ContainerProps]
+    )
 
-    if (ContainerProps?.onMouseEnter) {
-      ContainerProps.onMouseEnter(event)
-    }
-  }
+    const handleClose = useCallback(() => {
+      setIsSubMenuOpen(false)
+    }, [setIsSubMenuOpen])
 
-  const handleMouseLeave = event => {
-    setIsSubMenuOpen(false)
+    const open = isSubMenuOpen && parentMenuOpen
+    const classes = useStyles({ open })
 
-    if (ContainerProps?.onMouseLeave) {
-      ContainerProps.onMouseLeave(event)
-    }
-  }
-
-  // Check if any immediate children are active
-  const isSubmenuFocused = () => {
-    const active =
-      containerRef.current && containerRef.current.ownerDocument.activeElement
-    const children =
-      (menuContainerRef.current && menuContainerRef.current.children) || []
-    for (const child of children) {
-      if (child === active) {
-        return true
-      }
-    }
-
-    return false
-  }
-
-  const handleFocus = event => {
-    if (event.target === containerRef.current) {
-      setIsSubMenuOpen(true)
-    }
-
-    if (ContainerProps && ContainerProps.onFocus) {
-      ContainerProps.onFocus(event)
-    }
-  }
-
-  const handleKeyDown = event => {
-    if (event.key === 'Escape') {
-      return
-    }
-
-    if (isSubmenuFocused()) {
-      event.stopPropagation()
-    }
-
-    const active =
-      containerRef.current && containerRef.current.ownerDocument.activeElement
-
-    if (event.key === 'ArrowLeft' && isSubmenuFocused()) {
-      if (containerRef.current) containerRef.current.focus()
-    }
-
-    if (
-      event.key === 'ArrowRight' &&
-      event.target === containerRef.current &&
-      event.target === active
-    ) {
-      const firstChild = menuContainerRef.current?.children[0]
-      if (firstChild) firstChild.focus()
-    }
-  }
-
-  const open = isSubMenuOpen && parentMenuOpen
-  const menuItemClasses = useMenuItemStyles({ open })
-
-  let tabIndex = tabIndexProp || -1
-  if (!props.disabled) {
-    tabIndex = -1
-  }
-
-  return (
-    <div
-      {...ContainerProps}
-      ref={containerRef}
-      tabIndex={tabIndex}
-      role="button"
-      onFocus={handleFocus}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onKeyDown={handleKeyDown}
-    >
-      <MenuItem
-        {...MenuItemProps}
-        ref={menuItemRef}
-        className={clsx(menuItemClasses.root, className)}
+    return (
+      <div
+        {...ContainerProps}
+        ref={containerRef}
+        tabIndex={disabled ? -1 : tabIndex || -1}
+        role="button"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
-        {label}
-        {rightIcon}
-      </MenuItem>
-      <Menu
-        // Set pointer events to 'none' to prevent the invisible Popover div
-        // from capturing events for clicks and hovers
-        disableAutoFocus
-        disableEnforceFocus
-        style={{ pointerEvents: 'none' }}
-        anchorEl={menuItemRef.current}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        open={open}
-        onClose={() => {
-          setIsSubMenuOpen(false)
-        }}
-        {...MenuProps}
-      >
-        <div ref={menuContainerRef} style={{ pointerEvents: 'auto' }}>
-          {children}
-        </div>
-      </Menu>
-    </div>
-  )
-})
+        <MenuItem
+          {...MenuItemProps}
+          ref={menuItemRef}
+          className={clsx(classes.root, className)}
+        >
+          {label}
+          {Children.count(children) > 0 && <ArrowRight />}
+        </MenuItem>
+        {open && Children.count(children) > 0 && (
+          <Menu
+            disableAutoFocus
+            disableEnforceFocus
+            hideBackdrop
+            anchorEl={menuItemRef.current}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+            open={open}
+            onClose={handleClose}
+            {...MenuProps}
+          >
+            {children}
+          </Menu>
+        )}
+      </div>
+    )
+  }
+)
 
 export default NestedMenuItem

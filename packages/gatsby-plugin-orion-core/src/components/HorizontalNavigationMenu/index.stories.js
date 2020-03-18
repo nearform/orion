@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
-import { select, text, object } from '@storybook/addon-knobs'
+import { select, object } from '@storybook/addon-knobs'
 import { AppBar, Toolbar } from '@material-ui/core'
 
 import HorizontalNavigationMenu from '.'
@@ -102,14 +102,6 @@ storiesOf('HorizontalNavigationMenu', module)
       <AppBar>
         <Toolbar>
           <HorizontalNavigationMenu
-            childIndicatorIcon={text(
-              'Child Indicator Icon',
-              'fas fa-chevron-right'
-            )}
-            dropDownIndicatorIcon={text(
-              'Drop Down Indicator Icon',
-              'fas fa-chevron-down'
-            )}
             userRole={select('User Role', ['User', 'Admin'], 'Admin')}
             data={object('Menu Data', menuData)}
           />

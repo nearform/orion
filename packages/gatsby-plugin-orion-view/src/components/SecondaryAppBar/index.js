@@ -2,9 +2,24 @@ import BreadcrumbNavigation from 'gatsby-plugin-orion-core/src/components/Breadc
 import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
 import React from 'react'
 import T from 'prop-types'
-import { Grid, withStyles } from '@material-ui/core'
+import { Grid, makeStyles } from '@material-ui/core'
 
-function SecondaryAppBar({ action, classes, data }) {
+const useStyles = makeStyles(theme => ({
+  root: {
+    backgroundColor: theme.palette.background.dark,
+    padding: theme.spacing(2, 0),
+    width: '100%',
+    '& a': {
+      ...theme.typography.h5,
+      color: theme.palette.primary.main,
+      fontSize: 16,
+    },
+  },
+}))
+
+function SecondaryAppBar({ action, data }) {
+  const classes = useStyles()
+
   return (
     <div className={classes.root}>
       <PaddedContainer>
@@ -21,11 +36,8 @@ function SecondaryAppBar({ action, classes, data }) {
   )
 }
 
-const styles = theme => ({ ...theme.secondaryAppBar })
-
 SecondaryAppBar.propTypes = {
   action: T.node.isRequired,
-  classes: T.object,
   data: T.arrayOf(
     T.shape({
       title: T.string.isRequired,
@@ -35,8 +47,7 @@ SecondaryAppBar.propTypes = {
 }
 
 SecondaryAppBar.defaultProps = {
-  classes: undefined,
   data: [],
 }
 
-export default withStyles(styles, { withTheme: true })(SecondaryAppBar)
+export default SecondaryAppBar

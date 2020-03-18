@@ -1,11 +1,54 @@
 import React from 'react'
 import T from 'prop-types'
 import moment from 'moment'
-import { Avatar, withStyles } from '@material-ui/core'
+import { Avatar, makeStyles } from '@material-ui/core'
 import AccessTime from '@material-ui/icons/AccessTime'
 import CalendarToday from '@material-ui/icons/CalendarToday'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 
-function ArticleMetadata({ author, classes, created, readTime, section }) {
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: 208,
+  },
+  author: {
+    display: 'flex',
+    margin: '8px 4px',
+    '& > :first-child': {
+      marginRight: 8,
+      width: 38,
+    },
+  },
+  data: {
+    ...theme.typography.h6,
+    color: fade(theme.palette.secondary.main, 0.6),
+    display: 'flex',
+    margin: '8px 4px',
+    '& > :first-child': {
+      color: theme.palette.tertiary.main,
+      marginRight: 6,
+      width: 38,
+    },
+  },
+  name: {
+    ...theme.typography.h5,
+  },
+  section: {
+    ...theme.typography.h5,
+    borderBottom: '4px solid',
+    borderBottomColor: theme.palette.secondary.main,
+    marginBottom: 12,
+    paddingBottom: 8,
+  },
+  title: {
+    ...theme.typography.h6,
+  },
+}))
+
+function ArticleMetadata({ author, created, readTime, section }) {
+  const classes = useStyles()
+
   return (
     <div className={classes.root}>
       <div className={classes.section}>{section}</div>
@@ -28,22 +71,15 @@ function ArticleMetadata({ author, classes, created, readTime, section }) {
   )
 }
 
-const styles = theme => ({ ...theme.articleMetadata })
-
 ArticleMetadata.propTypes = {
   author: T.shape({
     image: T.string.isRequired,
     name: T.string.isRequired,
     title: T.string.isRequired,
   }).isRequired,
-  classes: T.object,
   created: T.string.isRequired,
   readTime: T.number.isRequired,
   section: T.string.isRequired,
 }
 
-ArticleMetadata.defaultProps = {
-  classes: undefined,
-}
-
-export default withStyles(styles, { withTheme: true })(ArticleMetadata)
+export default ArticleMetadata
