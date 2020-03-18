@@ -20,11 +20,18 @@ query baseSearch($term: String!, $limit: Int, $offset: Int) {
             tag: { _ilike: $term }
           }
         }
-      }
+      },
     ],
     _and: {
-      published: { _lte: "now()" },
-      expires: { _is_null: true }
+      published: { _lte: "now()" }
+      _or: [
+        {
+          expires: { _is_null: true } 
+        },
+        {
+          expires: { _gte: "now()" }
+        }
+      ]
     }
   }) {
     id
