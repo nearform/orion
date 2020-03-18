@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+// Adds the cloudinary media library
+// See: https://www.gatsbyjs.org/docs/custom-html/
+
 export default function HTML(props) {
   return (
     <html {...props.htmlAttributes}>
@@ -11,15 +14,17 @@ export default function HTML(props) {
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
+        {/* Load cloudinary media library widget */}
         <script src="/all.js" />
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>
         {props.preBodyComponents}
         <div
-          key={`body`}
-          id="___gatsby"
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: props.body }}
+          key="body"
+          id="___gatsby"
         />
         {props.postBodyComponents}
       </body>

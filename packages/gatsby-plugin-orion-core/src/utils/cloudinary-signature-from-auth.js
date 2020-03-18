@@ -5,6 +5,8 @@ export default async function getCloudinarySignatureFromAuth() {
   // In theory, it won't be necessary since the idToken should expire
   // after an hour, the same amount of time that the cloudinary signature
   // is valid for.
+  // See: https://github.com/aws-amplify/amplify-js/issues/4396#issuecomment-553695518
+  // See: https://github.com/aws-amplify/amplify-js/issues/4396#issuecomment-553954564
   // TODO: if there are problems signing in to cloudinary, uncomment this line
   // await Auth.currentAuthenticatedUser({ bypassCache: true })
 
