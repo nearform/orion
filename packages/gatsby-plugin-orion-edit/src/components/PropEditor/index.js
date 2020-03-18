@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import MarkdownEditor from '../MarkdownEditor/MarkdownEditor'
-import { MediaLibraryModal2 } from 'gatsby-plugin-orion-core/src/components/CloudinaryMediaLibrary'
-import CloudinaryMediaLibraryContext from 'gatsby-plugin-orion-core/src/components/CloudinaryMediaLibraryContext'
+import CloudinaryImageChooser from 'gatsby-plugin-orion-core/src/components/CloudinaryMediaLibrary'
+import getCloudinarySignature from 'gatsby-plugin-orion-core/src/utils/cloudinary-signature-from-auth'
 import {
   FormControl,
   Input,
@@ -68,14 +68,13 @@ export default function createPropEditor(componentProps) {
                 handleChange(componentProp, event.target.value)
               }}
             />
-            <CloudinaryMediaLibraryContext.Provider value={() => 'sig'}>
-              <MediaLibraryModal2
-                cloudinaryApiKey={process.env.GATSBY_CLOUDINARY_API_KEY}
-                cloudinaryCloudName={process.env.GATSBY_CLOUDINARY_CLOUD_NAME}
-                cloudinaryUsername={process.env.GATSBY_CLOUDINARY_USERNAME}
-                onInsertedImage={imgUrl => handleChange(componentProp, imgUrl)}
-              />
-            </CloudinaryMediaLibraryContext.Provider>
+            <CloudinaryImageChooser
+              cloudinaryApiKey={process.env.GATSBY_CLOUDINARY_API_KEY}
+              cloudinaryCloudName={process.env.GATSBY_CLOUDINARY_CLOUD_NAME}
+              cloudinaryUsername={process.env.GATSBY_CLOUDINARY_USERNAME}
+              getCloudinarySignature={getCloudinarySignature}
+              onInsertedImage={imgUrl => handleChange(componentProp, imgUrl)}
+            />
           </>
         )
       }
