@@ -112,8 +112,7 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     backgroundColor: theme.palette.action.main,
-    border: '1px solid',
-    borderColor: theme.palette.tertiary.main,
+    border: 'none',
     borderRadius: 4,
     borderBottomLeftRadius: 0,
     borderLeft: 0,
@@ -122,21 +121,17 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.background.default,
     height: '100%',
     padding: 4,
-    minWidth: 32,
-    minHeight: 35,
+    minWidth: 40,
+    minHeight: 40,
     transition: 'all 0.2s ease 0.2s',
     zIndex: 2,
     '&:hover': {
       backgroundColor: fade(theme.palette.action.main, 0.8),
     },
   },
-})
+}))
 
-function SearchInput({
-  onSearch,
-  placeholderText,
-  query = baseQuery,
-}) {
+function SearchInput({ onSearch, placeholderText, query = baseQuery }) {
   const classes = useStyles()
   const [state, setState] = useState({
     term: '',
