@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.30.0](https://github.com/nearform/orion/compare/v2.29.0...v2.30.0) (2020-03-18)
+
+
+### Features
+
+* 🎸 include signature and timestamp in cloudinary claims ([8cd8be2](https://github.com/nearform/orion/commit/8cd8be2eb74e2b7a7176adcd0a9a36fd2eeb96c1))
+
+
+
+
+
 # [2.29.0](https://github.com/nearform/orion/compare/v2.28.2...v2.29.0) (2020-03-18)
 
 
