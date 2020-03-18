@@ -60,7 +60,7 @@ function PageSettings({ open, onCancel, onSave, page }) {
   }, [layout, onSave, page, path, published, showInMenu, title])
 
   return (
-    <Dialog open={open} onClose={handleCancel}>
+    <Dialog fullWidth open={open} onClose={handleCancel}>
       <DialogTitle>Page settings</DialogTitle>
       <DialogContent>
         <FormControl fullWidth className={classes.input}>

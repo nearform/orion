@@ -1,5 +1,13 @@
-const theme = require('./theme')
+import MuiButton from './mui/muiComponentsOverrides/mui-button'
+import MuiInput from './mui/muiComponentsOverrides/mui-input'
+import palette from './mui/palette'
+import typography from './mui/typography'
 
-module.exports = {
-  theme,
+export default {
+  overrides: {
+    MuiButton,
+    MuiInput,
+  },
+  palette,
+  typography,
 }

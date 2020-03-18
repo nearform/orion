@@ -64,13 +64,12 @@ describe('root menu items', () => {
   })
 
   test('renders brand logo button with to url', () => {
-    expect.assertions(3)
+    expect.assertions(2)
     const Logo = () => <div />
     const { getByTestId } = render(<AppBar Logo={Logo} brandTo="/dest1" />)
 
     const logoButton = getByTestId('brand-logo-button')
     expect(logoButton).toBeInTheDocument()
-    expect(logoButton).toHaveClass('brand-logo')
     expect(logoButton).toHaveAttribute('href', '/dest1')
   })
 

@@ -5,7 +5,6 @@ import { Breadcrumbs, Typography } from '@material-ui/core'
 import ArrowRightAlt from '@material-ui/icons/ArrowRightAlt'
 
 function BreadcrumbNavigation({
-  classes,
   data = [],
   itemsAfterCollapse,
   itemsBeforeCollapse,
@@ -15,7 +14,6 @@ function BreadcrumbNavigation({
 }) {
   return (
     <Breadcrumbs
-      classes={classes}
       itemsAfterCollapse={itemsAfterCollapse}
       itemsBeforeCollapse={itemsBeforeCollapse}
       maxItems={maxItems}
@@ -36,7 +34,6 @@ function BreadcrumbNavigation({
 }
 
 BreadcrumbNavigation.propTypes = {
-  classes: T.object,
   data: T.arrayOf(
     T.shape({
       title: T.string.isRequired,

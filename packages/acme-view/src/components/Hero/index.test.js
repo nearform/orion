@@ -1,14 +1,13 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import theme from 'gatsby-theme-acme'
 
 import Hero from '.'
 
 test('renders search bar', () => {
   const { getByPlaceholderText } = render(
-    <ThemeProvider
-      theme={createMuiTheme({ palette: { tertiary: {}, common: {} } })}
-    >
+    <ThemeProvider theme={createMuiTheme(theme)}>
       <Hero />
     </ThemeProvider>
   )
@@ -21,9 +20,7 @@ test('renders search bar', () => {
 test('background image can be set', () => {
   const expectedImageSrc = 'the-image.jpg'
   const { container } = render(
-    <ThemeProvider
-      theme={createMuiTheme({ palette: { tertiary: {}, common: {} } })}
-    >
+    <ThemeProvider theme={createMuiTheme(theme)}>
       <Hero imageSrc={expectedImageSrc} />
     </ThemeProvider>
   )

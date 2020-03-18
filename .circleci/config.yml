@@ -49,6 +49,8 @@ get_envars: &get_envars
         echo "export EDIT_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/edit_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
         echo "export VIEW_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/view_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
         echo "export STORYBOOK_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/storybook_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
+        echo "export GATSBY_AWS_COOKIE_DOMAIN=.nearform.com" >> .env
+        echo "export GATSBY_AWS_COOKIE_SECURE=true" >> .env
 
 
 load_envars: &load_envars
