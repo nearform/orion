@@ -43,7 +43,9 @@ export const handler = async event => {
             'X-Orion-User-Role': user.orionRole.name,
             'X-Orion-User-Group': user.orionGroup.name,
           }),
-          'X-Cloudinary-Signature': getCloudinaryMediaLibrarySignature(),
+          'X-Cloudinary-Claims': JSON.stringify(
+            getCloudinaryMediaLibrarySignature()
+          ),
         },
       },
     }
