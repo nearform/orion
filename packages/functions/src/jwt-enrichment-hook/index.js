@@ -2,7 +2,6 @@ import graphql from '../graphql'
 import getUserByCognitoId from './graphql/get-user-by-cognito-id.graphql'
 import getGuestRole from './graphql/get-guest-role.graphql'
 import { createNumericRolePermissions } from '../../../gatsby-plugin-orion-core/src/utils/permissions'
-import cloudinarySignature from './cloudinary-signature'
 import getCloudinaryMediaLibrarySignature from './cloudinary-signture'
 
 export const handler = async event => {
