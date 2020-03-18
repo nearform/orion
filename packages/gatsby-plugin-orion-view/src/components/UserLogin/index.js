@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-import { Auth } from 'aws-amplify'
-
+import { Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
 import { Grid, Button, Typography } from '@material-ui/core'
-
 import { Form } from 'gatsby-plugin-orion-core'
 
 const UserLogin = ({ setAuthStage }) => {

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { sha256 } from 'js-sha256'
-import { Storage } from 'aws-amplify'
+import { Storage } from '../utils/amplify'
 import useAmplifyImage from './useAmplifyImage'
 
 function useImageUpload({
