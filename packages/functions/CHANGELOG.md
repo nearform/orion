@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.29.0](https://github.com/nearform/orion/compare/v2.28.2...v2.29.0) (2020-03-18)
+
+
+### Features
+
+* 🎸 cloudinary signature in jwt enrichment token ([6195f8a](https://github.com/nearform/orion/commit/6195f8aad7ab929a9305ffdffa664ef586bd9fb7))
+
+
+
+
+
 # [2.26.0](https://github.com/nearform/orion/compare/v2.25.0...v2.26.0) (2020-03-10)
 
 
