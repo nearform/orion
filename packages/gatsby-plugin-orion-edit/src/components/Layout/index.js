@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect, useReducer } from 'react'
 import BreadcrumbNavigation from 'gatsby-plugin-orion-core/src/components/BreadcrumbNavigation'
-import SideBarMenu from 'gatsby-plugin-orion-core/src/components/SideBarMenu'
+import TreeView from '../TreeView'
 import { makeStyles } from '@material-ui/core'
 
 const drawerWidth = 318
@@ -36,17 +36,11 @@ const useStyles = makeStyles(theme => ({
     zIndex: 1,
   },
   side: {
+    overflowX: 'hidden',
     overflowY: 'scroll',
     marginBottom: theme.spacing(1),
     marginTop: 62,
     width: drawerWidth,
-    '& > div': {
-      width: drawerWidth,
-    },
-    '& ul': {
-      height: '100%',
-      padding: 0,
-    },
   },
   top: {
     alignItems: 'center',
@@ -64,13 +58,55 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function Layout({ action, breadcrumbs, children, data, path }) {
+function reducer(data, { type, ...payload }) {
+  const getItem = (path, data) => {
+    let current = data
+
+    for (const index of path) {
+      current = current.children[index]
+    }
+
+    return current
+  }
+
+  switch (type) {
+    case 'reset':
+      return payload
+
+    case 'collapse':
+      const update = { ...data }
+      const item = getItem(payload.path, update)
+
+      item.collapsed = payload.collapsed
+
+      return update
+
+    case 'move':
+      console.log(payload)
+
+      return data
+
+    default:
+      throw new Error('Invalid action')
+  }
+}
+
+function Layout({ action, breadcrumbs, children, data: initialData }) {
   const classes = useStyles()
+  const [data, dispatch] = useReducer(reducer, initialData)
+
+  useEffect(() => {
+    dispatch({ type: 'reset', ...initialData })
+  }, [initialData])
 
   return (
     <div className={classes.root}>
       <div className={classes.side}>
-        <SideBarMenu data={data} depthIndent={20} path={path} />
+        <TreeView
+          root={data}
+          onCollapsedChange={(path, collapsed) => dispatch({ type: 'collapse', path, collapsed })}
+          onMove={(srcPath, destPath) => dispatch({ type: 'move', srcPath, destPath })}
+        />
       </div>
       <div className={classes.main}>
         <div className={classes.top}>
