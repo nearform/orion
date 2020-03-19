@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.31.0](https://github.com/nearform/orion/compare/v2.30.0...v2.31.0) (2020-03-19)
+
+
+### Features
+
+* 🎸 cloudinary image chooser using sig from jwt ([8d8add9](https://github.com/nearform/orion/commit/8d8add9b5bf6b187b9b2b4d535ead0370dee3363))
+* 🎸 embed cloudinary in page editor ([75b11b6](https://github.com/nearform/orion/commit/75b11b60ccddc2f86b0e2fc70e392eb4a1542379))
+* 🎸 style cloudinary media library ([7eb91d0](https://github.com/nearform/orion/commit/7eb91d0890089e4353fd8bca8e19603a478c064a))
+
+
+
+
+
 ## [2.28.2](https://github.com/nearform/orion/compare/v2.28.1...v2.28.2) (2020-03-18)
 
 **Note:** Version bump only for package gatsby-plugin-orion-edit
