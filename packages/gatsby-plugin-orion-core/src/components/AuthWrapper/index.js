@@ -125,9 +125,8 @@ const AwsAuthWrapper = props => (
   </Authenticator>
 )
 
-AuthWrapper.propTypes = {
+AwsAuthWrapper.propTypes = {
   children: T.node.isRequired,
-  authState: T.object.isRequired,
 }
 
 export default AwsAuthWrapper
