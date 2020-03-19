@@ -5,15 +5,32 @@ import getCloudinarySignature from 'gatsby-plugin-orion-core/src/utils/cloudinar
 import {
   FormControl,
   Input,
+  InputBase,
   InputLabel,
   MenuItem,
   Select,
   makeStyles,
+  Paper,
 } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   input: {
     marginBottom: theme.spacing(1),
+  },
+  imageInputPaper: {
+    display: 'flex',
+    marginTop: 16,
+    paddingBottom: 8.5,
+    paddingTop: 7.5,
+    paddingLeft: 12,
+    border: 'solid 1px',
+    borderColor: theme.palette.tertiary.main,
+    backgroundColor: theme.palette.background.dark,
+    boxShadow: 'none',
+  },
+  imageInputBase: {
+    fontSize: 12,
+    flex: 1,
   },
 }))
 
@@ -60,8 +77,9 @@ export default function createPropEditor(componentProps) {
 
       if (type === 'image') {
         input = (
-          <>
-            <Input
+          <Paper className={classes.imageInputPaper}>
+            <InputBase
+              className={classes.imageInputBase}
               value={value}
               required={required}
               onChange={event => {
@@ -75,7 +93,7 @@ export default function createPropEditor(componentProps) {
               getCloudinarySignature={getCloudinarySignature}
               onInsertedImage={imgUrl => handleChange(componentProp, imgUrl)}
             />
-          </>
+          </Paper>
         )
       }
 

@@ -1,6 +1,36 @@
 import React, { useState } from 'react'
-import { Button, Paper, Modal } from '@material-ui/core'
-import { AddAPhoto } from '@material-ui/icons'
+import { Button, Paper, Modal, makeStyles } from '@material-ui/core'
+import { PermMedia } from '@material-ui/icons'
+
+const useStyles = makeStyles(() => ({
+  root: {
+    '& .MuiButton-root': {
+      paddingBottom: 8.5,
+      paddingTop: 7.5,
+      minWidth: 0,
+      boxShadow: 'none',
+      '& .MuiButton-label': {
+        width: 32,
+      },
+      '&:hover': {
+        backgroundColor: 'transparent',
+      },
+      '& .MuiSvgIcon-root': {
+        width: 24,
+        height: 24,
+      },
+    },
+  },
+  modal: {
+    width: '80vw',
+    height: '80vh',
+    margin: 'auto',
+  },
+  orionMediaLibrary: {
+    width: '100%',
+    height: '100%',
+  },
+}))
 
 const CloudinaryImageChooser = ({
   cloudinaryCloudName,
@@ -9,6 +39,7 @@ const CloudinaryImageChooser = ({
   getCloudinarySignature = () => undefined,
   onInsertedImage = () => undefined,
 }) => {
+  const classes = useStyles()
   const [show, setShow] = useState(false)
 
   async function openLibrary() {
@@ -19,6 +50,9 @@ const CloudinaryImageChooser = ({
       username: cloudinaryUsername,
       timestamp,
       signature,
+      // Setting the container to an element by react ref did not work
+      // Cloudinary only rendered when the container was referenced by a selector
+      // See: https://cloudinary.com/documentation/media_library_widget#3_set_the_configuration_options
       inline_container: '#orion-media-library', // eslint-disable-line camelcase
       remove_header: true, // eslint-disable-line camelcase
       multiple: false,
@@ -37,27 +71,21 @@ const CloudinaryImageChooser = ({
   }
 
   return (
-    <>
+    <div className={classes.root}>
       <Button onClick={() => setShow(!show)}>
-        <AddAPhoto /> Open Media Library
+        <PermMedia />
       </Button>
       <Modal
         open={show}
-        style={{
-          width: '80vw',
-          height: '80vh',
-          margin: 'auto',
-        }}
+        className={classes.modal}
         onClose={() => setShow(false)}
         onRendered={() => openLibrary()}
       >
-        <Paper
-          hidden={!show}
-          style={{ height: '100%', width: '100%' }}
-          id="orion-media-library"
-        />
+        <Paper className={classes.orionMediaLibrary}>
+          <div id="orion-media-library" className={classes.orionMediaLibrary} />
+        </Paper>
       </Modal>
-    </>
+    </div>
   )
 }
 
