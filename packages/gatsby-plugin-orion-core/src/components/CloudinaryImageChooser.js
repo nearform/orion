@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Paper, Modal, makeStyles } from '@material-ui/core'
 import { PermMedia } from '@material-ui/icons'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -36,8 +37,8 @@ const CloudinaryImageChooser = ({
   cloudinaryCloudName,
   cloudinaryApiKey,
   cloudinaryUsername,
-  getCloudinarySignature = () => undefined,
-  onInsertedImage = () => undefined,
+  getCloudinarySignature,
+  onInsertedImage,
 }) => {
   const classes = useStyles()
   const [show, setShow] = useState(false)
@@ -87,6 +88,18 @@ const CloudinaryImageChooser = ({
       </Modal>
     </div>
   )
+}
+
+CloudinaryImageChooser.propTypes = {
+  cloudinaryCloudName: PropTypes.string.isRequired,
+  cloudinaryApiKey: PropTypes.string.isRequired,
+  cloudinaryUsername: PropTypes.string.isRequired,
+  getCloudinarySignature: PropTypes.func.isRequired,
+  onInsertedImage: PropTypes.func,
+}
+
+CloudinaryImageChooser.defaultProps = {
+  onInsertedImage: () => undefined,
 }
 
 export default CloudinaryImageChooser

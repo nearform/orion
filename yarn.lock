@@ -19559,6 +19559,13 @@ react-select@^3.0.8:
     react-input-autosize "^2.2.2"
     react-transition-group "^2.2.1"
 
+react-serp-preview@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/react-serp-preview/-/react-serp-preview-0.3.1.tgz#2e168e3b69890417575f06c1ac7dfdbceeec41f1"
+  integrity sha512-dFnO8ADWQjPqYL7UnluIt/0oSNqXAq0dRrktjbS1/Ysc1U2pzbb3N9fP4kjvaxTsYzGnkJVtzhjeSEpUupzG2A==
+  dependencies:
+    prop-types "^15.6.0"
+
 react-side-effect@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-1.2.0.tgz#0e940c78faba0c73b9b0eba9cd3dda8dfb7e7dae"
