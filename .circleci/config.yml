@@ -53,7 +53,7 @@ get_envars: &get_envars
         echo "export GATSBY_AWS_COOKIE_SECURE=true" >> .env
         echo "export GATSBY_CLOUDINARY_USERNAME=orion-dev@nearform.com" >> .env
         echo "export GATSBY_CLOUDINARY_CLOUD_NAME=orionacme" >> .env
-        echo "export GATSBY_CLOUDINARY_API_KEY=896844219399941" >> .env
+        echo "export GATSBY_CLOUDINARY_API_KEY=949742159216452" >> .env
 
 
 load_envars: &load_envars
