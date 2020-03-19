@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import MarkdownEditor from '../MarkdownEditor/MarkdownEditor'
-import CloudinaryImageChooser from 'gatsby-plugin-orion-core/src/components/CloudinaryMediaLibrary'
+import CloudinaryImageChooser from 'gatsby-plugin-orion-core/src/components/CloudinaryImageChooser'
 import getCloudinarySignature from 'gatsby-plugin-orion-core/src/utils/cloudinary-signature-from-auth'
 import {
   FormControl,
