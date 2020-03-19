@@ -1,17 +1,36 @@
 import React, { useCallback } from 'react'
 import MarkdownEditor from '../MarkdownEditor/MarkdownEditor'
+import CloudinaryImageChooser from 'gatsby-plugin-orion-core/src/components/CloudinaryImageChooser'
+import getCloudinarySignature from 'gatsby-plugin-orion-core/src/utils/cloudinary-signature-from-auth'
 import {
   FormControl,
   Input,
+  InputBase,
   InputLabel,
   MenuItem,
   Select,
   makeStyles,
+  Paper,
 } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   input: {
     marginBottom: theme.spacing(1),
+  },
+  imageInputPaper: {
+    display: 'flex',
+    marginTop: 16,
+    paddingBottom: 8.5,
+    paddingTop: 7.5,
+    paddingLeft: 12,
+    border: 'solid 1px',
+    borderColor: theme.palette.tertiary.main,
+    backgroundColor: theme.palette.background.dark,
+    boxShadow: 'none',
+  },
+  imageInputBase: {
+    fontSize: 12,
+    flex: 1,
   },
 }))
 
@@ -53,6 +72,28 @@ export default function createPropEditor(componentProps) {
               handleChange(componentProp, event.target.value)
             }}
           />
+        )
+      }
+
+      if (type === 'image') {
+        input = (
+          <Paper className={classes.imageInputPaper}>
+            <InputBase
+              className={classes.imageInputBase}
+              value={value}
+              required={required}
+              onChange={event => {
+                handleChange(componentProp, event.target.value)
+              }}
+            />
+            <CloudinaryImageChooser
+              cloudinaryApiKey={process.env.GATSBY_CLOUDINARY_API_KEY}
+              cloudinaryCloudName={process.env.GATSBY_CLOUDINARY_CLOUD_NAME}
+              cloudinaryUsername={process.env.GATSBY_CLOUDINARY_USERNAME}
+              getCloudinarySignature={getCloudinarySignature}
+              onInsertedImage={imgUrl => handleChange(componentProp, imgUrl)}
+            />
+          </Paper>
         )
       }
 

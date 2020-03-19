@@ -5,6 +5,7 @@ packages/components/storybook-static
 packages/functions/build
 /hasura-schema.json
 terraform
+packages/acme-edit/static/all.js
 
 # ingore the build result.
 packages/knowledge-base/.cache

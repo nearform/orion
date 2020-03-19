@@ -140,7 +140,7 @@ export default {
     image: {
       label: 'Image',
       required: false,
-      type: 'string',
+      type: 'image',
     },
     content: {
       label: 'Content',
