@@ -12,6 +12,7 @@ import youtube from 'gatsby-plugin-orion-core/src/assets/social/logo-youtube.svg
 import twitter from 'gatsby-plugin-orion-core/src/assets/social/logo-twitter.svg'
 import linkedin from 'gatsby-plugin-orion-core/src/assets/social/logo-linkedin.svg'
 import Logo from 'gatsby-plugin-orion-core/src/assets/logo.inline.svg'
+import { Helmet } from 'react-helmet'
 
 const socialIcons = [
   {
@@ -74,6 +75,9 @@ function Layout({ children, menu, page }) {
 
   return (
     <div className={classes.root}>
+      <Helmet>
+        <title>{page.title} | Acme</title>
+      </Helmet>
       <header>
         <AcmeAppBar
           brandTo="/"
