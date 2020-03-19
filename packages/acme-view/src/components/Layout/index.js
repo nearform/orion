@@ -6,13 +6,13 @@ import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
 import SecondaryAppBar from 'gatsby-plugin-orion-view/src/components/SecondaryAppBar'
 import { useLocation } from '@reach/router'
 import { makeStyles } from '@material-ui/core'
+import { Helmet } from 'react-helmet'
 
 import facebook from 'gatsby-plugin-orion-core/src/assets/social/logo-fb.svg'
 import youtube from 'gatsby-plugin-orion-core/src/assets/social/logo-youtube.svg'
 import twitter from 'gatsby-plugin-orion-core/src/assets/social/logo-twitter.svg'
 import linkedin from 'gatsby-plugin-orion-core/src/assets/social/logo-linkedin.svg'
 import Logo from 'gatsby-plugin-orion-core/src/assets/logo.inline.svg'
-import { Helmet } from 'react-helmet'
 
 const socialIcons = [
   {
