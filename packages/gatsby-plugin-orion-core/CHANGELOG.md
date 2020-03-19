@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.31.0](https://github.com/nearform/orion/compare/v2.30.0...v2.31.0) (2020-03-19)
+
+
+### Features
+
+* 🎸 cloudinary image chooser using sig from jwt ([8d8add9](https://github.com/nearform/orion/commit/8d8add9b5bf6b187b9b2b4d535ead0370dee3363))
+* 🎸 Cloudinary media library component + story ([835fc90](https://github.com/nearform/orion/commit/835fc90950b372876286735150b6b110c009c82c))
+* 🎸 embed cloudinary in page editor ([75b11b6](https://github.com/nearform/orion/commit/75b11b60ccddc2f86b0e2fc70e392eb4a1542379))
+* 🎸 style cloudinary media library ([7eb91d0](https://github.com/nearform/orion/commit/7eb91d0890089e4353fd8bca8e19603a478c064a))
+
+
+
+
+
+## [2.28.2](https://github.com/nearform/orion/compare/v2.28.1...v2.28.2) (2020-03-18)
+
+
+### Bug Fixes
+
+* 🐛 authorization persistance via cookie ([ac03e1c](https://github.com/nearform/orion/commit/ac03e1c7d92c5eaec1cb6642ebfc41a83fadf9db))
+
+
+
+
+
+## [2.28.1](https://github.com/nearform/orion/compare/v2.28.0...v2.28.1) (2020-03-17)
+
+**Note:** Version bump only for package gatsby-plugin-orion-core
+
+
+
+
+
+# [2.28.0](https://github.com/nearform/orion/compare/v2.27.1...v2.28.0) (2020-03-13)
+
+
+### Features
+
+* 🎸 new layout, preview mode ([9657bcf](https://github.com/nearform/orion/commit/9657bcfb80fc4e55fc9589c7425b59d091f050ef))
+
+
+
+
+
 ## [2.27.1](https://github.com/nearform/orion/compare/v2.27.0...v2.27.1) (2020-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-orion-core

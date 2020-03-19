@@ -1,72 +1,66 @@
 import React from 'react'
 import T from 'prop-types'
-
-import {
-  withStyles,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-} from '@material-ui/core'
-import Close from '@material-ui/icons/Close'
-
 import ListOfListItems from '../ListOfListItems'
+import { List, makeStyles } from '@material-ui/core'
+import { fade } from '@material-ui/core/styles/colorManipulator'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    '& .MuiListItemText-root': {
+      color: theme.palette.background.default,
+    },
+    '& .MuiListItem-root': {
+      color: theme.palette.tertiary.main,
+      '& > .MuiIcon-colorPrimary': {
+        color: theme.palette.tertiary.main,
+      },
+      '& > .MuiIcon-colorAction': {
+        color: theme.palette.action.main,
+      },
+      '& > .MuiIcon-root': {
+        marginRight: '8px',
+      },
+      '& > .expand-icon': {
+        height: '32px',
+        width: '32px',
+      },
+    },
+    '& .MuiListItem-button': {
+      '&:hover': {
+        backgroundColor: fade(theme.palette.secondary.main, 0.85),
+      },
+    },
+  },
+}))
 
 function SideBarMenu({
-  classes,
-  closeSidebar,
   data = [],
-  variant = 'permanent',
   userRole,
   path,
   isFullyExpanded = false,
   depthIndent = 20,
-  ...props
 }) {
+  const classes = useStyles()
+
   return (
-    <Drawer variant={variant} {...props}>
-      <List>
-        {variant === 'persistent' && (
-          <ListItem>
-            <span className={classes.headerHead}>
-              <IconButton className={classes.iconButton} onClick={closeSidebar}>
-                <Close className="close-button" />
-              </IconButton>
-            </span>
-          </ListItem>
-        )}
-        <ListOfListItems
-          data={data}
-          userRole={userRole}
-          currentPath={path}
-          isFullyExpanded={isFullyExpanded}
-          depthIndent={depthIndent}
-        />
-      </List>
-    </Drawer>
+    <List className={classes.root}>
+      <ListOfListItems
+        data={data}
+        userRole={userRole}
+        currentPath={path}
+        isFullyExpanded={isFullyExpanded}
+        depthIndent={depthIndent}
+      />
+    </List>
   )
 }
 
 SideBarMenu.propTypes = {
-  classes: T.object.isRequired,
-  data: T.object.isRequired,
-  variant: T.oneOf(['permanent', 'persistent']).isRequired,
+  data: T.array.isRequired,
   userRole: T.oneOf(['Admin', 'User']),
   path: T.string.isRequired,
-  isFullyExpanded: T.bool.isRequired,
+  isFullyExpanded: T.bool,
   depthIndent: T.number.isRequired,
-  closeSidebar: T.func,
 }
 
-const styles = () => ({
-  headerHead: {
-    width: '100%',
-    paddingTop: '0px',
-  },
-  iconButton: {
-    float: 'right',
-    padding: '4px',
-  },
-})
-
-export default withStyles(styles)(SideBarMenu)
+export default SideBarMenu

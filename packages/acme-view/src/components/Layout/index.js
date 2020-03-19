@@ -4,8 +4,8 @@ import Footer from 'gatsby-plugin-orion-core/src/components/Footer'
 import AcmeAppBar from '../AcmeAppBar'
 import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
 import SecondaryAppBar from 'gatsby-plugin-orion-view/src/components/SecondaryAppBar'
-import { withStyles } from '@material-ui/core'
 import { useLocation } from '@reach/router'
+import { makeStyles } from '@material-ui/core'
 
 import facebook from 'gatsby-plugin-orion-core/src/assets/social/logo-fb.svg'
 import youtube from 'gatsby-plugin-orion-core/src/assets/social/logo-youtube.svg'
@@ -34,7 +34,31 @@ const socialIcons = [
 
 const Img = ({ ...props }) => <img alt="social" {...props} />
 
-function Layout({ children, classes, menu, page }) {
+const useStyles = makeStyles(theme => ({
+  '@global': {
+    'html, body, body > div:first-child, body > div:first-child > div:first-child': {
+      height: '100%',
+    },
+    body: {
+      overflowY: 'scroll',
+      fontFamily: theme.fontFamily,
+    },
+  },
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    '& main': {
+      flex: 1,
+    },
+    '& footer > div': {
+      overflow: 'hidden',
+    },
+  },
+}))
+
+function Layout({ children, menu, page }) {
+  const classes = useStyles()
   const location = useLocation()
 
   const parents = useMemo(() => {
@@ -54,13 +78,13 @@ function Layout({ children, classes, menu, page }) {
         <AcmeAppBar
           brandTo="/"
           Logo={Logo}
-          childIndicatorIcon="fas fa-chevron-right"
-          dropDownIndicatorIcon="fas fa-chevron-down"
+          childIndicatorIcon="fas fa-caret-right"
+          dropDownIndicatorIcon="fas fa-caret-down"
           userRole="User"
           menuData={menu}
           location={location.pathname}
         />
-        {location.pathname !== '/' && (
+        {(!page || page.layout !== 'home') && (
           <SecondaryAppBar
             action={<SearchInput onSearch={() => {}} />}
             data={parents}
@@ -77,17 +101,13 @@ function Layout({ children, classes, menu, page }) {
 
 Layout.propTypes = {
   children: T.node.isRequired,
-  classes: T.object,
   page: T.object,
   menu: T.array,
 }
 
 Layout.defaultProps = {
-  classes: undefined,
   page: undefined,
   menu: undefined,
 }
 
-const styles = theme => ({ ...theme.layout })
-
-export default withStyles(styles, { withTheme: true })(Layout)
+export default Layout

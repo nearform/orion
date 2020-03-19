@@ -1,30 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import awsConfig from './utils/aws-exports'
+import React, { useEffect } from 'react'
+import { loadCSS } from 'fg-loadcss'
 import AuthWrapper from './src/components/AuthWrapper'
-import { ClientContext } from 'graphql-hooks'
-import { initGraphQLClient, makeGraphQLClient } from './utils/graphql'
+import GraphQLProvider from './src/components/GraphQLProvider'
 
-const client = makeGraphQLClient(process.env.GATSBY_GRAPHQL_API)
-
-const AuthInitWrapper = ({ element }) => {
-  const [isAuthInitialized, setIsAuthInitialized] = useState(false)
-
+function FontAwesomeLoader({ children }) {
   useEffect(() => {
-    const init = async () => {
-      await initGraphQLClient(client, awsConfig)
-      setIsAuthInitialized(true)
-    }
-
-    init()
+    loadCSS(
+      'https://use.fontawesome.com/releases/v5.12.1/css/all.css',
+      document.querySelector('#font-awesome-css')
+    )
   }, [])
 
-  return (
-    <ClientContext.Provider value={client}>
-      <AuthWrapper isAuthInitialized={isAuthInitialized}>{element}</AuthWrapper>
-    </ClientContext.Provider>
-  )
+  return children
 }
 
 export const wrapRootElement = ({ element }) => (
-  <AuthInitWrapper client={client} element={element} />
+  <FontAwesomeLoader>
+    <AuthWrapper>
+      <GraphQLProvider>{element}</GraphQLProvider>
+    </AuthWrapper>
+  </FontAwesomeLoader>
 )

@@ -2,7 +2,7 @@
   "name": "gatsby-plugin-orion-view",
   "description": "Orion core view plugin",
   "main": "index.js",
-  "version": "2.27.1",
+  "version": "2.31.0",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
@@ -17,8 +17,7 @@
     "@material-ui/styles": "^4.9.0",
     "aws-amplify": "^2.2.6",
     "date-fns": "^2.10.0",
-    "gatsby-plugin-orion-core": "^2.27.1",
-    "gatsby-theme-acme": "^2.23.0",
+    "gatsby-plugin-orion-core": "^2.31.0",
     "graphql-hooks": "^4.4.2",
     "prop-types": "^15.7.2",
     "react-twemoji": "^0.2.3"

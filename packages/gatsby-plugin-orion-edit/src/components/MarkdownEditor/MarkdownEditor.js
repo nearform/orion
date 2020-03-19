@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { withStyles } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 import ReactMde, { commands } from 'react-mde'
 import ReactMarkdown from 'react-markdown'
 
@@ -21,27 +21,7 @@ const listCommands = [
   },
 ]
 
-const MarkdownEditor = ({ content = '', onChange = () => {}, classes }) => {
-  const [selectedTab, setSelectedTab] = useState('write')
-
-  return (
-    <div className={classes.container}>
-      <ReactMde
-        classes={classes}
-        commands={listCommands}
-        value={content}
-        selectedTab={selectedTab}
-        generateMarkdownPreview={markdown =>
-          Promise.resolve(<ReactMarkdown source={markdown} />)
-        }
-        onChange={onChange}
-        onTabChange={setSelectedTab}
-      />
-    </div>
-  )
-}
-
-export default withStyles(theme => {
+const useStyles = makeStyles(theme => {
   return {
     container: {
       position: 'relative',
@@ -83,4 +63,27 @@ export default withStyles(theme => {
       borderRadius: `0 0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
     },
   }
-})(MarkdownEditor)
+})
+
+const MarkdownEditor = ({ content = '', onChange = () => {} }) => {
+  const classes = useStyles()
+  const [selectedTab, setSelectedTab] = useState('write')
+
+  return (
+    <div className={classes.container}>
+      <ReactMde
+        classes={classes}
+        commands={listCommands}
+        value={content}
+        selectedTab={selectedTab}
+        generateMarkdownPreview={markdown =>
+          Promise.resolve(<ReactMarkdown source={markdown} />)
+        }
+        onChange={onChange}
+        onTabChange={setSelectedTab}
+      />
+    </div>
+  )
+}
+
+export default MarkdownEditor

@@ -1,10 +1,49 @@
 import React from 'react'
 import T from 'prop-types'
-import { withStyles, Grid, Typography } from '@material-ui/core'
+import { Grid, Typography, makeStyles } from '@material-ui/core'
 import { Link } from '@reach/router'
 import PaddedContainer from '../PaddedContainer'
 
-function Footer({ classes, Img, socialIcons = [], Logo }) {
+const useStyles = makeStyles(theme => ({
+  footer: {
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.background.default,
+    paddingTop: '28px',
+    '& .root': {
+      paddingTop: '28px',
+    },
+    '& .MuiGrid-root': {
+      '&:second-of-type': {
+        marginBottom: '88px',
+      },
+      '& .social-logos': {
+        '& > a': {
+          display: 'block',
+        },
+      },
+    },
+    '& .logo': {
+      display: 'block',
+      width: 110,
+    },
+    '& .terms': {
+      '& > .MuiGrid-root': {
+        margin: '30px 8px 30px',
+      },
+      '& a': {
+        color: theme.palette.background.default,
+        textDecoration: 'none',
+      },
+    },
+    '& .greeting': {
+      fontWeight: 'bold',
+    },
+  },
+}))
+
+function Footer({ Img, socialIcons = [], Logo }) {
+  const classes = useStyles()
+
   return (
     <div className={classes.footer}>
       <PaddedContainer>
@@ -80,19 +119,15 @@ function Footer({ classes, Img, socialIcons = [], Logo }) {
   )
 }
 
-const styles = theme => ({ ...theme.footer })
-
 Footer.propTypes = {
-  classes: T.object,
   Img: T.elementType.isRequired,
   socialIcons: T.arrayOf(T.object),
-  Logo: T.element,
+  Logo: T.elementType,
 }
 
 Footer.defaultProps = {
-  classes: {},
   socialIcons: [],
   Logo: undefined,
 }
 
-export default withStyles(styles, { withTheme: true })(Footer)
+export default Footer

@@ -104,10 +104,10 @@ function ListOfListItems({
 }
 
 ListOfListItems.propTypes = {
-  data: T.object.isRequired,
+  data: T.array.isRequired,
   userRole: T.oneOf(['Admin', 'User']),
   currentPath: T.string.isRequired,
-  isFullyExpanded: T.bool.isRequired,
+  isFullyExpanded: T.bool,
   depthIndent: T.number.isRequired,
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Grid, Button, Typography } from '@material-ui/core'
-import { Auth } from 'aws-amplify'
+import { Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
 
 import { Form } from 'gatsby-plugin-orion-core'
 
@@ -36,6 +36,7 @@ const UserRegistrationConfirm = ({ setAuthStage, username }) => {
             direction="row"
             justify="space-between"
             alignItems="center"
+            spacing={1}
             {...props}
           >
             <Grid>&nbsp;</Grid>

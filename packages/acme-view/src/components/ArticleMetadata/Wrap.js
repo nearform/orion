@@ -34,7 +34,7 @@ function ArticleMetadata({ page, readTime }) {
       return page.ancestry[page.ancestry.length - 1].ancestor.title
     }
 
-    return ''
+    return 'Acme'
   }, [page])
 
   return (

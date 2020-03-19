@@ -1,20 +1,30 @@
 import React from 'react'
 import T from 'prop-types'
 import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
-import { Grid } from '@material-ui/core'
+import { Grid, makeStyles } from '@material-ui/core'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(4, 0),
+  },
+}))
 
 function ArticleLayout({ content, metadata }) {
+  const classes = useStyles()
+
   return (
-    <PaddedContainer>
-      <Grid container spacing={4}>
-        <Grid item xs={3}>
-          {metadata}
+    <div className={classes.root}>
+      <PaddedContainer>
+        <Grid container spacing={4}>
+          <Grid item xs={3}>
+            {metadata}
+          </Grid>
+          <Grid item xs={7}>
+            {content}
+          </Grid>
         </Grid>
-        <Grid item xs={7}>
-          {content}
-        </Grid>
-      </Grid>
-    </PaddedContainer>
+      </PaddedContainer>
+    </div>
   )
 }
 
