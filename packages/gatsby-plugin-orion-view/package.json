@@ -20,6 +20,7 @@
     "gatsby-plugin-orion-core": "^2.31.0",
     "graphql-hooks": "^4.4.2",
     "prop-types": "^15.7.2",
+    "react-helmet": "^5.2.1",
     "react-twemoji": "^0.2.3"
   },
   "peerDependencies": {

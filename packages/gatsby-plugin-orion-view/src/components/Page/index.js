@@ -2,6 +2,7 @@ import React from 'react'
 import getPageQuery from '../../queries/get-page'
 import { useViewComponents } from '../ViewComponentProvider'
 import { useQuery } from 'graphql-hooks'
+import { Helmet } from 'react-helmet'
 
 function PageProvider({ location, pageContext }) {
   const { components, layouts } = useViewComponents()
@@ -44,7 +45,25 @@ function PageProvider({ location, pageContext }) {
     }
   }
 
-  return <Layout {...blocks} loading={loading} page={page} />
+  const siteName = 'Acme'
+  const { content } = page.contents[0].props
+  const endOfFirstSentence = /\.|\?|!/.exec(content)
+
+  return (
+    <>
+      <Helmet>
+        <title>
+          {page.title} | {siteName}
+        </title>
+        <link rel="canonical" href={`${location.origin}${page.path}`} />
+        <meta
+          name="description"
+          content={content.slice(0, endOfFirstSentence.index + 1)}
+        />
+      </Helmet>
+      <Layout {...blocks} loading={loading} page={page} />
+    </>
+  )
 }
 
 export default PageProvider

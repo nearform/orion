@@ -6,7 +6,6 @@ import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
 import SecondaryAppBar from 'gatsby-plugin-orion-view/src/components/SecondaryAppBar'
 import { useLocation } from '@reach/router'
 import { makeStyles } from '@material-ui/core'
-import { Helmet } from 'react-helmet'
 
 import facebook from 'gatsby-plugin-orion-core/src/assets/social/logo-fb.svg'
 import youtube from 'gatsby-plugin-orion-core/src/assets/social/logo-youtube.svg'
@@ -75,9 +74,6 @@ function Layout({ children, menu, page }) {
 
   return (
     <div className={classes.root}>
-      <Helmet>
-        <title>{page.title} | Acme</title>
-      </Helmet>
       <header>
         <AcmeAppBar
           brandTo="/"
