@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet'
 
 const endOfFirstSentence = content => /\.|\?|!/.exec(content)
 
-const PageSEO = ({ siteName = 'Acme', content, canonicalHref, title }) => (
+const PageSEO = ({ siteName, content, canonicalHref, title }) => (
   <Helmet>
     <title>
       {title} | {siteName}
@@ -16,11 +16,17 @@ const PageSEO = ({ siteName = 'Acme', content, canonicalHref, title }) => (
     />
   </Helmet>
 )
-PageSEO.prototype = {
+PageSEO.propTypes = {
   siteName: PropTypes.string,
   content: PropTypes.string,
   canonicalHref: PropTypes.string,
   title: PropTypes.string,
+}
+PageSEO.defaultProps = {
+  siteName: 'Acme',
+  content: '',
+  canonicalHref: '',
+  title: '',
 }
 
 export default PageSEO
