@@ -35,8 +35,8 @@
     "hosted:e2e-test": "npm run e2e-test -- ./hosted.js -- --screenshots-on-fails",
     "ci:e2e-test": "start-server-and-test 'start:apps' http-get://localhost:8000 'npm run e2e-test ./local.js'",
     "ci:version": "lerna version --conventional-commits --yes --message \"$(echo \"chore(release): %s\\n\\n[skip ci]\")\"",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "start-storybook -s .storybook/public -p 6006",
+    "build-storybook": "build-storybook -s .storybook/public"
   },
   "repository": {
     "type": "git",
@@ -100,7 +100,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged && pretty-quick --staged --pattern '**/*.json'",
+      "pre-commit": "lint-staged && pretty-quick --staged --pattern '**/*.json' --pattern '!lerna.json'",
       "post-commit": "git update-index --again",
       "pre-push": "yarn dev:lint"
     }

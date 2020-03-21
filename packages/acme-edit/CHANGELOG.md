@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.32.0](https://github.com/nearform/orion/compare/v2.31.0...v2.32.0) (2020-03-19)
+
+**Note:** Version bump only for package acme-edit
+
+
+
+
+
+# [2.31.0](https://github.com/nearform/orion/compare/v2.30.0...v2.31.0) (2020-03-19)
+
+
+### Features
+
+* 🎸 embed cloudinary in page editor ([75b11b6](https://github.com/nearform/orion/commit/75b11b60ccddc2f86b0e2fc70e392eb4a1542379))
+
+
+
+
+
+## [2.28.2](https://github.com/nearform/orion/compare/v2.28.1...v2.28.2) (2020-03-18)
+
+
+### Bug Fixes
+
+* 🐛 authorization persistance via cookie ([ac03e1c](https://github.com/nearform/orion/commit/ac03e1c7d92c5eaec1cb6642ebfc41a83fadf9db))
+
+
+
+
+
 ## [2.28.1](https://github.com/nearform/orion/compare/v2.28.0...v2.28.1) (2020-03-17)
 
 **Note:** Version bump only for package acme-edit

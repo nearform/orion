@@ -1,38 +1,14 @@
 import React, { createContext } from 'react'
 import T from 'prop-types'
-import { Auth } from 'aws-amplify'
+import { Auth } from '../../utils/amplify'
+import { Authenticator } from 'aws-amplify-react'
 import { permissions } from '../../utils/permissions'
 
 const isBrowser = typeof window !== 'undefined'
 const HASURA_CLAIMS_NAMESPACE = 'https://hasura.io/jwt/claims'
 const CUSTOM_CLAIMS_NAMESPACE = 'X-Orion-Claims'
 
-export const AuthContext = createContext({ isAuthInitialized: false })
-
-/**
- * A user object exists within a browser window
- *
- * @return {boolean}
- */
-const isAuthenticated = () => isBrowser && Boolean(Auth.user)
-
-/**
- * Extracts data from aws-amplify provided JWT
- *
- * @return {object} JWT namespace data
- */
-const extractTokenPayload = () => {
-  const tokenPayload = isAuthenticated()
-    ? Auth.user.signInUserSession.idToken.payload
-    : undefined
-
-  return tokenPayload
-    ? {
-        ...JSON.parse(tokenPayload[HASURA_CLAIMS_NAMESPACE]),
-        ...JSON.parse(tokenPayload[CUSTOM_CLAIMS_NAMESPACE]),
-      }
-    : undefined
-}
+export const AuthContext = createContext()
 
 /**
  * Compares a given permission set against the given required permissions
@@ -50,7 +26,33 @@ const comparePerms = (permSet, userPerms, reqString) => {
   return divider === '|' ? (val & userPerms) > 0 : (val & userPerms) === val
 }
 
-function AuthWrapper({ children, isAuthInitialized }) {
+function AuthWrapper({ children, authState }) {
+  /**
+   * Extracts data from aws-amplify provided JWT
+   *
+   * @return {object} JWT namespace data
+   */
+  async function extractTokenPayload() {
+    // No tokens in SSR
+    if (!isBrowser) {
+      return
+    }
+
+    // No tokens if not signed in
+    if (authState !== 'signedIn') {
+      return
+    }
+
+    // Get or refresh the current session
+    // See: https://aws-amplify.github.io/docs/js/authentication#retrieve-current-session
+    const session = await Auth.currentSession()
+
+    return {
+      ...JSON.parse(session.getIdToken().payload[HASURA_CLAIMS_NAMESPACE]),
+      ...JSON.parse(session.getIdToken().payload[CUSTOM_CLAIMS_NAMESPACE]),
+    }
+  }
+
   /**
    * Check a user's permissions against required permissions for an action
    * Intended to be called before performing any permission-restricted action
@@ -63,8 +65,8 @@ function AuthWrapper({ children, isAuthInitialized }) {
    *                      False, only one permission set must pass for function to return True
    * @return {boolean} True if permission checks pass, False otherwise
    */
-  const checkPermissions = (permReqs, all = true) => {
-    const { permissions } = getUserTokenData()
+  async function checkPermissions(permReqs, all = true) {
+    const { permissions } = await getUserTokenData()
 
     let hasPerms = false
     for (const permSet in permReqs) {
@@ -84,8 +86,8 @@ function AuthWrapper({ children, isAuthInitialized }) {
    *
    * @return {object} The user object for a logged-in user
    */
-  const getUserTokenData = () => {
-    const claims = extractTokenPayload()
+  async function getUserTokenData() {
+    const claims = await extractTokenPayload()
     return claims === undefined
       ? {
           id: 0,
@@ -106,7 +108,7 @@ function AuthWrapper({ children, isAuthInitialized }) {
   }
 
   const auth = {
-    isAuthInitialized,
+    authState,
     getUserTokenData,
     checkPermissions,
   }
@@ -114,9 +116,17 @@ function AuthWrapper({ children, isAuthInitialized }) {
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
 }
 
-AuthWrapper.propTypes = {
+// Wrap with aws-amplify Authenticator so that the authState is passed as a prop.
+// Setting the hideDefault to true removes any aws-amplify components.
+// See: https://aws-amplify.github.io/docs/js/authentication#customize-your-own-components
+const AwsAuthWrapper = props => (
+  <Authenticator hideDefault>
+    <AuthWrapper {...props} />
+  </Authenticator>
+)
+
+AwsAuthWrapper.propTypes = {
   children: T.node.isRequired,
-  isAuthInitialized: T.bool.isRequired,
 }
 
-export default AuthWrapper
+export default AwsAuthWrapper

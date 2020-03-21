@@ -2,6 +2,7 @@ import graphql from '../graphql'
 import getUserByCognitoId from './graphql/get-user-by-cognito-id.graphql'
 import getGuestRole from './graphql/get-guest-role.graphql'
 import { createNumericRolePermissions } from '../../../gatsby-plugin-orion-core/src/utils/permissions'
+import getCloudinaryMediaLibrarySignature from './cloudinary-signture'
 
 export const handler = async event => {
   try {
@@ -42,6 +43,9 @@ export const handler = async event => {
             'X-Orion-User-Role': user.orionRole.name,
             'X-Orion-User-Group': user.orionGroup.name,
           }),
+          'X-Cloudinary-Claims': JSON.stringify(
+            getCloudinaryMediaLibrarySignature()
+          ),
         },
       },
     }
