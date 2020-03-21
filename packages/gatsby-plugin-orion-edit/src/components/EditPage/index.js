@@ -57,33 +57,45 @@ function EditPage({ initialState, onSave }) {
   const { data } = useQuery(getPagesQuery)
 
   const pages = useMemo(() => {
-    const map = page => {
-      const filter = descendant =>
-        descendant.ancestry.find(ancestor => {
-          return ancestor.ancestor.id === page.id && ancestor.direct
-        })
+    const items = {
+      root: {
+        id: 'root',
+        title: 'root',
+        allowChildren: true,
+        children: [],
+      },
+    }
 
-      const children = data.orion_page.filter(filter).map(map)
+    if (data) {
+      items.root.children = data.orion_page
+        .filter(page => page.ancestry.length === 0)
+        .map(item => item.id)
 
-      return {
-        key: page.id,
-        collapsed: false,
-        label: page.title,
-        to: `/pages/${page.id}/edit`,        
-        iconClass:
-          page.path === '/'
-            ? 'fas fa-home'
-            : children.length === 0
-            ? 'fas fa-long-arrow-alt-right'
-            : 'fas fa-file',
-        children,
+      for (const page of data.orion_page) {
+        const filter = descendant =>
+          descendant.ancestry.find(ancestor => {
+            return ancestor.ancestor.id === page.id && ancestor.direct
+          })
+
+        items[page.id] = {
+          id: page.id,
+          title: page.title,
+          to: `/pages/${page.id}/edit`,
+          children: data.orion_page.filter(filter).map(item => item.id),
+          allowChildren: layouts[page.layout].allowChildren,
+          iconClass:
+            page.path === '/'
+              ? 'fas fa-home'
+              : layouts[page.layout].allowChildren
+              ? 'fas fa-file'
+              : 'fas fa-long-arrow-alt-right',
+        }
       }
     }
 
     return {
-      key: 'root',
-      collapsed: false,
-      children: data ? data.orion_page.filter(page => page.ancestry.length === 0).map(map) : [],
+      rootId: 'root',
+      items,
     }
   }, [data, layouts])
 
@@ -215,11 +227,7 @@ function EditPage({ initialState, onSave }) {
   )
 
   return (
-    <Layout
-      action={actions}
-      breadcrumbs={breadcrumbs}
-      data={pages}
-    >
+    <Layout action={actions} breadcrumbs={breadcrumbs} data={pages}>
       <PageSettings
         open={showSettings}
         page={page}

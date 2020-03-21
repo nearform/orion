@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import React from 'react'
 import BreadcrumbNavigation from 'gatsby-plugin-orion-core/src/components/BreadcrumbNavigation'
 import TreeView from '../TreeView'
 import { makeStyles } from '@material-ui/core'
@@ -58,55 +58,13 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function reducer(data, { type, ...payload }) {
-  const getItem = (path, data) => {
-    let current = data
-
-    for (const index of path) {
-      current = current.children[index]
-    }
-
-    return current
-  }
-
-  switch (type) {
-    case 'reset':
-      return payload
-
-    case 'collapse':
-      const update = { ...data }
-      const item = getItem(payload.path, update)
-
-      item.collapsed = payload.collapsed
-
-      return update
-
-    case 'move':
-      console.log(payload)
-
-      return data
-
-    default:
-      throw new Error('Invalid action')
-  }
-}
-
-function Layout({ action, breadcrumbs, children, data: initialData }) {
+function Layout({ action, breadcrumbs, children, data }) {
   const classes = useStyles()
-  const [data, dispatch] = useReducer(reducer, initialData)
-
-  useEffect(() => {
-    dispatch({ type: 'reset', ...initialData })
-  }, [initialData])
 
   return (
     <div className={classes.root}>
       <div className={classes.side}>
-        <TreeView
-          root={data}
-          onCollapsedChange={(path, collapsed) => dispatch({ type: 'collapse', path, collapsed })}
-          onMove={(srcPath, destPath) => dispatch({ type: 'move', srcPath, destPath })}
-        />
+        <TreeView data={data} />
       </div>
       <div className={classes.main}>
         <div className={classes.top}>
