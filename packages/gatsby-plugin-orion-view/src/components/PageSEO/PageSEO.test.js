@@ -3,8 +3,8 @@ import PageSEO from '.'
 import { render } from '@testing-library/react'
 import { Helmet } from 'react-helmet'
 
-describe('Page component', () => {
-  it('adds meta date to the head based on the data', () => {
+describe('PageSEO component', () => {
+  it('adds metadata to the head based on the props', () => {
     const props = {
       content: "Some content. It's very long.",
       canonicalHref: 'http://localhost:8000/about',
