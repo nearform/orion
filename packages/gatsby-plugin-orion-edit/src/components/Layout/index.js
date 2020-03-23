@@ -1,13 +1,13 @@
 import React from 'react'
 import BreadcrumbNavigation from 'gatsby-plugin-orion-core/src/components/BreadcrumbNavigation'
-import TreeView from '../TreeView'
+import PageTree from '../PageTree'
 import { makeStyles } from '@material-ui/core'
 
 const drawerWidth = 318
 
 const useStyles = makeStyles(theme => ({
   '@global': {
-    'html, body, body > div:first-child, body > div:first-child > div:first-child': {
+    'html, body, body > div:first-child, body > div:first-child > div:first-child, body > div:first-child > div:first-child > div:first-child': {
       height: '100%',
     },
     body: {
@@ -58,13 +58,13 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function Layout({ action, breadcrumbs, children, data }) {
+function Layout({ action, breadcrumbs, children }) {
   const classes = useStyles()
 
   return (
     <div className={classes.root}>
       <div className={classes.side}>
-        <TreeView data={data} />
+        <PageTree />
       </div>
       <div className={classes.main}>
         <div className={classes.top}>

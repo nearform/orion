@@ -1,0 +1,3 @@
+- args:
+    sql: ALTER TABLE "public"."orion_page_ancestry" DROP COLUMN "position";
+  type: run_sql

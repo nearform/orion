@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useReducer, useState } from 'react'
 import createPageMutation from '../../queries/create-page'
-import getPagesQuery from '../../queries/get-pages'
 import updatePageMutation from '../../queries/update-page'
 import ArticleEditButtons from '../ArticleEditButtons'
 import EditComponent from '../EditComponent'
@@ -8,7 +7,7 @@ import Layout from '../Layout'
 import LayoutSelect from '../LayoutSelect'
 import PageSettings from '../PageSettings'
 import { useEditComponents } from '../EditComponentProvider'
-import { useMutation, useQuery } from 'graphql-hooks'
+import { useMutation } from 'graphql-hooks'
 
 function reducer(page, { type, ...payload }) {
   switch (type) {
@@ -54,50 +53,6 @@ function EditPage({ initialState, onSave }) {
   const [updatePage] = useMutation(updatePageMutation)
   const [isEditing, setIsEditing] = useState(true)
   const [showSettings, setShowSettings] = useState(false)
-  const { data } = useQuery(getPagesQuery)
-
-  const pages = useMemo(() => {
-    const items = {
-      root: {
-        id: 'root',
-        title: 'root',
-        allowChildren: true,
-        children: [],
-      },
-    }
-
-    if (data) {
-      items.root.children = data.orion_page
-        .filter(page => page.ancestry.length === 0)
-        .map(item => item.id)
-
-      for (const page of data.orion_page) {
-        const filter = descendant =>
-          descendant.ancestry.find(ancestor => {
-            return ancestor.ancestor.id === page.id && ancestor.direct
-          })
-
-        items[page.id] = {
-          id: page.id,
-          title: page.title,
-          to: `/pages/${page.id}/edit`,
-          children: data.orion_page.filter(filter).map(item => item.id),
-          allowChildren: layouts[page.layout].allowChildren,
-          iconClass:
-            page.path === '/'
-              ? 'fas fa-home'
-              : layouts[page.layout].allowChildren
-              ? 'fas fa-file'
-              : 'fas fa-long-arrow-alt-right',
-        }
-      }
-    }
-
-    return {
-      rootId: 'root',
-      items,
-    }
-  }, [data, layouts])
 
   const layout = layouts[page.layout]
   const blocks = layout === undefined ? {} : layout.blocks
@@ -227,7 +182,7 @@ function EditPage({ initialState, onSave }) {
   )
 
   return (
-    <Layout action={actions} breadcrumbs={breadcrumbs} data={pages}>
+    <Layout action={actions} breadcrumbs={breadcrumbs}>
       <PageSettings
         open={showSettings}
         page={page}

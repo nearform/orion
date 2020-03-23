@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "public"."orion_page_ancestry" ADD COLUMN "position" integer
+      NOT NULL DEFAULT 0;
+  type: run_sql

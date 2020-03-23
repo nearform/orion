@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback } from 'react'
+import T from 'prop-types'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import ArrowRight from '@material-ui/icons/ArrowRight'
-import Tree, { mutateTree, moveItemOnTree } from '@atlaskit/tree'
+import Tree from '@atlaskit/tree'
 import classNames from 'classnames'
 import { IconButton, makeStyles } from '@material-ui/core'
 import { Link, useLocation } from '@reach/router'
@@ -67,86 +68,95 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function TreeView({ data: initialData }) {
+function TreeView({
+  isDragEnabled,
+  isNestingEnabled,
+  onCollapse,
+  onDragEnd,
+  onExpand,
+  tree,
+}) {
   const classes = useStyles()
-  const [data, setData] = useState(initialData)
   const location = useLocation()
 
-  useEffect(() => {
-    setData(initialData)
-  }, [initialData])
-
-  const renderItem = ({ item, onCollapse, onExpand, provided, snapshot }) => {
-    return (
-      <div
-        {...provided.draggableProps}
-        ref={provided.innerRef}
-        className={classNames({
-          [classes.item]: true,
-          [classes.dragging]: snapshot.isDragging,
-          [classes.selected]: location.pathname === item.to,
-        })}
-      >
-        <div {...provided.dragHandleProps} className={classes.icon}>
-          <i className={item.iconClass} />
+  const renderItem = useCallback(
+    ({ item, onCollapse, onExpand, provided, snapshot }) => {
+      return (
+        <div
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+          className={classNames({
+            [classes.item]: true,
+            [classes.dragging]: snapshot.isDragging,
+            [classes.selected]: location.pathname === item.to,
+          })}
+        >
+          <div {...provided.dragHandleProps} className={classes.icon}>
+            <i className={item.iconClass} />
+          </div>
+          <div className={classes.label}>
+            <Link to={item.to}>{item.title}</Link>
+          </div>
+          {item.children.length > 0 && (
+            <IconButton
+              className={classes.toggle}
+              size="small"
+              onClick={() => {
+                if (item.isExpanded) {
+                  onCollapse(item.id)
+                } else {
+                  onExpand(item.id)
+                }
+              }}
+            >
+              {item.isExpanded ? <ArrowDropDown /> : <ArrowRight />}
+            </IconButton>
+          )}
         </div>
-        <div className={classes.label}>
-          <Link to={item.to}>{item.title}</Link>
-        </div>
-        {item.children.length > 0 && (
-          <IconButton
-            className={classes.toggle}
-            size="small"
-            onClick={() => {
-              if (item.isExpanded) {
-                onCollapse(item.id)
-              } else {
-                onExpand(item.id)
-              }
-            }}
-          >
-            {item.isExpanded ? <ArrowDropDown /> : <ArrowRight />}
-          </IconButton>
-        )}
-      </div>
-    )
-  }
-
-  const onExpand = itemId => {
-    setData(mutateTree(data, itemId, { isExpanded: true }))
-  }
-
-  const onCollapse = itemId => {
-    setData(mutateTree(data, itemId, { isExpanded: false }))
-  }
-
-  const onDragEnd = (source, destination) => {
-    if (!destination) {
-      return
-    }
-
-    const newParent = data.items[destination.parentId]
-
-    if (!newParent.allowChildren) {
-      return
-    }
-
-    setData(moveItemOnTree(data, source, destination))
-  }
+      )
+    },
+    [classes]
+  )
 
   return (
     <div className={classes.container}>
       <Tree
-        isDragEnabled
-        isNestingEnabled
-        tree={data}
+        isDragEnabled={isDragEnabled}
+        isNestingEnabled={isNestingEnabled}
+        tree={tree}
         renderItem={renderItem}
-        onExpand={onExpand}
         onCollapse={onCollapse}
         onDragEnd={onDragEnd}
+        onExpand={onExpand}
       />
     </div>
   )
+}
+
+TreeView.defaultProps = {
+  isDragEnabled: false,
+  isNestingEnabled: false,
+}
+
+TreeView.propTypes = {
+  isDragEnabled: T.bool,
+  isNestingEnabled: T.bool,
+  tree: T.shape({
+    rootId: T.any.isRequired,
+    items: T.objectOf(
+      T.shape({
+        id: T.any.isRequired,
+        title: T.string.isRequired,
+        allowChildren: T.bool,
+        children: T.arrayOf(T.any).isRequired,
+        iconClass: T.string,
+        isExpanded: T.bool,
+      })
+    ).isRequired,
+  }).isRequired,
+  onCollapse: T.func.isRequired,
+  onDragEnd: T.func.isRequired,
+  onExpand: T.func.isRequired,
 }
 
 export default TreeView
