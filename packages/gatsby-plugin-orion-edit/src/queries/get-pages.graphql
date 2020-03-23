@@ -1,10 +1,19 @@
 query getPages {
   orion_page {
-    ancestry {
+    ancestry(
+      where: { direct: { _eq: true } }
+    ) {
       ancestor {
         id
       }
-      direct
+    }
+    descendants(
+      order_by: { position: asc },
+      where: { direct: { _eq: true } }
+    ) {
+      descendant {
+        id
+      }
     }
     id
     layout

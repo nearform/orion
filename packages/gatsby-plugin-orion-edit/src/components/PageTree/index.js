@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import TreeView from '../TreeView'
 import { mutateTree, moveItemOnTree } from '@atlaskit/tree'
 import { useEditComponents } from '../EditComponentProvider'
+import { useLocation } from '@reach/router'
 import { useQuery } from 'graphql-hooks'
 
 import getPagesQuery from '../../queries/get-pages'
@@ -9,6 +10,7 @@ import getPagesQuery from '../../queries/get-pages'
 function PageTree() {
   const { data } = useQuery(getPagesQuery)
   const { layouts } = useEditComponents()
+  const { pathname } = useLocation()
   const [tree, setTree] = useState(null)
 
   useEffect(() => {
@@ -27,16 +29,11 @@ function PageTree() {
         .map(item => item.id)
 
       for (const page of data.orion_page) {
-        const filter = descendant =>
-          descendant.ancestry.find(ancestor => {
-            return ancestor.ancestor.id === page.id && ancestor.direct
-          })
-
         items[page.id] = {
           id: page.id,
           title: page.title,
           to: `/pages/${page.id}/edit`,
-          children: data.orion_page.filter(filter).map(item => item.id),
+          children: page.descendants.map(({ descendant }) => descendant.id),
           allowChildren: layouts[page.layout].allowChildren,
           iconClass:
             page.path === '/'
@@ -44,6 +41,14 @@ function PageTree() {
               : layouts[page.layout].allowChildren
               ? 'fas fa-file'
               : 'fas fa-long-arrow-alt-right',
+        }
+      }
+
+      const current = data.orion_page.find(page => pathname === `/pages/${page.id}/edit`)
+
+      if (current) {
+        for (const { ancestor } of current.ancestry) {
+          items[ancestor.id].isExpanded = true
         }
       }
     }
@@ -75,12 +80,15 @@ function PageTree() {
       }
 
       const newParent = tree.items[destination.parentId]
+      const newTree = moveItemOnTree(tree, source, destination)
 
       if (!newParent.allowChildren) {
         return
       }
 
-      setTree(moveItemOnTree(tree, source, destination))
+      console.log(newTree.items[newParent.id].children)
+
+      setTree(newTree)
     },
     [tree, setTree]
   )
