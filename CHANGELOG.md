@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.34.0](https://github.com/nearform/orion/compare/v2.33.0...v2.34.0) (2020-03-24)
+
+
+### Features
+
+* 🎸 drag and drop management of page hierarchy ([0d520da](https://github.com/nearform/orion/commit/0d520da7c9820c4e08e36393df0da953c27ffcee))
+
+
+
+
+
 # [2.33.0](https://github.com/nearform/orion/compare/v2.32.1...v2.33.0) (2020-03-24)
 
 
