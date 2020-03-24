@@ -29,7 +29,6 @@ const useStyles = makeStyles(theme => ({
   main: {
     backgroundColor: theme.palette.common.white,
     margin: 0,
-    padding: theme.spacing(2),
     overflowY: 'scroll',
     position: 'relative',
     display: 'flex',
@@ -37,6 +36,9 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     marginLeft: -17,
     zIndex: 1,
+  },
+  gridList: {
+    padding: theme.spacing(2),
   },
   side: {
     display: 'block',
@@ -54,6 +56,10 @@ const useStyles = makeStyles(theme => ({
       padding: 0,
     },
   },
+  top: {
+    background: theme.palette.background.dark,
+    height: 64,
+  },
 }))
 
 const AdminDashboard = ({ data, heading, content }) => {
@@ -65,7 +71,8 @@ const AdminDashboard = ({ data, heading, content }) => {
         <SideBarMenu data={data} depthIndent={20} path="/" />
       </div>
       <div className={classes.main}>
-        <GridList cellHeight={160} className={classes.gridList} cols={3}>
+        <div className={classes.top} />
+        <GridList cellHeight={256} className={classes.gridList} cols={3}>
           {content &&
             content.map(menuItem => (
               <MenuCard {...menuItem} key={menuItem.label} />

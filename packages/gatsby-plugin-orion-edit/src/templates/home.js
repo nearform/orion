@@ -1,8 +1,12 @@
 import React from 'react'
 import AdminDashboard from '../components/AdminDashboard'
 
-const data = [
-  { label: 'Quick find', iconClass: 'fas fa-search', to: '/search' },
+const sideBarItems = [
+  {
+    label: 'Quick find',
+    iconClass: 'fas fa-search',
+    to: '/quick-find',
+  },
   {
     label: 'Pages',
     to: '/pages',
@@ -11,7 +15,7 @@ const data = [
   {
     label: 'Articles',
     to: '/articles',
-    iconClass: 'fas fa-file-alt',
+    iconClass: 'fas fa-newspaper',
   },
   {
     label: 'Menus',
@@ -20,44 +24,48 @@ const data = [
   },
   {
     label: 'Categories / Tags',
-    to: '/tags',
+    to: '/categories',
     iconClass: 'fas fa-tag',
   },
   {
     label: 'Media Library',
-    to: '/media',
-    iconClass: 'fas fa-film',
+    to: '/media-library',
+    iconClass: 'fas fa-photo-video',
   },
   {
     label: 'Users',
     to: '/users',
-    iconClass: 'fas fa-users',
+    iconClass: 'fas fa-user-friends',
   },
-  { label: 'Sign out', to: '/sign-out', iconClass: 'fas fa-arrow-left' },
+  {
+    label: 'Sign out',
+    to: '/sign-out',
+    iconClass: 'fas fa-long-arrow-alt-left',
+  },
 ]
 const content = [
   {
     label: 'Pages',
     to: '/pages',
-    src: 'fas fa-file',
+    src: 'todo',
   },
   {
     label: 'Articles',
     to: '/articles',
-    src: 'fas fa-file-alt',
+    src: 'todo',
   },
   {
     label: 'Menus',
     to: '/menus',
-    src: 'fas fa-list-alt',
+    src: 'todo',
   },
   {
     label: 'Users',
     to: '/users',
-    src: 'fas fa-users',
+    src: 'todo',
   },
 ]
 
 export default function() {
-  return <AdminDashboard data={data} heading="Acme" content={content} />
+  return <AdminDashboard data={sideBarItems} heading="Acme" content={content} />
 }
