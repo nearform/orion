@@ -85,10 +85,7 @@ function Layout({ children, menu, page }) {
           location={location.pathname}
         />
         {(!page || page.layout !== 'home') && (
-          <SecondaryAppBar
-            action={<SearchInput onSearch={() => {}} />}
-            data={parents}
-          />
+          <SecondaryAppBar action={<SearchInput />} data={parents} />
         )}
       </header>
       <main>{children}</main>

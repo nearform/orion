@@ -131,7 +131,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function SearchInput({ onSearch, placeholderText, query = baseQuery }) {
+function SearchInput({ placeholderText, query = baseQuery }) {
   const classes = useStyles()
   const [state, setState] = useState({
     term: '',
@@ -187,7 +187,11 @@ function SearchInput({ onSearch, placeholderText, query = baseQuery }) {
         onBlur={() => setState({ ...state, focused: false })}
         onChange={event => setState({ ...state, term: event.target.value })}
       />
-      <Button className={classes.button} onClick={() => onSearch(term)}>
+      <Button
+        className={classes.button}
+        component={Link}
+        to={`/search?term=${state.term}`}
+      >
         <Search />
       </Button>
       <Paper elevation={3} className={cls}>
@@ -230,14 +234,12 @@ function SearchInput({ onSearch, placeholderText, query = baseQuery }) {
 }
 
 SearchInput.propTypes = {
-  onSearch: T.func,
   placeholderText: T.string,
   query: T.string,
 }
 
 SearchInput.defaultProps = {
   placeholderText: 'Search',
-  onSearch: () => undefined,
   query: undefined,
 }
 
