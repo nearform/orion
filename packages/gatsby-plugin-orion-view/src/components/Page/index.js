@@ -2,6 +2,7 @@ import React from 'react'
 import getPageQuery from '../../queries/get-page'
 import { useViewComponents } from '../ViewComponentProvider'
 import { useQuery } from 'graphql-hooks'
+import PageSEO from '../PageSEO'
 
 function PageProvider({ location, pageContext }) {
   const { components, layouts } = useViewComponents()
@@ -44,7 +45,18 @@ function PageProvider({ location, pageContext }) {
     }
   }
 
-  return <Layout {...blocks} loading={loading} page={page} />
+  const { content } = page.contents[0].props
+
+  return (
+    <>
+      <PageSEO
+        canonicalHref={`${location.origin}${page.path}`}
+        title={page.title}
+        content={content}
+      />
+      <Layout {...blocks} loading={loading} page={page} />
+    </>
+  )
 }
 
 export default PageProvider

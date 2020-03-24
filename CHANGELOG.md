@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.32.1](https://github.com/nearform/orion/compare/v2.32.0...v2.32.1) (2020-03-24)
+
+
+### Bug Fixes
+
+* 🐛 Allow for content of an empty string ([8965a57](https://github.com/nearform/orion/commit/8965a576256697fbf166ca07423f05b1b8d7de09))
+* 🐛 Typo in propTypes and accidental removal of react-helmet ([6ec46ca](https://github.com/nearform/orion/commit/6ec46caa76fe6ff93d3c423d76b38d6478bd4d8d))
+
+
+### Features
+
+* 🎸 Add title to pages ([67b6293](https://github.com/nearform/orion/commit/67b62931389806f02fad9dc6151cc3a4d59b6694))
+
+
+
+
+
 # [2.32.0](https://github.com/nearform/orion/compare/v2.31.0...v2.32.0) (2020-03-19)
 
 
