@@ -2,7 +2,7 @@
   "name": "gatsby-plugin-orion-core",
   "description": "Orion core core plugin",
   "main": "index.js",
-  "version": "2.31.0",
+  "version": "2.33.0",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
@@ -62,8 +62,7 @@
     "storybook-addon-jsx": "^7.1.14"
   },
   "peerDependencies": {
-    "@reach/router": "^1.3.1",
-    "clsx": "^1.1.0"
+    "@reach/router": "^1.3.1"
   },
   "homepage": "https://www.nearform.com/",
   "keywords": [
