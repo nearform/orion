@@ -1,6 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import SideBarMenu from 'gatsby-plugin-orion-core/src/components/SideBarMenu'
 import { makeStyles } from '@material-ui/core'
+import MenuCard from '../MenuCard'
+import GridList from '@material-ui/core/GridList'
 
 const drawerWidth = 318
 const useStyles = makeStyles(theme => ({
@@ -13,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   root: {
-    backgroundColor: '#204c67',
+    backgroundColor: theme.palette.secondary.main,
     display: 'flex',
     height: '100%',
     overflow: 'hidden',
@@ -23,15 +26,12 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.common.white,
     padding: '0 16px',
   },
-  content: {
+  main: {
     backgroundColor: theme.palette.common.white,
-    flex: 1,
     margin: 0,
     padding: theme.spacing(2),
     overflowY: 'scroll',
     position: 'relative',
-  },
-  main: {
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
@@ -55,7 +55,8 @@ const useStyles = makeStyles(theme => ({
     },
   },
 }))
-const AdminDashboard = ({ data, heading }) => {
+
+const AdminDashboard = ({ data, heading, content }) => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
@@ -64,12 +65,33 @@ const AdminDashboard = ({ data, heading }) => {
         <SideBarMenu data={data} depthIndent={20} path="/" />
       </div>
       <div className={classes.main}>
-        <div className={classes.content}>
-          <h1>hello</h1>
-        </div>
+        <GridList cellHeight={160} className={classes.gridList} cols={3}>
+          {content &&
+            content.map(menuItem => (
+              <MenuCard {...menuItem} key={menuItem.label} />
+            ))}
+        </GridList>
       </div>
     </div>
   )
+}
+
+AdminDashboard.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      iconClass: PropTypes.string,
+      to: PropTypes.string,
+    })
+  ).isRequired,
+  heading: PropTypes.string.isRequired,
+  content: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      src: PropTypes.string,
+      to: PropTypes.string,
+    })
+  ).isRequired,
 }
 
 export default AdminDashboard

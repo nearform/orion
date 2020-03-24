@@ -4,9 +4,10 @@ import MenuCard from '.'
 import { render } from '@testing-library/react'
 
 const renderComponent = () =>
-  render(<MenuCard src="test.jpg" text="Test Item" />)
+  render(<MenuCard src="test.jpg" label="Test Item" to="me" />)
+
 describe('MenuCard component', () => {
-  it("renders the text it's passed", () => {
+  it("renders the label it's passed", () => {
     const { getByText } = renderComponent()
     expect(getByText('Test Item')).toBeInTheDocument()
   })

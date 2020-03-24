@@ -35,7 +35,29 @@ const data = [
   },
   { label: 'Sign out', to: '/sign-out', iconClass: 'fas fa-arrow-left' },
 ]
+const content = [
+  {
+    label: 'Pages',
+    to: '/pages',
+    src: 'fas fa-file',
+  },
+  {
+    label: 'Articles',
+    to: '/articles',
+    src: 'fas fa-file-alt',
+  },
+  {
+    label: 'Menus',
+    to: '/menus',
+    src: 'fas fa-list-alt',
+  },
+  {
+    label: 'Users',
+    to: '/users',
+    src: 'fas fa-users',
+  },
+]
 
 export default function() {
-  return <AdminDashboard data={data} heading="Acme" />
+  return <AdminDashboard data={data} heading="Acme" content={content} />
 }
