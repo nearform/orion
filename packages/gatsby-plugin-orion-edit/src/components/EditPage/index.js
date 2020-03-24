@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useReducer, useState } from 'react'
 import createPageMutation from '../../queries/create-page'
-import getPagesQuery from '../../queries/get-pages'
 import updatePageMutation from '../../queries/update-page'
 import ArticleEditButtons from '../ArticleEditButtons'
 import EditComponent from '../EditComponent'
@@ -8,8 +7,7 @@ import Layout from '../Layout'
 import LayoutSelect from '../LayoutSelect'
 import PageSettings from '../PageSettings'
 import { useEditComponents } from '../EditComponentProvider'
-import { useLocation } from '@reach/router'
-import { useMutation, useQuery } from 'graphql-hooks'
+import { useMutation } from 'graphql-hooks'
 
 function reducer(page, { type, ...payload }) {
   switch (type) {
@@ -55,74 +53,6 @@ function EditPage({ initialState, onSave }) {
   const [updatePage] = useMutation(updatePageMutation)
   const [isEditing, setIsEditing] = useState(true)
   const [showSettings, setShowSettings] = useState(false)
-  const { data } = useQuery(getPagesQuery)
-  const location = useLocation()
-
-  const pages = useMemo(() => {
-    if (!data) {
-      return []
-    }
-
-    const sort = (a, b) => {
-      if (a.children === undefined && b.children !== undefined) {
-        return 1
-      }
-
-      if (a.children !== undefined && b.children === undefined) {
-        return -1
-      }
-
-      return a.label.localeCompare(b.label)
-    }
-
-    const map = page => {
-      const filter = descendant =>
-        descendant.ancestry.find(ancestor => {
-          return ancestor.ancestor.id === page.id && ancestor.direct
-        })
-
-      const children = []
-
-      if (layouts[page.layout].allowChildren) {
-        children.push({
-          label: 'Add page',
-          iconClass: 'fas fa-plus',
-          to: `/pages/${page.id}/create`,
-        })
-      }
-
-      children.push(
-        ...data.orion_page
-          .filter(filter)
-          .map(map)
-          .sort(sort)
-      )
-
-      return {
-        label: page.title,
-        to: `/pages/${page.id}/edit`,
-        iconClass:
-          page.path === '/'
-            ? 'fas fa-home'
-            : children.length === 0
-            ? 'fas fa-long-arrow-alt-right'
-            : 'fas fa-file',
-        children: children.length === 0 ? undefined : children,
-      }
-    }
-
-    return [
-      {
-        label: 'Add page',
-        iconClass: 'fas fa-plus',
-        to: `/pages/create`,
-      },
-      ...data.orion_page
-        .filter(page => page.ancestry.length === 0)
-        .map(map)
-        .sort(sort),
-    ]
-  }, [data, layouts])
 
   const layout = layouts[page.layout]
   const blocks = layout === undefined ? {} : layout.blocks
@@ -252,12 +182,7 @@ function EditPage({ initialState, onSave }) {
   )
 
   return (
-    <Layout
-      action={actions}
-      breadcrumbs={breadcrumbs}
-      data={pages}
-      path={location.pathname}
-    >
+    <Layout action={actions} breadcrumbs={breadcrumbs}>
       <PageSettings
         open={showSettings}
         page={page}

@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import { Menu, MenuItem, makeStyles } from '@material-ui/core'
 import ArrowRight from '@material-ui/icons/ArrowRight'
-import clsx from 'clsx'
+import classNames from 'classnames'
 
 const TRANSPARENT = 'rgba(0, 0, 0, 0)'
 
@@ -86,7 +86,7 @@ const NestedMenuItem = React.forwardRef(
         <MenuItem
           {...MenuItemProps}
           ref={menuItemRef}
-          className={clsx(classes.root, className)}
+          className={classNames(classes.root, className)}
         >
           {label}
           {Children.count(children) > 0 && <ArrowRight />}
