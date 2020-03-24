@@ -1,13 +1,13 @@
 import React from 'react'
 import BreadcrumbNavigation from 'gatsby-plugin-orion-core/src/components/BreadcrumbNavigation'
-import SideBarMenu from 'gatsby-plugin-orion-core/src/components/SideBarMenu'
+import PageTree from '../PageTree'
 import { makeStyles } from '@material-ui/core'
 
 const drawerWidth = 318
 
 const useStyles = makeStyles(theme => ({
   '@global': {
-    'html, body, body > div:first-child, body > div:first-child > div:first-child': {
+    'html, body, body > div:first-child, body > div:first-child > div:first-child, body > div:first-child > div:first-child > div:first-child': {
       height: '100%',
     },
     body: {
@@ -36,17 +36,11 @@ const useStyles = makeStyles(theme => ({
     zIndex: 1,
   },
   side: {
+    overflowX: 'hidden',
     overflowY: 'scroll',
     marginBottom: theme.spacing(1),
     marginTop: 62,
     width: drawerWidth,
-    '& > div': {
-      width: drawerWidth,
-    },
-    '& ul': {
-      height: '100%',
-      padding: 0,
-    },
   },
   top: {
     alignItems: 'center',
@@ -64,13 +58,13 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function Layout({ action, breadcrumbs, children, data, path }) {
+function Layout({ action, breadcrumbs, children }) {
   const classes = useStyles()
 
   return (
     <div className={classes.root}>
       <div className={classes.side}>
-        <SideBarMenu data={data} depthIndent={20} path={path} />
+        <PageTree />
       </div>
       <div className={classes.main}>
         <div className={classes.top}>

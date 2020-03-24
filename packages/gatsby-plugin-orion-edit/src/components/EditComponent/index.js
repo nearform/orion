@@ -13,7 +13,7 @@ import {
   makeStyles,
 } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
-import clsx from 'clsx'
+import classNames from 'classnames'
 import { useEditComponents } from '../EditComponentProvider'
 
 const useStyles = makeStyles(theme => ({
@@ -121,10 +121,9 @@ function EditComponent({ component, isEditing, onSave, page, props = {} }) {
     <>
       {isEditing && (
         <div
-          className={clsx(
-            classes.root,
-            PreviewEditor === undefined && classes.empty
-          )}
+          className={classNames(classes.root, {
+            [classes.empty]: PreviewEditor === undefined,
+          })}
         >
           <Fab
             className={classes.button}

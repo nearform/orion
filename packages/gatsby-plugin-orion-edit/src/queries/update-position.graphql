@@ -1,0 +1,11 @@
+mutation updatePosition(
+  $id: Int!,
+  $position: Int!
+) {
+  update_orion_page(
+    _set: { position: $position },
+    where: { id: { _eq: $id } }
+  ) {
+    affected_rows
+  }
+}
