@@ -90,7 +90,7 @@ describe('AdminDashboard component', () => {
   it('renders a list of menu cards', () => {
     const { container } = renderComponent()
     const { getByText } = within(
-      container.querySelector('[class^=makeStyles-content]')
+      container.querySelector('[class^=makeStyles-main]')
     )
     expect(getByText('Pages')).toBeInTheDocument()
     expect(getByText('Articles')).toBeInTheDocument()

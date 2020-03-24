@@ -12,11 +12,12 @@ describe('MenuCard component', () => {
     expect(getByText('Test Item')).toBeInTheDocument()
   })
   it('renders an image with the src and alt attributes', () => {
-    const { container } = renderComponent()
-    expect(container.querySelector('img')).toMatchInlineSnapshot(`
-      <img
-        alt="Menu icon for Test Item"
-        src="test.jpg"
+    const { getByTitle } = renderComponent()
+    expect(getByTitle('Test Item')).toMatchInlineSnapshot(`
+      <div
+        class="MuiCardMedia-root makeStyles-media-85"
+        style="background-image: url(test.jpg);"
+        title="Test Item"
       />
     `)
   })
