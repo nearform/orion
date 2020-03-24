@@ -65,7 +65,11 @@ const content = [
     src: 'todo',
   },
 ]
+// TODO pull this name from the consuming application. i.e. acme
+const heading = 'Acme'
 
 export default function() {
-  return <AdminDashboard data={sideBarItems} heading="Acme" content={content} />
+  return (
+    <AdminDashboard data={sideBarItems} heading={heading} content={content} />
+  )
 }

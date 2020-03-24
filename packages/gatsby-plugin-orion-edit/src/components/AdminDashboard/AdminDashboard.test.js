@@ -6,7 +6,11 @@ import theme from 'gatsby-theme-acme'
 import AdminDashboard from '.'
 
 const mockData = [
-  { label: 'Quick find', iconClass: 'fas fa-search', to: '/search' },
+  {
+    label: 'Quick find',
+    iconClass: 'fas fa-search',
+    to: '/quick-find',
+  },
   {
     label: 'Pages',
     to: '/pages',
@@ -15,7 +19,7 @@ const mockData = [
   {
     label: 'Articles',
     to: '/articles',
-    iconClass: 'fas fa-file-alt',
+    iconClass: 'fas fa-newspaper',
   },
   {
     label: 'Menus',
@@ -24,41 +28,45 @@ const mockData = [
   },
   {
     label: 'Categories / Tags',
-    to: '/tags',
+    to: '/categories',
     iconClass: 'fas fa-tag',
   },
   {
     label: 'Media Library',
-    to: '/media',
-    iconClass: 'fas fa-film',
+    to: '/media-library',
+    iconClass: 'fas fa-photo-video',
   },
   {
     label: 'Users',
     to: '/users',
-    iconClass: 'fas fa-users',
+    iconClass: 'fas fa-user-friends',
   },
-  { label: 'Sign out', to: '/sign-out', iconClass: 'fas fa-arrow-left' },
+  {
+    label: 'Sign out',
+    to: '/sign-out',
+    iconClass: 'fas fa-long-arrow-alt-left',
+  },
 ]
 const mockContent = [
   {
     label: 'Pages',
     to: '/pages',
-    src: 'fas fa-file',
+    src: 'todo',
   },
   {
     label: 'Articles',
     to: '/articles',
-    src: 'fas fa-file-alt',
+    src: 'todo',
   },
   {
     label: 'Menus',
     to: '/menus',
-    src: 'fas fa-list-alt',
+    src: 'todo',
   },
   {
     label: 'Users',
     to: '/users',
-    src: 'fas fa-users',
+    src: 'todo',
   },
 ]
 const renderComponent = () =>
@@ -96,5 +104,10 @@ describe('AdminDashboard component', () => {
     expect(getByText('Articles')).toBeInTheDocument()
     expect(getByText('Menus')).toBeInTheDocument()
     expect(getByText('Users')).toBeInTheDocument()
+  })
+
+  it('uses the MUI theme components and classes to style the page', () => {
+    const { container } = renderComponent()
+    expect(container).toMatchSnapshot()
   })
 })

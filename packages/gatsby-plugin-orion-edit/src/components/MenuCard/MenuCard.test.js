@@ -7,11 +7,11 @@ const renderComponent = () =>
   render(<MenuCard src="test.jpg" label="Test Item" to="me" />)
 
 describe('MenuCard component', () => {
-  it("renders the label it's passed", () => {
+  it('renders a text label', () => {
     const { getByText } = renderComponent()
     expect(getByText('Test Item')).toBeInTheDocument()
   })
-  it('renders an image with the src and alt attributes', () => {
+  it('renders an image using the MUI card media component', () => {
     const { getByTitle } = renderComponent()
     expect(getByTitle('Test Item')).toMatchInlineSnapshot(`
       <div
