@@ -10,16 +10,16 @@
     "migrate": "env-cmd -f .env hasura migrate",
     "seed": "node ./seed.js",
     "artifact:create": "cd .. && tar -zcf $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz hasura",
-    "artifact:name": "echo $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz"
+    "artifact:name": "echo $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz",
+    "clone": "env-cmd -f .env node ./clone.js"
   },
   "devDependencies": {
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "env-cmd": "^10.1.0",
     "graphql-request": "^1.8.2",
-    "hasura-cli": "^1.1.0"
+    "hasura-cli": "^1.1.0",
+    "p-wait-for": "^3.1.0"
   },
-  "xo": false,
-  "dependencies": {
-    "env-cmd": "^10.1.0"
-  }
+  "xo": false
 }
