@@ -24,7 +24,7 @@
   "scripts": {
     "commit": "cd .. && yarn commit",
     "build": "gatsby build",
-    "develop": "gatsby develop",
+    "develop": "gatsby develop -p 8002",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "artifact:create": "tar -zcf $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz public",
