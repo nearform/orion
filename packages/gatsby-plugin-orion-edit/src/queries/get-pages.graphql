@@ -1,14 +1,23 @@
 query getPages {
-  orion_page {
+  orion_page(
+    order_by: { position: asc }
+  ) {
     ancestry {
       ancestor {
         id
       }
-      direct
+    }
+    descendants(
+      where: { direct: { _eq: true } }
+    ) {
+      descendant {
+        id
+      }
     }
     id
     layout
     path
+    position
     title
   }
 }
