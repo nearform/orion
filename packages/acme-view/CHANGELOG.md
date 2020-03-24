@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.33.0](https://github.com/nearform/orion/compare/v2.32.1...v2.33.0) (2020-03-24)
+
+
+### Features
+
+* 🎸 re-ordering of pages within the existing hierarchy ([652fb4e](https://github.com/nearform/orion/commit/652fb4e90fdd6c7352adba16d1e3a3d52e760aaf))
+
+
+
+
+
 ## [2.32.1](https://github.com/nearform/orion/compare/v2.32.0...v2.32.1) (2020-03-24)
 
 **Note:** Version bump only for package acme-view
