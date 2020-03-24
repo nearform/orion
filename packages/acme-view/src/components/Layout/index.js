@@ -36,7 +36,7 @@ const Img = ({ ...props }) => <img alt="social" {...props} />
 
 const useStyles = makeStyles(theme => ({
   '@global': {
-    'html, body, body > div:first-child, body > div:first-child > div:first-child': {
+    'html, body, body > div:first-child, body > div:first-child > div:first-child, body > div:first-child > div:first-child > div:first-child': {
       height: '100%',
     },
     body: {

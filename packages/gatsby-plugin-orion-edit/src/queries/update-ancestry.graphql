@@ -1,0 +1,18 @@
+mutation updateAncestry(
+  $id: Int,
+  $ancestry: [orion_page_ancestry_insert_input!]!
+) {
+  delete_orion_page_ancestry(
+    where: {
+      page_id: { _eq: $id }
+    }
+  ) {
+    affected_rows
+  }
+
+  insert_orion_page_ancestry(
+    objects: $ancestry
+  ) {
+    affected_rows
+  }
+}

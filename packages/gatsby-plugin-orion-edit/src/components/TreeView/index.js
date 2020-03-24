@@ -85,8 +85,7 @@ function TreeView({
         <div
           {...provided.draggableProps}
           ref={provided.innerRef}
-          className={classNames({
-            [classes.item]: true,
+          className={classNames(classes.item, {
             [classes.dragging]: snapshot.isDragging,
             [classes.selected]: location.pathname === item.to,
           })}
