@@ -6,8 +6,6 @@ mutation updatePosition(
     _set: { position: $position },
     where: { id: { _eq: $id } }
   ) {
-    returning {
-      id
-    }
+    affected_rows
   }
 }

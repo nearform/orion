@@ -121,8 +121,7 @@ function EditComponent({ component, isEditing, onSave, page, props = {} }) {
     <>
       {isEditing && (
         <div
-          className={classNames({
-            [classes.root]: true,
+          className={classNames(classes.root, {
             [classes.empty]: PreviewEditor === undefined,
           })}
         >
