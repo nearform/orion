@@ -1,23 +1,92 @@
-# hasura
+# Hasura
 
-This directory contains the Hasura configuration and migration files.
+Administer Hasura deployed in AWS or run a local instance of the Hasura engine and postgres with docker-compose.
 
-Its main purpose is to contain Hasura configuration and to run the Hasura console.
+## Administer remote Hasura
 
-Please read the [Hasura documentation](https://docs.hasura.io) to learn more.
+To administer (access the Hasura console and run migrations) the instance deployed to AWS, follow these directions:
 
-## Setup and running
+### Prerequisites
 
-- make sure that the Hasura CLI is installed as described in the [docs](https://docs.hasura.io/1.0/graphql/manual/hasura-cli/install-hasura-cli.html)
-- `cp .env.sample .env`
-- populate the `.env` file with the required environment variables. Note that for the sake of running the Hasura console, `HASURA_GRAPHQL_ADMIN_SECRET` is the only environment variable required, as the others are needed to run Hasura itself
-- To seed data into Hasura from our [./seed-data.js/](./seed-data.js) files, update the relevant data (and maybe the graphQL script if needed in [./seed.js](./seed.js)) and run `npm run seed`.
-- `npm run console`
+1. Use yarn to install the package:
 
-This will open the local Hasura Web console, pointing at the Hasura instance specified in the `config.yaml` file.
+   ```bash
+   yarn
+   ```
 
-## Handling the database schema and Hasura metadata
+1. Ensure the `.env` file sets the following vars:
+   |VAR|Description|Example|
+   |--|--|--|
+   |`HASURA_ADMIN_SECRET`|Hasura admin secret of the **remote** DB | `123abc` |
+   |`HASURA_GRAPHQL_ENDPOINT`|URL of the remote Hasura instance| `https://remote-hasrua-instance.com` |
 
-Make sure you check out the Hasura docs to understand how this works.
+### Run the Hasura console locally
 
-Changes made to the database via the Hasura console are replicated in corresponding migration files stored in the [migrations](./migrations) directory. This allows to reproduce the DB schema and Hasura metadata in other environments, hence they should be committed to the repository.
+1. Run the console from the terminal:
+   ```bash
+   yarn console
+   ```
+1. Navigate to console at http://localhost:9695
+
+### Run Migrations
+
+Refer to the [Hasura docs](https://hasura.io/docs/1.0/graphql/manual/migrations/index.html) for learning about migrations.
+
+1. Hasura migration commands can be accessed from the terminal:
+
+   ```bash
+   yarn migrate [...args]
+   ```
+
+   See `yarn migrate --help` and the Hasura docs for help
+
+🚨 As discussed in this [github issue](https://github.com/hasura/graphql-engine/issues/2817), Hasura enums and migrations are not compatible because Hasura requires an enum table to have rows in it before it can be set as an enum table. Care should be taken when exporting migrations from the orion DB. Upon exporting, manually add a line inserting the enum values in the generated SQL file. Then the SQL file and the metadata file _must be applied as 2 separate migrations._ Otherwise there will be errors applying the migrations into another DB.
+
+## Run local DB instance (Hasura + Postgres)
+
+There is a [video tutorial](https://drive.google.com/open?id=1KWPzau_-WuUnvXSu1AMvbrUoFueVg9Nx) demonstrating how to run the DB locally. The following instructions describe the procedure:
+
+### Prerequisites
+
+**⚠️ You must have [docker-compose](https://docs.docker.com/compose/) installed on your development machine.**
+
+### Start the local DB
+
+1. **Optional:** you can customize the Postgres password and the Hasura admin secret inside `docker-compose.yml`.
+
+   **⚠️ There is no requirement to set the above parameters, however be aware your local DB will not be secured.**
+
+1. Bring up the docker-compose environment from the terminal:
+
+   ```bash
+   docker-compose up
+   ```
+
+   ℹ️ Tip: depending on your operating system you may need may need sudo privileges to run docker-compose.
+
+1. Access the hasura console at http://localhost:8080
+
+1. Configure the environment variables for the other packages to access your new graphql endpoint at http://localhost:8080/v1/graphql and remove the Hasura admin secret if you didn't configure one.
+
+### Clone the remote DB into your local DB
+
+Upon completing the steps to start the DB locally, you can clone the current schema, data, and hasura metadata of the DB deployed in AWS by following these directions:
+
+1. Ensure the `.env` file sets the following vars:
+   |VAR|Description|Example|
+   |--|--|--|
+   |`HASURA_ADMIN_SECRET`|Hasura admin secret of the **remote** DB | `123abc` |
+   |`HASURA_REMOTE_BASE_URL`|Base URL (including a trailing slash) of the remote Hasura instance| `https://remote-hasrua-instance.com/` |
+   |`HASURA_LOCAL_BASE_URL`|Base URL (including a trailing slash) of the local Hasura instance| `http://localhost:8080/`|
+
+1. From the terminal, run:
+   ```bash
+   yarn clone
+   ```
+
+### Stopping the localDB
+
+There are 2 ways to stop the local DB:
+
+1. `docker-compose stop` stops the docker containers but leaves the docker volume containing the postgres data intact. If the local instance is restarted with `docker-compose up` the DB will have the same state. Refer to the docker documentation for managing volumes.
+2. `docker-compose down --volumes` stops the containers, destroys the containers, and deletes the volume containing the postgres database. Subsequent `up` commands will create a new DB. This is useful for cloning a fresh copy of the remote DB.
