@@ -25,6 +25,11 @@ const UserLogin = () => (
         path: 'articles',
       },
       {
+        label: 'Tag this article',
+        name: 'tags',
+        type: 'tags',
+      },
+      {
         label: 'Article Summary',
         name: 'article_summary',
         type: 'text',

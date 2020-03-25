@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core'
 
 import UploadImage from '../UploadImage'
+import TagsSelect from '../TagsSelect'
 
 const useStyles = makeStyles(theme => ({
   input: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function FieldLabel({ required, hasError, children }) {
+export function FieldLabel({ required, hasError, children }) {
   return (
     <Typography
       gutterBottom
@@ -38,7 +39,7 @@ FieldLabel.propTypes = {
   children: T.node.isRequired,
 }
 
-function ErrorMessage({ children }) {
+export function ErrorMessage({ children }) {
   const classes = useStyles()
   return (
     <Typography
@@ -202,17 +203,20 @@ InputSelectField.propTypes = {
 }
 
 const InputField = withTheme(({ type, children, ...props }) => {
-  if (type === 'select') {
-    return <InputSelectField {...props}>{children}</InputSelectField>
+  switch (type) {
+    case 'select':
+      return <InputSelectField {...props}>{children}</InputSelectField>
+    case 'image':
+      return <UploadImage {...props} />
+    case 'tags':
+      return <TagsSelect {...props} />
+    default:
+      return (
+        <InputTextField type={type} {...props}>
+          {children}
+        </InputTextField>
+      )
   }
-
-  if (type === 'image') return <UploadImage {...props} />
-
-  return (
-    <InputTextField type={type} {...props}>
-      {children}
-    </InputTextField>
-  )
 })
 
 InputField.propTypes = {
