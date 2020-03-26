@@ -240,7 +240,7 @@ SearchInput.propTypes = {
 
 SearchInput.defaultProps = {
   placeholderText: 'Search',
-  query: undefined,
+  query: '',
 }
 
 export default SearchInput
