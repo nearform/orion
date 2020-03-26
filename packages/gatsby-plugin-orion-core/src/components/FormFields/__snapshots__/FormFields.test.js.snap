@@ -107,7 +107,7 @@ exports[`InputField component When the type prop is "tags" composes a the TagsSe
               autocapitalize="none"
               autocomplete="off"
               autocorrect="off"
-              id="react-select-2-input"
+              id="test input"
               spellcheck="false"
               style="box-sizing: content-box; width: 2px; border: 0px; opacity: 1; outline: 0; padding: 0px;"
               tabindex="0"
@@ -144,6 +144,12 @@ exports[`InputField component When the type prop is "tags" composes a the TagsSe
           </svg>
         </div>
       </div>
+    </div>
+    <div>
+      <input
+        name="test input"
+        type="hidden"
+      />
     </div>
   </div>
 </div>

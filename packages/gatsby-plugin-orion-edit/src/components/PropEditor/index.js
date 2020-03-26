@@ -62,8 +62,14 @@ export default function createPropEditor(componentProps) {
               fullWidth
               className={`${classes.input} ${classes.tagsInput}`}
             >
-              <InputLabel shrink>{label || componentProp}</InputLabel>
-              <TagsSelect existingTags={page.allTags} currentTags={page.tags} />
+              <InputLabel shrink htmlFor="tags-select">
+                {label || componentProp}
+              </InputLabel>
+              <TagsSelect
+                existingTags={page.allTags}
+                name="tags-select"
+                currentTags={page.tags}
+              />
             </FormControl>
           </div>
         )

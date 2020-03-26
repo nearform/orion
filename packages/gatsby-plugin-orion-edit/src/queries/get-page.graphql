@@ -1,7 +1,5 @@
 query getPage($id: Int!) {
-  orion_page(where: {
-    id: { _eq: $id }
-  }) {
+  orion_page(where: { id: { _eq: $id } }) {
     ancestry {
       ancestor {
         id

@@ -9,16 +9,20 @@ const styles = {
     zIndex: 1000,
   }),
 }
-const createOption = label => ({
+const createOption = ({ tag: label }) => ({
   label,
   value: label.toLowerCase().replace(/\W/g, ''),
 })
+const mapValue = ({ tag }) => ({
+  label: tag.tag,
+  value: tag.tag.toLowerCase().replace(/\W/g, ''),
+})
 
-const TagsSelect = ({ existingTags = [], currentTags = [] }) => {
+const TagsSelect = ({ existingTags = [], currentTags = [], name }) => {
   const initialState = {
     isLoading: false,
-    options: existingTags,
-    value: currentTags,
+    options: existingTags.map(createOption),
+    value: currentTags.map(mapValue),
   }
   const [state, setState] = useState(initialState)
   const updateState = values => setState({ ...state, ...values })
@@ -51,12 +55,15 @@ const TagsSelect = ({ existingTags = [], currentTags = [] }) => {
   const { isLoading, options, value } = state
   return (
     <CreatableSelect
+      isMulti
       isClearable
       isDisabled={isLoading}
       isLoading={isLoading}
       options={options}
       value={value}
       styles={styles}
+      name={name}
+      inputId={name}
       onChange={handleChange}
       onCreateOption={handleCreate}
     />
@@ -64,8 +71,20 @@ const TagsSelect = ({ existingTags = [], currentTags = [] }) => {
 }
 
 TagsSelect.propTypes = {
-  existingTags: PropTypes.array.isRequired,
-  currentTags: PropTypes.array.isRequired,
+  existingTags: PropTypes.arrayOf(PropTypes.shape({ tag: PropTypes.string }))
+    .isRequired,
+  currentTags: PropTypes.arrayOf(
+    PropTypes.shape({
+      tag: PropTypes.shape({
+        tag: PropTypes.string,
+      }),
+    })
+  ),
+  name: PropTypes.string,
+}
+TagsSelect.defaultProps = {
+  currentTags: [],
+  name: '',
 }
 
 export default TagsSelect
