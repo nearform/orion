@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.35.0](https://github.com/nearform/orion/compare/v2.34.0...v2.35.0) (2020-03-24)
+
+
+### Features
+
+* 🎸 Setup orion-admin minimal runable app ([5d405f3](https://github.com/nearform/orion/commit/5d405f3bb767b3f4d1b82b89c286ad1775bcd81c))
+
+
+
+
+
 # [2.34.0](https://github.com/nearform/orion/compare/v2.33.0...v2.34.0) (2020-03-24)
 
 
