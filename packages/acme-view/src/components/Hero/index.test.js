@@ -6,13 +6,16 @@ import theme from 'gatsby-theme-acme'
 import Hero from '.'
 
 test('renders search bar', () => {
-  const { getByPlaceholderText } = render(
+  const testId = 'test'
+  const searchInput = <div data-testid={testId} />
+
+  const { getByTestId } = render(
     <ThemeProvider theme={createMuiTheme(theme)}>
-      <Hero />
+      <Hero searchInput={searchInput} />
     </ThemeProvider>
   )
 
-  const searchInputEl = getByPlaceholderText('Search Acme')
+  const searchInputEl = getByTestId(testId)
 
   expect(searchInputEl).toBeInTheDocument()
 })

@@ -1,7 +1,7 @@
 import React from 'react'
 import T from 'prop-types'
 import { makeStyles } from '@material-ui/core'
-import clsx from 'clsx'
+import classNames from 'classnames'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 function PaddedContainer({ className, ...props }) {
   const classes = useStyles()
 
-  return <div className={clsx(classes.root, className)} {...props} />
+  return <div className={classNames(classes.root, className)} {...props} />
 }
 
 PaddedContainer.propTypes = {

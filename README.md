@@ -8,40 +8,45 @@ Orion is a bespoke CMS development kit, offering developers packages and capabil
 ## Tech Stack
 
 Bundlers and Package Managers
-  * Webpack (https://webpack.js.org/)
-  * Lerna (https://github.com/lerna/lerna)
-  * Yarn (https://yarnpkg.com/lang/en/)
-  
+
+- Webpack (https://webpack.js.org/)
+- Lerna (https://github.com/lerna/lerna)
+- Yarn (https://yarnpkg.com/lang/en/)
+
 Languages and Frameworks
-  * JavaScript (https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-  * React (https://reactjs.org/)
-  * Gatsby (https://www.gatsbyjs.org/)
-  * Material-UI (https://material-ui.com/)
-  * Styled Components (https://www.styled-components.com/)
-  
+
+- JavaScript (https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- React (https://reactjs.org/)
+- Gatsby (https://www.gatsbyjs.org/)
+- Material-UI (https://material-ui.com/)
+- Styled Components (https://www.styled-components.com/)
+
 Datastore and Languages
-  * Hasura (https://hasura.io/)
-  * GraphQL (https://graphql.org/)
-  * PostgreSQL (https://www.postgresql.org/)
+
+- Hasura (https://hasura.io/)
+- GraphQL (https://graphql.org/)
+- PostgreSQL (https://www.postgresql.org/)
 
 Linting
-  * XO (https://github.com/xojs/xo)
-  * Prettier (https://prettier.io/)
+
+- XO (https://github.com/xojs/xo)
+- Prettier (https://prettier.io/)
 
 Testing
-  * Jest (https://jestjs.io/)
-  * React Testing Library
-  * Cypress
+
+- Jest (https://jestjs.io/)
+- React Testing Library
+- Cypress
 
 CI and Deployment
-  * CircleCI (https://circleci.com)
-  * Github Actions (https://help.github.com/en/actions)
+
+- CircleCI (https://circleci.com)
+- Github Actions (https://help.github.com/en/actions)
 
 Logging and Debugging
-  * LogLevel (https://github.com/pimterry/loglevel)
-  * Default Node.js Debugging for Chrome (https://medium.com/the-node-js-collection/debugging-node-js-with-google-chrome-4965b5f910f4)
 
-
+- LogLevel (https://github.com/pimterry/loglevel)
+- Default Node.js Debugging for Chrome (https://medium.com/the-node-js-collection/debugging-node-js-with-google-chrome-4965b5f910f4)
 
 ## Installation
 
@@ -53,10 +58,22 @@ To install the project's package dependencies use `yarn run bootstrap`.
 
 To clean the project's package dependencies use `yarn run clean`.
 
+## Environment variables
+
+This project uses .env files for environment variables.
+
+To get the environment variable setup for local development you will need
+
+- .env.development files need to added to acme-view, acme-admin and acme-edit.
+- A .env file needs to added to the hasura package.
+
+The content of the files can be found on clipperz.is
+
 ## Quick Start
 
 To get started quickly, check out these useful links:
 
+- [QuickStart](https://github.com/nearform/orion/tree/master/docs/quick-start)
 - [Documentation][docs]
 - [Demo](https://orion.nearform.com)
 - [Storybook](https://orion-storybook.nearform.com)
@@ -64,6 +81,15 @@ To get started quickly, check out these useful links:
 ## Repo structure
 
 The application is stored in a [lerna](https://github.com/lerna/lerna) monorepo.
+
+### Adding a new package
+
+When making a new package we want to make sure that gatsby doesn’t do its own linting with eslint but rather uses the root level config from XO. Do do this you need an empty eslintrc.js file.
+
+```lang javascript
+// We use xo configured in the root of the monorepo. Disable eslint for gatsby.
+module.exports = {}
+```
 
 Some packages are marked as `Legacy Package`. This marking indicates that they have been brought over from a previous
 client-based project as part of transitioning that project into the Orion Accelerator and that those packages are potentially

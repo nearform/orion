@@ -1,0 +1,28 @@
+- args:
+    role: edit
+    table:
+      name: orion_page
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check: {}
+      columns:
+      - id
+      - path
+      - layout
+      - title
+      - created
+      - modified
+      - published
+      - expires
+      - show_in_menu
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: edit
+    table:
+      name: orion_page
+      schema: public
+  type: create_insert_permission

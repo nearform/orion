@@ -1,5 +1,6 @@
 import React from 'react'
 import Hero from '.'
+import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
 
 export default function({ image, subtitle, title }) {
   return (
@@ -7,7 +8,7 @@ export default function({ image, subtitle, title }) {
       imageSrc={image}
       subtitle={subtitle}
       title={title}
-      onSearch={() => {}}
+      searchInput={<SearchInput placeholderText="Search Acme" />}
     />
   )
 }

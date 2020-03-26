@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.36.0](https://github.com/nearform/orion/compare/v2.35.0...v2.36.0) (2020-03-26)
+
+
+### Bug Fixes
+
+* 🐛 authorization persistance via cookie ([0d69089](https://github.com/nearform/orion/commit/0d6908902bcacf90b711b7668d0240a7d8688aff))
+
+
+### Features
+
+* 🎸 419 Basic Search Functionality ([2b24ba8](https://github.com/nearform/orion/commit/2b24ba823286330f2a1b918f532f6d40dbccd602))
+* 🎸 419 Basic Search Functionality ([4c44941](https://github.com/nearform/orion/commit/4c4494153214f55d10415bf1fd6fe8b67c01274f))
+* 🎸 cloudinary signature in jwt enrichment token ([66510e5](https://github.com/nearform/orion/commit/66510e54a288ec4a2206d076dec8134def48c78c))
+* 🎸 improved editor experience ([f5826f4](https://github.com/nearform/orion/commit/f5826f40c700ca97c72dbbbc5fa822817aeb61e8))
+* 🎸 new layout, preview mode ([f6de4b6](https://github.com/nearform/orion/commit/f6de4b64b84f6f5cb7663b70f44485db3f26aaa1))
+* 🎸 use collapse on editor menus, layout improvements ([d7b472f](https://github.com/nearform/orion/commit/d7b472f5c0d3f2f1978a85aa0723df4139351438))
+
+
+
+
+
+# [2.35.0](https://github.com/nearform/orion/compare/v2.34.0...v2.35.0) (2020-03-24)
+
+
+### Features
+
+* 🎸 Setup orion-admin minimal runable app ([5d405f3](https://github.com/nearform/orion/commit/5d405f3bb767b3f4d1b82b89c286ad1775bcd81c))
+
+
+
+
+
+# [2.34.0](https://github.com/nearform/orion/compare/v2.33.0...v2.34.0) (2020-03-24)
+
+
+### Features
+
+* 🎸 drag and drop management of page hierarchy ([0d520da](https://github.com/nearform/orion/commit/0d520da7c9820c4e08e36393df0da953c27ffcee))
+
+
+
+
+
+# [2.33.0](https://github.com/nearform/orion/compare/v2.32.1...v2.33.0) (2020-03-24)
+
+
+### Features
+
+* 🎸 drag and drop tree ui for page management ([8953efe](https://github.com/nearform/orion/commit/8953efe6f0356f86ce716ac57c4f43a0dc41e96b))
+* 🎸 re-ordering of pages within the existing hierarchy ([652fb4e](https://github.com/nearform/orion/commit/652fb4e90fdd6c7352adba16d1e3a3d52e760aaf))
+
+
+
+
+
+## [2.32.1](https://github.com/nearform/orion/compare/v2.32.0...v2.32.1) (2020-03-24)
+
+
+### Bug Fixes
+
+* 🐛 Allow for content of an empty string ([8965a57](https://github.com/nearform/orion/commit/8965a576256697fbf166ca07423f05b1b8d7de09))
+* 🐛 Typo in propTypes and accidental removal of react-helmet ([6ec46ca](https://github.com/nearform/orion/commit/6ec46caa76fe6ff93d3c423d76b38d6478bd4d8d))
+
+
+### Features
+
+* 🎸 Add title to pages ([67b6293](https://github.com/nearform/orion/commit/67b62931389806f02fad9dc6151cc3a4d59b6694))
+
+
+
+
+
 # [2.32.0](https://github.com/nearform/orion/compare/v2.31.0...v2.32.0) (2020-03-19)
 
 

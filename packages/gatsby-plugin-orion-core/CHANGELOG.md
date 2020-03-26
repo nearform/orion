@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.36.0](https://github.com/nearform/orion/compare/v2.35.0...v2.36.0) (2020-03-26)
+
+
+### Bug Fixes
+
+* 🐛 authorization persistance via cookie ([0d69089](https://github.com/nearform/orion/commit/0d6908902bcacf90b711b7668d0240a7d8688aff))
+
+
+### Features
+
+* 🎸 419 Basic Search Functionality ([2b24ba8](https://github.com/nearform/orion/commit/2b24ba823286330f2a1b918f532f6d40dbccd602))
+* 🎸 419 Basic Search Functionality ([4c44941](https://github.com/nearform/orion/commit/4c4494153214f55d10415bf1fd6fe8b67c01274f))
+* 🎸 new layout, preview mode ([f6de4b6](https://github.com/nearform/orion/commit/f6de4b64b84f6f5cb7663b70f44485db3f26aaa1))
+
+
+
+
+
+# [2.33.0](https://github.com/nearform/orion/compare/v2.32.1...v2.33.0) (2020-03-24)
+
+**Note:** Version bump only for package gatsby-plugin-orion-core
+
+
+
+
+
 # [2.32.0](https://github.com/nearform/orion/compare/v2.31.0...v2.32.0) (2020-03-19)
 
 **Note:** Version bump only for package gatsby-plugin-orion-core
