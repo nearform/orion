@@ -3,16 +3,22 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import CreatableSelect from 'react-select/creatable'
 
+const styles = {
+  menu: provided => ({
+    ...provided,
+    zIndex: 1000,
+  }),
+}
 const createOption = label => ({
   label,
   value: label.toLowerCase().replace(/\W/g, ''),
 })
 
-const TagsSelect = ({ existingTags = [] }) => {
+const TagsSelect = ({ existingTags = [], currentTags = [] }) => {
   const initialState = {
     isLoading: false,
     options: existingTags,
-    value: undefined,
+    value: currentTags,
   }
   const [state, setState] = useState(initialState)
   const updateState = values => setState({ ...state, ...values })
@@ -50,6 +56,7 @@ const TagsSelect = ({ existingTags = [] }) => {
       isLoading={isLoading}
       options={options}
       value={value}
+      styles={styles}
       onChange={handleChange}
       onCreateOption={handleCreate}
     />
@@ -57,7 +64,8 @@ const TagsSelect = ({ existingTags = [] }) => {
 }
 
 TagsSelect.propTypes = {
-  existingTags: PropTypes.array,
+  existingTags: PropTypes.array.isRequired,
+  currentTags: PropTypes.array.isRequired,
 }
 
 export default TagsSelect

@@ -47,4 +47,8 @@ query getPage($id: Int!) {
     show_in_menu
     title
   }
+  orion_tag {
+    tag
+    hidden
+  }
 }

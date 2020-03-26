@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import MarkdownEditor from '../MarkdownEditor/MarkdownEditor'
 import CloudinaryImageChooser from 'gatsby-plugin-orion-core/src/components/CloudinaryImageChooser'
 import getCloudinarySignature from 'gatsby-plugin-orion-core/src/utils/cloudinary-signature-from-auth'
+import { TagsSelect } from 'gatsby-plugin-orion-core'
 import {
   FormControl,
   Input,
@@ -16,6 +17,9 @@ import {
 const useStyles = makeStyles(theme => ({
   input: {
     marginBottom: theme.spacing(1),
+  },
+  tagsInput: {
+    zIndex: 2,
   },
   imageInputPaper: {
     display: 'flex',
@@ -50,6 +54,20 @@ export default function createPropEditor(componentProps) {
       const value = props[componentProp]
 
       let input = null
+
+      if (type === 'tags') {
+        return (
+          <div key={componentProp}>
+            <FormControl
+              fullWidth
+              className={`${classes.input} ${classes.tagsInput}`}
+            >
+              <InputLabel shrink>{label || componentProp}</InputLabel>
+              <TagsSelect existingTags={page.allTags} currentTags={page.tags} />
+            </FormControl>
+          </div>
+        )
+      }
 
       if (type === 'boolean') {
         input = (

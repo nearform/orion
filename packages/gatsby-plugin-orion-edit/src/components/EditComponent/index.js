@@ -158,6 +158,7 @@ function EditComponent({ component, isEditing, onSave, page, props = {} }) {
               </FormControl>
               {SettingsEditor !== undefined && (
                 <SettingsEditor
+                  page={page}
                   props={currentProps}
                   onChange={handleSettingsChange}
                 />
