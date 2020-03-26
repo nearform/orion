@@ -81,9 +81,6 @@ exports[`InputField component When the type prop is "select" composes a select c
 
 exports[`InputField component When the type prop is "tags" composes a the TagsSelect component 1`] = `
 <div>
-  <h6
-    class="MuiTypography-root MuiTypography-h6 MuiTypography-colorError MuiTypography-gutterBottom"
-  />
   <div
     class=" css-2b097c-container"
   >
@@ -149,10 +146,5 @@ exports[`InputField component When the type prop is "tags" composes a the TagsSe
       </div>
     </div>
   </div>
-  <p
-    class="MuiTypography-root MuiTypography-body2 MuiTypography-colorError MuiTypography-gutterBottom"
-  >
-    mock error string
-  </p>
 </div>
 `;

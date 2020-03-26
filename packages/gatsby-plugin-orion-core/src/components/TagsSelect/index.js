@@ -2,23 +2,18 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import CreatableSelect from 'react-select/creatable'
-import { ErrorMessage, FieldLabel } from '../FormFields'
 
 const createOption = label => ({
   label,
   value: label.toLowerCase().replace(/\W/g, ''),
 })
-const defaultOptions = [
-  createOption('One'),
-  createOption('Two'),
-  createOption('Three'),
-]
-const initialState = {
-  isLoading: false,
-  options: defaultOptions,
-  value: undefined,
-}
-const TagsSelect = ({ children, error }) => {
+
+const TagsSelect = ({ existingTags = [] }) => {
+  const initialState = {
+    isLoading: false,
+    options: existingTags,
+    value: undefined,
+  }
   const [state, setState] = useState(initialState)
   const updateState = values => setState({ ...state, ...values })
 
@@ -49,25 +44,20 @@ const TagsSelect = ({ children, error }) => {
 
   const { isLoading, options, value } = state
   return (
-    <>
-      <FieldLabel hasError={Boolean(error)}>{children}</FieldLabel>
-      <CreatableSelect
-        isClearable
-        isDisabled={isLoading}
-        isLoading={isLoading}
-        options={options}
-        value={value}
-        onChange={handleChange}
-        onCreateOption={handleCreate}
-      />
-      {error && <ErrorMessage>{error}</ErrorMessage>}
-    </>
+    <CreatableSelect
+      isClearable
+      isDisabled={isLoading}
+      isLoading={isLoading}
+      options={options}
+      value={value}
+      onChange={handleChange}
+      onCreateOption={handleCreate}
+    />
   )
 }
 
 TagsSelect.propTypes = {
-  children: PropTypes.string.isRequired,
-  error: PropTypes.string.isRequired,
+  existingTags: PropTypes.array,
 }
 
 export default TagsSelect

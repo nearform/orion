@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export function FieldLabel({ required, hasError, children }) {
+function FieldLabel({ required, hasError, children }) {
   return (
     <Typography
       gutterBottom
@@ -39,7 +39,7 @@ FieldLabel.propTypes = {
   children: T.node.isRequired,
 }
 
-export function ErrorMessage({ children }) {
+function ErrorMessage({ children }) {
   const classes = useStyles()
   return (
     <Typography
