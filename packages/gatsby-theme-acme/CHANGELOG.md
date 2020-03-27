@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.36.0](https://github.com/nearform/orion/compare/v2.35.0...v2.36.0) (2020-03-26)
+
+
+### Features
+
+* 🎸 419 Basic Search Functionality ([4c44941](https://github.com/nearform/orion/commit/4c4494153214f55d10415bf1fd6fe8b67c01274f))
+
+
+
+
+
 ## [2.28.1](https://github.com/nearform/orion/compare/v2.28.0...v2.28.1) (2020-03-17)
 
 **Note:** Version bump only for package gatsby-theme-acme
