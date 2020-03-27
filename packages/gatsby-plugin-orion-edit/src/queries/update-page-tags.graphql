@@ -1,5 +1,4 @@
 mutation updatePageTags($tag: String!, $pageId: Int!, $isNewTag: Boolean!) {
-  __typename
   insert_orion_tag(objects: { tag: $tag, hidden: false })
     @include(if: $isNewTag) {
     affected_rows

@@ -27,6 +27,10 @@ const setupForm = currentTags =>
     </form>
   )
 describe('TagsSelect component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   it('populates the select with all existing tags', async () => {
     const { getByLabelText, queryByText } = setupForm()
     expect(queryByText('test')).not.toBeInTheDocument()
@@ -61,6 +65,21 @@ describe('TagsSelect component', () => {
           isNewTag: false,
           pageId: 1,
           tag: 'test',
+        },
+      })
+    })
+  })
+  describe('when a new tag is is created', () => {
+    it('then it adds the tag to the page and to the total list of tags', async () => {
+      const { getByLabelText } = setupForm()
+
+      await selectEvent.create(getByLabelText('Test Label'), 'orion-rocks')
+
+      expect(mockUpdatePageTags).toHaveBeenCalledWith({
+        variables: {
+          isNewTag: true,
+          pageId: 1,
+          tag: 'orion-rocks',
         },
       })
     })

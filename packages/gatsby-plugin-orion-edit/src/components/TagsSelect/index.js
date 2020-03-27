@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import CreatableSelect from 'react-select/creatable'
@@ -32,15 +31,11 @@ const TagsSelect = ({ existingTags = [], currentTags = [], name, pageId }) => {
   const updateState = values => setState({ ...state, ...values })
 
   const handleChange = (newValue, actionMeta) => {
-    console.group('Value Changed')
-    console.log(newValue)
-    console.log(`action: ${actionMeta.action}`)
-    console.groupEnd()
     updatePageTags({
       variables: {
         isNewTag: false,
         pageId,
-        tag: newValue[0].value,
+        tag: actionMeta.option.value,
       },
     })
     updateState({ value: newValue })
@@ -48,19 +43,20 @@ const TagsSelect = ({ existingTags = [], currentTags = [], name, pageId }) => {
 
   const handleCreate = inputValue => {
     updateState({ isLoading: true })
-    console.group('Option created')
-    console.log('Wait a moment...')
-    setTimeout(() => {
-      const { options } = state
-      const newOption = createOption(inputValue)
-      console.log(newOption)
-      console.groupEnd()
-      updateState({
-        isLoading: false,
-        options: [...options, newOption],
-        value: newOption,
-      })
-    }, 1000)
+    const { options } = state
+    const newOption = createOption({ tag: inputValue })
+    updatePageTags({
+      variables: {
+        isNewTag: true,
+        pageId,
+        tag: inputValue,
+      },
+    })
+    updateState({
+      isLoading: false,
+      options: [...options, newOption],
+      value: newOption,
+    })
   }
 
   const { isLoading, options, value } = state
