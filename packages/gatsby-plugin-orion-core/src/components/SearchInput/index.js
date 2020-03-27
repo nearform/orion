@@ -131,7 +131,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function SearchInput({ placeholderText, query = baseQuery }) {
+function SearchInput({ placeholderText, query }) {
   const classes = useStyles()
   const [state, setState] = useState({
     term: '',
@@ -240,7 +240,7 @@ SearchInput.propTypes = {
 
 SearchInput.defaultProps = {
   placeholderText: 'Search',
-  query: '',
+  query: baseQuery,
 }
 
 export default SearchInput
