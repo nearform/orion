@@ -44,10 +44,4 @@ describe('InputField component', () => {
       expect(container).toMatchSnapshot()
     })
   })
-  describe('When the type prop is "tags"', () => {
-    it('composes a the TagsSelect component', () => {
-      const { container } = renderComponent({ type: 'tags' })
-      expect(container).toMatchSnapshot()
-    })
-  })
 })

@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core'
 
 import UploadImage from '../UploadImage'
-import TagsSelect from '../TagsSelect'
 
 const useStyles = makeStyles(theme => ({
   input: {
@@ -203,20 +202,17 @@ InputSelectField.propTypes = {
 }
 
 const InputField = withTheme(({ type, children, ...props }) => {
-  switch (type) {
-    case 'select':
-      return <InputSelectField {...props}>{children}</InputSelectField>
-    case 'image':
-      return <UploadImage {...props} />
-    case 'tags':
-      return <TagsSelect {...props} />
-    default:
-      return (
-        <InputTextField type={type} {...props}>
-          {children}
-        </InputTextField>
-      )
+  if (type === 'select') {
+    return <InputSelectField {...props}>{children}</InputSelectField>
   }
+
+  if (type === 'image') return <UploadImage {...props} />
+
+  return (
+    <InputTextField type={type} {...props}>
+      {children}
+    </InputTextField>
+  )
 })
 
 InputField.propTypes = {
