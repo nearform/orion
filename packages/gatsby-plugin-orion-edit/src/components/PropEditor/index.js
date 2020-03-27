@@ -69,6 +69,7 @@ export default function createPropEditor(componentProps) {
                 existingTags={page.allTags}
                 name="tags-select"
                 currentTags={page.tags}
+                pageId={page.id}
               />
             </FormControl>
           </div>
