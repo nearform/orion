@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.38.1](https://github.com/nearform/orion/compare/v2.38.0...v2.38.1) (2020-03-27)
+
+
+### Bug Fixes
+
+* 🐛 Set defaultProps correct for search ([3bad718](https://github.com/nearform/orion/commit/3bad718e5d032986dbd59eba6cc304d45b40b828))
+
+
+
+
+
 # [2.36.0](https://github.com/nearform/orion/compare/v2.35.0...v2.36.0) (2020-03-26)
 
 

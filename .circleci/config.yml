@@ -217,7 +217,6 @@ jobs:
           command: |
             export HASURA_GRAPHQL_API=${GATSBY_GRAPHQL_API}
             cd packages/hasura
-            yarn run seed
 workflows:
   version: 2
   build-only:
