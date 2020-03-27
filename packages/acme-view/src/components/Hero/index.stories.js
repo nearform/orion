@@ -11,6 +11,7 @@ storiesOf('Hero', module)
     return (
       <Hero
         title={text('title', 'Accelerating the insurance industry')}
+        searchInput={null}
         subtitle={text(
           'subtitle',
           'The new accelerator for insurance from the team who brought you Orion'

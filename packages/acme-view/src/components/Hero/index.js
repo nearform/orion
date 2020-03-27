@@ -1,7 +1,6 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import SearchBar from 'gatsby-plugin-orion-core/src/components/SearchInput'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -42,7 +41,7 @@ const useStyles = makeStyles(theme => {
   }
 })
 
-const Hero = ({ imageSrc, onSearch, subtitle, title }) => {
+const Hero = ({ imageSrc, searchInput, subtitle, title }) => {
   const classes = useStyles({ imageSrc })
 
   return (
@@ -69,9 +68,7 @@ const Hero = ({ imageSrc, onSearch, subtitle, title }) => {
               {subtitle}
             </Typography>
           </Grid>
-          <Grid item>
-            <SearchBar placeholderText="Search Acme" onSearch={onSearch} />
-          </Grid>
+          <Grid item>{searchInput}</Grid>
         </Grid>
       </Grid>
     </Grid>
