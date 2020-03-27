@@ -75,7 +75,7 @@ function PageTree() {
       rootId: 'root',
       items,
     })
-  }, [data, layouts, setTree])
+  }, [data, layouts, pathname, setTree])
 
   const onExpand = useCallback(
     id => {
@@ -148,7 +148,7 @@ function PageTree() {
 
       await Promise.all(promises)
     },
-    [tree, setTree]
+    [tree, updateAncestry, updatePosition]
   )
 
   if (!tree) {
