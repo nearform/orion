@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.38.0](https://github.com/nearform/orion/compare/v2.37.0...v2.38.0) (2020-03-27)
+
+
+### Bug Fixes
+
+* 🐛 Fix yarn.lock ([3b2dc72](https://github.com/nearform/orion/commit/3b2dc72eb54f08fc821a8715c0f7dd30a042dff3))
+
+
+### Features
+
+* 🎸 Add styles and data to admin dashboard ([8a90963](https://github.com/nearform/orion/commit/8a90963f0fb419bba439968249253f7eb08b7467))
+* 🎸 Create MenuCard component ([92a8ec4](https://github.com/nearform/orion/commit/92a8ec43da447253d37c23b11c8df0c5eb1e1aa6))
+* 🎸 Setup new admin dashboard for edit on the home route ([24e14dd](https://github.com/nearform/orion/commit/24e14ddc3dfc6d57561778d0b422110fd43e597b))
+
+
+
+
+
 # [2.37.0](https://github.com/nearform/orion/compare/v2.36.0...v2.37.0) (2020-03-27)
 
 
