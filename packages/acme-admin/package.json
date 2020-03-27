@@ -2,7 +2,7 @@
   "name": "acme-admin",
   "private": true,
   "description": "The Orion powered administration site for Acme Insurance",
-  "version": "2.36.0",
+  "version": "2.38.1",
   "author": "NearForm",
   "dependencies": {
     "dotenv": "^8.2.0",
@@ -10,7 +10,7 @@
     "gatsby-image": "^2.2.41",
     "gatsby-plugin-manifest": "^2.2.41",
     "gatsby-plugin-offline": "^3.0.35",
-    "gatsby-plugin-orion-admin": "^2.36.0",
+    "gatsby-plugin-orion-admin": "^2.38.1",
     "gatsby-plugin-react-helmet": "^3.1.22",
     "gatsby-plugin-sharp": "^2.4.5",
     "gatsby-source-filesystem": "^2.1.48",
