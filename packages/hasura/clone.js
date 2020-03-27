@@ -12,7 +12,7 @@ async function cloneDb() {
   const metadata = await exportMetadata()
 
   // The import order is important since hasura enums must have rows before the metadata can be applied
-  // See:
+  // See: https://github.com/hasura/graphql-engine/issues/2817
   // First import the data (including the enum table rows), then import the metadata
   await importPgData(pgData)
   await importMetadata(metadata)
@@ -21,7 +21,8 @@ async function cloneDb() {
 }
 
 async function waitForLocalHasura() {
-  await pWaitFor(hasuraReady, { interval: 200, timeout: 20 * 1000 })
+  // Poll Hasura up to 30 seconds or until it reports being ready
+  await pWaitFor(hasuraReady, { interval: 200, timeout: 30 * 1000 })
 
   async function hasuraReady() {
     try {
@@ -34,6 +35,7 @@ async function waitForLocalHasura() {
       // A 200 status indicates the server is healthy, return true to stop the polling
       return true
     } catch (error) {
+      // If there is a 500 error, stop polling because something is wrong
       if (error.response && error.response.status === 500) {
         console.log('The server is not healthy:', error.response.data)
         throw error
@@ -143,6 +145,8 @@ async function request(...options) {
   } catch (error) {
     const thingsToLog = [error.message]
 
+    // If the error came from the server (vs a networking error),
+    // log stuff from the response
     if (error.response) {
       thingsToLog.push(error.response.status, error.response.data)
     }
