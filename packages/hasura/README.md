@@ -84,7 +84,7 @@ Upon completing the steps to start the DB locally, you can clone the current sch
    yarn clone
    ```
 
-### Stopping the localDB
+### Stopping the local DB
 
 There are 2 ways to stop the local DB:
 
