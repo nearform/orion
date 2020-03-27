@@ -7,6 +7,6 @@ storiesOf('SearchInput', module)
   .addDecorator(jsxDecorator)
   .add('Default', () => (
     <div style={{ width: 256 }}>
-      <SearchInput onSearch={() => {}} />
+      <SearchInput />
     </div>
   ))
