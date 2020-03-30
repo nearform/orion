@@ -12,10 +12,15 @@ jest.mock(
   '../../queries/delete-page-tag.graphql',
   () => 'mockDeletePageTagMutation'
 )
+jest.mock(
+  '../../queries/clear-page-tags.graphql',
+  () => 'mockClearPageTagsMutation'
+)
 
 jest.mock('graphql-hooks')
 const mockUpdatePageTags = jest.fn()
 const mockDeletePageTag = jest.fn()
+const mockClearPageTags = jest.fn()
 useMutation.mockImplementation(mutation => {
   if (mutation === 'mockupdatePageTagsMutation') {
     return [mockUpdatePageTags]
@@ -23,6 +28,10 @@ useMutation.mockImplementation(mutation => {
 
   if (mutation === 'mockDeletePageTagMutation') {
     return [mockDeletePageTag]
+  }
+
+  if (mutation === 'mockClearPageTagsMutation') {
+    return [mockClearPageTags]
   }
 
   return []
@@ -61,11 +70,6 @@ describe('TagsSelect component', () => {
     const { queryByText } = setupForm([{ tag: { tag: 'test' } }])
     expect(queryByText('test')).toBeInTheDocument()
     expect(queryByText('something')).not.toBeInTheDocument()
-  })
-
-  it('uses the updatePageTags mutation', () => {
-    setupForm()
-    expect(useMutation).toHaveBeenCalledWith('mockupdatePageTagsMutation')
   })
 
   describe('when a tag is selected from the existing list', () => {
@@ -118,6 +122,24 @@ describe('TagsSelect component', () => {
         },
       })
       expect(queryByText(tag)).not.toBeInTheDocument()
+    })
+  })
+
+  describe('When clearing all the tags from a page', () => {
+    it('Then all tags are deleted', async () => {
+      const { queryByText, getByLabelText } = setupForm([
+        { tag: { tag: 'tag 1' } },
+        { tag: { tag: 'tag 2' } },
+      ])
+      await selectEvent.clearAll(getByLabelText('Test Label'))
+      expect(mockClearPageTags).toHaveBeenCalledWith({
+        variables: {
+          pageId: 1,
+        },
+      })
+
+      expect(queryByText('tag 1')).not.toBeInTheDocument()
+      expect(queryByText('tag 2')).not.toBeInTheDocument()
     })
   })
 })

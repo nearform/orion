@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import CreatableSelect from 'react-select/creatable'
 
 import updatePageTagsMutation from '../../queries/update-page-tags.graphql'
-import deletePageTagsMutation from '../../queries/delete-page-tag.graphql'
+import deletePageTagMutation from '../../queries/delete-page-tag.graphql'
+import clearPageTagsMutation from '../../queries/clear-page-tags.graphql'
 import { useMutation } from 'graphql-hooks'
 
 const styles = {
@@ -29,7 +30,8 @@ const TagsSelect = ({ existingTags = [], currentTags = [], name, pageId }) => {
   }
   const [state, setState] = useState(initialState)
   const [updatePageTags] = useMutation(updatePageTagsMutation)
-  const [deletePageTag] = useMutation(deletePageTagsMutation)
+  const [deletePageTag] = useMutation(deletePageTagMutation)
+  const [clearPageTag] = useMutation(clearPageTagsMutation)
   const updateState = values => setState({ ...state, ...values })
 
   const handleChange = (newValue, actionMeta) => {
@@ -40,7 +42,13 @@ const TagsSelect = ({ existingTags = [], currentTags = [], name, pageId }) => {
           tag: actionMeta.removedValue.value,
         },
       })
-    } else {
+    }
+
+    if (actionMeta.action === 'clear') {
+      clearPageTag({ variables: { pageId } })
+    }
+
+    if (actionMeta.action === 'select-option') {
       updatePageTags({
         variables: {
           isNewTag: false,

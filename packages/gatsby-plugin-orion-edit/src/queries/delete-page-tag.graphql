@@ -1,4 +1,4 @@
-mutation thing($pageId: Int!, $tag: String!) {
+mutation deletePageTag($pageId: Int!, $tag: String!) {
   delete_orion_page_tag(
     where: { page_id: { _eq: $pageId }, tag_id: { _eq: $tag } }
   ) {
