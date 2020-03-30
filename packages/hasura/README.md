@@ -95,9 +95,9 @@ There are 2 ways to stop the local DB:
 
 ## Manually squashing migrations
 
-Tracking each change in the DB can lead to a of pollution in the migrations. Also consider that [enums require special attention]() it may be necessary to manually "squash" the migrations into minimum set of the migrations. This section documents that procedure.
+Tracking each change in the DB can lead to a lot of pollution in the migrations. Also consider that [enums require special attention](https://github.com/hasura/graphql-engine/issues/2817) require special consideration. It may be necessary to manually "squash" the migrations into minimum set of the migrations. This section documents that procedure.
 
-1. Delete the directories in the `./migrations` directory of migrations that will be replaced.
+1. Delete the sub-directories in `./migrations` of the migrations that will be replaced (probably all of them).
 1. Export the SQL schema and Hasura metadata in 2 separate migrations:
    ```bash
    yarn migrate create init_sql --sql-from-server
@@ -110,7 +110,7 @@ Tracking each change in the DB can lead to a of pollution in the migrations. Als
       INSERT INTO public.orion_permissions(permission_set)
       VALUES ('pages'), ('articles'), ('users') ON CONFLICT DO NOTHING;
       ```
-1. Brute-force delete the record of all migrations in the remote DB by running the following SQL command in the hasura console. This clears Hasura's history of all applied migrations.
+1. Brute-force delete the record of all migrations in the remote DB by running the following SQL command in the Hasura console. This clears Hasura's history of all applied migrations.
    ```sql
    TRUNCATE hdb_catalog.schema_migrations;
    ```
@@ -118,7 +118,7 @@ Tracking each change in the DB can lead to a of pollution in the migrations. Als
    ```bash
    yarn migrate status
    ```
-1. Apply each migration file created above (without actually executing them) to the DB. For each migration run:
+1. Apply each migration file that was created in the above steps to the DB. They should be applied with the `--skip-execution` flag so that the are just marked as applied without executing since the DB is already configured. For each migration run:
    ```bash
    yarn migrate apply --version {MIGRATION_VERSION} --skip-execution
    ```
