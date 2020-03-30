@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."orion_page" DROP COLUMN "parent_id" CASCADE
-  type: run_sql

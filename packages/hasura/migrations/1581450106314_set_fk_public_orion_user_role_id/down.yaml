@@ -1,6 +1,0 @@
-- args:
-    sql: "\n          alter table \"public\".\"orion_user\" drop constraint \"orion_user_role_id_fkey\",\n
-      \         add constraint \"orion_user_role_id_fkey\"\n          foreign key
-      (\"role_id\")\n          references \"public\".\"orion_role\"\n          (\"id\")\n
-      \         on update no action\n          on delete no action;\n        "
-  type: run_sql

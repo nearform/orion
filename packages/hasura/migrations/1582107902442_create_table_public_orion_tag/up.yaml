@@ -1,8 +1,0 @@
-- args:
-    sql: CREATE TABLE "public"."orion_tag"("tag" text NOT NULL, PRIMARY KEY ("tag")
-      , UNIQUE ("tag"));
-  type: run_sql
-- args:
-    name: orion_tag
-    schema: public
-  type: add_existing_table_or_view

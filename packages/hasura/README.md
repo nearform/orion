@@ -42,6 +42,8 @@ Refer to the [Hasura docs](https://hasura.io/docs/1.0/graphql/manual/migrations/
 
 🚨 As discussed in this [github issue](https://github.com/hasura/graphql-engine/issues/2817), Hasura enums and migrations are not compatible because Hasura requires an enum table to have rows in it before it can be set as an enum table. Care should be taken when exporting migrations from the orion DB. Upon exporting, manually add a line inserting the enum values in the generated SQL file. Then the SQL file and the metadata file _must be applied as 2 separate migrations._ Otherwise there will be errors applying the migrations into another DB.
 
+💡 Refer to [Manually squashing migrations](#manually-squashing-migrations) for the steps to squash all migrations.
+
 ## Run local DB instance (Hasura + Postgres)
 
 There is a [video tutorial](https://drive.google.com/open?id=1KWPzau_-WuUnvXSu1AMvbrUoFueVg9Nx) demonstrating how to run the DB locally. The following instructions describe the procedure:
@@ -90,3 +92,38 @@ There are 2 ways to stop the local DB:
 
 1. `docker-compose stop` stops the docker containers but leaves the docker volume containing the postgres data intact. If the local instance is restarted with `docker-compose up` the DB will have the same state. Refer to the docker documentation for managing volumes.
 2. `docker-compose down --volumes` stops the containers, destroys the containers, and deletes the volume containing the postgres database. Subsequent `up` commands will create a new DB. This is useful for cloning a fresh copy of the remote DB.
+
+## Manually squashing migrations
+
+Tracking each change in the DB can lead to a of pollution in the migrations. Also consider that [enums require special attention]() it may be necessary to manually "squash" the migrations into minimum set of the migrations. This section documents that procedure.
+
+1. Delete the directories in the `./migrations` directory of migrations that will be replaced.
+1. Export the SQL schema and Hasura metadata in 2 separate migrations:
+   ```bash
+   yarn migrate create init_sql --sql-from-server
+   yarn migrate create init_metadata --metadata-from-server
+   ```
+1. Manually add a migration **in between** the above 2 migrations to insert enum values:
+   1. create a directory `./migrations/{timestamp}_insert_enums` where `{timestamp}` is a value between the migrations created in the previous step.
+   1. add a file to the above directory named `up.sql` and manually insert the enum values. For example:
+      ```sql
+      INSERT INTO public.orion_permissions(permission_set)
+      VALUES ('pages'), ('articles'), ('users') ON CONFLICT DO NOTHING;
+      ```
+1. Brute-force delete the record of all migrations in the remote DB by running the following SQL command in the hasura console. This clears Hasura's history of all applied migrations.
+   ```sql
+   TRUNCATE hdb_catalog.schema_migrations;
+   ```
+1. Verify the Database Status reports Not Present for all migrations:
+   ```bash
+   yarn migrate status
+   ```
+1. Apply each migration file created above (without actually executing them) to the DB. For each migration run:
+   ```bash
+   yarn migrate apply --version {MIGRATION_VERSION} --skip-execution
+   ```
+   👆 run this command for the 3 migrations make in the previous steps
+1. Verify the migrations are now Present:
+   ```bash
+   yarn migrate status
+   ```

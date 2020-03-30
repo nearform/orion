@@ -1,7 +1,0 @@
-- args:
-    name: descendant
-    new_name: page
-    table:
-      name: orion_page_ancestry
-      schema: public
-  type: rename_relationship
