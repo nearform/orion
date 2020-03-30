@@ -127,3 +127,9 @@ Tracking each change in the DB can lead to a of pollution in the migrations. Als
    ```bash
    yarn migrate status
    ```
+
+References:
+
+- https://ruleoftech.com/2020/reset-hasura-migrations-and-squash-files
+- https://hasura.io/docs/1.0/graphql/manual/migrations/existing-database.html#migrations-existing-db
+- https://github.com/hasura/graphql-engine/issues/2817
