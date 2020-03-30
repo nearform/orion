@@ -1,6 +1,0 @@
-- args:
-    role: public
-    table:
-      name: orion_page_ancestry
-      schema: public
-  type: drop_update_permission

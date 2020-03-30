@@ -1,6 +1,0 @@
-- args:
-    role: public
-    table:
-      name: orion_role_permissions
-      schema: public
-  type: drop_select_permission

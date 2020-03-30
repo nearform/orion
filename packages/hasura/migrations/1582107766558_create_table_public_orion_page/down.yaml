@@ -1,3 +1,0 @@
-- args:
-    sql: DROP TABLE "public"."orion_page"
-  type: run_sql

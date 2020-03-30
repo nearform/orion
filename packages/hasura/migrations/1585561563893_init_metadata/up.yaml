@@ -1,0 +1,673 @@
+- args:
+    tables:
+    - delete_permissions:
+      - permission:
+          filter: {}
+        role: edit
+      insert_permissions:
+      - permission:
+          check: {}
+          columns:
+          - parents
+          - path
+          - content_type
+          - title
+          - subtitle
+          - hero_img
+          - date_created
+          - date_modified
+          - date_published
+          - date_expired
+          - content
+          - id
+          - summary
+          - status
+        role: edit
+      select_permissions:
+      - permission:
+          columns:
+          - date_created
+          - date_expired
+          - date_modified
+          - date_published
+          - id
+          - parents
+          - content
+          - content_type
+          - hero_img
+          - path
+          - status
+          - subtitle
+          - summary
+          - title
+          filter: {}
+        role: edit
+      - permission:
+          allow_aggregations: true
+          columns:
+          - date_created
+          - date_expired
+          - date_modified
+          - date_published
+          - id
+          - parents
+          - content
+          - content_type
+          - hero_img
+          - path
+          - status
+          - subtitle
+          - summary
+          - title
+          filter:
+            _and:
+            - date_published:
+                _lte: now()
+            - _or:
+              - date_expired:
+                  _is_null: true
+              - date_expired:
+                  _gt: now()
+        role: public
+      table:
+        name: orion_content
+        schema: public
+      update_permissions:
+      - permission:
+          columns:
+          - date_created
+          - date_expired
+          - date_modified
+          - date_published
+          - id
+          - parents
+          - content
+          - content_type
+          - hero_img
+          - path
+          - status
+          - subtitle
+          - summary
+          - title
+          filter: {}
+        role: edit
+    - array_relationships:
+      - name: orion_users
+        using:
+          foreign_key_constraint_on:
+            column: group_id
+            table:
+              name: orion_user
+              schema: public
+      select_permissions:
+      - permission:
+          columns:
+          - parents
+          - name
+          - id
+          filter:
+            id:
+              _eq: X-Hasura-Group-Id
+        role: edit
+      - permission:
+          columns:
+          - id
+          - parents
+          - name
+          filter:
+            id:
+              _eq: X-Hasura-Group-Id
+        role: public
+      table:
+        name: orion_group
+        schema: public
+    - array_relationships:
+      - name: ancestry
+        using:
+          foreign_key_constraint_on:
+            column: page_id
+            table:
+              name: orion_page_ancestry
+              schema: public
+      - name: authors
+        using:
+          foreign_key_constraint_on:
+            column: page_id
+            table:
+              name: orion_page_author
+              schema: public
+      - name: contents
+        using:
+          foreign_key_constraint_on:
+            column: page_id
+            table:
+              name: orion_page_content
+              schema: public
+      - name: descendants
+        using:
+          foreign_key_constraint_on:
+            column: ancestor_id
+            table:
+              name: orion_page_ancestry
+              schema: public
+      - name: tags
+        using:
+          foreign_key_constraint_on:
+            column: page_id
+            table:
+              name: orion_page_tag
+              schema: public
+      delete_permissions:
+      - permission:
+          filter: {}
+        role: edit
+      - permission:
+          filter: {}
+        role: public
+      insert_permissions:
+      - permission:
+          check: {}
+          columns:
+          - created
+          - expires
+          - id
+          - layout
+          - modified
+          - path
+          - position
+          - published
+          - show_in_menu
+          - title
+        role: edit
+      - permission:
+          check: {}
+          columns:
+          - created
+          - expires
+          - id
+          - layout
+          - modified
+          - path
+          - position
+          - published
+          - show_in_menu
+          - title
+        role: public
+      select_permissions:
+      - permission:
+          columns:
+          - created
+          - expires
+          - id
+          - layout
+          - modified
+          - path
+          - position
+          - published
+          - show_in_menu
+          - title
+          filter: {}
+        role: edit
+      - permission:
+          columns:
+          - created
+          - expires
+          - id
+          - layout
+          - modified
+          - path
+          - position
+          - published
+          - show_in_menu
+          - title
+          filter: {}
+        role: public
+      table:
+        name: orion_page
+        schema: public
+      update_permissions:
+      - permission:
+          columns:
+          - created
+          - expires
+          - id
+          - layout
+          - modified
+          - path
+          - position
+          - published
+          - show_in_menu
+          - title
+          filter: {}
+        role: edit
+      - permission:
+          columns:
+          - created
+          - expires
+          - id
+          - layout
+          - modified
+          - path
+          - position
+          - published
+          - show_in_menu
+          - title
+          filter: {}
+        role: public
+    - delete_permissions:
+      - permission:
+          filter: {}
+        role: edit
+      - permission:
+          filter: {}
+        role: public
+      insert_permissions:
+      - permission:
+          check: {}
+          columns:
+          - ancestor_id
+          - direct
+          - page_id
+        role: edit
+      - permission:
+          check: {}
+          columns:
+          - ancestor_id
+          - direct
+          - page_id
+        role: public
+      object_relationships:
+      - name: ancestor
+        using:
+          foreign_key_constraint_on: ancestor_id
+      - name: descendant
+        using:
+          foreign_key_constraint_on: page_id
+      select_permissions:
+      - permission:
+          columns:
+          - ancestor_id
+          - direct
+          - page_id
+          filter: {}
+        role: edit
+      - permission:
+          columns:
+          - ancestor_id
+          - direct
+          - page_id
+          filter: {}
+        role: public
+      table:
+        name: orion_page_ancestry
+        schema: public
+      update_permissions:
+      - permission:
+          columns:
+          - ancestor_id
+          - direct
+          - page_id
+          filter: {}
+        role: edit
+      - permission:
+          columns:
+          - ancestor_id
+          - direct
+          - page_id
+          filter: {}
+        role: public
+    - delete_permissions:
+      - permission:
+          filter: {}
+        role: edit
+      - permission:
+          filter: {}
+        role: public
+      insert_permissions:
+      - permission:
+          check: {}
+          columns:
+          - page_id
+          - user_id
+        role: edit
+      - permission:
+          check: {}
+          columns:
+          - page_id
+          - user_id
+        role: public
+      object_relationships:
+      - name: page
+        using:
+          foreign_key_constraint_on: page_id
+      - name: user
+        using:
+          foreign_key_constraint_on: user_id
+      select_permissions:
+      - permission:
+          columns:
+          - page_id
+          - user_id
+          filter: {}
+        role: edit
+      - permission:
+          columns:
+          - page_id
+          - user_id
+          filter: {}
+        role: public
+      table:
+        name: orion_page_author
+        schema: public
+      update_permissions:
+      - permission:
+          columns:
+          - page_id
+          - user_id
+          filter: {}
+        role: edit
+      - permission:
+          columns:
+          - page_id
+          - user_id
+          filter: {}
+        role: public
+    - delete_permissions:
+      - permission:
+          filter: {}
+        role: edit
+      - permission:
+          filter: {}
+        role: public
+      insert_permissions:
+      - permission:
+          check: {}
+          columns:
+          - id
+          - page_id
+          - props
+          - block
+          - component
+        role: edit
+      - permission:
+          check: {}
+          columns:
+          - id
+          - page_id
+          - block
+          - component
+          - props
+        role: public
+      object_relationships:
+      - name: page
+        using:
+          foreign_key_constraint_on: page_id
+      select_permissions:
+      - permission:
+          columns:
+          - id
+          - page_id
+          - props
+          - block
+          - component
+          filter: {}
+        role: edit
+      - permission:
+          columns:
+          - block
+          - component
+          - id
+          - page_id
+          - props
+          filter: {}
+        role: public
+      table:
+        name: orion_page_content
+        schema: public
+      update_permissions:
+      - permission:
+          columns:
+          - id
+          - page_id
+          - props
+          - block
+          - component
+          filter: {}
+        role: edit
+      - permission:
+          columns:
+          - id
+          - page_id
+          - props
+          - block
+          - component
+          filter: {}
+        role: public
+    - delete_permissions:
+      - permission:
+          filter: {}
+        role: edit
+      - permission:
+          filter: {}
+        role: public
+      insert_permissions:
+      - permission:
+          check: {}
+          columns:
+          - page_id
+          - tag_id
+        role: edit
+      - permission:
+          check: {}
+          columns:
+          - page_id
+          - tag_id
+        role: public
+      object_relationships:
+      - name: page
+        using:
+          foreign_key_constraint_on: page_id
+      - name: tag
+        using:
+          foreign_key_constraint_on: tag_id
+      select_permissions:
+      - permission:
+          columns:
+          - page_id
+          - tag_id
+          filter: {}
+        role: edit
+      - permission:
+          columns:
+          - page_id
+          - tag_id
+          filter: {}
+        role: public
+      table:
+        name: orion_page_tag
+        schema: public
+      update_permissions:
+      - permission:
+          columns:
+          - page_id
+          - tag_id
+          filter: {}
+        role: edit
+      - permission:
+          columns:
+          - page_id
+          - tag_id
+          filter: {}
+        role: public
+    - array_relationships:
+      - name: orion_role_permissions
+        using:
+          foreign_key_constraint_on:
+            column: permission_set
+            table:
+              name: orion_role_permissions
+              schema: public
+      is_enum: true
+      table:
+        name: orion_permissions
+        schema: public
+    - array_relationships:
+      - name: orion_role_permissions
+        using:
+          foreign_key_constraint_on:
+            column: role_id
+            table:
+              name: orion_role_permissions
+              schema: public
+      - name: orion_users
+        using:
+          foreign_key_constraint_on:
+            column: role_id
+            table:
+              name: orion_user
+              schema: public
+      select_permissions:
+      - permission:
+          columns:
+          - parents
+          - name
+          - id
+          filter:
+            id:
+              _eq: X-Hasura-Role-Id
+        role: edit
+      - permission:
+          columns:
+          - id
+          - parents
+          - name
+          filter:
+            id:
+              _eq: X-Hasura-Role-Id
+        role: public
+      table:
+        name: orion_role
+        schema: public
+    - object_relationships:
+      - name: orion_permission
+        using:
+          foreign_key_constraint_on: permission_set
+      - name: orion_role
+        using:
+          foreign_key_constraint_on: role_id
+      select_permissions:
+      - permission:
+          columns:
+          - role_id
+          - create
+          - read
+          - update
+          - delete
+          - permission_set
+          filter:
+            role_id:
+              _eq: X-Hasura-Role-Id
+        role: edit
+      - permission:
+          columns:
+          - create
+          - delete
+          - read
+          - update
+          - role_id
+          - permission_set
+          filter:
+            role_id:
+              _eq: X-Hasura-Role-Id
+        role: public
+      table:
+        name: orion_role_permissions
+        schema: public
+    - delete_permissions:
+      - permission:
+          filter: {}
+        role: edit
+      insert_permissions:
+      - permission:
+          check: {}
+          columns:
+          - tag
+          - hidden
+        role: edit
+      select_permissions:
+      - permission:
+          columns:
+          - hidden
+          - tag
+          filter: {}
+        role: edit
+      - permission:
+          columns:
+          - hidden
+          - tag
+          filter: {}
+        role: public
+      table:
+        name: orion_tag
+        schema: public
+      update_permissions:
+      - permission:
+          columns:
+          - hidden
+          - tag
+          filter: {}
+        role: edit
+    - object_relationships:
+      - name: orion_group
+        using:
+          foreign_key_constraint_on: group_id
+      - name: orion_role
+        using:
+          foreign_key_constraint_on: role_id
+      select_permissions:
+      - permission:
+          columns:
+          - avatar
+          - bio
+          - given_name
+          - id
+          - title
+          filter: {}
+        role: edit
+      - permission:
+          columns:
+          - avatar
+          - bio
+          - given_name
+          - id
+          - title
+          filter: {}
+        role: public
+      table:
+        name: orion_user
+        schema: public
+      update_permissions:
+      - permission:
+          columns:
+          - avatar
+          - bio
+          - email
+          - given_name
+          - title
+          filter:
+            id:
+              _eq: X-Hasura-User-Id
+        role: edit
+      - permission:
+          columns:
+          - avatar
+          - bio
+          - email
+          - given_name
+          - title
+          filter:
+            id:
+              _eq: X-Hasura-User-Id
+        role: public
+    version: 2
+  type: replace_metadata

@@ -1,9 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."orion_page" ALTER COLUMN "parent" TYPE integer;
-  type: run_sql
-- args:
-    sql: COMMENT ON COLUMN "public"."orion_page"."parent" IS E'null'
-  type: run_sql
-- args:
-    sql: alter table "public"."orion_page" rename column "parent_id" to "parent";
-  type: run_sql

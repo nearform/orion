@@ -1,8 +1,0 @@
-- args:
-    name: ancestor
-    table:
-      name: orion_page_ancestry
-      schema: public
-    using:
-      foreign_key_constraint_on: ancestor_id
-  type: create_object_relationship

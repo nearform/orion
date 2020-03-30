@@ -1,6 +1,0 @@
-- args:
-    relationship: ancestor
-    table:
-      name: orion_page_ancestry
-      schema: public
-  type: drop_relationship
