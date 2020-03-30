@@ -8,10 +8,25 @@ jest.mock(
   '../../queries/update-page-tags.graphql',
   () => 'mockupdatePageTagsMutation'
 )
+jest.mock(
+  '../../queries/delete-page-tag.graphql',
+  () => 'mockDeletePageTagMutation'
+)
 
 jest.mock('graphql-hooks')
 const mockUpdatePageTags = jest.fn()
-useMutation.mockImplementation(() => [mockUpdatePageTags])
+const mockDeletePageTag = jest.fn()
+useMutation.mockImplementation(mutation => {
+  if (mutation === 'mockupdatePageTagsMutation') {
+    return [mockUpdatePageTags]
+  }
+
+  if (mutation === 'mockDeletePageTagMutation') {
+    return [mockDeletePageTag]
+  }
+
+  return []
+})
 
 const existingTags = [{ tag: 'test' }, { tag: 'something' }]
 const setupForm = currentTags =>
@@ -82,6 +97,27 @@ describe('TagsSelect component', () => {
           tag: 'orion-rocks',
         },
       })
+    })
+  })
+
+  describe('When a tag is deleted', () => {
+    const tag = 'removed'
+    let form
+
+    beforeEach(() => {
+      form = setupForm([{ tag: { tag } }])
+      const tagElement = form.queryByText(tag).parentElement
+      fireEvent.click(tagElement.querySelector('svg'))
+    })
+    it('Then it is removed from the page', async () => {
+      const { queryByText } = form
+      expect(mockDeletePageTag).toHaveBeenCalledWith({
+        variables: {
+          pageId: 1,
+          tag,
+        },
+      })
+      expect(queryByText(tag)).not.toBeInTheDocument()
     })
   })
 })
