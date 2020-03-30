@@ -2,7 +2,7 @@
   "name": "hasura",
   "private": true,
   "description": "Orion database",
-  "version": "2.38.2",
+  "version": "2.38.3",
   "author": "NearForm",
   "scripts": {
     "commit": "cd .. && yarn commit",
