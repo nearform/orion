@@ -36,7 +36,7 @@ useMutation.mockImplementation(mutation => {
 
   return []
 })
-
+const mockHandleSaveTags = jest.fn()
 const existingTags = [{ tag: 'test' }, { tag: 'something' }]
 const setupForm = currentTags =>
   render(
@@ -47,6 +47,7 @@ const setupForm = currentTags =>
         name="testName"
         currentTags={currentTags}
         pageId={1}
+        handleSaveTags={mockHandleSaveTags}
       />
     </form>
   )
@@ -73,8 +74,16 @@ describe('TagsSelect component', () => {
   })
 
   describe('when a tag is selected from the existing list', () => {
+    let form
+
+    beforeEach(() => {
+      form = setupForm()
+
+      selectEvent.openMenu(form.getByLabelText('Test Label'))
+      fireEvent.click(form.getByText('test'))
+    })
     it('then it adds the tag to the page', () => {
-      const { getByLabelText, getByText } = setupForm()
+      const { getByLabelText, getByText } = form
 
       selectEvent.openMenu(getByLabelText('Test Label'))
       fireEvent.click(getByText('test'))
@@ -86,13 +95,40 @@ describe('TagsSelect component', () => {
           tag: 'test',
         },
       })
+      expect(getByText('test')).toBeInTheDocument()
+    })
+
+    it('saves the tag using the callback passed in', () => {
+      expect(mockHandleSaveTags).toHaveBeenCalledWith([
+        { tag: { hidden: false, tag: 'test' } },
+      ])
+    })
+
+    describe('And a new tag is created', () => {
+      beforeEach(async () => {
+        await selectEvent.create(
+          form.getByLabelText('Test Label'),
+          'orion-rocks'
+        )
+      })
+      it('Then adds the tag and shows all the currently selected tags', () => {
+        const { getByText } = form
+
+        expect(getByText('test')).toBeInTheDocument()
+        expect(getByText('orion-rocks')).toBeInTheDocument()
+      })
     })
   })
   describe('when a new tag is is created', () => {
-    it('then it adds the tag to the page and to the total list of tags', async () => {
-      const { getByLabelText } = setupForm()
+    let form
 
-      await selectEvent.create(getByLabelText('Test Label'), 'orion-rocks')
+    beforeEach(async () => {
+      form = setupForm()
+
+      await selectEvent.create(form.getByLabelText('Test Label'), 'orion-rocks')
+    })
+    it('then it adds the tag to the page and to the total list of tags', async () => {
+      const { getByText } = form
 
       expect(mockUpdatePageTags).toHaveBeenCalledWith({
         variables: {
@@ -101,6 +137,13 @@ describe('TagsSelect component', () => {
           tag: 'orion-rocks',
         },
       })
+
+      expect(getByText('orion-rocks')).toBeInTheDocument()
+    })
+    it('saves the tag using the callback passed in', () => {
+      expect(mockHandleSaveTags).toHaveBeenCalledWith([
+        { tag: { hidden: false, tag: 'orion-rocks' } },
+      ])
     })
   })
 
@@ -109,7 +152,7 @@ describe('TagsSelect component', () => {
     let form
 
     beforeEach(() => {
-      form = setupForm([{ tag: { tag } }])
+      form = setupForm([{ tag: { tag } }, { tag: { tag: 'still-here' } }])
       const tagElement = form.queryByText(tag).parentElement
       fireEvent.click(tagElement.querySelector('svg'))
     })
@@ -123,15 +166,27 @@ describe('TagsSelect component', () => {
       })
       expect(queryByText(tag)).not.toBeInTheDocument()
     })
+
+    it('saves the tag using the callback passed in', () => {
+      expect(mockHandleSaveTags).toHaveBeenCalledWith([
+        {
+          tag: {
+            hidden: false,
+            tag: 'still-here',
+          },
+        },
+      ])
+    })
   })
 
   describe('When clearing all the tags from a page', () => {
+    let form
+    beforeEach(async () => {
+      form = setupForm([{ tag: { tag: 'tag 1' } }, { tag: { tag: 'tag 2' } }])
+      await selectEvent.clearAll(form.getByLabelText('Test Label'))
+    })
     it('Then all tags are deleted', async () => {
-      const { queryByText, getByLabelText } = setupForm([
-        { tag: { tag: 'tag 1' } },
-        { tag: { tag: 'tag 2' } },
-      ])
-      await selectEvent.clearAll(getByLabelText('Test Label'))
+      const { queryByText } = form
       expect(mockClearPageTags).toHaveBeenCalledWith({
         variables: {
           pageId: 1,
@@ -140,6 +195,10 @@ describe('TagsSelect component', () => {
 
       expect(queryByText('tag 1')).not.toBeInTheDocument()
       expect(queryByText('tag 2')).not.toBeInTheDocument()
+    })
+
+    it('saves the tag using the callback passed in', () => {
+      expect(mockHandleSaveTags).toHaveBeenCalledWith([])
     })
   })
 })

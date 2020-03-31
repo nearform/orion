@@ -15,14 +15,20 @@ const styles = {
 }
 const createOption = ({ tag: label }) => ({
   label,
-  value: label.toLowerCase().replace(/\W/g, ''),
+  value: label.toLowerCase().replace(/[^-\w]/g, ''),
 })
 const mapValue = ({ tag }) => ({
   label: tag.tag,
-  value: tag.tag.toLowerCase().replace(/\W/g, ''),
+  value: tag.tag.toLowerCase().replace(/[^-\w]/g, ''),
 })
 
-const TagsSelect = ({ existingTags = [], currentTags = [], name, pageId }) => {
+const TagsSelect = ({
+  existingTags = [],
+  currentTags = [],
+  name,
+  pageId,
+  handleSaveTags,
+}) => {
   const initialState = {
     isLoading: false,
     options: existingTags.map(createOption),
@@ -42,6 +48,9 @@ const TagsSelect = ({ existingTags = [], currentTags = [], name, pageId }) => {
           tag: actionMeta.removedValue.value,
         },
       })
+      newValue = state.value.filter(
+        tag => tag.value !== actionMeta.removedValue.value
+      )
     }
 
     if (actionMeta.action === 'clear') {
@@ -59,6 +68,9 @@ const TagsSelect = ({ existingTags = [], currentTags = [], name, pageId }) => {
     }
 
     updateState({ value: newValue })
+    handleSaveTags(
+      newValue.map(({ value }) => ({ tag: { tag: value, hidden: false } }))
+    )
   }
 
   const handleCreate = inputValue => {
@@ -72,11 +84,15 @@ const TagsSelect = ({ existingTags = [], currentTags = [], name, pageId }) => {
         tag: inputValue,
       },
     })
+    const newValue = state.value.concat([newOption])
     updateState({
       isLoading: false,
       options: [...options, newOption],
-      value: newOption,
+      value: newValue,
     })
+    handleSaveTags(
+      newValue.map(({ value }) => ({ tag: { tag: value, hidden: false } }))
+    )
   }
 
   const { isLoading, options, value } = state
@@ -109,6 +125,7 @@ TagsSelect.propTypes = {
   ),
   name: PropTypes.string,
   pageId: PropTypes.number.isRequired,
+  handleSaveTags: PropTypes.func.isRequired,
 }
 TagsSelect.defaultProps = {
   currentTags: [],

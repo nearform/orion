@@ -57,7 +57,15 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function EditComponent({ component, isEditing, onSave, page, props = {} }) {
+// TODO Add prop types
+function EditComponent({
+  component,
+  isEditing,
+  onSave,
+  page,
+  props = {},
+  handleSaveTags,
+}) {
   const classes = useStyles()
   const { components } = useEditComponents()
 
@@ -160,6 +168,7 @@ function EditComponent({ component, isEditing, onSave, page, props = {} }) {
                 <SettingsEditor
                   page={page}
                   props={currentProps}
+                  handleSaveTags={handleSaveTags}
                   onChange={handleSettingsChange}
                 />
               )}

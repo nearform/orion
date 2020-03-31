@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function createPropEditor(componentProps) {
-  const PropEditor = ({ page, props, onChange }) => {
+  const PropEditor = ({ page, props, onChange, handleSaveTags }) => {
     const classes = useStyles()
 
     const handleChange = useCallback(
@@ -70,6 +70,7 @@ export default function createPropEditor(componentProps) {
                 name="tags-select"
                 currentTags={page.tags}
                 pageId={page.id}
+                handleSaveTags={handleSaveTags}
               />
             </FormControl>
           </div>
