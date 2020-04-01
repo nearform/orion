@@ -40,6 +40,27 @@ exports.createPages = async ({ graphql, actions }) => {
   const menu = mapChildren(menuParents[0])
 
   createPage({
+    path: '/search',
+    matchPath: '/search/*',
+    component: pageComponent,
+    context: {
+      page: {
+        ancestry: [],
+        layout: 'section',
+        contents: [
+          {
+            block: 'main',
+            component: 'ArticleList',
+            id: -1,
+            props: {},
+          },
+        ],
+      },
+      menu,
+    },
+  })
+
+  createPage({
     path: '/_not_found',
     matchPath: '/*',
     component: pageComponent,
