@@ -10,6 +10,7 @@ import {
 import HorizontalNavigationMenu from 'gatsby-plugin-orion-core/src/components/HorizontalNavigationMenu'
 import LanguageSelector from './LanguageSelector'
 import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
+import AuthButton from './AuthButton'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -87,7 +88,10 @@ const AppBar = ({
                   userRole={userRole}
                 />
               )}
+
+              <AuthButton />
             </div>
+
             <LanguageSelector />
           </div>
         </Toolbar>

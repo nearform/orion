@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, screen } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import { navigate } from '@reach/router'
 import { Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
 import AuthButton from '.'
