@@ -197,30 +197,29 @@ function SearchInput({ placeholderText, query }) {
       <Paper elevation={3} className={cls}>
         <Grid container>
           {state.results.length > 0 && (
-            <Grid item xs={12}>
-              <Typography className="results-label" variant="h5">
-                Top Hits
-              </Typography>
-            </Grid>
-          )}
-          {state.results.length > 0 &&
-            state.results.map(result => (
-              <Grid key={result.id} item xs={12}>
-                <Typography component={Link} to={result.path} variant="h5">
-                  {result.title}
+            <>
+              <Grid item xs={12}>
+                <Typography className="results-label" variant="h5">
+                  Top Hits
                 </Typography>
               </Grid>
-            ))}
-          {state.results && state.results.length > 0 && (
-            <Grid item xs={12}>
-              <Typography
-                component={Link}
-                to={`/search?term=${state.term}`}
-                variant="h5"
-              >
-                More results
-              </Typography>
-            </Grid>
+              {state.results.map(result => (
+                <Grid key={result.id} item xs={12}>
+                  <Typography component={Link} to={result.path} variant="h5">
+                    {result.title}
+                  </Typography>
+                </Grid>
+              ))}
+              <Grid item xs={12}>
+                <Typography
+                  component={Link}
+                  to={`/search?term=${state.term}`}
+                  variant="h5"
+                >
+                  More results
+                </Typography>
+              </Grid>
+            </>
           )}
           {state.results.length === 0 && (
             <Grid item xs={12}>

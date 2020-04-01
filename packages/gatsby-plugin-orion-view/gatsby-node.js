@@ -1,6 +1,7 @@
 const getPagesQuery = require('./queries/get-pages')
 const getMenuQuery = require('./queries/get-menu-items')
 const pageComponent = require.resolve('./src/components/Page')
+const searchPageComponent = require.resolve('./src/components/SearchPage')
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -42,7 +43,7 @@ exports.createPages = async ({ graphql, actions }) => {
   createPage({
     path: '/search',
     matchPath: '/search/*',
-    component: pageComponent,
+    component: searchPageComponent,
     context: {
       page: {
         ancestry: [],
