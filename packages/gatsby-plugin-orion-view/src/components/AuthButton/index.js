@@ -12,10 +12,10 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function AuthButton() {
-  const sLabelIn = 'sign in'
-  const sLabelOut = 'sign out'
-  const sSlugIn = '/login'
-  const sSlugOut = '/'
+  const labelIn = 'sign in'
+  const labelOut = 'sign out'
+  const slugIn = '/login'
+  const slugOut = '/'
 
   const amLoggedIn = Auth.user !== null
 
@@ -23,19 +23,15 @@ function AuthButton() {
 
   const handleSignout = () => {
     Auth.signOut()
-    navigate(sSlugOut)
+    navigate(slugOut)
   }
 
   return (
     <div>
       <Button
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        component={Button}
-        to={undefined}
-        onClick={amLoggedIn ? () => handleSignout() : () => navigate(sSlugIn)}
+        onClick={amLoggedIn ? () => handleSignout() : () => navigate(slugIn)}
       >
-        {amLoggedIn ? sLabelOut : sLabelIn}
+        {amLoggedIn ? labelOut : labelIn}
         <i
           className={`${classes.icon} fas fa-long-arrow-alt-${
             amLoggedIn ? 'right' : 'left'
