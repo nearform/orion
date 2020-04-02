@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.39.0](https://github.com/nearform/orion/compare/v2.38.3...v2.39.0) (2020-04-02)
+
+**Note:** Version bump only for package acme-admin
+
+
+
+
+
 ## [2.38.2](https://github.com/nearform/orion/compare/v2.38.1...v2.38.2) (2020-03-27)
 
 **Note:** Version bump only for package acme-admin

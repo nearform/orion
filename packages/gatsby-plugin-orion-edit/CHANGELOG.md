@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.39.0](https://github.com/nearform/orion/compare/v2.38.3...v2.39.0) (2020-04-02)
+
+
+### Features
+
+* 🎸 Add a tag select input to InputField ([8754be2](https://github.com/nearform/orion/commit/8754be27c4fb76ffa98b64f630617066b248737a))
+* 🎸 Add tag when selected from existing list ([4e4917a](https://github.com/nearform/orion/commit/4e4917aff5eb99df31039c6691f3b0d7b67bae6f))
+* 🎸 Add TagsSelect to the editor screen ([a0f1732](https://github.com/nearform/orion/commit/a0f1732aa5047cb02acb1be1acc6c68fc16bb742))
+* 🎸 Enable clear all tags button ([b5c23d3](https://github.com/nearform/orion/commit/b5c23d3eba2edafc0655c7d8f24be91670d83f9b))
+* 🎸 Enable x button to remove single tag ([308b3c7](https://github.com/nearform/orion/commit/308b3c7df0587f354c5718892b99fb353cebb23a))
+* 🎸 Make autocomplete select to assign and create tags ([170ca03](https://github.com/nearform/orion/commit/170ca034b73b04f315b2566c03abf90374257c5a))
+* 🎸 Populate TagsSelect with data ([cbe5d35](https://github.com/nearform/orion/commit/cbe5d35dc9f0257d576fa512bca72db8408b084c))
+* 🎸 Update page reducer state when tags change ([dda374c](https://github.com/nearform/orion/commit/dda374ca80a08253418c24a4dcec3d9f071c7ebe))
+
+
+
+
+
 ## [2.38.2](https://github.com/nearform/orion/compare/v2.38.1...v2.38.2) (2020-03-27)
 
 **Note:** Version bump only for package gatsby-plugin-orion-edit
