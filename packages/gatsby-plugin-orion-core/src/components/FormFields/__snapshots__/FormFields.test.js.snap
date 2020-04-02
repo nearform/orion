@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputField component When the type prop is "image" composes a select component 1`] = `
+<div>
+  <h6
+    class="MuiTypography-root MuiTypography-h6 MuiTypography-colorError MuiTypography-gutterBottom"
+  >
+    mock label name
+  </h6>
+  <div
+    aspectratio="1.333"
+    class="MuiFormControl-root MuiTextField-root makeStyles-input-87 MuiFormControl-fullWidth"
+    options="hello,test,person"
+    path="/a/path/to/test.jpg"
+  >
+    <div
+      class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-error Mui-error MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl"
+    >
+      <input
+        aria-invalid="true"
+        class="MuiInputBase-input MuiInput-input"
+        name="test input"
+        type="text"
+        value="mock value"
+      />
+    </div>
+  </div>
+  <p
+    class="MuiTypography-root MuiTypography-body2 MuiTypography-colorError MuiTypography-gutterBottom"
+  >
+    mock error string
+  </p>
+</div>
+`;
+
+exports[`InputField component When the type prop is "select" composes a select component 1`] = `
+<div>
+  <h6
+    class="MuiTypography-root MuiTypography-h6 MuiTypography-colorError MuiTypography-gutterBottom"
+  >
+    mock label name
+  </h6>
+  <div
+    class="MuiInputBase-root MuiInput-root MuiInput-underline"
+    theme="[object Object]"
+  >
+    <div
+      aria-haspopup="listbox"
+      aria-labelledby=" mui-component-select-test input"
+      class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+      id="mui-component-select-test input"
+      role="button"
+      tabindex="0"
+    >
+      Hello
+    </div>
+    <input
+      name="test input"
+      type="hidden"
+      value="hello"
+    />
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root MuiSelect-icon"
+      focusable="false"
+      role="presentation"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M7 10l5 5 5-5z"
+      />
+    </svg>
+  </div>
+  <p
+    class="MuiTypography-root MuiTypography-body2 MuiTypography-colorError MuiTypography-gutterBottom"
+  >
+    mock error string
+  </p>
+</div>
+`;

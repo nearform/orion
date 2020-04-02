@@ -1,7 +1,5 @@
 query getPage($id: Int!) {
-  orion_page(where: {
-    id: { _eq: $id }
-  }) {
+  orion_page(where: { id: { _eq: $id } }) {
     ancestry {
       ancestor {
         id
@@ -46,5 +44,9 @@ query getPage($id: Int!) {
     published
     show_in_menu
     title
+  }
+  orion_tag {
+    tag
+    hidden
   }
 }
