@@ -12,5 +12,10 @@ export default function({ id }) {
     return null
   }
 
-  return <EditPage initialState={data.orion_page[0]} onSave={refetch} />
+  const initialState = {
+    ...data.orion_page[0],
+    allTags: data.orion_tag,
+  }
+
+  return <EditPage initialState={initialState} onSave={refetch} />
 }

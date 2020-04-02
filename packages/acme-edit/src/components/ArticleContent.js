@@ -142,6 +142,11 @@ export default {
       required: false,
       type: 'image',
     },
+    tags: {
+      label: 'Tags',
+      required: false,
+      type: 'tags',
+    },
     content: {
       label: 'Content',
       required: true,

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useReducer, useState } from 'react'
-import createPageMutation from '../../queries/create-page'
-import updatePageMutation from '../../queries/update-page'
+import createPageMutation from '../../queries/create-page.graphql'
+import updatePageMutation from '../../queries/update-page.graphql'
 import ArticleEditButtons from '../ArticleEditButtons'
 import EditComponent from '../EditComponent'
 import Layout from '../Layout'
@@ -8,10 +8,12 @@ import LayoutSelect from '../LayoutSelect'
 import PageSettings from '../PageSettings'
 import { useEditComponents } from '../EditComponentProvider'
 import { useMutation } from 'graphql-hooks'
+import produce from 'immer' // eslint-disable-line import/no-named-as-default
 
-function reducer(page, { type, ...payload }) {
+export function reducer(page, { type, ...payload }) {
   switch (type) {
     case 'load':
+      // TODO Is this case ever used? I don't think so
       return payload.page
 
     case 'settings':
@@ -30,7 +32,7 @@ function reducer(page, { type, ...payload }) {
     case 'component':
       return {
         ...page,
-        ...payload.page,
+        ...payload.page, // TODO is spreading the page twice really needed?
         contents: [
           ...page.contents.filter(content => content.block !== payload.block),
           {
@@ -40,6 +42,10 @@ function reducer(page, { type, ...payload }) {
           },
         ],
       }
+    case 'saveTags':
+      return produce(page, draft => {
+        draft.tags = payload.tags
+      })
 
     default:
       throw new Error('Invalid action')
@@ -130,6 +136,13 @@ function EditPage({ initialState, onSave }) {
     [dispatch, setShowSettings]
   )
 
+  const handleSaveTags = useCallback(
+    tags => {
+      dispatch({ type: 'saveTags', tags })
+    },
+    [dispatch]
+  )
+
   const breadcrumbs = useMemo(() => {
     const breadcrumbs = []
 
@@ -158,6 +171,7 @@ function EditPage({ initialState, onSave }) {
         isEditing={isEditing}
         page={page}
         props={content === undefined ? undefined : content.props}
+        handleSaveTags={handleSaveTags}
         onSave={(component, props, page) =>
           dispatch({
             type: 'component',

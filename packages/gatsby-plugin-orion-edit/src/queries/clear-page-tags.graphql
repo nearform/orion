@@ -1,0 +1,5 @@
+mutation clearPageTags($pageId: Int!) {
+  delete_orion_page_tag(where: { page_id: { _eq: $pageId } }) {
+    affected_rows
+  }
+}
