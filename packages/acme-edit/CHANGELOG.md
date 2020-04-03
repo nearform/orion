@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.41.0](https://github.com/nearform/orion/compare/v2.40.0...v2.41.0) (2020-04-03)
+
+**Note:** Version bump only for package acme-edit
+
+
+
+
+
 # [2.40.0](https://github.com/nearform/orion/compare/v2.39.0...v2.40.0) (2020-04-03)
 
 **Note:** Version bump only for package acme-edit

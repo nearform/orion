@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.41.0](https://github.com/nearform/orion/compare/v2.40.0...v2.41.0) (2020-04-03)
+
+
+### Features
+
+* 🎸 Add images and summaries to the list of search results ([18ca811](https://github.com/nearform/orion/commit/18ca81197a91c118e8d6f15fd5c2ef08e599fc27))
+* 🎸 Enable enter button to submit search form ([5e66617](https://github.com/nearform/orion/commit/5e6661710cb4901e007eb2e0f68cf82de32df2e8))
+* 🎸 Show results on search page ([f1754d0](https://github.com/nearform/orion/commit/f1754d033872477ba4811020cd2b7a4517ab192c))
+
+
+
+
+
 # [2.39.0](https://github.com/nearform/orion/compare/v2.38.3...v2.39.0) (2020-04-02)
 
 
