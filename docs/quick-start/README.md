@@ -4,72 +4,30 @@
 
 ## Project Setup
 
-### 1. Clone and install dependencies
+### 1. Clone and install dependencies ⬇️
 
-```
+**🔧 Tooling:** The project uses node.js and [yarn "classic"](https://classic.yarnpkg.com). You must have both installed.
+
+#### 🚀 Execute the following commands:
+```bash
 git clone https://github.com/nearform/orion.git
-
 cd orion
-
 yarn
 ```
 
-### 2. Configure
+**🔧 Tooling:** The repo uses [lerna](https://lerna.js.org/) and [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/) to work as monorepo. The individual packages are located in the `packages` sub directory.
 
-Most of the configuration comes from environment variables. Required environment variables for each part of the architecture are documented in the `.env.sample` files inside the repository.
+### 2. IDE setup ⚙️
 
-- knowledge-base [`.env.sample`](../../packages/knowledge-base/.env.sample) - build time environment variables for the Gatsby applications. They should also be configured in CI, along with any other environment variables required by CI
-- hasura [`.env.sample`](../../packages/hasura/.env.sample) - runtime environment variables for Hasura and Hasura console. To run the Hasura console, it also needs to be installed and seeded as per the [Hasura package readme](../../packages/hasura).
-- functions [`.env.sample`](../../packages/functions/.env.sample) - runtime environment variables for AWS Lambda functions.
-- e2e-tests [`.env.sample`](../../packages/e2e-tests/.env.sample) - runtime environment variables for end-to-end testsusing Testcafe.
+Orion uses the [xo linter 🐛](https://github.com/xojs/xo). It is very strict and is intended to eliminate all style debates.
 
-Shared secrets are stored in a vault. Get in touch with a team member to get access to it.
+Developers are assumed to be using VSCode. Use other IDEs at your own risk.
 
-## Contributing
+#### 🚀 Install the [XO extension for VSCode](https://marketplace.visualstudio.com/items?itemName=samverschueren.linter-xo)
 
-1. Clone the project.
-1. Pick a story to work on from the clubhouse project.
-1. Work on a new branch, using the [name suggested by clubhouse](https://help.clubhouse.io/hc/en-us/articles/207540323-Using-the-Clubhouse-GitHub-Integration-with-Branches-and-Pull-Requests) by clicking on the github helpers button on your story. Clubhouse will use the convention `{username}/ch{story number}/{story-summary}`. For example `codyzu/ch81/poc-automatic-versioning-in-ci`.
-   ![clubhouse branch name](../images/clubhouse-branch-name.jpg)
-1. Commit changes:
-   1. `yarn commit` in the console
-      
-      **This is the easy way** and will guide you through the commit conventions 🤖! If your commit fails (linting or other problems), it can retried with `yarn commit --retry` (see [commitizen's docs](https://github.com/commitizen/cz-cli#retrying-failed-commits) for details).
-   1. your favorite tool
-   
-      ⚠️ Warning: no matter what tool you use, commit messages are linted. See details below.
-   
-1. Follow the [conventional-commits](https://www.conventionalcommits.org/en/v1.0.0/) commit conventions. Generally, the format should match:
+ℹ️ **Info:** There are [xo extensions](https://github.com/xojs/xo#editor-plugins) for other IDEs. Use them at your own risk.
 
-   ```
-   <type>[(<scope>)]: <subject>
-   ```
-
-   where the scope is optional.
-
-   **⚠️ Commit messages are linted!!!**
-
-   💡 Use Commitizen as described in the previous step to ensure correctly formatted messages.
-
-   💡 Include the clubhouse story tag in your commit messages to create a link between your story and github. Clubhouse uses the form `[ch1234]` where 1234 is the story number. If using Commitizen, use the entire tag, `[ch1234]`, in the "Issues this commit closes" prompt.
-
-   ⚠️ When using `yarn commit`, when prompted for "BREAKING CHANGE", leave the prompt blank and press enter (unless you have a breaking change to report). Entering `n` or `none` will result in a new major version and a corresponding note in the changelog.
-
-   🚑 _In case of emergency_ (or when rebasing), you can disable commit linting by deactivating git hooks with either of the following:
-
-   - `git commit --no-verify ...`
-   - `HUSKY_SKIP_HOOKS=1 git ...`
-
-1. Create a pull request and get someone to review it.
-1. Once approved, you as the author of the PR should merge it.
-
-### Linting
-
-The project uses the [xo](https://github.com/xojs/xo) linter.
-
-Be sure to install the [xo extension for your IDE](https://github.com/xojs/xo#editor-plugins).
-
-💡 VSCode users pro tip: **Enable the xo formatter and format on save options to make your life easier!** The linter only works when opening the project from the root of the the monorepo.
+#### 🚀 For the best VSCode experience, enable the xo formatter and the format on save options:
 
 ```json
 {
@@ -79,25 +37,106 @@ Be sure to install the [xo extension for your IDE](https://github.com/xojs/xo#ed
 }
 ```
 
-## Running the application
+💡 **Pro tip:** The linter only works in VSCode when opening the project from the root of the the monorepo. Opening individual packages will lead to headaches 🤕💊.
 
-Ensure you have a local `.env.development` file available.
 
+### 3. Configure ⚙️
+
+Configuration happens through environment variables.
+
+**🔧 Tooling:** Environment variables are loaded with [env-cmd](https://www.npmjs.com/package/env-cmd) or [dotenv](https://www.npmjs.com/package/dotenv) depending on the pacakage.
+
+Required environment variables for each package are documented in the `.env.sample` files inside the associated packages.
+
+The following packages distinguish between `.env.development` and `.env.production` when running in development mode or building for production:
+* `acme-admin`
+* `acme-edit`
+* `acme-view`
+
+The package `hasura` does not make a distinction and has a single `.env` file.
+
+#### 🚀 Download the required `.env.development` files *for each package* from [clipperz](https://clipperz.is/app/) (ask a team member for the credentials). Ignore the individual secrets and simply download the attached file and ensure it is saved with the correct name.
+
+![clipperz secrets](../images/clipperz.png)
+
+## Run
+
+### 1. Launch the sites locally 💻
+
+#### 🚀 Run the command(s) for the site(s) you want develop:
+
+```bash
+yarn start:view
+yarn start:edit
+yarn start:admin
 ```
-# Starts knowledge-base via `gatsby develop`
-yarn start:kb
 
-# Runs both the above in parallel
-yarn start:apps
-```
+### 2. Debug the sites in your browser 🚫🐛
 
-## Storybook
+Once Gatsby successfully builds and starts the development server(s) the sites can be debugged in your browser.
 
-The components package contains storybook stories to document and test the components contained therein.
+#### 🚀 Navigate to http://localhost:8000 (view), http://localhost:8001 (edit), or http://localhost:8002 (admin) as required.
 
-A hosted version of the storybook stories is running at https://orion-storybook.nearform.com
+### 3. Storybook 📖
 
-```
-cd packages/components
+As appropriate, individual components should be demo'able in storybook.
+
+#### 🚀 Run story book locally:
+
+```bash
 yarn storybook
 ```
+
+#### 🚀 View the staging version of storybook at https://orion-storybook.nearform.com
+
+## Contribute 📝
+
+### 1. Prepare 👨‍🏭
+
+#### 🚀 Pick a story to work on from the [clubhouse project](https://app.clubhouse.io/nearform/stories).
+
+#### 🚀 Work on a new branch, using the [name suggested by clubhouse](https://help.clubhouse.io/hc/en-us/articles/207540323-Using-the-Clubhouse-GitHub-Integration-with-Branches-and-Pull-Requests) by clicking on the github helpers button on your story.
+
+Clubhouse will suggest the convention `{username}/ch{story number}/{story-summary}`. For example `codyzu/ch81/poc-automatic-versioning-in-ci`.
+
+![clubhouse branch name](../images/clubhouse-branch-name.jpg)
+
+### 2. Commit ⬆️
+
+#### 🚀 Run `yarn commit` in the console
+
+👆 This is _the easy way to commit_ and will guide you through the commit conventions!
+
+Staged changes and commit messages are linted. You have been warned. Seemingly incoherent linting problems during commits could be due to missing changes in the git staging area.
+
+**💡 Pro Tip:**  If your commit fails (linting or other problems), it can retried with `yarn commit --retry` (see [commitizen's docs](https://github.com/commitizen/cz-cli#retrying-failed-commits) for details).
+
+**💡 Pro Tip:** When prompted for "Issues this commit closes" using the format `[ch1234]`. This will link your commit to your story.
+
+**⚠️ Warning:** When prompted for "BREAKING CHANGE", **_leave the prompt blank and press enter_** (unless you have a breaking change to report). Entering `n` or `none` will result in a new major version and a corresponding note in the changelog!
+
+**🚑 _In case of emergency_** (or when rebasing), you can disable commit linting by deactivating git hooks with either of the following:
+
+- `yarn commit --no-verify`
+- `git commit --no-verify ...`
+- `HUSKY_SKIP_HOOKS=1 git ...`
+
+### 2. Github PR and Review 🔍
+
+#### 🚀 Create a pull request in Github and ask someone to review it.
+
+### 3. Merge into master 🔀
+
+#### 🚀 Ensure your branch is built successfully by [Circle CI](https://circleci.com/gh/nearform/workflows/orion)
+
+#### 🚀 Once approved, you as the author of the PR should merge it.
+
+**⚠️ Warning:** Every developer is responsible that their merge into master builds successfully in [Circle CI](https://circleci.com/gh/nearform/workflows/orion).
+
+### 4. Deploy to Staging 🏭
+
+Deploying master into staging can be done by anyone.
+
+#### 🚀 Create a PR merging _from_ `master` _into_ `staging` and merge it to trigger a staging deployment
+
+**⚠️ Warning:** Ensure your deployment succeeds by monitoring [Circle CI](https://circleci.com/gh/nearform/workflows/orion).
