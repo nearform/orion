@@ -1,7 +1,0 @@
-- args:
-    name: parent
-    new_name: parent_relationship
-    table:
-      name: orion_page
-      schema: public
-  type: rename_relationship

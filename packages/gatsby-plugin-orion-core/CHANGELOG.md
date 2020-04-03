@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.39.0](https://github.com/nearform/orion/compare/v2.38.3...v2.39.0) (2020-04-02)
+
+
+### Bug Fixes
+
+* 🐛 Fix issue with unknown path for TagsSelect ([dd8bb01](https://github.com/nearform/orion/commit/dd8bb01df4a7500f8b4b1e4d244aea4821518c7d))
+
+
+### Features
+
+* 🎸 Add a tag select input to InputField ([8754be2](https://github.com/nearform/orion/commit/8754be27c4fb76ffa98b64f630617066b248737a))
+* 🎸 Add TagsSelect to the editor screen ([a0f1732](https://github.com/nearform/orion/commit/a0f1732aa5047cb02acb1be1acc6c68fc16bb742))
+* 🎸 Populate TagsSelect with data ([cbe5d35](https://github.com/nearform/orion/commit/cbe5d35dc9f0257d576fa512bca72db8408b084c))
+
+
+
+
+
+## [2.38.2](https://github.com/nearform/orion/compare/v2.38.1...v2.38.2) (2020-03-27)
+
+**Note:** Version bump only for package gatsby-plugin-orion-core
+
+
+
+
+
 ## [2.38.1](https://github.com/nearform/orion/compare/v2.38.0...v2.38.1) (2020-03-27)
 
 

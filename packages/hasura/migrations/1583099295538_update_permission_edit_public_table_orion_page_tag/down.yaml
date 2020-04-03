@@ -1,6 +1,0 @@
-- args:
-    role: edit
-    table:
-      name: orion_page_tag
-      schema: public
-  type: drop_update_permission

@@ -1,6 +1,0 @@
-- args:
-    sql: "\n           alter table \"public\".\"orion_role_permissions\"\n           add
-      constraint \"orion_role_permissions_permission_set_fkey\"\n           foreign
-      key (\"permission_set\")\n           references \"public\".\"orion_permissions\"\n
-      \          (\"permission_set\") on update cascade on delete cascade;\n      "
-  type: run_sql

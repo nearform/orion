@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.40.0](https://github.com/nearform/orion/compare/v2.39.0...v2.40.0) (2020-04-03)
+
+
+### Features
+
+* 🎸 add sign in/out btn to h.nav-menu ([0f73ff1](https://github.com/nearform/orion/commit/0f73ff1ced794013e0ced021bfa8164f6416b08d)), closes [#474](https://github.com/nearform/orion/issues/474) [#509](https://github.com/nearform/orion/issues/509) [#474](https://github.com/nearform/orion/issues/474) [#509](https://github.com/nearform/orion/issues/509)
+* 🎸 add sign in/out btn to h.nav-menu ([2d13332](https://github.com/nearform/orion/commit/2d133329451025a9c7e549a63e18c68416b829cb)), closes [#474](https://github.com/nearform/orion/issues/474) [#509](https://github.com/nearform/orion/issues/509) [#474](https://github.com/nearform/orion/issues/474) [#509](https://github.com/nearform/orion/issues/509)
+
+
+
+
+
+# [2.39.0](https://github.com/nearform/orion/compare/v2.38.3...v2.39.0) (2020-04-02)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
+## [2.38.2](https://github.com/nearform/orion/compare/v2.38.1...v2.38.2) (2020-03-27)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
 ## [2.38.1](https://github.com/nearform/orion/compare/v2.38.0...v2.38.1) (2020-03-27)
 
 **Note:** Version bump only for package gatsby-plugin-orion-view

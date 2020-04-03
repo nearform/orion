@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.40.0](https://github.com/nearform/orion/compare/v2.39.0...v2.40.0) (2020-04-03)
+
+
+### Features
+
+* 🎸 add sign in/out btn to h.nav-menu ([0f73ff1](https://github.com/nearform/orion/commit/0f73ff1ced794013e0ced021bfa8164f6416b08d)), closes [#474](https://github.com/nearform/orion/issues/474) [#509](https://github.com/nearform/orion/issues/509) [#474](https://github.com/nearform/orion/issues/474) [#509](https://github.com/nearform/orion/issues/509)
+* 🎸 add sign in/out btn to h.nav-menu ([2d13332](https://github.com/nearform/orion/commit/2d133329451025a9c7e549a63e18c68416b829cb)), closes [#474](https://github.com/nearform/orion/issues/474) [#509](https://github.com/nearform/orion/issues/509) [#474](https://github.com/nearform/orion/issues/474) [#509](https://github.com/nearform/orion/issues/509)
+
+
+
+
+
+# [2.39.0](https://github.com/nearform/orion/compare/v2.38.3...v2.39.0) (2020-04-02)
+
+
+### Bug Fixes
+
+* 🐛 Fix issue with unknown path for TagsSelect ([dd8bb01](https://github.com/nearform/orion/commit/dd8bb01df4a7500f8b4b1e4d244aea4821518c7d))
+
+
+### Features
+
+* 🎸 Add a tag select input to InputField ([8754be2](https://github.com/nearform/orion/commit/8754be27c4fb76ffa98b64f630617066b248737a))
+* 🎸 Add tag when selected from existing list ([4e4917a](https://github.com/nearform/orion/commit/4e4917aff5eb99df31039c6691f3b0d7b67bae6f))
+* 🎸 Add tags section to acme edit props ([6ea32c5](https://github.com/nearform/orion/commit/6ea32c5e101dd735c539fa6a0b4ec1babbe97903))
+* 🎸 Add TagsSelect to the editor screen ([a0f1732](https://github.com/nearform/orion/commit/a0f1732aa5047cb02acb1be1acc6c68fc16bb742))
+* 🎸 Enable clear all tags button ([b5c23d3](https://github.com/nearform/orion/commit/b5c23d3eba2edafc0655c7d8f24be91670d83f9b))
+* 🎸 Enable x button to remove single tag ([308b3c7](https://github.com/nearform/orion/commit/308b3c7df0587f354c5718892b99fb353cebb23a))
+* 🎸 Make autocomplete select to assign and create tags ([170ca03](https://github.com/nearform/orion/commit/170ca034b73b04f315b2566c03abf90374257c5a))
+* 🎸 Populate TagsSelect with data ([cbe5d35](https://github.com/nearform/orion/commit/cbe5d35dc9f0257d576fa512bca72db8408b084c))
+* 🎸 Update page reducer state when tags change ([dda374c](https://github.com/nearform/orion/commit/dda374ca80a08253418c24a4dcec3d9f071c7ebe))
+
+
+
+
+
+## [2.38.3](https://github.com/nearform/orion/compare/v2.38.2...v2.38.3) (2020-03-30)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
+## [2.38.2](https://github.com/nearform/orion/compare/v2.38.1...v2.38.2) (2020-03-27)
+
+
+### Bug Fixes
+
+* 🐛 Remove yarn run seed from circleci config ([7bb93b3](https://github.com/nearform/orion/commit/7bb93b39b36f21bf110e66cb494669cfe2255b8e))
+
+
+
+
+
 ## [2.38.1](https://github.com/nearform/orion/compare/v2.38.0...v2.38.1) (2020-03-27)
 
 

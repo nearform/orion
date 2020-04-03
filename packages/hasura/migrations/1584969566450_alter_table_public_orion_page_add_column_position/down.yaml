@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."orion_page" DROP COLUMN "position";
-  type: run_sql

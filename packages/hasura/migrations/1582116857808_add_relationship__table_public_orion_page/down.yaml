@@ -1,6 +1,0 @@
-- args:
-    relationship: contents
-    table:
-      name: orion_page
-      schema: public
-  type: drop_relationship

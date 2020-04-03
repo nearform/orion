@@ -5,9 +5,9 @@ import { useEditComponents } from '../EditComponentProvider'
 import { useLocation } from '@reach/router'
 import { useMutation, useQuery } from 'graphql-hooks'
 
-import getPagesQuery from '../../queries/get-pages'
-import updateAncestryMutation from '../../queries/update-ancestry'
-import updatePositionMutation from '../../queries/update-position'
+import getPagesQuery from '../../queries/get-pages.graphql'
+import updateAncestryMutation from '../../queries/update-ancestry.graphql'
+import updatePositionMutation from '../../queries/update-position.graphql'
 
 function PageTree() {
   const { data } = useQuery(getPagesQuery)

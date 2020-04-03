@@ -1,4 +1,0 @@
-- args:
-    sql: "\n          alter table \"public\".\"orion_user\" drop constraint \"orion_user_group_id_fkey\"\n
-      \     "
-  type: run_sql

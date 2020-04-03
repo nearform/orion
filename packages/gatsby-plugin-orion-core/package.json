@@ -2,13 +2,14 @@
   "name": "gatsby-plugin-orion-core",
   "description": "Orion core core plugin",
   "main": "index.js",
-  "version": "2.38.1",
+  "version": "2.39.0",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
   },
   "scripts": {
     "test": "jest",
+    "test:watch": "yarn test --watch",
     "commit": "cd .. && yarn commit"
   },
   "dependencies": {
@@ -33,7 +34,7 @@
     "gatsby-plugin-sharp": "^2.4.5",
     "gatsby-plugin-webpack-bundle-analyzer": "^1.0.5",
     "gatsby-source-graphql": "^2.1.33",
-    "gatsby-theme-acme": "^2.38.1",
+    "gatsby-theme-acme": "^2.38.2",
     "gatsby-transformer-json": "^2.2.26",
     "gatsby-transformer-sharp": "^2.3.14",
     "graphql-hooks": "^4.4.2",
