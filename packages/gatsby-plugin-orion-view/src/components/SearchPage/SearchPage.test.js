@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from '@testing-library/react'
-import SearchPage from '.'
+import SearchPage, { getContents } from '.'
 import { useQuery } from 'graphql-hooks'
 import { useViewComponents } from '../ViewComponentProvider'
 
@@ -121,6 +121,19 @@ describe('SearchPage component', () => {
     })
   })
 
+  it('shows the no results text when there are no results', () => {
+    useQuery.mockReturnValueOnce({
+      data: {
+        results: [],
+      },
+      loading: false,
+    })
+    const { getByText } = setupPage()
+    expect(
+      getByText('No pages or articles matched the given search parameters.')
+    ).toBeInTheDocument()
+  })
+
   it('shows the correct number of results', () => {
     const { container } = setupPage()
     expect(container.querySelectorAll('article').length).toEqual(3)
@@ -191,5 +204,20 @@ describe('SearchPage component', () => {
         'When a company insures an individual entity, there are basic legal requirements and regulations.'
       )
     ).toBeInTheDocument()
+  })
+
+  describe('the getContents helper', () => {
+    it('returns the fallback of an empty string if there is no options arg passed in', () => {
+      expect(getContents()).toEqual('')
+    })
+    it('returns the fallback of an empty string if no contents are passed in', () => {
+      expect(getContents({ value: 'a', block: 'b' })).toEqual('')
+    })
+    it('returns the fallback of an empty string if no block is passed in', () => {
+      expect(getContents({ value: 'a', contents: [{}] })).toEqual('')
+    })
+    it('returns the fallback of an empty string if no value is passed in', () => {
+      expect(getContents({ block: 'a', contents: [{}] })).toEqual('')
+    })
   })
 })

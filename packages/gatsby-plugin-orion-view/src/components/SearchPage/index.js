@@ -5,8 +5,13 @@ import { useViewComponents } from '../ViewComponentProvider'
 import { useQuery } from 'graphql-hooks'
 import ArticleList from '../ArticleList'
 
-const getContents = ({ contents, block, value, fallback = '' } = {}) => {
-  if (!contents || !block || !value) {
+export const getContents = ({
+  contents = [],
+  block = '',
+  value = '',
+  fallback = '',
+} = {}) => {
+  if (contents.lenght === 0 || !block || !value) {
     return fallback
   }
 
@@ -21,7 +26,6 @@ function SearchPageProvider({ location, pageContext }) {
     .split('&')
     .find(s => s.indexOf('term=') === 0)
     .replace('term=', '')
-
   const { data, loading } = useQuery(getSearchQuery, {
     variables: {
       term: `%${searchTerm}%`,
@@ -29,17 +33,8 @@ function SearchPageProvider({ location, pageContext }) {
       isFullSearch: true,
     },
   })
-
   const { page } = pageContext
-  if (loading && page === null) {
-    return <h1>Loading</h1>
-  }
-
   const results = data && data.results
-
-  if (!results || !page) {
-    return <h1>Error</h1>
-  }
 
   if (results.length === 0) {
     return <h1>No pages or articles matched the given search parameters.</h1>
@@ -49,7 +44,6 @@ function SearchPageProvider({ location, pageContext }) {
 
   return (
     <Layout
-      breadcrumbs={() => [{ title: 'taerhnt', to: 'treinh' }]}
       main={
         <ArticleList
           articles={results.map(({ path, id, title, contents, published }) => ({
