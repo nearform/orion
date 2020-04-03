@@ -5,6 +5,15 @@ import { useViewComponents } from '../ViewComponentProvider'
 import { useQuery } from 'graphql-hooks'
 import ArticleList from '../ArticleList'
 
+const getContents = ({ contents, block, value, fallback = '' } = {}) => {
+  if (!contents || !block || !value) {
+    return fallback
+  }
+
+  const content = contents.find((c = {}) => c.block === block)
+  return (content && content.props && content.props[value]) || fallback
+}
+
 function SearchPageProvider({ location, pageContext }) {
   const { layouts } = useViewComponents()
   const searchTerm = location.search
@@ -17,6 +26,7 @@ function SearchPageProvider({ location, pageContext }) {
     variables: {
       term: `%${searchTerm}%`,
       limit: 30,
+      isFullSearch: true,
     },
   })
 
@@ -39,9 +49,26 @@ function SearchPageProvider({ location, pageContext }) {
 
   return (
     <Layout
+      breadcrumbs={() => [{ title: 'taerhnt', to: 'treinh' }]}
       main={
         <ArticleList
-          articles={results}
+          articles={results.map(({ path, id, title, contents, published }) => ({
+            path,
+            id,
+            title,
+            image: getContents({
+              contents,
+              block: 'content',
+              value: 'image',
+              fallback: '/place-8@2x.png',
+            }),
+            summary: getContents({
+              contents,
+              block: 'summary',
+              value: 'content',
+            }),
+            published,
+          }))}
           title={`Search results for: ${searchTerm}`}
           type="rows"
         />

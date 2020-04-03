@@ -150,6 +150,7 @@ function SearchInput({ placeholderText, query }) {
         variables: {
           term: `%${debouncedSearchTerm}%`,
           limit: 4,
+          isFullSearch: false,
         },
       })
     } else {
