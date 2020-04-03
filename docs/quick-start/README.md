@@ -6,7 +6,7 @@
 
 ### 1. Clone and install dependencies ⬇️
 
-**🔧 Tooling Tip:** The project uses node.js and [yarn "classic"](https://classic.yarnpkg.com). You must have both installed.
+**🔧 Tooling:** The project uses node.js and [yarn "classic"](https://classic.yarnpkg.com). You must have both installed.
 
 #### 🚀 Execute the following commands:
 ```bash
@@ -25,7 +25,7 @@ Developers are assumed to be using VSCode. Use other IDEs at your own risk.
 
 #### 🚀 Install the [XO extension for VSCode](https://marketplace.visualstudio.com/items?itemName=samverschueren.linter-xo)
 
-ℹ️ **Info:** There are [xo extensions](https://github.com/xojs/xo#editor-plugins) for other IDEs.
+ℹ️ **Info:** There are [xo extensions](https://github.com/xojs/xo#editor-plugins) for other IDEs. Use them at your own risk.
 
 #### 🚀 For the best VSCode experience, enable the xo formatter and the format on save options:
 
@@ -44,11 +44,11 @@ Developers are assumed to be using VSCode. Use other IDEs at your own risk.
 
 Configuration happens through environment variables.
 
-**📦 Packages Info:** Environment variables are loaded with [env-cmd](https://www.npmjs.com/package/env-cmd) or [dotenv](https://www.npmjs.com/package/dotenv) packages.
+**🔧 Tooling:** Environment variables are loaded with [env-cmd](https://www.npmjs.com/package/env-cmd) or [dotenv](https://www.npmjs.com/package/dotenv) depending on the pacakage.
 
 Required environment variables for each package are documented in the `.env.sample` files inside the associated packages.
 
-The following packages distinguish between `.env.development` and `.env.production` for running in development mode and building for production:
+The following packages distinguish between `.env.development` and `.env.production` when running in development mode or building for production:
 * `acme-admin`
 * `acme-edit`
 * `acme-view`
@@ -107,25 +107,17 @@ Clubhouse will suggest the convention `{username}/ch{story number}/{story-summar
 
 👆 This is _the easy way to commit_ and will guide you through the commit conventions!
 
+Staged changes and commit messages are linted. You have been warned. Seemingly incoherent linting problems during commits could be due to missing changes in the git staging area.
+
 **💡 Pro Tip:**  If your commit fails (linting or other problems), it can retried with `yarn commit --retry` (see [commitizen's docs](https://github.com/commitizen/cz-cli#retrying-failed-commits) for details).
 
+**💡 Pro Tip:** When prompted for "Issues this commit closes" using the format `[ch1234]`. This will link your commit to your story.
 
-**⚠️ Warning:** You can commit with your tool of choice, but understand that your commit changes and commit messages are linted.
-   
-Commit messages must follow the [conventional-commits](https://www.conventionalcommits.org/en/v1.0.0/) commit conventions. Generally, the format should match:
+**⚠️ Warning:** When prompted for "BREAKING CHANGE", **_leave the prompt blank and press enter_** (unless you have a breaking change to report). Entering `n` or `none` will result in a new major version and a corresponding note in the changelog!
 
-```
-<type>[(<scope>)]: <subject>
-```
+**🚑 _In case of emergency_** (or when rebasing), you can disable commit linting by deactivating git hooks with either of the following:
 
-**💡 Pro Tip:** Using `yarn commit` prompts you for the various fields.
-
-**💡 Pro Tip:** When using `yarn commit` enter the clubhouse story when prompted for "Issues this commit closes" using the format `[ch1234]`. This will link your commit to your story.
-
-**⚠️ Warning:** When using `yarn commit`, when prompted for "BREAKING CHANGE", **_leave the prompt blank and press enter_** (unless you have a breaking change to report). Entering `n` or `none` will result in a new major version and a corresponding note in the changelog!
-
-🚑 _In case of emergency_ (or when rebasing), you can disable commit linting by deactivating git hooks with either of the following:
-
+- `yarn commit --no-verify`
 - `git commit --no-verify ...`
 - `HUSKY_SKIP_HOOKS=1 git ...`
 
@@ -139,7 +131,7 @@ Commit messages must follow the [conventional-commits](https://www.conventionalc
 
 #### 🚀 Once approved, you as the author of the PR should merge it.
 
-**⚠️ Warning:** Every developer is responsible that their merge into master builds successfully in [Circle CI](https://circleci.com/gh/nearform/workflows/orion)
+**⚠️ Warning:** Every developer is responsible that their merge into master builds successfully in [Circle CI](https://circleci.com/gh/nearform/workflows/orion).
 
 ### 4. Deploy to Staging 🏭
 
@@ -147,4 +139,4 @@ Deploying master into staging can be done by anyone.
 
 #### 🚀 Create a PR merging _from_ `master` _into_ `staging` and merge it to trigger a staging deployment
 
-**⚠️ Warning:** Ensure your deployment succeeds by monitoring [Circle CI](https://circleci.com/gh/nearform/workflows/orion)
+**⚠️ Warning:** Ensure your deployment succeeds by monitoring [Circle CI](https://circleci.com/gh/nearform/workflows/orion).
