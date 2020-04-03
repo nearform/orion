@@ -21,11 +21,12 @@ export const getContents = ({
 
 function SearchPageProvider({ location, pageContext }) {
   const { layouts } = useViewComponents()
-  const searchTerm = location.search
+  let searchTerm = location.search
     .replace('?', '')
     .split('&')
     .find(s => s.indexOf('term=') === 0)
-    .replace('term=', '')
+  searchTerm = searchTerm ? searchTerm.replace('term=', '') : ''
+
   const { data, loading } = useQuery(getSearchQuery, {
     variables: {
       term: `%${searchTerm}%`,
@@ -36,7 +37,7 @@ function SearchPageProvider({ location, pageContext }) {
   const { page } = pageContext
   const results = data && data.results
 
-  if (results.length === 0) {
+  if (!results || results.length === 0) {
     return <h1>No pages or articles matched the given search parameters.</h1>
   }
 
