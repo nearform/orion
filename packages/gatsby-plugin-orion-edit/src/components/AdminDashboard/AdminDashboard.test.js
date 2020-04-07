@@ -42,6 +42,12 @@ const mockData = [
     iconClass: 'fas fa-user-friends',
   },
   {
+    label: 'goto View',
+    to: '',
+    iconClass: 'fas fa-eye',
+    onClick: () => {},
+  },
+  {
     label: 'Sign out',
     to: '/sign-out',
     iconClass: 'fas fa-long-arrow-alt-left',
@@ -92,6 +98,7 @@ describe('AdminDashboard component', () => {
     expect(getByText('Categories / Tags')).toBeInTheDocument()
     expect(getByText('Media Library')).toBeInTheDocument()
     expect(getByText('Users')).toBeInTheDocument()
+    expect(getByText('goto View')).toBeInTheDocument()
     expect(getByText('Sign out')).toBeInTheDocument()
   })
 
