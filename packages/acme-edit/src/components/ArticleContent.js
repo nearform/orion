@@ -3,6 +3,7 @@ import ArticleContent from 'acme-view/src/components/ArticleContent/Wrap'
 import MarkdownEditor from 'gatsby-plugin-orion-edit/src/components/MarkdownEditor/MarkdownEditor'
 import { Input, makeStyles } from '@material-ui/core'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
+import TagsSelect from 'gatsby-plugin-orion-edit/src/components/TagsSelect'
 
 const useStyles = makeStyles(theme => ({
   content: {
@@ -113,6 +114,19 @@ function ArticleContentEditor({ content, image, onChange, page, subtitle }) {
         value={subtitle}
         onChange={event => {
           onChange({ content, image, subtitle: event.target.value }, page)
+        }}
+      />
+      <TagsSelect
+        existingTags={page.allTags}
+        currentTags={page.tags}
+        onChange={tags => {
+          onChange(
+            { content, image, subtitle },
+            {
+              ...page,
+              tags,
+            }
+          )
         }}
       />
       {image && <img alt={page.title} src={image} className={classes.image} />}
