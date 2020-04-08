@@ -32,7 +32,7 @@ describe('PageSettings', () => {
       document.querySelector('[format="MMM dd yyyy, hh:mm a"]')
     ).toBeInTheDocument()
     expect(getByText('Published Date').nextSibling.childNodes[0]).toHaveValue(
-      'Apr 07 2020, 11:20 AM'
+      'Apr 07 2020, 10:20 AM'
     )
   })
 })
