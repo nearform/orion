@@ -55,14 +55,14 @@ const useStyles = makeStyles(theme => ({
 
 const LinkEdit = ({ userRole }) => {
   if ((userRole === 'User' || userRole === 'Admin') && Auth.user !== null) {
-    let slug = process.env.GATSBY_EDIT_URL || undefined
+    let slug = process.env.GATSBY_URL_EDIT || ''
 
-    if (slug === undefined) {
-      const a = window.location.hostname.toLowerCase().split('.')
+    if (slug === '') {
+      const hostnameSections = window.location.hostname.toLowerCase().split('.')
 
-      switch (a[0]) {
+      switch (hostnameSections[0]) {
         case 'view':
-          slug = `edit.${a[1]}.${a[2]}`
+          slug = `edit.${hostnameSections[1]}.${hostnameSections[2]}`
           break
         case 'localhost':
           slug = 'http://localhost:8001'
@@ -118,7 +118,6 @@ const AppBar = ({
               <LinkEdit userRole={userRole} />
               <AuthButton />
             </div>
-
             <LanguageSelector />
           </div>
         </Toolbar>

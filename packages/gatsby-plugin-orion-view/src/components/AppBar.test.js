@@ -83,7 +83,7 @@ describe('root menu items', () => {
     Auth.user = null
 
     const { queryByText } = render(<AppBar userRole="User" />)
-    expect(queryByText(/edit/i)).toBeFalsy()
+    expect(queryByText(/edit/i)).not.toBeInTheDocument()
   })
 
   test("doesn't render edit link when user's role is neither User or Admin", () => {
@@ -99,7 +99,7 @@ describe('root menu items', () => {
     Auth.user = {}
 
     const { queryByText } = render(<AppBar userRole="User" />)
-    expect(queryByText(/edit/i)).toBeTruthy()
+    expect(queryByText(/edit/i)).toBeInTheDocument()
   })
 
   test('renders edit link when logged in as Admin', () => {
@@ -107,7 +107,7 @@ describe('root menu items', () => {
     Auth.user = {}
 
     const { queryByText } = render(<AppBar userRole="Admin" />)
-    expect(queryByText(/edit/i)).toBeTruthy()
+    expect(queryByText(/edit/i)).toBeInTheDocument()
   })
 
   // This should be tested in another component and mocked here
