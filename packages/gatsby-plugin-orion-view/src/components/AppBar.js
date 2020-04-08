@@ -62,7 +62,7 @@ const LinkEdit = ({ userRole }) => {
 
       switch (a[0]) {
         case 'view':
-          slug = 'edit.' + a[1] + '.' + a[2]
+          slug = `edit.${a[1]}.${a[2]}`
           break
         case 'localhost':
           slug = 'http://localhost:8001'
