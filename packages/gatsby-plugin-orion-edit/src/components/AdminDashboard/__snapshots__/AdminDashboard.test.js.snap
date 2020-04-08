@@ -3,18 +3,18 @@
 exports[`AdminDashboard component uses the MUI theme components and classes to style the page 1`] = `
 <div>
   <div
-    class="makeStyles-root-361"
+    class="makeStyles-root-721"
   >
     <div
-      class="makeStyles-side-365"
+      class="makeStyles-side-725"
     >
       <h1
-        class="makeStyles-heading-362"
+        class="makeStyles-heading-722"
       >
         test me
       </h1>
       <ul
-        class="MuiList-root makeStyles-root-367 MuiList-padding"
+        class="MuiList-root makeStyles-root-727 MuiList-padding"
       >
          
         <a
@@ -264,17 +264,17 @@ exports[`AdminDashboard component uses the MUI theme components and classes to s
       </ul>
     </div>
     <div
-      class="makeStyles-main-363"
+      class="makeStyles-main-723"
     >
       <div
-        class="makeStyles-top-366"
+        class="makeStyles-top-726"
       />
       <ul
-        class="MuiGridList-root makeStyles-gridList-364"
+        class="MuiGridList-root makeStyles-gridList-724"
         style="margin: -2px;"
       >
         <div
-          class="MuiPaper-root MuiCard-root makeStyles-root-432 MuiPaper-elevation1 MuiPaper-rounded"
+          class="MuiPaper-root MuiCard-root makeStyles-root-792 MuiPaper-elevation1 MuiPaper-rounded"
         >
           <button
             class="MuiButtonBase-root MuiCardActionArea-root"
@@ -282,14 +282,14 @@ exports[`AdminDashboard component uses the MUI theme components and classes to s
             type="button"
           >
             <a
-              class="makeStyles-link-433"
+              class="makeStyles-link-793"
               href="/pages"
             >
               <div
                 class="MuiCardContent-root"
               >
                 <div
-                  class="MuiCardMedia-root makeStyles-media-434"
+                  class="MuiCardMedia-root makeStyles-media-794"
                   style="background-image: url(todo);"
                   title="Pages"
                 />
@@ -309,7 +309,7 @@ exports[`AdminDashboard component uses the MUI theme components and classes to s
           </button>
         </div>
         <div
-          class="MuiPaper-root MuiCard-root makeStyles-root-432 MuiPaper-elevation1 MuiPaper-rounded"
+          class="MuiPaper-root MuiCard-root makeStyles-root-792 MuiPaper-elevation1 MuiPaper-rounded"
         >
           <button
             class="MuiButtonBase-root MuiCardActionArea-root"
@@ -317,14 +317,14 @@ exports[`AdminDashboard component uses the MUI theme components and classes to s
             type="button"
           >
             <a
-              class="makeStyles-link-433"
+              class="makeStyles-link-793"
               href="/articles"
             >
               <div
                 class="MuiCardContent-root"
               >
                 <div
-                  class="MuiCardMedia-root makeStyles-media-434"
+                  class="MuiCardMedia-root makeStyles-media-794"
                   style="background-image: url(todo);"
                   title="Articles"
                 />
@@ -344,7 +344,7 @@ exports[`AdminDashboard component uses the MUI theme components and classes to s
           </button>
         </div>
         <div
-          class="MuiPaper-root MuiCard-root makeStyles-root-432 MuiPaper-elevation1 MuiPaper-rounded"
+          class="MuiPaper-root MuiCard-root makeStyles-root-792 MuiPaper-elevation1 MuiPaper-rounded"
         >
           <button
             class="MuiButtonBase-root MuiCardActionArea-root"
@@ -352,14 +352,14 @@ exports[`AdminDashboard component uses the MUI theme components and classes to s
             type="button"
           >
             <a
-              class="makeStyles-link-433"
+              class="makeStyles-link-793"
               href="/menus"
             >
               <div
                 class="MuiCardContent-root"
               >
                 <div
-                  class="MuiCardMedia-root makeStyles-media-434"
+                  class="MuiCardMedia-root makeStyles-media-794"
                   style="background-image: url(todo);"
                   title="Menus"
                 />
@@ -379,7 +379,7 @@ exports[`AdminDashboard component uses the MUI theme components and classes to s
           </button>
         </div>
         <div
-          class="MuiPaper-root MuiCard-root makeStyles-root-432 MuiPaper-elevation1 MuiPaper-rounded"
+          class="MuiPaper-root MuiCard-root makeStyles-root-792 MuiPaper-elevation1 MuiPaper-rounded"
         >
           <button
             class="MuiButtonBase-root MuiCardActionArea-root"
@@ -387,14 +387,14 @@ exports[`AdminDashboard component uses the MUI theme components and classes to s
             type="button"
           >
             <a
-              class="makeStyles-link-433"
+              class="makeStyles-link-793"
               href="/users"
             >
               <div
                 class="MuiCardContent-root"
               >
                 <div
-                  class="MuiCardMedia-root makeStyles-media-434"
+                  class="MuiCardMedia-root makeStyles-media-794"
                   style="background-image: url(todo);"
                   title="Users"
                 />
