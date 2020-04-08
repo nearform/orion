@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react'
+import 'date-fns' // eslint-disable-line import/no-unassigned-import
 import {
   Button,
   Dialog,
@@ -13,6 +14,8 @@ import {
   makeStyles,
 } from '@material-ui/core'
 import { useEditComponents } from '../EditComponentProvider'
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns'
 
 const useStyles = makeStyles(theme => ({
   input: {
@@ -26,14 +29,14 @@ function PageSettings({ open, onCancel, onSave, page }) {
 
   const [layout, setLayout] = useState(page.layout)
   const [path, setPath] = useState(page.path)
-  const [published, setPublished] = useState(page.published !== null)
+  const [publishedDate, setPublishedDate] = useState(page.published || null)
   const [showInMenu, setShowInMenu] = useState(page.show_in_menu)
   const [title, setTitle] = useState(page.title)
 
   const handleCancel = useCallback(() => {
     setLayout(page.layout)
     setPath(page.path)
-    setPublished(page.published !== null)
+    setPublishedDate(page.published || null)
     setShowInMenu(page.show_in_menu)
     setTitle(page.title)
 
@@ -42,8 +45,8 @@ function PageSettings({ open, onCancel, onSave, page }) {
     page,
     onCancel,
     setLayout,
+    setPublishedDate,
     setPath,
-    setPublished,
     setShowInMenu,
     setTitle,
   ])
@@ -53,11 +56,11 @@ function PageSettings({ open, onCancel, onSave, page }) {
       ...page,
       layout,
       path,
-      published: published ? page.published || new Date() : null,
+      published: publishedDate,
       show_in_menu: showInMenu, // eslint-disable-line camelcase
       title,
     })
-  }, [layout, onSave, page, path, published, showInMenu, title])
+  }, [layout, onSave, page, path, showInMenu, title, publishedDate])
 
   return (
     <Dialog fullWidth open={open} onClose={handleCancel}>
@@ -76,6 +79,7 @@ function PageSettings({ open, onCancel, onSave, page }) {
         </FormControl>
         <FormControl fullWidth className={classes.input}>
           <InputLabel shrink>Show in menu</InputLabel>
+
           <Select
             value={showInMenu}
             onChange={event => setShowInMenu(event.target.value)}
@@ -84,16 +88,20 @@ function PageSettings({ open, onCancel, onSave, page }) {
             <MenuItem value={false}>No</MenuItem>
           </Select>
         </FormControl>
-        <FormControl fullWidth className={classes.input}>
-          <InputLabel shrink>Published</InputLabel>
-          <Select
-            value={published}
-            onChange={event => setPublished(event.target.value)}
-          >
-            <MenuItem value>Yes</MenuItem>
-            <MenuItem value={false}>No</MenuItem>
-          </Select>
-        </FormControl>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <FormControl fullWidth className={classes.input}>
+            <DateTimePicker
+              format="MMM dd yyyy, hh:mm a"
+              label="Published Date"
+              value={publishedDate}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+              orientation="portrait"
+              onChange={dateTime => setPublishedDate(dateTime)}
+            />
+          </FormControl>
+        </MuiPickersUtilsProvider>
         <FormControl fullWidth className={classes.input}>
           <InputLabel shrink>Layout</InputLabel>
           <Select
