@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import CreatableSelect from 'react-select/creatable'
 
 import updatePageTagsMutation from '../../queries/update-page-tags.graphql'
+import createTagMutation from '../../queries/create-tag.graphql'
 import deletePageTagMutation from '../../queries/delete-page-tag.graphql'
 import clearPageTagsMutation from '../../queries/clear-page-tags.graphql'
 import { useMutation } from 'graphql-hooks'
@@ -27,7 +28,7 @@ const TagsSelect = ({
   currentTags = [],
   name,
   pageId,
-  handleSaveTags,
+  onChange,
 }) => {
   const initialState = {
     isLoading: false,
@@ -36,39 +37,42 @@ const TagsSelect = ({
   }
   const [state, setState] = useState(initialState)
   const [updatePageTags] = useMutation(updatePageTagsMutation)
+  const [createTag] = useMutation(createTagMutation)
   const [deletePageTag] = useMutation(deletePageTagMutation)
   const [clearPageTag] = useMutation(clearPageTagsMutation)
   const updateState = values => setState({ ...state, ...values })
 
   const handleChange = (newValue, actionMeta) => {
-    if (actionMeta.action === 'remove-value') {
-      deletePageTag({
-        variables: {
-          pageId,
-          tag: actionMeta.removedValue.value,
-        },
-      })
-      newValue = state.value.filter(
-        tag => tag.value !== actionMeta.removedValue.value
-      )
-    }
+    if (pageId) {
+      if (actionMeta.action === 'remove-value') {
+        deletePageTag({
+          variables: {
+            pageId,
+            tag: actionMeta.removedValue.value,
+          },
+        })
+        newValue = state.value.filter(
+          tag => tag.value !== actionMeta.removedValue.value
+        )
+      }
 
-    if (actionMeta.action === 'clear') {
-      clearPageTag({ variables: { pageId } })
-    }
+      if (actionMeta.action === 'clear') {
+        clearPageTag({ variables: { pageId } })
+      }
 
-    if (actionMeta.action === 'select-option') {
-      updatePageTags({
-        variables: {
-          isNewTag: false,
-          pageId,
-          tag: actionMeta.option.value,
-        },
-      })
+      if (actionMeta.action === 'select-option') {
+        updatePageTags({
+          variables: {
+            isNewTag: false,
+            pageId,
+            tag: actionMeta.option.value,
+          },
+        })
+      }
     }
 
     updateState({ value: newValue })
-    handleSaveTags(
+    onChange(
       newValue.map(({ value }) => ({ tag: { tag: value, hidden: false } }))
     )
   }
@@ -77,20 +81,29 @@ const TagsSelect = ({
     updateState({ isLoading: true })
     const { options } = state
     const newOption = createOption({ tag: inputValue })
-    updatePageTags({
-      variables: {
-        isNewTag: true,
-        pageId,
-        tag: inputValue,
-      },
-    })
+    if (pageId) {
+      updatePageTags({
+        variables: {
+          isNewTag: true,
+          pageId,
+          tag: inputValue,
+        },
+      })
+    } else {
+      createTag({
+        variables: {
+          tag: inputValue,
+        },
+      })
+    }
+
     const newValue = state.value.concat([newOption])
     updateState({
       isLoading: false,
       options: [...options, newOption],
       value: newValue,
     })
-    handleSaveTags(
+    onChange(
       newValue.map(({ value }) => ({ tag: { tag: value, hidden: false } }))
     )
   }
@@ -124,12 +137,14 @@ TagsSelect.propTypes = {
     })
   ),
   name: PropTypes.string,
-  pageId: PropTypes.number.isRequired,
-  handleSaveTags: PropTypes.func.isRequired,
+  pageId: PropTypes.number,
+  onChange: PropTypes.func,
 }
 TagsSelect.defaultProps = {
   currentTags: [],
   name: '',
+  pageId: null,
+  onChange: () => {},
 }
 
 export default TagsSelect

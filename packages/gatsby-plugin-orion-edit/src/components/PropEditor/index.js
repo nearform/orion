@@ -70,7 +70,7 @@ export default function createPropEditor(componentProps) {
                 name="tags-select"
                 currentTags={page.tags}
                 pageId={page.id}
-                handleSaveTags={handleSaveTags}
+                onChange={handleSaveTags}
               />
             </FormControl>
           </div>
