@@ -49,7 +49,10 @@ function ArticleMetadata({ page, readTime }) {
 
 ArticleMetadata.propTypes = {
   page: T.object.isRequired,
-  readTime: T.number.isRequired,
+  readTime: T.number,
+}
+ArticleMetadata.defaultProps = {
+  readTime: 0,
 }
 
 export default ArticleMetadata

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.42.0](https://github.com/nearform/orion/compare/v2.41.0...v2.42.0) (2020-04-08)
+
+
+### Features
+
+* 🎸 Add tag select to page creation template ([d335096](https://github.com/nearform/orion/commit/d335096579c25da66e7075f730c44b3d682673e0))
+
+
+
+
+
 # [2.41.0](https://github.com/nearform/orion/compare/v2.40.0...v2.41.0) (2020-04-03)
 
 **Note:** Version bump only for package acme-edit

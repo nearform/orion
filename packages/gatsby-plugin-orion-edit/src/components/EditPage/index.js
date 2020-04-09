@@ -82,6 +82,10 @@ function EditPage({ initialState, onSave }) {
             ...content,
             page_id: page.id, // eslint-disable-line camelcase
           })),
+          tags: page.tags.map(({ value }) => ({
+            tag_id: value, // eslint-disable-line camelcase
+            page_id: page.id, // eslint-disable-line camelcase
+          })),
         },
       })
 
@@ -102,6 +106,7 @@ function EditPage({ initialState, onSave }) {
           authors: page.authors.map(({ user }) => ({
             user_id: user.id, // eslint-disable-line camelcase
           })),
+          tags: page.tags.map(({ tag }) => ({ tag_id: tag.tag })), // eslint-disable-line camelcase
         },
       })
 

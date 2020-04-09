@@ -1,0 +1,5 @@
+mutation createTag($tag: String!) {
+  insert_orion_tag(objects: { tag: $tag, hidden: false }) {
+    affected_rows
+  }
+}
