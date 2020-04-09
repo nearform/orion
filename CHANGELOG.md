@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.43.0](https://github.com/nearform/orion/compare/v2.42.0...v2.43.0) (2020-04-09)
+
+
+### Features
+
+* 🎸 Allow custom date for publishing of pages ([1d3e742](https://github.com/nearform/orion/commit/1d3e742840cbd84562885768f37647bb8231ba0c))
+
+
+
+
+
+# [2.42.0](https://github.com/nearform/orion/compare/v2.41.0...v2.42.0) (2020-04-08)
+
+
+### Features
+
+* 🎸 Add redirect to edit-page when no matching page found ([f9f86f5](https://github.com/nearform/orion/commit/f9f86f5b5ad6eed643bbad68aca16a873bb52de3))
+* 🎸 Add tag select to page creation template ([d335096](https://github.com/nearform/orion/commit/d335096579c25da66e7075f730c44b3d682673e0))
+
+
+
+
+
+# [2.41.0](https://github.com/nearform/orion/compare/v2.40.0...v2.41.0) (2020-04-03)
+
+
+### Features
+
+* 🎸 Add basic search page template ([8114af8](https://github.com/nearform/orion/commit/8114af833b8063612296bcf6765abe3747c4c67e))
+* 🎸 Add images and summaries to the list of search results ([18ca811](https://github.com/nearform/orion/commit/18ca81197a91c118e8d6f15fd5c2ef08e599fc27))
+* 🎸 Enable enter button to submit search form ([5e66617](https://github.com/nearform/orion/commit/5e6661710cb4901e007eb2e0f68cf82de32df2e8))
+* 🎸 Show results on search page ([f1754d0](https://github.com/nearform/orion/commit/f1754d033872477ba4811020cd2b7a4517ab192c))
+
+
+
+
+
 # [2.40.0](https://github.com/nearform/orion/compare/v2.39.0...v2.40.0) (2020-04-03)
 
 

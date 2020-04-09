@@ -1,0 +1,6 @@
+query getTags {
+  orion_tag {
+    tag
+    hidden
+  }
+}

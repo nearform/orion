@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import T from 'prop-types'
 import { Button, Grid, Typography, Paper, makeStyles } from '@material-ui/core'
 import Search from '@material-ui/icons/Search'
-import { Link } from '@reach/router'
+import { Link, navigate } from '@reach/router'
 import { useManualQuery } from 'graphql-hooks'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 
@@ -64,6 +64,7 @@ const useStyles = makeStyles(theme => ({
         padding: '12px 8px',
         display: 'block',
         textDecoration: 'none',
+        color: theme.palette.secondary.main,
       },
       '& .MuiTypography-h5.results-label': {
         borderBottomWidth: 1,
@@ -141,6 +142,7 @@ function SearchInput({ placeholderText, query }) {
   })
   const [queryFn, queryResult] = useManualQuery(query)
   const debouncedSearchTerm = useDebounce(state.term, 500)
+  const searchInput = useRef(null)
 
   useEffect(() => {
     if (debouncedSearchTerm && debouncedSearchTerm.length > 0) {
@@ -148,6 +150,7 @@ function SearchInput({ placeholderText, query }) {
         variables: {
           term: `%${debouncedSearchTerm}%`,
           limit: 4,
+          isFullSearch: false,
         },
       })
     } else {
@@ -178,8 +181,16 @@ function SearchInput({ placeholderText, query }) {
       : 'results'
 
   return (
-    <div className={focused ? `${classes.root} focused` : classes.root}>
+    <form
+      className={focused ? `${classes.root} focused` : classes.root}
+      onSubmit={event => {
+        event.preventDefault()
+        searchInput.current.blur()
+        navigate(`/search?term=${state.term}`)
+      }}
+    >
       <input
+        ref={searchInput}
         className={classes.input}
         placeholder={placeholderText}
         value={term}
@@ -187,40 +198,35 @@ function SearchInput({ placeholderText, query }) {
         onBlur={() => setState({ ...state, focused: false })}
         onChange={event => setState({ ...state, term: event.target.value })}
       />
-      <Button
-        className={classes.button}
-        component={Link}
-        to={`/search?term=${state.term}`}
-      >
+      <Button className={classes.button} type="submit">
         <Search />
       </Button>
       <Paper elevation={3} className={cls}>
         <Grid container>
           {state.results.length > 0 && (
-            <Grid item xs={12}>
-              <Typography className="results-label" variant="h5">
-                Top Hits
-              </Typography>
-            </Grid>
-          )}
-          {state.results.length > 0 &&
-            state.results.map(result => (
-              <Grid key={result.id} item xs={12}>
-                <Typography component={Link} to={result.path} variant="h5">
-                  {result.title}
+            <>
+              <Grid item xs={12}>
+                <Typography className="results-label" variant="h5">
+                  Top Hits
                 </Typography>
               </Grid>
-            ))}
-          {state.results && state.results.length > 0 && (
-            <Grid item xs={12}>
-              <Typography
-                component={Link}
-                to={`/search?term=${state.term}`}
-                variant="h5"
-              >
-                More results
-              </Typography>
-            </Grid>
+              {state.results.map(result => (
+                <Grid key={result.id} item xs={12}>
+                  <Typography component={Link} to={result.path} variant="h5">
+                    {result.title}
+                  </Typography>
+                </Grid>
+              ))}
+              <Grid item xs={12}>
+                <Typography
+                  component={Link}
+                  to={`/search?term=${state.term}`}
+                  variant="h5"
+                >
+                  More results
+                </Typography>
+              </Grid>
+            </>
           )}
           {state.results.length === 0 && (
             <Grid item xs={12}>
@@ -229,7 +235,7 @@ function SearchInput({ placeholderText, query }) {
           )}
         </Grid>
       </Paper>
-    </div>
+    </form>
   )
 }
 

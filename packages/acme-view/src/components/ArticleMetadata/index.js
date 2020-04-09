@@ -77,9 +77,13 @@ ArticleMetadata.propTypes = {
     name: T.string.isRequired,
     title: T.string.isRequired,
   }).isRequired,
-  created: T.string.isRequired,
-  readTime: T.number.isRequired,
+  created: T.oneOfType([T.instanceOf(Date), T.string]),
+  readTime: T.number,
   section: T.string.isRequired,
+}
+ArticleMetadata.defaultProps = {
+  readTime: 0,
+  created: '',
 }
 
 export default ArticleMetadata
