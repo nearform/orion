@@ -77,7 +77,7 @@ ArticleMetadata.propTypes = {
     name: T.string.isRequired,
     title: T.string.isRequired,
   }).isRequired,
-  created: T.string,
+  created: T.oneOfType([T.instanceOf(Date), T.string]),
   readTime: T.number,
   section: T.string.isRequired,
 }
