@@ -47,17 +47,14 @@ const sideBarItems = [
         process.env.GATSBY_URL_VIEW.length > 0
 
       if (hasCustomUrl) {
-        console.log('### Custom Url #' + process.env.GATSBY_URL_VIEW + '#')
         window.location.href = process.env.GATSBY_URL_VIEW
       } else if (!hasCustomUrl) {
         const bit = window.location.hostname.split('.')[0]
         switch (bit) {
           case 'localhost':
-            console.log('### localhost')
             window.location.href = 'http://localhost:8000'
             break
           case 'edit': {
-            console.log('### edit url!')
             const { origin } = window.location
             const idx = origin.indexOf('edit')
             const remainder = origin.slice(idx + 4)
