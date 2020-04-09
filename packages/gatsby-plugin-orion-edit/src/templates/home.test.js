@@ -28,7 +28,6 @@ describe('test dynamic "goto View" button click functionality in home.js', () =>
     fireEvent.click(getByText(/goto View/i))
     expect(window.location.href).toEqual('http://myview.test.com/')
   })
-
   it('navigates to localhost if ENV blank', () => {
     delete global.window.location
     const href = 'http://localhost:8001'
@@ -39,7 +38,6 @@ describe('test dynamic "goto View" button click functionality in home.js', () =>
     fireEvent.click(getByText(/goto View/i))
     expect(window.location.href).toEqual('http://localhost:8000/')
   })
-
   it('navigates to relative url', () => {
     delete global.window.location
     const href = 'http://edit.test.com'
