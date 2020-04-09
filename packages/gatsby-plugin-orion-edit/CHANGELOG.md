@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.43.0](https://github.com/nearform/orion/compare/v2.42.0...v2.43.0) (2020-04-09)
+
+
+### Features
+
+* 🎸 Allow custom date for publishing of pages ([1d3e742](https://github.com/nearform/orion/commit/1d3e742840cbd84562885768f37647bb8231ba0c))
+
+
+
+
+
 # [2.42.0](https://github.com/nearform/orion/compare/v2.41.0...v2.42.0) (2020-04-08)
 
 
