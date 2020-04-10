@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.44.0](https://github.com/nearform/orion/compare/v2.43.0...v2.44.0) (2020-04-10)
+
+
+### Features
+
+* 🎸 add edit link to h.nav ([#114](https://github.com/nearform/orion/issues/114)) ([1eff527](https://github.com/nearform/orion/commit/1eff527012fdff1f4e37c192b7d4e179a38d3fd5)), closes [#494](https://github.com/nearform/orion/issues/494) [#494](https://github.com/nearform/orion/issues/494)
+
+
+
+
+
 # [2.43.0](https://github.com/nearform/orion/compare/v2.42.0...v2.43.0) (2020-04-09)
 
 
