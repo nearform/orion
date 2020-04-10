@@ -1,8 +1,13 @@
 import React from 'react'
 import { render } from '@testing-library/react'
+import { Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
 import AppBar from './AppBar'
 
 import HorizontalNavigationMenu from 'gatsby-plugin-orion-core/src/components/HorizontalNavigationMenu'
+
+jest.mock('gatsby-plugin-orion-core/src/utils/amplify', () => ({
+  Auth: {},
+}))
 
 // Mock the components that are already tested
 jest.mock(
@@ -71,6 +76,38 @@ describe('root menu items', () => {
     const logoButton = getByTestId('brand-logo-button')
     expect(logoButton).toBeInTheDocument()
     expect(logoButton).toHaveAttribute('href', '/dest1')
+  })
+
+  test("doesn't render edit link when user is not logged in", () => {
+    expect.assertions(1)
+    Auth.user = null
+
+    const { queryByText } = render(<AppBar userRole="User" />)
+    expect(queryByText(/edit/i)).not.toBeInTheDocument()
+  })
+
+  test("doesn't render edit link when user's role is neither User or Admin", () => {
+    expect.assertions(1)
+    Auth.user = {}
+
+    const { queryByText } = render(<AppBar userRole="test" />)
+    expect(queryByText(/edit/i)).toBeFalsy()
+  })
+
+  test('renders edit link when logged in as User', () => {
+    expect.assertions(1)
+    Auth.user = {}
+
+    const { queryByText } = render(<AppBar userRole="User" />)
+    expect(queryByText(/edit/i)).toBeInTheDocument()
+  })
+
+  test('renders edit link when logged in as Admin', () => {
+    expect.assertions(1)
+    Auth.user = {}
+
+    const { queryByText } = render(<AppBar userRole="Admin" />)
+    expect(queryByText(/edit/i)).toBeInTheDocument()
   })
 
   // This should be tested in another component and mocked here
