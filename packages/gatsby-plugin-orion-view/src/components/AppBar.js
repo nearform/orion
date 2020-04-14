@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from '@reach/router'
+import { Link, navigate } from '@reach/router'
 import {
   Button,
   AppBar as MuiAppBar,
@@ -11,6 +11,8 @@ import HorizontalNavigationMenu from 'gatsby-plugin-orion-core/src/components/Ho
 import LanguageSelector from './LanguageSelector'
 import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
 import AuthButton from './AuthButton'
+
+import { Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -51,6 +53,31 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const LinkEdit = ({ userRole }) => {
+  if ((userRole === 'User' || userRole === 'Admin') && Auth.user !== null) {
+    let slug = process.env.GATSBY_URL_EDIT || ''
+
+    if (slug === '') {
+      const hostnameSections = window.location.hostname.toLowerCase().split('.')
+
+      switch (hostnameSections[0]) {
+        case 'view':
+          slug = `edit.${hostnameSections[1]}.${hostnameSections[2]}`
+          break
+        case 'localhost':
+          slug = 'http://localhost:8001'
+          break
+        default:
+          console.error('edit redirect not configured in Environment vars')
+      }
+    }
+
+    return <Button onClick={() => navigate(slug)}>Edit</Button>
+  }
+
+  return null
+}
+
 const AppBar = ({
   menuData,
   dropDownIndicatorIcon,
@@ -88,10 +115,9 @@ const AppBar = ({
                   userRole={userRole}
                 />
               )}
-
+              <LinkEdit userRole={userRole} />
               <AuthButton />
             </div>
-
             <LanguageSelector />
           </div>
         </Toolbar>

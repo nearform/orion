@@ -206,6 +206,33 @@ exports[`AdminDashboard component uses the MUI theme components and classes to s
             class="MuiTouchRipple-root"
           />
         </a>
+        <div
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+          role="button"
+          tabindex="0"
+          to=""
+        >
+          <div
+            style="padding-right: 0px;"
+          />
+          <span
+            aria-hidden="true"
+            class="material-icons MuiIcon-root fas fa-eye MuiIcon-colorPrimary"
+          />
+          <div
+            class="MuiListItemText-root"
+          >
+            <span
+              class="MuiTypography-root MuiListItemText-primary MuiTypography-body1"
+            >
+              goto View
+            </span>
+          </div>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </div>
         <a
           aria-disabled="false"
           class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
