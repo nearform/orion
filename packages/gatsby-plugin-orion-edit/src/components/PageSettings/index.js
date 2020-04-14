@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react'
-import 'date-fns' // eslint-disable-line import/no-unassigned-import
 import {
   Button,
   Dialog,
@@ -14,8 +13,6 @@ import {
   makeStyles,
 } from '@material-ui/core'
 import { useEditComponents } from '../EditComponentProvider'
-import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
-import DateFnsUtils from '@date-io/date-fns'
 
 const useStyles = makeStyles(theme => ({
   input: {
@@ -88,20 +85,6 @@ function PageSettings({ open, onCancel, onSave, page }) {
             <MenuItem value={false}>No</MenuItem>
           </Select>
         </FormControl>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <FormControl fullWidth className={classes.input}>
-            <DateTimePicker
-              format="MMM dd yyyy, hh:mm a"
-              label="Published Date"
-              value={publishedDate}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
-              orientation="portrait"
-              onChange={dateTime => setPublishedDate(dateTime)}
-            />
-          </FormControl>
-        </MuiPickersUtilsProvider>
         <FormControl fullWidth className={classes.input}>
           <InputLabel shrink>Layout</InputLabel>
           <Select
