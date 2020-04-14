@@ -295,7 +295,7 @@ describe('Publishing', () => {
             path: '/latest-news/legal',
             published: mockDate,
             showInMenu: false,
-            tags: [{ page_id: 23, tag_id: 'test-tag' }],
+            pageTags: [{ page_id: 23, tag_id: 'test-tag' }],
             title: 'Legal requirements',
           },
         })
@@ -379,7 +379,7 @@ describe('Publishing', () => {
             path: '/latest-news/legal',
             published: mockDate,
             showInMenu: false,
-            tags: [{ page_id: 23, tag_id: 'test-tag' }],
+            pageTags: [{ page_id: 23, tag_id: 'test-tag' }],
             title: 'Legal requirements',
           },
         })

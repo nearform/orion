@@ -71,6 +71,10 @@ function EditPage({ initialState, onSave }) {
   const editLayoutProps = {}
 
   const handleSave = useCallback(async () => {
+    if (!page.path) {
+      return
+    }
+
     let result
     const commonVariables = {
       layout: page.layout,
@@ -89,7 +93,7 @@ function EditPage({ initialState, onSave }) {
             ...content,
             page_id: page.id, // eslint-disable-line camelcase
           })),
-          tags: page.tags.map(({ tag }) => ({
+          pageTags: page.tags.map(({ tag }) => ({
             tag_id: tag.tag, // eslint-disable-line camelcase
             page_id: page.id, // eslint-disable-line camelcase
           })),
