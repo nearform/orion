@@ -14,8 +14,6 @@ import {
   makeStyles,
 } from '@material-ui/core'
 import { useEditComponents } from '../EditComponentProvider'
-import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
-import DateFnsUtils from '@date-io/date-fns'
 
 const useStyles = makeStyles(theme => ({
   input: {
