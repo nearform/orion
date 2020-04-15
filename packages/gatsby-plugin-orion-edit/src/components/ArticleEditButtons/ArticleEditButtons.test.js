@@ -40,8 +40,12 @@ describe('ArticleEditButtons component', () => {
         onChange: expect.any(Function),
         orientation: 'portrait',
         value: mockDate,
-        variant: 'inline',
+        variant: 'dialog',
         maxDate: null,
+        showTodayButton: true,
+        DialogProps: {
+          className: expect.stringContaining('makeStyles-dialog-wrapper-'),
+        },
       },
       {},
     ])
@@ -69,7 +73,11 @@ describe('ArticleEditButtons component', () => {
         onChange: expect.any(Function),
         orientation: 'portrait',
         value: null,
-        variant: 'inline',
+        variant: 'dialog',
+        clearable: true,
+        DialogProps: {
+          className: expect.stringContaining('makeStyles-dialog-wrapper-'),
+        },
       },
       {},
     ])

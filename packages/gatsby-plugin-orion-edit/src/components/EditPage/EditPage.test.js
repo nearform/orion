@@ -246,6 +246,8 @@ describe('Publishing', () => {
     expect(mui.DateTimePicker).toHaveBeenCalledWith(
       expect.objectContaining({
         autoOk: true,
+        showTodayButton: true,
+        id: 'published-date-picker',
         ampm: false,
         emptyLabel: 'Now',
         format: 'MMM dd yyyy, hh:mm a',
@@ -253,7 +255,7 @@ describe('Publishing', () => {
         onChange: expect.any(Function),
         orientation: 'portrait',
         value: null,
-        variant: 'inline',
+        variant: 'dialog',
       }),
       {}
     )

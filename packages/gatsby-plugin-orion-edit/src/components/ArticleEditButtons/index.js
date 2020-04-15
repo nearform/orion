@@ -60,7 +60,26 @@ const useStyles = makeStyles(theme => ({
       color: theme.palette.common.white,
     },
   },
+  'dialog-wrapper': {
+    '& .MuiButton-root': {
+      minWidth: 'auto',
+    },
+  },
 }))
+
+const ArticleDatePicker = ({ dialogPropsClassName, ...props }) => (
+  <DateTimePicker
+    autoOk
+    ampm={false}
+    DialogProps={{
+      className: dialogPropsClassName,
+    }}
+    format="MMM dd yyyy, hh:mm a"
+    variant="dialog"
+    orientation="portrait"
+    {...props}
+  />
+)
 
 const ArticleEditButtons = ({
   isEditing,
@@ -106,15 +125,12 @@ const ArticleEditButtons = ({
             color="primary"
             className={classes.dateButton}
           >
-            <DateTimePicker
-              autoOk
-              ampm={false}
-              format="MMM dd yyyy, hh:mm a"
-              variant="inline"
+            <ArticleDatePicker
+              showTodayButton
+              dialogPropsClassName={classes['dialog-wrapper']}
               value={publishedDate}
               id="published-date-picker"
               maxDate={expiresDate}
-              orientation="portrait"
               emptyLabel="Now"
               InputProps={{ className: classes['published-date-input'] }}
               onChange={dateTime => setPublishedDate(dateTime)}
@@ -122,18 +138,16 @@ const ArticleEditButtons = ({
           </Button>
         </Grid>
         <Grid item>
-          <DateTimePicker
-            autoOk
-            ampm={false}
+          <ArticleDatePicker
+            clearable
             id="expires-date-picker"
             minDate={publishedDate}
             classes={{
               root: classes['expires-date-root'],
             }}
+            dialogPropsClassName={classes['dialog-wrapper']}
             format="MMM dd yyyy"
-            variant="inline"
             value={expiresDate}
-            orientation="portrait"
             emptyLabel="Never"
             InputProps={{ className: classes['expires-date-input'] }}
             label="Expires:"
