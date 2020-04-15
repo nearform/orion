@@ -50,6 +50,10 @@ export function reducer(page, { type, ...payload }) {
       return produce(page, draft => {
         draft.published = payload.date
       })
+    case 'setExpiresdDate':
+      return produce(page, draft => {
+        draft.expires = payload.date
+      })
 
     default:
       throw new Error('Invalid action')
@@ -82,6 +86,7 @@ function EditPage({ initialState, onSave }) {
       published: page.published || new Date(),
       showInMenu: page.show_in_menu,
       title: page.title,
+      expires: page.expires || null,
     }
 
     if (page.id) {
@@ -159,6 +164,10 @@ function EditPage({ initialState, onSave }) {
     date => dispatch({ type: 'setPublishedDate', date }),
     [dispatch]
   )
+  const handleSetExpiresDate = useCallback(
+    date => dispatch({ type: 'setExpiresdDate', date }),
+    [dispatch]
+  )
 
   const breadcrumbs = useMemo(() => {
     const breadcrumbs = []
@@ -207,6 +216,8 @@ function EditPage({ initialState, onSave }) {
       isEditing={isEditing}
       setPublishedDate={handleSetPublishedDate}
       publishedDate={page.published}
+      expiresDate={page.expires}
+      setExpiresDate={handleSetExpiresDate}
       onEdit={() => setIsEditing(true)}
       onPreview={() => setIsEditing(false)}
       onSave={handleSave}

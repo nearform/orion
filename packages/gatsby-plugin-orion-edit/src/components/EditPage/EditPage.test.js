@@ -212,6 +212,24 @@ describe('Edit page reducer', () => {
       expect(state.tags).toEqual(payload.tags)
     })
   })
+
+  it('handles changes to the publish date', () => {
+    const payload = { date: otherMockDate }
+    const state = reducer(mockInitialState, {
+      type: 'setPublishedDate',
+      ...payload,
+    })
+    expect(state.published).toEqual(otherMockDate)
+  })
+
+  it('handles changes to the expires date', () => {
+    const payload = { date: otherMockDate }
+    const state = reducer(mockInitialState, {
+      type: 'setExpiresdDate',
+      ...payload,
+    })
+    expect(state.expires).toEqual(otherMockDate)
+  })
 })
 
 describe('Publishing', () => {
@@ -226,21 +244,17 @@ describe('Publishing', () => {
   it('should have a date picker', () => {
     renderPage()
     expect(mui.DateTimePicker).toHaveBeenCalledWith(
-      {
+      expect.objectContaining({
         autoOk: true,
         ampm: false,
-        InputProps: {
-          className: expect.stringContaining('makeStyles-input-'),
-        },
-        KeyboardButtonProps: { 'aria-label': 'change date' },
         emptyLabel: 'Now',
         format: 'MMM dd yyyy, hh:mm a',
-        mask: 'now',
+
         onChange: expect.any(Function),
         orientation: 'portrait',
         value: null,
         variant: 'inline',
-      },
+      }),
       {}
     )
   })
@@ -297,6 +311,7 @@ describe('Publishing', () => {
             showInMenu: false,
             pageTags: [{ page_id: 23, tag_id: 'test-tag' }],
             title: 'Legal requirements',
+            expires: null,
           },
         })
       })
@@ -304,11 +319,12 @@ describe('Publishing', () => {
     describe('And I select a publish date from the date picker and click the publish button', () => {
       beforeEach(async () => {
         const { getByText } = renderPage()
-
+        const [renderPublishDatePicker] = mui.DateTimePicker.mock.calls
         await waitFor(() => {
-          return mui.DateTimePicker.mock.calls[0][0].onChange(otherMockDate)
+          return renderPublishDatePicker[0].onChange(otherMockDate)
         })
-        expect(mui.DateTimePicker.mock.calls[1][0].value).toEqual(otherMockDate)
+        const reRenderPublishDatePicker = mui.DateTimePicker.mock.calls[2]
+        expect(reRenderPublishDatePicker[0].value).toEqual(otherMockDate)
         fireEvent.click(getByText('Publish'))
       })
 
@@ -381,6 +397,7 @@ describe('Publishing', () => {
             showInMenu: false,
             pageTags: [{ page_id: 23, tag_id: 'test-tag' }],
             title: 'Legal requirements',
+            expires: null,
           },
         })
       })
@@ -388,17 +405,68 @@ describe('Publishing', () => {
     describe('And I select a publish date from the date picker and click the publish button', () => {
       beforeEach(async () => {
         const { getByText } = editPage
+        const [renderPublishDatePicker] = mui.DateTimePicker.mock.calls
 
         await waitFor(() => {
-          return mui.DateTimePicker.mock.calls[0][0].onChange(otherMockDate)
+          return renderPublishDatePicker[0].onChange(otherMockDate)
         })
-        expect(mui.DateTimePicker.mock.calls[1][0].value).toEqual(otherMockDate)
+        const reRenderPublishDatePicker = mui.DateTimePicker.mock.calls[2]
+        expect(reRenderPublishDatePicker[0].value).toEqual(otherMockDate)
         fireEvent.click(getByText('Publish'))
       })
-      it('should save the page with all data and a publish date selected', () => {
+      it('should save the page with the correct publish date', () => {
         expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
           otherMockDate
         )
+      })
+      it('Then I can NOT select an expires date less than the publish date', () => {
+        const reRenderExpiresDatePicker = mui.DateTimePicker.mock.calls[3]
+        expect(reRenderExpiresDatePicker[0].minDate).toEqual(otherMockDate)
+      })
+    })
+
+    describe('And I do NOT set an expires date and then I publish', () => {
+      beforeEach(async () => {
+        const { getByText } = editPage
+
+        fireEvent.click(getByText('Publish'))
+      })
+
+      it('save the expires date as null', () => {
+        expect(mockUpdatePage.mock.calls[0][0].variables.expires).toEqual(null)
+      })
+    })
+
+    describe('And I set an expires date', () => {
+      beforeEach(async () => {
+        const [
+          renderPublishDatePicker, // eslint-disable-line no-unused-vars
+          renderExpiresDatePicker,
+        ] = mui.DateTimePicker.mock.calls
+
+        await waitFor(() => {
+          return renderExpiresDatePicker[0].onChange(otherMockDate)
+        })
+        const reRenderExpiresDatePicker = mui.DateTimePicker.mock.calls[3]
+        expect(reRenderExpiresDatePicker[0].value).toEqual(otherMockDate)
+      })
+
+      it('Then I can NOT set the publish date to be later than the expires date', () => {
+        const reRenderPublishedDatePicker = mui.DateTimePicker.mock.calls[2]
+        expect(reRenderPublishedDatePicker[0].maxDate).toEqual(otherMockDate)
+      })
+
+      describe('And then publish', () => {
+        beforeEach(() => {
+          const { getByText } = editPage
+          fireEvent.click(getByText('Publish'))
+        })
+
+        it('should save the page with an expires date', () => {
+          expect(mockUpdatePage.mock.calls[0][0].variables.expires).toEqual(
+            otherMockDate
+          )
+        })
       })
     })
   })

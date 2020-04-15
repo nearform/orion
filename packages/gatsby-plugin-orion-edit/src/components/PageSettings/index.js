@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react'
-import 'date-fns' // eslint-disable-line import/no-unassigned-import
 import {
   Button,
   Dialog,
