@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.45.0](https://github.com/nearform/orion/compare/v2.44.0...v2.45.0) (2020-04-15)
+
+
+### Bug Fixes
+
+* 🐛 Issue with update page and tags ([cd7eb27](https://github.com/nearform/orion/commit/cd7eb27e57f094ef96ed83b95261a9ddc8d49ff0))
+
+
+### Features
+
+* 🎸 Add publish button and date picker to header of edit ([ce0c68e](https://github.com/nearform/orion/commit/ce0c68e285908eac7a36fb5f82d04e008fa05587))
+
+
+
+
+
 # [2.44.0](https://github.com/nearform/orion/compare/v2.43.0...v2.44.0) (2020-04-10)
 
 
