@@ -1,31 +1,27 @@
 mutation updatePage(
-  $id: Int,
-  $layout: String!,
-  $path: String!,
-  $published: timestamptz,
-  $showInMenu: Boolean!,
-  $title: String!,
+  $id: Int
+  $layout: String!
+  $path: String!
+  $published: timestamptz
+  $showInMenu: Boolean!
+  $title: String!
   $contents: [orion_page_content_insert_input!]!
+  $pageTags: [orion_page_tag_insert_input!]!
 ) {
-  delete_orion_page_content(
-    where: {
-      page: {
-        id: { _eq: $id }
-      }
-    }
-  ) {
+  delete_orion_page_content(where: { page: { id: { _eq: $id } } }) {
+    affected_rows
+  }
+  delete_orion_page_tag(where: { page_id: { _eq: $id } }) {
     affected_rows
   }
 
   update_orion_page(
-    where: {
-      id: { _eq: $id }
-    },
+    where: { id: { _eq: $id } }
     _set: {
-      layout: $layout,
-      path: $path,
-      published: $published,
-      show_in_menu: $showInMenu,
+      layout: $layout
+      path: $path
+      published: $published
+      show_in_menu: $showInMenu
       title: $title
     }
   ) {
@@ -34,9 +30,11 @@ mutation updatePage(
     }
   }
 
-  insert_orion_page_content(
-    objects: $contents
-  ) {
+  insert_orion_page_tag(objects: $pageTags) {
+    affected_rows
+  }
+
+  insert_orion_page_content(objects: $contents) {
     affected_rows
   }
 }
