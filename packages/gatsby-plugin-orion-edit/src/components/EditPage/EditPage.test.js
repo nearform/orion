@@ -35,6 +35,11 @@ jest.mock(
   () => 'mockUpdatePositionMutation'
 )
 
+jest.mock(
+  '../../queries/update-page-title.graphql',
+  () => 'updatePageTitleMutation'
+)
+
 jest.mock('../../queries/create-page.graphql', () => 'mockCreatePageMutation')
 jest.mock('../../queries/update-page.graphql', () => 'mockUpdatePageMutation')
 jest.mock('graphql-hooks')
