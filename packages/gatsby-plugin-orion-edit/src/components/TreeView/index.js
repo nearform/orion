@@ -5,7 +5,8 @@ import ArrowRight from '@material-ui/icons/ArrowRight'
 import Tree from '@atlaskit/tree'
 import classNames from 'classnames'
 import { IconButton, makeStyles } from '@material-ui/core'
-import { Link, useLocation } from '@reach/router'
+import { useLocation } from '@reach/router'
+import TreeViewLink from '../TreeViewLink'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -41,19 +42,6 @@ const useStyles = makeStyles(theme => ({
     width: 34,
     '&:hover': {
       color: theme.palette.action.light,
-    },
-  },
-  label: {
-    color: theme.palette.common.white,
-    flex: 1,
-    overflow: 'hidden',
-    '& a': {
-      color: theme.palette.common.white,
-      display: 'block',
-      overflow: 'hidden',
-      textDecoration: 'none',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
     },
   },
   selected: {
@@ -93,9 +81,7 @@ function TreeView({
           <div {...provided.dragHandleProps} className={classes.icon}>
             <i className={item.iconClass} />
           </div>
-          <div className={classes.label}>
-            <Link to={item.to}>{item.title}</Link>
-          </div>
+          <TreeViewLink to={item.to} title={item.title} pageId={item.id} />
           {item.children.length > 0 && (
             <IconButton
               className={classes.toggle}
