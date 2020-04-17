@@ -8,6 +8,7 @@ mutation createPage(
   $authors: [orion_page_author_insert_input!]!
   $contents: [orion_page_content_insert_input!]!
   $tags: [orion_page_tag_insert_input!]!
+  $expires: timestamptz
 ) {
   insert_orion_page(
     objects: [
@@ -21,6 +22,7 @@ mutation createPage(
         authors: { data: $authors }
         contents: { data: $contents }
         tags: { data: $tags }
+        expires: $expires
       }
     ]
   ) {

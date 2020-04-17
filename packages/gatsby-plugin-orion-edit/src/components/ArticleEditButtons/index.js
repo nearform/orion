@@ -6,7 +6,7 @@ import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 
 const useStyles = makeStyles(theme => ({
-  input: {
+  'published-date-input': {
     background: 'none',
     border: 'none',
     color: theme.palette.common.white,
@@ -31,7 +31,55 @@ const useStyles = makeStyles(theme => ({
     boxShadow: 'none',
     padding: 0,
   },
+  'expires-date-root': {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+  },
+  'expires-date-input': {
+    background: 'none',
+    border: 'none',
+    borderBottom: `1px solid ${theme.palette.common.white}`,
+    color: theme.palette.common.white,
+    fontWeight: 700,
+    fontSize: '16px',
+    cursor: 'pointer',
+    padding: 0,
+    margin: '0 !important',
+
+    '& input': {
+      cursor: 'pointer',
+      padding: '5px 5px 6px',
+    },
+  },
+  'expires-date-label': {
+    color: theme.palette.common.white,
+    transform: 'none',
+    position: 'static',
+
+    '&.Mui-focused': {
+      color: theme.palette.common.white,
+    },
+  },
+  'dialog-wrapper': {
+    '& .MuiButton-root': {
+      minWidth: 'auto',
+    },
+  },
 }))
+
+const ArticleDatePicker = ({ dialogPropsClassName, ...props }) => (
+  <DateTimePicker
+    autoOk
+    ampm={false}
+    DialogProps={{
+      className: dialogPropsClassName,
+    }}
+    format="MMM dd yyyy, hh:mm a"
+    variant="dialog"
+    orientation="portrait"
+    {...props}
+  />
+)
 
 const ArticleEditButtons = ({
   isEditing,
@@ -41,59 +89,76 @@ const ArticleEditButtons = ({
   onSettings,
   publishedDate,
   setPublishedDate,
+  expiresDate,
+  setExpiresDate,
 }) => {
   const classes = useStyles()
 
   return (
-    <Grid container spacing={2}>
-      <Grid item>
-        <Button variant="contained" color="secondary" onClick={onSettings}>
-          Page settings
-        </Button>
-      </Grid>
-      <Grid item>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => (isEditing ? onPreview() : onEdit())}
-        >
-          {isEditing ? 'Preview' : 'Edit'}
-        </Button>
-      </Grid>
-      <Grid item>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.publishButton}
-          onClick={onSave}
-        >
-          Publish
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.dateButton}
-        >
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <DateTimePicker
-              autoOk
-              ampm={false}
-              format="MMM dd yyyy, hh:mm a"
-              variant="inline"
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <Grid container spacing={2}>
+        <Grid item>
+          <Button variant="contained" color="secondary" onClick={onSettings}>
+            Page settings
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => (isEditing ? onPreview() : onEdit())}
+          >
+            {isEditing ? 'Preview' : 'Edit'}
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.publishButton}
+            onClick={onSave}
+          >
+            Publish
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.dateButton}
+          >
+            <ArticleDatePicker
+              showTodayButton
+              dialogPropsClassName={classes['dialog-wrapper']}
               value={publishedDate}
-              mask="now"
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
-              orientation="portrait"
+              id="published-date-picker"
+              maxDate={expiresDate}
               emptyLabel="Now"
-              InputProps={{ className: classes.input }}
+              InputProps={{ className: classes['published-date-input'] }}
               onChange={dateTime => setPublishedDate(dateTime)}
             />
-          </MuiPickersUtilsProvider>
-        </Button>
+          </Button>
+        </Grid>
+        <Grid item>
+          <ArticleDatePicker
+            clearable
+            id="expires-date-picker"
+            minDate={publishedDate}
+            classes={{
+              root: classes['expires-date-root'],
+            }}
+            dialogPropsClassName={classes['dialog-wrapper']}
+            format="MMM dd yyyy"
+            value={expiresDate}
+            emptyLabel="Never"
+            InputProps={{ className: classes['expires-date-input'] }}
+            label="Expires:"
+            InputLabelProps={{
+              className: classes['expires-date-label'],
+            }}
+            onChange={dateTime => setExpiresDate(dateTime)}
+          />
+        </Grid>
       </Grid>
-    </Grid>
+    </MuiPickersUtilsProvider>
   )
 }
 
@@ -105,10 +170,13 @@ ArticleEditButtons.propTypes = {
   onSettings: T.func.isRequired,
   setPublishedDate: T.func.isRequired,
   publishedDate: T.oneOfType([T.string, T.instanceOf(Date)]),
+  setExpiresDate: T.func.isRequired,
+  expiresDate: T.oneOfType([T.string, T.instanceOf(Date)]),
 }
 
 ArticleEditButtons.defaultProps = {
   publishedDate: null,
+  expiresDate: null,
 }
 
 export default ArticleEditButtons
