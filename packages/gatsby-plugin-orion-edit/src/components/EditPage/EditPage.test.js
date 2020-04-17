@@ -223,6 +223,7 @@ describe('Publishing', () => {
     const { getByText } = renderPage()
     expect(getByText('Publish')).toBeInTheDocument()
   })
+
   it('should have a date picker', () => {
     renderPage()
     expect(mui.DateTimePicker).toHaveBeenCalledWith(
@@ -399,6 +400,138 @@ describe('Publishing', () => {
         expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
           otherMockDate
         )
+      })
+    })
+  })
+})
+
+describe('Saving draft', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('should have a save draft button', () => {
+    const { getByText } = renderPage()
+    expect(getByText(/save draft/i)).toBeInTheDocument()
+  })
+
+  describe('When I am editing an unpublished page', () => {
+    it('the date picker should show the text "now"', () => {
+      const { getByDisplayValue } = renderPage()
+      expect(getByDisplayValue('Now')).toBeInTheDocument()
+    })
+    describe('And I click on the save draft button', () => {
+      it('should save the page with all data and a publish date of null', () => {
+        const { getByText } = renderPage()
+        fireEvent.click(getByText(/save draft/i))
+        expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
+          null
+        )
+        expect(mockUpdatePage).toHaveBeenCalledWith({
+          variables: {
+            contents: [
+              {
+                block: 'metadata',
+                component: 'ArticleMetadata',
+                id: 38,
+                page_id: 23,
+                props: { readTime: 5 },
+              },
+              {
+                block: 'content',
+                component: 'ArticleContent',
+                id: 39,
+                page_id: 23,
+                props: {
+                  content:
+                    'When a company insures an individual entity, there are basic legal requirements and regulations.',
+                  image:
+                    'https://s3-eu-west-1.amazonaws.com/orion-assets.nearform.com/public/default/place-5%402x.png',
+                },
+              },
+              {
+                block: 'summary',
+                component: 'ArticleContent',
+                id: 40,
+                page_id: 23,
+                props: {
+                  content:
+                    'When a company insures an individual entity, there are basic legal requirements and regulations.',
+                },
+              },
+            ],
+            id: 23,
+            layout: 'article',
+            path: '/latest-news/legal',
+            published: null,
+            showInMenu: false,
+            pageTags: [{ page_id: 23, tag_id: 'test-tag' }],
+            title: 'Legal requirements',
+          },
+        })
+      })
+    })
+  })
+
+  describe('When I am editing a page that is already published', () => {
+    let editPage
+
+    beforeEach(() => {
+      editPage = renderPage({ published: mockDate })
+    })
+
+    describe('And I click on the save draft button', () => {
+      beforeEach(() => {
+        const { getByText } = editPage
+        fireEvent.click(getByText(/save draft/i))
+      })
+
+      it('should save the page with all data and a publish date of null', () => {
+        expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
+          null
+        )
+        expect(mockUpdatePage).toHaveBeenCalledWith({
+          variables: {
+            contents: [
+              {
+                block: 'metadata',
+                component: 'ArticleMetadata',
+                id: 38,
+                page_id: 23,
+                props: { readTime: 5 },
+              },
+              {
+                block: 'content',
+                component: 'ArticleContent',
+                id: 39,
+                page_id: 23,
+                props: {
+                  content:
+                    'When a company insures an individual entity, there are basic legal requirements and regulations.',
+                  image:
+                    'https://s3-eu-west-1.amazonaws.com/orion-assets.nearform.com/public/default/place-5%402x.png',
+                },
+              },
+              {
+                block: 'summary',
+                component: 'ArticleContent',
+                id: 40,
+                page_id: 23,
+                props: {
+                  content:
+                    'When a company insures an individual entity, there are basic legal requirements and regulations.',
+                },
+              },
+            ],
+            id: 23,
+            layout: 'article',
+            path: '/latest-news/legal',
+            published: null,
+            showInMenu: false,
+            pageTags: [{ page_id: 23, tag_id: 'test-tag' }],
+            title: 'Legal requirements',
+          },
+        })
       })
     })
   })

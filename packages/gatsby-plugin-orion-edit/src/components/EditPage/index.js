@@ -70,58 +70,69 @@ function EditPage({ initialState, onSave }) {
 
   const editLayoutProps = {}
 
-  const handleSave = useCallback(async () => {
-    if (!page.path) {
-      return
-    }
+  const handleSaveDraft = () => {
+    savePage(true)
+  }
 
-    let result
-    const commonVariables = {
-      layout: page.layout,
-      path: page.path,
-      published: page.published || new Date(),
-      showInMenu: page.show_in_menu,
-      title: page.title,
-    }
+  const handlePublish = () => {
+    savePage(false)
+  }
 
-    if (page.id) {
-      const { data } = await updatePage({
-        variables: {
-          ...commonVariables,
-          id: page.id,
-          contents: page.contents.map(content => ({
-            ...content,
-            page_id: page.id, // eslint-disable-line camelcase
-          })),
-          pageTags: page.tags.map(({ tag }) => ({
-            tag_id: tag.tag, // eslint-disable-line camelcase
-            page_id: page.id, // eslint-disable-line camelcase
-          })),
-        },
-      })
+  const savePage = useCallback(
+    async amDraft => {
+      if (!page.path) {
+        return
+      }
 
-      result = data.update_orion_page.returning[0]
-    } else {
-      const { data } = await createPage({
-        variables: {
-          ...commonVariables,
-          contents: page.contents,
-          ancestry: page.ancestry.map(({ ancestor, direct }) => ({
-            ancestor_id: ancestor.id, // eslint-disable-line camelcase
-            direct,
-          })),
-          authors: page.authors.map(({ user }) => ({
-            user_id: user.id, // eslint-disable-line camelcase
-          })),
-          tags: page.tags.map(({ tag }) => ({ tag_id: tag.tag })), // eslint-disable-line camelcase
-        },
-      })
+      let result
+      const commonVariables = {
+        layout: page.layout,
+        path: page.path,
+        published: amDraft ? null : page.published || new Date(),
+        showInMenu: page.show_in_menu,
+        title: page.title,
+      }
 
-      result = data.insert_orion_page.returning[0]
-    }
+      if (page.id) {
+        const { data } = await updatePage({
+          variables: {
+            ...commonVariables,
+            id: page.id,
+            contents: page.contents.map(content => ({
+              ...content,
+              page_id: page.id, // eslint-disable-line camelcase
+            })),
+            pageTags: page.tags.map(({ tag }) => ({
+              tag_id: tag.tag, // eslint-disable-line camelcase
+              page_id: page.id, // eslint-disable-line camelcase
+            })),
+          },
+        })
 
-    onSave(result)
-  }, [createPage, onSave, page, updatePage])
+        result = data.update_orion_page.returning[0]
+      } else {
+        const { data } = await createPage({
+          variables: {
+            ...commonVariables,
+            contents: page.contents,
+            ancestry: page.ancestry.map(({ ancestor, direct }) => ({
+              ancestor_id: ancestor.id, // eslint-disable-line camelcase
+              direct,
+            })),
+            authors: page.authors.map(({ user }) => ({
+              user_id: user.id, // eslint-disable-line camelcase
+            })),
+            tags: page.tags.map(({ tag }) => ({ tag_id: tag.tag })), // eslint-disable-line camelcase
+          },
+        })
+
+        result = data.insert_orion_page.returning[0]
+      }
+
+      onSave(result)
+    },
+    [createPage, onSave, page, updatePage]
+  )
 
   const handleLayoutSelect = useCallback(
     layout => {
@@ -209,7 +220,8 @@ function EditPage({ initialState, onSave }) {
       publishedDate={page.published}
       onEdit={() => setIsEditing(true)}
       onPreview={() => setIsEditing(false)}
-      onSave={handleSave}
+      onSaveDraft={handleSaveDraft}
+      onPublish={handlePublish}
       onSettings={() => setShowSettings(true)}
     />
   )
