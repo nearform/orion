@@ -56,23 +56,13 @@ const mockData = [
 const mockContent = [
   {
     label: 'Pages',
-    to: '/pages',
-    src: 'todo',
+    to: '/pages/create',
+    Image: () => <div>mockPagesIcon</div>,
   },
   {
     label: 'Articles',
-    to: '/articles',
-    src: 'todo',
-  },
-  {
-    label: 'Menus',
-    to: '/menus',
-    src: 'todo',
-  },
-  {
-    label: 'Users',
-    to: '/users',
-    src: 'todo',
+    to: '/pages/create',
+    Image: () => <div>mockArticlesIcon</div>,
   },
 ]
 
@@ -111,12 +101,5 @@ describe('AdminDashboard component', () => {
     )
     expect(getByText('Pages')).toBeInTheDocument()
     expect(getByText('Articles')).toBeInTheDocument()
-    expect(getByText('Menus')).toBeInTheDocument()
-    expect(getByText('Users')).toBeInTheDocument()
-  })
-
-  it('uses the MUI theme components and classes to style the page', () => {
-    const { container } = renderComponent()
-    expect(container).toMatchSnapshot()
   })
 })
