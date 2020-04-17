@@ -22,7 +22,7 @@ const gotoNewUrl = (currentSub, newSub, localPath) => {
       case currentSub: {
         const { origin } = window.location
         const idx = origin.indexOf(currentSub)
-        const remainder = origin.slice(idx + 4)
+        const remainder = origin.slice(idx + currentSub.length)
         window.location.href = `${origin.slice(
           0,
           idx
@@ -78,33 +78,6 @@ const sideBarItems = [
     iconClass: 'fas fa-eye',
     onClick: () => {
       gotoNewUrl('edit', 'view')
-
-      /*
-      Const hasCustomUrl =
-        process.env.GATSBY_URL_VIEW !== undefined &&
-        process.env.GATSBY_URL_VIEW.length > 0
-
-      if (hasCustomUrl) {
-        window.location.href = process.env.GATSBY_URL_VIEW
-      } else if (!hasCustomUrl) {
-        const bit = window.location.hostname.split('.')[0]
-        switch (bit) {
-          case 'localhost':
-            window.location.href = 'http://localhost:8000'
-            break
-          case 'edit': {
-            const { origin } = window.location
-            const idx = origin.indexOf('edit')
-            const remainder = origin.slice(idx + 4)
-            window.location.href = `${origin.slice(0, idx)}view${remainder}`
-            break
-          }
-
-          default:
-            console.error('no URL_VIEW set in environment variables')
-        }
-      }
-      */
     },
   },
   {
