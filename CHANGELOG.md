@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.46.0](https://github.com/nearform/orion/compare/v2.45.0...v2.46.0) (2020-04-17)
+
+
+### Features
+
+* 🎸 Add edit title functionality in tree view menu ([30b59cd](https://github.com/nearform/orion/commit/30b59cdda4119c48b067c80c0548723cba7915ac))
+* 🎸 Add expires date picker to edit page ([2b2f894](https://github.com/nearform/orion/commit/2b2f8944a5fc09c7d7928ec5a988e5965367d63c))
+* 🎸 Show clear and today button in date pickers ([a9ea9de](https://github.com/nearform/orion/commit/a9ea9def14eca4cd1275f357c79c567400b96dfa))
+
+
+
+
+
 # [2.45.0](https://github.com/nearform/orion/compare/v2.44.0...v2.45.0) (2020-04-15)
 
 
