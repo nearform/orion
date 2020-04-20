@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useReducer, useState } from 'react'
+import React, { useCallback, useReducer, useState } from 'react'
 import createPageMutation from '../../queries/create-page.graphql'
 import updatePageMutation from '../../queries/update-page.graphql'
 import ArticleEditButtons from '../ArticleEditButtons'
@@ -180,18 +180,6 @@ function EditPage({ initialState, onSave }) {
     [dispatch]
   )
 
-  const breadcrumbs = useMemo(() => {
-    const breadcrumbs = []
-
-    for (const { ancestor } of page.ancestry) {
-      breadcrumbs.push({
-        path: ancestor.path,
-      })
-    }
-
-    return breadcrumbs
-  }, [page])
-
   for (const [key, block] of Object.entries(blocks)) {
     const content = page.contents.find(content => content.block === key)
 
@@ -233,7 +221,7 @@ function EditPage({ initialState, onSave }) {
   return (
     <Layout
       action={actions}
-      breadcrumbs={breadcrumbs}
+      ancestry={page.ancestry}
       path={page.path.split('/').slice(-1)[0]}
       setPath={handleSetPath}
     >

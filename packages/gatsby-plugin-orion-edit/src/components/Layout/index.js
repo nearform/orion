@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import PageTree from '../PageTree'
 import { makeStyles } from '@material-ui/core'
@@ -93,8 +93,17 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function Layout({ action, breadcrumbs, children, path, setPath }) {
+function Layout({ action, children, path, setPath, ancestry }) {
   const classes = useStyles()
+
+  const parentPath = useMemo(() => {
+    const directParent = ancestry.filter(ancestor => ancestor.direct)
+    if (directParent.length > 0) {
+      return directParent[0].ancestor.path
+    }
+
+    return ''
+  }, [ancestry])
 
   return (
     <div className={classes.root}>
@@ -105,9 +114,7 @@ function Layout({ action, breadcrumbs, children, path, setPath }) {
         <div className={classes.top}>
           <div className={classes.path}>
             <label htmlFor="edit-path-path-input">Path:</label>
-            {breadcrumbs.map(crumb => (
-              <span key={crumb.path}>{crumb.path}</span>
-            ))}
+            <span>{parentPath}</span>
             <span>/</span>
             <input
               value={path}
@@ -125,9 +132,11 @@ function Layout({ action, breadcrumbs, children, path, setPath }) {
 
 Layout.propTypes = {
   action: PropTypes.node.isRequired,
-  breadcrumbs: PropTypes.arrayOf(
+  ancestry: PropTypes.arrayOf(
     PropTypes.shape({
-      path: PropTypes.string.isRequired,
+      ancestor: PropTypes.shape({
+        path: PropTypes.string.isRequired,
+      }),
     })
   ).isRequired,
   children: PropTypes.node,

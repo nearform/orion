@@ -14,7 +14,10 @@ const mockSetPath = jest.fn()
 const renderComponent = () => {
   const props = {
     action: <div>mockEditButtons</div>,
-    breadcrumbs: [{ path: '/parent-path' }],
+    ancestry: [
+      { ancestor: { path: '/parent-path' }, direct: false },
+      { ancestor: { path: '/parent-path/full' }, direct: true },
+    ],
     setPath: mockSetPath,
     path: 'somewhere-here',
   }
@@ -42,7 +45,7 @@ describe('Layout component', () => {
 
   it('shows the parents parts of the path', () => {
     const { getByText } = renderComponent()
-    expect(getByText('/parent-path')).toBeInTheDocument()
+    expect(getByText('/parent-path/full')).toBeInTheDocument()
   })
 
   describe('When I edit the path', () => {
