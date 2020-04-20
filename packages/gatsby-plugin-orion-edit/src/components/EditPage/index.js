@@ -54,6 +54,13 @@ export function reducer(page, { type, ...payload }) {
       return produce(page, draft => {
         draft.expires = payload.date
       })
+    case 'updatePath':
+      return produce(page, draft => {
+        const ancestryPath = page.ancestry
+          .map(({ ancestor }) => ancestor.path)
+          .join('')
+        draft.path = `${ancestryPath}/${payload.path}`
+      })
 
     default:
       throw new Error('Invalid action')

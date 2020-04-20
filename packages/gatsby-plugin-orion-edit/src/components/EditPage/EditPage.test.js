@@ -235,6 +235,35 @@ describe('Edit page reducer', () => {
     })
     expect(state.expires).toEqual(otherMockDate)
   })
+
+  describe('When updating the path with NO ancestors', () => {
+    const oldState = produce(mockInitialState, draft => {
+      draft.ancestry = []
+    })
+    it('handles changes to the path', () => {
+      const action = { type: 'updatePath', path: 'a-new-path' }
+      const state = reducer(oldState, action)
+      expect(state.path).toEqual('/a-new-path')
+    })
+
+    it('handles a blank path as the root', () => {
+      const action = { type: 'updatePath', path: '' }
+      const state = reducer(oldState, action)
+      expect(state.path).toEqual('/')
+    })
+  })
+  describe('When updating the path and it has ancestors', () => {
+    it('handles changes to the path', () => {
+      const action = { type: 'updatePath', path: 'a-new-path' }
+      const state = reducer(mockInitialState, action)
+      expect(state.path).toEqual('/latest-news/a-new-path')
+    })
+    it('handles a blank path as the root', () => {
+      const action = { type: 'updatePath', path: '' }
+      const state = reducer(mockInitialState, action)
+      expect(state.path).toEqual('/latest-news/')
+    })
+  })
 })
 
 describe('Publishing', () => {
