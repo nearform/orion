@@ -1,5 +1,5 @@
 import React from 'react'
-import BreadcrumbNavigation from 'gatsby-plugin-orion-core/src/components/BreadcrumbNavigation'
+import PropTypes from 'prop-types'
 import PageTree from '../PageTree'
 import { makeStyles } from '@material-ui/core'
 
@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     width: drawerWidth,
   },
   top: {
-    alignItems: 'center',
+    alignItems: 'top',
     display: 'flex',
     justifyContent: 'space-between',
     padding: '16px 32px',
@@ -56,9 +56,44 @@ const useStyles = makeStyles(theme => ({
       color: theme.palette.tertiary.main,
     },
   },
+  path: {
+    display: 'flex',
+    alignItems: 'baseline',
+    justifyContent: 'flex-start',
+    whiteSpace: 'nowrap',
+    marginRight: '16px',
+    fontFamily: theme.typography.fontFamily,
+
+    '& label': {
+      color: theme.palette.common.white,
+      fontSize: '16px',
+      marginRight: '8px',
+      whiteSpace: 'nowrap',
+      fontWeight: '700',
+    },
+
+    '& span': {
+      color: theme.palette.common.white,
+      fontSize: '16px',
+      whiteSpace: 'nowrap',
+    },
+    '& input': {
+      fontFamily: theme.typography.fontFamily,
+      marginLeft: '4px',
+      color: theme.palette.common.black,
+      fontSize: '16px',
+      borderRadius: '3px',
+      border: 'none',
+      padding: '3.5px 4px 2px',
+
+      '&:focus': {
+        outlineColor: theme.palette.action.main,
+      },
+    },
+  },
 }))
 
-function Layout({ action, breadcrumbs, children }) {
+function Layout({ action, breadcrumbs, children, path, setPath }) {
   const classes = useStyles()
 
   return (
@@ -68,13 +103,41 @@ function Layout({ action, breadcrumbs, children }) {
       </div>
       <div className={classes.main}>
         <div className={classes.top}>
-          <BreadcrumbNavigation data={breadcrumbs} />
+          <div className={classes.path}>
+            <label htmlFor="edit-path-path-input">Path:</label>
+            {breadcrumbs.map(crumb => (
+              <span key={crumb.path}>{crumb.path}</span>
+            ))}
+            <span>/</span>
+            <input
+              value={path}
+              id="edit-path-path-input"
+              onChange={({ target }) => setPath(target.value)}
+            />
+          </div>
           <div>{action}</div>
         </div>
         <div className={classes.content}>{children}</div>
       </div>
     </div>
   )
+}
+
+Layout.propTypes = {
+  action: PropTypes.node.isRequired,
+  breadcrumbs: PropTypes.arrayOf(
+    PropTypes.shape({
+      path: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  children: PropTypes.node,
+  path: PropTypes.string,
+  setPath: PropTypes.func.isRequired,
+}
+
+Layout.defaultProps = {
+  children: '',
+  path: '',
 }
 
 export default Layout

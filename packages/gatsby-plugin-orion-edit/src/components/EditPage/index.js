@@ -54,7 +54,7 @@ export function reducer(page, { type, ...payload }) {
       return produce(page, draft => {
         draft.expires = payload.date
       })
-    case 'updatePath':
+    case 'setPath':
       return produce(page, draft => {
         const ancestryPath = page.ancestry
           .map(({ ancestor }) => ancestor.path)
@@ -175,21 +175,19 @@ function EditPage({ initialState, onSave }) {
     date => dispatch({ type: 'setExpiresdDate', date }),
     [dispatch]
   )
+  const handleSetPath = useCallback(
+    path => dispatch({ type: 'setPath', path }),
+    [dispatch]
+  )
 
   const breadcrumbs = useMemo(() => {
     const breadcrumbs = []
 
     for (const { ancestor } of page.ancestry) {
       breadcrumbs.push({
-        title: ancestor.title,
-        to: `/pages/${ancestor.id}/edit`,
+        path: ancestor.path,
       })
     }
-
-    breadcrumbs.push({
-      title: page.title,
-      to: `/pages/${page.id}/edit`,
-    })
 
     return breadcrumbs
   }, [page])
@@ -233,7 +231,12 @@ function EditPage({ initialState, onSave }) {
   )
 
   return (
-    <Layout action={actions} breadcrumbs={breadcrumbs}>
+    <Layout
+      action={actions}
+      breadcrumbs={breadcrumbs}
+      path={page.path.split('/').slice(-1)[0]}
+      setPath={handleSetPath}
+    >
       <PageSettings
         open={showSettings}
         page={page}
