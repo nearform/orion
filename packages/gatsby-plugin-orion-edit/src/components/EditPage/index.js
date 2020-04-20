@@ -9,6 +9,7 @@ import PageSettings from '../PageSettings'
 import { useEditComponents } from '../EditComponentProvider'
 import { useMutation } from 'graphql-hooks'
 import produce from 'immer' // eslint-disable-line import/no-named-as-default
+import slugify from 'gatsby-plugin-orion-core/src/utils/slugify'
 
 export function reducer(page, { type, ...payload }) {
   switch (type) {
@@ -30,6 +31,13 @@ export function reducer(page, { type, ...payload }) {
       }
 
     case 'component':
+      if (
+        payload.page.title !== undefined &&
+        page.title !== payload.page.title
+      ) {
+        payload.page.path = slugify(payload.page.title)
+      }
+
       return {
         ...page,
         ...payload.page, // TODO is spreading the page twice really needed?
