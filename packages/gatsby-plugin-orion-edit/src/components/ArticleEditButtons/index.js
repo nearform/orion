@@ -61,11 +61,13 @@ const ArticleEditButtons = ({
           {isEditing ? 'Preview' : 'Edit'}
         </Button>
       </Grid>
-      <Grid item>
-        <Button variant="contained" color="secondary" onClick={onSaveDraft}>
-          Save Draft
-        </Button>
-      </Grid>
+      {publishedDate === null && (
+        <Grid item>
+          <Button variant="contained" color="secondary" onClick={onSaveDraft}>
+            Save Draft
+          </Button>
+        </Grid>
+      )}
       <Grid item>
         <Button
           variant="contained"
