@@ -7,9 +7,9 @@ import TagsSelect from 'gatsby-plugin-orion-edit/src/components/TagsSelect'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    border: '1px dashed black',
+    border: `1px dashed ${theme.palette.common.black}`,
     margin: '-16px 0 0 -16px',
-    padding: 16,
+    padding: '36px 16px 16px',
     width: 'calc(100% + 32px)',
   },
   content: {

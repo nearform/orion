@@ -9,9 +9,9 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  Select,
   makeStyles,
 } from '@material-ui/core'
+import Select from '@material-ui/core/Select'
 import EditIcon from '@material-ui/icons/Edit'
 import classNames from 'classnames'
 import { useEditComponents } from '../EditComponentProvider'
@@ -23,6 +23,8 @@ const useStyles = makeStyles(theme => ({
     minWidth: 150,
     position: 'relative',
     width: '100%',
+    marginTop: '36px',
+
     '&:hover': {
       '& $button': {
         display: 'flex',
@@ -54,6 +56,9 @@ const useStyles = makeStyles(theme => ({
   },
   input: {
     marginBottom: theme.spacing(1),
+    position: 'absolute',
+    right: '1px',
+    top: '-41px',
   },
 }))
 
@@ -92,8 +97,9 @@ function EditComponent({
     event => {
       setCurrentComponent(event.target.value)
       setCurrentProps({})
+      onSave(event.target.value, currentProps, currentPage)
     },
-    [setCurrentComponent, setCurrentProps]
+    [setCurrentComponent, setCurrentProps, onSave, currentProps, currentPage]
   )
 
   const handleSettingsChange = useCallback(
@@ -141,6 +147,22 @@ function EditComponent({
           >
             <EditIcon />
           </Fab>
+          <FormControl className={classes.input}>
+            <InputLabel htmlFor="component-select">Select Component</InputLabel>
+            <Select
+              inputProps={{
+                id: 'component-select',
+              }}
+              value={currentComponent}
+              onChange={handleComponentChange}
+            >
+              {Object.keys(components).map(component => (
+                <MenuItem key={component} value={component}>
+                  {component}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           {PreviewEditor !== undefined && (
             <PreviewEditor
               {...props}
@@ -150,20 +172,8 @@ function EditComponent({
           )}
           <Dialog fullWidth open={showSettings} onClose={handleCancel}>
             <DialogTitle>Component settings</DialogTitle>
+
             <DialogContent>
-              <FormControl fullWidth className={classes.input}>
-                <InputLabel shrink>Component</InputLabel>
-                <Select
-                  value={currentComponent}
-                  onChange={handleComponentChange}
-                >
-                  {Object.keys(components).map(component => (
-                    <MenuItem key={component} value={component}>
-                      {component}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
               {SettingsEditor !== undefined && (
                 <SettingsEditor
                   page={page}

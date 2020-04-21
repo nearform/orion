@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 'none',
     border: `1px dashed ${theme.palette.common.black}`,
     margin: '-16px 0 0 -16px',
-    padding: 16,
+    padding: '36px 16px 16px',
     width: 'calc(100% + 32px)',
     height: '100%',
   },
