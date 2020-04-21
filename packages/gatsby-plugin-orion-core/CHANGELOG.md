@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.46.1](https://github.com/nearform/orion/compare/v2.46.0...v2.46.1) (2020-04-21)
+
+
+### Bug Fixes
+
+* 🐛 Broken links on admin dashboard and images ([5cf37ce](https://github.com/nearform/orion/commit/5cf37cecaece5174c944c0c0721fd8848a38794c))
+
+
+
+
+
 # [2.41.0](https://github.com/nearform/orion/compare/v2.40.0...v2.41.0) (2020-04-03)
 
 
