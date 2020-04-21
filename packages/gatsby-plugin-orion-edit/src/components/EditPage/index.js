@@ -46,6 +46,14 @@ export function reducer(page, { type, ...payload }) {
       return produce(page, draft => {
         draft.tags = payload.tags
       })
+    case 'setPublishedDate':
+      return produce(page, draft => {
+        draft.published = payload.date
+      })
+    case 'setExpiresdDate':
+      return produce(page, draft => {
+        draft.expires = payload.date
+      })
 
     default:
       throw new Error('Invalid action')
@@ -67,23 +75,31 @@ function EditPage({ initialState, onSave }) {
   const editLayoutProps = {}
 
   const handleSave = useCallback(async () => {
+    if (!page.path) {
+      return
+    }
+
     let result
+    const commonVariables = {
+      layout: page.layout,
+      path: page.path,
+      published: page.published || new Date(),
+      showInMenu: page.show_in_menu,
+      title: page.title,
+      expires: page.expires || null,
+    }
 
     if (page.id) {
       const { data } = await updatePage({
         variables: {
+          ...commonVariables,
           id: page.id,
-          layout: page.layout,
-          path: page.path,
-          published: page.published,
-          showInMenu: page.show_in_menu,
-          title: page.title,
           contents: page.contents.map(content => ({
             ...content,
             page_id: page.id, // eslint-disable-line camelcase
           })),
-          tags: page.tags.map(({ value }) => ({
-            tag_id: value, // eslint-disable-line camelcase
+          pageTags: page.tags.map(({ tag }) => ({
+            tag_id: tag.tag, // eslint-disable-line camelcase
             page_id: page.id, // eslint-disable-line camelcase
           })),
         },
@@ -93,11 +109,7 @@ function EditPage({ initialState, onSave }) {
     } else {
       const { data } = await createPage({
         variables: {
-          layout: page.layout,
-          path: page.path,
-          published: page.published,
-          showInMenu: page.show_in_menu,
-          title: page.title,
+          ...commonVariables,
           contents: page.contents,
           ancestry: page.ancestry.map(({ ancestor, direct }) => ({
             ancestor_id: ancestor.id, // eslint-disable-line camelcase
@@ -148,6 +160,15 @@ function EditPage({ initialState, onSave }) {
     [dispatch]
   )
 
+  const handleSetPublishedDate = useCallback(
+    date => dispatch({ type: 'setPublishedDate', date }),
+    [dispatch]
+  )
+  const handleSetExpiresDate = useCallback(
+    date => dispatch({ type: 'setExpiresdDate', date }),
+    [dispatch]
+  )
+
   const breadcrumbs = useMemo(() => {
     const breadcrumbs = []
 
@@ -193,6 +214,10 @@ function EditPage({ initialState, onSave }) {
   const actions = (
     <ArticleEditButtons
       isEditing={isEditing}
+      setPublishedDate={handleSetPublishedDate}
+      publishedDate={page.published}
+      expiresDate={page.expires}
+      setExpiresDate={handleSetExpiresDate}
       onEdit={() => setIsEditing(true)}
       onPreview={() => setIsEditing(false)}
       onSave={handleSave}

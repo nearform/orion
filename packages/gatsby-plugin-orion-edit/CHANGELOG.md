@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.46.0](https://github.com/nearform/orion/compare/v2.45.0...v2.46.0) (2020-04-17)
+
+
+### Features
+
+* 🎸 Add edit title functionality in tree view menu ([30b59cd](https://github.com/nearform/orion/commit/30b59cdda4119c48b067c80c0548723cba7915ac))
+* 🎸 Add expires date picker to edit page ([2b2f894](https://github.com/nearform/orion/commit/2b2f8944a5fc09c7d7928ec5a988e5965367d63c))
+* 🎸 Show clear and today button in date pickers ([a9ea9de](https://github.com/nearform/orion/commit/a9ea9def14eca4cd1275f357c79c567400b96dfa))
+
+
+
+
+
+# [2.45.0](https://github.com/nearform/orion/compare/v2.44.0...v2.45.0) (2020-04-15)
+
+
+### Bug Fixes
+
+* 🐛 Issue with update page and tags ([cd7eb27](https://github.com/nearform/orion/commit/cd7eb27e57f094ef96ed83b95261a9ddc8d49ff0))
+
+
+### Features
+
+* 🎸 Add publish button and date picker to header of edit ([ce0c68e](https://github.com/nearform/orion/commit/ce0c68e285908eac7a36fb5f82d04e008fa05587))
+
+
+
+
+
+# [2.44.0](https://github.com/nearform/orion/compare/v2.43.0...v2.44.0) (2020-04-10)
+
+**Note:** Version bump only for package gatsby-plugin-orion-edit
+
+
+
+
+
 # [2.43.0](https://github.com/nearform/orion/compare/v2.42.0...v2.43.0) (2020-04-09)
 
 

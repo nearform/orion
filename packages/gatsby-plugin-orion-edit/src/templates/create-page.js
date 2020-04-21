@@ -38,6 +38,7 @@ export default function({ id }) {
       descendants: [],
       show_in_menu: true, // eslint-disable-line camelcase,
       allTags: data.orion_tag,
+      tags: [],
     }
   }, [data, id, loading])
 

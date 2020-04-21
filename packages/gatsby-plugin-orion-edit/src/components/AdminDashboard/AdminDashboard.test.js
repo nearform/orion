@@ -42,6 +42,12 @@ const mockData = [
     iconClass: 'fas fa-user-friends',
   },
   {
+    label: 'goto View',
+    to: '',
+    iconClass: 'fas fa-eye',
+    onClick: () => {},
+  },
+  {
     label: 'Sign out',
     to: '/sign-out',
     iconClass: 'fas fa-long-arrow-alt-left',
@@ -50,31 +56,23 @@ const mockData = [
 const mockContent = [
   {
     label: 'Pages',
-    to: '/pages',
-    src: 'todo',
+    to: '/pages/create',
+    Image: () => <div>mockPagesIcon</div>,
   },
   {
     label: 'Articles',
-    to: '/articles',
-    src: 'todo',
-  },
-  {
-    label: 'Menus',
-    to: '/menus',
-    src: 'todo',
-  },
-  {
-    label: 'Users',
-    to: '/users',
-    src: 'todo',
+    to: '/pages/create',
+    Image: () => <div>mockArticlesIcon</div>,
   },
 ]
+
 const renderComponent = () =>
   render(
     <ThemeProvider theme={createMuiTheme(theme)}>
       <AdminDashboard data={mockData} content={mockContent} heading="test me" />
     </ThemeProvider>
   )
+
 describe('AdminDashboard component', () => {
   it('renders a header', async () => {
     const { getByText } = renderComponent()
@@ -92,6 +90,7 @@ describe('AdminDashboard component', () => {
     expect(getByText('Categories / Tags')).toBeInTheDocument()
     expect(getByText('Media Library')).toBeInTheDocument()
     expect(getByText('Users')).toBeInTheDocument()
+    expect(getByText('goto View')).toBeInTheDocument()
     expect(getByText('Sign out')).toBeInTheDocument()
   })
 
@@ -102,12 +101,5 @@ describe('AdminDashboard component', () => {
     )
     expect(getByText('Pages')).toBeInTheDocument()
     expect(getByText('Articles')).toBeInTheDocument()
-    expect(getByText('Menus')).toBeInTheDocument()
-    expect(getByText('Users')).toBeInTheDocument()
-  })
-
-  it('uses the MUI theme components and classes to style the page', () => {
-    const { container } = renderComponent()
-    expect(container).toMatchSnapshot()
   })
 })

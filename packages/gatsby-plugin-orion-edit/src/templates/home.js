@@ -1,5 +1,7 @@
 import React from 'react'
 import AdminDashboard from '../components/AdminDashboard'
+import ArticlesIcon from '../components/SvgIcons/drawing-woman.inline.svg'
+import PagesIcon from '../components/SvgIcons/support-notes.inline.svg'
 
 const sideBarItems = [
   {
@@ -9,33 +11,64 @@ const sideBarItems = [
   },
   {
     label: 'Pages',
-    to: '/pages',
+    to: '/pages/create',
     iconClass: 'fas fa-file',
   },
   {
     label: 'Articles',
-    to: '/articles',
+    to: '/pages/create/',
     iconClass: 'fas fa-newspaper',
   },
-  {
-    label: 'Menus',
-    to: '/menus',
-    iconClass: 'fas fa-list-alt',
-  },
-  {
-    label: 'Categories / Tags',
-    to: '/categories',
-    iconClass: 'fas fa-tag',
-  },
+  // {
+  //   label: 'Menus',
+  //   to: '/menus',
+  //   iconClass: 'fas fa-list-alt',
+  // },
+  // {
+  //   label: 'Categories / Tags',
+  //   to: '/categories',
+  //   iconClass: 'fas fa-tag',
+  // },
   {
     label: 'Media Library',
     to: '/media-library',
     iconClass: 'fas fa-photo-video',
   },
+  // {
+  //   label: 'Users',
+  //   to: '/users',
+  //   iconClass: 'fas fa-user-friends',
+  // },
   {
-    label: 'Users',
-    to: '/users',
-    iconClass: 'fas fa-user-friends',
+    label: 'goto View',
+    to: '',
+    iconClass: 'fas fa-eye',
+    onClick: () => {
+      const hasCustomUrl =
+        process.env.GATSBY_URL_VIEW !== undefined &&
+        process.env.GATSBY_URL_VIEW.length > 0
+
+      if (hasCustomUrl) {
+        window.location.href = process.env.GATSBY_URL_VIEW
+      } else if (!hasCustomUrl) {
+        const bit = window.location.hostname.split('.')[0]
+        switch (bit) {
+          case 'localhost':
+            window.location.href = 'http://localhost:8000'
+            break
+          case 'edit': {
+            const { origin } = window.location
+            const idx = origin.indexOf('edit')
+            const remainder = origin.slice(idx + 4)
+            window.location.href = `${origin.slice(0, idx)}view${remainder}`
+            break
+          }
+
+          default:
+            console.error('no URL_VIEW set in environment variables')
+        }
+      }
+    },
   },
   {
     label: 'Sign out',
@@ -46,24 +79,24 @@ const sideBarItems = [
 const content = [
   {
     label: 'Pages',
-    to: '/pages',
-    src: 'todo',
+    to: '/pages/create',
+    Image: PagesIcon,
   },
   {
     label: 'Articles',
-    to: '/articles',
-    src: 'todo',
+    to: '/pages/create',
+    Image: ArticlesIcon,
   },
-  {
-    label: 'Menus',
-    to: '/menus',
-    src: 'todo',
-  },
-  {
-    label: 'Users',
-    to: '/users',
-    src: 'todo',
-  },
+  // {
+  //   label: 'Menus',
+  //   to: '/menus',
+  //   src: 'todo',
+  // },
+  // {
+  //   label: 'Users',
+  //   to: '/users',
+  //   src: 'todo',
+  // },
 ]
 // TODO pull this name from the consuming application. i.e. acme
 const heading = 'Acme'

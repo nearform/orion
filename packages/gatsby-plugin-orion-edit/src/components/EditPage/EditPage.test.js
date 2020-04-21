@@ -1,16 +1,72 @@
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, max-nested-callbacks */
+import React from 'react'
 import produce from 'immer' // eslint-disable-line import/no-named-as-default
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import theme from 'gatsby-theme-acme'
+import { render, fireEvent, waitFor } from '@testing-library/react'
+import EditPage, { reducer } from '.'
+import { useMutation, useQuery } from 'graphql-hooks'
+import { useLocation } from '@reach/router'
+import * as mui from '@material-ui/pickers'
 
-import { reducer } from '.'
+jest.spyOn(mui, 'DateTimePicker')
 
-jest.mock('../../queries/create-page.graphql', () => 'mutation')
+const mockDate = new Date('2020-03-09T13:05:20.588+00:00')
 
-jest.mock('../../queries/update-page.graphql', () => 'mutation')
-jest.mock('../../queries/get-pages.graphql', () => 'query')
-jest.mock('../../queries/update-ancestry.graphql', () => 'query')
-jest.mock('../../queries/update-position.graphql', () => 'query')
+const otherMockDate = new Date('2021-01-01')
 
-const initialState = {
+const _Date = Date
+global.Date = jest.fn(() => mockDate)
+global.Date.UTC = _Date.UTC
+global.Date.parse = _Date.parse
+global.Date.now = _Date.now
+
+jest.mock('@reach/router')
+useLocation.mockReturnValue({
+  pathname: '/',
+})
+jest.mock('../../queries/get-pages.graphql', () => 'mockGetPagesQuery')
+jest.mock(
+  '../../queries/update-ancestry.graphql',
+  () => 'mockUpdateAncestryMutation'
+)
+jest.mock(
+  '../../queries/update-position.graphql',
+  () => 'mockUpdatePositionMutation'
+)
+
+jest.mock(
+  '../../queries/update-page-title.graphql',
+  () => 'updatePageTitleMutation'
+)
+
+jest.mock('../../queries/create-page.graphql', () => 'mockCreatePageMutation')
+jest.mock('../../queries/update-page.graphql', () => 'mockUpdatePageMutation')
+jest.mock('graphql-hooks')
+useQuery.mockReturnValue({
+  data: null,
+})
+
+const mockCreatePage = jest.fn()
+const mockUpdatePage = jest.fn(() => ({
+  data: {
+    update_orion_page: {
+      returning: [{ id: 1999 }],
+    },
+  },
+}))
+useMutation.mockImplementation(mutation => {
+  if (mutation === 'mockCreatePageMutation') {
+    return [mockCreatePage]
+  }
+
+  if (mutation === 'mockUpdatePageMutation') {
+    return [mockUpdatePage]
+  }
+
+  return []
+})
+const mockInitialState = {
   ancestry: [
     {
       ancestor: { id: 2, path: '/latest-news', title: 'Latest news' },
@@ -42,7 +98,7 @@ const initialState = {
         image:
           'https://s3-eu-west-1.amazonaws.com/orion-assets.nearform.com/public/default/place-5%402x.png',
         content:
-          'When a company insures an individual entity, there are basic legal requirements and regulations. Several commonly cited legal principles of insurance include:\n\n1. Indemnity – the insurance company indemnifies, or compensates, the insured in the case of certain losses only up to the insured\'s interest.\n2. Benefit insurance – as it is stated in the study books of The Chartered Insurance Institute, the insurance company does not have the right of recovery from the party who caused the injury and is to compensate the Insured regardless of the fact that Insured had already sued the negligent party for the damages (for example, personal accident insurance)\n3. Insurable interest – the insured typically must directly suffer from the loss. Insurable interest must exist whether property insurance or insurance on a person is involved. The concept requires that the insured have a "stake" in the loss or damage to the life or property insured. What that "stake" is will be determined by the kind of insurance involved and the nature of the property ownership or relationship between the persons. The requirement of an insurable interest is what distinguishes insurance from gambling.\n4. Utmost good faith – (Uberrima fides) the insured and the insurer are bound by a good faith bond of honesty and fairness. Material facts must be disclosed.\n5. Contribution – insurers which have similar obligations to the insured contribute in the indemnification, according to some method.\n6. Subrogation – the insurance company acquires legal rights to pursue recoveries on behalf of the insured; for example, the insurer may sue those liable for the insured\'s loss. The Insurers can waive their subrogation rights by using the special clauses.\n7. Causa proxima, or proximate cause – the cause of loss (the peril) must be covered under the insuring agreement of the policy, and the dominant cause must not be excluded\n8. Mitigation – In case of any loss or casualty, the asset owner must attempt to keep loss to a minimum, as if the asset was not insured.\n',
+          'When a company insures an individual entity, there are basic legal requirements and regulations.',
       },
     },
     {
@@ -56,30 +112,41 @@ const initialState = {
     },
   ],
   descendants: [],
-  tags: [{ tag: { hidden: false, tag: '2020' } }],
+  tags: [{ tag: { hidden: false, tag: 'test-tag' } }],
   created: '2020-03-09T13:04:33.627494+00:00',
   id: 23,
   layout: 'article',
   modified: null,
   path: '/latest-news/legal',
-  published: '2020-03-09T13:04:33.588+00:00',
   show_in_menu: false,
   title: 'Legal requirements',
   allTags: [
-    { tag: '2020', hidden: false },
+    { tag: 'test-tag', hidden: false },
     { tag: 'history', hidden: false },
   ],
 }
+const makeInitialState = values => ({
+  ...mockInitialState,
+  ...values,
+})
+
+const mockOnSave = jest.fn()
+const renderPage = values =>
+  render(
+    <ThemeProvider theme={createMuiTheme(theme)}>
+      <EditPage initialState={makeInitialState(values)} onSave={mockOnSave} />
+    </ThemeProvider>
+  )
 
 describe('Edit page reducer', () => {
   it('handles updates to the settings', () => {
-    const payload = produce(initialState, draft => {
+    const payload = produce(mockInitialState, draft => {
       draft.title = 'something different'
       draft.show_in_menu = true
       draft.path = '/else/where'
       draft.layout = 'section'
     })
-    const state = reducer(initialState, { type: 'settings', ...payload })
+    const state = reducer(mockInitialState, { type: 'settings', ...payload })
     expect(state).toEqual(payload)
   })
 
@@ -112,7 +179,7 @@ describe('Edit page reducer', () => {
         },
       ],
     }
-    const state = reducer(initialState, { type: 'layout', ...payload })
+    const state = reducer(mockInitialState, { type: 'layout', ...payload })
     expect(state.layout).toEqual(payload.layout)
     expect(state.contents).toEqual(payload.contents)
   })
@@ -126,7 +193,7 @@ describe('Edit page reducer', () => {
         content: 'test.',
       },
     }
-    const state = reducer(initialState, { type: 'component', ...payload })
+    const state = reducer(mockInitialState, { type: 'component', ...payload })
     expect(state.contents.find(t => t.block === 'summary')).toEqual({
       block: payload.block,
       component: payload.component,
@@ -146,8 +213,268 @@ describe('Edit page reducer', () => {
       const payload = {
         tags: testTags,
       }
-      const state = reducer(initialState, { type: 'saveTags', ...payload })
+      const state = reducer(mockInitialState, { type: 'saveTags', ...payload })
       expect(state.tags).toEqual(payload.tags)
+    })
+  })
+
+  it('handles changes to the publish date', () => {
+    const payload = { date: otherMockDate }
+    const state = reducer(mockInitialState, {
+      type: 'setPublishedDate',
+      ...payload,
+    })
+    expect(state.published).toEqual(otherMockDate)
+  })
+
+  it('handles changes to the expires date', () => {
+    const payload = { date: otherMockDate }
+    const state = reducer(mockInitialState, {
+      type: 'setExpiresdDate',
+      ...payload,
+    })
+    expect(state.expires).toEqual(otherMockDate)
+  })
+})
+
+describe('Publishing', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('should have a publish button', () => {
+    const { getByText } = renderPage()
+    expect(getByText('Publish')).toBeInTheDocument()
+  })
+  it('should have a date picker', () => {
+    renderPage()
+    expect(mui.DateTimePicker).toHaveBeenCalledWith(
+      expect.objectContaining({
+        autoOk: true,
+        showTodayButton: true,
+        id: 'published-date-picker',
+        ampm: false,
+        emptyLabel: 'Now',
+        format: 'MMM dd yyyy, hh:mm a',
+
+        onChange: expect.any(Function),
+        orientation: 'portrait',
+        value: null,
+        variant: 'dialog',
+      }),
+      {}
+    )
+  })
+
+  describe('When I am editing an unpublished page', () => {
+    it('the date picker should show the text "now"', () => {
+      const { getByDisplayValue } = renderPage()
+      expect(getByDisplayValue('Now')).toBeInTheDocument()
+    })
+    describe('And I click on the publish button', () => {
+      it('should save the page with all data and a publish date of now', () => {
+        const { getByText } = renderPage()
+        fireEvent.click(getByText('Publish'))
+        expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
+          mockDate
+        )
+        expect(mockUpdatePage).toHaveBeenCalledWith({
+          variables: {
+            contents: [
+              {
+                block: 'metadata',
+                component: 'ArticleMetadata',
+                id: 38,
+                page_id: 23,
+                props: { readTime: 5 },
+              },
+              {
+                block: 'content',
+                component: 'ArticleContent',
+                id: 39,
+                page_id: 23,
+                props: {
+                  content:
+                    'When a company insures an individual entity, there are basic legal requirements and regulations.',
+                  image:
+                    'https://s3-eu-west-1.amazonaws.com/orion-assets.nearform.com/public/default/place-5%402x.png',
+                },
+              },
+              {
+                block: 'summary',
+                component: 'ArticleContent',
+                id: 40,
+                page_id: 23,
+                props: {
+                  content:
+                    'When a company insures an individual entity, there are basic legal requirements and regulations.',
+                },
+              },
+            ],
+            id: 23,
+            layout: 'article',
+            path: '/latest-news/legal',
+            published: mockDate,
+            showInMenu: false,
+            pageTags: [{ page_id: 23, tag_id: 'test-tag' }],
+            title: 'Legal requirements',
+            expires: null,
+          },
+        })
+      })
+    })
+    describe('And I select a publish date from the date picker and click the publish button', () => {
+      beforeEach(async () => {
+        const { getByText } = renderPage()
+        const [renderPublishDatePicker] = mui.DateTimePicker.mock.calls
+        await waitFor(() => {
+          return renderPublishDatePicker[0].onChange(otherMockDate)
+        })
+        const reRenderPublishDatePicker = mui.DateTimePicker.mock.calls[2]
+        expect(reRenderPublishDatePicker[0].value).toEqual(otherMockDate)
+        fireEvent.click(getByText('Publish'))
+      })
+
+      it('should save the page with all data and a publish date selected', async () => {
+        expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
+          otherMockDate
+        )
+      })
+    })
+  })
+
+  describe('When I am editing a page that is already published', () => {
+    let editPage
+
+    beforeEach(() => {
+      editPage = renderPage({ published: mockDate })
+    })
+
+    it('the date picker should show the date the page was published on', () => {
+      expect(mui.DateTimePicker.mock.calls[0][0].value).toEqual(mockDate)
+    })
+
+    describe('And I click on the publish button', () => {
+      beforeEach(() => {
+        const { getByText } = editPage
+        fireEvent.click(getByText('Publish'))
+      })
+
+      it('should save the page with all data and the previously selected date', () => {
+        expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
+          mockDate
+        )
+        expect(mockUpdatePage).toHaveBeenCalledWith({
+          variables: {
+            contents: [
+              {
+                block: 'metadata',
+                component: 'ArticleMetadata',
+                id: 38,
+                page_id: 23,
+                props: { readTime: 5 },
+              },
+              {
+                block: 'content',
+                component: 'ArticleContent',
+                id: 39,
+                page_id: 23,
+                props: {
+                  content:
+                    'When a company insures an individual entity, there are basic legal requirements and regulations.',
+                  image:
+                    'https://s3-eu-west-1.amazonaws.com/orion-assets.nearform.com/public/default/place-5%402x.png',
+                },
+              },
+              {
+                block: 'summary',
+                component: 'ArticleContent',
+                id: 40,
+                page_id: 23,
+                props: {
+                  content:
+                    'When a company insures an individual entity, there are basic legal requirements and regulations.',
+                },
+              },
+            ],
+            id: 23,
+            layout: 'article',
+            path: '/latest-news/legal',
+            published: mockDate,
+            showInMenu: false,
+            pageTags: [{ page_id: 23, tag_id: 'test-tag' }],
+            title: 'Legal requirements',
+            expires: null,
+          },
+        })
+      })
+    })
+    describe('And I select a publish date from the date picker and click the publish button', () => {
+      beforeEach(async () => {
+        const { getByText } = editPage
+        const [renderPublishDatePicker] = mui.DateTimePicker.mock.calls
+
+        await waitFor(() => {
+          return renderPublishDatePicker[0].onChange(otherMockDate)
+        })
+        const reRenderPublishDatePicker = mui.DateTimePicker.mock.calls[2]
+        expect(reRenderPublishDatePicker[0].value).toEqual(otherMockDate)
+        fireEvent.click(getByText('Publish'))
+      })
+      it('should save the page with the correct publish date', () => {
+        expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
+          otherMockDate
+        )
+      })
+      it('Then I can NOT select an expires date less than the publish date', () => {
+        const reRenderExpiresDatePicker = mui.DateTimePicker.mock.calls[3]
+        expect(reRenderExpiresDatePicker[0].minDate).toEqual(otherMockDate)
+      })
+    })
+
+    describe('And I do NOT set an expires date and then I publish', () => {
+      beforeEach(async () => {
+        const { getByText } = editPage
+
+        fireEvent.click(getByText('Publish'))
+      })
+
+      it('save the expires date as null', () => {
+        expect(mockUpdatePage.mock.calls[0][0].variables.expires).toEqual(null)
+      })
+    })
+
+    describe('And I set an expires date', () => {
+      beforeEach(async () => {
+        const [
+          renderPublishDatePicker, // eslint-disable-line no-unused-vars
+          renderExpiresDatePicker,
+        ] = mui.DateTimePicker.mock.calls
+
+        await waitFor(() => {
+          return renderExpiresDatePicker[0].onChange(otherMockDate)
+        })
+        const reRenderExpiresDatePicker = mui.DateTimePicker.mock.calls[3]
+        expect(reRenderExpiresDatePicker[0].value).toEqual(otherMockDate)
+      })
+
+      it('Then I can NOT set the publish date to be later than the expires date', () => {
+        const reRenderPublishedDatePicker = mui.DateTimePicker.mock.calls[2]
+        expect(reRenderPublishedDatePicker[0].maxDate).toEqual(otherMockDate)
+      })
+
+      describe('And then publish', () => {
+        beforeEach(() => {
+          const { getByText } = editPage
+          fireEvent.click(getByText('Publish'))
+        })
+
+        it('should save the page with an expires date', () => {
+          expect(mockUpdatePage.mock.calls[0][0].variables.expires).toEqual(
+            otherMockDate
+          )
+        })
+      })
     })
   })
 })

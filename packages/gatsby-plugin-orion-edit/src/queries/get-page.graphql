@@ -42,6 +42,7 @@ query getPage($id: Int!) {
     modified
     path
     published
+    expires
     show_in_menu
     title
   }
