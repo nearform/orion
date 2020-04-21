@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 'auto',
+    maxWidth: 'none',
     border: `1px dashed ${theme.palette.common.black}`,
     margin: '-16px 0 0 -16px',
     padding: 16,
