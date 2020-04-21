@@ -89,15 +89,12 @@ function EditPage({ initialState, onSave }) {
   const editLayoutProps = {}
 
   const handleSave = useCallback(async () => {
-    const directAncestor = page.ancestry.filter(ancestor => ancestor.direct)
+    const directAncestor = getParentPath(page.ancestry)
     if (page.path === '/') {
       console.warn(
         'This will set the page as your home page. Make sure to rename your old home page or this will not work as expected.'
       )
-    } else if (
-      directAncestor.length > 0 &&
-      page.path === `${directAncestor[0].ancestor.path}/`
-    ) {
+    } else if (directAncestor !== '' && page.path === `${directAncestor}/`) {
       console.warn(
         'Failed to publish changes. A page with this path already exsists. Try rearranging the pages in the left menu instead.'
       )
