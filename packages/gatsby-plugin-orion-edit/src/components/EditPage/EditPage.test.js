@@ -285,7 +285,7 @@ describe('Edit page reducer', () => {
       expect(state.path).toEqual('/')
     })
   })
-  describe('When updating the path and it has ancestors', () => {
+  describe('When updating the path and it has one ancestor', () => {
     it('handles changes to the path', () => {
       const action = { type: 'setPath', path: 'a-new-path' }
       const state = reducer(mockInitialState, action)
@@ -295,6 +295,40 @@ describe('Edit page reducer', () => {
       const action = { type: 'setPath', path: '' }
       const state = reducer(mockInitialState, action)
       expect(state.path).toEqual('/latest-news/')
+    })
+  })
+
+  describe('When updating the path and it has two ancestors', () => {
+    const oldState = produce(mockInitialState, draft => {
+      draft.ancestry = [
+        {
+          ancestor: {
+            id: 2,
+            path: '/latest-news',
+            title: 'Latest news',
+          },
+          direct: false,
+        },
+        {
+          ancestor: {
+            id: 3,
+            path: '/latest-news/other-news',
+            title: 'Other news',
+          },
+          direct: true,
+        },
+      ]
+    })
+    it('handles changes to the path', () => {
+      const action = { type: 'setPath', path: 'a-new-path' }
+      const state = reducer(oldState, action)
+      expect(state.path).toEqual('/latest-news/other-news/a-new-path')
+    })
+
+    it('handles a blank path as the root', () => {
+      const action = { type: 'setPath', path: '' }
+      const state = reducer(oldState, action)
+      expect(state.path).toEqual('/latest-news/other-news/')
     })
   })
 })

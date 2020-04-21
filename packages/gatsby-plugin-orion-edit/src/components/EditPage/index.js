@@ -10,6 +10,7 @@ import { useEditComponents } from '../EditComponentProvider'
 import { useMutation } from 'graphql-hooks'
 import produce from 'immer' // eslint-disable-line import/no-named-as-default
 import slugify from 'gatsby-plugin-orion-core/src/utils/slugify'
+import getParentPath from '../../utils/get-parent-path'
 
 export function reducer(page, { type, ...payload }) {
   switch (type) {
@@ -64,9 +65,7 @@ export function reducer(page, { type, ...payload }) {
       })
     case 'setPath':
       return produce(page, draft => {
-        const ancestryPath = page.ancestry
-          .map(({ ancestor }) => ancestor.path)
-          .join('')
+        const ancestryPath = getParentPath(page.ancestry)
         draft.path = `${ancestryPath}/${payload.path}`
       })
 
@@ -90,7 +89,19 @@ function EditPage({ initialState, onSave }) {
   const editLayoutProps = {}
 
   const handleSave = useCallback(async () => {
-    if (!page.path) {
+    const directAncestor = page.ancestry.filter(ancestor => ancestor.direct)
+    if (page.path === '/') {
+      console.warn(
+        'This will set the page as your home page. Make sure to rename your old home page or this will not work as expected.'
+      )
+    } else if (
+      directAncestor.length > 0 &&
+      page.path === `${directAncestor[0].ancestor.path}/`
+    ) {
+      console.warn(
+        'Failed to publish changes. A page with this path already exsists. Try rearranging the pages in the left menu instead.'
+      )
+      handleSetPath(slugify(page.title))
       return
     }
 

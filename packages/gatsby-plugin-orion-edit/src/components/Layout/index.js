@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import PageTree from '../PageTree'
 import { makeStyles } from '@material-ui/core'
+import getParentPath from '../../utils/get-parent-path'
 
 const drawerWidth = 318
 
@@ -97,12 +98,7 @@ function Layout({ action, children, path, setPath, ancestry }) {
   const classes = useStyles()
 
   const parentPath = useMemo(() => {
-    const directParent = ancestry.filter(ancestor => ancestor.direct)
-    if (directParent.length > 0) {
-      return directParent[0].ancestor.path
-    }
-
-    return ''
+    return getParentPath(ancestry)
   }, [ancestry])
 
   return (
