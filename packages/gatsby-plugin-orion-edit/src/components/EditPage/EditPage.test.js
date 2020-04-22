@@ -39,6 +39,10 @@ jest.mock(
   '../../queries/update-page-title.graphql',
   () => 'updatePageTitleMutation'
 )
+jest.mock(
+  '../../queries/update-page-show_in_menu.graphql',
+  () => 'updatePageShowInMenuMutation'
+)
 
 jest.mock('../../queries/create-page.graphql', () => 'mockCreatePageMutation')
 jest.mock('../../queries/update-page.graphql', () => 'mockUpdatePageMutation')

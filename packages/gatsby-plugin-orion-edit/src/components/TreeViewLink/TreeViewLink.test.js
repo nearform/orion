@@ -5,23 +5,26 @@ import TreeViewLink from '.'
 import { useMutation } from 'graphql-hooks'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import theme from 'gatsby-theme-acme'
-import updatePageTitleMutation from '../../queries/update-page-title.graphql'
-import updatePageShowInMenuMutation from '../../queries/update-page-show_in_menu.graphql'
-
 jest.mock(
   '../../queries/update-page-title.graphql',
   () => 'updatePageTitleMutation'
 )
-jest.mock('graphql-hooks')
-const mockUpdatePageTitleMutation = jest.fn()
-useMutation.mockImplementation(() => [mockUpdatePageTitleMutation])
-
 jest.mock(
   '../../queries/update-page-show_in_menu.graphql',
   () => 'updatePageShowInMenuMutation'
 )
+jest.mock('graphql-hooks')
 const mockUpdatePageShowInMenuMutation = jest.fn()
-useMutation.mockImplementation(() => [mockUpdatePageShowInMenuMutation])
+const mockUpdatePageTitleMutation = jest.fn()
+useMutation.mockImplementation(mutation => {
+  if (mutation === 'updatePageTitleMutation') {
+    return [mockUpdatePageTitleMutation]
+  }
+  if (mutation === 'updatePageShowInMenuMutation') {
+    return [mockUpdatePageShowInMenuMutation]
+  }
+  return []
+})
 
 const props = {
   title: 'great titles are made',

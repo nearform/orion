@@ -4,7 +4,6 @@ import { Link } from '@reach/router'
 import { useMutation } from 'graphql-hooks'
 import updatePageTitleMutation from '../../queries/update-page-title.graphql'
 import updatePageShowInMenuMutation from '../../queries/update-page-show_in_menu.graphql'
-
 const useStyles = makeStyles(theme => ({
   label: {
     color: theme.palette.common.white,
@@ -111,7 +110,7 @@ const TreeViewLink = ({
           show_in_menu: !showInMenu,
         },
       })
-      setShowInMenu(!showInMenu);
+      setShowInMenu(!showInMenu)
     } catch (error) {
       console.warn(
         `There was an error making changes to the showInMenu parameter of page ${pageId} because of the following error. ${error.message}`
