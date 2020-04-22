@@ -1,4 +1,5 @@
-/* eslint-disable camelcase, max-nested-callbacks */
+/* eslint-disable max-nested-callbacks */
+/* eslint-disable camelcase */
 import React from 'react'
 import produce from 'immer' // eslint-disable-line import/no-named-as-default
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'

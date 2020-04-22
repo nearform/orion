@@ -1,4 +1,5 @@
 /* eslint-disable max-nested-callbacks */
+/* eslint-disable camelcase */
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import TreeViewLink from '.'
@@ -20,9 +21,11 @@ useMutation.mockImplementation(mutation => {
   if (mutation === 'updatePageTitleMutation') {
     return [mockUpdatePageTitleMutation]
   }
+
   if (mutation === 'updatePageShowInMenuMutation') {
     return [mockUpdatePageShowInMenuMutation]
   }
+
   return []
 })
 
@@ -130,7 +133,6 @@ describe('TreeViewLink component', () => {
         const { getByLabelText } = component
         fireEvent.click(getByLabelText('include page in menu'))
       })
-
       it('calls the graphql mutation to save the change', () => {
         expect(mockUpdatePageShowInMenuMutation).toHaveBeenCalledWith({
           variables: {
