@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState, useRef, useEffect } from 'react'
 import { Button, makeStyles } from '@material-ui/core'
 import { Link } from '@reach/router'
