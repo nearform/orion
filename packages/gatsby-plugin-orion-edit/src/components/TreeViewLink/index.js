@@ -3,6 +3,7 @@ import { Button, makeStyles } from '@material-ui/core'
 import { Link } from '@reach/router'
 import { useMutation } from 'graphql-hooks'
 import updatePageTitleMutation from '../../queries/update-page-title.graphql'
+import updatePageShowInMenuMutation from '../../queries/update-page-show_in_menu.graphql'
 
 const useStyles = makeStyles(theme => ({
   label: {
@@ -26,6 +27,9 @@ const useStyles = makeStyles(theme => ({
   },
   editButtonIcon: {
     color: theme.palette.tertiary.main,
+    '&:hover': {
+      color: theme.palette.action.light,
+    },
   },
   edit: {
     padding: '5px 15px',
@@ -66,12 +70,19 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const TreeViewLink = ({ title: initialTitle, to, pageId }) => {
+const TreeViewLink = ({
+  title: initialTitle,
+  to,
+  pageId,
+  showInMenu: initialShowInMenu,
+}) => {
   const classes = useStyles()
   const [isEditing, setIsEditing] = useState(false)
   const [title, setTitle] = useState(initialTitle)
+  const [showInMenu, setShowInMenu] = useState(initialShowInMenu)
   const ref = useRef(null)
   const [updatePageTitle] = useMutation(updatePageTitleMutation)
+  const [updatePageShowInMenu] = useMutation(updatePageShowInMenuMutation)
   const saveTitle = async e => {
     e.preventDefault()
     setIsEditing(false)
@@ -87,6 +98,25 @@ const TreeViewLink = ({ title: initialTitle, to, pageId }) => {
         `There was an error making changes to the title of page ${pageId} because of the following error. ${error.message}`
       )
       setTitle(initialTitle)
+    }
+  }
+
+  const saveShowInMenu = async e => {
+    e.preventDefault()
+
+    try {
+      await updatePageShowInMenu({
+        variables: {
+          id: pageId,
+          show_in_menu: !showInMenu,
+        },
+      })
+      setShowInMenu(!showInMenu);
+    } catch (error) {
+      console.warn(
+        `There was an error making changes to the showInMenu parameter of page ${pageId} because of the following error. ${error.message}`
+      )
+      setShowInMenu(initialShowInMenu)
     }
   }
 
@@ -112,7 +142,13 @@ const TreeViewLink = ({ title: initialTitle, to, pageId }) => {
             setTitle(initialTitle)
           }}
         />
-        <button type="submit" className={classes.editSaveButton}>
+        <button
+          type="submit"
+          className={classes.editSaveButton}
+          onChange={e => {
+            setTitle(e.target.value)
+          }}
+        >
           <i className={`fa fa-save ${classes.editSaveButtonIcon}`} />
         </button>
       </form>
@@ -122,6 +158,19 @@ const TreeViewLink = ({ title: initialTitle, to, pageId }) => {
       <Link to={to}>{title}</Link>
       <Button className={classes.editButton} onClick={() => setIsEditing(true)}>
         <i className={`fa fa-pen ${classes.editButtonIcon}`} />
+      </Button>
+      <Button
+        className={classes.editButton}
+        aria-label={
+          showInMenu ? 'exclude page from menu' : 'include page in menu'
+        }
+        onClick={saveShowInMenu}
+      >
+        <i
+          className={`fa fa-eye${showInMenu ? '' : '-slash'} ${
+            classes.editButtonIcon
+          }`}
+        />
       </Button>
     </div>
   )

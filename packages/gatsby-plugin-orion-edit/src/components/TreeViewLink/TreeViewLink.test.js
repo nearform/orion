@@ -5,6 +5,8 @@ import TreeViewLink from '.'
 import { useMutation } from 'graphql-hooks'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import theme from 'gatsby-theme-acme'
+import updatePageTitleMutation from '../../queries/update-page-title.graphql'
+import updatePageShowInMenuMutation from '../../queries/update-page-show_in_menu.graphql'
 
 jest.mock(
   '../../queries/update-page-title.graphql',
@@ -13,6 +15,13 @@ jest.mock(
 jest.mock('graphql-hooks')
 const mockUpdatePageTitleMutation = jest.fn()
 useMutation.mockImplementation(() => [mockUpdatePageTitleMutation])
+
+jest.mock(
+  '../../queries/update-page-show_in_menu.graphql',
+  () => 'updatePageShowInMenuMutation'
+)
+const mockUpdatePageShowInMenuMutation = jest.fn()
+useMutation.mockImplementation(() => [mockUpdatePageShowInMenuMutation])
 
 const props = {
   title: 'great titles are made',
@@ -103,6 +112,34 @@ describe('TreeViewLink component', () => {
             })
           })
         })
+      })
+    })
+
+    describe('I want to include this page in the menu', () => {
+      it('shows a button with include aria-label', () => {
+        const { getByLabelText } = component
+        expect(getByLabelText('include page in menu')).toBeInTheDocument()
+      })
+    })
+
+    describe('Toggles show in menu state after click', () => {
+      beforeEach(() => {
+        const { getByLabelText } = component
+        fireEvent.click(getByLabelText('include page in menu'))
+      })
+
+      it('calls the graphql mutation to save the change', () => {
+        expect(mockUpdatePageShowInMenuMutation).toHaveBeenCalledWith({
+          variables: {
+            id: 123,
+            show_in_menu: true,
+          },
+        })
+      })
+
+      it('shows a button with exclude aria-label', () => {
+        const { getByLabelText } = component
+        expect(getByLabelText('exclude page from menu')).toBeInTheDocument()
       })
     })
   })
