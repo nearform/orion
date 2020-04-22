@@ -5,6 +5,7 @@ require('dotenv').config({
 module.exports = {
   plugins: [
     'gatsby-plugin-orion-edit',
+    'gatsby-plugin-orion-core',
     {
       resolve: `gatsby-plugin-prefetch-google-fonts`,
       options: {
