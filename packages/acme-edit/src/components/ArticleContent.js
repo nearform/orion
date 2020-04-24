@@ -7,6 +7,8 @@ import TagsSelect from 'gatsby-plugin-orion-edit/src/components/TagsSelect'
 
 const useStyles = makeStyles(theme => ({
   content: {
+    marginBottom: 16,
+
     '& h1': {
       ...theme.typography.h1,
       marginBottom: 16,
@@ -116,6 +118,15 @@ function ArticleContentEditor({ content, image, onChange, page, subtitle }) {
           onChange({ content, image, subtitle: event.target.value }, page)
         }}
       />
+      {image && <img alt={page.title} src={image} className={classes.image} />}
+      <div className={classes.content}>
+        <MarkdownEditor
+          content={content}
+          onChange={value => {
+            onChange({ content: value, image, subtitle }, page)
+          }}
+        />
+      </div>
       <TagsSelect
         existingTags={page.allTags}
         currentTags={page.tags}
@@ -129,15 +140,6 @@ function ArticleContentEditor({ content, image, onChange, page, subtitle }) {
           )
         }}
       />
-      {image && <img alt={page.title} src={image} className={classes.image} />}
-      <div className={classes.content}>
-        <MarkdownEditor
-          content={content}
-          onChange={value => {
-            onChange({ content: value, image, subtitle }, page)
-          }}
-        />
-      </div>
     </div>
   )
 }
