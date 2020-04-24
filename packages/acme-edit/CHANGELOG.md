@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.47.0](https://github.com/nearform/orion/compare/v2.46.1...v2.47.0) (2020-04-24)
+
+
+### Features
+
+* 🎸 Add Select for article type to main view of editor ([a7141c4](https://github.com/nearform/orion/commit/a7141c47b4550588a534b86b917843c45f360250))
+* 🎸 Apply border to all edit components ([3720cd4](https://github.com/nearform/orion/commit/3720cd40e3b57815523cb3113211ed5e8b7a2936))
+* 🎸 Move tags input below content ([c4ef02a](https://github.com/nearform/orion/commit/c4ef02a9546a65e734cf9c7f8ed1cb9dd7e28953))
+* 🎸 Show edit areas with a dashed border ([53482f7](https://github.com/nearform/orion/commit/53482f7a96fd2c0a511e78a3460825fdcd35e02e))
+
+
+
+
+
 ## [2.46.1](https://github.com/nearform/orion/compare/v2.46.0...v2.46.1) (2020-04-21)
 
 **Note:** Version bump only for package acme-edit
