@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useReducer, useState } from 'react'
+import React, { useCallback, useReducer, useState } from 'react'
 import createPageMutation from '../../queries/create-page.graphql'
 import updatePageMutation from '../../queries/update-page.graphql'
 import ArticleEditButtons from '../ArticleEditButtons'
@@ -9,6 +9,8 @@ import PageSettings from '../PageSettings'
 import { useEditComponents } from '../EditComponentProvider'
 import { useMutation } from 'graphql-hooks'
 import produce from 'immer' // eslint-disable-line import/no-named-as-default
+import slugify from 'gatsby-plugin-orion-core/src/utils/slugify'
+import getParentPath from '../../utils/get-parent-path'
 
 export function reducer(page, { type, ...payload }) {
   switch (type) {
@@ -30,6 +32,13 @@ export function reducer(page, { type, ...payload }) {
       }
 
     case 'component':
+      if (
+        payload.page.title !== undefined &&
+        page.title !== payload.page.title
+      ) {
+        payload.page.path = slugify(payload.page.title)
+      }
+
       return {
         ...page,
         ...payload.page, // TODO is spreading the page twice really needed?
@@ -54,6 +63,11 @@ export function reducer(page, { type, ...payload }) {
       return produce(page, draft => {
         draft.expires = payload.date
       })
+    case 'setPath':
+      return produce(page, draft => {
+        const ancestryPath = getParentPath(page.ancestry)
+        draft.path = `${ancestryPath}/${payload.path}`
+      })
 
     default:
       throw new Error('Invalid action')
@@ -75,7 +89,16 @@ function EditPage({ initialState, onSave }) {
   const editLayoutProps = {}
 
   const handleSave = useCallback(async () => {
-    if (!page.path) {
+    const directAncestor = getParentPath(page.ancestry)
+    if (page.path === '/') {
+      console.warn(
+        'This will set the page as your home page. Make sure to rename your old home page or this will not work as expected.'
+      )
+    } else if (directAncestor !== '' && page.path === `${directAncestor}/`) {
+      console.warn(
+        'Failed to publish changes. A page with this path already exsists. Try rearranging the pages in the left menu instead.'
+      )
+      handleSetPath(slugify(page.title))
       return
     }
 
@@ -168,24 +191,10 @@ function EditPage({ initialState, onSave }) {
     date => dispatch({ type: 'setExpiresdDate', date }),
     [dispatch]
   )
-
-  const breadcrumbs = useMemo(() => {
-    const breadcrumbs = []
-
-    for (const { ancestor } of page.ancestry) {
-      breadcrumbs.push({
-        title: ancestor.title,
-        to: `/pages/${ancestor.id}/edit`,
-      })
-    }
-
-    breadcrumbs.push({
-      title: page.title,
-      to: `/pages/${page.id}/edit`,
-    })
-
-    return breadcrumbs
-  }, [page])
+  const handleSetPath = useCallback(
+    path => dispatch({ type: 'setPath', path }),
+    [dispatch]
+  )
 
   for (const [key, block] of Object.entries(blocks)) {
     const content = page.contents.find(content => content.block === key)
@@ -226,7 +235,12 @@ function EditPage({ initialState, onSave }) {
   )
 
   return (
-    <Layout action={actions} breadcrumbs={breadcrumbs}>
+    <Layout
+      action={actions}
+      ancestry={page.ancestry}
+      path={page.path.split('/').slice(-1)[0]}
+      setPath={handleSetPath}
+    >
       <PageSettings
         open={showSettings}
         page={page}
