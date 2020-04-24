@@ -6,6 +6,12 @@ import { createPropEditor } from 'gatsby-plugin-orion-edit'
 import TagsSelect from 'gatsby-plugin-orion-edit/src/components/TagsSelect'
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    border: '1px dashed black',
+    margin: '-16px 0 0 -16px',
+    padding: 16,
+    width: 'calc(100% + 32px)',
+  },
   content: {
     marginBottom: 16,
 

@@ -1,8 +1,26 @@
+import React from 'react'
 import Hero from 'acme-view/src/components/Hero/Wrap'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
+import { makeStyles } from '@material-ui/core'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    border: `1px dashed ${theme.palette.common.black}`,
+  },
+}))
+
+const HeroEditor = props => {
+  const classes = useStyles()
+
+  return (
+    <div className={classes.root}>
+      <Hero {...props} />
+    </div>
+  )
+}
 
 export default {
-  editor: Hero,
+  editor: HeroEditor,
   preview: Hero,
   settings: createPropEditor({
     image: {
