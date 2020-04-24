@@ -221,15 +221,17 @@ jobs:
     <<: *deploy_environment
     steps:
       - attach_workspace:
-        at: /home/circleci
+          at: /home/circleci
       - *load_envars
-      - run:
-          name: Build acme-view static files
-          command: yarn run build:view
       - *install_awscli
       - run:
+          name: Build acme-view static files
+          command: |
+            yarn run build:view
+      - run:
           name: Deploy acme-view bundle to S3
-          command: aws s3 sync packages/acme-view/public ${VIEW_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+          command: |
+            aws s3 sync packages/acme-view/public ${VIEW_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
 workflows:
   version: 2
   build-only:
@@ -260,6 +262,13 @@ workflows:
                 - master
           requires:
             - test
+      - generate-view-content:
+          filters:
+            branches:
+              only: 
+                - staging
+          requires:
+            - build
   build-and-deploy:
     jobs:
       - setup:
