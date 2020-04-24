@@ -267,6 +267,7 @@ workflows:
             branches:
               only: 
                 - staging
+                - sprift/ch496/trigger-rebuilds-when-necessary
           requires:
             - build
   build-and-deploy:
