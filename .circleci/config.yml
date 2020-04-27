@@ -1,3 +1,5 @@
+version: 2.1
+
 install_hasura_cli: &install_hasura_cli
   run:
     name: Install Hasura CLI
@@ -5,81 +7,85 @@ install_hasura_cli: &install_hasura_cli
       curl -L https://github.com/hasura/graphql-engine/raw/master/cli/get.sh | bash
 
 install_awscli: &install_awscli
-    run:
-      name: Install awscli
-      command: |
-        sudo apt-get install python-pip python
-        sudo pip install awscli
+  run:
+    name: Install awscli
+    command: |
+      sudo apt-get install python-pip python
+      sudo pip install awscli
 
 deploy_environment: &deploy_environment
   docker:
     - image: circleci/node:10-browsers
 
 get_envars: &get_envars
-    run:
-      name: Get environment variables from AWS
-      environment:
-        ORG: "orion"
-      command: |
-        if [ "$CIRCLE_BRANCH" == "production" ]; then
-            export AWS_DEFAULT_REGION=${PRODUCTION_AWS_REGION}
-            export AWS_ACCESS_KEY_ID=${PRODUCTION_AWS_ACCESS_KEY_ID}
-            export AWS_SECRET_ACCESS_KEY=${PRODUCTION_AWS_SECRET_ACCESS_KEY}
-        else
-            export AWS_DEFAULT_REGION=${STAGING_AWS_REGION}
-            export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-            export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-        fi
-        echo "export ORG=${ORG}" >> .env
-        echo "export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> .env
-        echo "export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> .env
-        echo "export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" >> .env
-        echo "export BUILD=${CIRCLE_BUILD_NUM}" >> .env
-        echo "export GATSBY_GRAPHQL_API=$(aws ssm get-parameters --name /${ORG}/GATSBY_GRAPHQL_API --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export GATSBY_AWS_REGION=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_REGION --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export GATSBY_AWS_COGNITO_IDENTITY_POOL_ID=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_COGNITO_IDENTITY_POOL_ID --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export GATSBY_AWS_COGNITO_USER_POOL_ID=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_COGNITO_USER_POOL_ID --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export GATSBY_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export GATSBY_AWS_S3_BUCKET=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_S3_BUCKET --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export GATSBY_PLACEHOLDER_IMAGE=${GATSBY_PLACEHOLDER_IMAGE}" >> .env
-        echo "export HASURA_GRAPHQL_ENDPOINT=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ENDPOINT --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export HASURA_GRAPHQL_ADMIN_SECRET=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ADMIN_SECRET --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export ARTIFACTS_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/s3_deploy_artifacts --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export ADMIN_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/admin_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export EDIT_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/edit_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export VIEW_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/view_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export STORYBOOK_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/storybook_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
-        echo "export GATSBY_AWS_COOKIE_DOMAIN=.nearform.com" >> .env
-        echo "export GATSBY_AWS_COOKIE_SECURE=true" >> .env
-        echo "export GATSBY_CLOUDINARY_USERNAME=orion-dev@nearform.com" >> .env
-        echo "export GATSBY_CLOUDINARY_CLOUD_NAME=orionacme" >> .env
-        echo "export GATSBY_CLOUDINARY_API_KEY=949742159216452" >> .env
-
+  run:
+    name: Get environment variables from AWS
+    environment:
+      ORG: "orion"
+    command: |
+      if [ "$CIRCLE_BRANCH" == "production" ]; then
+          export AWS_DEFAULT_REGION=${PRODUCTION_AWS_REGION}
+          export AWS_ACCESS_KEY_ID=${PRODUCTION_AWS_ACCESS_KEY_ID}
+          export AWS_SECRET_ACCESS_KEY=${PRODUCTION_AWS_SECRET_ACCESS_KEY}
+      else
+          export AWS_DEFAULT_REGION=${STAGING_AWS_REGION}
+          export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+          export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      fi
+      echo "export ORG=${ORG}" >> .env
+      echo "export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> .env
+      echo "export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> .env
+      echo "export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" >> .env
+      echo "export BUILD=${CIRCLE_BUILD_NUM}" >> .env
+      echo "export GATSBY_GRAPHQL_API=$(aws ssm get-parameters --name /${ORG}/GATSBY_GRAPHQL_API --with-decryption --query Parameters[0].Value --output=text)" >> .env
+      echo "export GATSBY_AWS_REGION=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_REGION --with-decryption --query Parameters[0].Value --output=text)" >> .env
+      echo "export GATSBY_AWS_COGNITO_IDENTITY_POOL_ID=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_COGNITO_IDENTITY_POOL_ID --with-decryption --query Parameters[0].Value --output=text)" >> .env
+      echo "export GATSBY_AWS_COGNITO_USER_POOL_ID=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_COGNITO_USER_POOL_ID --with-decryption --query Parameters[0].Value --output=text)" >> .env
+      echo "export GATSBY_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID --with-decryption --query Parameters[0].Value --output=text)" >> .env
+      echo "export GATSBY_AWS_S3_BUCKET=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_S3_BUCKET --with-decryption --query Parameters[0].Value --output=text)" >> .env
+      echo "export GATSBY_PLACEHOLDER_IMAGE=${GATSBY_PLACEHOLDER_IMAGE}" >> .env
+      echo "export HASURA_GRAPHQL_ENDPOINT=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ENDPOINT --with-decryption --query Parameters[0].Value --output=text)" >> .env
+      echo "export HASURA_GRAPHQL_ADMIN_SECRET=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ADMIN_SECRET --with-decryption --query Parameters[0].Value --output=text)" >> .env
+      echo "export ARTIFACTS_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/s3_deploy_artifacts --with-decryption --query Parameters[0].Value --output=text)" >> .env
+      echo "export ADMIN_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/admin_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
+      echo "export EDIT_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/edit_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
+      echo "export VIEW_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/view_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
+      echo "export STORYBOOK_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/storybook_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
+      echo "export GATSBY_AWS_COOKIE_DOMAIN=.nearform.com" >> .env
+      echo "export GATSBY_AWS_COOKIE_SECURE=true" >> .env
+      echo "export GATSBY_CLOUDINARY_USERNAME=orion-dev@nearform.com" >> .env
+      echo "export GATSBY_CLOUDINARY_CLOUD_NAME=orionacme" >> .env
+      echo "export GATSBY_CLOUDINARY_API_KEY=949742159216452" >> .env
 
 load_envars: &load_envars
-    run:
-        name: Load environment variables
-        command: |
-          cat .env >> $BASH_ENV
+  run:
+    name: Load environment variables
+    command: |
+      cat .env >> $BASH_ENV
 
-version: 2
+parameters:
+  regenerate_view_only:
+    type: boolean
+    default: false
+
+
 jobs:
   setup:
     <<: *deploy_environment
     steps:
-    - checkout
-    - *install_awscli
-    - *get_envars
-    - run:
-        name: Install yarn deps
-        command: yarn install --no-save
-    - persist_to_workspace:
-        root: /home/circleci
-        paths:
-          # Build and test happens in the project directory
-          - project
-          # known_hosts is needed in the version job to push the commit+tag back to github with ssh
-          - .ssh/known_hosts
+      - checkout
+      - *install_awscli
+      - *get_envars
+      - run:
+          name: Install yarn deps
+          command: yarn install --no-save
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            # Build and test happens in the project directory
+            - project
+            # known_hosts is needed in the version job to push the commit+tag back to github with ssh
+            - .ssh/known_hosts
   build:
     <<: *deploy_environment
     steps:
@@ -126,7 +132,7 @@ jobs:
           command: |
             set -e
             yarn run 'ci:e2e-test'
-  version:
+  bumpVersion:
     <<: *deploy_environment
     steps:
       - attach_workspace:
@@ -217,7 +223,7 @@ jobs:
           command: |
             export HASURA_GRAPHQL_API=${GATSBY_GRAPHQL_API}
             cd packages/hasura
-  generate-view-content:
+  gatsby-build-and-deploy:
     <<: *deploy_environment
     steps:
       - attach_workspace:
@@ -235,6 +241,7 @@ jobs:
 workflows:
   version: 2
   build-only:
+    unless: << pipeline.parameters.regenerate_view_only >>
     jobs:
       - setup:
           filters:
@@ -255,22 +262,15 @@ workflows:
                 - e2e-test
           requires:
             - build
-      - version:
+      - bumpVersion:
           filters:
             branches:
               only:
                 - master
           requires:
             - test
-      - generate-view-content:
-          filters:
-            branches:
-              only: 
-                - staging
-                - sprift/ch496/trigger-rebuilds-when-necessary
-          requires:
-            - build
   build-and-deploy:
+    unless: << pipeline.parameters.regenerate_view_only >>
     jobs:
       - setup:
           filters:
@@ -301,3 +301,21 @@ workflows:
       - publish-artifacts:
           requires:
             - test
+  generate-view-content: 
+    when: << pipeline.parameters.regenerate_view_only >>
+    jobs:
+      - setup:
+          filters:
+            branches:
+              only:
+                - staging
+                - production
+                - sprift/ch496/trigger-rebuilds-when-necessary
+      - gatsby-build-and-deploy:
+          requires:
+            - setup
+          filters:
+            branches:
+              only:
+                - staging
+                - sprift/ch496/trigger-rebuilds-when-necessary
