@@ -1,0 +1,17 @@
+diff a/packages/gatsby-plugin-orion-edit/src/pages/default401.js b/packages/gatsby-plugin-orion-edit/src/pages/default401.js	(rejected hunks)
+@@ -2 +2 @@ import React from 'react'
+-import {makeStyles} from "@material-ui/core"
++import { makeStyles } from '@material-ui/core'
+@@ -59 +59 @@ const useStyles = makeStyles(theme => ({
+-    display:  'flex',
++    display: 'flex',
+@@ -74 +74 @@ const useStyles = makeStyles(theme => ({
+-  }
++  },
+@@ -93 +93,5 @@ export default () => {
+-              <p>Sorry, but you are not authorised to access this page. Please contact your service administrator if you believe this is incorrect.</p>
++              <p>
++                Sorry, but you are not authorised to access this page. Please
++                contact your service administrator if you believe this is
++                incorrect.
++              </p>
