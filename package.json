@@ -15,7 +15,7 @@
     "build": "./scripts/patch-core-count.sh && lerna run build",
     "build:admin": "lerna exec --scope=acme-admin yarn run build",
     "build:edit": "lerna exec --scope=acme-edit yarn run build",
-    "build:view": "lerna exec --scope=acme-view yarn run build",
+    "build:view": "./scripts/patch-core-count.sh && lerna exec --scope=acme-view yarn run build",
     "artifact:create": "lerna run artifact:create",
     "test": "lerna run test",
     "clean": "lerna clean",
