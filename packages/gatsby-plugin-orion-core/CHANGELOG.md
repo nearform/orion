@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.47.0](https://github.com/nearform/orion/compare/v2.46.1...v2.47.0) (2020-04-24)
+
+
+### Features
+
+* 🎸 Change path automatically when changing page title ([4e36129](https://github.com/nearform/orion/commit/4e361291393169cfd8e2ebdac470b79691647c8c))
+
+
+
+
+
 ## [2.46.1](https://github.com/nearform/orion/compare/v2.46.0...v2.46.1) (2020-04-21)
 
 

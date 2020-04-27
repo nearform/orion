@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.47.0](https://github.com/nearform/orion/compare/v2.46.1...v2.47.0) (2020-04-24)
+
+
+### Bug Fixes
+
+* 🐛 Ancestor part of the path for edit page ([2611b41](https://github.com/nearform/orion/commit/2611b41b5fdb39b5c036ec4a0526f283546d73f9))
+
+
+### Features
+
+* 🎸 Add input field to change page path ([f593e80](https://github.com/nearform/orion/commit/f593e80589c10a09188e56e16a16710b9acbafaf))
+* 🎸 Add Select for article type to main view of editor ([a7141c4](https://github.com/nearform/orion/commit/a7141c47b4550588a534b86b917843c45f360250))
+* 🎸 Add updatePath reducer case ([a27bc04](https://github.com/nearform/orion/commit/a27bc04673cf1048e757b9257b8e9bf110d6232a))
+* 🎸 Change path automatically when changing page title ([4e36129](https://github.com/nearform/orion/commit/4e361291393169cfd8e2ebdac470b79691647c8c))
+* 🎸 Handle empty path properties with console messages ([117409a](https://github.com/nearform/orion/commit/117409a4ca86bb95b670718383512a80142704d6))
+
+
+
+
+
 ## [2.46.1](https://github.com/nearform/orion/compare/v2.46.0...v2.46.1) (2020-04-21)
 
 
