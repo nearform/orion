@@ -81,7 +81,12 @@ function TreeView({
           <div {...provided.dragHandleProps} className={classes.icon}>
             <i className={item.iconClass} />
           </div>
-          <TreeViewLink to={item.to} title={item.title} pageId={item.id} />
+          <TreeViewLink
+            to={item.to}
+            title={item.title}
+            pageId={item.id}
+            showInMenu={item.showInMenu}
+          />
           {item.children.length > 0 && (
             <IconButton
               className={classes.toggle}

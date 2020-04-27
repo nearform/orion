@@ -1,18 +1,33 @@
 /* eslint-disable max-nested-callbacks */
+/* eslint-disable camelcase */
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import TreeViewLink from '.'
 import { useMutation } from 'graphql-hooks'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import theme from 'gatsby-theme-acme'
-
 jest.mock(
   '../../queries/update-page-title.graphql',
   () => 'updatePageTitleMutation'
 )
+jest.mock(
+  '../../queries/update-page-show_in_menu.graphql',
+  () => 'updatePageShowInMenuMutation'
+)
 jest.mock('graphql-hooks')
+const mockUpdatePageShowInMenuMutation = jest.fn()
 const mockUpdatePageTitleMutation = jest.fn()
-useMutation.mockImplementation(() => [mockUpdatePageTitleMutation])
+useMutation.mockImplementation(mutation => {
+  if (mutation === 'updatePageTitleMutation') {
+    return [mockUpdatePageTitleMutation]
+  }
+
+  if (mutation === 'updatePageShowInMenuMutation') {
+    return [mockUpdatePageShowInMenuMutation]
+  }
+
+  return []
+})
 
 const props = {
   title: 'great titles are made',
@@ -103,6 +118,33 @@ describe('TreeViewLink component', () => {
             })
           })
         })
+      })
+    })
+
+    describe('I want to include this page in the menu', () => {
+      it('shows a button with include aria-label', () => {
+        const { getByLabelText } = component
+        expect(getByLabelText('include page in menu')).toBeInTheDocument()
+      })
+    })
+
+    describe('Toggles show in menu state after click', () => {
+      beforeEach(() => {
+        const { getByLabelText } = component
+        fireEvent.click(getByLabelText('include page in menu'))
+      })
+      it('calls the graphql mutation to save the change', () => {
+        expect(mockUpdatePageShowInMenuMutation).toHaveBeenCalledWith({
+          variables: {
+            id: 123,
+            show_in_menu: true,
+          },
+        })
+      })
+
+      it('shows a button with exclude aria-label', () => {
+        const { getByLabelText } = component
+        expect(getByLabelText('exclude page from menu')).toBeInTheDocument()
       })
     })
   })
