@@ -310,7 +310,6 @@ workflows:
               only:
                 - staging
                 - production
-                - sprift/ch496/trigger-rebuilds-when-necessary
       - gatsby-build-and-deploy:
           requires:
             - setup
@@ -318,4 +317,4 @@ workflows:
             branches:
               only:
                 - staging
-                - sprift/ch496/trigger-rebuilds-when-necessary
+                - production
