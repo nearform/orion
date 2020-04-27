@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.50.0](https://github.com/nearform/orion/compare/v2.49.0...v2.50.0) (2020-04-27)
+
+
+### Features
+
+* 🎸 handle unaith visit of edit ([a5389c2](https://github.com/nearform/orion/commit/a5389c20913e6469f4df9b6864d3ce36a33beda3)), closes [#510](https://github.com/nearform/orion/issues/510)
+* 🎸 redirect unauth to view ([0a22114](https://github.com/nearform/orion/commit/0a22114acbfb3c1dce876d211f890d37f02b91e7)), closes [#510](https://github.com/nearform/orion/issues/510)
+
+
+
+
+
 # [2.49.0](https://github.com/nearform/orion/compare/v2.48.0...v2.49.0) (2020-04-27)
 
 
