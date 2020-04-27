@@ -1,4 +1,5 @@
-/* eslint-disable camelcase, max-nested-callbacks */
+/* eslint-disable max-nested-callbacks */
+/* eslint-disable camelcase */
 import React from 'react'
 import produce from 'immer' // eslint-disable-line import/no-named-as-default
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
@@ -8,8 +9,10 @@ import EditPage, { reducer } from '.'
 import { useMutation, useQuery } from 'graphql-hooks'
 import { useLocation } from '@reach/router'
 import * as mui from '@material-ui/pickers'
+import * as slugifyWrap from 'gatsby-plugin-orion-core/src/utils/slugify'
 
 jest.spyOn(mui, 'DateTimePicker')
+jest.spyOn(slugifyWrap, 'default')
 
 const mockDate = new Date('2020-03-09T13:05:20.588+00:00')
 
@@ -38,6 +41,10 @@ jest.mock(
 jest.mock(
   '../../queries/update-page-title.graphql',
   () => 'updatePageTitleMutation'
+)
+jest.mock(
+  '../../queries/update-page-show_in_menu.graphql',
+  () => 'updatePageShowInMenuMutation'
 )
 
 jest.mock('../../queries/create-page.graphql', () => 'mockCreatePageMutation')
@@ -139,6 +146,9 @@ const renderPage = values =>
   )
 
 describe('Edit page reducer', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
   it('handles updates to the settings', () => {
     const payload = produce(mockInitialState, draft => {
       draft.title = 'something different'
@@ -184,20 +194,48 @@ describe('Edit page reducer', () => {
     expect(state.contents).toEqual(payload.contents)
   })
 
-  it('handles updates to component by only updating the relevent block of content', () => {
-    const payload = {
-      page: {},
-      block: 'summary',
-      component: 'TestArticleContent',
-      props: {
-        content: 'test.',
-      },
-    }
-    const state = reducer(mockInitialState, { type: 'component', ...payload })
-    expect(state.contents.find(t => t.block === 'summary')).toEqual({
-      block: payload.block,
-      component: payload.component,
-      props: payload.props,
+  describe('When updating the content and there is a new title', () => {
+    let state
+    const newTitle = 'A new title & stuff'
+    beforeEach(() => {
+      const payload = {
+        page: {
+          title: newTitle,
+        },
+        block: 'summary',
+        component: 'TestArticleContent',
+        props: {
+          content: 'test.',
+        },
+      }
+      state = reducer(mockInitialState, { type: 'component', ...payload })
+    })
+    it('updates the title of the page', () => {
+      expect(state.title).toEqual(newTitle)
+    })
+    it('updates the path of the page', () => {
+      expect(state.path).toEqual('a-new-title-and-stuff')
+    })
+    it('runs the new title through the slugify function to strip special characters', () => {
+      expect(slugifyWrap.default).toHaveBeenCalledWith(newTitle)
+    })
+  })
+  describe('When updating the content and there is NOT a new title', () => {
+    it('handles updates to component by only updating the relevent block of content', () => {
+      const payload = {
+        page: {},
+        block: 'summary',
+        component: 'TestArticleContent',
+        props: {
+          content: 'test.',
+        },
+      }
+      const state = reducer(mockInitialState, { type: 'component', ...payload })
+      expect(state.contents.find(t => t.block === 'summary')).toEqual({
+        block: payload.block,
+        component: payload.component,
+        props: payload.props,
+      })
     })
   })
 
@@ -234,6 +272,69 @@ describe('Edit page reducer', () => {
       ...payload,
     })
     expect(state.expires).toEqual(otherMockDate)
+  })
+
+  describe('When updating the path with NO ancestors', () => {
+    const oldState = produce(mockInitialState, draft => {
+      draft.ancestry = []
+    })
+    it('handles changes to the path', () => {
+      const action = { type: 'setPath', path: 'a-new-path' }
+      const state = reducer(oldState, action)
+      expect(state.path).toEqual('/a-new-path')
+    })
+
+    it('handles a blank path as the root', () => {
+      const action = { type: 'setPath', path: '' }
+      const state = reducer(oldState, action)
+      expect(state.path).toEqual('/')
+    })
+  })
+  describe('When updating the path and it has one ancestor', () => {
+    it('handles changes to the path', () => {
+      const action = { type: 'setPath', path: 'a-new-path' }
+      const state = reducer(mockInitialState, action)
+      expect(state.path).toEqual('/latest-news/a-new-path')
+    })
+    it('handles a blank path as the root', () => {
+      const action = { type: 'setPath', path: '' }
+      const state = reducer(mockInitialState, action)
+      expect(state.path).toEqual('/latest-news/')
+    })
+  })
+
+  describe('When updating the path and it has two ancestors', () => {
+    const oldState = produce(mockInitialState, draft => {
+      draft.ancestry = [
+        {
+          ancestor: {
+            id: 2,
+            path: '/latest-news',
+            title: 'Latest news',
+          },
+          direct: false,
+        },
+        {
+          ancestor: {
+            id: 3,
+            path: '/latest-news/other-news',
+            title: 'Other news',
+          },
+          direct: true,
+        },
+      ]
+    })
+    it('handles changes to the path', () => {
+      const action = { type: 'setPath', path: 'a-new-path' }
+      const state = reducer(oldState, action)
+      expect(state.path).toEqual('/latest-news/other-news/a-new-path')
+    })
+
+    it('handles a blank path as the root', () => {
+      const action = { type: 'setPath', path: '' }
+      const state = reducer(oldState, action)
+      expect(state.path).toEqual('/latest-news/other-news/')
+    })
   })
 })
 

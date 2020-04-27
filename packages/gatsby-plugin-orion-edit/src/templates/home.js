@@ -3,6 +3,25 @@ import AdminDashboard from '../components/AdminDashboard'
 import ArticlesIcon from '../components/SvgIcons/drawing-woman.inline.svg'
 import PagesIcon from '../components/SvgIcons/support-notes.inline.svg'
 
+import { Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
+import { navigate } from '@reach/router'
+
+const gotoNewUrl = (newSub, localPath) => {
+  newSub = newSub.toLowerCase()
+  localPath = (localPath && localPath.toLowerCase()) || ''
+
+  const hasCustomUrl =
+    process.env.GATSBY_URL_VIEW !== undefined &&
+    process.env.GATSBY_URL_VIEW.length > 0
+  if (hasCustomUrl) {
+    window.location.href = `${process.env.GATSBY_URL_VIEW}${localPath}`
+  } else if (newSub === '/login') {
+    navigate('/default401')
+  } else {
+    navigate('/missing-route')
+  }
+}
+
 const sideBarItems = [
   {
     label: 'Quick find',
@@ -44,30 +63,7 @@ const sideBarItems = [
     to: '',
     iconClass: 'fas fa-eye',
     onClick: () => {
-      const hasCustomUrl =
-        process.env.GATSBY_URL_VIEW !== undefined &&
-        process.env.GATSBY_URL_VIEW.length > 0
-
-      if (hasCustomUrl) {
-        window.location.href = process.env.GATSBY_URL_VIEW
-      } else if (!hasCustomUrl) {
-        const bit = window.location.hostname.split('.')[0]
-        switch (bit) {
-          case 'localhost':
-            window.location.href = 'http://localhost:8000'
-            break
-          case 'edit': {
-            const { origin } = window.location
-            const idx = origin.indexOf('edit')
-            const remainder = origin.slice(idx + 4)
-            window.location.href = `${origin.slice(0, idx)}view${remainder}`
-            break
-          }
-
-          default:
-            console.error('no URL_VIEW set in environment variables')
-        }
-      }
+      gotoNewUrl('view')
     },
   },
   {
@@ -102,6 +98,15 @@ const content = [
 const heading = 'Acme'
 
 export default function() {
+  Auth.currentAuthenticatedUser()
+    .then(() => {
+      // All good, you're allowed to be here!
+    })
+    .catch(() => {
+      // User not authorised so redirect to View where they can log in
+      gotoNewUrl('view', '/login')
+    })
+
   return (
     <AdminDashboard data={sideBarItems} heading={heading} content={content} />
   )
