@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.49.0](https://github.com/nearform/orion/compare/v2.48.0...v2.49.0) (2020-04-27)
+
+
+### Features
+
+* 🎸 Add Cloudinary image selector to article edit screen ([5670303](https://github.com/nearform/orion/commit/5670303a1a4b41e0610958e5f4e1002e7edbca54))
+
+
+
+
+
 # [2.48.0](https://github.com/nearform/orion/compare/v2.47.0...v2.48.0) (2020-04-27)
 
 

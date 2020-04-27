@@ -2,7 +2,7 @@
   "name": "acme-edit",
   "private": true,
   "description": "The Orion powered content editing site for Acme Insurance",
-  "version": "2.48.0",
+  "version": "2.49.0",
   "author": "NearForm",
   "dependencies": {
     "@material-ui/core": "^4.9.3",
@@ -13,8 +13,8 @@
     "gatsby-image": "^2.2.41",
     "gatsby-plugin-manifest": "^2.2.41",
     "gatsby-plugin-offline": "^3.0.35",
-    "gatsby-plugin-orion-edit": "^2.48.0",
     "gatsby-plugin-orion-core": "^2.46.1",
+    "gatsby-plugin-orion-edit": "^2.48.0",
     "gatsby-plugin-prefetch-google-fonts": "^1.4.3",
     "gatsby-plugin-react-helmet": "^3.1.22",
     "gatsby-plugin-react-svg": "^3.0.0",
