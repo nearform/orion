@@ -57,6 +57,7 @@ function PageTree() {
               : layouts[page.layout].allowChildren
               ? 'fas fa-file'
               : 'fas fa-long-arrow-alt-right',
+          showInMenu: page.show_in_menu,
         }
       }
 
