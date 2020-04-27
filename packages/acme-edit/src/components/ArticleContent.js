@@ -1,9 +1,11 @@
 import React from 'react'
 import ArticleContent from 'acme-view/src/components/ArticleContent/Wrap'
 import MarkdownEditor from 'gatsby-plugin-orion-edit/src/components/MarkdownEditor/MarkdownEditor'
-import { Input, makeStyles } from '@material-ui/core'
+import { Input, makeStyles, InputBase, Paper } from '@material-ui/core'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
 import TagsSelect from 'gatsby-plugin-orion-edit/src/components/TagsSelect'
+import CloudinaryImageChooser from 'gatsby-plugin-orion-core/src/components/CloudinaryImageChooser'
+import getCloudinarySignature from 'gatsby-plugin-orion-core/src/utils/cloudinary-signature-from-auth'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -98,6 +100,21 @@ const useStyles = makeStyles(theme => ({
     ...theme.typography.h2,
     marginBottom: 16,
   },
+  imageInputPaper: {
+    display: 'flex',
+    marginBottom: 16,
+    paddingBottom: 8.5,
+    paddingTop: 7.5,
+    paddingLeft: 12,
+    border: 'solid 1px',
+    borderColor: theme.palette.tertiary.main,
+    backgroundColor: theme.palette.background.dark,
+    boxShadow: 'none',
+  },
+  imageInputBase: {
+    fontSize: 12,
+    flex: 1,
+  },
 }))
 
 function ArticleContentEditor({ content, image, onChange, page, subtitle }) {
@@ -124,6 +141,24 @@ function ArticleContentEditor({ content, image, onChange, page, subtitle }) {
           onChange({ content, image, subtitle: event.target.value }, page)
         }}
       />
+      <Paper className={classes.imageInputPaper}>
+        <InputBase
+          className={classes.imageInputBase}
+          value={image}
+          onChange={event => {
+            onChange({ content, image: event.target.value, subtitle }, page)
+          }}
+        />
+        <CloudinaryImageChooser
+          cloudinaryApiKey={process.env.GATSBY_CLOUDINARY_API_KEY}
+          cloudinaryCloudName={process.env.GATSBY_CLOUDINARY_CLOUD_NAME}
+          cloudinaryUsername={process.env.GATSBY_CLOUDINARY_USERNAME}
+          getCloudinarySignature={getCloudinarySignature}
+          onInsertedImage={imgUrl =>
+            onChange({ content, image: imgUrl, subtitle }, page)
+          }
+        />
+      </Paper>
       {image && <img alt={page.title} src={image} className={classes.image} />}
       <div className={classes.content}>
         <MarkdownEditor
