@@ -142,13 +142,7 @@ const TreeViewLink = ({
             setTitle(initialTitle)
           }}
         />
-        <button
-          type="submit"
-          className={classes.editSaveButton}
-          onChange={e => {
-            setTitle(e.target.value)
-          }}
-        >
+        <button type="submit" className={classes.editSaveButton}>
           <i className={`fa fa-save ${classes.editSaveButtonIcon}`} />
         </button>
       </form>
