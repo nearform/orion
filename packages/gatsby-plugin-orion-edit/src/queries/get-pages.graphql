@@ -19,5 +19,6 @@ query getPages {
     path
     position
     title
+    show_in_menu
   }
 }

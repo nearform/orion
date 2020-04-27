@@ -2,9 +2,9 @@ import React from 'react'
 import AdminDashboard from '../components/AdminDashboard'
 
 import { Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
+import { navigate } from '@reach/router'
 
-const gotoNewUrl = (currentSub, newSub, localPath) => {
-  currentSub = currentSub.toLowerCase()
+const gotoNewUrl = (newSub, localPath) => {
   newSub = newSub.toLowerCase()
   localPath = (localPath && localPath.toLowerCase()) || ''
 
@@ -13,26 +13,10 @@ const gotoNewUrl = (currentSub, newSub, localPath) => {
     process.env.GATSBY_URL_VIEW.length > 0
   if (hasCustomUrl) {
     window.location.href = `${process.env.GATSBY_URL_VIEW}${localPath}`
-  } else if (!hasCustomUrl) {
-    const bit = window.location.hostname.split('.')[0]
-    switch (bit) {
-      case 'localhost':
-        window.location.href = `http://localhost:8000${localPath}`
-        break
-      case currentSub: {
-        const { origin } = window.location
-        const idx = origin.indexOf(currentSub)
-        const remainder = origin.slice(idx + currentSub.length)
-        window.location.href = `${origin.slice(
-          0,
-          idx
-        )}${newSub.toLowerCase()}${remainder}${localPath}`
-        break
-      }
-
-      default:
-        console.error('no URL_VIEW set in environment variables')
-    }
+  } else if (newSub === '/login') {
+    navigate('/default401')
+  } else {
+    navigate('/missing-route')
   }
 }
 
@@ -77,7 +61,7 @@ const sideBarItems = [
     to: '',
     iconClass: 'fas fa-eye',
     onClick: () => {
-      gotoNewUrl('edit', 'view')
+      gotoNewUrl('view')
     },
   },
   {
@@ -118,7 +102,7 @@ export default function() {
     })
     .catch(() => {
       // User not authorised so redirect to View where they can log in
-      gotoNewUrl('edit', 'view', '/login')
+      gotoNewUrl('view', '/login')
     })
 
   return (
