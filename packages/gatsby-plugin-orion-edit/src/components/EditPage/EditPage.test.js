@@ -372,6 +372,10 @@ describe('Publishing', () => {
       const { getByDisplayValue } = renderPage()
       expect(getByDisplayValue('Now')).toBeInTheDocument()
     })
+    it('a save draft button should be visible', () => {
+      const { getByText } = renderPage()
+      expect(getByText('Save Draft')).toBeInTheDocument()
+    })
     describe('And I click on the publish button', () => {
       it('should save the page with all data and a publish date of now', () => {
         const { getByText } = renderPage()
@@ -453,6 +457,10 @@ describe('Publishing', () => {
 
     it('the date picker should show the date the page was published on', () => {
       expect(mui.DateTimePicker.mock.calls[0][0].value).toEqual(mockDate)
+    })
+    it('save draft button should not be visible', () => {
+      const { queryByText } = editPage
+      expect(queryByText(/save draft/i)).not.toBeInTheDocument()
     })
 
     describe('And I click on the publish button', () => {

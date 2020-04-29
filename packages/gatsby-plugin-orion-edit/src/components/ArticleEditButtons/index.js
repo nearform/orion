@@ -85,7 +85,8 @@ const ArticleEditButtons = ({
   isEditing,
   onEdit,
   onPreview,
-  onSave,
+  onSaveDraft,
+  onPublish,
   onSettings,
   publishedDate,
   setPublishedDate,
@@ -111,12 +112,19 @@ const ArticleEditButtons = ({
             {isEditing ? 'Preview' : 'Edit'}
           </Button>
         </Grid>
+        {publishedDate === null && (
+          <Grid item>
+            <Button variant="contained" color="secondary" onClick={onSaveDraft}>
+              Save Draft
+            </Button>
+          </Grid>
+        )}
         <Grid item>
           <Button
             variant="contained"
             color="primary"
             className={classes.publishButton}
-            onClick={onSave}
+            onClick={onPublish}
           >
             Publish
           </Button>
@@ -166,7 +174,8 @@ ArticleEditButtons.propTypes = {
   isEditing: T.bool.isRequired,
   onEdit: T.func.isRequired,
   onPreview: T.func.isRequired,
-  onSave: T.func.isRequired,
+  onSaveDraft: T.func.isRequired,
+  onPublish: T.func.isRequired,
   onSettings: T.func.isRequired,
   setPublishedDate: T.func.isRequired,
   publishedDate: T.oneOfType([T.string, T.instanceOf(Date)]),
