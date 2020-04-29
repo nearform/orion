@@ -3,6 +3,8 @@ import getPageQuery from '../../queries/get-page'
 import { useViewComponents } from '../ViewComponentProvider'
 import { useQuery } from 'graphql-hooks'
 import PageSEO from '../PageSEO'
+import { navigate } from '@reach/router'
+import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
 
 function PageProvider({ location, pageContext }) {
   const { components, layouts } = useViewComponents()
@@ -21,7 +23,21 @@ function PageProvider({ location, pageContext }) {
     data && data.orion_page.length === 1 ? data.orion_page[0] : pageContext.page
 
   if (!page) {
-    return <h1>Error</h1>
+    navigate('/_not_found')
+    return null
+  }
+
+  if (page.is4xx) {
+    return (
+      <PaddedContainer>
+        <div>
+          <h1>{page.title}</h1>
+          <p>
+            That&apos;s a {page.type}. {page.message}.
+          </p>
+        </div>
+      </PaddedContainer>
+    )
   }
 
   const blocks = {}
