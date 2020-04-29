@@ -1,10 +1,10 @@
 import React from 'react'
-import getPageQuery from '../../queries/get-page'
+import getPageQuery from '../../queries/get-page.graphql'
 import { useViewComponents } from '../ViewComponentProvider'
 import { useQuery } from 'graphql-hooks'
 import PageSEO from '../PageSEO'
 import { navigate } from '@reach/router'
-import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
+import ErrorMessage from '../ErrorMessage'
 
 function PageProvider({ location, pageContext }) {
   const { components, layouts } = useViewComponents()
@@ -29,14 +29,11 @@ function PageProvider({ location, pageContext }) {
 
   if (page.is4xx) {
     return (
-      <PaddedContainer>
-        <div>
-          <h1>{page.title}</h1>
-          <p>
-            That&apos;s a {page.type}. {page.message}.
-          </p>
-        </div>
-      </PaddedContainer>
+      <ErrorMessage
+        title={page.title}
+        errorCode={page.errorCode}
+        message={page.message}
+      />
     )
   }
 

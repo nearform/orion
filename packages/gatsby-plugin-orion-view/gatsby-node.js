@@ -69,7 +69,7 @@ exports.createPages = async ({ graphql, actions }) => {
       page: {
         ancestry: [],
         is4xx: true,
-        type: 404,
+        errorCode: 404,
         message: "We can't find the article you're looking for.",
         title: 'Not found.',
       },
