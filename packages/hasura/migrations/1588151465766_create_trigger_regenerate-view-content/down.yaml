@@ -1,0 +1,3 @@
+- args:
+    name: regenerate-view-content
+  type: delete_event_trigger
