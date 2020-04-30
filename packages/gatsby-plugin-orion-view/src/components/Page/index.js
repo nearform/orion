@@ -5,6 +5,7 @@ import { useQuery } from 'graphql-hooks'
 import PageSEO from '../PageSEO'
 import { navigate } from '@reach/router'
 import ErrorMessage from '../ErrorMessage'
+import PageLoading from '../PageLoading'
 
 function PageProvider({ location, pageContext }) {
   const { components, layouts } = useViewComponents()
@@ -14,9 +15,8 @@ function PageProvider({ location, pageContext }) {
       path: location.pathname,
     },
   })
-
-  if (loading && pageContext.page === null) {
-    return <h1>Loading</h1>
+  if (loading && pageContext.defaultPage) {
+    return <PageLoading />
   }
 
   const page =
@@ -27,7 +27,7 @@ function PageProvider({ location, pageContext }) {
     return null
   }
 
-  if (page.is4xx) {
+  if (!loading && page.is4xx) {
     return (
       <ErrorMessage
         title={page.title}

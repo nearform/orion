@@ -66,6 +66,7 @@ exports.createPages = async ({ graphql, actions }) => {
     matchPath: '/*',
     component: pageComponent,
     context: {
+      defaultPage: true,
       page: {
         ancestry: [],
         is4xx: true,
