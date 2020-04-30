@@ -149,7 +149,23 @@ function EditPage({ initialState, onSave }) {
     }
 
     onSave(result)
-  }, [createPage, onSave, page, updatePage])
+  }, [
+    createPage,
+    handleSetPath,
+    onSave,
+    page.ancestry,
+    page.authors,
+    page.contents,
+    page.expires,
+    page.id,
+    page.layout,
+    page.path,
+    page.published,
+    page.show_in_menu,
+    page.tags,
+    page.title,
+    updatePage,
+  ])
 
   const handleLayoutSelect = useCallback(
     layout => {
@@ -220,7 +236,7 @@ function EditPage({ initialState, onSave }) {
     )
   }
 
-  const actions = (
+  const actions = EditorLayout && (
     <ArticleEditButtons
       isEditing={isEditing}
       setPublishedDate={handleSetPublishedDate}

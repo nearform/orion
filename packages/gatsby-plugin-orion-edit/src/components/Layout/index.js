@@ -108,16 +108,18 @@ function Layout({ action, children, path, setPath, ancestry }) {
       </div>
       <div className={classes.main}>
         <div className={classes.top}>
-          <div className={classes.path}>
-            <label htmlFor="edit-path-path-input">Path:</label>
-            <span>{parentPath}</span>
-            <span>/</span>
-            <input
-              value={path}
-              id="edit-path-path-input"
-              onChange={({ target }) => setPath(target.value)}
-            />
-          </div>
+          {action && (
+            <div className={classes.path}>
+              <label htmlFor="edit-path-path-input">Path:</label>
+              <span>{parentPath}</span>
+              <span>/</span>
+              <input
+                value={path}
+                id="edit-path-path-input"
+                onChange={({ target }) => setPath(target.value)}
+              />
+            </div>
+          )}
           <div>{action}</div>
         </div>
         <div className={classes.content}>{children}</div>
@@ -127,7 +129,7 @@ function Layout({ action, children, path, setPath, ancestry }) {
 }
 
 Layout.propTypes = {
-  action: PropTypes.node.isRequired,
+  action: PropTypes.node,
   ancestry: PropTypes.arrayOf(
     PropTypes.shape({
       ancestor: PropTypes.shape({
@@ -143,6 +145,7 @@ Layout.propTypes = {
 Layout.defaultProps = {
   children: '',
   path: '',
+  action: null,
 }
 
 export default Layout
