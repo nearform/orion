@@ -24,23 +24,5 @@ exports.createPages = async ({ actions }) => {
     component: require.resolve('./src/templates/edit-page'),
   })
 
-  createPage({
-    path: '/_articles_create_root',
-    matchPath: '/articles/create',
-    component: require.resolve('./src/templates/create-root-page'),
-  })
-
-  createPage({
-    path: '/_articles_create',
-    matchPath: '/articles/:id/create',
-    component: require.resolve('./src/templates/create-page'),
-  })
-
-  createPage({
-    path: '/_articles_edit',
-    matchPath: '/articles/:id/edit',
-    component: require.resolve('./src/templates/edit-page'),
-  })
-
   return null
 }

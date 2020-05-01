@@ -96,6 +96,16 @@ function EditPage({ initialState, onSave }) {
     savePage(false)
   }
 
+  let result
+  const commonVariables = {
+    layout: page.layout,
+    path: page.path,
+    published: page.published || new Date(),
+    showInMenu: page.layout === 'article' ? false : page.show_in_menu,
+    title: page.title,
+    expires: page.expires || null,
+  }
+
   const handleSetPath = useCallback(
     path => dispatch({ type: 'setPath', path }),
     [dispatch]
@@ -214,6 +224,7 @@ function EditPage({ initialState, onSave }) {
 
     editLayoutProps[key] = (
       <EditComponent
+        layout={page.layout}
         block={block}
         component={content === undefined ? undefined : content.component}
         isEditing={isEditing}

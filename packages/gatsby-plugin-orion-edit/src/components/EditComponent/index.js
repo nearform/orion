@@ -39,7 +39,14 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function EditComponent({ component, isEditing, onSave, page, props = {} }) {
+function EditComponent({
+  layout,
+  component,
+  isEditing,
+  onSave,
+  page,
+  props = {},
+}) {
   const classes = useStyles()
   const { components } = useEditComponents()
 
@@ -78,6 +85,7 @@ function EditComponent({ component, isEditing, onSave, page, props = {} }) {
             [classes.empty]: PreviewEditor === undefined,
           })}
         >
+          {layout !== 'article' && (
           <FormControl className={classes.input}>
             <InputLabel htmlFor="component-select">Select Component</InputLabel>
             <Select
@@ -94,6 +102,7 @@ function EditComponent({ component, isEditing, onSave, page, props = {} }) {
               ))}
             </Select>
           </FormControl>
+          )}
           {PreviewEditor !== undefined && (
             <PreviewEditor
               {...props}
@@ -113,6 +122,7 @@ function EditComponent({ component, isEditing, onSave, page, props = {} }) {
 EditComponent.propTypes = {
   component: PropTypes.string,
   isEditing: PropTypes.bool,
+  layout: PropTypes.string,
   onSave: PropTypes.func,
   page: PropTypes.object,
   props: PropTypes.object,

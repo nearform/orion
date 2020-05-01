@@ -7,13 +7,15 @@ import { useQuery } from 'graphql-hooks'
 export default function() {
   const { data, loading } = useQuery(getTagsQuery)
 
+  console.log('create-root-page # data', data)
+
   const initialState = useMemo(() => {
     if (loading) {
       return null
     }
 
     return {
-      title: 'New page',
+      title: '',
       path: '',
       ancestry: [],
       authors: [
@@ -25,8 +27,8 @@ export default function() {
       ],
       contents: [],
       descendants: [],
+      // Show_in_menu: (type === 'page'), // eslint-disable-line camelcase
       show_in_menu: true, // eslint-disable-line camelcase
-
       allTags: data.orion_tag,
       tags: [],
     }
@@ -38,6 +40,7 @@ export default function() {
 
   return (
     <EditPage
+      // Type={type}
       initialState={initialState}
       onSave={({ id }) => navigate(`/pages/${id}/edit`)}
     />
