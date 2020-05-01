@@ -4,7 +4,7 @@ import getPageQuery from '../queries/get-page'
 import { navigate } from '@reach/router'
 import { useQuery } from 'graphql-hooks'
 
-export default function({ id, layout = 'section' }) {
+export default function({ id }) {
   const { data, loading } = useQuery(getPageQuery, {
     variables: { id },
   })
@@ -15,7 +15,7 @@ export default function({ id, layout = 'section' }) {
     }
 
     return {
-      title: `New ${layout}`,
+      title: `New Page`,
       path: '',
       ancestry: [
         ...data.orion_page[0].ancestry,

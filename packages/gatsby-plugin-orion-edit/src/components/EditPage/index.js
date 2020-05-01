@@ -107,7 +107,7 @@ function EditPage({ initialState, onSave }) {
       layout: page.layout,
       path: page.path,
       published: page.published || new Date(),
-      showInMenu: page.show_in_menu,
+      showInMenu: page.layout === 'article' ? false : page.show_in_menu,
       title: page.title,
       expires: page.expires || null,
     }
@@ -201,6 +201,7 @@ function EditPage({ initialState, onSave }) {
 
     editLayoutProps[key] = (
       <EditComponent
+        layout={page.layout}
         block={block}
         component={content === undefined ? undefined : content.component}
         isEditing={isEditing}

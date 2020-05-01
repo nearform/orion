@@ -64,6 +64,7 @@ const useStyles = makeStyles(theme => ({
 
 // TODO Add prop types
 function EditComponent({
+  layout,
   component,
   isEditing,
   onSave,
@@ -147,22 +148,26 @@ function EditComponent({
           >
             <EditIcon />
           </Fab>
-          <FormControl className={classes.input}>
-            <InputLabel htmlFor="component-select">Select Component</InputLabel>
-            <Select
-              inputProps={{
-                id: 'component-select',
-              }}
-              value={currentComponent}
-              onChange={handleComponentChange}
-            >
-              {Object.keys(components).map(component => (
-                <MenuItem key={component} value={component}>
-                  {component}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          {layout !== 'article' && (
+            <FormControl className={classes.input}>
+              <InputLabel htmlFor="component-select">
+                Select Component
+              </InputLabel>
+              <Select
+                inputProps={{
+                  id: 'component-select',
+                }}
+                value={currentComponent}
+                onChange={handleComponentChange}
+              >
+                {Object.keys(components).map(component => (
+                  <MenuItem key={component} value={component}>
+                    {component}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
           {PreviewEditor !== undefined && (
             <PreviewEditor
               {...props}

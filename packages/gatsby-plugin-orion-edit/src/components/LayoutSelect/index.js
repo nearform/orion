@@ -42,7 +42,7 @@ function LayoutSelect({ onSelect }) {
       <Typography variant="h2">Choose layout</Typography>
       <Typography variant="body1" className={classes.p}>
         Before we get started on adding some content, lets select a layout for
-        our new page.
+        our new content.
       </Typography>
       <div className={classes.layouts}>
         {Object.entries(layouts).map(([key, layout]) => {
