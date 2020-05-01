@@ -7,15 +7,17 @@
   "scripts": {
     "commit": "cd .. && yarn commit",
     "build": "webpack -p",
-    "test:watch": "npm run test -- --watch",
-    "artifact:create": "zip $ORG-jwt-enrichment-hook-$npm_package_version-$BUILD.zip -FSj build/jwt-enrichment-hook.js && zip $ORG-signup-hook-$npm_package_version-$BUILD.zip -FSj build/signup-hook.js",
+    "test:watch": "jest --watch",
+    "artifact:create": "zip $ORG-jwt-enrichment-hook-$npm_package_version-$BUILD.zip -FSj build/jwt-enrichment-hook.js && zip $ORG-signup-hook-$npm_package_version-$BUILD.zip -FSj build/signup-hook.js && zip $ORG-content-generator-hook-$npm_package_version-$BUILD.zip -FSj build/content-generator-hook.js",
     "artifact:name-enrichment-hook": "echo $ORG-jwt-enrichment-hook-$npm_package_version-$BUILD.zip",
-    "artifact:name-signup-hook": "echo $ORG-signup-hook-$npm_package_version-$BUILD.zip"
+    "artifact:name-signup-hook": "echo $ORG-signup-hook-$npm_package_version-$BUILD.zip",
+    "artifact:name-content-generator-hook": "echo $ORG-content-generator-hook-$npm_package_version-$BUILD.zip"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.664.0",
     "graphql-request": "^1.8.2",
     "js-sha256": "^0.9.0",
     "lodash": "^4.17.11",
