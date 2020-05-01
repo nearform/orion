@@ -153,23 +153,7 @@ function EditPage({ initialState, onSave }) {
     }
 
     onSave(result)
-  }, [
-    createPage,
-    handleSetPath,
-    onSave,
-    page.ancestry,
-    page.authors,
-    page.contents,
-    page.expires,
-    page.id,
-    page.layout,
-    page.path,
-    page.published,
-    page.show_in_menu,
-    page.tags,
-    page.title,
-    updatePage,
-  ])
+  }, [createPage, handleSetPath, onSave, page, updatePage])
 
   const handleLayoutSelect = useCallback(
     layout => {
