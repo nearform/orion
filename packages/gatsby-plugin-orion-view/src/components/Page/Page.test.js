@@ -73,9 +73,9 @@ describe('Page component', () => {
           data: null,
           loading: true,
         })
-        component = renderComponent({ pageContext: { page: null } })
+        component = renderComponent({ pageContext: { defaultPage: true } })
       })
-      it('shows a loading message', () => {
+      it('shows a loading message', async () => {
         const { getByText } = component
         expect(getByText('Loading')).toBeInTheDocument()
       })
