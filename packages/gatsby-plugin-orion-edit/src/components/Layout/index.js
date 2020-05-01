@@ -1,8 +1,7 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import PageTree from '../PageTree'
 import { makeStyles } from '@material-ui/core'
-import getParentPath from '../../utils/get-parent-path'
 
 const drawerWidth = 318
 
@@ -57,49 +56,10 @@ const useStyles = makeStyles(theme => ({
       color: theme.palette.tertiary.main,
     },
   },
-  path: {
-    display: 'flex',
-    alignItems: 'baseline',
-    justifyContent: 'flex-start',
-    whiteSpace: 'nowrap',
-    marginRight: '16px',
-    fontFamily: theme.typography.fontFamily,
-
-    '& label': {
-      color: theme.palette.common.white,
-      fontSize: '16px',
-      marginRight: '8px',
-      whiteSpace: 'nowrap',
-      fontWeight: '700',
-    },
-
-    '& span': {
-      color: theme.palette.common.white,
-      fontSize: '16px',
-      whiteSpace: 'nowrap',
-    },
-    '& input': {
-      fontFamily: theme.typography.fontFamily,
-      marginLeft: '4px',
-      color: theme.palette.common.black,
-      fontSize: '16px',
-      borderRadius: '3px',
-      border: 'none',
-      padding: '3.5px 4px 2px',
-
-      '&:focus': {
-        outlineColor: theme.palette.action.main,
-      },
-    },
-  },
 }))
 
-function Layout({ action, children, path, setPath, ancestry }) {
+function Layout({ action, children }) {
   const classes = useStyles()
-
-  const parentPath = useMemo(() => {
-    return getParentPath(ancestry)
-  }, [ancestry])
 
   return (
     <div className={classes.root}>
@@ -108,18 +68,6 @@ function Layout({ action, children, path, setPath, ancestry }) {
       </div>
       <div className={classes.main}>
         <div className={classes.top}>
-          {action && (
-            <div className={classes.path}>
-              <label htmlFor="edit-path-path-input">Path:</label>
-              <span>{parentPath}</span>
-              <span>/</span>
-              <input
-                value={path}
-                id="edit-path-path-input"
-                onChange={({ target }) => setPath(target.value)}
-              />
-            </div>
-          )}
           <div>{action}</div>
         </div>
         <div className={classes.content}>{children}</div>
@@ -130,21 +78,11 @@ function Layout({ action, children, path, setPath, ancestry }) {
 
 Layout.propTypes = {
   action: PropTypes.node,
-  ancestry: PropTypes.arrayOf(
-    PropTypes.shape({
-      ancestor: PropTypes.shape({
-        path: PropTypes.string.isRequired,
-      }),
-    })
-  ).isRequired,
   children: PropTypes.node,
-  path: PropTypes.string,
-  setPath: PropTypes.func.isRequired,
 }
 
 Layout.defaultProps = {
   children: '',
-  path: '',
   action: null,
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, within } from '@testing-library/react'
 import Layout from '.'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import theme from 'gatsby-theme-acme'
@@ -31,38 +31,33 @@ const renderComponent = () => {
 }
 
 describe('Layout component', () => {
-  it('shows a path input field to allow a user to change the path for the current page', () => {
-    const { getByLabelText } = renderComponent()
-    const input = getByLabelText(/Path:/i)
-    expect(input).toBeInTheDocument()
+  let layout
+  beforeEach(() => {
+    layout = renderComponent()
   })
 
-  it('uses the path as the value of the input', () => {
-    const { getByLabelText } = renderComponent()
-    const input = getByLabelText(/Path:/i)
-    expect(input).toHaveValue('somewhere-here')
+  it('composes the PageTree in the side bar', () => {
+    const { container } = layout
+
+    const { getByText } = within(
+      container.querySelector('[class^=makeStyles-side]')
+    )
+    expect(getByText('page tree mock')).toBeInTheDocument()
   })
+  it('composes the action in the top section', () => {
+    const { container } = layout
 
-  it('shows the parents parts of the path', () => {
-    const { getByText } = renderComponent()
-    expect(getByText('/parent-path/full')).toBeInTheDocument()
+    const { getByText } = within(
+      container.querySelector('[class^=makeStyles-top]')
+    )
+    expect(getByText('mockEditButtons')).toBeInTheDocument()
   })
+  it('composes the children in the content section', () => {
+    const { container } = layout
 
-  describe('When I edit the path', () => {
-    let layout
-    const event = {
-      target: {
-        value: 'stuff',
-      },
-    }
-    beforeEach(() => {
-      layout = renderComponent()
-      const { getByLabelText } = layout
-      fireEvent.change(getByLabelText(/path/i), event)
-    })
-
-    it('uses update path as the change handler', () => {
-      expect(mockSetPath).toHaveBeenCalledWith('stuff')
-    })
+    const { getByText } = within(
+      container.querySelector('[class^=makeStyles-content]')
+    )
+    expect(getByText('children')).toBeInTheDocument()
   })
 })
