@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.53.0](https://github.com/nearform/orion/compare/v2.52.0...v2.53.0) (2020-05-04)
+
+
+### Features
+
+* 🎸 add save-draft to edit page ([#136](https://github.com/nearform/orion/issues/136)) ([aacb465](https://github.com/nearform/orion/commit/aacb46561115b91770617c9726b5e833b325d365)), closes [#543](https://github.com/nearform/orion/issues/543) [#543](https://github.com/nearform/orion/issues/543) [#543](https://github.com/nearform/orion/issues/543)
+
+
+
+
+
 # [2.52.0](https://github.com/nearform/orion/compare/v2.51.0...v2.52.0) (2020-05-04)
 
 
