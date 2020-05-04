@@ -88,72 +88,79 @@ function EditPage({ initialState, onSave }) {
 
   const editLayoutProps = {}
 
-  const handleSetPath = useCallback(
-    path => dispatch({ type: 'setPath', path }),
-    [dispatch]
+  const handleSaveDraft = () => {
+    savePage(true)
+  }
+
+  const handlePublish = () => {
+    savePage(false)
+  }
+
+  const savePage = useCallback(
+    async amDraft => {
+      const directAncestor = getParentPath(page.ancestry)
+      if (page.path === '/') {
+        console.warn(
+          'This will set the page as your home page. Make sure to rename your old home page or this will not work as expected.'
+        )
+      } else if (directAncestor !== '' && page.path === `${directAncestor}/`) {
+        console.warn(
+          'Failed to publish changes. A page with this path already exsists. Try rearranging the pages in the left menu instead.'
+        )
+        handleSetPath(slugify(page.title))
+        return
+      }
+
+      let result
+      const commonVariables = {
+        layout: page.layout,
+        path: page.path,
+        published: amDraft ? null : page.published || new Date(),
+        showInMenu: page.show_in_menu,
+        title: page.title,
+        expires: page.expires || null,
+      }
+
+      if (page.id) {
+        const { data } = await updatePage({
+          variables: {
+            ...commonVariables,
+            id: page.id,
+            contents: page.contents.map(content => ({
+              ...content,
+              page_id: page.id, // eslint-disable-line camelcase
+            })),
+            pageTags: page.tags.map(({ tag }) => ({
+              tag_id: tag.tag, // eslint-disable-line camelcase
+              page_id: page.id, // eslint-disable-line camelcase
+            })),
+          },
+        })
+
+        result = data.update_orion_page.returning[0]
+      } else {
+        const { data } = await createPage({
+          variables: {
+            ...commonVariables,
+            contents: page.contents,
+            ancestry: page.ancestry.map(({ ancestor, direct }) => ({
+              ancestor_id: ancestor.id, // eslint-disable-line camelcase
+              direct,
+            })),
+            authors: page.authors.map(({ user }) => ({
+              user_id: user.id, // eslint-disable-line camelcase
+            })),
+            tags: page.tags.map(({ tag }) => ({ tag_id: tag.tag })), // eslint-disable-line camelcase
+          },
+        })
+
+        result = data.insert_orion_page.returning[0]
+      }
+
+      onSave(result)
+    },
+    [createPage, onSave, page, updatePage]
   )
-  const handleSave = useCallback(async () => {
-    const directAncestor = getParentPath(page.ancestry)
-    if (page.path === '/') {
-      console.warn(
-        'This will set the page as your home page. Make sure to rename your old home page or this will not work as expected.'
-      )
-    } else if (directAncestor !== '' && page.path === `${directAncestor}/`) {
-      console.warn(
-        'Failed to publish changes. A page with this path already exsists. Try rearranging the pages in the left menu instead.'
-      )
-      handleSetPath(slugify(page.title))
-      return
-    }
-
-    let result
-    const commonVariables = {
-      layout: page.layout,
-      path: page.path,
-      published: page.published || new Date(),
-      showInMenu: page.show_in_menu,
-      title: page.title,
-      expires: page.expires || null,
-    }
-
-    if (page.id) {
-      const { data } = await updatePage({
-        variables: {
-          ...commonVariables,
-          id: page.id,
-          contents: page.contents.map(content => ({
-            ...content,
-            page_id: page.id, // eslint-disable-line camelcase
-          })),
-          pageTags: page.tags.map(({ tag }) => ({
-            tag_id: tag.tag, // eslint-disable-line camelcase
-            page_id: page.id, // eslint-disable-line camelcase
-          })),
-        },
-      })
-
-      result = data.update_orion_page.returning[0]
-    } else {
-      const { data } = await createPage({
-        variables: {
-          ...commonVariables,
-          contents: page.contents,
-          ancestry: page.ancestry.map(({ ancestor, direct }) => ({
-            ancestor_id: ancestor.id, // eslint-disable-line camelcase
-            direct,
-          })),
-          authors: page.authors.map(({ user }) => ({
-            user_id: user.id, // eslint-disable-line camelcase
-          })),
-          tags: page.tags.map(({ tag }) => ({ tag_id: tag.tag })), // eslint-disable-line camelcase
-        },
-      })
-
-      result = data.insert_orion_page.returning[0]
-    }
-
-    onSave(result)
-  }, [createPage, handleSetPath, onSave, page, updatePage])
 
   const handleLayoutSelect = useCallback(
     layout => {
@@ -195,6 +202,10 @@ function EditPage({ initialState, onSave }) {
     date => dispatch({ type: 'setExpiresdDate', date }),
     [dispatch]
   )
+  const handleSetPath = useCallback(
+    path => dispatch({ type: 'setPath', path }),
+    [dispatch]
+  )
 
   for (const [key, block] of Object.entries(blocks)) {
     const content = page.contents.find(content => content.block === key)
@@ -220,25 +231,28 @@ function EditPage({ initialState, onSave }) {
     )
   }
 
-  const actions = EditorLayout && (
+  const actions = (
     <ArticleEditButtons
       isEditing={isEditing}
+      setPublishedDate={handleSetPublishedDate}
       publishedDate={page.published}
       expiresDate={page.expires}
-      ancestry={page.ancestry}
-      path={page.path.split('/').slice(-1)[0]}
-      setPublishedDate={handleSetPublishedDate}
       setExpiresDate={handleSetExpiresDate}
-      setPath={handleSetPath}
-      onSave={handleSave}
       onEdit={() => setIsEditing(true)}
       onPreview={() => setIsEditing(false)}
+      onSaveDraft={handleSaveDraft}
+      onPublish={handlePublish}
       onSettings={() => setShowSettings(true)}
     />
   )
 
   return (
-    <Layout action={actions}>
+    <Layout
+      action={actions}
+      ancestry={page.ancestry}
+      path={page.path.split('/').slice(-1)[0]}
+      setPath={handleSetPath}
+    >
       <PageSettings
         open={showSettings}
         page={page}

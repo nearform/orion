@@ -382,20 +382,6 @@ describe('EditPage component', () => {
 
       expect(queryByText('Path:')).not.toBeInTheDocument()
     })
-
-    describe('And I select the article template', () => {
-      beforeEach(() => {
-        const { getByText } = templatePage
-        fireEvent.click(
-          getByText('Simple article').parentNode.querySelector('button')
-        )
-      })
-      it('Then I can see the top menu', () => {
-        const { queryByText } = templatePage
-
-        expect(queryByText('Path:')).toBeInTheDocument()
-      })
-    })
   })
 
   describe('Publishing', () => {

@@ -1,11 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import T from 'prop-types'
 import 'date-fns' // eslint-disable-line import/no-unassigned-import
 import { Button, Grid, makeStyles } from '@material-ui/core'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import PathEditor from '../PathEditor'
-import ArticleDatePicker from '../ArticleDatePicker'
 
 const useStyles = makeStyles(theme => ({
   'published-date-input': {
@@ -69,25 +67,36 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const ArticleDatePicker = ({ dialogPropsClassName, ...props }) => (
+  <DateTimePicker
+    autoOk
+    ampm={false}
+    DialogProps={{
+      className: dialogPropsClassName,
+    }}
+    format="MMM dd yyyy, hh:mm a"
+    variant="dialog"
+    orientation="portrait"
+    {...props}
+  />
+)
+
 const ArticleEditButtons = ({
   isEditing,
   onEdit,
   onPreview,
-  onSave,
+  onSaveDraft,
+  onPublish,
   onSettings,
   publishedDate,
   setPublishedDate,
   expiresDate,
   setExpiresDate,
-  ancestry,
-  setPath,
-  path,
 }) => {
   const classes = useStyles()
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <PathEditor ancestry={ancestry} setPath={setPath} path={path} />
       <Grid container spacing={2}>
         <Grid item>
           <Button variant="contained" color="secondary" onClick={onSettings}>
@@ -103,12 +112,19 @@ const ArticleEditButtons = ({
             {isEditing ? 'Preview' : 'Edit'}
           </Button>
         </Grid>
+        {publishedDate === null && (
+          <Grid item>
+            <Button variant="contained" color="secondary" onClick={onSaveDraft}>
+              Save Draft
+            </Button>
+          </Grid>
+        )}
         <Grid item>
           <Button
             variant="contained"
             color="primary"
             className={classes.publishButton}
-            onClick={onSave}
+            onClick={onPublish}
           >
             Publish
           </Button>
@@ -155,36 +171,21 @@ const ArticleEditButtons = ({
 }
 
 ArticleEditButtons.propTypes = {
-  isEditing: PropTypes.bool.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  onPreview: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
-  onSettings: PropTypes.func.isRequired,
-  setPublishedDate: PropTypes.func.isRequired,
-  publishedDate: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-  ]),
-  setExpiresDate: PropTypes.func.isRequired,
-  expiresDate: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-  ]),
-  ancestry: PropTypes.arrayOf(
-    PropTypes.shape({
-      ancestor: PropTypes.shape({
-        path: PropTypes.string.isRequired,
-      }),
-    })
-  ).isRequired,
-  path: PropTypes.string,
-  setPath: PropTypes.func.isRequired,
+  isEditing: T.bool.isRequired,
+  onEdit: T.func.isRequired,
+  onPreview: T.func.isRequired,
+  onSaveDraft: T.func.isRequired,
+  onPublish: T.func.isRequired,
+  onSettings: T.func.isRequired,
+  setPublishedDate: T.func.isRequired,
+  publishedDate: T.oneOfType([T.string, T.instanceOf(Date)]),
+  setExpiresDate: T.func.isRequired,
+  expiresDate: T.oneOfType([T.string, T.instanceOf(Date)]),
 }
 
 ArticleEditButtons.defaultProps = {
   publishedDate: null,
   expiresDate: null,
-  path: '',
 }
 
 export default ArticleEditButtons
