@@ -80,11 +80,13 @@ const TreeViewLink = ({
   const [isEditing, setIsEditing] = useState(false)
   const [title, setTitle] = useState(initialTitle)
   const [showInMenu, setShowInMenu] = useState(initialShowInMenu)
+  const [timer, setTimer] = useState(null)
   const ref = useRef(null)
   const [updatePageTitle] = useMutation(updatePageTitleMutation)
   const [updatePageShowInMenu] = useMutation(updatePageShowInMenuMutation)
   const saveTitle = async e => {
     e.preventDefault()
+    global.clearTimeout(timer)
     setIsEditing(false)
     try {
       await updatePageTitle({
@@ -138,8 +140,12 @@ const TreeViewLink = ({
             setTitle(e.target.value)
           }}
           onBlur={() => {
-            setIsEditing(false)
-            setTitle(initialTitle)
+            setTimer(
+              setTimeout(() => {
+                setIsEditing(false)
+                setTitle(initialTitle)
+              }, 100)
+            )
           }}
         />
         <button type="submit" className={classes.editSaveButton}>

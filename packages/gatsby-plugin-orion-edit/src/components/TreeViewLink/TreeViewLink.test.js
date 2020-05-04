@@ -6,6 +6,9 @@ import TreeViewLink from '.'
 import { useMutation } from 'graphql-hooks'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import theme from 'gatsby-theme-acme'
+
+jest.useFakeTimers()
+
 jest.mock(
   '../../queries/update-page-title.graphql',
   () => 'updatePageTitleMutation'
@@ -95,6 +98,7 @@ describe('TreeViewLink component', () => {
           })
           it('shows the original title as a link again', () => {
             const { getByText } = component
+            jest.runAllTimers()
             expect(getByText(props.title)).toBeInTheDocument()
           })
         })
@@ -102,7 +106,7 @@ describe('TreeViewLink component', () => {
         describe('And then I submit the form to save the changes', () => {
           beforeEach(() => {
             const { getByDisplayValue } = component
-
+            fireEvent.blur(getByDisplayValue('a new title'))
             fireEvent.click(getByDisplayValue('a new title').nextSibling)
           })
           it('shows the new title as a link', () => {
