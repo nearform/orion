@@ -11,6 +11,7 @@ import { useMutation } from 'graphql-hooks'
 import produce from 'immer' // eslint-disable-line import/no-named-as-default
 import slugify from 'gatsby-plugin-orion-core/src/utils/slugify'
 import getParentPath from '../../utils/get-parent-path'
+import { isEqual } from 'lodash'
 
 export function reducer(page, { type, ...payload }) {
   switch (type) {
@@ -234,15 +235,16 @@ function EditPage({ initialState, onSave }) {
   const actions = (
     <ArticleEditButtons
       isEditing={isEditing}
-      setPublishedDate={handleSetPublishedDate}
       publishedDate={page.published}
       expiresDate={page.expires}
       setExpiresDate={handleSetExpiresDate}
-      onEdit={() => setIsEditing(true)}
+      setPublishedDate={handleSetPublishedDate}
+      amDirty={isEqual(page, initialState)}
       onPreview={() => setIsEditing(false)}
       onSaveDraft={handleSaveDraft}
       onPublish={handlePublish}
       onSettings={() => setShowSettings(true)}
+      onEdit={() => setIsEditing(true)}
     />
   )
 

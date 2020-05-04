@@ -82,16 +82,17 @@ const ArticleDatePicker = ({ dialogPropsClassName, ...props }) => (
 )
 
 const ArticleEditButtons = ({
+  amDirty,
+  expiresDate,
   isEditing,
   onEdit,
   onPreview,
-  onSaveDraft,
   onPublish,
+  onSaveDraft,
   onSettings,
   publishedDate,
-  setPublishedDate,
-  expiresDate,
   setExpiresDate,
+  setPublishedDate,
 }) => {
   const classes = useStyles()
 
@@ -114,7 +115,12 @@ const ArticleEditButtons = ({
         </Grid>
         {publishedDate === null && (
           <Grid item>
-            <Button variant="contained" color="secondary" onClick={onSaveDraft}>
+            <Button
+              variant="contained"
+              color="secondary"
+              disabled={amDirty}
+              onClick={onSaveDraft}
+            >
               Save Draft
             </Button>
           </Grid>
@@ -123,6 +129,7 @@ const ArticleEditButtons = ({
           <Button
             variant="contained"
             color="primary"
+            disabled={amDirty}
             className={classes.publishButton}
             onClick={onPublish}
           >
@@ -171,21 +178,22 @@ const ArticleEditButtons = ({
 }
 
 ArticleEditButtons.propTypes = {
+  amDirty: T.bool.isRequired,
   isEditing: T.bool.isRequired,
+  expiresDate: T.oneOfType([T.string, T.instanceOf(Date)]),
   onEdit: T.func.isRequired,
   onPreview: T.func.isRequired,
-  onSaveDraft: T.func.isRequired,
   onPublish: T.func.isRequired,
+  onSaveDraft: T.func.isRequired,
   onSettings: T.func.isRequired,
-  setPublishedDate: T.func.isRequired,
   publishedDate: T.oneOfType([T.string, T.instanceOf(Date)]),
   setExpiresDate: T.func.isRequired,
-  expiresDate: T.oneOfType([T.string, T.instanceOf(Date)]),
+  setPublishedDate: T.func.isRequired,
 }
 
 ArticleEditButtons.defaultProps = {
-  publishedDate: null,
   expiresDate: null,
+  publishedDate: null,
 }
 
 export default ArticleEditButtons

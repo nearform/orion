@@ -10,15 +10,17 @@ const mockSetPath = jest.fn()
 
 const renderComponent = () => {
   const props = {
+    amDirty: true,
+    expiresDate: null,
     isEditing: true,
     onEdit: jest.fn(),
     onPreview: jest.fn(),
-    onSave: jest.fn(),
+    onSaveDraft: jest.fn(),
+    onPublish: jest.fn(),
     onSettings: jest.fn(),
     publishedDate: mockDate,
-    setPublishedDate: jest.fn(),
-    expiresDate: null,
     setExpiresDate: jest.fn(),
+    setPublishedDate: jest.fn(),
     ancestry: [
       { ancestor: { path: '/parent-path' }, direct: false },
       { ancestor: { path: '/parent-path/full' }, direct: true },
