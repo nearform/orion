@@ -10,6 +10,7 @@ import { useMutation, useQuery } from 'graphql-hooks'
 import { useLocation } from '@reach/router'
 import * as mui from '@material-ui/pickers'
 import * as slugifyWrap from 'gatsby-plugin-orion-core/src/utils/slugify'
+import { useEditComponents } from '../EditComponentProvider'
 
 jest.spyOn(mui, 'DateTimePicker')
 jest.spyOn(slugifyWrap, 'default')
@@ -52,6 +53,26 @@ jest.mock('../../queries/update-page.graphql', () => 'mockUpdatePageMutation')
 jest.mock('graphql-hooks')
 useQuery.mockReturnValue({
   data: null,
+})
+jest.mock('../EditComponentProvider')
+useEditComponents.mockReturnValue({
+  layouts: {
+    article: {
+      allowChildren: false,
+      blocks: {
+        metadata: {
+          defaultComponent: 'ArticleMetadata',
+        },
+        content: {
+          defaultComponent: 'ArticleContent',
+        },
+      },
+      editor: () => <div>layouts.article</div>,
+      example: () => <div>Example</div>,
+      name: 'Simple article',
+    },
+  },
+  wrapper: ({ children }) => <div>{children}</div>,
 })
 
 const mockCreatePage = jest.fn()
@@ -338,242 +359,288 @@ describe('Edit page reducer', () => {
   })
 })
 
-describe('Publishing', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
-  it('should have a publish button', () => {
-    const { getByText } = renderPage()
-    expect(getByText('Publish')).toBeInTheDocument()
-  })
-  it('should have a date picker', () => {
-    renderPage()
-    expect(mui.DateTimePicker).toHaveBeenCalledWith(
-      expect.objectContaining({
-        autoOk: true,
-        showTodayButton: true,
-        id: 'published-date-picker',
-        ampm: false,
-        emptyLabel: 'Now',
-        format: 'MMM dd yyyy, hh:mm a',
-
-        onChange: expect.any(Function),
-        orientation: 'portrait',
-        value: null,
-        variant: 'dialog',
-      }),
-      {}
-    )
-  })
-
-  describe('When I am editing an unpublished page', () => {
-    it('the date picker should show the text "now"', () => {
-      const { getByDisplayValue } = renderPage()
-      expect(getByDisplayValue('Now')).toBeInTheDocument()
-    })
-    describe('And I click on the publish button', () => {
-      it('should save the page with all data and a publish date of now', () => {
-        const { getByText } = renderPage()
-        fireEvent.click(getByText('Publish'))
-        expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
-          mockDate
-        )
-        expect(mockUpdatePage).toHaveBeenCalledWith({
-          variables: {
-            contents: [
-              {
-                block: 'metadata',
-                component: 'ArticleMetadata',
-                id: 38,
-                page_id: 23,
-                props: { readTime: 5 },
-              },
-              {
-                block: 'content',
-                component: 'ArticleContent',
-                id: 39,
-                page_id: 23,
-                props: {
-                  content:
-                    'When a company insures an individual entity, there are basic legal requirements and regulations.',
-                  image:
-                    'https://s3-eu-west-1.amazonaws.com/orion-assets.nearform.com/public/default/place-5%402x.png',
-                },
-              },
-              {
-                block: 'summary',
-                component: 'ArticleContent',
-                id: 40,
-                page_id: 23,
-                props: {
-                  content:
-                    'When a company insures an individual entity, there are basic legal requirements and regulations.',
-                },
-              },
-            ],
-            id: 23,
-            layout: 'article',
-            path: '/latest-news/legal',
-            published: mockDate,
-            showInMenu: false,
-            pageTags: [{ page_id: 23, tag_id: 'test-tag' }],
-            title: 'Legal requirements',
-            expires: null,
-          },
-        })
-      })
-    })
-    describe('And I select a publish date from the date picker and click the publish button', () => {
-      beforeEach(async () => {
-        const { getByText } = renderPage()
-        const [renderPublishDatePicker] = mui.DateTimePicker.mock.calls
-        await waitFor(() => {
-          return renderPublishDatePicker[0].onChange(otherMockDate)
-        })
-        const reRenderPublishDatePicker = mui.DateTimePicker.mock.calls[2]
-        expect(reRenderPublishDatePicker[0].value).toEqual(otherMockDate)
-        fireEvent.click(getByText('Publish'))
-      })
-
-      it('should save the page with all data and a publish date selected', async () => {
-        expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
-          otherMockDate
-        )
-      })
-    })
-  })
-
-  describe('When I am editing a page that is already published', () => {
-    let editPage
-
+describe('EditPage component', () => {
+  describe('When I am viewing the template selection screen', () => {
+    let templatePage
+    const blankPage = {
+      allTags: [{ tag: 'jonny5', hidden: false }],
+      ancestry: [],
+      authors: [{ user: { id: 0 } }],
+      contents: [],
+      descendants: [],
+      path: '',
+      show_in_menu: true,
+      tags: [],
+      title: 'New page',
+      layout: '',
+    }
     beforeEach(() => {
-      editPage = renderPage({ published: mockDate })
+      templatePage = renderPage(blankPage)
+    })
+    it('does not show the top menu as there is nothing to set yes', () => {
+      const { queryByText } = templatePage
+
+      expect(queryByText('Path:')).not.toBeInTheDocument()
     })
 
-    it('the date picker should show the date the page was published on', () => {
-      expect(mui.DateTimePicker.mock.calls[0][0].value).toEqual(mockDate)
-    })
-
-    describe('And I click on the publish button', () => {
+    describe('And I select the article template', () => {
       beforeEach(() => {
-        const { getByText } = editPage
-        fireEvent.click(getByText('Publish'))
-      })
-
-      it('should save the page with all data and the previously selected date', () => {
-        expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
-          mockDate
-        )
-        expect(mockUpdatePage).toHaveBeenCalledWith({
-          variables: {
-            contents: [
-              {
-                block: 'metadata',
-                component: 'ArticleMetadata',
-                id: 38,
-                page_id: 23,
-                props: { readTime: 5 },
-              },
-              {
-                block: 'content',
-                component: 'ArticleContent',
-                id: 39,
-                page_id: 23,
-                props: {
-                  content:
-                    'When a company insures an individual entity, there are basic legal requirements and regulations.',
-                  image:
-                    'https://s3-eu-west-1.amazonaws.com/orion-assets.nearform.com/public/default/place-5%402x.png',
-                },
-              },
-              {
-                block: 'summary',
-                component: 'ArticleContent',
-                id: 40,
-                page_id: 23,
-                props: {
-                  content:
-                    'When a company insures an individual entity, there are basic legal requirements and regulations.',
-                },
-              },
-            ],
-            id: 23,
-            layout: 'article',
-            path: '/latest-news/legal',
-            published: mockDate,
-            showInMenu: false,
-            pageTags: [{ page_id: 23, tag_id: 'test-tag' }],
-            title: 'Legal requirements',
-            expires: null,
-          },
-        })
-      })
-    })
-    describe('And I select a publish date from the date picker and click the publish button', () => {
-      beforeEach(async () => {
-        const { getByText } = editPage
-        const [renderPublishDatePicker] = mui.DateTimePicker.mock.calls
-
-        await waitFor(() => {
-          return renderPublishDatePicker[0].onChange(otherMockDate)
-        })
-        const reRenderPublishDatePicker = mui.DateTimePicker.mock.calls[2]
-        expect(reRenderPublishDatePicker[0].value).toEqual(otherMockDate)
-        fireEvent.click(getByText('Publish'))
-      })
-      it('should save the page with the correct publish date', () => {
-        expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
-          otherMockDate
+        const { getByText } = templatePage
+        fireEvent.click(
+          getByText('Simple article').parentNode.querySelector('button')
         )
       })
-      it('Then I can NOT select an expires date less than the publish date', () => {
-        const reRenderExpiresDatePicker = mui.DateTimePicker.mock.calls[3]
-        expect(reRenderExpiresDatePicker[0].minDate).toEqual(otherMockDate)
+      it('Then I can see the top menu', () => {
+        const { queryByText } = templatePage
+
+        expect(queryByText('Path:')).toBeInTheDocument()
       })
     })
+  })
 
-    describe('And I do NOT set an expires date and then I publish', () => {
-      beforeEach(async () => {
-        const { getByText } = editPage
-
-        fireEvent.click(getByText('Publish'))
-      })
-
-      it('save the expires date as null', () => {
-        expect(mockUpdatePage.mock.calls[0][0].variables.expires).toEqual(null)
-      })
+  describe('Publishing', () => {
+    beforeEach(() => {
+      jest.clearAllMocks()
     })
 
-    describe('And I set an expires date', () => {
-      beforeEach(async () => {
-        const [
-          renderPublishDatePicker, // eslint-disable-line no-unused-vars
-          renderExpiresDatePicker,
-        ] = mui.DateTimePicker.mock.calls
+    it('should have a publish button', () => {
+      const { getByText } = renderPage()
+      expect(getByText('Publish')).toBeInTheDocument()
+    })
+    it('should have a date picker', () => {
+      renderPage()
+      expect(mui.DateTimePicker).toHaveBeenCalledWith(
+        expect.objectContaining({
+          autoOk: true,
+          showTodayButton: true,
+          id: 'published-date-picker',
+          ampm: false,
+          emptyLabel: 'Now',
+          format: 'MMM dd yyyy, hh:mm a',
 
-        await waitFor(() => {
-          return renderExpiresDatePicker[0].onChange(otherMockDate)
+          onChange: expect.any(Function),
+          orientation: 'portrait',
+          value: null,
+          variant: 'dialog',
+        }),
+        {}
+      )
+    })
+
+    describe('When I am editing an unpublished page', () => {
+      let unpublishedPage
+      beforeEach(() => {
+        unpublishedPage = renderPage()
+      })
+      it('the date picker should show the text "now"', () => {
+        const { getByDisplayValue } = unpublishedPage
+        expect(getByDisplayValue('Now')).toBeInTheDocument()
+      })
+      describe('And I click on the publish button', () => {
+        it('should save the page with all data and a publish date of now', () => {
+          const { getByText } = unpublishedPage
+          fireEvent.click(getByText('Publish'))
+          expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
+            mockDate
+          )
+          expect(mockUpdatePage).toHaveBeenCalledWith({
+            variables: {
+              contents: [
+                {
+                  block: 'metadata',
+                  component: 'ArticleMetadata',
+                  id: 38,
+                  page_id: 23,
+                  props: { readTime: 5 },
+                },
+                {
+                  block: 'content',
+                  component: 'ArticleContent',
+                  id: 39,
+                  page_id: 23,
+                  props: {
+                    content:
+                      'When a company insures an individual entity, there are basic legal requirements and regulations.',
+                    image:
+                      'https://s3-eu-west-1.amazonaws.com/orion-assets.nearform.com/public/default/place-5%402x.png',
+                  },
+                },
+                {
+                  block: 'summary',
+                  component: 'ArticleContent',
+                  id: 40,
+                  page_id: 23,
+                  props: {
+                    content:
+                      'When a company insures an individual entity, there are basic legal requirements and regulations.',
+                  },
+                },
+              ],
+              id: 23,
+              layout: 'article',
+              path: '/latest-news/legal',
+              published: mockDate,
+              showInMenu: false,
+              pageTags: [{ page_id: 23, tag_id: 'test-tag' }],
+              title: 'Legal requirements',
+              expires: null,
+            },
+          })
         })
-        const reRenderExpiresDatePicker = mui.DateTimePicker.mock.calls[3]
-        expect(reRenderExpiresDatePicker[0].value).toEqual(otherMockDate)
+      })
+      describe('And I select a publish date from the date picker and click the publish button', () => {
+        beforeEach(async () => {
+          const { getByText } = unpublishedPage
+          const [renderPublishDatePicker] = mui.DateTimePicker.mock.calls
+          await waitFor(() => {
+            return renderPublishDatePicker[0].onChange(otherMockDate)
+          })
+          const reRenderPublishDatePicker = mui.DateTimePicker.mock.calls[2]
+          expect(reRenderPublishDatePicker[0].value).toEqual(otherMockDate)
+          fireEvent.click(getByText('Publish'))
+        })
+
+        it('should save the page with all data and a publish date selected', async () => {
+          expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
+            otherMockDate
+          )
+        })
+      })
+    })
+
+    describe('When I am editing a page that is already published', () => {
+      let editPage
+
+      beforeEach(() => {
+        editPage = renderPage({ published: mockDate })
       })
 
-      it('Then I can NOT set the publish date to be later than the expires date', () => {
-        const reRenderPublishedDatePicker = mui.DateTimePicker.mock.calls[2]
-        expect(reRenderPublishedDatePicker[0].maxDate).toEqual(otherMockDate)
+      it('the date picker should show the date the page was published on', () => {
+        expect(mui.DateTimePicker.mock.calls[0][0].value).toEqual(mockDate)
       })
 
-      describe('And then publish', () => {
+      describe('And I click on the publish button', () => {
         beforeEach(() => {
           const { getByText } = editPage
           fireEvent.click(getByText('Publish'))
         })
 
-        it('should save the page with an expires date', () => {
-          expect(mockUpdatePage.mock.calls[0][0].variables.expires).toEqual(
+        it('should save the page with all data and the previously selected date', () => {
+          expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
+            mockDate
+          )
+          expect(mockUpdatePage).toHaveBeenCalledWith({
+            variables: {
+              contents: [
+                {
+                  block: 'metadata',
+                  component: 'ArticleMetadata',
+                  id: 38,
+                  page_id: 23,
+                  props: { readTime: 5 },
+                },
+                {
+                  block: 'content',
+                  component: 'ArticleContent',
+                  id: 39,
+                  page_id: 23,
+                  props: {
+                    content:
+                      'When a company insures an individual entity, there are basic legal requirements and regulations.',
+                    image:
+                      'https://s3-eu-west-1.amazonaws.com/orion-assets.nearform.com/public/default/place-5%402x.png',
+                  },
+                },
+                {
+                  block: 'summary',
+                  component: 'ArticleContent',
+                  id: 40,
+                  page_id: 23,
+                  props: {
+                    content:
+                      'When a company insures an individual entity, there are basic legal requirements and regulations.',
+                  },
+                },
+              ],
+              id: 23,
+              layout: 'article',
+              path: '/latest-news/legal',
+              published: mockDate,
+              showInMenu: false,
+              pageTags: [{ page_id: 23, tag_id: 'test-tag' }],
+              title: 'Legal requirements',
+              expires: null,
+            },
+          })
+        })
+      })
+      describe('And I select a publish date from the date picker and click the publish button', () => {
+        beforeEach(async () => {
+          const { getByText } = editPage
+          const [renderPublishDatePicker] = mui.DateTimePicker.mock.calls
+
+          await waitFor(() => {
+            return renderPublishDatePicker[0].onChange(otherMockDate)
+          })
+          const reRenderPublishDatePicker = mui.DateTimePicker.mock.calls[2]
+          expect(reRenderPublishDatePicker[0].value).toEqual(otherMockDate)
+          fireEvent.click(getByText('Publish'))
+        })
+        it('should save the page with the correct publish date', () => {
+          expect(mockUpdatePage.mock.calls[0][0].variables.published).toEqual(
             otherMockDate
           )
+        })
+        it('Then I can NOT select an expires date less than the publish date', () => {
+          const reRenderExpiresDatePicker = mui.DateTimePicker.mock.calls[3]
+          expect(reRenderExpiresDatePicker[0].minDate).toEqual(otherMockDate)
+        })
+      })
+
+      describe('And I do NOT set an expires date and then I publish', () => {
+        beforeEach(async () => {
+          const { getByText } = editPage
+
+          fireEvent.click(getByText('Publish'))
+        })
+
+        it('save the expires date as null', () => {
+          expect(mockUpdatePage.mock.calls[0][0].variables.expires).toEqual(
+            null
+          )
+        })
+      })
+
+      describe('And I set an expires date', () => {
+        beforeEach(async () => {
+          const [
+            renderPublishDatePicker, // eslint-disable-line no-unused-vars
+            renderExpiresDatePicker,
+          ] = mui.DateTimePicker.mock.calls
+
+          await waitFor(() => {
+            return renderExpiresDatePicker[0].onChange(otherMockDate)
+          })
+          const reRenderExpiresDatePicker = mui.DateTimePicker.mock.calls[3]
+          expect(reRenderExpiresDatePicker[0].value).toEqual(otherMockDate)
+        })
+
+        it('Then I can NOT set the publish date to be later than the expires date', () => {
+          const reRenderPublishedDatePicker = mui.DateTimePicker.mock.calls[2]
+          expect(reRenderPublishedDatePicker[0].maxDate).toEqual(otherMockDate)
+        })
+
+        describe('And then publish', () => {
+          beforeEach(() => {
+            const { getByText } = editPage
+            fireEvent.click(getByText('Publish'))
+          })
+
+          it('should save the page with an expires date', () => {
+            expect(mockUpdatePage.mock.calls[0][0].variables.expires).toEqual(
+              otherMockDate
+            )
+          })
         })
       })
     })

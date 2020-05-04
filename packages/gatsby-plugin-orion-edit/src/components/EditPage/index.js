@@ -88,6 +88,10 @@ function EditPage({ initialState, onSave }) {
 
   const editLayoutProps = {}
 
+  const handleSetPath = useCallback(
+    path => dispatch({ type: 'setPath', path }),
+    [dispatch]
+  )
   const handleSave = useCallback(async () => {
     const directAncestor = getParentPath(page.ancestry)
     if (page.path === '/') {
@@ -149,7 +153,7 @@ function EditPage({ initialState, onSave }) {
     }
 
     onSave(result)
-  }, [createPage, onSave, page, updatePage])
+  }, [createPage, handleSetPath, onSave, page, updatePage])
 
   const handleLayoutSelect = useCallback(
     layout => {
@@ -191,10 +195,6 @@ function EditPage({ initialState, onSave }) {
     date => dispatch({ type: 'setExpiresdDate', date }),
     [dispatch]
   )
-  const handleSetPath = useCallback(
-    path => dispatch({ type: 'setPath', path }),
-    [dispatch]
-  )
 
   for (const [key, block] of Object.entries(blocks)) {
     const content = page.contents.find(content => content.block === key)
@@ -220,27 +220,25 @@ function EditPage({ initialState, onSave }) {
     )
   }
 
-  const actions = (
+  const actions = EditorLayout && (
     <ArticleEditButtons
       isEditing={isEditing}
-      setPublishedDate={handleSetPublishedDate}
       publishedDate={page.published}
       expiresDate={page.expires}
+      ancestry={page.ancestry}
+      path={page.path.split('/').slice(-1)[0]}
+      setPublishedDate={handleSetPublishedDate}
       setExpiresDate={handleSetExpiresDate}
+      setPath={handleSetPath}
+      onSave={handleSave}
       onEdit={() => setIsEditing(true)}
       onPreview={() => setIsEditing(false)}
-      onSave={handleSave}
       onSettings={() => setShowSettings(true)}
     />
   )
 
   return (
-    <Layout
-      action={actions}
-      ancestry={page.ancestry}
-      path={page.path.split('/').slice(-1)[0]}
-      setPath={handleSetPath}
-    >
+    <Layout action={actions}>
       <PageSettings
         open={showSettings}
         page={page}
