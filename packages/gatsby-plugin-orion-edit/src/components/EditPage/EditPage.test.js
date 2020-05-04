@@ -382,23 +382,6 @@ describe('EditPage component', () => {
 
       expect(queryByText('Path:')).not.toBeInTheDocument()
     })
-    it('a save draft button should be visible', () => {
-      const { getByText } = renderPage()
-      expect(getByText('Save Draft')).toBeInTheDocument()
-    })
-    describe('And I select the article template', () => {
-      beforeEach(() => {
-        const { getByText } = templatePage
-        fireEvent.click(
-          getByText('Simple article').parentNode.querySelector('button')
-        )
-      })
-      it('Then I can see the top menu', () => {
-        const { queryByText } = templatePage
-
-        expect(queryByText('Path:')).toBeInTheDocument()
-      })
-    })
   })
 
   describe('Publishing', () => {
@@ -428,10 +411,6 @@ describe('EditPage component', () => {
         }),
         {}
       )
-    })
-    it('save draft button should not be visible', () => {
-      const { queryByText } = renderPage()
-      expect(queryByText(/save draft/i)).not.toBeInTheDocument()
     })
 
     describe('When I am editing an unpublished page', () => {
