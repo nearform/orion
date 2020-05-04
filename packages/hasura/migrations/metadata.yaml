@@ -759,24 +759,7 @@ tables:
     comment: null
     permission:
       filter: {}
-  event_triggers:
-  - webhook: https://5ma71mhse4.execute-api.eu-west-1.amazonaws.com/default/orion_content_generator_hook
-    headers: []
-    name: regenerate-view-content-orion_page_tag
-    definition:
-      insert:
-        columns: '*'
-      update:
-        columns:
-        - page_id
-        - tag_id
-      delete:
-        columns: '*'
-      enable_manual: false
-    retry_conf:
-      timeout_sec: 60
-      num_retries: 0
-      interval_sec: 10
+  event_triggers: []
   computed_fields: []
 - table: orion_permissions
   is_enum: true
