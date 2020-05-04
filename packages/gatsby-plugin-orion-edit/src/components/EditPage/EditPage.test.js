@@ -430,7 +430,7 @@ describe('EditPage component', () => {
       )
     })
     it('save draft button should not be visible', () => {
-      const { queryByText } = editPage
+      const { queryByText } = renderPage()
       expect(queryByText(/save draft/i)).not.toBeInTheDocument()
     })
 
