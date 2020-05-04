@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.52.0](https://github.com/nearform/orion/compare/v2.51.0...v2.52.0) (2020-05-04)
+
+
+### Features
+
+* 🎸 Hide top menu bar when no layout is selected ([695e41a](https://github.com/nearform/orion/commit/695e41a2f286656a0ee17b91c56197be75ebeefa))
+
+
+
+
+
 # [2.50.0](https://github.com/nearform/orion/compare/v2.49.0...v2.50.0) (2020-04-27)
 
 

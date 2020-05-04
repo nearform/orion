@@ -6,6 +6,7 @@ import * as mui from '@material-ui/pickers'
 jest.spyOn(mui, 'DateTimePicker')
 
 const mockDate = new Date('2020-03-09T13:05:20.588+00:00')
+const mockSetPath = jest.fn()
 
 const renderComponent = () => {
   const props = {
@@ -18,6 +19,12 @@ const renderComponent = () => {
     setPublishedDate: jest.fn(),
     expiresDate: null,
     setExpiresDate: jest.fn(),
+    ancestry: [
+      { ancestor: { path: '/parent-path' }, direct: false },
+      { ancestor: { path: '/parent-path/full' }, direct: true },
+    ],
+    setPath: mockSetPath,
+    path: 'somewhere-here',
   }
   return render(<ArticleEditButtons {...props} />)
 }

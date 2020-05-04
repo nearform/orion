@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.52.0](https://github.com/nearform/orion/compare/v2.51.0...v2.52.0) (2020-05-04)
+
+
+### Features
+
+* 🎸 Hide top menu bar when no layout is selected ([695e41a](https://github.com/nearform/orion/commit/695e41a2f286656a0ee17b91c56197be75ebeefa))
+
+
+
+
+
+# [2.51.0](https://github.com/nearform/orion/compare/v2.50.0...v2.51.0) (2020-05-01)
+
+
+### Features
+
+* 🎸 Add aws lambda to send rebuild request to circleci ([e035ed1](https://github.com/nearform/orion/commit/e035ed11e5cd02f509deb2b0b4a7c097345de93e))
+
+
+
+
+
 # [2.50.0](https://github.com/nearform/orion/compare/v2.49.0...v2.50.0) (2020-04-27)
 
 
