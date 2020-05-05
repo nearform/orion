@@ -23,6 +23,7 @@
     "lodash": "^4.17.11",
     "node-fetch": "^2.6.0",
     "pino": "^5.13.4",
+    "request": "^2.88.2",
     "webpack": "^4.32.2",
     "webpack-cli": "^3.3.2"
   },
