@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk')
 const https = require('https')
-const cancelRunningJobs = require('./cancel-running-jobs')
+const { cancelRunningJobs } = require('./cancel-running-jobs')
 
 const region = 'eu-west-1'
 const secretName = 'ORION_CIRCLE_CI_API_USER_TOKEN'
