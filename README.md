@@ -162,3 +162,9 @@ Terraform AWS configuration
 
 [logo-img]: docs/images/Accel_Logo_Orion.svg
 [docs]: https://nf-orion.netlify.com/#/
+
+## Dynamicly generate static files
+
+This project is setup to responde to changes to data by rebuilding the static content. This process has 3 moving parts.
+
+Hasura events are setup to listen to changes in all `orion_page` tables. These events call the `content-generator-hook` lambda. The lambda starts a `generate-view-content` workflow on circleCI which ultimately runs `gatsby build` and uploads it to the s3 bucket to be served.
