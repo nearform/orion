@@ -45,7 +45,9 @@ const cancelRunningJobs = async ORION_CIRCLE_CI_API_USER_TOKEN => {
     const promises = data
       .filter(
         job =>
-          (job.status === 'running' || job.status === 'not_running') &&
+          (job.status === 'running' ||
+            job.status === 'not_running' ||
+            job.status === 'queued') &&
           job.workflows.workflow_name === 'generate-view-content'
       )
       .map(job => {
