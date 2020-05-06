@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.54.0](https://github.com/nearform/orion/compare/v2.53.1...v2.54.0) (2020-05-06)
+
+
+### Features
+
+* 🎸 adding breadcrumbs to search results page ([a02474a](https://github.com/nearform/orion/commit/a02474a098ea6aee86a5eb7179b3319371add8b0))
+
+
+
+
+
 # [2.47.0](https://github.com/nearform/orion/compare/v2.46.1...v2.47.0) (2020-04-24)
 
 **Note:** Version bump only for package gatsby-plugin-orion-view
