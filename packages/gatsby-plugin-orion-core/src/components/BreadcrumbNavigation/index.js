@@ -1,7 +1,8 @@
 import React from 'react'
 import T from 'prop-types'
-import { Link } from '@reach/router'
 import { Breadcrumbs, Typography } from '@material-ui/core'
+import { Link } from '@reach/router'
+
 import ArrowRightAlt from '@material-ui/icons/ArrowRightAlt'
 
 function BreadcrumbNavigation({
@@ -22,7 +23,9 @@ function BreadcrumbNavigation({
     >
       {data.map(({ title, to }) =>
         to === undefined ? (
-          <Typography key={title}>{title}</Typography>
+          <Typography key={title} variant="h5" component="span">
+            {title}
+          </Typography>
         ) : (
           <Link key={title} to={to}>
             {title}
