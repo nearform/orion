@@ -7,7 +7,6 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
   const menuResults = await graphql(getMenuQuery)
   const pagesResults = await graphql(getPagesQuery)
-
   if (pagesResults.errors) {
     throw pagesResults.errors
   }
@@ -46,7 +45,19 @@ exports.createPages = async ({ graphql, actions }) => {
     component: searchPageComponent,
     context: {
       page: {
-        ancestry: [],
+        ancestry: [
+          {
+            ancestor: {
+              path: '/',
+              title: 'Home',
+            },
+          },
+          {
+            ancestor: {
+              title: 'Search Results',
+            },
+          },
+        ],
         layout: 'section',
         contents: [
           {
