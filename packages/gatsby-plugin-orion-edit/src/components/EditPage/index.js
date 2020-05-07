@@ -85,7 +85,6 @@ function EditPage({ initialState, onSave }) {
   const layout = layouts[page.layout]
   const blocks = layout === undefined ? {} : layout.blocks
   const EditorLayout = layout === undefined ? undefined : layout.editor
-
   const editLayoutProps = {}
 
   const handleSaveDraft = () => {
@@ -131,7 +130,7 @@ function EditPage({ initialState, onSave }) {
         layout: page.layout,
         path: page.path,
         published: amDraft ? null : page.published || new Date(),
-        showInMenu: page.show_in_menu,
+        showInMenu: page.layout === 'article' ? false : page.show_in_menu,
         title: page.title,
         expires: page.expires || null,
         modified: new Date(),
