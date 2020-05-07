@@ -91,6 +91,7 @@ const TreeViewLink = ({
         variables: {
           id: pageId,
           title,
+          modified: new Date(),
         },
       })
     } catch (error) {
@@ -109,6 +110,7 @@ const TreeViewLink = ({
         variables: {
           id: pageId,
           show_in_menu: !showInMenu,
+          modified: new Date(),
         },
       })
       setShowInMenu(!showInMenu)

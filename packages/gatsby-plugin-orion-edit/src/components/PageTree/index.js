@@ -142,7 +142,7 @@ function PageTree() {
       promises.push(
         ...newTree.items[newParent.id].children.map((id, position) =>
           updatePosition({
-            variables: { id, position },
+            variables: { id, position, modified: new Date() },
           })
         )
       )

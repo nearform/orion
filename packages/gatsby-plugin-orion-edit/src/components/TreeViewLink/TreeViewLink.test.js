@@ -6,6 +6,15 @@ import TreeViewLink from '.'
 import { useMutation } from 'graphql-hooks'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import theme from 'gatsby-theme-acme'
+
+const mockDate = new Date('2020-03-09T13:05:20.588+00:00')
+
+const _Date = Date
+global.Date = jest.fn(() => mockDate)
+global.Date.UTC = _Date.UTC
+global.Date.parse = _Date.parse
+global.Date.now = _Date.now
+
 jest.mock(
   '../../queries/update-page-title.graphql',
   () => 'updatePageTitleMutation'
@@ -114,6 +123,7 @@ describe('TreeViewLink component', () => {
               variables: {
                 id: 123,
                 title: 'a new title',
+                modified: mockDate,
               },
             })
           })
@@ -138,6 +148,7 @@ describe('TreeViewLink component', () => {
           variables: {
             id: 123,
             show_in_menu: true,
+            modified: mockDate,
           },
         })
       })

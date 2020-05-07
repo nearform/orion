@@ -96,6 +96,11 @@ function EditPage({ initialState, onSave }) {
     savePage(false)
   }
 
+  const handleSetPath = useCallback(
+    path => dispatch({ type: 'setPath', path }),
+    [dispatch]
+  )
+
   const savePage = useCallback(
     async amDraft => {
       const directAncestor = getParentPath(page.ancestry)
@@ -119,6 +124,7 @@ function EditPage({ initialState, onSave }) {
         showInMenu: page.show_in_menu,
         title: page.title,
         expires: page.expires || null,
+        modified: new Date(),
       }
 
       if (page.id) {
@@ -159,7 +165,7 @@ function EditPage({ initialState, onSave }) {
 
       onSave(result)
     },
-    [createPage, onSave, page, updatePage]
+    [createPage, onSave, page, updatePage, handleSetPath]
   )
 
   const handleLayoutSelect = useCallback(
@@ -200,10 +206,6 @@ function EditPage({ initialState, onSave }) {
   )
   const handleSetExpiresDate = useCallback(
     date => dispatch({ type: 'setExpiresdDate', date }),
-    [dispatch]
-  )
-  const handleSetPath = useCallback(
-    path => dispatch({ type: 'setPath', path }),
     [dispatch]
   )
 
