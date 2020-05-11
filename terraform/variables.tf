@@ -25,7 +25,7 @@ variable "cf_edit_app_domain_name" {
 }
 
 variable "cf_view_app_domain_name" {
-  description = "Domain name used for gatsby-package-orion-view Cloudfront"
+  description = "Domain name used for gatsby-plugin-orion-view Cloudfront"
 }
 
 variable "cf_uploaded_assets_domain_name" {

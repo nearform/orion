@@ -1,5 +1,5 @@
 import React from 'react'
-import ListChildren from 'gatsby-package-orion-view/src/components/ListChildren'
+import ListChildren from 'gatsby-plugin-orion-view/src/components/ListChildren'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
 import { makeStyles } from '@material-ui/core'
 

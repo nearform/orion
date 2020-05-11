@@ -196,7 +196,7 @@ jobs:
             echo 'export HASURA_ARTIFACT="packages/`cd packages/hasura && npm run artifact:name --silent`"' >> $BASH_ENV
             echo 'export ADMIN_APP_ARTIFACT="packages/acme-admin/`cd packages/acme-admin && npm run artifact:name --silent`"' >> $BASH_ENV
             echo 'export EDIT_APP_ARTIFACT="packages/acme-edit/`cd packages/acme-edit && npm run artifact:name --silent`"' >> $BASH_ENV
-            echo 'export VIEW_APP_ARTIFACT="packages/gatsby-package-orion-view/`cd packages/gatsby-package-orion-view && npm run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export VIEW_APP_ARTIFACT="packages/gatsby-plugin-orion-view/`cd packages/gatsby-plugin-orion-view && npm run artifact:name --silent`"' >> $BASH_ENV
       - *install_awscli
       - run:
           name: Copy artifacts to S3 bucket
@@ -231,13 +231,13 @@ jobs:
       - *load_envars
       - *install_awscli
       - run:
-          name: Build gatsby-package-orion-view static files
+          name: Build gatsby-plugin-orion-view static files
           command: |
             yarn run build:view
       - run:
-          name: Deploy gatsby-package-orion-view bundle to S3
+          name: Deploy gatsby-plugin-orion-view bundle to S3
           command: |
-            aws s3 sync packages/gatsby-package-orion-view/public ${VIEW_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+            aws s3 sync packages/gatsby-plugin-orion-view/public ${VIEW_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
 workflows:
   version: 2
   build-only:

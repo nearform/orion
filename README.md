@@ -64,7 +64,7 @@ This project uses .env files for environment variables.
 
 To get the environment variable setup for local development you will need
 
-- .env.development files need to added to gatsby-package-orion-view, acme-admin and acme-edit.
+- .env.development files need to added to gatsby-plugin-orion-view, acme-admin and acme-edit.
 - A .env file needs to added to the hasura package.
 
 The content of the files can be found on clipperz.is

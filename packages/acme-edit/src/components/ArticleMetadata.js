@@ -1,5 +1,5 @@
 import React from 'react'
-import ArticleMetadata from 'gatsby-package-orion-view/src/components/ArticleMetadata/Wrap'
+import ArticleMetadata from 'gatsby-plugin-orion-view/src/components/ArticleMetadata/Wrap'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
 import { makeStyles } from '@material-ui/core'
 

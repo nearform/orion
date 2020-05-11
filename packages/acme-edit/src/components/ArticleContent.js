@@ -1,5 +1,5 @@
 import React from 'react'
-import ArticleContent from 'gatsby-package-orion-view/src/components/ArticleContent/Wrap'
+import ArticleContent from 'gatsby-plugin-orion-view/src/components/ArticleContent/Wrap'
 import MarkdownEditor from 'gatsby-plugin-orion-edit/src/components/MarkdownEditor/MarkdownEditor'
 import { Input, makeStyles, InputBase, Paper } from '@material-ui/core'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
