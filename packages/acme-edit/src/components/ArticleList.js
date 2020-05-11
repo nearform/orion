@@ -1,5 +1,5 @@
 import React from 'react'
-import ArticleList from 'acme-view/src/components/ArticleList'
+import ArticleList from 'gatsby-package-orion-view/src/components/ArticleList'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
 import { makeStyles } from '@material-ui/core'
 

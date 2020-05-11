@@ -1,5 +1,5 @@
 import React from 'react'
-import Hero from 'acme-view/src/components/Hero/Wrap'
+import Hero from 'gatsby-package-orion-view/src/components/Hero/Wrap'
 import { createPropEditor } from 'gatsby-plugin-orion-edit'
 import { makeStyles } from '@material-ui/core'
 
