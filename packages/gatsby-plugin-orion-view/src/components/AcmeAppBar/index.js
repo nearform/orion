@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react'
-import AppBar from 'gatsby-plugin-orion-view/src/components/AppBar'
+import AppBar from '../components/AppBar'
 import { useQuery } from 'graphql-hooks'
 
-import { AuthContext } from 'gatsby-plugin-orion-core/src/components/AuthWrapper'
+import { AuthContext } from '../components/AuthWrapper'
 import getMenuQuery from '../../queries/get-nested-menu.graphql'
 
 export default function AcmeAppBar({
