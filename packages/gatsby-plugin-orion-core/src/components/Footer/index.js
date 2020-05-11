@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function Footer({ Img, socialIcons = [], Logo }) {
+function Footer({ socialIcons = [], Logo }) {
   const classes = useStyles()
 
   return (
@@ -77,10 +77,10 @@ function Footer({ Img, socialIcons = [], Logo }) {
               alignItems="center"
               justify="flex-end"
             >
-              {socialIcons.map(({ logo, url }) => (
+              {socialIcons.map(({ logo, url, alt }) => (
                 <Grid key={`sl-${url}`} item>
                   <a key={url} href={url} data-testid={url}>
-                    <Img src={logo} />
+                    <img src={logo} alt={alt} />
                   </a>
                 </Grid>
               ))}
@@ -120,7 +120,6 @@ function Footer({ Img, socialIcons = [], Logo }) {
 }
 
 Footer.propTypes = {
-  Img: T.elementType.isRequired,
   socialIcons: T.arrayOf(T.object),
   Logo: T.elementType,
 }

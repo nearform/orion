@@ -6,33 +6,8 @@ import SearchInput from 'gatsby-plugin-orion-core/src/components/SearchInput'
 import SecondaryAppBar from 'gatsby-plugin-orion-view/src/components/SecondaryAppBar'
 import { useLocation } from '@reach/router'
 import { makeStyles } from '@material-ui/core'
-
-import facebook from 'gatsby-plugin-orion-core/src/assets/social/logo-fb.svg'
-import youtube from 'gatsby-plugin-orion-core/src/assets/social/logo-youtube.svg'
-import twitter from 'gatsby-plugin-orion-core/src/assets/social/logo-twitter.svg'
-import linkedin from 'gatsby-plugin-orion-core/src/assets/social/logo-linkedin.svg'
+import { socialIcons } from './utils/constants'
 import Logo from 'gatsby-plugin-orion-core/src/assets/logo.inline.svg'
-
-const socialIcons = [
-  {
-    logo: facebook,
-    url: 'https://www.facebook.com/NearFormLtd/',
-  },
-  {
-    logo: youtube,
-    url: 'https://www.youtube.com/channel/UCp2Tsbjd3P8itnBHUNHi82A',
-  },
-  {
-    logo: twitter,
-    url: 'https://twitter.com/NearForm',
-  },
-  {
-    logo: linkedin,
-    url: 'https://www.linkedin.com/company/nearform',
-  },
-]
-
-const Img = ({ ...props }) => <img alt="social" {...props} />
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -90,7 +65,7 @@ function Layout({ children, menu, page }) {
       </header>
       <main>{children}</main>
       <footer>
-        <Footer socialIcons={socialIcons} Logo={Logo} Img={Img} />
+        <Footer socialIcons={socialIcons} Logo={Logo} />
       </footer>
     </div>
   )
