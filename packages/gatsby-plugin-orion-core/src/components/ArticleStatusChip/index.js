@@ -1,25 +1,9 @@
 import React from 'react'
 import { Chip, makeStyles } from '@material-ui/core'
 import T from 'prop-types'
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import { colorDefinitions } from 'gatsby-theme-acme/variables'
-
-export const articleStatusMap = {
-  'in-progress': {
-    label: 'In Progress',
-  },
-  'in-review': {
-    label: 'Needs Review',
-  },
-  published: {
-    label: 'Published',
-  },
-  hidden: {
-    label: 'Hidden',
-    Icon: VisibilityOffIcon,
-  },
-}
+import { articleStatusMap } from './utils/constants'
 
 const useStyles = makeStyles(() => {
   const articleColors = {
