@@ -9,7 +9,6 @@ const Form = ({ author, articleStatus }) => (
       <Typography variant="h6">Status</Typography>
     </Grid>
     <Grid item xs={10}>
-      dd
       <ArticleStatusChip status={articleStatus} />
     </Grid>
     {author && (

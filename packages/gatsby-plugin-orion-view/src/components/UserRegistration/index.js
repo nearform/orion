@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Grid, Button, Typography } from '@material-ui/core'
 import { Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
+import { formFields } from './utils/form-fields'
 
 import { Form } from 'gatsby-plugin-orion-core'
 
@@ -28,45 +29,7 @@ const UserRegistration = ({ setAuthStage, setUsername }) => {
 
   return (
     <Form
-      formFields={[
-        {
-          label: 'Given name',
-          name: 'givenName',
-          type: 'text',
-          xs: 12,
-        },
-        {
-          label: 'Email',
-          name: 'username',
-          required: true,
-          type: 'email',
-          xs: 12,
-        },
-        {
-          label: 'Password',
-          name: 'password',
-          required: true,
-          type: 'password',
-          xs: 12,
-          helperText:
-            'Must include an uppercase character, a number and a symbol',
-          validate: value => {
-            let error
-
-            if (!value) {
-              error = 'Required'
-            } else if (
-              !/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Z\d@$!%*#?&]{1,}$/i.test(
-                value
-              )
-            ) {
-              error = 'Invalid Password'
-            }
-
-            return error
-          },
-        },
-      ]}
+      formFields={formFields}
       title={<Typography variant="h3">Create a new account</Typography>}
       SubmitComponent={({ disabled, ...props }) => (
         <>
