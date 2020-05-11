@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from './src/components/Layout'
 import theme from 'gatsby-theme-acme'
-import { ViewComponentProvider } from './src/components/vie'
+import { ViewComponentProvider } from './src/components/ViewComponentProvider'
 import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'

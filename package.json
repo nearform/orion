@@ -29,7 +29,7 @@
     "generate-schema": "graphql get-schema --output=hasura-schema.json",
     "start:admin": "lerna exec --scope=acme-admin yarn start",
     "start:edit": "lerna exec --scope=acme-edit yarn start",
-    "start:view": "lerna exec --scope=acme-view yarn start",
+    "start:view": "lerna exec --scope=gatsby-plugin-orion-view yarn start",
     "e2e-test": "lerna run --scope=e2e-tests --stream --no-prefix e2e-test -- ",
     "dev:e2e-test": "npm run e2e-test -- ./local.js -- --screenshots-on-fails",
     "hosted:e2e-test": "npm run e2e-test -- ./hosted.js -- --screenshots-on-fails",
