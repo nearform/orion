@@ -1,18 +1,12 @@
 import React, { useCallback, useState } from 'react'
+import PropTypes from 'prop-types'
 import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Fab,
   FormControl,
   InputLabel,
   MenuItem,
   makeStyles,
 } from '@material-ui/core'
 import Select from '@material-ui/core/Select'
-import EditIcon from '@material-ui/icons/Edit'
 import classNames from 'classnames'
 import { useEditComponents } from '../EditComponentProvider'
 
@@ -25,11 +19,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     marginTop: '36px',
 
-    '&:hover': {
-      '& $button': {
-        display: 'flex',
-      },
-    },
     '&:hover:after, &$empty:after': {
       backgroundColor: theme.palette.grey['300'],
       content: '""',
@@ -42,18 +31,6 @@ const useStyles = makeStyles(theme => ({
       right: 0,
     },
   },
-  button: {
-    display: 'none',
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    zIndex: 1,
-  },
-  empty: {
-    '& $button': {
-      display: 'flex',
-    },
-  },
   input: {
     marginBottom: theme.spacing(1),
     position: 'absolute',
@@ -62,36 +39,13 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-// TODO Add prop types
-function EditComponent({
-  component,
-  isEditing,
-  onSave,
-  page,
-  props = {},
-  handleSaveTags,
-}) {
+function EditComponent({ component, isEditing, onSave, page, props = {} }) {
   const classes = useStyles()
   const { components } = useEditComponents()
 
-  const [showSettings, setShowSettings] = useState(false)
   const [currentComponent, setCurrentComponent] = useState(component)
   const [currentPage, setCurrentPage] = useState(page)
   const [currentProps, setCurrentProps] = useState(props)
-
-  const handleCancel = useCallback(() => {
-    setCurrentComponent(component)
-    setCurrentPage(page)
-    setCurrentProps(props)
-    setShowSettings(false)
-  }, [
-    component,
-    page,
-    props,
-    setCurrentComponent,
-    setCurrentPage,
-    setCurrentProps,
-  ])
 
   const handleComponentChange = useCallback(
     event => {
@@ -101,19 +55,6 @@ function EditComponent({
     },
     [setCurrentComponent, setCurrentProps, onSave, currentProps, currentPage]
   )
-
-  const handleSettingsChange = useCallback(
-    (props, page) => {
-      setCurrentPage(page)
-      setCurrentProps(props)
-    },
-    [setCurrentPage, setCurrentProps]
-  )
-
-  const handleSave = useCallback(() => {
-    setShowSettings(false)
-    onSave(currentComponent, currentProps, currentPage)
-  }, [currentComponent, currentPage, currentProps, onSave])
 
   const handleEditorChange = useCallback(
     (props, page) => {
@@ -125,11 +66,9 @@ function EditComponent({
   )
 
   const config = components[component]
-  const currentConfig = components[currentComponent]
 
   const PreviewComponent = config ? config.preview : undefined
   const PreviewEditor = config ? config.editor : undefined
-  const SettingsEditor = currentConfig ? currentConfig.settings : undefined
 
   return (
     <>
@@ -139,14 +78,6 @@ function EditComponent({
             [classes.empty]: PreviewEditor === undefined,
           })}
         >
-          <Fab
-            className={classes.button}
-            color="primary"
-            size="small"
-            onClick={() => setShowSettings(true)}
-          >
-            <EditIcon />
-          </Fab>
           <FormControl className={classes.input}>
             <InputLabel htmlFor="component-select">Select Component</InputLabel>
             <Select
@@ -170,28 +101,6 @@ function EditComponent({
               onChange={handleEditorChange}
             />
           )}
-          <Dialog fullWidth open={showSettings} onClose={handleCancel}>
-            <DialogTitle>Component settings</DialogTitle>
-
-            <DialogContent>
-              {SettingsEditor !== undefined && (
-                <SettingsEditor
-                  page={page}
-                  props={currentProps}
-                  handleSaveTags={handleSaveTags}
-                  onChange={handleSettingsChange}
-                />
-              )}
-            </DialogContent>
-            <DialogActions>
-              <Button variant="contained" onClick={handleCancel}>
-                Cancel
-              </Button>
-              <Button variant="contained" color="primary" onClick={handleSave}>
-                Apply
-              </Button>
-            </DialogActions>
-          </Dialog>
         </div>
       )}
       {!isEditing && PreviewComponent !== undefined && (
@@ -199,6 +108,14 @@ function EditComponent({
       )}
     </>
   )
+}
+
+EditComponent.propTypes = {
+  component: PropTypes.string,
+  isEditing: PropTypes.bool,
+  onSave: PropTypes.func,
+  page: PropTypes.object,
+  props: PropTypes.object,
 }
 
 export default EditComponent
