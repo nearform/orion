@@ -1,5 +1,12 @@
-mutation updatePageShowInMenu($id: Int!, $show_in_menu: Boolean!) {
-  update_orion_page(where: { id: { _eq: $id } }, _set: { show_in_menu: $show_in_menu }) {
+mutation updatePageShowInMenu(
+  $id: Int!
+  $show_in_menu: Boolean!
+  $modified: timestamptz
+) {
+  update_orion_page(
+    where: { id: { _eq: $id } }
+    _set: { show_in_menu: $show_in_menu, modified: $modified }
+  ) {
     affected_rows
   }
 }
