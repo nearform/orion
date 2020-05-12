@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.56.0](https://github.com/nearform/orion/compare/v2.55.0...v2.56.0) (2020-05-12)
+
+
+### Bug Fixes
+
+* 🐛 Fallback title stays up-to-date with the server ([85dc4f5](https://github.com/nearform/orion/commit/85dc4f5754cc5113d5eec23cb71aa6f79d515e75))
+* 🐛 Save title when clicking the save button ([7e758d3](https://github.com/nearform/orion/commit/7e758d36c95bc86c08327d64a56cd479256fa59c))
+
+
+
+
+
 # [2.55.0](https://github.com/nearform/orion/compare/v2.54.0...v2.55.0) (2020-05-11)
 
 
