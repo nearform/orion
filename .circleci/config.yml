@@ -45,9 +45,7 @@ get_envars: &get_envars
       echo "export GATSBY_AWS_S3_BUCKET=$(aws ssm get-parameters --name /${ORG}/GATSBY_AWS_S3_BUCKET --with-decryption --query Parameters[0].Value --output=text)" >> .env
       echo "export GATSBY_PLACEHOLDER_IMAGE=${GATSBY_PLACEHOLDER_IMAGE}" >> .env
       echo "export HASURA_GRAPHQL_ENDPOINT=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ENDPOINT --with-decryption --query Parameters[0].Value --output=text)" >> .env
-#delete      echo "export HASURA_GRAPHQL_ADMIN_SECRET=$(aws ssm get-parameters --name /${ORG}/HASURA_GRAPHQL_ADMIN_SECRET --with-decryption --query Parameters[0].Value --output=text)" >> .env
       echo "export ARTIFACTS_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/s3_deploy_artifacts --with-decryption --query Parameters[0].Value --output=text)" >> .env
-#delete      echo "export ADMIN_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/admin_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
       echo "export EDIT_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/edit_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
       echo "export VIEW_APP_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/view_app_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
       echo "export STORYBOOK_BUCKET=s3://$(aws ssm get-parameters --name /${ORG}/storybook_bucket --with-decryption --query Parameters[0].Value --output=text)" >> .env
