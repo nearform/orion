@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link, navigate } from '@reach/router'
+import { Link } from '@reach/router'
 import {
   Button,
   AppBar as MuiAppBar,
@@ -8,11 +8,10 @@ import {
   makeStyles,
 } from '@material-ui/core'
 import HorizontalNavigationMenu from 'gatsby-plugin-orion-core/src/components/HorizontalNavigationMenu'
-import LanguageSelector from './LanguageSelector'
+import LanguageSelector from '../LanguageSelector'
 import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
-import AuthButton from './AuthButton'
-
-import { Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
+import AuthButton from '../AuthButton'
+import LinkEdit from './LinkEdit'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,31 +51,6 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
   },
 }))
-
-const LinkEdit = ({ userRole }) => {
-  if ((userRole === 'User' || userRole === 'Admin') && Auth.user !== null) {
-    let slug = process.env.GATSBY_URL_EDIT || ''
-
-    if (slug === '') {
-      const hostnameSections = window.location.hostname.toLowerCase().split('.')
-
-      switch (hostnameSections[0]) {
-        case 'view':
-          slug = `edit.${hostnameSections[1]}.${hostnameSections[2]}`
-          break
-        case 'localhost':
-          slug = 'http://localhost:8001'
-          break
-        default:
-          console.error('edit redirect not configured in Environment vars')
-      }
-    }
-
-    return <Button onClick={() => navigate(slug)}>Edit</Button>
-  }
-
-  return null
-}
 
 const AppBar = ({
   menuData,
