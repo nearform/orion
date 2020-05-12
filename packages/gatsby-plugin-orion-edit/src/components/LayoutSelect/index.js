@@ -47,20 +47,23 @@ function LayoutSelect({ onSelect }) {
       <div className={classes.layouts}>
         {Object.entries(layouts).map(([key, layout]) => {
           const Example = layout.example
+          if (layout.name !== 'Article') {
+            return (
+              <div key={key} className={classes.layout}>
+                <Example className={classes.example} />
+                <div className={classes.name}>{layout.name}</div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => onSelect(key)}
+                >
+                  Select
+                </Button>
+              </div>
+            )
+          }
 
-          return (
-            <div key={key} className={classes.layout}>
-              <Example className={classes.example} />
-              <div className={classes.name}>{layout.name}</div>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => onSelect(key)}
-              >
-                Select
-              </Button>
-            </div>
-          )
+          return null
         })}
       </div>
     </div>

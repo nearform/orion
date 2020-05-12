@@ -40,7 +40,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function EditComponent({
-  layout,
   component,
   isEditing,
   onSave,

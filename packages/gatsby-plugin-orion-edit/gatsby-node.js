@@ -19,6 +19,12 @@ exports.createPages = async ({ actions }) => {
   })
 
   createPage({
+    path: '/_article_create_root',
+    matchPath: '/article/create',
+    component: require.resolve('./src/templates/create-root-page'),
+  })
+
+  createPage({
     path: '/_pages_edit',
     matchPath: '/pages/:id/edit',
     component: require.resolve('./src/templates/edit-page'),

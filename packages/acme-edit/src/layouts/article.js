@@ -13,5 +13,5 @@ export default {
   },
   editor: layouts.article,
   example: Example,
-  name: 'Simple article',
+  name: 'Article',
 }

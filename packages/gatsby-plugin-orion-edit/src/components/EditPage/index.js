@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from 'react'
+import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import createPageMutation from '../../queries/create-page.graphql'
 import updatePageMutation from '../../queries/update-page.graphql'
 import ArticleEditButtons from '../ArticleEditButtons'
@@ -11,6 +11,8 @@ import { useMutation } from 'graphql-hooks'
 import produce from 'immer' // eslint-disable-line import/no-named-as-default
 import slugify from 'gatsby-plugin-orion-core/src/utils/slugify'
 import getParentPath from '../../utils/get-parent-path'
+
+import { useLocation } from '@reach/router'
 
 export function reducer(page, { type, ...payload }) {
   switch (type) {
@@ -75,6 +77,9 @@ export function reducer(page, { type, ...payload }) {
 }
 
 function EditPage({ initialState, onSave }) {
+  const { pathname } = useLocation()
+  const amArticle = pathname.includes('/article/')
+
   const { layouts, wrapper: Wrapper } = useEditComponents()
   const [page, dispatch] = useReducer(reducer, initialState)
   const [createPage] = useMutation(createPageMutation)
@@ -82,10 +87,28 @@ function EditPage({ initialState, onSave }) {
   const [isEditing, setIsEditing] = useState(true)
   const [showSettings, setShowSettings] = useState(false)
 
-  const layout = layouts[page.layout]
+  let layout = layouts[page.layout]
+  if (layout === undefined && amArticle) {
+    layout = layouts.article
+  }
+
   const blocks = layout === undefined ? {} : layout.blocks
   const EditorLayout = layout === undefined ? undefined : layout.editor
   const editLayoutProps = {}
+
+  useEffect(() => {
+    if (amArticle) {
+      dispatch({
+        type: 'layout',
+        layout: 'article',
+        contents: Object.entries(blocks).map(([key, block]) => ({
+          block: key,
+          component: block.defaultComponent,
+          props: {},
+        })),
+      })
+    }
+  }, [])
 
   const handleSaveDraft = () => {
     savePage(true)
@@ -223,7 +246,6 @@ function EditPage({ initialState, onSave }) {
 
     editLayoutProps[key] = (
       <EditComponent
-        layout={page.layout}
         block={block}
         component={content === undefined ? undefined : content.component}
         isEditing={isEditing}

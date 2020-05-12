@@ -13,7 +13,7 @@ export default function() {
     }
 
     return {
-      title: '',
+      title: 'Title',
       path: '',
       ancestry: [],
       authors: [
