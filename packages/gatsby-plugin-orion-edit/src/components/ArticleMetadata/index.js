@@ -2,8 +2,64 @@ import React, { useState } from 'react'
 import SerpPreview from 'react-serp-preview'
 import { Container, Grid, Typography, makeStyles } from '@material-ui/core'
 import MetadataItem from './MetadataItem'
-import { defaultContent } from './utils/constants'
-import { replaceAt } from './utils/helpers'
+
+const defaultContent = [
+  {
+    label: 'Page Title',
+    name: 'title',
+    type: 'title',
+    value: '',
+  },
+  {
+    label: 'Page Description',
+    type: 'meta',
+    name: 'description',
+    multiline: true,
+    value: '',
+  },
+  {
+    label: 'Open Graph Type',
+    type: 'meta',
+    name: 'og:type',
+    property: 'og:type',
+    value: '',
+  },
+  {
+    label: 'Open Graph Title',
+    type: 'meta',
+    name: 'og:title',
+    property: 'og:title',
+    value: '',
+  },
+  {
+    label: 'Open Graph Description',
+    type: 'meta',
+    name: 'og:description',
+    property: 'og:description',
+    multiline: true,
+    value: '',
+  },
+  {
+    label: 'Open Graph Image',
+    type: 'meta',
+    name: 'og:image',
+    property: 'og:image',
+    value: '',
+  },
+  {
+    label: 'Structured Data',
+    type: 'script',
+    name: 'structuredData',
+    multiline: true,
+    value: '{}',
+  },
+]
+
+function replaceAt(array, index, value) {
+  const ret = array.slice(0)
+  ret[index] = value
+  return ret
+}
 
 const useItemStyles = makeStyles(theme => {
   return { ...theme.seoMetadata.item }
