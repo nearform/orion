@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import InnerArticleList from '../InnerArticleList'
 import { useQuery } from 'graphql-hooks'
 
-import getArticleListQuery from '../../queries/get-article-list'
+import getArticleListQuery from '../../queries/get-article-list.graphql'
 
 export default function ArticleList({
   title,
