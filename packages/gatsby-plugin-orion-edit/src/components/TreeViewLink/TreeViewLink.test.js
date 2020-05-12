@@ -1,11 +1,14 @@
 /* eslint-disable max-nested-callbacks */
 /* eslint-disable camelcase */
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, act } from '@testing-library/react'
 import TreeViewLink from '.'
 import { useMutation } from 'graphql-hooks'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import theme from 'gatsby-theme-acme'
+
+jest.useFakeTimers()
+
 jest.mock(
   '../../queries/update-page-title.graphql',
   () => 'updatePageTitleMutation'
@@ -16,7 +19,21 @@ jest.mock(
 )
 jest.mock('graphql-hooks')
 const mockUpdatePageShowInMenuMutation = jest.fn()
-const mockUpdatePageTitleMutation = jest.fn()
+
+let promise = null
+const makePageTitlePromise = title =>
+  Promise.resolve({
+    data: {
+      update_orion_page: {
+        returning: [{ title }],
+      },
+    },
+  })
+
+const mockUpdatePageTitleMutation = jest.fn(({ variables: { title } }) => {
+  promise = makePageTitlePromise(title)
+  return promise
+})
 useMutation.mockImplementation(mutation => {
   if (mutation === 'updatePageTitleMutation') {
     return [mockUpdatePageTitleMutation]
@@ -95,15 +112,19 @@ describe('TreeViewLink component', () => {
           })
           it('shows the original title as a link again', () => {
             const { getByText } = component
+            act(() => {
+              jest.runAllTimers()
+            })
             expect(getByText(props.title)).toBeInTheDocument()
           })
         })
 
         describe('And then I submit the form to save the changes', () => {
-          beforeEach(() => {
+          beforeEach(async () => {
             const { getByDisplayValue } = component
-
+            fireEvent.blur(getByDisplayValue('a new title'))
             fireEvent.click(getByDisplayValue('a new title').nextSibling)
+            await act(() => promise)
           })
           it('shows the new title as a link', () => {
             const { getByText } = component
@@ -115,6 +136,36 @@ describe('TreeViewLink component', () => {
                 id: 123,
                 title: 'a new title',
               },
+            })
+          })
+
+          describe('And then I edit the title a second time', () => {
+            beforeEach(() => {
+              const { getByDisplayValue, getByText } = component
+
+              fireEvent.click(getByText('a new title').nextSibling)
+              fireEvent.change(getByDisplayValue('a new title'), {
+                target: { value: 'What the page' },
+              })
+            })
+
+            describe('And then I click away from the input without saving', () => {
+              beforeEach(async () => {
+                const { getByDisplayValue } = component
+                fireEvent.blur(getByDisplayValue('What the page'))
+
+                await act(() => jest.runAllTimers())
+              })
+              it('shows the last saved title as a link again', () => {
+                const { getByText } = component
+
+                expect(getByText('a new title')).toBeInTheDocument()
+              })
+              it('does NOT show the original title', () => {
+                const { queryByText } = component
+
+                expect(queryByText(props.title)).not.toBeInTheDocument()
+              })
             })
           })
         })
