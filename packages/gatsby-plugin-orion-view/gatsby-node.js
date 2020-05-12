@@ -77,7 +77,14 @@ exports.createPages = async ({ graphql, actions }) => {
     matchPath: '/*',
     component: pageComponent,
     context: {
-      page: null,
+      defaultPage: true,
+      page: {
+        ancestry: [],
+        is4xx: true,
+        errorCode: 404,
+        message: "We can't find the article you're looking for.",
+        title: 'Not found.',
+      },
       menu,
     },
   })
