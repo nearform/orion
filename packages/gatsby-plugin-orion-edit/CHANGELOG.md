@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.57.0](https://github.com/nearform/orion/compare/v2.56.0...v2.57.0) (2020-05-12)
+
+
+### Features
+
+* 🎸 Set the modified column when editing orion_page ([9a81b6c](https://github.com/nearform/orion/commit/9a81b6c090c67feee5b42e19cf666e6835b4aded))
+
+
+
+
+
 # [2.56.0](https://github.com/nearform/orion/compare/v2.55.0...v2.56.0) (2020-05-12)
 
 
