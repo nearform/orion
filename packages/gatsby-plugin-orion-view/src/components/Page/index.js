@@ -1,8 +1,11 @@
 import React from 'react'
-import getPageQuery from '../../queries/get-page'
+import getPageQuery from '../../queries/get-page.graphql'
 import { useViewComponents } from '../ViewComponentProvider'
 import { useQuery } from 'graphql-hooks'
 import PageSEO from '../PageSEO'
+import { navigate } from '@reach/router'
+import ErrorMessage from '../ErrorMessage'
+import PageLoading from '../PageLoading'
 
 function PageProvider({ location, pageContext }) {
   const { components, layouts } = useViewComponents()
@@ -12,16 +15,26 @@ function PageProvider({ location, pageContext }) {
       path: location.pathname,
     },
   })
-
-  if (loading && pageContext.page === null) {
-    return <h1>Loading</h1>
+  if (loading && pageContext.defaultPage) {
+    return <PageLoading />
   }
 
   const page =
     data && data.orion_page.length === 1 ? data.orion_page[0] : pageContext.page
 
   if (!page) {
-    return <h1>Error</h1>
+    navigate('/_not_found')
+    return null
+  }
+
+  if (!loading && page.is4xx) {
+    return (
+      <ErrorMessage
+        title={page.title}
+        errorCode={page.errorCode}
+        message={page.message}
+      />
+    )
   }
 
   const blocks = {}

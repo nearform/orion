@@ -4,5 +4,8 @@ mutation updatePageTitle($id: Int!, $title: String!, $modified: timestamptz) {
     _set: { title: $title, modified: $modified }
   ) {
     affected_rows
+    returning {
+      title
+    }
   }
 }
