@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk')
 const https = require('https')
+const { cancelRunningJobs } = require('./cancel-running-jobs')
 
 const region = 'eu-west-1'
 const secretName = 'ORION_CIRCLE_CI_API_USER_TOKEN'
@@ -26,6 +27,9 @@ const getCircleCiApiKey = async () => {
 exports.handler = async () => {
   const { secret } = await getCircleCiApiKey()
   const { ORION_CIRCLE_CI_API_USER_TOKEN } = JSON.parse(secret)
+
+  await cancelRunningJobs(ORION_CIRCLE_CI_API_USER_TOKEN)
+
   const bodyData = JSON.stringify({
     branch: 'staging',
     parameters: {
