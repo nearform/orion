@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import AppBar from 'gatsby-plugin-orion-view/src/components/AppBar'
+import AppBar from '../AppBar'
 import { useQuery } from 'graphql-hooks'
 
 import { AuthContext } from 'gatsby-plugin-orion-core/src/components/AuthWrapper'

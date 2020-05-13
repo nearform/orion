@@ -159,8 +159,8 @@ jobs:
           name: Deploy acme-edit bundle to S3
           command: aws s3 sync packages/acme-edit/public ${EDIT_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
       - run:
-          name: Deploy acme-view bundle to S3
-          command: aws s3 sync packages/acme-view/public ${VIEW_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+          name: Deploy gatsby-plugin-orion-view bundle to S3
+          command: aws s3 sync packages/gatsby-plugin-orion-view/public ${VIEW_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
       - run:
           name: Deploy storybook bundle to S3
           command: aws s3 sync storybook-static ${STORYBOOK_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
@@ -191,7 +191,7 @@ jobs:
             echo 'export SIGNUP_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-signup-hook --silent`"' >> $BASH_ENV
             echo 'export HASURA_ARTIFACT="packages/`cd packages/hasura && npm run artifact:name --silent`"' >> $BASH_ENV
             echo 'export EDIT_APP_ARTIFACT="packages/acme-edit/`cd packages/acme-edit && npm run artifact:name --silent`"' >> $BASH_ENV
-            echo 'export VIEW_APP_ARTIFACT="packages/acme-view/`cd packages/acme-view && npm run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export VIEW_APP_ARTIFACT="packages/gatsby-plugin-orion-view/`cd packages/gatsby-plugin-orion-view && npm run artifact:name --silent`"' >> $BASH_ENV
       - *install_awscli
       - run:
           name: Copy artifacts to S3 bucket
@@ -225,13 +225,13 @@ jobs:
       - *load_envars
       - *install_awscli
       - run:
-          name: Build acme-view static files
+          name: Build gatsby-plugin-orion-view static files
           command: |
             yarn run build:view
       - run:
-          name: Deploy acme-view bundle to S3
+          name: Deploy gatsby-plugin-orion-view bundle to S3
           command: |
-            aws s3 sync packages/acme-view/public ${VIEW_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+            aws s3 sync packages/gatsby-plugin-orion-view/public ${VIEW_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
 workflows:
   version: 2
   build-only:

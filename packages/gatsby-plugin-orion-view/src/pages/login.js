@@ -1,6 +1,6 @@
 import React from 'react'
 import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
-import UserAuthentication from 'gatsby-plugin-orion-view/src/components/UserAuthentication'
+import UserAuthentication from '../components/UserAuthentication'
 
 const Login = () => (
   <PaddedContainer>

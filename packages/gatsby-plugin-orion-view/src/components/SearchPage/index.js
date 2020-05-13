@@ -3,7 +3,7 @@ import React from 'react'
 import getSearchQuery from 'gatsby-plugin-orion-core/src/queries/base-search.graphql'
 import { useViewComponents } from '../ViewComponentProvider'
 import { useQuery } from 'graphql-hooks'
-import ArticleList from '../ArticleList'
+import InnerArticleList from '../InnerArticleList'
 
 export const getContents = ({
   contents = [],
@@ -46,7 +46,7 @@ function SearchPageProvider({ location, pageContext }) {
   return (
     <Layout
       main={
-        <ArticleList
+        <InnerArticleList
           articles={results.map(({ path, id, title, contents, published }) => ({
             path,
             id,

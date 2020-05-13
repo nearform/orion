@@ -50,7 +50,7 @@ Required environment variables for each package are documented in the `.env.samp
 
 The following packages distinguish between `.env.development` and `.env.production` when running in development mode or building for production:
 * `acme-edit`
-* `acme-view`
+* `gatsby-plugin-orion-view`
 
 The package `hasura` does not make a distinction and has a single `.env` file.
 

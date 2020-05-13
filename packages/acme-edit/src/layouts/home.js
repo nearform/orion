@@ -1,5 +1,5 @@
 import Example from '../assets/layout1.inline.svg'
-import layouts from 'acme-view/src/layouts'
+import layouts from 'gatsby-plugin-orion-view/src/layouts'
 
 export default {
   allowChildren: false,
