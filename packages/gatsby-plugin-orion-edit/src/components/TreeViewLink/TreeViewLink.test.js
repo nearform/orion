@@ -84,12 +84,13 @@ describe('TreeViewLink component', () => {
     beforeEach(() => {
       component = renderComponent(propsPage)
     })
+
     it('shows a Link to the relevent page', () => {
       const { getByText } = component
       expect(getByText(propsPage.title)).toHaveAttribute('href', propsPage.to)
       expect(getByText(propsPage.title)).toMatchInlineSnapshot(`
         <a
-          href="/great-title-slug"
+          href='/great-title-slug'
         >
           great titles are made
         </a>
@@ -98,7 +99,6 @@ describe('TreeViewLink component', () => {
 
     it('shows a button to edit the page title', () => {
       const { getByText } = component
-
       expect(getByText(propsPage.title).nextSibling).toBeInTheDocument()
     })
 
@@ -107,6 +107,7 @@ describe('TreeViewLink component', () => {
         const { getByText } = component
         fireEvent.click(getByText(propsPage.title).nextSibling)
       })
+
       it('then it shows an input with a value initialised to be the title', () => {
         const { getByDisplayValue } = component
         expect(getByDisplayValue(propsPage.title)).toBeInTheDocument()
