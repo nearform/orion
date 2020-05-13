@@ -69,7 +69,21 @@ useEditComponents.mockReturnValue({
       },
       editor: () => <div>layouts.article</div>,
       example: () => <div>Example</div>,
-      name: 'Simple article',
+      name: 'Article',
+    },
+    page: {
+      allowChildren: false,
+      blocks: {
+        metadata: {
+          defaultComponent: 'ArticleMetadata',
+        },
+        content: {
+          defaultComponent: 'ArticleContent',
+        },
+      },
+      editor: () => <div>layouts.page</div>,
+      example: () => <div>Example</div>,
+      name: 'Simple page',
     },
   },
   wrapper: ({ children }) => <div>{children}</div>,
@@ -143,7 +157,7 @@ const mockInitialState = {
   tags: [{ tag: { hidden: false, tag: 'test-tag' } }],
   created: '2020-03-09T13:04:33.627494+00:00',
   id: 23,
-  layout: 'article',
+  layout: 'page',
   modified: null,
   path: '/latest-news/legal',
   show_in_menu: false,
@@ -175,7 +189,7 @@ describe('Edit page reducer', () => {
       draft.title = 'something different'
       draft.show_in_menu = true
       draft.path = '/else/where'
-      draft.layout = 'section'
+      draft.layout = 'page'
     })
     const state = reducer(mockInitialState, { type: 'settings', ...payload })
     expect(state).toEqual(payload)
@@ -463,7 +477,7 @@ describe('EditPage component', () => {
                 },
               ],
               id: 23,
-              layout: 'article',
+              layout: 'page',
               modified: mockDate,
               path: '/latest-news/legal',
               published: mockDate,
@@ -550,7 +564,7 @@ describe('EditPage component', () => {
                 },
               ],
               id: 23,
-              layout: 'article',
+              layout: 'page',
               modified: mockDate,
               path: '/latest-news/legal',
               published: mockDate,
