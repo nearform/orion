@@ -49,7 +49,6 @@ Configuration happens through environment variables.
 Required environment variables for each package are documented in the `.env.sample` files inside the associated packages.
 
 The following packages distinguish between `.env.development` and `.env.production` when running in development mode or building for production:
-* `acme-admin`
 * `acme-edit`
 * `gatsby-plugin-orion-view`
 
@@ -68,14 +67,13 @@ The package `hasura` does not make a distinction and has a single `.env` file.
 ```bash
 yarn start:view
 yarn start:edit
-yarn start:admin
 ```
 
 ### 2. Debug the sites in your browser 🚫🐛
 
 Once Gatsby successfully builds and starts the development server(s) the sites can be debugged in your browser.
 
-#### 🚀 Navigate to http://localhost:8000 (view), http://localhost:8001 (edit), or http://localhost:8002 (admin) as required.
+#### 🚀 Navigate to http://localhost:8000 (view), or http://localhost:8001 (edit) as required.
 
 ### 3. Storybook 📖
 

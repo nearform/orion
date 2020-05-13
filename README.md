@@ -64,7 +64,7 @@ This project uses .env files for environment variables.
 
 To get the environment variable setup for local development you will need
 
-- .env.development files need to added to gatsby-plugin-orion-view, acme-admin and acme-edit.
+- .env.development files need to added to gatsby-plugin-orion-view and acme-edit.
 - A .env file needs to added to the hasura package.
 
 The content of the files can be found on clipperz.is
@@ -125,11 +125,6 @@ End-to-end tests using TestCafe. Requires environment variables to run, see
 ### [./packages/gatsby-gatsby-theme-acme](./packages/gatsby-gatsby-theme-acme)
 
 Contains all styling (CSS) and unique-client assets (such as logo images) for the Orion demo project `Acme`.
-
-### [./packages/gatsby-plugin-orion-admin](./packages/gatsby-plugin-orion-admin)
-
-Contains all components and functionality related to the creation and management of users, groups, roles,
-and role-permissions for Orion projects.
 
 ### [./packages/gatsby-plugin-orion-core](./packages/gatsby-plugin-orion-core)
 
