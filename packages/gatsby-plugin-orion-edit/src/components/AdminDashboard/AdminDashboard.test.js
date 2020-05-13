@@ -40,7 +40,7 @@ const mockData = [
 ]
 const mockContent = [
   {
-    label: 'Create page',
+    label: 'Create Page',
     to: '/pages/create',
     Image: () => <div>mockPagesIcon</div>,
   },

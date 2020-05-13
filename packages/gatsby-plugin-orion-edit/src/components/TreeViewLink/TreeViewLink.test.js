@@ -90,7 +90,7 @@ describe('TreeViewLink component', () => {
       expect(getByText(propsPage.title)).toHaveAttribute('href', propsPage.to)
       expect(getByText(propsPage.title)).toMatchInlineSnapshot(`
         <a
-          href='/great-title-slug'
+          href="/great-title-slug"
         >
           great titles are made
         </a>
