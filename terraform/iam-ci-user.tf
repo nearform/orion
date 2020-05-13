@@ -19,8 +19,6 @@ data "aws_iam_policy_document" "s3_bucket_access" {
     ]
 
     resources = [
-      "arn:aws:s3:::${var.cf_admin_app_domain_name}",
-      "arn:aws:s3:::${var.cf_admin_app_domain_name}/*",
       "arn:aws:s3:::${var.cf_edit_app_domain_name}",
       "arn:aws:s3:::${var.cf_edit_app_domain_name}/*",
       "arn:aws:s3:::${var.cf_view_app_domain_name}",
