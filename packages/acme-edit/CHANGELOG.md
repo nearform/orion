@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.57.3](https://github.com/nearform/orion/compare/v2.57.2...v2.57.3) (2020-05-13)
+
+
+### Bug Fixes
+
+* 🐛 Add gatsby-plugin-orion-view to acme-edit ([c726d62](https://github.com/nearform/orion/commit/c726d621f9bcac05651220d4ab0eae0db8f6b812))
+* 🐛 Naming issue ([942a0c5](https://github.com/nearform/orion/commit/942a0c5e730efa5c2559c320d588db3a6262ea32))
+
+
+
+
+
 ## [2.57.2](https://github.com/nearform/orion/compare/v2.57.1...v2.57.2) (2020-05-13)
 
 **Note:** Version bump only for package acme-edit

@@ -5,5 +5,5 @@
     "packages/*",
     "hasura"
   ],
-  "version": "2.57.2"
+  "version": "2.57.3"
 }

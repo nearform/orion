@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.57.3](https://github.com/nearform/orion/compare/v2.57.2...v2.57.3) (2020-05-13)
+
+
+### Bug Fixes
+
+* 🐛 Add gatsby-plugin-orion-view to acme-edit ([c726d62](https://github.com/nearform/orion/commit/c726d621f9bcac05651220d4ab0eae0db8f6b812))
+* 🐛 ArticleList naming issue ([55a740f](https://github.com/nearform/orion/commit/55a740f3613c6c225c45c8bd00fc87dfdf1fac60))
+* 🐛 cpuCoreCount export was changed in newer gatsby version ([7e798d5](https://github.com/nearform/orion/commit/7e798d5ee695b7078ca7a0df0b6d8885feda15d5))
+* 🐛 Failing tests ([cf067f2](https://github.com/nearform/orion/commit/cf067f2b280c6f74cc3af4ab70aab1ef9a4d7e2a))
+* 🐛 Import issue ([896dfb6](https://github.com/nearform/orion/commit/896dfb61004626a36d47e1fcc15dca799ae624ef))
+* 🐛 Import mistake ([8da577c](https://github.com/nearform/orion/commit/8da577c8db91630dae3d85b1fa85070c97d18f20))
+* 🐛 Issue with gatsby version of react ([11b1e3e](https://github.com/nearform/orion/commit/11b1e3e0fbabb23878b23ac8efb3802a73feb538))
+* 🐛 Naming issue ([942a0c5](https://github.com/nearform/orion/commit/942a0c5e730efa5c2559c320d588db3a6262ea32))
+
+
+
+
+
 ## [2.57.2](https://github.com/nearform/orion/compare/v2.57.1...v2.57.2) (2020-05-13)
 
 **Note:** Version bump only for package orion
