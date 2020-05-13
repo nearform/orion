@@ -180,7 +180,7 @@ describe('TreeViewLink component', () => {
               it('does NOT show the original title', () => {
                 const { queryByText } = component
 
-                expect(queryByText(props.title)).not.toBeInTheDocument()
+                expect(queryByText(propsPage.title)).not.toBeInTheDocument()
               })
             })
           })
