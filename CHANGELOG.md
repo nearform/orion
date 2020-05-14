@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.57.5](https://github.com/nearform/orion/compare/v2.57.4...v2.57.5) (2020-05-14)
+
+
+### Reverts
+
+* Revert "Nf richatkins/ch454/build create article for orionedit (#144)" (#150) ([54352fb](https://github.com/nearform/orion/commit/54352fb1dc0900e7cfa9b755ecedd32de9b90194)), closes [#144](https://github.com/nearform/orion/issues/144) [#150](https://github.com/nearform/orion/issues/150)
+
+
+
+
+
 ## [2.57.4](https://github.com/nearform/orion/compare/v2.57.3...v2.57.4) (2020-05-14)
 
 **Note:** Version bump only for package orion
