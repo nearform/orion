@@ -13,7 +13,7 @@ export default function() {
     }
 
     return {
-      title: 'Title',
+      title: 'New page',
       path: '',
       ancestry: [],
       authors: [
@@ -26,6 +26,7 @@ export default function() {
       contents: [],
       descendants: [],
       show_in_menu: true, // eslint-disable-line camelcase
+
       allTags: data.orion_tag,
       tags: [],
     }

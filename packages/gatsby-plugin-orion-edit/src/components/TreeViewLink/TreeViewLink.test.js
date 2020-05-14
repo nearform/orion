@@ -54,19 +54,12 @@ useMutation.mockImplementation(mutation => {
   return []
 })
 
-const propsArticle = {
+const props = {
   title: 'great titles are made',
   to: '/great-title-slug',
   pageId: 123,
-  layout: 'article',
 }
-const propsPage = {
-  title: 'great titles are made',
-  to: '/great-title-slug',
-  pageId: 123,
-  layout: 'page',
-}
-const renderComponent = props =>
+const renderComponent = () =>
   render(
     <ThemeProvider theme={createMuiTheme(theme)}>
       <TreeViewLink {...props} />
@@ -78,17 +71,16 @@ describe('TreeViewLink component', () => {
     jest.clearAllMocks()
   })
 
-  let component
+  describe('When the component first loads', () => {
+    let component
 
-  describe('When the component first loads with page layout', () => {
     beforeEach(() => {
-      component = renderComponent(propsPage)
+      component = renderComponent()
     })
-
     it('shows a Link to the relevent page', () => {
       const { getByText } = component
-      expect(getByText(propsPage.title)).toHaveAttribute('href', propsPage.to)
-      expect(getByText(propsPage.title)).toMatchInlineSnapshot(`
+      expect(getByText(props.title)).toHaveAttribute('href', props.to)
+      expect(getByText(props.title)).toMatchInlineSnapshot(`
         <a
           href="/great-title-slug"
         >
@@ -99,25 +91,25 @@ describe('TreeViewLink component', () => {
 
     it('shows a button to edit the page title', () => {
       const { getByText } = component
-      expect(getByText(propsPage.title).nextSibling).toBeInTheDocument()
+
+      expect(getByText(props.title).nextSibling).toBeInTheDocument()
     })
 
     describe('And I click the edit button', () => {
       beforeEach(() => {
         const { getByText } = component
-        fireEvent.click(getByText(propsPage.title).nextSibling)
+        fireEvent.click(getByText(props.title).nextSibling)
       })
-
       it('then it shows an input with a value initialised to be the title', () => {
         const { getByDisplayValue } = component
-        expect(getByDisplayValue(propsPage.title)).toBeInTheDocument()
+        expect(getByDisplayValue(props.title)).toBeInTheDocument()
       })
 
       describe('And I change the title', () => {
         beforeEach(() => {
           const { getByDisplayValue } = component
 
-          fireEvent.change(getByDisplayValue(propsPage.title), {
+          fireEvent.change(getByDisplayValue(props.title), {
             target: { value: 'a new title' },
           })
         })
@@ -131,7 +123,7 @@ describe('TreeViewLink component', () => {
             act(() => {
               jest.runAllTimers()
             })
-            expect(getByText(propsPage.title)).toBeInTheDocument()
+            expect(getByText(props.title)).toBeInTheDocument()
           })
         })
 
@@ -181,7 +173,7 @@ describe('TreeViewLink component', () => {
               it('does NOT show the original title', () => {
                 const { queryByText } = component
 
-                expect(queryByText(propsPage.title)).not.toBeInTheDocument()
+                expect(queryByText(props.title)).not.toBeInTheDocument()
               })
             })
           })
@@ -215,17 +207,6 @@ describe('TreeViewLink component', () => {
         const { getByLabelText } = component
         expect(getByLabelText('exclude page from menu')).toBeInTheDocument()
       })
-    })
-  })
-
-  describe('When the component first loads with article layout', () => {
-    beforeEach(() => {
-      component = renderComponent(propsArticle)
-    })
-    it('include button should not exist', () => {
-      const { queryByLabelText } = component
-
-      expect(queryByLabelText('include page in menu')).not.toBeInTheDocument()
     })
   })
 })

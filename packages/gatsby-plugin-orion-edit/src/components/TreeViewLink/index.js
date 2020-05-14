@@ -75,7 +75,6 @@ const TreeViewLink = ({
   to,
   pageId,
   showInMenu: initialShowInMenu,
-  layout,
 }) => {
   const classes = useStyles()
   const [isEditing, setIsEditing] = useState(false)
@@ -165,21 +164,19 @@ const TreeViewLink = ({
       <Button className={classes.editButton} onClick={() => setIsEditing(true)}>
         <i className={`fa fa-pen ${classes.editButtonIcon}`} />
       </Button>
-      {layout !== 'article' && (
-        <Button
-          className={classes.editButton}
-          aria-label={
-            showInMenu ? 'exclude page from menu' : 'include page in menu'
-          }
-          onClick={saveShowInMenu}
-        >
-          <i
-            className={`fa fa-eye${showInMenu ? '' : '-slash'} ${
-              classes.editButtonIcon
-            }`}
-          />
-        </Button>
-      )}
+      <Button
+        className={classes.editButton}
+        aria-label={
+          showInMenu ? 'exclude page from menu' : 'include page in menu'
+        }
+        onClick={saveShowInMenu}
+      >
+        <i
+          className={`fa fa-eye${showInMenu ? '' : '-slash'} ${
+            classes.editButtonIcon
+          }`}
+        />
+      </Button>
     </div>
   )
 }
