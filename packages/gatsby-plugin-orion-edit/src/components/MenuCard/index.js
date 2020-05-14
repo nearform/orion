@@ -69,7 +69,7 @@ const MenuCard = ({ label, Image, to }) => {
 MenuCard.propTypes = {
   label: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
-  Image: PropTypes.node.isRequired,
+  Image: PropTypes.any.isRequired,
 }
 
 export default MenuCard
