@@ -35,14 +35,29 @@ const sideBarItems = [
   },
   {
     label: 'Articles',
-    to: '/article/create/',
+    to: '/pages/create/',
     iconClass: 'fas fa-newspaper',
   },
+  // {
+  //   label: 'Menus',
+  //   to: '/menus',
+  //   iconClass: 'fas fa-list-alt',
+  // },
+  // {
+  //   label: 'Categories / Tags',
+  //   to: '/categories',
+  //   iconClass: 'fas fa-tag',
+  // },
   {
     label: 'Media Library',
     to: '/media-library',
     iconClass: 'fas fa-photo-video',
   },
+  // {
+  //   label: 'Users',
+  //   to: '/users',
+  //   iconClass: 'fas fa-user-friends',
+  // },
   {
     label: 'goto View',
     to: '',
@@ -59,15 +74,25 @@ const sideBarItems = [
 ]
 const content = [
   {
-    label: 'Create page',
+    label: 'Pages',
     to: '/pages/create',
     Image: PagesIcon,
   },
   {
-    label: 'Create Article',
-    to: '/article/create',
+    label: 'Articles',
+    to: '/pages/create',
     Image: ArticlesIcon,
   },
+  // {
+  //   label: 'Menus',
+  //   to: '/menus',
+  //   src: 'todo',
+  // },
+  // {
+  //   label: 'Users',
+  //   to: '/users',
+  //   src: 'todo',
+  // },
 ]
 // TODO pull this name from the consuming application. i.e. acme
 const heading = 'Acme'

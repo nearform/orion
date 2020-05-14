@@ -42,28 +42,25 @@ function LayoutSelect({ onSelect }) {
       <Typography variant="h2">Choose layout</Typography>
       <Typography variant="body1" className={classes.p}>
         Before we get started on adding some content, lets select a layout for
-        our new content.
+        our new page.
       </Typography>
       <div className={classes.layouts}>
         {Object.entries(layouts).map(([key, layout]) => {
           const Example = layout.example
-          if (layout.name !== 'Article') {
-            return (
-              <div key={key} className={classes.layout}>
-                <Example className={classes.example} />
-                <div className={classes.name}>{layout.name}</div>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => onSelect(key)}
-                >
-                  Select
-                </Button>
-              </div>
-            )
-          }
 
-          return null
+          return (
+            <div key={key} className={classes.layout}>
+              <Example className={classes.example} />
+              <div className={classes.name}>{layout.name}</div>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => onSelect(key)}
+              >
+                Select
+              </Button>
+            </div>
+          )
         })}
       </div>
     </div>

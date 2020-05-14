@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -40,13 +39,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function EditComponent({
-  component,
-  isEditing,
-  onSave,
-  page,
-  props = {},
-}) {
+function EditComponent({ component, isEditing, onSave, page, props = {} }) {
   const classes = useStyles()
   const { components } = useEditComponents()
 
@@ -85,11 +78,8 @@ function EditComponent({
             [classes.empty]: PreviewEditor === undefined,
           })}
         >
-          { page.layout !== 'article' && (
           <FormControl className={classes.input}>
-            <InputLabel htmlFor="component-select">
-              Select Component
-            </InputLabel>
+            <InputLabel htmlFor="component-select">Select Component</InputLabel>
             <Select
               inputProps={{
                 id: 'component-select',
@@ -97,16 +87,14 @@ function EditComponent({
               value={currentComponent}
               onChange={handleComponentChange}
             >
-              { Object.keys(components).map(component => (
+              {Object.keys(components).map(component => (
                 <MenuItem key={component} value={component}>
                   {component}
                 </MenuItem>
-              )) }
+              ))}
             </Select>
           </FormControl>
-          )
-          }
-          { PreviewEditor !== undefined && (
+          {PreviewEditor !== undefined && (
             <PreviewEditor
               {...props}
               page={page}
@@ -115,9 +103,9 @@ function EditComponent({
           )}
         </div>
       )}
-      { !isEditing && PreviewComponent !== undefined && (
+      {!isEditing && PreviewComponent !== undefined && (
         <PreviewComponent {...props} page={page} />
-      ) }
+      )}
     </>
   )
 }
@@ -125,7 +113,6 @@ function EditComponent({
 EditComponent.propTypes = {
   component: PropTypes.string,
   isEditing: PropTypes.bool,
-  layout: PropTypes.string,
   onSave: PropTypes.func,
   page: PropTypes.object,
   props: PropTypes.object,

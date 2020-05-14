@@ -86,7 +86,6 @@ function TreeView({
             title={item.title}
             pageId={item.id}
             showInMenu={item.showInMenu}
-            layout={item.layout}
           />
           {item.children.length > 0 && (
             <IconButton
