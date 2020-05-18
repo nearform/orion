@@ -67,7 +67,6 @@ parameters:
     type: boolean
     default: false
 
-
 jobs:
   setup:
     <<: *deploy_environment
@@ -156,8 +155,8 @@ jobs:
       - *load_envars
       - *install_awscli
       - run:
-          name: Deploy acme-edit bundle to S3
-          command: aws s3 sync packages/acme-edit/public ${EDIT_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
+          name: Deploy gatsby-plugin-orion-edit bundle to S3
+          command: aws s3 sync packages/gatsby-plugin-orion-edit/public ${EDIT_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
       - run:
           name: Deploy gatsby-plugin-orion-view bundle to S3
           command: aws s3 sync packages/gatsby-plugin-orion-view/public ${VIEW_APP_BUCKET} --delete --cache-control max-age=0,no-cache,no-store,must-revalidate
@@ -190,7 +189,7 @@ jobs:
             echo 'export ENRICHMENT_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-enrichment-hook --silent`"' >> $BASH_ENV
             echo 'export SIGNUP_ARTIFACT="packages/functions/`cd packages/functions && npm run artifact:name-signup-hook --silent`"' >> $BASH_ENV
             echo 'export HASURA_ARTIFACT="packages/`cd packages/hasura && npm run artifact:name --silent`"' >> $BASH_ENV
-            echo 'export EDIT_APP_ARTIFACT="packages/acme-edit/`cd packages/acme-edit && npm run artifact:name --silent`"' >> $BASH_ENV
+            echo 'export EDIT_APP_ARTIFACT="packages/gatsby-plugin-orion-edit/`cd packages/gatsby-plugin-orion-edit && npm run artifact:name --silent`"' >> $BASH_ENV
             echo 'export VIEW_APP_ARTIFACT="packages/gatsby-plugin-orion-view/`cd packages/gatsby-plugin-orion-view && npm run artifact:name --silent`"' >> $BASH_ENV
       - *install_awscli
       - run:
@@ -295,7 +294,7 @@ workflows:
       - publish-artifacts:
           requires:
             - test
-  generate-view-content: 
+  generate-view-content:
     when: << pipeline.parameters.regenerate_view_only >>
     jobs:
       - setup:
