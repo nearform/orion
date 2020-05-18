@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.57.6](https://github.com/nearform/orion/compare/v2.57.5...v2.57.6) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
+## [2.57.5](https://github.com/nearform/orion/compare/v2.57.4...v2.57.5) (2020-05-14)
+
+
+### Reverts
+
+* Revert "Nf richatkins/ch454/build create article for orionedit (#144)" (#150) ([54352fb](https://github.com/nearform/orion/commit/54352fb1dc0900e7cfa9b755ecedd32de9b90194)), closes [#144](https://github.com/nearform/orion/issues/144) [#150](https://github.com/nearform/orion/issues/150)
+
+
+
+
+
+## [2.57.4](https://github.com/nearform/orion/compare/v2.57.3...v2.57.4) (2020-05-14)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
+## [2.57.3](https://github.com/nearform/orion/compare/v2.57.2...v2.57.3) (2020-05-13)
+
+
+### Bug Fixes
+
+* 🐛 ArticleList naming issue ([55a740f](https://github.com/nearform/orion/commit/55a740f3613c6c225c45c8bd00fc87dfdf1fac60))
+* 🐛 Failing tests ([cf067f2](https://github.com/nearform/orion/commit/cf067f2b280c6f74cc3af4ab70aab1ef9a4d7e2a))
+* 🐛 Import issue ([896dfb6](https://github.com/nearform/orion/commit/896dfb61004626a36d47e1fcc15dca799ae624ef))
+* 🐛 Import mistake ([8da577c](https://github.com/nearform/orion/commit/8da577c8db91630dae3d85b1fa85070c97d18f20))
+* 🐛 Issue with gatsby version of react ([11b1e3e](https://github.com/nearform/orion/commit/11b1e3e0fbabb23878b23ac8efb3802a73feb538))
+
+
+
+
+
 ## [2.57.2](https://github.com/nearform/orion/compare/v2.57.1...v2.57.2) (2020-05-13)
 
 **Note:** Version bump only for package gatsby-plugin-orion-view
