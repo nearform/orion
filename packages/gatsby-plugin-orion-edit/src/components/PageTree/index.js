@@ -58,6 +58,7 @@ function PageTree() {
               ? 'fas fa-file'
               : 'fas fa-long-arrow-alt-right',
           showInMenu: page.show_in_menu,
+          layout: page.layout,
         }
       }
 

@@ -11,7 +11,7 @@ export default {
       defaultComponent: 'ArticleContent',
     },
   },
-  editor: layouts.article,
+  editor: layouts.page,
   example: Example,
-  name: 'Article',
+  name: 'Simple page',
 }
