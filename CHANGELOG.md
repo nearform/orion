@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.57.7](https://github.com/nearform/orion/compare/v2.57.6...v2.57.7) (2020-05-19)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
 ## [2.57.6](https://github.com/nearform/orion/compare/v2.57.5...v2.57.6) (2020-05-18)
 
 **Note:** Version bump only for package orion
