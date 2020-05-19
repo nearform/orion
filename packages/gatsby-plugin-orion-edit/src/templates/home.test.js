@@ -1,7 +1,6 @@
 import React from 'react'
 import { fireEvent, render } from '@testing-library/react'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-// Import { checkIfAuthenticated, Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
 import { Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
 
 import theme from 'gatsby-theme-acme'
@@ -11,7 +10,6 @@ jest.mock('gatsby-plugin-orion-core/src/utils/amplify', () => ({
   Auth: {},
   checkIfAuthenticated: () => jest.fn(),
 }))
-
 Auth.currentAuthenticatedUser = jest.fn().mockResolvedValue('not authenticated')
 
 const renderComponent = () =>
