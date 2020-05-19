@@ -4,7 +4,7 @@ import ArticlesIcon from '../components/SvgIcons/drawing-woman.inline.svg'
 import PagesIcon from '../components/SvgIcons/support-notes.inline.svg'
 
 import { checkIfAuthenticated } from 'gatsby-plugin-orion-core/src/utils/amplify'
-import { navigate } from '@reach/router'
+import { navigate, useLocation } from '@reach/router'
 
 const gotoNewUrl = (newSub, localPath) => {
   newSub = newSub.toLowerCase()
@@ -73,7 +73,8 @@ const content = [
 const heading = 'Acme'
 
 export default function() {
-  checkIfAuthenticated()
+  const location = useLocation()
+  checkIfAuthenticated(location.hostname)
 
   return (
     <AdminDashboard data={sideBarItems} heading={heading} content={content} />
