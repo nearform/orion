@@ -4,7 +4,7 @@ import { jsxDecorator } from 'storybook-addon-jsx'
 import { text, boolean, select } from '@storybook/addon-knobs'
 
 import PaddedContainer from 'gatsby-plugin-orion-core/src/components/PaddedContainer'
-import ArticleList from '.'
+import InnerArticleList from '.'
 
 const mockArticles = [
   {
@@ -67,7 +67,7 @@ storiesOf('ArticleList', module)
   .addDecorator(jsxDecorator)
   .add('ArticleList Grid', () => (
     <PaddedContainer>
-      <ArticleList
+      <InnerArticleList
         title={text('Title', 'Latest News')}
         options={{
           withFeatured: boolean('withFeatured', false),
