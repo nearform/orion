@@ -4,6 +4,13 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import theme from 'gatsby-theme-acme'
 
 import AdminDashboard from '.'
+import { Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
+
+jest.mock('gatsby-plugin-orion-core/src/utils/amplify', () => ({
+  Auth: {},
+  checkIfAuthenticated: () => jest.fn(),
+}))
+Auth.currentAuthenticatedUser = jest.fn().mockResolvedValue('not authenticated')
 
 const mockData = [
   {
