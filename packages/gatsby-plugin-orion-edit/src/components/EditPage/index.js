@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
+import { checkIfAuthenticated } from 'gatsby-plugin-orion-core/src/utils/amplify'
 import createPageMutation from '../../queries/create-page.graphql'
 import updatePageMutation from '../../queries/update-page.graphql'
 import ArticleEditButtons from '../ArticleEditButtons'
@@ -77,6 +78,7 @@ export function reducer(page, { type, ...payload }) {
 }
 
 function EditPage({ initialState, onSave }) {
+  checkIfAuthenticated()
   const { pathname } = useLocation()
   const amArticle = pathname.includes('/article/')
 

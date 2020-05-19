@@ -11,6 +11,13 @@ import { useLocation } from '@reach/router'
 import * as mui from '@material-ui/pickers'
 import * as slugifyWrap from 'gatsby-plugin-orion-core/src/utils/slugify'
 import { useEditComponents } from '../EditComponentProvider'
+import { Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
+
+jest.mock('gatsby-plugin-orion-core/src/utils/amplify', () => ({
+  Auth: {},
+  checkIfAuthenticated: () => jest.fn(),
+}))
+Auth.currentAuthenticatedUser = jest.fn().mockResolvedValue('not authenticated')
 
 jest.spyOn(mui, 'DateTimePicker')
 jest.spyOn(slugifyWrap, 'default')
