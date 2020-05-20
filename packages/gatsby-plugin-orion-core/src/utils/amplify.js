@@ -1,31 +1,37 @@
 import Amplify from 'aws-amplify'
 import awsConfig from './aws-exports'
 
+const isWindowLoaded = typeof window !== 'undefined'
+
 const AmplifyMock = {
   Auth: {
-    user: null,
+    user: isWindowLoaded ? localStorage.getItem('loggedIn') : null,
     currentAuthenticatedUser: () => Promise.resolve(),
+
     signIn({ username, password }) {
       if (username === 'test@test.com' && password === 'test') {
         this.user = true
+        localStorage.setItem('loggedIn', 'true')
         return Promise.resolve()
       }
 
-      const error = new Error('whoos')
-      error.name = 'name'
-      error.code = 500
+      const error = new Error('Invalid credentials')
+      error.name = 'Error'
+      error.code = ''
       return Promise.reject(error)
     },
+
     signOut() {
       this.user = null
+      localStorage.removeItem('loggedIn')
       return Promise.resolve()
     },
   },
 }
 
-Amplify.configure(awsConfig)
-
 const developmentEnv = process.env.NODE_ENV === 'development'
+
+Amplify.configure(awsConfig)
 
 const { Auth, Storage } = developmentEnv
   ? AmplifyMock
