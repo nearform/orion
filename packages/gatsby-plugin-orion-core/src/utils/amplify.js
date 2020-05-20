@@ -6,10 +6,17 @@ const isWindowLoaded = typeof window !== 'undefined'
 const AmplifyMock = {
   Auth: {
     user: isWindowLoaded ? localStorage.getItem('loggedIn') : null,
+
     currentAuthenticatedUser: () => Promise.resolve(),
 
     signIn({ username, password }) {
-      if (username === 'test@test.com' && password === 'test') {
+      const developmentUsername = process.env.DEVELOPMENT_USERNAME
+      const developmentPassword = process.env.DEVELOPMENT_PASSWORD
+
+      if (
+        username === developmentUsername &&
+        password === developmentPassword
+      ) {
         this.user = true
         localStorage.setItem('loggedIn', 'true')
         return Promise.resolve()
