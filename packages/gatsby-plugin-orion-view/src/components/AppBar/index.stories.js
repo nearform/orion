@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { select, text, object } from '@storybook/addon-knobs'
 
-import AppBar from './AppBar'
+import AppBar from '.'
 
 const menuData = [
   {
