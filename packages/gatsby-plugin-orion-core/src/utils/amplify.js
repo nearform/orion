@@ -37,10 +37,12 @@ const AmplifyMock = {
 }
 
 const developmentEnv = process.env.NODE_ENV === 'development'
+const isCognitoBypassed = process.env.BYPASS_AWS_COGNITO === 'true'
+const bypassCognito = developmentEnv && isCognitoBypassed
 
 Amplify.configure(awsConfig)
 
-const { Auth, Storage } = developmentEnv
+const { Auth, Storage } = bypassCognito
   ? AmplifyMock
   : { Auth: Amplify.Auth, Storage: Amplify.Storage }
 
