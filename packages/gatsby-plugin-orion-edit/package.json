@@ -2,7 +2,7 @@
   "name": "gatsby-plugin-orion-edit",
   "private": true,
   "description": "Orion core edit plugin",
-  "version": "2.57.7",
+  "version": "2.57.8",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
