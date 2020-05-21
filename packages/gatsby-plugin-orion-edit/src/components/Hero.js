@@ -1,37 +1,45 @@
 import React from 'react'
-import ArticleMetadata from 'gatsby-plugin-orion-view/src/components/ArticleMetadata/Wrap'
-import { createPropEditor } from 'gatsby-plugin-orion-edit'
+import Hero from 'gatsby-plugin-orion-view/src/components/Hero/Wrap'
+import createPropEditor from './PropEditor'
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 'none',
     border: `1px dashed ${theme.palette.common.black}`,
     margin: '-16px 0 0 -16px',
     padding: '36px 16px 16px',
     width: 'calc(100% + 32px)',
-    height: '100%',
   },
 }))
 
-const ArticleMetadataEditor = props => {
+const HeroEditor = props => {
   const classes = useStyles()
 
   return (
     <div className={classes.root}>
-      <ArticleMetadata {...props} />
+      <Hero {...props} />
     </div>
   )
 }
 
 export default {
-  editor: ArticleMetadataEditor,
-  preview: ArticleMetadata,
+  editor: HeroEditor,
+  preview: Hero,
   settings: createPropEditor({
-    readTime: {
-      label: 'Read time',
+    image: {
+      label: 'Image',
       required: true,
-      type: 'number',
+      type: 'string',
+    },
+    title: {
+      label: 'Title',
+      required: true,
+      type: 'string',
+    },
+    subtitle: {
+      label: 'Subtitle',
+      required: true,
+      type: 'string',
     },
   }),
 }

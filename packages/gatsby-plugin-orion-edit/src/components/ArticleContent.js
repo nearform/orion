@@ -1,9 +1,9 @@
 import React from 'react'
 import ArticleContent from 'gatsby-plugin-orion-view/src/components/ArticleContent/Wrap'
-import MarkdownEditor from 'gatsby-plugin-orion-edit/src/components/MarkdownEditor/MarkdownEditor'
+import MarkdownEditor from './MarkdownEditor/MarkdownEditor'
 import { Input, makeStyles, InputBase, Paper } from '@material-ui/core'
-import { createPropEditor } from 'gatsby-plugin-orion-edit'
-import TagsSelect from 'gatsby-plugin-orion-edit/src/components/TagsSelect'
+import createPropEditor from './PropEditor'
+import TagsSelect from './TagsSelect'
 import CloudinaryImageChooser from 'gatsby-plugin-orion-core/src/components/CloudinaryImageChooser'
 import getCloudinarySignature from 'gatsby-plugin-orion-core/src/utils/cloudinary-signature-from-auth'
 

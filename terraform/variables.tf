@@ -17,7 +17,7 @@ variable "vpc_az_count" {
 }
 
 variable "cf_edit_app_domain_name" {
-  description = "Domain name used for acme-edit Cloudfront"
+  description = "Domain name used for gatsby-plugin-orion-edit Cloudfront"
 }
 
 variable "cf_view_app_domain_name" {

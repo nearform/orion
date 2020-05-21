@@ -1,6 +1,6 @@
 import React from 'react'
 import ListChildren from 'gatsby-plugin-orion-view/src/components/ListChildren'
-import { createPropEditor } from 'gatsby-plugin-orion-edit'
+import createPropEditor from './PropEditor'
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({

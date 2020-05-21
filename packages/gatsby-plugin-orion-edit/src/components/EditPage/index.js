@@ -108,7 +108,7 @@ function EditPage({ initialState, onSave }) {
         })),
       })
     }
-  }, [])
+  }, [amArticle, blocks])
 
   const handleSaveDraft = () => {
     savePage(true)
