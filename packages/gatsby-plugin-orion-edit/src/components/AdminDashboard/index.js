@@ -64,7 +64,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const AdminDashboard = ({ data, heading, content }) => {
-  checkIfAuthenticated(location.hostname)
+  checkIfAuthenticated()
 
   const classes = useStyles()
   return (
