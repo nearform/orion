@@ -78,8 +78,7 @@ export function reducer(page, { type, ...payload }) {
 }
 
 function EditPage({ initialState, onSave }) {
-  const location = useLocation()
-  checkIfAuthenticated(location.hostname)
+  checkIfAuthenticated()
   const { pathname } = useLocation()
   const amArticle = pathname.includes('/article/')
 

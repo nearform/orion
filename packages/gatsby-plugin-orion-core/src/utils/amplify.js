@@ -5,8 +5,9 @@ Amplify.configure(awsConfig)
 
 import { navigate } from '@reach/router'
 
-export const checkIfAuthenticated = hostname => {
-  if (hostname === 'localhost') {
+export const checkIfAuthenticated = () => {
+  const windowGlobal = typeof window !== 'undefined' && window
+  if (windowGlobal && windowGlobal.location.hostname === 'localhost') {
     return true
   }
 

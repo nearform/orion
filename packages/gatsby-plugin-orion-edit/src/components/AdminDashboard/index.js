@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core'
 import MenuCard from '../MenuCard'
 import GridList from '@material-ui/core/GridList'
 import { checkIfAuthenticated } from 'gatsby-plugin-orion-core/src/utils/amplify'
-import { useLocation } from '@reach/router'
 
 const drawerWidth = 318
 const useStyles = makeStyles(theme => ({
@@ -65,7 +64,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const AdminDashboard = ({ data, heading, content }) => {
-  const location = useLocation()
   checkIfAuthenticated(location.hostname)
 
   const classes = useStyles()
