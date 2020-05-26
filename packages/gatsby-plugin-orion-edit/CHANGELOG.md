@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.58.0](https://github.com/nearform/orion/compare/v2.57.8...v2.58.0) (2020-05-21)
+
+**Note:** Version bump only for package gatsby-plugin-orion-edit
+
+
+
+
+
+## [2.57.8](https://github.com/nearform/orion/compare/v2.57.7...v2.57.8) (2020-05-21)
+
+
+### Bug Fixes
+
+* 🐛 Style overrides not found in mui/styles ^4.9.1 ([d940e2e](https://github.com/nearform/orion/commit/d940e2eee65b82a2e1a9acd2411398844b6935c2))
+
+
+
+
+
+## [2.57.7](https://github.com/nearform/orion/compare/v2.57.6...v2.57.7) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-plugin-orion-edit
+
+
+
+
+
+## [2.57.6](https://github.com/nearform/orion/compare/v2.57.5...v2.57.6) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-plugin-orion-edit
+
+
+
+
+
 ## [2.57.5](https://github.com/nearform/orion/compare/v2.57.4...v2.57.5) (2020-05-14)
 
 

@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.58.0](https://github.com/nearform/orion/compare/v2.57.8...v2.58.0) (2020-05-21)
+
+
+### Features
+
+* 🎸 bypass cognito in local env update .env.sample ([d0a0f09](https://github.com/nearform/orion/commit/d0a0f09566f23e0c0af1487cc22675a8a9d9449f))
+* 🎸 Disable Cognito integration for running locally ([1e804e2](https://github.com/nearform/orion/commit/1e804e2d27aa2cb2ba2cf554d4111e154d4ccbbe))
+* 🎸 getting development credentials from env variables ([f4549f0](https://github.com/nearform/orion/commit/f4549f0a949f73de724fbf732ec98301a7a01ab7))
+* 🎸 waiting window to load before using localstorage ([acaa6f7](https://github.com/nearform/orion/commit/acaa6f72fedc7651b10a8070d246d214a14cb2a0))
+
+
+
+
+
+## [2.57.8](https://github.com/nearform/orion/compare/v2.57.7...v2.57.8) (2020-05-21)
+
+
+### Bug Fixes
+
+* 🐛 Style overrides not found in mui/styles ^4.9.1 ([d940e2e](https://github.com/nearform/orion/commit/d940e2eee65b82a2e1a9acd2411398844b6935c2))
+
+
+
+
+
+## [2.57.7](https://github.com/nearform/orion/compare/v2.57.6...v2.57.7) (2020-05-19)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
+## [2.57.6](https://github.com/nearform/orion/compare/v2.57.5...v2.57.6) (2020-05-18)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
 ## [2.57.5](https://github.com/nearform/orion/compare/v2.57.4...v2.57.5) (2020-05-14)
 
 

@@ -3,15 +3,13 @@ import T from 'prop-types'
 import {
   Paper,
   Table,
-  TableBody,
-  TableCell,
   TableContainer,
-  TableFooter,
-  TableHead,
   TablePagination,
-  TableRow,
-  TableSortLabel,
+  TableFooter,
 } from '@material-ui/core'
+
+import TableHead from './TableHead'
+import TableBody from './TableBody'
 
 function DataTable({
   activeSortDirection,
@@ -28,67 +26,29 @@ function DataTable({
   onChangeRowsPerPage,
   onChangeSort,
 }) {
-  const header = (
-    <TableHead>
-      {columns.map(({ align, id, label, minWidth, sortable }) => (
-        <TableCell key={id} align={align} style={{ minWidth }}>
-          {sortable ? (
-            <TableSortLabel
-              active={activeSortId === id}
-              direction={activeSortDirection || 'asc'}
-              onClick={() =>
-                onChangeSort(
-                  id,
-                  activeSortId === id
-                    ? activeSortDirection === 'asc'
-                      ? 'desc'
-                      : 'asc'
-                    : 'asc'
-                )
-              }
-            >
-              {label}
-            </TableSortLabel>
-          ) : (
-            label
-          )}
-        </TableCell>
-      ))}
-    </TableHead>
-  )
-
-  const body = (
-    <TableBody>
-      {data.map(row => (
-        <TableRow key={id}>
-          {columns.map(({ id, render }) => (
-            <TableCell key={id}>
-              {render === undefined ? row[id] : render(row[id], row)}
-            </TableCell>
-          ))}
-        </TableRow>
-      ))}
-    </TableBody>
-  )
-
-  const footer = isPaginated ? (
-    <TableFooter>
-      <TablePagination
-        count={rowCount}
-        page={page || 0}
-        rowsPerPage={rowsPerPage || 10}
-        onChangePage={(event, page) => onChangePage(page)}
-        onChangeRowsPerPage={event => onChangeRowsPerPage(event.target.value)}
-      />
-    </TableFooter>
-  ) : null
-
   return (
     <TableContainer component={container || Paper}>
       <Table>
-        {header}
-        {body}
-        {footer}
+        <TableHead
+          columns={columns}
+          activeSortId={activeSortId}
+          activeSortDirection={activeSortDirection}
+          onChangeSort={onChangeSort}
+        />
+        <TableBody data={data} columns={columns} id={id} />
+        {isPaginated && (
+          <TableFooter>
+            <TablePagination
+              count={rowCount}
+              page={page || 0}
+              rowsPerPage={rowsPerPage || 10}
+              onChangePage={(event, page) => onChangePage(page)}
+              onChangeRowsPerPage={event =>
+                onChangeRowsPerPage(event.target.value)
+              }
+            />
+          </TableFooter>
+        )}
       </Table>
     </TableContainer>
   )

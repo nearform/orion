@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { Auth } from 'gatsby-plugin-orion-core/src/utils/amplify'
-import AppBar from './AppBar'
+import AppBar from '.'
 
 import HorizontalNavigationMenu from 'gatsby-plugin-orion-core/src/components/HorizontalNavigationMenu'
 

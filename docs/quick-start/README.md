@@ -49,7 +49,7 @@ Configuration happens through environment variables.
 Required environment variables for each package are documented in the `.env.sample` files inside the associated packages.
 
 The following packages distinguish between `.env.development` and `.env.production` when running in development mode or building for production:
-* `acme-edit`
+* `gatsby-plugin-orion-edit`
 * `gatsby-plugin-orion-view`
 
 The package `hasura` does not make a distinction and has a single `.env` file.

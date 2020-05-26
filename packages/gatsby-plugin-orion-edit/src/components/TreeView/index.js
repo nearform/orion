@@ -110,7 +110,6 @@ function TreeView({
       classes.dragging,
       classes.icon,
       classes.item,
-      classes.label,
       classes.selected,
       classes.toggle,
       location.pathname,
