@@ -2,7 +2,13 @@
 
 ## What is this?
 
-This is the home to a knowledgebase. It is being created to be a generic reusable solution that can be self hosted and customised to individual needs. The project architecture follows a JAMStack, Serverless application model. This tool is built using [Gatsby] on top of the following technologies using [AWS Cognito](Cognito) for auth, [AWS S3](S3) for asset storage, hosted [PostgreSQL] on [AWS RDS](RDS) for data storage, [Hasura] to create a [GraphQL] api over postgres, and [AWS Lambda](Lambda) functions to tie it all together.
+This is the home to a knowledgebase. It is being created to be a generic reusable solution that can be self hosted and customised to individual needs. The project architecture follows a JAMStack, Serverless application model. This tool is built using [Gatsby] on top of the following technologies using:
+ 
+ * [AWS Cognito](Cognito) for auth
+ * [AWS S3](S3) for asset storage
+ * hosted [PostgreSQL] on [AWS RDS](RDS) for data storage
+ * [Hasura] to create a [GraphQL] api over postgres
+ * [AWS Lambda](Lambda) functions to tie it all together
 
 To deploy this application, Gatsby assets are stored on S3 and served via [AWS Cloudfront CDN](Cloudfront). [AWS Route53](Route53) is used for DNS mapping the hostname to the assets internally.
 
@@ -26,7 +32,7 @@ The end goal is to support all the variation on such axis:
 
 The initial goal is to implement the EFQM knowlegebase, while at the same time creating the platform to accommodate a non-EFQM version of both, with all that it entails.
 
-At a high level, the architecture of the project will have a single **host Web application built with Gatsby**, where branding customizations for a same brand (we don't expect to host within the same runtime instance of an application multiple brands) occur via a **theme** package which contains:
+At a high level, the architecture of the project will have a single **host web application built with Gatsby**, where branding customizations for a same brand (we don't expect to host within the same runtime instance of an application multiple brands) occur via a **theme** package which contains:
 
 - UI customizations via Material UI themes
 - application-wide specific configuration
@@ -51,6 +57,10 @@ All the above considered, the objective is to make it possible to implement a kn
   - ....
 
 [See here for a quick start guide](quick-start/)
+
+[See here for our Hasura docs](hasura/)
+
+[See here for our terraform docs](terraform/)
 
 <!-- External Links -->
 [Gatsby]: https://www.gatsbyjs.org/
