@@ -23,7 +23,7 @@ For local development purposes you might not want to configure the AWS authentic
 You can switch between modes by setting up the desired environments variables in `packages/gatsby-plugin-orion-view/.env.development` and `packages/gatsby-plugin-orion-edit/.env.development` files.
 If `BYPASS_AWS_COGNITO` environment variable is set to `false` the Authentication mode is enabled. In this scenario, Amplify's authentication module must be configured.
 If `BYPASS_AWS_COGNITO` is set to `true` the Bypass authentication mode is enabled, then `DEVELOPMENT_USERNAME` and `DEVELOPMENT_PASSWORD` environment variables must added to `packages/gatsby-plugin-orion-view/.env.development` in order to create credentials for signing in.
-Please refer to `packages/gatsby-plugin-orion-view/.env.sample` and `packages/gatsby-plugin-orion-edit/.env.sample`to get an example of the environments variables needed.
+Please refer to `packages/gatsby-plugin-orion-view/.env.sample` and `packages/gatsby-plugin-orion-edit/.env.sample`to get an example of the environment variables needed.
 
 **⚠️ Warning:** If you are switching from the `Authentication mode` to  `Bypass authentication mode` you might need to clear up the cookies from your browser to avoid conflicts between modes.
 
