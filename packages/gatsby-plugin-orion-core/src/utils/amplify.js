@@ -1,4 +1,4 @@
-import Amplify, { Auth } from 'aws-amplify'
+import Amplify from 'aws-amplify'
 import awsConfig from './aws-exports'
 import { navigate } from '@reach/router'
 
