@@ -18,7 +18,7 @@ This project's `components` package provides a customized authorization UI based
 ```
 ### Bypassing AWS Amplify's authentication module in local development environment
 
-For local development purposes you might not want to configure the AWS authentication module. For that purpose the project supports both **Authenticacion mode** and **Bypass authentication mode**.
+For local development purposes you might not want to configure the AWS authentication module. For that purpose the project supports both **Authenticacion mode** and **Bypass authentication mode** in local development environment.
 
 You can switch between modes by setting up the desired environments variables in `packages/gatsby-plugin-orion-view/.env.development` and `packages/gatsby-plugin-orion-edit/.env.development` files.
 If `BYPASS_AWS_COGNITO` environment variable is set to `false` the Authentication mode is enabled. In this scenario, Amplify's authentication module must be configured.
@@ -60,7 +60,7 @@ The `components` package provides functions for performing authorization and per
     ...
   }
 ```
-
+**Note: In local developent environment Authorization is bypassed when 'Bypass authentication mode is enabled'**
 ## User group loading
 
 The authorization functions defined in `AuthWrapper` need a list of available user groups in order to work correctly. This user group list is loaded _at build time_, using a Gatsby static graphql query. Because of limitations within Gatsby, the static query has to be defined in the Gatsby project's source code, and the query result then passed to the `AuthWrapper` component. In addition, static queries don't work if called from Gatsby's `wrapRootElement()` function. To get around these restrictions, `knowledge-base` includes a small amount of boilerplate code to bootstrap the authentication system. Both projects have a hook called [useUserGroups](https://github.com/nearform/orion/blob/master/packages/gatsby-plugin-orion-core/hooks/useUserGroups.js) which executes the user group query and passes the result to the in-scope `AuthWrapper` component. This hook is then called from the `wrapPageElement()` function in both `gatsby-browser.js` and `gatsby-ssr.js`.
