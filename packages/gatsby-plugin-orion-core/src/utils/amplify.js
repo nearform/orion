@@ -47,8 +47,6 @@ const { Auth, Storage } = bypassCognito
   ? AmplifyMock
   : { Auth: Amplify.Auth, Storage: Amplify.Storage }
 
-export { Auth, Storage }
-
 export const checkIfAuthenticated = () => {
   if (isWindowLoaded && window.location.hostname === 'localhost') {
     return true
