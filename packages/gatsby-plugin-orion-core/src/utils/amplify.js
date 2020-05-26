@@ -47,6 +47,8 @@ const { Auth, Storage } = bypassCognito
   ? AmplifyMock
   : { Auth: Amplify.Auth, Storage: Amplify.Storage }
 
+export { Auth, Storage }
+
 export const checkIfAuthenticated = () => {
   if (isWindowLoaded && window.location.hostname === 'localhost') {
     return true
@@ -61,7 +63,7 @@ export const checkIfAuthenticated = () => {
       const hasCustomUrl =
         process.env.GATSBY_URL_VIEW !== undefined &&
         process.env.GATSBY_URL_VIEW.length > 0
-      if (hasCustomUrl && ifWindowLoaded) {
+      if (hasCustomUrl && isWindowLoaded) {
         window.location.href = `${process.env.GATSBY_URL_VIEW}/login`
       } else {
         navigate('/default401')
