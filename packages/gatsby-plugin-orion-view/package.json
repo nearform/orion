@@ -3,7 +3,7 @@
   "description": "Orion core view plugin",
   "private": true,
   "main": "index.js",
-  "version": "2.58.0",
+  "version": "2.59.0",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.59.0](https://github.com/nearform/orion/compare/v2.58.0...v2.59.0) (2020-05-27)
+
+
+### Features
+
+* 🎸 updating docs and .env.sample for bypassing cognito aut ([aa0a06b](https://github.com/nearform/orion/commit/aa0a06bcb47a281142c590c0adfe94a50df5d810))
+
+
+
+
+
 # [2.58.0](https://github.com/nearform/orion/compare/v2.57.8...v2.58.0) (2020-05-21)
 
 
