@@ -35,7 +35,7 @@ const data = [
   },
 ]
 
-storiesOf('BreadcrumbNavigation', module)
+storiesOf('core/interactive/BreadcrumbNavigation', module)
   .addDecorator(jsxDecorator)
   .add('Interactive', () => {
     return (

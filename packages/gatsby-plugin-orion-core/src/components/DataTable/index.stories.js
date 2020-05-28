@@ -94,7 +94,7 @@ function sortData(data, id, direction) {
   })
 }
 
-storiesOf('DataTable', module)
+storiesOf('core/interactive/DataTable', module)
   .addDecorator(jsxDecorator)
   .add('Without pagination', () => {
     const rowCount = number('Row count', 25)

@@ -55,7 +55,7 @@ function DataTable({
 }
 
 DataTable.propTypes = {
-  activeSortDirection: T.oneOf('asc', 'desc'),
+  activeSortDirection: T.oneOf(['asc', 'desc']),
   activeSortId: T.symbol,
   columns: T.arrayOf(
     T.shape({

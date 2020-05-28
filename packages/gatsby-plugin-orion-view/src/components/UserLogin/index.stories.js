@@ -4,6 +4,6 @@ import { jsxDecorator } from 'storybook-addon-jsx'
 
 import UserLogin from '.'
 
-storiesOf('User Login', module)
+storiesOf('View/Interactive-forms/User Login', module)
   .addDecorator(jsxDecorator)
   .add('default', () => <UserLogin />)

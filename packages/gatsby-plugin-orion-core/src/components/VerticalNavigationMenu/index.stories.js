@@ -17,7 +17,7 @@ const linksData = [
   },
 ]
 
-storiesOf('VerticalNavigationMenu', module)
+storiesOf('core/interactive/VerticalNavigationMenu', module)
   .addDecorator(jsxDecorator)
   .add('Interactive', () => (
     <VerticalNavigationMenu

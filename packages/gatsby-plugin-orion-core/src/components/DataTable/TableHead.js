@@ -44,7 +44,7 @@ function TableHead({
 }
 
 TableHead.propTypes = {
-  activeSortDirection: T.oneOf('asc', 'desc'),
+  activeSortDirection: T.oneOf(['asc', 'desc']),
   activeSortId: T.symbol.isRequired,
   columns: T.arrayOf(
     T.shape({

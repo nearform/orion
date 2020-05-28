@@ -4,9 +4,9 @@ import { jsxDecorator } from 'storybook-addon-jsx'
 import { number, object, text } from '@storybook/addon-knobs'
 import ArticleMetadata from '.'
 
-storiesOf('ArticleMetadata', module)
+storiesOf('View/Interactive/Article Metadata', module)
   .addDecorator(jsxDecorator)
-  .add('Interactive', () => (
+  .add('Overview', () => (
     <div style={{ width: 208 }}>
       <ArticleMetadata
         author={object('Author', {

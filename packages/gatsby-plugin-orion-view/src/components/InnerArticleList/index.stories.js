@@ -63,7 +63,7 @@ const label = 'Type'
 const options = ['grid', 'rows', 'highlights']
 const defaultValue = 'grid'
 
-storiesOf('ArticleList', module)
+storiesOf('View/Decorative/Article List', module)
   .addDecorator(jsxDecorator)
   .add('ArticleList Grid', () => (
     <PaddedContainer>

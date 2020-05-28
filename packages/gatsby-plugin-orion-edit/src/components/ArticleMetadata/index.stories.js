@@ -56,6 +56,6 @@ const content = [
   },
 ]
 
-storiesOf('Article Metadata', module)
+storiesOf('Edit/Interactive/Article Metadata', module)
   .addDecorator(jsxDecorator)
   .add('default', () => <ArticleMetadata content={content} />)

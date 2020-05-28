@@ -95,7 +95,7 @@ const menuData = [
   },
 ]
 
-storiesOf('HorizontalNavigationMenu', module)
+storiesOf('core/interactive/HorizontalNavigationMenu', module)
   .addDecorator(jsxDecorator)
   .add('Interactive', () => {
     return (
