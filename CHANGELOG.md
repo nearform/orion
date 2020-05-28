@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.60.0](https://github.com/nearform/orion/compare/v2.59.0...v2.60.0) (2020-05-28)
+
+
+### Features
+
+* 🎸 Add storybook to Orion core FormFields ([230c92d](https://github.com/nearform/orion/commit/230c92d1fe822081dff42087e29f2d219fe142cf))
+
+
+
+
+
 # [2.59.0](https://github.com/nearform/orion/compare/v2.58.0...v2.59.0) (2020-05-27)
 
 
