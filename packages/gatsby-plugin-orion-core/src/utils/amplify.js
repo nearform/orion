@@ -50,9 +50,7 @@ const { Auth, Storage } = bypassCognito
 export { Auth, Storage }
 
 export const checkIfAuthenticated = () => {
-  if (isWindowLoaded && window.location.hostname === 'localhost') {
-    return true
-  }
+  if (process.env.NODE_ENV === 'development') return true
 
   Auth.currentAuthenticatedUser()
     .then(() => {
