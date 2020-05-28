@@ -11,7 +11,8 @@
     "artifact:create": "cd .. && tar -zcf $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz hasura",
     "artifact:name": "echo $ORG-$npm_package_name-$npm_package_version-$BUILD.tar.gz",
     "clone": "env-cmd -f .env -- node ./clone.js",
-    "start": "docker-compose up -d && yarn clone"
+    "start": "docker-compose up -d && yarn clone",
+    "stop": "docker-compose down --volumes"
   },
   "devDependencies": {
     "axios": "^0.19.2",
