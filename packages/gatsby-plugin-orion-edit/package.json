@@ -2,7 +2,7 @@
   "name": "gatsby-plugin-orion-edit",
   "private": true,
   "description": "Orion core edit plugin",
-  "version": "2.60.0",
+  "version": "2.60.1",
   "author": "NearForm",
   "bugs": {
     "url": "https://github.com/nearform/orion/issues"
@@ -37,8 +37,8 @@
     "gatsby-image": "^2.4.3",
     "gatsby-plugin-manifest": "^2.4.3",
     "gatsby-plugin-offline": "^3.2.2",
-    "gatsby-plugin-orion-core": "^2.60.0",
-    "gatsby-plugin-orion-view": "^2.60.0",
+    "gatsby-plugin-orion-core": "^2.60.1",
+    "gatsby-plugin-orion-view": "^2.60.1",
     "gatsby-plugin-prefetch-google-fonts": "^1.4.3",
     "gatsby-plugin-react-helmet": "^3.3.1",
     "gatsby-plugin-react-svg": "^3.0.0",
