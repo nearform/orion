@@ -34,10 +34,10 @@ This paragraph has some \`inline code\`.
 | col 2 is      | centered      |   $12 |
 | zebra stripes | are neat      |    $1 |`
 
-storiesOf('ArticleContent', module)
+storiesOf('View/Interactive/ArticleContent', module)
   .addDecorator(jsxDecorator)
   .add(
-    'Interactive',
+    'Overview',
     () => {
       return (
         <div style={{ display: 'flex', justifyContent: 'center' }}>

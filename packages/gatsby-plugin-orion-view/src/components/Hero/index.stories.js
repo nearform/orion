@@ -5,9 +5,9 @@ import { text } from '@storybook/addon-knobs'
 
 import Hero from '.'
 
-storiesOf('Hero', module)
+storiesOf('View/Decorative/Hero', module)
   .addDecorator(jsxDecorator)
-  .add('Interactive', () => {
+  .add('Overview', () => {
     return (
       <Hero
         title={text('title', 'Accelerating the insurance industry')}

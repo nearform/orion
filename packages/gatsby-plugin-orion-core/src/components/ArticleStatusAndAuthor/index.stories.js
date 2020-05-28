@@ -5,7 +5,7 @@ import { text, select } from '@storybook/addon-knobs'
 
 import ArticleStatusAndAuthor from '.'
 
-storiesOf('ArticleStatusAndAuthor', module)
+storiesOf('core/interactive/ArticleStatusAndAuthor', module)
   .addDecorator(jsxDecorator)
   .add('In Progress', () => (
     <ArticleStatusAndAuthor
@@ -13,7 +13,7 @@ storiesOf('ArticleStatusAndAuthor', module)
       articleStatus={select(
         'Article Status',
         ['in-progress', 'in-review', 'published', 'hidden'],
-        'published'
+        'in-review'
       )}
     />
   ))

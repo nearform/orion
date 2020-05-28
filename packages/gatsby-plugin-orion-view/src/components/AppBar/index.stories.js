@@ -94,9 +94,9 @@ const menuData = [
   },
 ]
 
-storiesOf('AppBar', module)
+storiesOf('View/Interactive/App Bar', module)
   .addDecorator(jsxDecorator)
-  .add('Interactive', () => {
+  .add('Overview', () => {
     return (
       <AppBar
         brandTo={text('Brand to', '/home')}

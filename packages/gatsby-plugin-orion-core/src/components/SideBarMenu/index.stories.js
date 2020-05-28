@@ -98,7 +98,7 @@ const linksData = [
   },
 ]
 
-storiesOf('SideBarMenu', module)
+storiesOf('core/interactive/SideBarMenu', module)
   .addDecorator(jsxDecorator)
   .add('Interactive', () => {
     const [showSidebar, setShowSidebar] = useState(true)

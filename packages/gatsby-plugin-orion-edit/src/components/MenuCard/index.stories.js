@@ -5,7 +5,7 @@ import { text } from '@storybook/addon-knobs'
 
 import MenuCard from '.'
 
-storiesOf('Menu card', module)
+storiesOf('Edit/Interactive/Menu Card', module)
   .addDecorator(jsxDecorator)
   .add('default', () => (
     <MenuCard

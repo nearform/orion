@@ -6,11 +6,11 @@ import { Typography, Button } from '@material-ui/core'
 
 import Form from '.'
 
-storiesOf('Form', module)
+storiesOf('core/interactive/Form', module)
   .addDecorator(jsxDecorator)
   .add('Signup', () => (
     <Form
-      formFields={[
+      formFields={object('Form Fields', [
         {
           label: 'First Name',
           name: 'given_name',
@@ -41,13 +41,13 @@ storiesOf('Form', module)
           helperText:
             'Must include an uppercase character, a number and a symbol',
         },
-      ]}
+      ])}
       title={<Typography variant="h3">Create a new account</Typography>}
     />
   ))
   .add('Login Error', () => (
     <Form
-      formFields={[
+      formFields={object('Form Fields', [
         {
           label: 'Please enter your username',
           name: 'username',
@@ -61,13 +61,13 @@ storiesOf('Form', module)
           type: 'password',
           xs: 12,
         },
-      ]}
+      ])}
       title={<Typography variant="h3">Sign in to your account</Typography>}
     />
   ))
   .add('Login', () => (
     <Form
-      formFields={[
+      formFields={object('Form Fields', [
         {
           label: 'Please enter your username',
           name: 'username',
@@ -80,7 +80,7 @@ storiesOf('Form', module)
           type: 'password',
           xs: 12,
         },
-      ]}
+      ])}
       title={<Typography variant="h3">Sign in to your account</Typography>}
       submitButtonText="Sign in"
       submitText={

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { Typography } from '@material-ui/core'
 
-storiesOf('typography', module)
+storiesOf('core/decorative/Typography', module)
   .addDecorator(jsxDecorator)
   .add('Interactive', () => {
     return (

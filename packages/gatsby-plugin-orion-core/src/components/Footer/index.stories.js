@@ -30,6 +30,6 @@ const socialIcons = [
 
 const Img = ({ ...props }) => <img {...props} />
 
-storiesOf('Footer', module)
+storiesOf('Core/Interactive/Footer', module)
   .addDecorator(jsxDecorator)
   .add('Link', () => <Footer socialIcons={socialIcons} logo={logo} Img={Img} />)
