@@ -68,7 +68,7 @@ The package `hasura` does not make a distinction and has a single `.env` file.
 #### 🚀 Run the command(s) for the site(s) you want develop:
 
 - Run hasura and postgres in local docker container and run `view` and `edit` websites. 
-This is the right script to have everything running in you local envirnoment.
+This is the right script to have everything running in you local environment.
 ```bash
 run start:dev
 ```
@@ -78,7 +78,7 @@ run start:db
 ```
 - Stop hasura docker container, drop all docker volumes and drop postgres db
 ```bash
-	run stop:db
+run stop:db
 ```
 - Start `view` client (no db connection unless you set up your own)
 ```bash
@@ -90,7 +90,6 @@ yarn start:view
 yarn start:edit
 ```
 **⚠️ Warning:** In any case you need to set up the right environment variables. Please refer to [Configure section](#_3-configure-⚙%ef%b8%8f)
-```
 
 ### 2. Debug the sites in your browser 🚫🐛
 
