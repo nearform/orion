@@ -89,7 +89,7 @@ yarn start:view
 ```bash
 yarn start:edit
 ```
-**⚠️ Warning:** In any case you need to set up the right environment variables. Please refer to [Configure section](#_3-configure-⚙%ef%b8%8f)
+**⚠️ Warning:** In any case you need to set up the right environment variables. Please refer to [Configure section](#3-configure-⚙%ef%b8%8f)
 
 ### 2. Debug the sites in your browser 🚫🐛
 
