@@ -44,7 +44,6 @@ async function waitForLocalHasura() {
 
       loading = `${loading}.`
       console.log(loading)
-      // Console.log('Hasura server not ready:', error.message)
       return false
     }
   }
