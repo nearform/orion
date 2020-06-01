@@ -13,7 +13,7 @@
     "test:watch": "jest --watch",
     "commit": "cd .. && yarn commit",
     "build": "gatsby build",
-    "develop": "gatsby develop -p 8000",
+    "develop": "gatsby develop -p 8000 -o",
     "start": "npm run develop",
     "clean": "gatsby clean",
     "serve": "gatsby serve",
