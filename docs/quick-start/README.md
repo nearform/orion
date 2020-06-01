@@ -67,10 +67,30 @@ The package `hasura` does not make a distinction and has a single `.env` file.
 
 #### 🚀 Run the command(s) for the site(s) you want develop:
 
+- Run hasura and postgres in local docker container and run `view` and `edit` websites. 
+This is the right script to have everything running in you local environment.
+```bash
+run start:dev
+```
+- Run hasura and postgres in local docker container (no clients running)
+```bash
+run start:db
+```
+- Stop hasura docker container, drop all docker volumes and drop postgres db
+```bash
+run stop:db
+```
+- Start `view` client (no db connection unless you set up your own)
 ```bash
 yarn start:view
+```
+
+- Start `edit` client (no db connection unless you set up your own)
+```bash
 yarn start:edit
 ```
+
+**⚠️ Warning:** In any case you need to set up the right environment variables. Please refer to [Configure section](#3-configure-%EF%B8%8F)
 
 ### 2. Debug the sites in your browser 🚫🐛
 
@@ -78,11 +98,11 @@ Once Gatsby successfully builds and starts the development server(s) the sites c
 
 #### 🚀 Navigate to http://localhost:8000 (view), or http://localhost:8001 (edit) as required.
 
-### Development user 👨👩 (Bypass authentication mode)
+### 3. Development user 👨👩 (Bypass authentication mode)
 
 As you are running Orion in Bypass authentication mode you need to set up your develoment user credentials as environment variables. Please refer to `.env.development.sample` files to get more info
 
-### 3. Storybook 📖
+### 4. Storybook 📖
 
 As appropriate, individual components should be demo'able in storybook.
 
