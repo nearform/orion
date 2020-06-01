@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.61.0](https://github.com/nearform/orion/compare/v2.60.1...v2.61.0) (2020-06-01)
+
+
+### Features
+
+* 🎸 Add storybook to Orion core PaddedContainer ([bfafe85](https://github.com/nearform/orion/commit/bfafe85a696f8c6679a7d45301ca14430ced1f2d))
+
+
+
+
+
 ## [2.60.1](https://github.com/nearform/orion/compare/v2.60.0...v2.60.1) (2020-05-28)
 
 **Note:** Version bump only for package gatsby-plugin-orion-core

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.61.0](https://github.com/nearform/orion/compare/v2.60.1...v2.61.0) (2020-06-01)
+
+
+### Features
+
+* 🎸 adding env variables examples to .env.sample ([8c6c521](https://github.com/nearform/orion/commit/8c6c521568956271a5e9c1155ed2d6345ed2f771))
+* 🎸 adding start:dev script to package.json ([20625fa](https://github.com/nearform/orion/commit/20625fab39f2e10cd9d4e35efdabc429f2c13898))
+
+
+
+
+
 ## [2.60.1](https://github.com/nearform/orion/compare/v2.60.0...v2.60.1) (2020-05-28)
 
 **Note:** Version bump only for package gatsby-plugin-orion-view

@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.61.0](https://github.com/nearform/orion/compare/v2.60.1...v2.61.0) (2020-06-01)
+
+
+### Features
+
+* 🎸 Add storybook to Orion core PaddedContainer ([bfafe85](https://github.com/nearform/orion/commit/bfafe85a696f8c6679a7d45301ca14430ced1f2d))
+* 🎸 adding env variables examples to .env.sample ([8c6c521](https://github.com/nearform/orion/commit/8c6c521568956271a5e9c1155ed2d6345ed2f771))
+* 🎸 adding start database script ([ff6a4db](https://github.com/nearform/orion/commit/ff6a4db1f0326aab73c32e254abd5eb5f45cf3c2))
+* 🎸 adding start:dev script to package.json ([20625fa](https://github.com/nearform/orion/commit/20625fab39f2e10cd9d4e35efdabc429f2c13898))
+* 🎸 Wrap needed processes into an npm start script ([3e04b16](https://github.com/nearform/orion/commit/3e04b169539212022c77932ec3c9ba17d57ba875))
+
+
+
+
+
 ## [2.60.1](https://github.com/nearform/orion/compare/v2.60.0...v2.60.1) (2020-05-28)
 
 **Note:** Version bump only for package orion
