@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.61.2](https://github.com/nearform/orion/compare/v2.61.1...v2.61.2) (2020-06-02)
+
+
+### Bug Fixes
+
+* 🐛 Docker runs local postgreSQL on Mac ([7364482](https://github.com/nearform/orion/commit/7364482be4c5dd5792db3da57f9ccbe1d8d84363))
+
+
+
+
+
 # [2.61.0](https://github.com/nearform/orion/compare/v2.60.1...v2.61.0) (2020-06-01)
 
 
