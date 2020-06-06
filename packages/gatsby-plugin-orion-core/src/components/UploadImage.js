@@ -69,8 +69,6 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
         color: theme.palette.action.main,
         '& .upload-image-typography': {
-          // TODO: pickup the article typography from???
-          // ...theme.articleTypography.articleEditButton,
           padding: theme.spacing(1, 3),
           borderRadius: theme.spacing(0.5),
           position: 'relative',
