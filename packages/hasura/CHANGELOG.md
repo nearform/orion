@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.61.2](https://github.com/nearform/orion/compare/v2.61.1...v2.61.2) (2020-06-02)
+
+
+### Bug Fixes
+
+* 🐛 Docker runs local postgreSQL on Mac ([7364482](https://github.com/nearform/orion/commit/7364482be4c5dd5792db3da57f9ccbe1d8d84363))
+
+
+
+
+
+# [2.61.0](https://github.com/nearform/orion/compare/v2.60.1...v2.61.0) (2020-06-01)
+
+
+### Features
+
+* 🎸 adding env variables examples to .env.sample ([8c6c521](https://github.com/nearform/orion/commit/8c6c521568956271a5e9c1155ed2d6345ed2f771))
+* 🎸 adding start database script ([ff6a4db](https://github.com/nearform/orion/commit/ff6a4db1f0326aab73c32e254abd5eb5f45cf3c2))
+* 🎸 adding start:dev script to package.json ([20625fa](https://github.com/nearform/orion/commit/20625fab39f2e10cd9d4e35efdabc429f2c13898))
+
+
+
+
+
+# [2.57.0](https://github.com/nearform/orion/compare/v2.56.0...v2.57.0) (2020-05-12)
+
+**Note:** Version bump only for package hasura
+
+
+
+
+
+## [2.53.1](https://github.com/nearform/orion/compare/v2.53.0...v2.53.1) (2020-05-05)
+
+**Note:** Version bump only for package hasura
+
+
+
+
+
 ## [2.38.3](https://github.com/nearform/orion/compare/v2.38.2...v2.38.3) (2020-03-30)
 
 **Note:** Version bump only for package hasura

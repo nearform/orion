@@ -4,6 +4,6 @@ import { jsxDecorator } from 'storybook-addon-jsx'
 
 import ArticleEditContent from '.'
 
-storiesOf('Article Edit Content', module)
+storiesOf('Edit/Interactive/Article Edit Content', module)
   .addDecorator(jsxDecorator)
   .add('default', () => <ArticleEditContent />)

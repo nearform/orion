@@ -3,6 +3,157 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.61.2](https://github.com/nearform/orion/compare/v2.61.1...v2.61.2) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
+## [2.61.1](https://github.com/nearform/orion/compare/v2.61.0...v2.61.1) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
+# [2.61.0](https://github.com/nearform/orion/compare/v2.60.1...v2.61.0) (2020-06-01)
+
+
+### Features
+
+* 🎸 adding env variables examples to .env.sample ([8c6c521](https://github.com/nearform/orion/commit/8c6c521568956271a5e9c1155ed2d6345ed2f771))
+* 🎸 adding start:dev script to package.json ([20625fa](https://github.com/nearform/orion/commit/20625fab39f2e10cd9d4e35efdabc429f2c13898))
+
+
+
+
+
+## [2.60.1](https://github.com/nearform/orion/compare/v2.60.0...v2.60.1) (2020-05-28)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
+# [2.60.0](https://github.com/nearform/orion/compare/v2.59.0...v2.60.0) (2020-05-28)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
+# [2.59.0](https://github.com/nearform/orion/compare/v2.58.0...v2.59.0) (2020-05-27)
+
+
+### Features
+
+* 🎸 updating docs and .env.sample for bypassing cognito aut ([aa0a06b](https://github.com/nearform/orion/commit/aa0a06bcb47a281142c590c0adfe94a50df5d810))
+
+
+
+
+
+# [2.58.0](https://github.com/nearform/orion/compare/v2.57.8...v2.58.0) (2020-05-21)
+
+
+### Features
+
+* 🎸 bypass cognito in local env update .env.sample ([d0a0f09](https://github.com/nearform/orion/commit/d0a0f09566f23e0c0af1487cc22675a8a9d9449f))
+
+
+
+
+
+## [2.57.7](https://github.com/nearform/orion/compare/v2.57.6...v2.57.7) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
+## [2.57.6](https://github.com/nearform/orion/compare/v2.57.5...v2.57.6) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
+## [2.57.5](https://github.com/nearform/orion/compare/v2.57.4...v2.57.5) (2020-05-14)
+
+
+### Reverts
+
+* Revert "Nf richatkins/ch454/build create article for orionedit (#144)" (#150) ([54352fb](https://github.com/nearform/orion/commit/54352fb1dc0900e7cfa9b755ecedd32de9b90194)), closes [#144](https://github.com/nearform/orion/issues/144) [#150](https://github.com/nearform/orion/issues/150)
+
+
+
+
+
+## [2.57.4](https://github.com/nearform/orion/compare/v2.57.3...v2.57.4) (2020-05-14)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
+## [2.57.3](https://github.com/nearform/orion/compare/v2.57.2...v2.57.3) (2020-05-13)
+
+
+### Bug Fixes
+
+* 🐛 ArticleList naming issue ([55a740f](https://github.com/nearform/orion/commit/55a740f3613c6c225c45c8bd00fc87dfdf1fac60))
+* 🐛 Failing tests ([cf067f2](https://github.com/nearform/orion/commit/cf067f2b280c6f74cc3af4ab70aab1ef9a4d7e2a))
+* 🐛 Import issue ([896dfb6](https://github.com/nearform/orion/commit/896dfb61004626a36d47e1fcc15dca799ae624ef))
+* 🐛 Import mistake ([8da577c](https://github.com/nearform/orion/commit/8da577c8db91630dae3d85b1fa85070c97d18f20))
+* 🐛 Issue with gatsby version of react ([11b1e3e](https://github.com/nearform/orion/commit/11b1e3e0fbabb23878b23ac8efb3802a73feb538))
+
+
+
+
+
+## [2.57.2](https://github.com/nearform/orion/compare/v2.57.1...v2.57.2) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-plugin-orion-view
+
+
+
+
+
+# [2.56.0](https://github.com/nearform/orion/compare/v2.55.0...v2.56.0) (2020-05-12)
+
+
+### Bug Fixes
+
+* 🐛 Redirect to 404 page when a page is not found ([9242c6c](https://github.com/nearform/orion/commit/9242c6c7e9ed7fa801643687777fd5ad324c347b))
+
+
+### Features
+
+* 🎸 Create a proper loading component ([fea42bf](https://github.com/nearform/orion/commit/fea42bf8fb7e8518cdecbbcd1268ce3d1f53731c))
+
+
+
+
+
+# [2.54.0](https://github.com/nearform/orion/compare/v2.53.1...v2.54.0) (2020-05-06)
+
+
+### Features
+
+* 🎸 adding breadcrumbs to search results page ([a02474a](https://github.com/nearform/orion/commit/a02474a098ea6aee86a5eb7179b3319371add8b0))
+
+
+
+
+
 # [2.47.0](https://github.com/nearform/orion/compare/v2.46.1...v2.47.0) (2020-04-24)
 
 **Note:** Version bump only for package gatsby-plugin-orion-view

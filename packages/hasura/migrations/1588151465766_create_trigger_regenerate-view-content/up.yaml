@@ -1,0 +1,29 @@
+- args:
+    delete:
+      columns: '*'
+    enable_manual: false
+    headers: []
+    insert:
+      columns: '*'
+    name: regenerate-view-content
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    table:
+      name: orion_page
+      schema: public
+    update:
+      columns:
+      - show_in_menu
+      - id
+      - position
+      - layout
+      - path
+      - title
+      - created
+      - expires
+      - modified
+      - published
+    webhook: https://5ma71mhse4.execute-api.eu-west-1.amazonaws.com/default/orion_content_generator_hook
+  type: create_event_trigger

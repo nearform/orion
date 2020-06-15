@@ -13,33 +13,18 @@ const mockData = [
   },
   {
     label: 'Pages',
-    to: '/pages',
+    to: '/pages/create',
     iconClass: 'fas fa-file',
   },
   {
     label: 'Articles',
-    to: '/articles',
+    to: '/article/create',
     iconClass: 'fas fa-newspaper',
-  },
-  {
-    label: 'Menus',
-    to: '/menus',
-    iconClass: 'fas fa-list-alt',
-  },
-  {
-    label: 'Categories / Tags',
-    to: '/categories',
-    iconClass: 'fas fa-tag',
   },
   {
     label: 'Media Library',
     to: '/media-library',
     iconClass: 'fas fa-photo-video',
-  },
-  {
-    label: 'Users',
-    to: '/users',
-    iconClass: 'fas fa-user-friends',
   },
   {
     label: 'goto View',
@@ -55,13 +40,13 @@ const mockData = [
 ]
 const mockContent = [
   {
-    label: 'Pages',
+    label: 'Create Page',
     to: '/pages/create',
     Image: () => <div>mockPagesIcon</div>,
   },
   {
-    label: 'Articles',
-    to: '/pages/create',
+    label: 'Create Article',
+    to: '/article/create',
     Image: () => <div>mockArticlesIcon</div>,
   },
 ]
@@ -86,10 +71,7 @@ describe('AdminDashboard component', () => {
     expect(getByText('Quick find')).toBeInTheDocument()
     expect(getByText('Pages')).toBeInTheDocument()
     expect(getByText('Articles')).toBeInTheDocument()
-    expect(getByText('Menus')).toBeInTheDocument()
-    expect(getByText('Categories / Tags')).toBeInTheDocument()
     expect(getByText('Media Library')).toBeInTheDocument()
-    expect(getByText('Users')).toBeInTheDocument()
     expect(getByText('goto View')).toBeInTheDocument()
     expect(getByText('Sign out')).toBeInTheDocument()
   })
@@ -99,7 +81,7 @@ describe('AdminDashboard component', () => {
     const { getByText } = within(
       container.querySelector('[class^=makeStyles-main]')
     )
-    expect(getByText('Pages')).toBeInTheDocument()
-    expect(getByText('Articles')).toBeInTheDocument()
+    expect(getByText('Create Page')).toBeInTheDocument()
+    expect(getByText('Create Article')).toBeInTheDocument()
   })
 })

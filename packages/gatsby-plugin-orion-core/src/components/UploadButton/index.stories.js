@@ -5,7 +5,7 @@ import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate'
 
 import UploadButton from '.'
 
-storiesOf('UploadButton', module)
+storiesOf('core/interactive/UploadButton', module)
   .addDecorator(jsxDecorator)
   .add('default', () => (
     <div>

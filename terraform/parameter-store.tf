@@ -76,13 +76,6 @@ resource "aws_ssm_parameter" "s3_deploy_artifacts" {
   tags  = "${var.default_tags}"
 }
 
-resource "aws_ssm_parameter" "admin_app_bucket" {
-  name  = "/${var.org}/admin_app_bucket"
-  type  = "SecureString"
-  value = "${var.cf_admin_app_domain_name}"
-  tags  = "${var.default_tags}"
-}
-
 resource "aws_ssm_parameter" "edit_app_bucket" {
   name  = "/${var.org}/edit_app_bucket"
   type  = "SecureString"

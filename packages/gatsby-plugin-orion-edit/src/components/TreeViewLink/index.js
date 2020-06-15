@@ -75,29 +75,36 @@ const TreeViewLink = ({
   to,
   pageId,
   showInMenu: initialShowInMenu,
+  layout,
 }) => {
   const classes = useStyles()
   const [isEditing, setIsEditing] = useState(false)
+  const [fallbackTitle, setFallbackTitle] = useState(initialTitle)
   const [title, setTitle] = useState(initialTitle)
   const [showInMenu, setShowInMenu] = useState(initialShowInMenu)
+  const [timer, setTimer] = useState(null)
   const ref = useRef(null)
   const [updatePageTitle] = useMutation(updatePageTitleMutation)
   const [updatePageShowInMenu] = useMutation(updatePageShowInMenuMutation)
+
   const saveTitle = async e => {
     e.preventDefault()
+    global.clearTimeout(timer)
     setIsEditing(false)
     try {
-      await updatePageTitle({
+      const { data } = await updatePageTitle({
         variables: {
           id: pageId,
           title,
+          modified: new Date(),
         },
       })
+      setFallbackTitle(data.update_orion_page.returning[0].title)
     } catch (error) {
       console.warn(
         `There was an error making changes to the title of page ${pageId} because of the following error. ${error.message}`
       )
-      setTitle(initialTitle)
+      setTitle(fallbackTitle)
     }
   }
 
@@ -109,6 +116,7 @@ const TreeViewLink = ({
         variables: {
           id: pageId,
           show_in_menu: !showInMenu,
+          modified: new Date(),
         },
       })
       setShowInMenu(!showInMenu)
@@ -138,8 +146,12 @@ const TreeViewLink = ({
             setTitle(e.target.value)
           }}
           onBlur={() => {
-            setIsEditing(false)
-            setTitle(initialTitle)
+            setTimer(
+              setTimeout(() => {
+                setIsEditing(false)
+                setTitle(fallbackTitle)
+              }, 100)
+            )
           }}
         />
         <button type="submit" className={classes.editSaveButton}>
@@ -153,19 +165,21 @@ const TreeViewLink = ({
       <Button className={classes.editButton} onClick={() => setIsEditing(true)}>
         <i className={`fa fa-pen ${classes.editButtonIcon}`} />
       </Button>
-      <Button
-        className={classes.editButton}
-        aria-label={
-          showInMenu ? 'exclude page from menu' : 'include page in menu'
-        }
-        onClick={saveShowInMenu}
-      >
-        <i
-          className={`fa fa-eye${showInMenu ? '' : '-slash'} ${
-            classes.editButtonIcon
-          }`}
-        />
-      </Button>
+      {layout !== 'article' && (
+        <Button
+          className={classes.editButton}
+          aria-label={
+            showInMenu ? 'exclude page from menu' : 'include page in menu'
+          }
+          onClick={saveShowInMenu}
+        >
+          <i
+            className={`fa fa-eye${showInMenu ? '' : '-slash'} ${
+              classes.editButtonIcon
+            }`}
+          />
+        </Button>
+      )}
     </div>
   )
 }

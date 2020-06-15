@@ -106,7 +106,7 @@ const linksData = [
   },
 ]
 
-storiesOf('ListOfListItems', module)
+storiesOf('core/interactive/ListOfListItems', module)
   .addDecorator(jsxDecorator)
   .add('Interactive', () => (
     <ListOfListItems

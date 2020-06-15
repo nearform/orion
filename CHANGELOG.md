@@ -3,6 +3,253 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.61.3](https://github.com/nearform/orion/compare/v2.61.2...v2.61.3) (2020-06-05)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
+## [2.61.2](https://github.com/nearform/orion/compare/v2.61.1...v2.61.2) (2020-06-02)
+
+
+### Bug Fixes
+
+* 🐛 Docker runs local postgreSQL on Mac ([7364482](https://github.com/nearform/orion/commit/7364482be4c5dd5792db3da57f9ccbe1d8d84363))
+
+
+
+
+
+## [2.61.1](https://github.com/nearform/orion/compare/v2.61.0...v2.61.1) (2020-06-02)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
+# [2.61.0](https://github.com/nearform/orion/compare/v2.60.1...v2.61.0) (2020-06-01)
+
+
+### Features
+
+* 🎸 Add storybook to Orion core PaddedContainer ([bfafe85](https://github.com/nearform/orion/commit/bfafe85a696f8c6679a7d45301ca14430ced1f2d))
+* 🎸 adding env variables examples to .env.sample ([8c6c521](https://github.com/nearform/orion/commit/8c6c521568956271a5e9c1155ed2d6345ed2f771))
+* 🎸 adding start database script ([ff6a4db](https://github.com/nearform/orion/commit/ff6a4db1f0326aab73c32e254abd5eb5f45cf3c2))
+* 🎸 adding start:dev script to package.json ([20625fa](https://github.com/nearform/orion/commit/20625fab39f2e10cd9d4e35efdabc429f2c13898))
+* 🎸 Wrap needed processes into an npm start script ([3e04b16](https://github.com/nearform/orion/commit/3e04b169539212022c77932ec3c9ba17d57ba875))
+
+
+
+
+
+## [2.60.1](https://github.com/nearform/orion/compare/v2.60.0...v2.60.1) (2020-05-28)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
+# [2.60.0](https://github.com/nearform/orion/compare/v2.59.0...v2.60.0) (2020-05-28)
+
+
+### Features
+
+* 🎸 Add storybook to Orion core FormFields ([230c92d](https://github.com/nearform/orion/commit/230c92d1fe822081dff42087e29f2d219fe142cf))
+
+
+
+
+
+# [2.59.0](https://github.com/nearform/orion/compare/v2.58.0...v2.59.0) (2020-05-27)
+
+
+### Features
+
+* 🎸 updating docs and .env.sample for bypassing cognito aut ([aa0a06b](https://github.com/nearform/orion/commit/aa0a06bcb47a281142c590c0adfe94a50df5d810))
+
+
+
+
+
+# [2.58.0](https://github.com/nearform/orion/compare/v2.57.8...v2.58.0) (2020-05-21)
+
+
+### Features
+
+* 🎸 bypass cognito in local env update .env.sample ([d0a0f09](https://github.com/nearform/orion/commit/d0a0f09566f23e0c0af1487cc22675a8a9d9449f))
+* 🎸 Disable Cognito integration for running locally ([1e804e2](https://github.com/nearform/orion/commit/1e804e2d27aa2cb2ba2cf554d4111e154d4ccbbe))
+* 🎸 getting development credentials from env variables ([f4549f0](https://github.com/nearform/orion/commit/f4549f0a949f73de724fbf732ec98301a7a01ab7))
+* 🎸 waiting window to load before using localstorage ([acaa6f7](https://github.com/nearform/orion/commit/acaa6f72fedc7651b10a8070d246d214a14cb2a0))
+
+
+
+
+
+## [2.57.8](https://github.com/nearform/orion/compare/v2.57.7...v2.57.8) (2020-05-21)
+
+
+### Bug Fixes
+
+* 🐛 Style overrides not found in mui/styles ^4.9.1 ([d940e2e](https://github.com/nearform/orion/commit/d940e2eee65b82a2e1a9acd2411398844b6935c2))
+
+
+
+
+
+## [2.57.7](https://github.com/nearform/orion/compare/v2.57.6...v2.57.7) (2020-05-19)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
+## [2.57.6](https://github.com/nearform/orion/compare/v2.57.5...v2.57.6) (2020-05-18)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
+## [2.57.5](https://github.com/nearform/orion/compare/v2.57.4...v2.57.5) (2020-05-14)
+
+
+### Reverts
+
+* Revert "Nf richatkins/ch454/build create article for orionedit (#144)" (#150) ([54352fb](https://github.com/nearform/orion/commit/54352fb1dc0900e7cfa9b755ecedd32de9b90194)), closes [#144](https://github.com/nearform/orion/issues/144) [#150](https://github.com/nearform/orion/issues/150)
+
+
+
+
+
+## [2.57.4](https://github.com/nearform/orion/compare/v2.57.3...v2.57.4) (2020-05-14)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
+## [2.57.3](https://github.com/nearform/orion/compare/v2.57.2...v2.57.3) (2020-05-13)
+
+
+### Bug Fixes
+
+* 🐛 Add gatsby-plugin-orion-view to acme-edit ([c726d62](https://github.com/nearform/orion/commit/c726d621f9bcac05651220d4ab0eae0db8f6b812))
+* 🐛 ArticleList naming issue ([55a740f](https://github.com/nearform/orion/commit/55a740f3613c6c225c45c8bd00fc87dfdf1fac60))
+* 🐛 cpuCoreCount export was changed in newer gatsby version ([7e798d5](https://github.com/nearform/orion/commit/7e798d5ee695b7078ca7a0df0b6d8885feda15d5))
+* 🐛 Failing tests ([cf067f2](https://github.com/nearform/orion/commit/cf067f2b280c6f74cc3af4ab70aab1ef9a4d7e2a))
+* 🐛 Import issue ([896dfb6](https://github.com/nearform/orion/commit/896dfb61004626a36d47e1fcc15dca799ae624ef))
+* 🐛 Import mistake ([8da577c](https://github.com/nearform/orion/commit/8da577c8db91630dae3d85b1fa85070c97d18f20))
+* 🐛 Issue with gatsby version of react ([11b1e3e](https://github.com/nearform/orion/commit/11b1e3e0fbabb23878b23ac8efb3802a73feb538))
+* 🐛 Naming issue ([942a0c5](https://github.com/nearform/orion/commit/942a0c5e730efa5c2559c320d588db3a6262ea32))
+
+
+
+
+
+## [2.57.2](https://github.com/nearform/orion/compare/v2.57.1...v2.57.2) (2020-05-13)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
+## [2.57.1](https://github.com/nearform/orion/compare/v2.57.0...v2.57.1) (2020-05-13)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
+# [2.57.0](https://github.com/nearform/orion/compare/v2.56.0...v2.57.0) (2020-05-12)
+
+
+### Features
+
+* 🎸 Set the modified column when editing orion_page ([9a81b6c](https://github.com/nearform/orion/commit/9a81b6c090c67feee5b42e19cf666e6835b4aded))
+
+
+
+
+
+# [2.56.0](https://github.com/nearform/orion/compare/v2.55.0...v2.56.0) (2020-05-12)
+
+
+### Bug Fixes
+
+* 🐛 Fallback title stays up-to-date with the server ([85dc4f5](https://github.com/nearform/orion/commit/85dc4f5754cc5113d5eec23cb71aa6f79d515e75))
+* 🐛 Redirect to 404 page when a page is not found ([9242c6c](https://github.com/nearform/orion/commit/9242c6c7e9ed7fa801643687777fd5ad324c347b))
+* 🐛 Save title when clicking the save button ([7e758d3](https://github.com/nearform/orion/commit/7e758d36c95bc86c08327d64a56cd479256fa59c))
+
+
+### Features
+
+* 🎸 Create a proper loading component ([fea42bf](https://github.com/nearform/orion/commit/fea42bf8fb7e8518cdecbbcd1268ce3d1f53731c))
+
+
+
+
+
+# [2.55.0](https://github.com/nearform/orion/compare/v2.54.0...v2.55.0) (2020-05-11)
+
+
+### Features
+
+* 🎸 remove modal popup from edit ([#145](https://github.com/nearform/orion/issues/145)) ([6115e35](https://github.com/nearform/orion/commit/6115e35f7756466c8d2396ad1f6edafcc1c17bd0)), closes [#606](https://github.com/nearform/orion/issues/606)
+
+
+
+
+
+# [2.54.0](https://github.com/nearform/orion/compare/v2.53.1...v2.54.0) (2020-05-06)
+
+
+### Features
+
+* 🎸 adding breadcrumbs to search results page ([a02474a](https://github.com/nearform/orion/commit/a02474a098ea6aee86a5eb7179b3319371add8b0))
+
+
+
+
+
+## [2.53.1](https://github.com/nearform/orion/compare/v2.53.0...v2.53.1) (2020-05-05)
+
+**Note:** Version bump only for package orion
+
+
+
+
+
+# [2.53.0](https://github.com/nearform/orion/compare/v2.52.0...v2.53.0) (2020-05-04)
+
+
+### Features
+
+* 🎸 add save-draft to edit page ([#136](https://github.com/nearform/orion/issues/136)) ([aacb465](https://github.com/nearform/orion/commit/aacb46561115b91770617c9726b5e833b325d365)), closes [#543](https://github.com/nearform/orion/issues/543) [#543](https://github.com/nearform/orion/issues/543) [#543](https://github.com/nearform/orion/issues/543)
+
+
+
+
+
+# [2.52.0](https://github.com/nearform/orion/compare/v2.51.0...v2.52.0) (2020-05-04)
+
+
+### Features
+
+* 🎸 Hide top menu bar when no layout is selected ([695e41a](https://github.com/nearform/orion/commit/695e41a2f286656a0ee17b91c56197be75ebeefa))
+
+
+
+
+
 # [2.51.0](https://github.com/nearform/orion/compare/v2.50.0...v2.51.0) (2020-05-01)
 
 

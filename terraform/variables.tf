@@ -16,16 +16,12 @@ variable "vpc_az_count" {
   description = "VPC count of availability zones"
 }
 
-variable "cf_admin_app_domain_name" {
-  description = "Domain name used for acme-admin Cloudfront"
-}
-
 variable "cf_edit_app_domain_name" {
-  description = "Domain name used for acme-edit Cloudfront"
+  description = "Domain name used for gatsby-plugin-orion-edit Cloudfront"
 }
 
 variable "cf_view_app_domain_name" {
-  description = "Domain name used for acme-view Cloudfront"
+  description = "Domain name used for gatsby-plugin-orion-view Cloudfront"
 }
 
 variable "cf_uploaded_assets_domain_name" {

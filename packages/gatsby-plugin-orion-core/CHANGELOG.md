@@ -3,6 +3,93 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.61.2](https://github.com/nearform/orion/compare/v2.61.1...v2.61.2) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-orion-core
+
+
+
+
+
+## [2.61.1](https://github.com/nearform/orion/compare/v2.61.0...v2.61.1) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-orion-core
+
+
+
+
+
+# [2.61.0](https://github.com/nearform/orion/compare/v2.60.1...v2.61.0) (2020-06-01)
+
+
+### Features
+
+* 🎸 Add storybook to Orion core PaddedContainer ([bfafe85](https://github.com/nearform/orion/commit/bfafe85a696f8c6679a7d45301ca14430ced1f2d))
+
+
+
+
+
+## [2.60.1](https://github.com/nearform/orion/compare/v2.60.0...v2.60.1) (2020-05-28)
+
+**Note:** Version bump only for package gatsby-plugin-orion-core
+
+
+
+
+
+# [2.60.0](https://github.com/nearform/orion/compare/v2.59.0...v2.60.0) (2020-05-28)
+
+
+### Features
+
+* 🎸 Add storybook to Orion core FormFields ([230c92d](https://github.com/nearform/orion/commit/230c92d1fe822081dff42087e29f2d219fe142cf))
+
+
+
+
+
+# [2.58.0](https://github.com/nearform/orion/compare/v2.57.8...v2.58.0) (2020-05-21)
+
+
+### Features
+
+* 🎸 bypass cognito in local env update .env.sample ([d0a0f09](https://github.com/nearform/orion/commit/d0a0f09566f23e0c0af1487cc22675a8a9d9449f))
+* 🎸 Disable Cognito integration for running locally ([1e804e2](https://github.com/nearform/orion/commit/1e804e2d27aa2cb2ba2cf554d4111e154d4ccbbe))
+* 🎸 getting development credentials from env variables ([f4549f0](https://github.com/nearform/orion/commit/f4549f0a949f73de724fbf732ec98301a7a01ab7))
+* 🎸 waiting window to load before using localstorage ([acaa6f7](https://github.com/nearform/orion/commit/acaa6f72fedc7651b10a8070d246d214a14cb2a0))
+
+
+
+
+
+## [2.57.7](https://github.com/nearform/orion/compare/v2.57.6...v2.57.7) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-plugin-orion-core
+
+
+
+
+
+## [2.57.2](https://github.com/nearform/orion/compare/v2.57.1...v2.57.2) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-plugin-orion-core
+
+
+
+
+
+# [2.54.0](https://github.com/nearform/orion/compare/v2.53.1...v2.54.0) (2020-05-06)
+
+
+### Features
+
+* 🎸 adding breadcrumbs to search results page ([a02474a](https://github.com/nearform/orion/commit/a02474a098ea6aee86a5eb7179b3319371add8b0))
+
+
+
+
+
 # [2.47.0](https://github.com/nearform/orion/compare/v2.46.1...v2.47.0) (2020-04-24)
 
 

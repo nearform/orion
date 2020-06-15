@@ -111,4 +111,9 @@ ListOfListItems.propTypes = {
   depthIndent: T.number.isRequired,
 }
 
+ListOfListItems.defaultProps = {
+  userRole: null,
+  isFullyExpanded: false,
+}
+
 export default ListOfListItems

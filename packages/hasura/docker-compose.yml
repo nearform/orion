@@ -9,8 +9,10 @@ services:
       - db_data:/var/lib/postgresql/data
       - ./:/local_dir #mount current dir so you can access the pg_dump file
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: orion
+      PGDATA: /var/lib/postgresql/data/pgdata
   graphql-engine:
     image: hasura/graphql-engine:v1.1.0
     ports:

@@ -5,7 +5,7 @@ import { text } from '@storybook/addon-knobs'
 import hashSha256 from 'js-sha256'
 import CloudinaryImageChooser from './CloudinaryImageChooser'
 
-storiesOf('MediaLibrary', module)
+storiesOf('core/interactive/MediaLibrary', module)
   .addDecorator(jsxDecorator)
   .add('Modal', () => {
     const [image, setImage] = useState('none')

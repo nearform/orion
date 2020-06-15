@@ -58,6 +58,7 @@ function PageTree() {
               ? 'fas fa-file'
               : 'fas fa-long-arrow-alt-right',
           showInMenu: page.show_in_menu,
+          layout: page.layout,
         }
       }
 
@@ -142,7 +143,7 @@ function PageTree() {
       promises.push(
         ...newTree.items[newParent.id].children.map((id, position) =>
           updatePosition({
-            variables: { id, position },
+            variables: { id, position, modified: new Date() },
           })
         )
       )

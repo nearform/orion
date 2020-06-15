@@ -1,5 +1,6 @@
 const axios = require('axios').default
 const pWaitFor = require('p-wait-for')
+let loading = '.'
 
 cloneDb()
 
@@ -41,7 +42,8 @@ async function waitForLocalHasura() {
         throw error
       }
 
-      console.log('Hasura server not ready:', error.message)
+      loading = `${loading}.`
+      console.log(loading)
       return false
     }
   }

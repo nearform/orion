@@ -49,15 +49,17 @@ Configuration happens through environment variables.
 Required environment variables for each package are documented in the `.env.sample` files inside the associated packages.
 
 The following packages distinguish between `.env.development` and `.env.production` when running in development mode or building for production:
-* `acme-admin`
-* `acme-edit`
-* `acme-view`
+* `gatsby-plugin-orion-edit`
+* `gatsby-plugin-orion-view`
 
 The package `hasura` does not make a distinction and has a single `.env` file.
 
-#### 🚀 Download the required `.env.development` files *for each package* from [clipperz](https://clipperz.is/app/) (ask a team member for the credentials). Ignore the individual secrets and simply download the attached file and ensure it is saved with the correct name.
+**⚠️ Warning:** by setting the .env files as in .env.sample you will be running the apps to run in **Bypass authentication mode**. This mode is ment to be used in development environment. [Contact us](https://www.nearform.com/contact/) in the case you need to run Orion in production environment.
 
-![clipperz secrets](../images/clipperz.png)
+
+<!-- #### 🚀 Download the required `.env.development` files *for each package* from [clipperz](https://clipperz.is/app/) (ask a team member for the credentials). Ignore the individual secrets and simply download the attached file and ensure it is saved with the correct name.
+
+![clipperz secrets](../images/clipperz.png) -->
 
 ## Run
 
@@ -65,19 +67,42 @@ The package `hasura` does not make a distinction and has a single `.env` file.
 
 #### 🚀 Run the command(s) for the site(s) you want develop:
 
+- Run hasura and postgres in local docker container and run `view` and `edit` websites. 
+This is the right script to have everything running in you local environment.
+```bash
+run start:dev
+```
+- Run hasura and postgres in local docker container (no clients running)
+```bash
+run start:db
+```
+- Stop hasura docker container, drop all docker volumes and drop postgres db
+```bash
+run stop:db
+```
+- Start `view` client (no db connection unless you set up your own)
 ```bash
 yarn start:view
-yarn start:edit
-yarn start:admin
 ```
+
+- Start `edit` client (no db connection unless you set up your own)
+```bash
+yarn start:edit
+```
+
+**⚠️ Warning:** In any case you need to set up the right environment variables. Please refer to [Configure section](#3-configure-%EF%B8%8F)
 
 ### 2. Debug the sites in your browser 🚫🐛
 
 Once Gatsby successfully builds and starts the development server(s) the sites can be debugged in your browser.
 
-#### 🚀 Navigate to http://localhost:8000 (view), http://localhost:8001 (edit), or http://localhost:8002 (admin) as required.
+#### 🚀 Navigate to http://localhost:8000 (view), or http://localhost:8001 (edit) as required.
 
-### 3. Storybook 📖
+### 3. Development user 👨👩 (Bypass authentication mode)
+
+As you are running Orion in Bypass authentication mode you need to set up your develoment user credentials as environment variables. Please refer to `.env.development.sample` files to get more info
+
+### 4. Storybook 📖
 
 As appropriate, individual components should be demo'able in storybook.
 

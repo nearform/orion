@@ -1,9 +1,6 @@
-mutation updatePosition(
-  $id: Int!,
-  $position: Int!
-) {
+mutation updatePosition($id: Int!, $position: Int!, $modified: timestamptz) {
   update_orion_page(
-    _set: { position: $position },
+    _set: { position: $position, modified: $modified }
     where: { id: { _eq: $id } }
   ) {
     affected_rows

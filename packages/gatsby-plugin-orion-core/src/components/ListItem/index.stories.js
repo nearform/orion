@@ -5,7 +5,7 @@ import { text, select, number, boolean } from '@storybook/addon-knobs'
 
 import ListItem from '.'
 
-storiesOf('CustomListItem', module)
+storiesOf('core/interactive/CustomListItem', module)
   .addDecorator(jsxDecorator)
   .add('Link', () => (
     <ListItem

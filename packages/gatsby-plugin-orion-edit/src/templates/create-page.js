@@ -15,7 +15,7 @@ export default function({ id }) {
     }
 
     return {
-      title: 'New page',
+      title: `New Page`,
       path: '',
       ancestry: [
         ...data.orion_page[0].ancestry,

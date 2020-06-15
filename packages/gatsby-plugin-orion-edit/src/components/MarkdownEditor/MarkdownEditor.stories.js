@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-storiesOf('MarkdownEditor', module)
+storiesOf('Edit/Interactive/MarkdownEditor', module)
   .addDecorator(jsxDecorator)
   .add('Interactive', () => {
     const classes = useStyles()

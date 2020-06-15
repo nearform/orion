@@ -92,7 +92,7 @@ const AwsStorage = ({ children }) => {
   )
 }
 
-storiesOf('UploadImage', module)
+storiesOf('core/interactive/UploadImage', module)
   .addDecorator(jsxDecorator)
   .add('Interactive', () => {
     return (

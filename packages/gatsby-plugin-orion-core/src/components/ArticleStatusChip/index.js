@@ -1,11 +1,11 @@
 import React from 'react'
 import { Chip, makeStyles } from '@material-ui/core'
 import T from 'prop-types'
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import { colorDefinitions } from 'gatsby-theme-acme/variables'
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 
-export const articleStatusMap = {
+const articleStatusMap = {
   'in-progress': {
     label: 'In Progress',
   },

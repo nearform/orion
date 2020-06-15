@@ -15,16 +15,14 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
   },
   layout: {
-    padding: 16,
+    padding: '30px',
+    margin: theme.spacing(0, 1),
     backgroundColor: theme.palette.grey['100'],
-    borderRadius: 8,
+    borderRadius: '4px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     width: '33%',
-  },
-  example: {
-    boxShadow: theme.shadows[2],
   },
   name: {
     color: theme.palette.primary.main,
@@ -42,25 +40,28 @@ function LayoutSelect({ onSelect }) {
       <Typography variant="h2">Choose layout</Typography>
       <Typography variant="body1" className={classes.p}>
         Before we get started on adding some content, lets select a layout for
-        our new page.
+        our new content.
       </Typography>
       <div className={classes.layouts}>
         {Object.entries(layouts).map(([key, layout]) => {
           const Example = layout.example
+          if (layout.name !== 'Article') {
+            return (
+              <div key={key} className={classes.layout}>
+                <Example />
+                <div className={classes.name}>{layout.name}</div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => onSelect(key)}
+                >
+                  Select
+                </Button>
+              </div>
+            )
+          }
 
-          return (
-            <div key={key} className={classes.layout}>
-              <Example className={classes.example} />
-              <div className={classes.name}>{layout.name}</div>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => onSelect(key)}
-              >
-                Select
-              </Button>
-            </div>
-          )
+          return null
         })}
       </div>
     </div>

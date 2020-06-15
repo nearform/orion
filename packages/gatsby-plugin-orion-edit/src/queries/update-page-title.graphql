@@ -1,5 +1,11 @@
-mutation updatePageTitle($id: Int!, $title: String!) {
-  update_orion_page(where: { id: { _eq: $id } }, _set: { title: $title }) {
+mutation updatePageTitle($id: Int!, $title: String!, $modified: timestamptz) {
+  update_orion_page(
+    where: { id: { _eq: $id } }
+    _set: { title: $title, modified: $modified }
+  ) {
     affected_rows
+    returning {
+      title
+    }
   }
 }

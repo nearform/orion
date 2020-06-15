@@ -1,0 +1,1034 @@
+functions: []
+remote_schemas: []
+query_collections: []
+allowlist: []
+version: 2
+tables:
+- table: orion_content
+  is_enum: false
+  configuration:
+    custom_root_fields:
+      select: null
+      select_by_pk: null
+      select_aggregate: null
+      insert: null
+      update: null
+      delete: null
+    custom_column_names: {}
+  object_relationships: []
+  array_relationships: []
+  insert_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      check: {}
+      columns:
+      - parents
+      - path
+      - content_type
+      - title
+      - subtitle
+      - hero_img
+      - date_created
+      - date_modified
+      - date_published
+      - date_expired
+      - content
+      - id
+      - summary
+      - status
+  select_permissions:
+  - role: edit
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - date_created
+      - date_expired
+      - date_modified
+      - date_published
+      - id
+      - parents
+      - content
+      - content_type
+      - hero_img
+      - path
+      - status
+      - subtitle
+      - summary
+      - title
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      allow_aggregations: true
+      computed_fields: []
+      columns:
+      - date_created
+      - date_expired
+      - date_modified
+      - date_published
+      - id
+      - parents
+      - content
+      - content_type
+      - hero_img
+      - path
+      - status
+      - subtitle
+      - summary
+      - title
+      filter:
+        _and:
+        - date_published:
+            _lte: now()
+        - _or:
+          - date_expired:
+              _is_null: true
+          - date_expired:
+              _gt: now()
+  update_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - date_created
+      - date_expired
+      - date_modified
+      - date_published
+      - id
+      - parents
+      - content
+      - content_type
+      - hero_img
+      - path
+      - status
+      - subtitle
+      - summary
+      - title
+      filter: {}
+  delete_permissions:
+  - role: edit
+    comment: null
+    permission:
+      filter: {}
+  event_triggers: []
+  computed_fields: []
+- table: orion_group
+  is_enum: false
+  configuration:
+    custom_root_fields:
+      select: null
+      select_by_pk: null
+      select_aggregate: null
+      insert: null
+      update: null
+      delete: null
+    custom_column_names: {}
+  object_relationships: []
+  array_relationships:
+  - using:
+      foreign_key_constraint_on:
+        column: group_id
+        table: orion_user
+    name: orion_users
+    comment: null
+  insert_permissions: []
+  select_permissions:
+  - role: edit
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - parents
+      - name
+      - id
+      filter:
+        id:
+          _eq: X-Hasura-Group-Id
+  - role: public
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - id
+      - parents
+      - name
+      filter:
+        id:
+          _eq: X-Hasura-Group-Id
+  update_permissions: []
+  delete_permissions: []
+  event_triggers: []
+  computed_fields: []
+- table: orion_page
+  is_enum: false
+  configuration:
+    custom_root_fields:
+      select: null
+      select_by_pk: null
+      select_aggregate: null
+      insert: null
+      update: null
+      delete: null
+    custom_column_names: {}
+  object_relationships: []
+  array_relationships:
+  - using:
+      foreign_key_constraint_on:
+        column: page_id
+        table: orion_page_ancestry
+    name: ancestry
+    comment: null
+  - using:
+      foreign_key_constraint_on:
+        column: page_id
+        table: orion_page_author
+    name: authors
+    comment: null
+  - using:
+      foreign_key_constraint_on:
+        column: page_id
+        table: orion_page_content
+    name: contents
+    comment: null
+  - using:
+      foreign_key_constraint_on:
+        column: ancestor_id
+        table: orion_page_ancestry
+    name: descendants
+    comment: null
+  - using:
+      foreign_key_constraint_on:
+        column: page_id
+        table: orion_page_tag
+    name: tags
+    comment: null
+  insert_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      check: {}
+      columns:
+      - created
+      - expires
+      - id
+      - layout
+      - modified
+      - path
+      - position
+      - published
+      - show_in_menu
+      - title
+  - role: public
+    comment: null
+    permission:
+      set: {}
+      check: {}
+      columns:
+      - created
+      - expires
+      - id
+      - layout
+      - modified
+      - path
+      - position
+      - published
+      - show_in_menu
+      - title
+  select_permissions:
+  - role: edit
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - created
+      - expires
+      - id
+      - layout
+      - modified
+      - path
+      - position
+      - published
+      - show_in_menu
+      - title
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - created
+      - expires
+      - id
+      - layout
+      - modified
+      - path
+      - position
+      - published
+      - show_in_menu
+      - title
+      filter: {}
+  update_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - created
+      - expires
+      - id
+      - layout
+      - modified
+      - path
+      - position
+      - published
+      - show_in_menu
+      - title
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - created
+      - expires
+      - id
+      - layout
+      - modified
+      - path
+      - position
+      - published
+      - show_in_menu
+      - title
+      filter: {}
+  delete_permissions:
+  - role: edit
+    comment: null
+    permission:
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      filter: {}
+  event_triggers:
+  - webhook: https://5ma71mhse4.execute-api.eu-west-1.amazonaws.com/default/orion_content_generator_hook
+    headers: []
+    name: regenerate-view-content
+    definition:
+      insert:
+        columns: '*'
+      update:
+        columns:
+        - show_in_menu
+        - id
+        - position
+        - layout
+        - path
+        - title
+        - created
+        - expires
+        - modified
+        - published
+      delete:
+        columns: '*'
+      enable_manual: false
+    retry_conf:
+      timeout_sec: 60
+      num_retries: 0
+      interval_sec: 10
+  computed_fields: []
+- table: orion_page_ancestry
+  is_enum: false
+  configuration:
+    custom_root_fields:
+      select: null
+      select_by_pk: null
+      select_aggregate: null
+      insert: null
+      update: null
+      delete: null
+    custom_column_names: {}
+  object_relationships:
+  - using:
+      foreign_key_constraint_on: ancestor_id
+    name: ancestor
+    comment: null
+  - using:
+      foreign_key_constraint_on: page_id
+    name: descendant
+    comment: null
+  array_relationships: []
+  insert_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      check: {}
+      columns:
+      - ancestor_id
+      - direct
+      - page_id
+  - role: public
+    comment: null
+    permission:
+      set: {}
+      check: {}
+      columns:
+      - ancestor_id
+      - direct
+      - page_id
+  select_permissions:
+  - role: edit
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - ancestor_id
+      - direct
+      - page_id
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - ancestor_id
+      - direct
+      - page_id
+      filter: {}
+  update_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - ancestor_id
+      - direct
+      - page_id
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - ancestor_id
+      - direct
+      - page_id
+      filter: {}
+  delete_permissions:
+  - role: edit
+    comment: null
+    permission:
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      filter: {}
+  event_triggers:
+  - webhook: https://5ma71mhse4.execute-api.eu-west-1.amazonaws.com/default/orion_content_generator_hook
+    headers: []
+    name: regenerate-view-content-orion_page_ancestry
+    definition:
+      insert:
+        columns: '*'
+      update:
+        columns:
+        - direct
+        - ancestor_id
+        - page_id
+      delete:
+        columns: '*'
+      enable_manual: false
+    retry_conf:
+      timeout_sec: 60
+      num_retries: 0
+      interval_sec: 10
+  computed_fields: []
+- table: orion_page_author
+  is_enum: false
+  configuration:
+    custom_root_fields:
+      select: null
+      select_by_pk: null
+      select_aggregate: null
+      insert: null
+      update: null
+      delete: null
+    custom_column_names: {}
+  object_relationships:
+  - using:
+      foreign_key_constraint_on: page_id
+    name: page
+    comment: null
+  - using:
+      foreign_key_constraint_on: user_id
+    name: user
+    comment: null
+  array_relationships: []
+  insert_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      check: {}
+      columns:
+      - page_id
+      - user_id
+  - role: public
+    comment: null
+    permission:
+      set: {}
+      check: {}
+      columns:
+      - page_id
+      - user_id
+  select_permissions:
+  - role: edit
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - page_id
+      - user_id
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - page_id
+      - user_id
+      filter: {}
+  update_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - page_id
+      - user_id
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - page_id
+      - user_id
+      filter: {}
+  delete_permissions:
+  - role: edit
+    comment: null
+    permission:
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      filter: {}
+  event_triggers:
+  - webhook: https://5ma71mhse4.execute-api.eu-west-1.amazonaws.com/default/orion_content_generator_hook
+    headers: []
+    name: regenerate-view-content-orion_page_author
+    definition:
+      insert:
+        columns: '*'
+      update:
+        columns:
+        - page_id
+        - user_id
+      delete:
+        columns: '*'
+      enable_manual: false
+    retry_conf:
+      timeout_sec: 60
+      num_retries: 0
+      interval_sec: 10
+  computed_fields: []
+- table: orion_page_content
+  is_enum: false
+  configuration:
+    custom_root_fields:
+      select: null
+      select_by_pk: null
+      select_aggregate: null
+      insert: null
+      update: null
+      delete: null
+    custom_column_names: {}
+  object_relationships:
+  - using:
+      foreign_key_constraint_on: page_id
+    name: page
+    comment: null
+  array_relationships: []
+  insert_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      check: {}
+      columns:
+      - id
+      - page_id
+      - props
+      - block
+      - component
+  - role: public
+    comment: null
+    permission:
+      set: {}
+      check: {}
+      columns:
+      - id
+      - page_id
+      - block
+      - component
+      - props
+  select_permissions:
+  - role: edit
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - id
+      - page_id
+      - props
+      - block
+      - component
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - block
+      - component
+      - id
+      - page_id
+      - props
+      filter: {}
+  update_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - id
+      - page_id
+      - props
+      - block
+      - component
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - id
+      - page_id
+      - props
+      - block
+      - component
+      filter: {}
+  delete_permissions:
+  - role: edit
+    comment: null
+    permission:
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      filter: {}
+  event_triggers:
+  - webhook: https://5ma71mhse4.execute-api.eu-west-1.amazonaws.com/default/orion_content_generator_hook
+    headers: []
+    name: regenerate-view-content-orion_page_content
+    definition:
+      insert:
+        columns: '*'
+      update:
+        columns:
+        - id
+        - page_id
+        - props
+        - block
+        - component
+      delete:
+        columns: '*'
+      enable_manual: false
+    retry_conf:
+      timeout_sec: 60
+      num_retries: 0
+      interval_sec: 10
+  computed_fields: []
+- table: orion_page_tag
+  is_enum: false
+  configuration:
+    custom_root_fields:
+      select: null
+      select_by_pk: null
+      select_aggregate: null
+      insert: null
+      update: null
+      delete: null
+    custom_column_names: {}
+  object_relationships:
+  - using:
+      foreign_key_constraint_on: page_id
+    name: page
+    comment: null
+  - using:
+      foreign_key_constraint_on: tag_id
+    name: tag
+    comment: null
+  array_relationships: []
+  insert_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      check: {}
+      columns:
+      - page_id
+      - tag_id
+  - role: public
+    comment: null
+    permission:
+      set: {}
+      check: {}
+      columns:
+      - page_id
+      - tag_id
+  select_permissions:
+  - role: edit
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - page_id
+      - tag_id
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - page_id
+      - tag_id
+      filter: {}
+  update_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - page_id
+      - tag_id
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - page_id
+      - tag_id
+      filter: {}
+  delete_permissions:
+  - role: edit
+    comment: null
+    permission:
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      filter: {}
+  event_triggers: []
+  computed_fields: []
+- table: orion_permissions
+  is_enum: true
+  configuration:
+    custom_root_fields:
+      select: null
+      select_by_pk: null
+      select_aggregate: null
+      insert: null
+      update: null
+      delete: null
+    custom_column_names: {}
+  object_relationships: []
+  array_relationships:
+  - using:
+      foreign_key_constraint_on:
+        column: permission_set
+        table: orion_role_permissions
+    name: orion_role_permissions
+    comment: null
+  insert_permissions: []
+  select_permissions: []
+  update_permissions: []
+  delete_permissions: []
+  event_triggers: []
+  computed_fields: []
+- table: orion_role
+  is_enum: false
+  configuration:
+    custom_root_fields:
+      select: null
+      select_by_pk: null
+      select_aggregate: null
+      insert: null
+      update: null
+      delete: null
+    custom_column_names: {}
+  object_relationships: []
+  array_relationships:
+  - using:
+      foreign_key_constraint_on:
+        column: role_id
+        table: orion_role_permissions
+    name: orion_role_permissions
+    comment: null
+  - using:
+      foreign_key_constraint_on:
+        column: role_id
+        table: orion_user
+    name: orion_users
+    comment: null
+  insert_permissions: []
+  select_permissions:
+  - role: edit
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - parents
+      - name
+      - id
+      filter:
+        id:
+          _eq: X-Hasura-Role-Id
+  - role: public
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - id
+      - parents
+      - name
+      filter:
+        id:
+          _eq: X-Hasura-Role-Id
+  update_permissions: []
+  delete_permissions: []
+  event_triggers: []
+  computed_fields: []
+- table: orion_role_permissions
+  is_enum: false
+  configuration:
+    custom_root_fields:
+      select: null
+      select_by_pk: null
+      select_aggregate: null
+      insert: null
+      update: null
+      delete: null
+    custom_column_names: {}
+  object_relationships:
+  - using:
+      foreign_key_constraint_on: permission_set
+    name: orion_permission
+    comment: null
+  - using:
+      foreign_key_constraint_on: role_id
+    name: orion_role
+    comment: null
+  array_relationships: []
+  insert_permissions: []
+  select_permissions:
+  - role: edit
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - role_id
+      - create
+      - read
+      - update
+      - delete
+      - permission_set
+      filter:
+        role_id:
+          _eq: X-Hasura-Role-Id
+  - role: public
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - create
+      - delete
+      - read
+      - update
+      - role_id
+      - permission_set
+      filter:
+        role_id:
+          _eq: X-Hasura-Role-Id
+  update_permissions: []
+  delete_permissions: []
+  event_triggers: []
+  computed_fields: []
+- table: orion_tag
+  is_enum: false
+  configuration:
+    custom_root_fields:
+      select: null
+      select_by_pk: null
+      select_aggregate: null
+      insert: null
+      update: null
+      delete: null
+    custom_column_names: {}
+  object_relationships: []
+  array_relationships: []
+  insert_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      check: {}
+      columns:
+      - tag
+      - hidden
+  select_permissions:
+  - role: edit
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - hidden
+      - tag
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - hidden
+      - tag
+      filter: {}
+  update_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - hidden
+      - tag
+      filter: {}
+  delete_permissions:
+  - role: edit
+    comment: null
+    permission:
+      filter: {}
+  event_triggers: []
+  computed_fields: []
+- table: orion_user
+  is_enum: false
+  configuration:
+    custom_root_fields:
+      select: null
+      select_by_pk: null
+      select_aggregate: null
+      insert: null
+      update: null
+      delete: null
+    custom_column_names: {}
+  object_relationships:
+  - using:
+      foreign_key_constraint_on: group_id
+    name: orion_group
+    comment: null
+  - using:
+      foreign_key_constraint_on: role_id
+    name: orion_role
+    comment: null
+  array_relationships: []
+  insert_permissions: []
+  select_permissions:
+  - role: edit
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - avatar
+      - bio
+      - given_name
+      - id
+      - title
+      filter: {}
+  - role: public
+    comment: null
+    permission:
+      allow_aggregations: false
+      computed_fields: []
+      columns:
+      - avatar
+      - bio
+      - given_name
+      - id
+      - title
+      filter: {}
+  update_permissions:
+  - role: edit
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - avatar
+      - bio
+      - email
+      - given_name
+      - title
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+  - role: public
+    comment: null
+    permission:
+      set: {}
+      columns:
+      - avatar
+      - bio
+      - email
+      - given_name
+      - title
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+  delete_permissions: []
+  event_triggers: []
+  computed_fields: []

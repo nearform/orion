@@ -9,7 +9,7 @@ exports[`InputField component When the type prop is "image" composes a select co
   </h6>
   <div
     aspectratio="1.333"
-    class="MuiFormControl-root MuiTextField-root makeStyles-input-87 MuiFormControl-fullWidth"
+    class="MuiFormControl-root MuiTextField-root makeStyles-input-88 MuiFormControl-fullWidth"
     options="hello,test,person"
     path="/a/path/to/test.jpg"
   >

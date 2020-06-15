@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from 'react'
+import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import createPageMutation from '../../queries/create-page.graphql'
 import updatePageMutation from '../../queries/update-page.graphql'
 import ArticleEditButtons from '../ArticleEditButtons'
@@ -11,6 +11,8 @@ import { useMutation } from 'graphql-hooks'
 import produce from 'immer' // eslint-disable-line import/no-named-as-default
 import slugify from 'gatsby-plugin-orion-core/src/utils/slugify'
 import getParentPath from '../../utils/get-parent-path'
+
+import { useLocation } from '@reach/router'
 
 export function reducer(page, { type, ...payload }) {
   switch (type) {
@@ -75,6 +77,9 @@ export function reducer(page, { type, ...payload }) {
 }
 
 function EditPage({ initialState, onSave }) {
+  const { pathname } = useLocation()
+  const amArticle = pathname.includes('/article/')
+
   const { layouts, wrapper: Wrapper } = useEditComponents()
   const [page, dispatch] = useReducer(reducer, initialState)
   const [createPage] = useMutation(createPageMutation)
@@ -82,78 +87,108 @@ function EditPage({ initialState, onSave }) {
   const [isEditing, setIsEditing] = useState(true)
   const [showSettings, setShowSettings] = useState(false)
 
-  const layout = layouts[page.layout]
+  let layout = layouts[page.layout]
+  if (layout === undefined && amArticle) {
+    layout = layouts.article
+  }
+
   const blocks = layout === undefined ? {} : layout.blocks
   const EditorLayout = layout === undefined ? undefined : layout.editor
-
   const editLayoutProps = {}
+
+  useEffect(() => {
+    if (amArticle) {
+      dispatch({
+        type: 'layout',
+        layout: 'article',
+        contents: Object.entries(blocks).map(([key, block]) => ({
+          block: key,
+          component: block.defaultComponent,
+          props: {},
+        })),
+      })
+    }
+  }, [amArticle, blocks])
+
+  const handleSaveDraft = () => {
+    savePage(true)
+  }
+
+  const handlePublish = () => {
+    savePage(false)
+  }
 
   const handleSetPath = useCallback(
     path => dispatch({ type: 'setPath', path }),
     [dispatch]
   )
-  const handleSave = useCallback(async () => {
-    const directAncestor = getParentPath(page.ancestry)
-    if (page.path === '/') {
-      console.warn(
-        'This will set the page as your home page. Make sure to rename your old home page or this will not work as expected.'
-      )
-    } else if (directAncestor !== '' && page.path === `${directAncestor}/`) {
-      console.warn(
-        'Failed to publish changes. A page with this path already exsists. Try rearranging the pages in the left menu instead.'
-      )
-      handleSetPath(slugify(page.title))
-      return
-    }
 
-    let result
-    const commonVariables = {
-      layout: page.layout,
-      path: page.path,
-      published: page.published || new Date(),
-      showInMenu: page.show_in_menu,
-      title: page.title,
-      expires: page.expires || null,
-    }
+  const savePage = useCallback(
+    async amDraft => {
+      const directAncestor = getParentPath(page.ancestry)
+      if (page.path === '/') {
+        console.warn(
+          'This will set the page as your home page. Make sure to rename your old home page or this will not work as expected.'
+        )
+      } else if (directAncestor !== '' && page.path === `${directAncestor}/`) {
+        console.warn(
+          'Failed to publish changes. A page with this path already exsists. Try rearranging the pages in the left menu instead.'
+        )
+        handleSetPath(slugify(page.title))
+        return
+      }
 
-    if (page.id) {
-      const { data } = await updatePage({
-        variables: {
-          ...commonVariables,
-          id: page.id,
-          contents: page.contents.map(content => ({
-            ...content,
-            page_id: page.id, // eslint-disable-line camelcase
-          })),
-          pageTags: page.tags.map(({ tag }) => ({
-            tag_id: tag.tag, // eslint-disable-line camelcase
-            page_id: page.id, // eslint-disable-line camelcase
-          })),
-        },
-      })
+      let result
+      const commonVariables = {
+        layout: page.layout,
+        path: page.path,
+        published: amDraft ? null : page.published || new Date(),
+        showInMenu: page.layout === 'article' ? false : page.show_in_menu,
+        title: page.title,
+        expires: page.expires || null,
+        modified: new Date(),
+      }
 
-      result = data.update_orion_page.returning[0]
-    } else {
-      const { data } = await createPage({
-        variables: {
-          ...commonVariables,
-          contents: page.contents,
-          ancestry: page.ancestry.map(({ ancestor, direct }) => ({
-            ancestor_id: ancestor.id, // eslint-disable-line camelcase
-            direct,
-          })),
-          authors: page.authors.map(({ user }) => ({
-            user_id: user.id, // eslint-disable-line camelcase
-          })),
-          tags: page.tags.map(({ tag }) => ({ tag_id: tag.tag })), // eslint-disable-line camelcase
-        },
-      })
+      if (page.id) {
+        const { data } = await updatePage({
+          variables: {
+            ...commonVariables,
+            id: page.id,
+            contents: page.contents.map(content => ({
+              ...content,
+              page_id: page.id, // eslint-disable-line camelcase
+            })),
+            pageTags: page.tags.map(({ tag }) => ({
+              tag_id: tag.tag, // eslint-disable-line camelcase
+              page_id: page.id, // eslint-disable-line camelcase
+            })),
+          },
+        })
 
-      result = data.insert_orion_page.returning[0]
-    }
+        result = data.update_orion_page.returning[0]
+      } else {
+        const { data } = await createPage({
+          variables: {
+            ...commonVariables,
+            contents: page.contents,
+            ancestry: page.ancestry.map(({ ancestor, direct }) => ({
+              ancestor_id: ancestor.id, // eslint-disable-line camelcase
+              direct,
+            })),
+            authors: page.authors.map(({ user }) => ({
+              user_id: user.id, // eslint-disable-line camelcase
+            })),
+            tags: page.tags.map(({ tag }) => ({ tag_id: tag.tag })), // eslint-disable-line camelcase
+          },
+        })
 
-    onSave(result)
-  }, [createPage, handleSetPath, onSave, page, updatePage])
+        result = data.insert_orion_page.returning[0]
+      }
+
+      onSave(result)
+    },
+    [createPage, onSave, page, updatePage, handleSetPath]
+  )
 
   const handleLayoutSelect = useCallback(
     layout => {
@@ -220,25 +255,28 @@ function EditPage({ initialState, onSave }) {
     )
   }
 
-  const actions = EditorLayout && (
+  const actions = (
     <ArticleEditButtons
       isEditing={isEditing}
+      setPublishedDate={handleSetPublishedDate}
       publishedDate={page.published}
       expiresDate={page.expires}
-      ancestry={page.ancestry}
-      path={page.path.split('/').slice(-1)[0]}
-      setPublishedDate={handleSetPublishedDate}
       setExpiresDate={handleSetExpiresDate}
-      setPath={handleSetPath}
-      onSave={handleSave}
       onEdit={() => setIsEditing(true)}
       onPreview={() => setIsEditing(false)}
+      onSaveDraft={handleSaveDraft}
+      onPublish={handlePublish}
       onSettings={() => setShowSettings(true)}
     />
   )
 
   return (
-    <Layout action={actions}>
+    <Layout
+      action={actions}
+      ancestry={page.ancestry}
+      path={page.path.split('/').slice(-1)[0]}
+      setPath={handleSetPath}
+    >
       <PageSettings
         open={showSettings}
         page={page}

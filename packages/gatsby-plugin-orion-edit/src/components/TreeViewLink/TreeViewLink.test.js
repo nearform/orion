@@ -1,11 +1,22 @@
 /* eslint-disable max-nested-callbacks */
 /* eslint-disable camelcase */
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, act } from '@testing-library/react'
 import TreeViewLink from '.'
 import { useMutation } from 'graphql-hooks'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import theme from 'gatsby-theme-acme'
+
+jest.useFakeTimers()
+
+const mockDate = new Date('2020-03-09T13:05:20.588+00:00')
+
+const _Date = Date
+global.Date = jest.fn(() => mockDate)
+global.Date.UTC = _Date.UTC
+global.Date.parse = _Date.parse
+global.Date.now = _Date.now
+
 jest.mock(
   '../../queries/update-page-title.graphql',
   () => 'updatePageTitleMutation'
@@ -16,7 +27,21 @@ jest.mock(
 )
 jest.mock('graphql-hooks')
 const mockUpdatePageShowInMenuMutation = jest.fn()
-const mockUpdatePageTitleMutation = jest.fn()
+
+let promise = null
+const makePageTitlePromise = title =>
+  Promise.resolve({
+    data: {
+      update_orion_page: {
+        returning: [{ title }],
+      },
+    },
+  })
+
+const mockUpdatePageTitleMutation = jest.fn(({ variables: { title } }) => {
+  promise = makePageTitlePromise(title)
+  return promise
+})
 useMutation.mockImplementation(mutation => {
   if (mutation === 'updatePageTitleMutation') {
     return [mockUpdatePageTitleMutation]
@@ -29,12 +54,19 @@ useMutation.mockImplementation(mutation => {
   return []
 })
 
-const props = {
+const propsArticle = {
   title: 'great titles are made',
   to: '/great-title-slug',
   pageId: 123,
+  layout: 'article',
 }
-const renderComponent = () =>
+const propsPage = {
+  title: 'great titles are made',
+  to: '/great-title-slug',
+  pageId: 123,
+  layout: 'page',
+}
+const renderComponent = props =>
   render(
     <ThemeProvider theme={createMuiTheme(theme)}>
       <TreeViewLink {...props} />
@@ -46,16 +78,17 @@ describe('TreeViewLink component', () => {
     jest.clearAllMocks()
   })
 
-  describe('When the component first loads', () => {
-    let component
+  let component
 
+  describe('When the component first loads with page layout', () => {
     beforeEach(() => {
-      component = renderComponent()
+      component = renderComponent(propsPage)
     })
+
     it('shows a Link to the relevent page', () => {
       const { getByText } = component
-      expect(getByText(props.title)).toHaveAttribute('href', props.to)
-      expect(getByText(props.title)).toMatchInlineSnapshot(`
+      expect(getByText(propsPage.title)).toHaveAttribute('href', propsPage.to)
+      expect(getByText(propsPage.title)).toMatchInlineSnapshot(`
         <a
           href="/great-title-slug"
         >
@@ -66,25 +99,25 @@ describe('TreeViewLink component', () => {
 
     it('shows a button to edit the page title', () => {
       const { getByText } = component
-
-      expect(getByText(props.title).nextSibling).toBeInTheDocument()
+      expect(getByText(propsPage.title).nextSibling).toBeInTheDocument()
     })
 
     describe('And I click the edit button', () => {
       beforeEach(() => {
         const { getByText } = component
-        fireEvent.click(getByText(props.title).nextSibling)
+        fireEvent.click(getByText(propsPage.title).nextSibling)
       })
+
       it('then it shows an input with a value initialised to be the title', () => {
         const { getByDisplayValue } = component
-        expect(getByDisplayValue(props.title)).toBeInTheDocument()
+        expect(getByDisplayValue(propsPage.title)).toBeInTheDocument()
       })
 
       describe('And I change the title', () => {
         beforeEach(() => {
           const { getByDisplayValue } = component
 
-          fireEvent.change(getByDisplayValue(props.title), {
+          fireEvent.change(getByDisplayValue(propsPage.title), {
             target: { value: 'a new title' },
           })
         })
@@ -95,15 +128,19 @@ describe('TreeViewLink component', () => {
           })
           it('shows the original title as a link again', () => {
             const { getByText } = component
-            expect(getByText(props.title)).toBeInTheDocument()
+            act(() => {
+              jest.runAllTimers()
+            })
+            expect(getByText(propsPage.title)).toBeInTheDocument()
           })
         })
 
         describe('And then I submit the form to save the changes', () => {
-          beforeEach(() => {
+          beforeEach(async () => {
             const { getByDisplayValue } = component
-
+            fireEvent.blur(getByDisplayValue('a new title'))
             fireEvent.click(getByDisplayValue('a new title').nextSibling)
+            await act(() => promise)
           })
           it('shows the new title as a link', () => {
             const { getByText } = component
@@ -114,7 +151,38 @@ describe('TreeViewLink component', () => {
               variables: {
                 id: 123,
                 title: 'a new title',
+                modified: mockDate,
               },
+            })
+          })
+
+          describe('And then I edit the title a second time', () => {
+            beforeEach(() => {
+              const { getByDisplayValue, getByText } = component
+
+              fireEvent.click(getByText('a new title').nextSibling)
+              fireEvent.change(getByDisplayValue('a new title'), {
+                target: { value: 'What the page' },
+              })
+            })
+
+            describe('And then I click away from the input without saving', () => {
+              beforeEach(async () => {
+                const { getByDisplayValue } = component
+                fireEvent.blur(getByDisplayValue('What the page'))
+
+                await act(() => jest.runAllTimers())
+              })
+              it('shows the last saved title as a link again', () => {
+                const { getByText } = component
+
+                expect(getByText('a new title')).toBeInTheDocument()
+              })
+              it('does NOT show the original title', () => {
+                const { queryByText } = component
+
+                expect(queryByText(propsPage.title)).not.toBeInTheDocument()
+              })
             })
           })
         })
@@ -138,6 +206,7 @@ describe('TreeViewLink component', () => {
           variables: {
             id: 123,
             show_in_menu: true,
+            modified: mockDate,
           },
         })
       })
@@ -146,6 +215,17 @@ describe('TreeViewLink component', () => {
         const { getByLabelText } = component
         expect(getByLabelText('exclude page from menu')).toBeInTheDocument()
       })
+    })
+  })
+
+  describe('When the component first loads with article layout', () => {
+    beforeEach(() => {
+      component = renderComponent(propsArticle)
+    })
+    it('include button should not exist', () => {
+      const { queryByLabelText } = component
+
+      expect(queryByLabelText('include page in menu')).not.toBeInTheDocument()
     })
   })
 })

@@ -64,7 +64,7 @@ This project uses .env files for environment variables.
 
 To get the environment variable setup for local development you will need
 
-- .env.development files need to added to acme-view, acme-admin and acme-edit.
+- .env.development files need to added to gatsby-plugin-orion-view and gatsby-plugin-orion-edit.
 - A .env file needs to added to the hasura package.
 
 The content of the files can be found on clipperz.is
@@ -126,11 +126,6 @@ End-to-end tests using TestCafe. Requires environment variables to run, see
 
 Contains all styling (CSS) and unique-client assets (such as logo images) for the Orion demo project `Acme`.
 
-### [./packages/gatsby-plugin-orion-admin](./packages/gatsby-plugin-orion-admin)
-
-Contains all components and functionality related to the creation and management of users, groups, roles,
-and role-permissions for Orion projects.
-
 ### [./packages/gatsby-plugin-orion-core](./packages/gatsby-plugin-orion-core)
 
 Core components shared by all Orion packages, such as user login and registration.
@@ -162,3 +157,9 @@ Terraform AWS configuration
 
 [logo-img]: docs/images/Accel_Logo_Orion.svg
 [docs]: https://nf-orion.netlify.com/#/
+
+## Dynamicly generate static files
+
+This project is setup to responde to changes to data by rebuilding the static content. This process has 3 moving parts.
+
+Hasura events are setup to listen to changes in all `orion_page` tables. These events call the `content-generator-hook` lambda. The lambda starts a `generate-view-content` workflow on circleCI which ultimately runs `gatsby build` and uploads it to the s3 bucket to be served.

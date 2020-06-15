@@ -8,6 +8,7 @@ mutation updatePage(
   $contents: [orion_page_content_insert_input!]!
   $pageTags: [orion_page_tag_insert_input!]!
   $expires: timestamptz
+  $modified: timestamptz
 ) {
   delete_orion_page_content(where: { page: { id: { _eq: $id } } }) {
     affected_rows
@@ -25,6 +26,7 @@ mutation updatePage(
       show_in_menu: $showInMenu
       title: $title
       expires: $expires
+      modified: $modified
     }
   ) {
     returning {
