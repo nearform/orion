@@ -33,7 +33,7 @@
     "hosted:e2e-test": "npm run e2e-test -- ./hosted.js -- --screenshots-on-fails",
     "ci:e2e-test": "start-server-and-test 'start:apps' http-get://localhost:8000 'npm run e2e-test ./local.js'",
     "ci:version": "lerna version --conventional-commits --yes --message \"$(echo \"chore(release): %s\\n\\n[skip ci]\")\"",
-    "storybook": "set BYPASS_AWS_COGNITOOO=true&&start-storybook -s .storybook/public -p 6006",
+    "storybook": "set BYPASS_AWS_COGNITO=true&&start-storybook -s .storybook/public -p 6006",
     "build-storybook": "build-storybook -s .storybook/public",
     "start:db": "lerna exec --scope=hasura yarn start",
     "stop:db": "lerna exec --scope=hasura yarn stop",

@@ -5,9 +5,9 @@ import Search from '@material-ui/icons/Search'
 import { Link, navigate } from '@reach/router'
 import { useManualQuery } from 'graphql-hooks'
 import { fade } from '@material-ui/core/styles/colorManipulator'
+import { debounce } from 'lodash'
 
 import baseQuery from '../../queries/base-search.graphql'
-import useDebounce from '../../hooks/useDebounce'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -141,7 +141,7 @@ function SearchInput({ placeholderText, query }) {
     results: [],
   })
   const [queryFn, queryResult] = useManualQuery(query)
-  const debouncedSearchTerm = useDebounce(state.term, 500)
+  const debouncedSearchTerm = debounce(state.term, 500)
   const searchInput = useRef(null)
 
   useEffect(() => {

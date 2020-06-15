@@ -20,6 +20,7 @@ function VerticalNavigationMenu({
     function addIcon(current, init = true) {
       if (init) {
         current = modifiedData
+        setModifiedData(JSON.parse(JSON.stringify(modifiedData)))
       }
 
       current.forEach(link => {
@@ -29,9 +30,6 @@ function VerticalNavigationMenu({
           addIcon(link.children, false)
         }
       })
-      if (init) {
-        setModifiedData(JSON.parse(JSON.stringify(modifiedData)))
-      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [data]
@@ -58,6 +56,10 @@ VerticalNavigationMenu.propTypes = {
   userRole: T.oneOf(['Admin', 'User']),
   path: T.string.isRequired,
   depthIndent: T.number.isRequired,
+}
+
+VerticalNavigationMenu.defaultProps = {
+  userRole: null,
 }
 
 export default VerticalNavigationMenu
