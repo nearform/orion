@@ -141,25 +141,20 @@ function SearchInput({ placeholderText, query }) {
     results: [],
   })
   const [queryFn, queryResult] = useManualQuery(query)
-  const debouncedSearchTerm = debounce(state.term, 500)
   const searchInput = useRef(null)
+  const debouncedQuery = debounce(() => {
+    queryFn({
+      variables: {
+        term: `%${state.term}%`,
+        limit: 4,
+        isFullSearch: false,
+      },
+    })
+  }, 250)
 
   useEffect(() => {
-    if (debouncedSearchTerm && debouncedSearchTerm.length > 0) {
-      queryFn({
-        variables: {
-          term: `%${debouncedSearchTerm}%`,
-          limit: 4,
-          isFullSearch: false,
-        },
-      })
-    } else {
-      setState(s => ({
-        ...s,
-        results: [],
-      }))
-    }
-  }, [debouncedSearchTerm, queryFn])
+    debouncedQuery()
+  }, [debouncedQuery, queryFn])
 
   useEffect(() => {
     if (queryResult.data) {

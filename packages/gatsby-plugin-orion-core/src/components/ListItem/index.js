@@ -59,4 +59,15 @@ CustomListItem.propTypes = {
   hasActionHighlight: T.bool,
 }
 
+CustomListItem.defaultProps = {
+  to: '',
+  onClick: () => {},
+  iconClass: '',
+  isOpen: false,
+  handleOpen: () => {},
+  depthLevel: 0,
+  depthIndent: 0,
+  hasActionHighlight: false,
+}
+
 export default CustomListItem
