@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.61.4](https://github.com/nearform/orion/compare/v2.61.3...v2.61.4) (2020-06-16)
+
+
+### Bug Fixes
+
+* 🐛 ENV var misnamed in storybook start script ([e69da4f](https://github.com/nearform/orion/commit/e69da4fbd70123f3d87ef9586710b7cf8b60c8d9))
+* 🐛 Fix lodash use of debounce ([3d72f34](https://github.com/nearform/orion/commit/3d72f34c96ba22e7e87d0faafe059596a0548ca8))
+
+
+
+
+
 ## [2.61.3](https://github.com/nearform/orion/compare/v2.61.2...v2.61.3) (2020-06-05)
 
 **Note:** Version bump only for package orion

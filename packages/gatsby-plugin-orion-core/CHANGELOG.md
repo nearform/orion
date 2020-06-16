@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.61.4](https://github.com/nearform/orion/compare/v2.61.3...v2.61.4) (2020-06-16)
+
+
+### Bug Fixes
+
+* 🐛 Fix lodash use of debounce ([3d72f34](https://github.com/nearform/orion/commit/3d72f34c96ba22e7e87d0faafe059596a0548ca8))
+
+
+
+
+
 ## [2.61.2](https://github.com/nearform/orion/compare/v2.61.1...v2.61.2) (2020-06-02)
 
 **Note:** Version bump only for package gatsby-plugin-orion-core
