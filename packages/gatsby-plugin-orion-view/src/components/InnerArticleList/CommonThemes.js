@@ -27,10 +27,6 @@ export default theme => ({
     height: 0,
     paddingTop: '50%',
   },
-  '& .MuiCardActions-root': {
-    marginTop: 'auto',
-    marginBottom: '1px',
-  },
   '& .MuiSvgIcon-root': {
     marginTop: 8,
   },
