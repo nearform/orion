@@ -1,32 +1,59 @@
 import React from 'react'
 import T from 'prop-types'
 import { Grid, Typography } from '@material-ui/core'
-import GridArticleItem from './GridArticleItem'
+import GridArticleCard from './GridArticleCard'
+import GridArticleRow from './GridArticleRow'
 
 function InnerArticleList({ articles, title, type = 'grid', options = {} }) {
   const containerProps = {
     spacing: type === 'highlights' ? 0 : 4,
   }
 
+  const titleComponent = title && (
+    <Grid container {...containerProps}>
+      <Grid item>
+        <Typography variant="h5">{title}</Typography>
+      </Grid>
+    </Grid>
+  )
+
+  if (type === 'grid') {
+    return (
+      <>
+        {titleComponent}
+        <Grid container component="section" spacing={1} {...containerProps}>
+          {articles.map((article, index) =>
+            article ? (
+              <GridArticleCard
+                key={article.id}
+                type={type}
+                article={article}
+                options={options}
+                featured={options.withFeatured && index === 0}
+              />
+            ) : null
+          )}
+        </Grid>
+      </>
+    )
+  }
+
   return (
     <>
-      {title && (
-        <Grid container {...containerProps}>
-          <Grid item>
-            <Typography variant="h5">{title}</Typography>
-          </Grid>
-        </Grid>
-      )}
+      {titleComponent}
       <Grid container component="section" spacing={1} {...containerProps}>
-        {articles.map((article, index) => (
-          <GridArticleItem
-            key={article.id}
-            type={type}
-            article={article}
-            options={options}
-            featured={options.withFeatured && index === 0}
-          />
-        ))}
+        {articles.map(
+          (article, index) =>
+            article && (
+              <GridArticleRow
+                key={article.id}
+                type={type}
+                article={article}
+                options={options}
+                featured={options.withFeatured && index === 0}
+              />
+            )
+        )}
       </Grid>
     </>
   )

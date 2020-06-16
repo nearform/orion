@@ -8,6 +8,9 @@ const useStyles = makeStyles(theme => ({
     padding: 32,
     '&:nth-child(2)': {
       backgroundColor: theme.palette.background.dark,
+      '& .MuiCard-root': {
+        backgroundColor: theme.palette.background.dark,
+      },
     },
   },
 }))
