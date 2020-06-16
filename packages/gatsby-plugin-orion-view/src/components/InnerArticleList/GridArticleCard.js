@@ -95,7 +95,9 @@ function GridArticleCard({ article, options, isFeatured = false }) {
               {!options.suppressImage && (
                 <Link to={article.path}>
                   <CardMedia
-                    className={options.clipImage && classes.clippedImage}
+                    className={
+                      options.clipImage ? classes.clippedImage : undefined
+                    }
                     title="Article Image"
                     image={article.image || '/place-8@2x.png'}
                   />
@@ -121,17 +123,19 @@ function GridArticleCard({ article, options, isFeatured = false }) {
             </Grid>
             <Grid container item xs={12} alignItems="flex-end">
               {article.path && (
-                <Grid item xs={12}>
-                  <Typography variant="body1">
-                    <Link to={article.path}>
-                      <Grid container alignItems="center">
-                        <Grid item>Read on </Grid>
-                        <Grid item>
-                          <ArrowRightAltIcon />
-                        </Grid>
-                      </Grid>
-                    </Link>
-                  </Typography>
+                <Grid container item alignItems="center">
+                  <Grid item>
+                    <Typography variant="body1">
+                      <Link to={article.path}>Read on </Link>
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body1">
+                      <Link to={article.path}>
+                        <ArrowRightAltIcon />
+                      </Link>
+                    </Typography>
+                  </Grid>
                 </Grid>
               )}
             </Grid>

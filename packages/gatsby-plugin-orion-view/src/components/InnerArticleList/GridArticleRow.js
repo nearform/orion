@@ -145,15 +145,19 @@ function GridArticleRow({ article, options, type, isFeatured = false }) {
     >
       <Card className={classes.card} elevation={0}>
         <Grid container>
-          <Grid item {...imageProps}>
-            <Link to={article.path}>
-              <CardMedia
-                className={options.clipImage && classes.clippedImage}
-                image={article.image || '/place-8@2x.png'}
-                title="Article Image"
-              />
-            </Link>
-          </Grid>
+          {!options.suppressImage && (
+            <Grid item {...imageProps}>
+              <Link to={article.path}>
+                <CardMedia
+                  className={
+                    options.clipImage ? classes.clippedImage : undefined
+                  }
+                  image={article.image || '/place-8@2x.png'}
+                  title={article.title || 'Article Image'}
+                />
+              </Link>
+            </Grid>
+          )}
           <Grid item {...contentProps}>
             <CardContent className={classes.fullHeight}>
               <Grid
@@ -182,16 +186,20 @@ function GridArticleRow({ article, options, type, isFeatured = false }) {
                 </Grid>
                 <Grid item>
                   {article.path && (
-                    <Typography variant="body1">
-                      <Link to={article.path}>
-                        <Grid container alignItems="center">
-                          <Grid item>Read on </Grid>
-                          <Grid item>
+                    <Grid container item alignItems="center">
+                      <Grid item>
+                        <Typography variant="body1">
+                          <Link to={article.path}>Read on </Link>
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="body1">
+                          <Link to={article.path}>
                             <ArrowRightAltIcon />
-                          </Grid>
-                        </Grid>
-                      </Link>
-                    </Typography>
+                          </Link>
+                        </Typography>
+                      </Grid>
+                    </Grid>
                   )}
                 </Grid>
               </Grid>

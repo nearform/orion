@@ -163,11 +163,15 @@ describe('SearchPage component', () => {
 
   it('shows a default image for the result when no images is available', () => {
     const { container } = setupPage()
-    expect(container.querySelectorAll('article')[0].querySelector('img'))
-      .toMatchInlineSnapshot(`
-      <img
-        alt="About"
-        src="/place-8@2x.png"
+    expect(
+      container
+        .querySelectorAll('article')[0]
+        .querySelector('.MuiCardMedia-root')
+    ).toMatchInlineSnapshot(`
+      <div
+        class="MuiCardMedia-root"
+        style="background-image: url(/place-8@2x.png);"
+        title="About"
       />
     `)
   })
@@ -175,25 +179,25 @@ describe('SearchPage component', () => {
     const { container } = setupPage()
     const article2Img = container
       .querySelectorAll('article')[1]
-      .querySelector('img')
+      .querySelector('.MuiCardMedia-root')
     expect(article2Img).toHaveAttribute(
-      'alt',
+      'title',
       'A discussion about insurability'
     )
     expect(article2Img).toHaveAttribute(
-      'src',
-      'https://s3-eu-west-1.amazonaws.com/orion-assets.nearform.com/public/default/place-2%402x.png'
+      'style',
+      'background-image: url(https://s3-eu-west-1.amazonaws.com/orion-assets.nearform.com/public/default/place-2%402x.png);'
     )
     const article3Img = container
       .querySelectorAll('article')[2]
-      .querySelector('img')
+      .querySelector('.MuiCardMedia-root')
     expect(article3Img).toHaveAttribute(
-      'alt',
+      'title',
       'Everything you need to know about insurance'
     )
     expect(article3Img).toHaveAttribute(
-      'src',
-      'https://res.cloudinary.com/orionacme/image/upload/v1584624711/samples/sheep.jpg'
+      'style',
+      'background-image: url(https://res.cloudinary.com/orionacme/image/upload/v1584624711/samples/sheep.jpg);'
     )
   })
 
