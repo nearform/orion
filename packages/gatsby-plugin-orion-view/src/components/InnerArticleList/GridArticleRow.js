@@ -149,7 +149,7 @@ function GridArticleRow({ article, options, type, isFeatured = false }) {
             <Link to={article.path}>
               <CardMedia
                 className={options.clipImage && classes.clippedImage}
-                image={article.image}
+                image={article.image || '/place-8@2x.png'}
                 title="Article Image"
               />
             </Link>

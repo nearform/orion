@@ -97,7 +97,7 @@ function GridArticleCard({ article, options, isFeatured = false }) {
                   <CardMedia
                     className={options.clipImage && classes.clippedImage}
                     title="Article Image"
-                    image={article.image}
+                    image={article.image || '/place-8@2x.png'}
                   />
                 </Link>
               )}
