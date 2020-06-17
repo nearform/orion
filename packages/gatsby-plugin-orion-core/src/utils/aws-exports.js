@@ -7,7 +7,7 @@ export default {
 
     cookieStorage: {
       // Set to "localhost" for local dev
-      domain: process.env.GATSBY_AWS_COOKIE_DOMAIN,
+      domain: process.env.GATSBY_AWS_COOKIE_DOMAIN || 'localhost',
       // Set to "false" for local dev
       secure:
         String(process.env.GATSBY_AWS_COOKIE_SECURE).toLowerCase() === 'true',
