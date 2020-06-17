@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.62.0](https://github.com/nearform/orion/compare/v2.61.4...v2.62.0) (2020-06-17)
+
+
+### Bug Fixes
+
+* 🐛 fix testing errors ([d13199f](https://github.com/nearform/orion/commit/d13199f923f8c2c435c5747df38ba8bdfb2ad252))
+
+
+### Features
+
+* 🎸 Add placeholder image for article grids ([7c19940](https://github.com/nearform/orion/commit/7c19940e5f247085483d1e878c2a83e7f88780f5))
+* 🎸 Seperate GridArticleItem component and fix styling ([7671475](https://github.com/nearform/orion/commit/7671475ce7be84cdec815e31c10026cb8c4cfcd4))
+
+
+
+
+
 ## [2.61.4](https://github.com/nearform/orion/compare/v2.61.3...v2.61.4) (2020-06-16)
 
 **Note:** Version bump only for package gatsby-plugin-orion-view
