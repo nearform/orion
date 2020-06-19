@@ -152,7 +152,7 @@ function PageSettings({ open, onCancel, onSave, page }) {
   return (
     <Drawer
       anchor="right"
-      open={open || true}
+      open={open}
       classes={{ paper: classes.paper }}
       onClose={handleCancel}
     >
