@@ -13,6 +13,7 @@ export default {
   },
   tertiary: {
     main: colorDefinitions.lightGrey,
+    dark: colorDefinitions.black,
   },
   background: {
     default: colorDefinitions.white,
