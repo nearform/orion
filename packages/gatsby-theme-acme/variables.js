@@ -4,6 +4,7 @@ export const colorDefinitions = {
   darkSlateBlue: '#204c67',
   purpleishBlue: '#5a49ff',
   accessibleGreen: '#2aa77b',
+  black: '#2e2e2e',
   brighterGreen: '#1fc57f',
   lightGrey: '#9cafc3',
   lighterGrey: '#f7fafc',

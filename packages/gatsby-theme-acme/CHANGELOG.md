@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.63.0](https://github.com/nearform/orion/compare/v2.62.1...v2.63.0) (2020-06-25)
+
+
+### Features
+
+* 🎸 Create page setting drawer component ([2400cfc](https://github.com/nearform/orion/commit/2400cfcb834859430108ed7bedc40060c0f6535f))
+
+
+
+
+
 ## [2.38.2](https://github.com/nearform/orion/compare/v2.38.1...v2.38.2) (2020-03-27)
 
 **Note:** Version bump only for package gatsby-theme-acme

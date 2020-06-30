@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.63.0](https://github.com/nearform/orion/compare/v2.62.1...v2.63.0) (2020-06-25)
+
+**Note:** Version bump only for package gatsby-plugin-orion-core
+
+
+
+
+
+## [2.62.1](https://github.com/nearform/orion/compare/v2.62.0...v2.62.1) (2020-06-17)
+
+
+### Bug Fixes
+
+* 🐛 Eliminate Amplify errors for Storybook ([dafa4b4](https://github.com/nearform/orion/commit/dafa4b49632896aec83ec839e1404e6652e28d60))
+
+
+
+
+
 ## [2.61.4](https://github.com/nearform/orion/compare/v2.61.3...v2.61.4) (2020-06-16)
 
 

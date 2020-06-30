@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.63.0](https://github.com/nearform/orion/compare/v2.62.1...v2.63.0) (2020-06-25)
+
+
+### Bug Fixes
+
+* 🐛 drawer alway open ([f02123d](https://github.com/nearform/orion/commit/f02123dbd55af75272d86272c97b76a497031b1d))
+
+
+### Features
+
+* 🎸 Create page setting drawer component ([2400cfc](https://github.com/nearform/orion/commit/2400cfcb834859430108ed7bedc40060c0f6535f))
+
+
+
+
+
+## [2.62.1](https://github.com/nearform/orion/compare/v2.62.0...v2.62.1) (2020-06-17)
+
+
+### Bug Fixes
+
+* 🐛 Eliminate Amplify errors for Storybook ([dafa4b4](https://github.com/nearform/orion/commit/dafa4b49632896aec83ec839e1404e6652e28d60))
+
+
+
+
+
 # [2.62.0](https://github.com/nearform/orion/compare/v2.61.4...v2.62.0) (2020-06-17)
 
 
