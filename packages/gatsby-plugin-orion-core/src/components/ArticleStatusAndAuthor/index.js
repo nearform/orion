@@ -25,9 +25,13 @@ const Form = ({ author, articleStatus }) => (
 )
 
 Form.propTypes = {
-  articleStatus: T.oneOf(['in-progress', 'in-review', 'published', 'hidden'])
-    .isRequired,
+  articleStatus: T.oneOf(['in-progress', 'in-review', 'published', 'hidden']),
   author: T.string,
+}
+
+Form.defaultProps = {
+  articleStatus: 'in-progress',
+  author: '',
 }
 
 export default Form
